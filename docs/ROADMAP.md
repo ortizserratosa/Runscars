@@ -14,7 +14,7 @@ terminada por haber creado archivos o código, sino por cumplir esa puerta.
 | 2 | Prototipo visual navegable | Completada |
 | 3 | Base técnica y staging | Completada |
 | 4 | Catálogo TMDB | Completada |
-| 5 | Sistema de ingesta | Pendiente |
+| 5 | Sistema de ingesta | Completada |
 | 6 | Agregación | Pendiente |
 | 7 | Snapshots y evaluación | Pendiente |
 | 8 | Usuarios | Pendiente |
@@ -138,21 +138,28 @@ Seguimiento detallado en [TMDB_CATALOG.md](TMDB_CATALOG.md).
 
 ## Fase 5 · Sistema de ingesta
 
+**Cerrada:** 2026-07-24. El sistema incorpora importación manual y conectores
+Guardian JSON, RogerEbert RSS y AwardsWatch HTML; persiste originales y
+procedencia, aísla ejecuciones, deriva dudas a una cola privada y se programa
+diariamente con Supabase Edge Functions y Cron.
+
 ### Entregables
 
-- adaptador común;
-- importación manual;
-- primeros 2–3 conectores;
-- almacenamiento de observaciones originales;
-- cola de revisión;
-- tareas programadas y logs.
+- [x] adaptador común;
+- [x] importación manual;
+- [x] primeros 2–3 conectores;
+- [x] almacenamiento de observaciones originales;
+- [x] cola de revisión;
+- [x] tareas programadas y logs.
 
 ### Puerta de salida
 
-- Repetir una importación no duplica.
-- El fallo de una fuente no bloquea las demás.
-- Una observación puede rastrearse hasta su URL.
-- Los conectores se prueban con fixtures sin acceder a internet.
+- [x] Repetir una importación no duplica.
+- [x] El fallo de una fuente no bloquea las demás.
+- [x] Una observación puede rastrearse hasta su URL.
+- [x] Los conectores se prueban con fixtures sin acceder a internet.
+
+Seguimiento detallado en [INGESTION.md](INGESTION.md).
 
 ## Fase 6 · Agregación
 

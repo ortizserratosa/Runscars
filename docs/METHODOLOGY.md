@@ -1,6 +1,6 @@
 # Metodología
 
-**Estado:** metodología de señales profesionales calibrada en fase 1
+**Estado:** metodología de señales profesionales e ingesta original operativas
 **Última revisión:** 2026-07-24
 
 ## 1. Principios
@@ -31,6 +31,12 @@ Toda observación externa guardará:
 
 El contenido capturado no se sobrescribe. Una corrección enlaza la observación
 original con la corregida.
+
+Desde la fase 5, la publicación y su captura se identifican por claves e hashes
+estables. El matching automático solo acepta una coincidencia exacta contra el
+título principal o alternativo de la temporada. Una coincidencia ausente o
+ambigua deja la observación pendiente, sin participación, y genera revisión
+editorial. La fase 6 no podrá agregar observaciones pendientes.
 
 ### 2.1 Elegibilidad de una fuente
 

@@ -36,6 +36,7 @@ pasado para ocultar cambios de criterio.
 | D-016 | Aplicación definitiva separada del prototipo | Aceptada |
 | D-017 | Validación SQL portable además del flujo Supabase | Aceptada |
 | D-018 | Catálogo TMDB desacoplado del runtime web | Aceptada |
+| D-019 | Ingesta append-only con matching conservador | Aceptada |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -253,3 +254,21 @@ iniciar la fase 2.
   entra en el runtime público y las decisiones editoriales son auditables.
 - **Límite:** la importación programada y su interfaz administrativa pertenecen
   a fases posteriores; en fase 4 el importador es una herramienta de CLI.
+
+## D-019 · Ingesta append-only con matching conservador
+
+- **Fecha:** 2026-07-24
+- **Estado:** Aceptada
+- **Decisión:** persistir publicaciones, capturas y observaciones originales
+  por separado; deduplicarlas con hashes estables y aceptar automáticamente
+  solo matches exactos contra títulos principales o alternativos.
+- **Revisión:** una identidad ausente o ambigua crea una observación pendiente
+  sin participación y una entrada privada e idempotente en la cola editorial.
+- **Ejecución:** cada conector dispone de su propio run y log. Guardian JSON,
+  RogerEbert RSS y AwardsWatch HTML forman el primer corte; un error no detiene
+  el siguiente conector.
+- **Seguridad:** la función programada usa un secreto propio compartido entre
+  Edge Functions y Vault; la configuración versionada no contiene
+  credenciales.
+- **Motivo:** preservar evidencia, impedir matches plausibles pero falsos y
+  permitir correcciones futuras sin destruir el historial.

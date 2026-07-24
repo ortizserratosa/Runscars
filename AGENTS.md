@@ -115,6 +115,8 @@ Comandos canónicos desde la raíz:
 - `npm run tmdb:import`: importa el manifiesto de fase 4 de forma idempotente.
 - `npm run tmdb:match -- <film-id> <tmdb-id> --reason "<motivo>"`: corrección
   editorial trazable. Los dos últimos comandos requieren secretos de servidor.
+- `npm run ingest:manual -- <manifiesto.json>`: carga profesional manual,
+  versionada e idempotente; requiere credenciales de servidor.
 
 Una tarea no está terminada hasta ejecutar las comprobaciones proporcionales al
 riesgo y comunicar sus resultados.

@@ -1,6 +1,6 @@
 # Registro de fuentes
 
-**Estado:** fase 1 completada; selección MVP preparada
+**Estado:** fase 5 completada; primer corte de ingesta operativo
 **Última revisión:** 2026-07-24
 
 ## 1. Objetivo
@@ -173,11 +173,16 @@ Cada conector usará fixtures guardados, una clave idempotente formada por
 `source_id + publication_id + film_id + data_type`, captura aislada por fuente
 y cola de revisión para coincidencias dudosas.
 
-El tercer conector profesional se elegirá entre los prototipos HTML de Next Best
-Picture, AwardsWatch y Awards Radar después de revisar condiciones y
-estabilidad. Variety, IndieWire y Awards Daily empiezan manuales. La ampliación
-a 28 fuentes no cambia esta prioridad: las nuevas fuentes se incorporarán por
-lotes después de contar con importación manual idempotente y fixtures.
+3. **AwardsWatch Best Picture:** tabla HTML ordenada con publicación, autor,
+   fecha, URL, categoría e intención explícitas. El fixture reproduce la
+   estructura verificada de la publicación de junio de 2026.
+
+Los tres conectores y la importación manual idempotente quedaron implementados
+en la fase 5. RogerEbert y AwardsWatch están activos en la tarea diaria;
+Guardian permanece preparado pero inactivo hasta configurar su API key.
+Variety, IndieWire y Awards Daily empiezan manuales. La ampliación a 28 fuentes
+no cambia esta prioridad: las nuevas fuentes se incorporarán por lotes, cada una
+con fixture y revisión de publicación.
 
 ## 8. Dataset de prueba
 
@@ -211,6 +216,8 @@ ninguna fecha, nota o posición se estima.
 - `rotten-tomatoes` y `metacritic` están `replace-before-publish`; pueden
   desactivarse sin perder la señal crítica individual.
 - El Content API de Guardian necesita clave y respeto de sus condiciones.
+- El HTML de AwardsWatch puede cambiar; el conector falla de forma aislada y
+  exige actualizar el fixture antes de aceptar una nueva estructura.
 - The New York Times, The Washington Post y The Ankler tienen paywall completo:
   Runscars solo guardará metadatos, enlaces y valores que pueda verificar.
 - Las tres subpuntuaciones de Little White Lies no forman una nota única sin una
