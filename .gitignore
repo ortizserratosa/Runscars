@@ -1,0 +1,15 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+node_modules/
+.next/
+coverage/
+playwright-report/
+test-results/
+.vercel/
+web/.vercel/
+supabase/.branches/
+supabase/.temp/
+*.tsbuildinfo
+npm-debug.log*
