@@ -39,3 +39,15 @@ test("exposes application health without leaking configuration", async ({
     databaseConfigured: false,
   });
 });
+
+test("keeps film pages available without a TMDB token at runtime", async ({
+  page,
+}) => {
+  await page.goto("/peliculas/project-hail-mary");
+
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Project Hail Mary" }),
+  ).toBeVisible();
+  await expect(page.getByText("La ficha sigue disponible")).toBeVisible();
+  await expect(page.getByText("Lo que sí está verificado")).toBeVisible();
+});

@@ -10,7 +10,8 @@ export function SiteFooter() {
       <div className="footer-links">
         <Link href="/temporadas/2027">Oscar 2027</Link>
         <Link href="/fuentes/awardswatch">Trazabilidad</Link>
-        <span>Base técnica · Fase 3</span>
+        <Link href="/creditos">Créditos</Link>
+        <span>Catálogo · Fase 4</span>
       </div>
     </footer>
   );

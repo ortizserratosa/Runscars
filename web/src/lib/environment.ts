@@ -3,7 +3,10 @@ import { z } from "zod";
 
 const supabaseEnvironmentSchema = z.object({
   NEXT_PUBLIC_SUPABASE_URL: z.url(),
-  NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(20),
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: z
+    .string()
+    .min(20)
+    .refine((value) => !value.startsWith("replace-with-")),
 });
 
 export function isSupabaseConfigured() {

@@ -12,6 +12,11 @@ export default defineConfig({
   },
   webServer: {
     command: "npm run dev",
+    env: {
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: "",
+      NEXT_PUBLIC_SUPABASE_URL: "",
+      TMDB_READ_ACCESS_TOKEN: "",
+    },
     url: "http://127.0.0.1:3000/api/health",
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,

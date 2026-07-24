@@ -1,24 +1,28 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { FilmCatalogDetails } from "../../components/FilmCatalogDetails";
 import { PosterBlock } from "../../components/PosterBlock";
-import { filmFixtures, findFilmById } from "../../../data/films";
+import {
+  getFilmCatalogDetail,
+  listFixtureFilmIds,
+} from "../../../lib/repositories/catalog";
 
 type FilmPageProps = {
   params: Promise<{ slug: string }>;
 };
 
 export function generateStaticParams() {
-  return filmFixtures
-    .filter((film) => film.id !== "the-odyssey")
-    .map((film) => ({ slug: film.id }));
+  return listFixtureFilmIds()
+    .filter((filmId) => filmId !== "the-odyssey")
+    .map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
   params,
 }: FilmPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const film = findFilmById(slug);
+  const film = await getFilmCatalogDetail(slug);
 
   if (!film) {
     return { title: "Película no encontrada" };
@@ -32,7 +36,7 @@ export async function generateMetadata({
 
 export default async function FilmPage({ params }: FilmPageProps) {
   const { slug } = await params;
-  const film = findFilmById(slug);
+  const film = await getFilmCatalogDetail(slug);
 
   if (!film) {
     notFound();
@@ -40,13 +44,14 @@ export default async function FilmPage({ params }: FilmPageProps) {
 
   const status =
     film.releaseStatus === "released" ? "Estrenada" : "Próximo estreno";
-  const date = film.releaseDate
+  const releaseDate = film.tmdb?.releaseDate ?? film.editorialReleaseDate;
+  const date = releaseDate
     ? new Intl.DateTimeFormat("es-ES", {
         day: "numeric",
         month: "short",
         year: "numeric",
         timeZone: "UTC",
-      }).format(new Date(`${film.releaseDate}T00:00:00Z`))
+      }).format(new Date(`${releaseDate}T00:00:00Z`))
     : "Fecha no confirmada";
 
   return (
@@ -63,6 +68,7 @@ export default async function FilmPage({ params }: FilmPageProps) {
 
           <div className="film-hero-grid">
             <PosterBlock
+              imagePath={film.tmdb?.posterPath}
               number="—"
               size="large"
               title={film.title}
@@ -78,8 +84,9 @@ export default async function FilmPage({ params }: FilmPageProps) {
               <p className="kicker">Oscar 2027 · película observada</p>
               <h1>{film.title}</h1>
               <p className="film-deck">
-                Ficha mínima procedente del dataset verificable de la fase 1. No
-                contiene metadatos inventados.
+                {film.tmdb?.tagline ??
+                  film.tmdb?.overview ??
+                  "Ficha procedente del dataset editorial verificable de Runscars."}
               </p>
               {film.alternateTitles.length > 0 ? (
                 <div className="film-score-strip">
@@ -91,8 +98,9 @@ export default async function FilmPage({ params }: FilmPageProps) {
                 </div>
               ) : null}
               <p className="metadata-note">
-                Reparto, equipo, sinopsis e imágenes llegarán con el catálogo
-                TMDB de la fase 4.
+                {film.tmdb
+                  ? "Metadatos e imágenes servidos desde la caché local; TMDB no interviene en las señales Oscar."
+                  : "Sin captura TMDB disponible en este entorno; se conserva la ficha editorial."}
               </p>
             </div>
           </div>
@@ -100,6 +108,8 @@ export default async function FilmPage({ params }: FilmPageProps) {
       </section>
 
       <section className="page-shell film-content">
+        <FilmCatalogDetails film={film} />
+
         <div className="film-signal-section reviews-module">
           <div className="module-heading">
             <span className="signal-letter">D</span>

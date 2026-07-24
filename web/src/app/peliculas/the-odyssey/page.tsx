@@ -1,17 +1,30 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { FilmCatalogDetails } from "../../components/FilmCatalogDetails";
 import { PosterBlock } from "../../components/PosterBlock";
 import { candidates, odysseyReviewLinks, odysseyReviews } from "../../data";
+import { getFilmCatalogDetail } from "../../../lib/repositories/catalog";
 import { FilmCommunity } from "./FilmCommunity";
 
-export const metadata: Metadata = {
-  title: "The Odyssey",
-  description: "Ficha de The Odyssey en la temporada Oscar 2027.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const film = await getFilmCatalogDetail("the-odyssey");
+  return {
+    title: film?.title ?? "The Odyssey",
+    description:
+      film?.tmdb?.overview ??
+      "Ficha de The Odyssey en la temporada Oscar 2027.",
+  };
+}
 
 const odyssey = candidates[0];
 
-export default function FilmPage() {
+export default async function FilmPage() {
+  const film = await getFilmCatalogDetail("the-odyssey");
+
+  if (!film) {
+    return null;
+  }
+
   return (
     <main>
       <section className="film-hero">
@@ -26,7 +39,8 @@ export default function FilmPage() {
 
           <div className="film-hero-grid">
             <PosterBlock
-              title="The Odyssey"
+              imagePath={film.tmdb?.posterPath}
+              title={film.title}
               tone="violet"
               number="01"
               size="large"
@@ -43,8 +57,8 @@ export default function FilmPage() {
                 The <em>Odyssey</em>
               </h1>
               <p className="film-deck">
-                Lidera el consenso del fixture con tres primeras posiciones y
-                presencia en las cuatro listas aplicables.
+                {film.tmdb?.tagline ??
+                  "Lidera el consenso del fixture con tres primeras posiciones y presencia en las cuatro listas aplicables."}
               </p>
               <div className="film-score-strip">
                 <div>
@@ -64,8 +78,9 @@ export default function FilmPage() {
                 </div>
               </div>
               <p className="metadata-note">
-                Ficha cinematográfica ampliada e imágenes: pendiente de la
-                integración TMDB de la Fase 4.
+                {film.tmdb
+                  ? "Metadatos e imágenes servidos desde la caché local; TMDB no interviene en las señales Oscar."
+                  : "Sin captura TMDB disponible en este entorno; se conserva la ficha editorial."}
               </p>
             </div>
           </div>
@@ -73,6 +88,8 @@ export default function FilmPage() {
       </section>
 
       <section className="page-shell film-content">
+        <FilmCatalogDetails film={film} />
+
         <div className="film-signal-section prediction-module">
           <div className="module-heading">
             <span className="signal-letter">A</span>
