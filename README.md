@@ -72,25 +72,27 @@ permite recorrer:
 - los [créditos y atribución de TMDB](https://runscars-staging.vercel.app/creditos).
 
 Todas las apariciones de películas del fixture enlazan a una ficha canónica. El
-catálogo TMDB se sirve desde snapshots locales versionados. El primer sistema
-de ingesta profesional ya incorpora Guardian, RogerEbert y AwardsWatch con
-fixtures offline, revisión editorial y ejecuciones aisladas.
+catálogo TMDB se sirve desde snapshots locales versionados. El primer sistema de
+ingesta profesional ya incorpora Guardian, RogerEbert y AwardsWatch con fixtures
+offline, revisión editorial y ejecuciones aisladas. El consenso se recalcula
+desde 48 observaciones y expone el término aportado por cada fuente.
 
 ## Estado
 
-| Fase | Resultado                                             | Estado        |
-| ---- | ----------------------------------------------------- | ------------- |
-| 0    | Contrato, metodología y decisiones                    | ✅ Completada |
-| 1    | Discovery y dataset verificable                       | ✅ Completada |
-| 2    | Prototipo visual navegable                            | ✅ Completada |
-| 3    | Aplicación definitiva, base técnica y staging         | ✅ Completada |
-| 4    | Catálogo TMDB versionado y fichas cinematográficas    | ✅ Completada |
-| 5    | Ingesta profesional idempotente y programada          | ✅ Completada |
-| 6–10 | Agregación, snapshots, usuarios y lanzamiento         | ⏳ Pendientes |
+| Fase | Resultado                                          | Estado        |
+| ---- | -------------------------------------------------- | ------------- |
+| 0    | Contrato, metodología y decisiones                 | ✅ Completada |
+| 1    | Discovery y dataset verificable                    | ✅ Completada |
+| 2    | Prototipo visual navegable                         | ✅ Completada |
+| 3    | Aplicación definitiva, base técnica y staging      | ✅ Completada |
+| 4    | Catálogo TMDB versionado y fichas cinematográficas | ✅ Completada |
+| 5    | Ingesta profesional idempotente y programada       | ✅ Completada |
+| 6    | Agregación reproducible y evolución temporal       | ✅ Completada |
+| 7–10 | Snapshots, usuarios, administración y lanzamiento  | ⏳ Pendientes |
 
-La fase 5 queda cerrada con tres conectores profesionales, importación manual,
-observaciones originales, cola privada y ejecución diaria. El detalle
-verificable está en [INGESTION.md](docs/INGESTION.md).
+La fase 6 queda cerrada con normalización crítica, consenso Borda, variación
+temporal y explicación completa desde la observación hasta la cifra visible. El
+detalle verificable está en [AGGREGATION.md](docs/AGGREGATION.md).
 
 ## Principios de datos
 
@@ -153,7 +155,8 @@ locales a `127.0.0.1`.
 Consulta la [guía técnica de fase 3](docs/TECHNICAL_FOUNDATION.md) para enlazar
 las variables públicas locales, la [guía del catálogo](docs/TMDB_CATALOG.md)
 para TMDB y la [guía de ingesta](docs/INGESTION.md) para conectores y cargas
-manuales.
+manuales. La [guía de agregación](docs/AGGREGATION.md) documenta fórmulas,
+ejemplos esperados y la frontera con los snapshots de fase 7.
 
 ## Estructura
 
@@ -179,6 +182,7 @@ Runscars/
 | [DECISIONS.md](docs/DECISIONS.md)           | Decisiones aceptadas y propuestas              |
 | [ROADMAP.md](docs/ROADMAP.md)               | Fases y puertas de salida                      |
 | [INGESTION.md](docs/INGESTION.md)           | Conectores, observaciones, revisión y Cron     |
+| [AGGREGATION.md](docs/AGGREGATION.md)       | Cálculos, ejemplos manuales y evolución        |
 | [AGENTS.md](AGENTS.md)                      | Reglas persistentes de trabajo                 |
 
 ## Participar

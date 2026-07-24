@@ -136,8 +136,8 @@ restricción única, la URL de procedencia y la privacidad de runs/logs/cola.
 - La revisión de condiciones previa a una publicación comercial sigue abierta;
   `review-before-publish` permite discovery personal, no autoriza reutilizar
   cuerpos.
-- La fase 6 podrá leer únicamente observaciones `published` y
-  `participates = true`; no debe reinterpretar las pendientes.
+- La agregación de fase 6 lee únicamente observaciones `published` y
+  `participates = true`; las pendientes no se reinterpretan ni participan.
 
 ## Evidencia en staging
 

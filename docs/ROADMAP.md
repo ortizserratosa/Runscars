@@ -15,7 +15,7 @@ terminada por haber creado archivos o código, sino por cumplir esa puerta.
 | 3 | Base técnica y staging | Completada |
 | 4 | Catálogo TMDB | Completada |
 | 5 | Sistema de ingesta | Completada |
-| 6 | Agregación | Pendiente |
+| 6 | Agregación | Completada |
 | 7 | Snapshots y evaluación | Pendiente |
 | 8 | Usuarios | Pendiente |
 | 9 | Administración editorial | Pendiente |
@@ -163,18 +163,24 @@ Seguimiento detallado en [INGESTION.md](INGESTION.md).
 
 ## Fase 6 · Agregación
 
+**Cerrada:** 2026-07-24. La versión `runscars-aggregation-v1` reproduce el
+fixture de fase 1, calcula por separado recepción y predicciones, explica cada
+término y deriva cuatro cortes temporales sin convertirlos todavía en snapshots.
+
 ### Entregables
 
-- normalización de puntuaciones;
-- métricas de consenso;
-- variación temporal;
-- explicación visible de cálculos;
-- pruebas con resultados esperados calculados a mano.
+- [x] normalización de puntuaciones;
+- [x] métricas de consenso;
+- [x] variación temporal;
+- [x] explicación visible de cálculos;
+- [x] pruebas con resultados esperados calculados a mano.
 
 ### Puerta de salida
 
 Todos los ejemplos de referencia coinciden y cualquier cifra agregada puede
 reproducirse desde sus observaciones.
+
+Cumplimiento detallado en [AGGREGATION.md](AGGREGATION.md).
 
 ## Fase 7 · Snapshots y evaluación
 

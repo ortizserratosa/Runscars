@@ -162,6 +162,41 @@ Una lista solo participa si:
 Una selección sin orden contribuye a cobertura, pero no a la puntuación Borda ni
 a las posiciones media o mediana.
 
+### 4.4 Fuente activa y cobertura
+
+La unidad de peso y de cobertura es la fuente profesional activa para la
+categoría e intención, no cada bloque de una misma publicación. Para un corte se
+usa únicamente la publicación elegible más reciente de cada fuente:
+
+- si contiene lista ordenada, aporta una vez al denominador Borda;
+- si además contiene una selección sin orden, ambas partes forman una sola
+  superficie de la fuente y no duplican su peso ni el denominador de cobertura;
+- una candidatura presente en cualquiera de las dos partes cuenta como aparición
+  de esa fuente;
+- una fuente con solo selección cuenta para cobertura, pero no entra en el
+  denominador Borda.
+
+La implementación `runscars-aggregation-v1` representa los puntos decimales con
+doce posiciones estables antes de ordenar. Esto elimina artefactos binarios —por
+ejemplo `0,65` frente a `0,649999…`— sin redondear para presentación ni alterar
+un empate matemático. Después se aplican los desempates de la sección 4.2.
+
+### 4.5 Variación durante la fase 6
+
+Antes de existir snapshots bloqueados, la variación se calcula de forma
+determinista entre dos cortes de cálculo consecutivos. Cada corte:
+
+1. limita observaciones por su fecha de publicación, o por captura si aquella no
+   consta;
+2. elige la última publicación elegible de cada fuente;
+3. recalcula toda la clasificación;
+4. expresa el movimiento como `posición_anterior - posición_actual`.
+
+Un valor positivo significa subida, uno negativo bajada y cero estabilidad. Una
+candidatura sin posición anterior se marca como nueva. Estos cortes no son
+snapshots y pueden recalcularse; su bloqueo e inmutabilidad empiezan en la
+fase 7.
+
 ## 5. Rankings de usuarios
 
 - Se agregan separadamente de los expertos.

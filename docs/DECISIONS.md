@@ -37,6 +37,7 @@ pasado para ocultar cambios de criterio.
 | D-017 | Validación SQL portable además del flujo Supabase | Aceptada |
 | D-018 | Catálogo TMDB desacoplado del runtime web | Aceptada |
 | D-019 | Ingesta append-only con matching conservador | Aceptada |
+| D-020 | Agregados derivados y snapshots diferidos | Aceptada |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -272,3 +273,31 @@ iniciar la fase 2.
   credenciales.
 - **Motivo:** preservar evidencia, impedir matches plausibles pero falsos y
   permitir correcciones futuras sin destruir el historial.
+
+## D-020 · Agregados derivados y snapshots diferidos
+
+- **Fecha:** 2026-07-24
+- **Estado:** Aceptada
+- **Decisión:** calcular normalización, recepción crítica y consenso mediante la
+  función determinista versionada `runscars-aggregation-v1`; no persistir un
+  resultado mutable antes de la fase 7.
+- **Fuente activa:** para cada categoría e intención participa la publicación
+  elegible más reciente de cada fuente. Una lista ordenada y su selección
+  complementaria forman una sola unidad de cobertura y nunca duplican el peso de
+  la fuente.
+- **Temporalidad:** durante la fase 6 la evolución son cortes recalculables
+  acumulados por fecha de publicación. No se presentan como snapshots ni
+  prometen inmutabilidad.
+- **Precisión:** los términos Borda se estabilizan a doce decimales para evitar
+  falsos desempates por representación binaria; cálculo y desempate siguen
+  separados del redondeo visual a dos decimales.
+- **Motivo:** cualquier cifra puede reconstruirse directamente desde sus
+  observaciones y la fase 7 podrá bloquear exactamente esa entrada, versión de
+  método y salida sin mantener dos agregados competidores.
+
+## Cierre de la fase 6
+
+El 2026-07-24 los ejemplos de normalización y consenso de la fase 1 coincidieron
+con los resultados manuales. La interfaz expone observaciones, términos Borda,
+cobertura, desempates y cortes temporales. Los snapshots bloqueados permanecen
+fuera de alcance hasta la fase 7.
