@@ -109,7 +109,8 @@ Comandos canónicos desde la raíz:
 - `npm run verify`: todos los checks salvo end-to-end.
 - `npm run db:start`, `npm run db:reset`, `npm run db:lint` y
   `npm run db:types`: flujo local canónico de Supabase; requiere un runtime de
-  contenedores compatible con Docker.
+  contenedores compatible con Docker. El arranque crea la red local protegida
+  `runscars-local`.
 
 Una tarea no está terminada hasta ejecutar las comprobaciones proporcionales al
 riesgo y comunicar sus resultados.
