@@ -17,7 +17,7 @@ snapshots ni los usuarios.
 | `supabase/` | Configuración, migraciones y seed |
 | `data/phase-1/` | Dataset editorial original e inmutable |
 | `prototype/` | Referencia visual descartable de fase 2 |
-| `.github/workflows/ci.yml` | Verificación automática propuesta para GitHub |
+| `.github/workflows/ci.yml` | Verificación automática en GitHub Actions |
 
 La aplicación conserva la identidad editorial de la fase 2, pero usa Next.js
 estándar compatible con Vercel. Todas las apariciones navegables de películas
@@ -141,12 +141,12 @@ usar para producción.
 - [x] Formato, lint, tipos, pruebas, compilación y E2E definidos.
 - [x] Integración continua declarada.
 - [ ] `supabase db reset` ejecutado sobre el stack local oficial.
-- [ ] CI ejecutada desde un remoto.
+- [x] CI ejecutada correctamente desde el remoto público.
 - [ ] Base de datos de staging creada y migrada.
 - [x] Aplicación desplegada y comprobada en Vercel staging.
 - [x] Instalación limpia completa repetida y documentada.
 
-La fase 3 no se cerrará hasta completar los tres puntos pendientes.
+La fase 3 no se cerrará hasta completar los dos puntos pendientes.
 
 ### Bloqueos comprobados el 2026-07-24
 
@@ -154,8 +154,11 @@ La fase 3 no se cerrará hasta completar los tres puntos pendientes.
   stack local oficial de Supabase no puede arrancar todavía.
 - La autorización de Supabase requiere que el propietario complete el inicio de
   sesión antes de crear o enlazar un proyecto.
-- El checkout no tiene remoto ni commit inicial, y GitHub CLI no está instalado;
-  la CI no puede ejecutarse fuera del equipo hasta publicar el repositorio.
 
-Estos bloqueos no afectan a la suite portable, al build ni al staging web, pero
-sí forman parte de la puerta de salida y mantienen la fase en curso.
+La primera ejecución remota de GitHub Actions terminó correctamente el
+2026-07-24, incluida la instalación limpia, la regeneración de tipos, el build,
+las pruebas de base de datos y seis recorridos E2E.
+
+Los bloqueos restantes no afectan a la suite portable, al build, a la CI ni al
+staging web, pero sí forman parte de la puerta de salida y mantienen la fase en
+curso.

@@ -93,9 +93,9 @@ Cumplimiento detallado en [PROTOTYPE.md](PROTOTYPE.md).
 **En curso:** la aplicación Next.js definitiva, la migración inicial, el seed,
 los tipos derivados del esquema, la suite de pruebas y la definición de CI
 están implementados. La instalación limpia y el staging web en Vercel están
-verificados. Falta ejecutar el flujo oficial de Supabase con un runtime de
-contenedores, migrar su proyecto de staging y ejecutar la CI desde un remoto
-antes de cerrar la fase.
+verificados, y la CI se ha ejecutado correctamente desde el remoto público.
+Falta ejecutar el flujo oficial de Supabase con un runtime de contenedores y
+migrar su proyecto de staging antes de cerrar la fase.
 
 ### Entregables
 
