@@ -74,6 +74,11 @@ No presentar como cerrada una decisión marcada `Propuesta`.
 ## Datos externos y secretos
 
 - No guardar tokens, cookies, contraseñas ni credenciales en Git.
+- Los commits publicados deben usar la dirección `noreply` de GitHub del autor,
+  nunca un correo personal. Comprobar autor y committer antes de cada push.
+- Mantener locales los archivos de vinculación con cuentas o proyectos de
+  hosting, como `.openai/hosting.json` y `.vercel/`, salvo decisión explícita que
+  justifique versionarlos.
 - Mantener un `.env.example` sin valores secretos cuando exista la aplicación.
 - El token de TMDB se usará únicamente en el servidor.
 - Para el prototipo personal, el riesgo de publicación se registra pero no
