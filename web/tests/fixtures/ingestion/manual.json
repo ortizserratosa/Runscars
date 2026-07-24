@@ -1,0 +1,35 @@
+{
+  "formatVersion": 1,
+  "sourceId": "metacritic",
+  "seasonId": "oscars-2027",
+  "publications": [
+    {
+      "externalId": "metacritic-the-odyssey-2026-07-24",
+      "canonicalUrl": "https://www.metacritic.com/movie/the-odyssey/",
+      "title": "The Odyssey Reviews",
+      "author": "Metacritic",
+      "publishedAt": "2026-07-24T12:00:00Z",
+      "originalData": {
+        "label": "Metascore",
+        "value": 79,
+        "captured_from": "title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "The Odyssey",
+          "filmId": "the-odyssey",
+          "originalValue": {
+            "score": 79
+          },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Metascore"
+          },
+          "participates": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Roger Ebert</title>
+    <link>https://www.rogerebert.com</link>
+    <item>
+      <title><![CDATA[Project Hail Mary movie review (2026)]]></title>
+      <link>https://www.rogerebert.com/reviews/project-hail-mary-movie-review-2026</link>
+      <guid>roger-ebert-project-hail-mary-2026</guid>
+      <dc:creator><![CDATA[Brian Tallerico]]></dc:creator>
+      <pubDate>Fri, 20 Mar 2026 13:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[An interview that must not become a review]]></title>
+      <link>https://www.rogerebert.com/interviews/sample-interview</link>
+      <guid>roger-ebert-sample-interview</guid>
+      <dc:creator><![CDATA[Sample Author]]></dc:creator>
+      <pubDate>Sat, 21 Mar 2026 13:00:00 +0000</pubDate>
+    </item>
+  </channel>
+</rss>

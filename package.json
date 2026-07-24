@@ -11,8 +11,8 @@
   "scripts": {
     "dev": "npm --workspace web run dev",
     "build": "npm --workspace web run build",
-    "format": "prettier --check \"web/**/*.{ts,tsx,mjs,css,json,md}\" \"scripts/**/*.mjs\" package.json .prettierrc.json",
-    "format:write": "prettier --write \"web/**/*.{ts,tsx,mjs,css,json,md}\" \"scripts/**/*.mjs\" package.json .prettierrc.json",
+    "format": "prettier --check \"web/**/*.{ts,tsx,mjs,css,json,md}\" \"supabase/functions/**/*.{ts,mjs,json}\" \"scripts/**/*.mjs\" package.json .prettierrc.json",
+    "format:write": "prettier --write \"web/**/*.{ts,tsx,mjs,css,json,md}\" \"supabase/functions/**/*.{ts,mjs,json}\" \"scripts/**/*.mjs\" package.json .prettierrc.json",
     "audit": "npm audit --audit-level=high",
     "lint": "npm --workspace web run lint",
     "typecheck": "npm --workspace web run typecheck",
@@ -29,7 +29,8 @@
     "db:types:supabase": "supabase gen types typescript --local --schema public",
     "tmdb:search": "node web/scripts/tmdb-catalog.mjs search",
     "tmdb:import": "node web/scripts/tmdb-catalog.mjs import",
-    "tmdb:match": "node web/scripts/tmdb-catalog.mjs match"
+    "tmdb:match": "node web/scripts/tmdb-catalog.mjs match",
+    "ingest:manual": "node web/scripts/ingestion.mjs manual"
   },
   "devDependencies": {
     "prettier": "3.9.6",
