@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { FilmCatalogDetails } from "../../components/FilmCatalogDetails";
 import { PosterBlock } from "../../components/PosterBlock";
-import { candidates, odysseyReviewLinks, odysseyReviews } from "../../data";
+import { odysseyReviewLinks } from "../../data";
+import { consensusCandidates } from "../../../data/aggregation-presentation";
+import { getReferenceCriticalReception } from "../../../data/phase6-reference";
 import { getFilmCatalogDetail } from "../../../lib/repositories/catalog";
 import { FilmCommunity } from "./FilmCommunity";
 
@@ -16,7 +18,51 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const odyssey = candidates[0];
+const odyssey = consensusCandidates.find(
+  (candidate) => candidate.id === "the-odyssey",
+)!;
+const reception = getReferenceCriticalReception("the-odyssey");
+const criticalCards = [
+  ...reception.scores.map((score) => ({
+    source: score.sourceName,
+    author: score.author ?? "Autor no indicado",
+    date: score.publishedAt ?? score.capturedAt,
+    value: score.originalDisplay,
+    normalized: `${score.normalization.normalizedValue.toLocaleString("es-ES", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}/5`,
+    kind: "Puntuación individual",
+    href: score.publicationUrl,
+  })),
+  ...reception.contextualScores.map((score) => ({
+    source: score.sourceName,
+    author: "Agregado contextual",
+    date: score.publishedAt ?? score.capturedAt,
+    value: score.originalDisplay,
+    normalized: "No participa",
+    kind: score.scaleLabel,
+    href: score.publicationUrl,
+  })),
+];
+
+function formatDate(value: string) {
+  return new Intl.DateTimeFormat("es-ES", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(value.length === 10 ? `${value}T00:00:00Z` : value));
+}
+
+function formatNumber(value: number | null) {
+  return value === null
+    ? "—"
+    : value.toLocaleString("es-ES", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
+}
 
 export default async function FilmPage() {
   const film = await getFilmCatalogDetail("the-odyssey");
@@ -63,18 +109,18 @@ export default async function FilmPage() {
               <div className="film-score-strip">
                 <div>
                   <span>Consenso</span>
-                  <strong>97,5</strong>
+                  <strong>{formatNumber(odyssey.score)}</strong>
                   <small>puntos Borda / 100</small>
                 </div>
                 <div>
                   <span>Cobertura</span>
-                  <strong>4/4</strong>
+                  <strong>{odyssey.coverage}</strong>
                   <small>listas ordenadas</small>
                 </div>
                 <div>
                   <span>Pos. media</span>
-                  <strong>1,25</strong>
-                  <small>mediana 1</small>
+                  <strong>{formatNumber(odyssey.average)}</strong>
+                  <small>mediana {formatNumber(odyssey.median)}</small>
                 </div>
               </div>
               <p className="metadata-note">
@@ -106,18 +152,21 @@ export default async function FilmPage() {
                   {source.name.slice(0, 2).toUpperCase()}
                 </span>
                 <div>
-                  {source.name === "AwardsWatch" ? (
-                    <Link href="/fuentes/awardswatch">{source.name}</Link>
-                  ) : (
-                    <strong>{source.name}</strong>
-                  )}
+                  <a href={source.href} rel="noreferrer" target="_blank">
+                    {source.name}
+                  </a>
                   <small>Predicción de nominación · Best Picture</small>
                 </div>
-                <span>Posición publicada</span>
+                <span>{formatNumber(source.points * 100)} pts</span>
                 <strong className="source-rank">#{source.rank}</strong>
               </div>
             ))}
           </div>
+          <p className="calculation-proof">
+            Cada fila aporta <code>(10 − posición + 1) / 10</code>. La media de
+            las cuatro contribuciones es{" "}
+            <strong>{formatNumber(odyssey.score)} / 100</strong>.
+          </p>
           <Link className="text-link" href="/temporadas/2027/mejor-pelicula">
             Ver la categoría completa
           </Link>
@@ -136,7 +185,7 @@ export default async function FilmPage() {
             </div>
           </div>
           <div className="review-score-grid">
-            {odysseyReviews.map((review) => (
+            {criticalCards.map((review) => (
               <a
                 href={review.href}
                 key={review.source}
@@ -145,7 +194,7 @@ export default async function FilmPage() {
               >
                 <div className="review-source-line">
                   <span>{review.source}</span>
-                  <small>{review.date}</small>
+                  <small>{formatDate(review.date)}</small>
                 </div>
                 <strong>{review.value}</strong>
                 <p>{review.author}</p>
@@ -162,10 +211,15 @@ export default async function FilmPage() {
               </a>
             ))}
           </div>
+          <p className="calculation-proof">
+            La nota individual conserva <strong>5/5</strong> y se normaliza con{" "}
+            <code>5 ÷ 5 × 5 = 5,0000</code>. Metacritic y Rotten Tomatoes se
+            mantienen como contexto y nunca entran en esa media.
+          </p>
           <p className="insufficient-note">
-            <strong>Datos insuficientes:</strong> el fixture contiene una
-            puntuación individual verificable. Se necesitan tres para ordenar
-            públicamente por recepción.
+            <strong>Datos insuficientes:</strong> hay {reception.scores.length}{" "}
+            puntuación individual verificable. Se necesitan{" "}
+            {reception.minimumRequired} para ordenar públicamente por recepción.
           </p>
         </div>
 

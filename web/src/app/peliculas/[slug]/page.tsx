@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FilmCatalogDetails } from "../../components/FilmCatalogDetails";
 import { PosterBlock } from "../../components/PosterBlock";
+import { consensusCandidates } from "../../../data/aggregation-presentation";
 import {
   getFilmCatalogDetail,
   listFixtureFilmIds,
@@ -53,6 +54,16 @@ export default async function FilmPage({ params }: FilmPageProps) {
         timeZone: "UTC",
       }).format(new Date(`${releaseDate}T00:00:00Z`))
     : "Fecha no confirmada";
+  const prediction = consensusCandidates.find(
+    (candidate) => candidate.id === slug,
+  );
+  const formatNumber = (value: number | null) =>
+    value === null
+      ? "—"
+      : value.toLocaleString("es-ES", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
 
   return (
     <main>
@@ -88,6 +99,33 @@ export default async function FilmPage({ params }: FilmPageProps) {
                   film.tmdb?.overview ??
                   "Ficha procedente del dataset editorial verificable de Runscars."}
               </p>
+              {prediction ? (
+                <div className="film-score-strip">
+                  <div>
+                    <span>Consenso</span>
+                    <strong>{formatNumber(prediction.score)}</strong>
+                    <small>puntos Borda / 100</small>
+                  </div>
+                  <div>
+                    <span>Cobertura</span>
+                    <strong>{prediction.coverage}</strong>
+                    <small>fuentes aplicables</small>
+                  </div>
+                  <div>
+                    <span>Posición</span>
+                    <strong>
+                      #
+                      {consensusCandidates.findIndex(
+                        (candidate) => candidate.id === slug,
+                      ) + 1}
+                    </strong>
+                    <small>
+                      media {formatNumber(prediction.average)} · mediana{" "}
+                      {formatNumber(prediction.median)}
+                    </small>
+                  </div>
+                </div>
+              ) : null}
               {film.alternateTitles.length > 0 ? (
                 <div className="film-score-strip">
                   <div>
@@ -109,6 +147,54 @@ export default async function FilmPage({ params }: FilmPageProps) {
 
       <section className="page-shell film-content">
         <FilmCatalogDetails film={film} />
+
+        {prediction ? (
+          <div className="film-signal-section prediction-module">
+            <div className="module-heading">
+              <span className="signal-letter">A</span>
+              <div>
+                <p className="section-index">PREDICCIONES</p>
+                <h2>De las listas al resultado</h2>
+                <p>
+                  Cada fuente pesa lo mismo. Una ausencia aporta cero; una
+                  selección sin orden suma cobertura, pero no puntos.
+                </p>
+              </div>
+            </div>
+            <div className="film-source-table">
+              {prediction.contributions.map((source) => (
+                <div key={source.id}>
+                  <span className="source-monogram">
+                    {source.name.slice(0, 2).toUpperCase()}
+                  </span>
+                  <div>
+                    <a href={source.href} rel="noreferrer" target="_blank">
+                      {source.name}
+                    </a>
+                    <small>
+                      {source.appearanceKind === "ordered"
+                        ? `(10 − ${source.rank} + 1) / 10`
+                        : source.appearanceKind === "selection"
+                          ? "Selección publicada sin orden"
+                          : "Ausente de la publicación"}
+                    </small>
+                  </div>
+                  <span>{formatNumber(source.points * 100)} pts</span>
+                  <strong className="source-rank">
+                    {source.rank === null ? "—" : `#${source.rank}`}
+                  </strong>
+                </div>
+              ))}
+            </div>
+            <p className="calculation-proof">
+              Media de {prediction.orderedSources} listas ordenadas ={" "}
+              <strong>{formatNumber(prediction.score)} / 100</strong>.
+            </p>
+            <Link className="text-link" href="/temporadas/2027/mejor-pelicula">
+              Ver observaciones y clasificación completa
+            </Link>
+          </div>
+        ) : null}
 
         <div className="film-signal-section reviews-module">
           <div className="module-heading">

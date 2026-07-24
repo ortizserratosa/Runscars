@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Movement } from "../../components/Movement";
-import { candidates, categories, snapshots } from "../../data";
+import {
+  calculationCuts,
+  consensusCandidates,
+} from "../../../data/aggregation-presentation";
+import { categories } from "../../data";
 import { filmHref } from "../../../data/films";
 
 export const metadata: Metadata = {
@@ -98,7 +102,7 @@ export default function SeasonPage() {
               </Link>
             </div>
             <div className="mini-leaderboard">
-              {candidates.slice(0, 5).map((candidate, index) => (
+              {consensusCandidates.slice(0, 5).map((candidate, index) => (
                 <div className="mini-leader-row" key={candidate.id}>
                   <span className="mini-rank">{index + 1}</span>
                   <Link href={filmHref(candidate.id)}>{candidate.title}</Link>
@@ -115,17 +119,19 @@ export default function SeasonPage() {
           <div className="sidebar-card">
             <p className="section-index">CALENDARIO DEL FIXTURE</p>
             <ol className="timeline-list">
-              {snapshots.map((snapshot, index) => (
+              {calculationCuts.map((cut, index) => (
                 <li
-                  className={index === snapshots.length - 1 ? "current" : ""}
-                  key={snapshot.id}
+                  className={
+                    index === calculationCuts.length - 1 ? "current" : ""
+                  }
+                  key={cut.id}
                 >
-                  <span>{snapshot.shortDate}</span>
+                  <span>{cut.shortDate}</span>
                   <div>
-                    <strong>{snapshot.label}</strong>
+                    <strong>{cut.label}</strong>
                     <small>
-                      {snapshot.sourceCount}{" "}
-                      {snapshot.sourceCount === 1 ? "lista" : "listas"}
+                      {cut.sourceCount}{" "}
+                      {cut.sourceCount === 1 ? "lista" : "listas"}
                     </small>
                   </div>
                 </li>

@@ -51,3 +51,43 @@ test("keeps film pages available without a TMDB token at runtime", async ({
   await expect(page.getByText("La ficha sigue disponible")).toBeVisible();
   await expect(page.getByText("Lo que sí está verificado")).toBeVisible();
 });
+
+test("explains and recalculates prediction consensus from its observations", async ({
+  page,
+}) => {
+  await page.goto("/temporadas/2027/mejor-pelicula");
+
+  await expect(
+    page.getByRole("heading", { name: "Consenso de nominación" }),
+  ).toBeVisible();
+  await expect(page.getByText("runscars-aggregation-v1")).toBeVisible();
+  await expect(page.getByText("48 observaciones incluidas")).toBeVisible();
+  await expect(
+    page.getByText("Media de 4 listas ordenadas = 97,50 / 100"),
+  ).toBeVisible();
+
+  await page.getByRole("button", { name: "15 JUL 2 listas" }).click();
+
+  await expect(
+    page.getByRole("heading", { name: "Señal editorial" }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("este corte todavía no alcanza las tres listas ordenadas"),
+  ).toBeVisible();
+});
+
+test("shows ordered, selected and absent contributions on every film page", async ({
+  page,
+}) => {
+  await page.goto("/peliculas/the-social-reckoning");
+
+  await expect(
+    page.getByRole("heading", { level: 1, name: "The Social Reckoning" }),
+  ).toBeVisible();
+  await expect(page.getByText("10,00", { exact: true }).first()).toBeVisible();
+  await expect(page.getByText("2/4", { exact: true })).toBeVisible();
+  await expect(page.getByText("Selección publicada sin orden")).toBeVisible();
+  await expect(
+    page.getByText("Ausente de la publicación").first(),
+  ).toBeVisible();
+});

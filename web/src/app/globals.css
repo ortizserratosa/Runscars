@@ -1195,6 +1195,14 @@ select:focus-visible {
   color: var(--muted);
 }
 
+.calculation-cut-note {
+  margin: 0;
+  padding: 0.8rem 1.5rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.7rem;
+}
+
 .insufficient-note {
   margin: 0;
   padding: 0.85rem 1.5rem;
@@ -1342,6 +1350,107 @@ select:focus-visible {
 
 .source-pills a {
   border-color: var(--violet);
+}
+
+.source-calculations {
+  display: grid;
+  border-top: 1px solid var(--line);
+}
+
+.source-calculations > a {
+  display: grid;
+  grid-template-columns: minmax(150px, 1fr) 180px 64px;
+  gap: 1rem;
+  align-items: center;
+  min-height: 58px;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.7rem;
+}
+
+.source-calculations > a > span {
+  display: grid;
+  font-weight: 800;
+}
+
+.source-calculations small {
+  overflow: hidden;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.56rem;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.source-calculations code,
+.calculation-explainer code,
+.calculation-proof code {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+}
+
+.source-calculations > a > strong {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  text-align: right;
+}
+
+.source-calculations .candidate-formula-result {
+  padding: 0.85rem 0;
+  color: var(--ink);
+  text-align: right;
+}
+
+.calculation-explainer {
+  display: grid;
+  grid-template-columns: 0.65fr 1.35fr;
+  gap: 5rem;
+  margin-top: 6rem;
+  padding: 3rem;
+  border: 1px solid var(--ink);
+  background: var(--acid);
+}
+
+.calculation-explainer h2 {
+  max-width: 340px;
+  font-size: 3rem;
+}
+
+.calculation-explainer > div > p:last-child {
+  max-width: 420px;
+  font-size: 0.76rem;
+}
+
+.calculation-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-content: start;
+  border-top: 1px solid var(--ink);
+}
+
+.calculation-steps article {
+  display: grid;
+  gap: 0.7rem;
+  min-height: 150px;
+  padding: 1rem;
+  border-right: 1px solid rgba(26, 26, 25, 0.25);
+}
+
+.calculation-steps article:last-of-type {
+  border-right: 0;
+}
+
+.calculation-steps article > span {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+}
+
+.calculation-steps > p {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 1rem;
+  border-top: 1px solid var(--ink);
+  font-size: 0.68rem;
 }
 
 .ranking-lab {
@@ -1630,6 +1739,15 @@ select:focus-visible {
   margin-top: -2rem;
 }
 
+.calculation-proof {
+  grid-column: 2;
+  margin: -2.6rem 0 0;
+  padding: 0.85rem 1rem;
+  border-left: 3px solid var(--violet);
+  background: var(--white);
+  font-size: 0.72rem;
+}
+
 .review-score-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1698,7 +1816,7 @@ select:focus-visible {
 
 .critics-module > .insufficient-note {
   grid-column: 2;
-  margin-top: -3.5rem;
+  margin-top: -3rem;
   border: 0;
 }
 
@@ -2539,6 +2657,34 @@ select:focus-visible {
     padding: 1.2rem;
   }
 
+  .source-calculations > a {
+    grid-template-columns: 1fr auto;
+  }
+
+  .source-calculations > a code {
+    display: none;
+  }
+
+  .calculation-explainer,
+  .calculation-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .calculation-explainer {
+    gap: 2rem;
+    padding: 1.4rem;
+  }
+
+  .calculation-steps article {
+    min-height: auto;
+    border-right: 0;
+    border-bottom: 1px solid rgba(26, 26, 25, 0.25);
+  }
+
+  .calculation-steps > p {
+    grid-column: 1;
+  }
+
   .ranking-lab {
     display: grid;
     margin-top: 5rem;
@@ -2591,7 +2737,8 @@ select:focus-visible {
   }
 
   .prediction-module > .text-link,
-  .critics-module > .insufficient-note {
+  .critics-module > .insufficient-note,
+  .calculation-proof {
     grid-column: 1;
     margin-top: 0;
   }

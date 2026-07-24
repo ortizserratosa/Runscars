@@ -1,9 +1,6 @@
 import { describe, expect, it } from "vitest";
-import {
-  awardsWatchRadar,
-  awardsWatchRanking,
-  candidates,
-} from "../../src/app/data";
+import { awardsWatchRadar, awardsWatchRanking } from "../../src/app/data";
+import { consensusCandidates } from "../../src/data/aggregation-presentation";
 import {
   filmFixtures,
   filmHref,
@@ -13,7 +10,7 @@ import {
 
 describe("film routes", () => {
   it("gives every candidate a canonical detail route", () => {
-    for (const candidate of candidates) {
+    for (const candidate of consensusCandidates) {
       expect(findFilmById(candidate.id)?.title).toBe(candidate.title);
       expect(filmHref(candidate.id)).toBe(`/peliculas/${candidate.id}`);
     }

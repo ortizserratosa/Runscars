@@ -2,21 +2,27 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { candidates, snapshots } from "../../../data";
+import {
+  calculationCuts,
+  consensusCandidates,
+} from "../../../../data/aggregation-presentation";
+import { AGGREGATION_METHOD_VERSION } from "../../../../lib/aggregation";
 import { filmHref } from "../../../../data/films";
 
-const initialRanking = candidates.slice(0, 6).map((candidate) => candidate.id);
+const initialRanking = consensusCandidates
+  .slice(0, 6)
+  .map((candidate) => candidate.id);
 
 function formatScore(value: number) {
   return value.toLocaleString("es-ES", {
-    minimumFractionDigits: value % 1 === 0 ? 0 : 1,
-    maximumFractionDigits: 1,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   });
 }
 
 export function CategoryExperience() {
-  const [snapshotId, setSnapshotId] = useState(
-    snapshots.at(-1)?.id ?? snapshots[0].id,
+  const [cutId, setCutId] = useState(
+    calculationCuts.at(-1)?.id ?? calculationCuts[0].id,
   );
   const [expanded, setExpanded] = useState<string | null>("the-odyssey");
   const [ranking, setRanking] = useState(initialRanking);
@@ -26,13 +32,16 @@ export function CategoryExperience() {
   ]);
   const [saved, setSaved] = useState(false);
 
-  const snapshot =
-    snapshots.find((item) => item.id === snapshotId) ?? snapshots.at(-1)!;
-  const isCurrent = snapshot.id === snapshots.at(-1)?.id;
+  const cut =
+    calculationCuts.find((item) => item.id === cutId) ??
+    calculationCuts.at(-1)!;
+  const isCurrent = cut.id === calculationCuts.at(-1)?.id;
 
   const rankedCandidates = useMemo(
     () =>
-      ranking.map((id) => candidates.find((candidate) => candidate.id === id)!),
+      ranking.map((id) =>
+        consensusCandidates.find((candidate) => candidate.id === id)!,
+      ),
     [ranking],
   );
 
@@ -63,11 +72,11 @@ export function CategoryExperience() {
         <div className="snapshot-heading">
           <div>
             <p className="section-index">EVOLUCIÓN</p>
-            <h2 id="snapshot-title">Volver a un corte</h2>
+            <h2 id="snapshot-title">Recalcular hasta una fecha</h2>
           </div>
           <div className="snapshot-readout" aria-live="polite">
-            <span>{snapshot.date}</span>
-            <strong>{snapshot.label}</strong>
+            <span>{cut.date}</span>
+            <strong>{cut.label}</strong>
           </div>
         </div>
         <div
@@ -75,12 +84,12 @@ export function CategoryExperience() {
           role="group"
           aria-label="Elegir corte temporal"
         >
-          {snapshots.map((item) => (
+          {calculationCuts.map((item) => (
             <button
-              className={snapshot.id === item.id ? "active" : ""}
+              className={cut.id === item.id ? "active" : ""}
               key={item.id}
               onClick={() => {
-                setSnapshotId(item.id);
+                setCutId(item.id);
                 setExpanded(null);
               }}
               type="button"
@@ -92,7 +101,12 @@ export function CategoryExperience() {
             </button>
           ))}
         </div>
-        {!snapshot.isConsensus ? (
+        <p className="calculation-cut-note">
+          Son cortes reproducibles sobre observaciones publicadas, no snapshots
+          bloqueados. Cada fecha acumula la última publicación disponible de
+          cada fuente.
+        </p>
+        {!cut.isConsensus ? (
           <p className="insufficient-note">
             <strong>Datos insuficientes:</strong> este corte todavía no alcanza
             las tres listas ordenadas exigidas para llamarlo consenso.
@@ -108,9 +122,7 @@ export function CategoryExperience() {
           <div>
             <p className="section-index">PREDICCIONES</p>
             <h2 id="leaderboard-title">
-              {snapshot.isConsensus
-                ? "Consenso de nominación"
-                : "Señal editorial"}
+              {cut.isConsensus ? "Consenso de nominación" : "Señal editorial"}
             </h2>
           </div>
           <p>
@@ -127,8 +139,8 @@ export function CategoryExperience() {
             <span>Puntos</span>
             <span />
           </div>
-          {snapshot.ranking.map((item, index) => {
-            const candidate = candidates.find(
+          {cut.ranking.map((item, index) => {
+            const candidate = consensusCandidates.find(
               (candidateItem) => candidateItem.id === item.id,
             );
             const hasSources = isCurrent && candidate;
@@ -146,30 +158,41 @@ export function CategoryExperience() {
                     <Link href={filmHref(item.id)}>{item.title}</Link>
                     <small>
                       {isCurrent && candidate
-                        ? `Posición media ${candidate.average}`
-                        : snapshot.date}
+                        ? `Posición media ${
+                            candidate.average === null
+                              ? "—"
+                              : formatScore(candidate.average)
+                          }`
+                        : cut.date}
                     </small>
                   </div>
                   <div className="coverage-cell">
                     <span>
                       {isCurrent && candidate
                         ? candidate.coverage
-                        : `corte ${snapshot.sourceCount}`}
+                        : `corte ${cut.sourceCount}`}
                     </span>
                     <div className="coverage-dots" aria-hidden="true">
-                      {[0, 1, 2, 3].map((dot) => (
-                        <i
-                          className={
-                            dot <
-                            (isCurrent && candidate
-                              ? candidate.sources.length
-                              : snapshot.sourceCount)
-                              ? "filled"
-                              : ""
-                          }
-                          key={dot}
-                        />
-                      ))}
+                      {Array.from(
+                        {
+                          length: isCurrent
+                            ? (candidate?.applicableSources ?? cut.sourceCount)
+                            : cut.sourceCount,
+                        },
+                        (_, dot) => (
+                          <i
+                            className={
+                              dot <
+                              (isCurrent && candidate
+                                ? candidate.appearances
+                                : cut.sourceCount)
+                                ? "filled"
+                                : ""
+                            }
+                            key={dot}
+                          />
+                        ),
+                      )}
                     </div>
                   </div>
                   <div className="points-cell">
@@ -200,32 +223,84 @@ export function CategoryExperience() {
                   <div className="source-breakdown">
                     <div>
                       <p className="section-index">
-                        FUENTES QUE SOSTIENEN ESTA POSICIÓN
+                        DESGLOSE DE TODAS LAS FUENTES
                       </p>
                       <p>
                         {candidate.firsts} primeras posiciones · mediana{" "}
-                        {candidate.median} · {candidate.topFive} apariciones en
-                        top 5
+                        {candidate.median === null
+                          ? "—"
+                          : formatScore(candidate.median)}{" "}
+                        · {candidate.topFive} apariciones en top 5
                       </p>
                     </div>
-                    <div className="source-pills">
-                      {candidate.sources.map((source) =>
-                        source.name === "AwardsWatch" ? (
-                          <Link href="/fuentes/awardswatch" key={source.name}>
-                            {source.name} <strong>#{source.rank}</strong>
-                          </Link>
-                        ) : (
-                          <span key={source.name}>
-                            {source.name} <strong>#{source.rank}</strong>
+                    <div className="source-calculations">
+                      {candidate.contributions.map((source) => (
+                        <a
+                          href={source.href}
+                          key={source.id}
+                          rel="noreferrer"
+                          target="_blank"
+                        >
+                          <span>
+                            {source.name}
+                            <small>
+                              {source.observationId ??
+                                "ausencia comprobada en la lista"}
+                            </small>
                           </span>
-                        ),
-                      )}
+                          <code>
+                            {source.rank === null
+                              ? source.appearanceKind === "selection"
+                                ? "selección sin orden → 0"
+                                : "ausente → 0"
+                              : `(${source.listLength} − ${source.rank} + 1) / ${source.listLength}`}
+                          </code>
+                          <strong>{formatScore(source.points * 100)}</strong>
+                        </a>
+                      ))}
+                      <p className="candidate-formula-result">
+                        Media de {candidate.orderedSources} listas ordenadas ={" "}
+                        <strong>{formatScore(candidate.score)}</strong> / 100
+                      </p>
                     </div>
                   </div>
                 ) : null}
               </div>
             );
           })}
+        </div>
+      </section>
+
+      <section className="calculation-explainer" aria-labelledby="method-title">
+        <div>
+          <p className="section-index">CÁLCULO REPRODUCIBLE</p>
+          <h2 id="method-title">Sin una caja negra.</h2>
+          <p>
+            El resultado se deriva al abrir la vista; todavía no se persiste
+            como snapshot. La Fase 7 se encargará de bloquear cortes inmutables.
+          </p>
+        </div>
+        <div className="calculation-steps">
+          <article>
+            <span>01</span>
+            <strong>Una lista, un peso</strong>
+            <code>(L − posición + 1) / L</code>
+          </article>
+          <article>
+            <span>02</span>
+            <strong>Ausencias explícitas</strong>
+            <code>película ausente = 0</code>
+          </article>
+          <article>
+            <span>03</span>
+            <strong>Consenso</strong>
+            <code>suma de puntos / listas ordenadas</code>
+          </article>
+          <p>
+            Método <code>{AGGREGATION_METHOD_VERSION}</code> ·{" "}
+            {cut.observationCount} observaciones incluidas · desempate por
+            cobertura, mediana, primeras posiciones y título.
+          </p>
         </div>
       </section>
 

@@ -1,18 +1,32 @@
 import Link from "next/link";
 import { Movement } from "./components/Movement";
 import { PosterBlock } from "./components/PosterBlock";
-import { candidates } from "./data";
+import {
+  calculationCuts,
+  consensusCandidates,
+} from "../data/aggregation-presentation";
+import { getReferenceCriticalReception } from "../data/phase6-reference";
 import { filmHref } from "../data/films";
 
-const topThree = candidates.slice(0, 3);
+const topThree = consensusCandidates.slice(0, 3);
+const leader = topThree[0];
+const currentCut = calculationCuts.at(-1)!;
+const fjordPosition =
+  consensusCandidates.findIndex((candidate) => candidate.id === "fjord") + 1;
+const odysseyCritical = getReferenceCriticalReception("the-odyssey").scores[0];
 
 export default function Home() {
   return (
     <main>
       <section className="home-hero page-shell">
         <div className="eyebrow-row">
-          <span className="eyebrow">Cuaderno de temporada · 24 jul 2026</span>
-          <span className="data-note">4 listas ordenadas · 20 películas</span>
+          <span className="eyebrow">
+            Cuaderno de temporada · {currentCut.date}
+          </span>
+          <span className="data-note">
+            {currentCut.sourceCount} listas ordenadas ·{" "}
+            {consensusCandidates.length} películas
+          </span>
         </div>
 
         <div className="hero-grid">
@@ -45,9 +59,9 @@ export default function Home() {
               <span>La favorita hoy</span>
               <span>Consenso</span>
             </div>
-            <Link href={filmHref("the-odyssey")}>
+            <Link href={filmHref(leader.id)}>
               <PosterBlock
-                title="The Odyssey"
+                title={leader.title}
                 tone="violet"
                 number="01"
                 size="large"
@@ -55,11 +69,19 @@ export default function Home() {
             </Link>
             <div className="leader-score">
               <div>
-                <strong>97,5</strong>
+                <strong>
+                  {leader.score.toLocaleString("es-ES", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </strong>
                 <span>puntos Borda / 100</span>
               </div>
-              <div className="score-meter" aria-label="97,5 puntos de 100">
-                <span style={{ width: "97.5%" }} />
+              <div
+                className="score-meter"
+                aria-label={`${leader.score.toLocaleString("es-ES")} puntos de 100`}
+              >
+                <span style={{ width: `${leader.score}%` }} />
               </div>
             </div>
           </div>
@@ -69,13 +91,13 @@ export default function Home() {
       <section className="ticker" aria-label="Resumen del último corte">
         <div className="page-shell ticker-inner">
           <span className="ticker-label">Último corte</span>
-          <Link href={filmHref("the-odyssey")}>
-            The Odyssey conserva el nº 1
+          <Link href={filmHref(leader.id)}>
+            {leader.title} conserva el nº 1
           </Link>
           <span className="ticker-separator" aria-hidden="true">
             ◆
           </span>
-          <Link href={filmHref("fjord")}>Fjord sube al nº 4</Link>
+          <Link href={filmHref("fjord")}>Fjord sube al nº {fjordPosition}</Link>
           <span className="ticker-separator" aria-hidden="true">
             ◆
           </span>
@@ -142,10 +164,10 @@ export default function Home() {
               <p className="signal-type">Predicciones</p>
               <h3>¿Quién aparece en las listas?</h3>
               <div className="signal-stat">
-                <strong>4/4</strong>
+                <strong>{leader.coverage}</strong>
                 <span>
                   fuentes sitúan a{" "}
-                  <Link href={filmHref("the-odyssey")}>The Odyssey</Link>
+                  <Link href={filmHref(leader.id)}>{leader.title}</Link>
                 </span>
               </div>
               <Link href="/temporadas/2027/mejor-pelicula">
@@ -158,7 +180,7 @@ export default function Home() {
               <p className="signal-type">Crítica</p>
               <h3>¿Cómo está siendo recibida?</h3>
               <div className="signal-stat">
-                <strong>5/5</strong>
+                <strong>{odysseyCritical.originalDisplay}</strong>
                 <span>
                   <Link href={filmHref("the-odyssey")}>The Odyssey</Link> · The
                   Guardian
