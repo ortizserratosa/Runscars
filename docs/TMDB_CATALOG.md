@@ -1,7 +1,10 @@
 # Catálogo TMDB · fase 4
 
-**Estado:** implementado, en validación de staging
+**Estado:** completada
+
 **Fecha de inicio:** 2026-07-24
+
+**Fecha de cierre:** 2026-07-24
 
 ## Objetivo
 
@@ -114,6 +117,14 @@ editorial de fase 1 continúa disponible.
 - revisión visual de película y persona en escritorio y película en móvil;
 - escaneo del token real contra todos los archivos versionados y no ignorados,
   sin coincidencias.
+- base de staging migrada y cargada con los mismos recuentos persistidos;
+- CI remota `30105061979` completada con instalación limpia y 8 E2E;
+- despliegue estable
+  [`runscars-staging.vercel.app`](https://runscars-staging.vercel.app)
+  comprobado: salud web/base, película, póster, persona y créditos responden con
+  HTTP 200;
+- HTML y nueve bundles JavaScript del despliegue comparados con el token real,
+  sin coincidencias.
 
 ## Puerta de salida
 
@@ -121,4 +132,4 @@ editorial de fase 1 continúa disponible.
 - [x] Una coincidencia incorrecta puede corregirse y deja historial.
 - [x] La web funciona sin el token y no llama a TMDB durante la visita.
 - [x] El token no aparece en cliente, logs ni archivos publicables.
-- [ ] Web de staging desplegada y comprobada con el catálogo persistido.
+- [x] Web de staging desplegada y comprobada con el catálogo persistido.

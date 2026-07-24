@@ -65,12 +65,16 @@ permite recorrer:
   [consenso de Mejor película](https://runscars-staging.vercel.app/temporadas/2027/mejor-pelicula);
 - una
   [ficha de película](https://runscars-staging.vercel.app/peliculas/the-odyssey);
+- una
+  [ficha de persona](https://runscars-staging.vercel.app/personas/tmdb-30614);
 - el
-  [recibo de una fuente](https://runscars-staging.vercel.app/fuentes/awardswatch).
+  [recibo de una fuente](https://runscars-staging.vercel.app/fuentes/awardswatch);
+- los [créditos y atribución de TMDB](https://runscars-staging.vercel.app/creditos).
 
-Todas las apariciones de películas del fixture enlazan a una ficha canónica. Los
-datos que dependen de TMDB, conectores o usuarios reales permanecen
-deliberadamente pendientes de sus fases correspondientes.
+Todas las apariciones de películas del fixture enlazan a una ficha canónica. El
+catálogo TMDB se sirve desde snapshots locales versionados; conectores
+profesionales y usuarios reales permanecen deliberadamente pendientes de sus
+fases correspondientes.
 
 ## Estado
 
@@ -80,12 +84,12 @@ deliberadamente pendientes de sus fases correspondientes.
 | 1    | Discovery y dataset verificable                       | ✅ Completada |
 | 2    | Prototipo visual navegable                            | ✅ Completada |
 | 3    | Aplicación definitiva, base técnica y staging         | ✅ Completada |
-| 4–10 | Catálogo, ingesta, agregación, usuarios y lanzamiento | ⏳ Pendientes |
+| 4    | Catálogo TMDB versionado y fichas cinematográficas    | ✅ Completada |
+| 5–10 | Ingesta, agregación, usuarios y lanzamiento           | ⏳ Pendientes |
 
-La fase 3 queda cerrada con aplicación Next.js, migración y seed reproducibles,
-RLS de solo lectura, tipos derivados, stack local oficial, CI y staging
-conectado a una base Supabase aislada. El detalle verificable está en
-[TECHNICAL_FOUNDATION.md](docs/TECHNICAL_FOUNDATION.md).
+La fase 4 queda cerrada con 20 matches revisados, caché idempotente, fichas de
+película y persona, imágenes, correcciones auditables y atribución. El detalle
+verificable está en [TMDB_CATALOG.md](docs/TMDB_CATALOG.md).
 
 ## Principios de datos
 
@@ -146,7 +150,9 @@ El arranque crea de forma idempotente una red Docker que limita los servicios
 locales a `127.0.0.1`.
 
 Consulta la [guía técnica de fase 3](docs/TECHNICAL_FOUNDATION.md) para enlazar
-las variables públicas locales y trabajar con migraciones.
+las variables públicas locales y trabajar con migraciones, y la
+[guía del catálogo](docs/TMDB_CATALOG.md) para buscar, importar o corregir
+matches de TMDB.
 
 ## Estructura
 

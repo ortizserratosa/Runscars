@@ -13,7 +13,7 @@ terminada por haber creado archivos o código, sino por cumplir esa puerta.
 | 1 | Discovery y dataset de fuentes | Completada |
 | 2 | Prototipo visual navegable | Completada |
 | 3 | Base técnica y staging | Completada |
-| 4 | Catálogo TMDB | Pendiente |
+| 4 | Catálogo TMDB | Completada |
 | 5 | Sistema de ingesta | Pendiente |
 | 6 | Agregación | Pendiente |
 | 7 | Snapshots y evaluación | Pendiente |
@@ -114,6 +114,10 @@ Seguimiento detallado en
 
 ## Fase 4 · Catálogo TMDB
 
+**Cerrada:** 2026-07-24. Las 20 películas del fixture tienen match revisado,
+snapshot persistido, créditos y fichas enlazadas. El catálogo está desplegado
+en staging y no hace llamadas a TMDB durante una visita.
+
 ### Entregables
 
 - búsqueda e importación desde TMDB;
@@ -125,10 +129,12 @@ Seguimiento detallado en
 
 ### Puerta de salida
 
-- Importar dos veces no duplica.
-- Una coincidencia incorrecta puede corregirse.
-- La web funciona con la API temporalmente caída usando datos ya guardados.
-- El token no aparece en cliente, logs ni repositorio.
+- [x] Importar dos veces no duplica.
+- [x] Una coincidencia incorrecta puede corregirse.
+- [x] La web funciona con la API temporalmente caída usando datos ya guardados.
+- [x] El token no aparece en cliente, logs ni repositorio.
+
+Seguimiento detallado en [TMDB_CATALOG.md](TMDB_CATALOG.md).
 
 ## Fase 5 · Sistema de ingesta
 
