@@ -1,40 +1,179 @@
-# Runscars
+<p align="center">
+  <img src="web/public/og.png" alt="Runscars · La carrera, con los recibos" width="1200">
+</p>
 
-Runscars será una web personal para seguir la carrera a los Oscar combinando, sin
-confundirlas, tres señales:
+<h1 align="center">Runscars</h1>
 
-1. recepción crítica;
-2. predicciones de medios y expertos;
-3. rankings y estado de visionado de sus usuarios.
+<p align="center">
+  <strong>La carrera a los Oscar, con los recibos.</strong><br>
+  Crítica, predicciones y comunidad en un mismo lugar, sin convertirlas en una
+  señal opaca.
+</p>
 
-Las **fases 0, 1 y 2** están completadas. La **fase 3 está en curso**: la
-aplicación definitiva, el esquema Supabase, los fixtures y la verificación
-automática ya viven en el repositorio; quedan por verificar el stack local
-completo de Supabase y el staging remoto.
+<p align="center">
+  <a href="https://runscars-staging.vercel.app"><strong>Explorar el staging →</strong></a>
+  ·
+  <a href="docs/PRODUCT.md">Producto</a>
+  ·
+  <a href="docs/METHODOLOGY.md">Metodología</a>
+  ·
+  <a href="docs/ROADMAP.md">Roadmap</a>
+</p>
 
-## Documentación del proyecto
+<p align="center">
+  <a href="https://github.com/ortizserratosa/Runscars/actions/workflows/ci.yml">
+    <img src="https://github.com/ortizserratosa/Runscars/actions/workflows/ci.yml/badge.svg" alt="CI">
+  </a>
+</p>
 
-- [Contrato de producto](docs/PRODUCT.md)
-- [Metodología de agregación](docs/METHODOLOGY.md)
-- [Registro de fuentes](docs/DATA_SOURCES.md)
-- [Matriz de fuentes de fase 1](docs/SOURCE_MATRIX.md)
-- [Dataset verificable de fase 1](data/phase-1/README.md)
-- [Prototipo visual de fase 2](docs/PROTOTYPE.md)
-- [Base técnica de fase 3](docs/TECHNICAL_FOUNDATION.md)
-- [Staging web de fase 3](https://runscars-staging.vercel.app)
-- [Registro de decisiones](docs/DECISIONS.md)
-- [Hoja de ruta y criterios de cierre](docs/ROADMAP.md)
-- [Instrucciones persistentes para Codex](AGENTS.md)
+## ¿Qué es Runscars?
+
+La conversación sobre los Oscar vive repartida entre reseñas, listas de
+predicciones, agregadores y rankings personales. Runscars reúne esas señales
+para mostrar cómo cambia la carrera durante la temporada y cuánto acertó cada
+consenso cuando llegan las nominaciones y los premios.
+
+La aplicación no busca fabricar una nota definitiva. Busca que cualquier
+posición se pueda entender, contrastar y rastrear hasta su fuente.
+
+| Señal                          | Qué responde                                            | Regla                                              |
+| ------------------------------ | ------------------------------------------------------- | -------------------------------------------------- |
+| **Recepción crítica**          | ¿Cómo está siendo recibida la obra?                     | Conserva la puntuación original y su normalización |
+| **Predicciones profesionales** | ¿Quién aparece con más fuerza en la carrera?            | Expone medio, autor, fecha y lista original        |
+| **Comunidad**                  | ¿Qué ha visto y cómo ordena sus favoritas cada usuario? | Nunca altera los agregados profesionales           |
+
+> Tres señales. Tres lecturas distintas. Nunca promediadas entre sí.
+
+## El proyecto, en cifras
+
+| Fuentes evaluadas | Seleccionadas por calidad | Películas del fixture | Observaciones trazables | Categorías MVP |
+| ----------------: | ------------------------: | --------------------: | ----------------------: | -------------: |
+|                31 |                        28 |                    20 |                      69 |              8 |
+
+El dataset inicial es reproducible, conserva URLs y fechas de captura y permite
+desarrollar y probar sin consultar fuentes externas en tiempo real.
+
+## Qué puedes explorar ahora
+
+El staging actual conserva la identidad editorial validada en el prototipo y
+permite recorrer:
+
+- la [portada y sus tres señales](https://runscars-staging.vercel.app);
+- la
+  [temporada Oscar 2027](https://runscars-staging.vercel.app/temporadas/2027);
+- el
+  [consenso de Mejor película](https://runscars-staging.vercel.app/temporadas/2027/mejor-pelicula);
+- una
+  [ficha de película](https://runscars-staging.vercel.app/peliculas/the-odyssey);
+- el
+  [recibo de una fuente](https://runscars-staging.vercel.app/fuentes/awardswatch).
+
+Todas las apariciones de películas del fixture enlazan a una ficha canónica. Los
+datos que dependen de TMDB, conectores o usuarios reales permanecen
+deliberadamente pendientes de sus fases correspondientes.
 
 ## Estado
 
-| Fase | Estado |
-|---|---|
-| 0. Contrato y registros | Completada |
-| 1. Discovery de fuentes | Completada |
-| 2. Prototipo visual | Completada |
-| 3. Base técnica y staging | En curso |
-| 4–10. Construcción y lanzamiento | Pendiente |
+| Fase | Resultado                                             | Estado        |
+| ---- | ----------------------------------------------------- | ------------- |
+| 0    | Contrato, metodología y decisiones                    | ✅ Completada |
+| 1    | Discovery y dataset verificable                       | ✅ Completada |
+| 2    | Prototipo visual navegable                            | ✅ Completada |
+| 3    | Aplicación definitiva, base técnica y staging         | 🚧 En curso   |
+| 4–10 | Catálogo, ingesta, agregación, usuarios y lanzamiento | ⏳ Pendientes |
 
-Las decisiones que gobiernan el MVP están registradas en
-[DECISIONS.md](docs/DECISIONS.md).
+La fase 3 ya cuenta con aplicación Next.js, migración y seed, RLS de solo
+lectura, tipos derivados, instalación limpia, CI y staging web. Quedan el reset
+oficial del stack local de Supabase y la base de datos remota de staging. El
+detalle verificable está en
+[TECHNICAL_FOUNDATION.md](docs/TECHNICAL_FOUNDATION.md).
+
+## Principios de datos
+
+- Todo valor externo conserva fuente, URL, autor cuando existe, publicación,
+  captura y valor original.
+- Una normalización acompaña al dato original; nunca lo sustituye.
+- Crítica, predicciones y comunidad permanecen separadas.
+- Las importaciones deben ser idempotentes.
+- Los snapshots bloqueados son inmutables.
+- El fallo de una fuente no bloquea las demás.
+- Los emparejamientos dudosos requieren revisión editorial.
+
+## Stack
+
+- **Web:** Next.js 16, React 19 y TypeScript.
+- **Datos y autenticación:** PostgreSQL, Supabase y Row Level Security.
+- **Despliegue y tareas:** Vercel; Supabase Edge Functions/Cron en las fases de
+  ingesta.
+- **Calidad:** ESLint, Prettier, Vitest, PGlite y Playwright.
+- **Automatización:** GitHub Actions.
+
+No se usa ORM: el esquema vive en migraciones SQL y genera tipos verificables.
+
+## Desarrollo local
+
+Requisitos: Node.js 22 o posterior y npm.
+
+```bash
+git clone https://github.com/ortizserratosa/Runscars.git
+cd Runscars
+npm ci
+npm run verify
+npx playwright install chromium
+npm run test:e2e
+npm run dev
+```
+
+La interfaz y las pruebas portables funcionan sin servicios externos. Para
+levantar también Supabase local se necesita un runtime compatible con Docker:
+
+```bash
+cp web/.env.example web/.env.local
+npm run db:start
+npm run db:reset
+npm run db:types
+npm run dev
+```
+
+Consulta la [guía técnica de fase 3](docs/TECHNICAL_FOUNDATION.md) para enlazar
+las variables públicas locales y trabajar con migraciones.
+
+## Estructura
+
+```text
+Runscars/
+├── web/                 Aplicación Next.js definitiva
+├── supabase/            Configuración, migraciones y seed
+├── data/phase-1/        Fixture editorial verificable
+├── prototype/           Referencia visual aislada de fase 2
+├── docs/                Producto, metodología, fuentes y decisiones
+└── .github/workflows/   Integración continua
+```
+
+## Documentación
+
+| Documento                                   | Contenido                                      |
+| ------------------------------------------- | ---------------------------------------------- |
+| [PRODUCT.md](docs/PRODUCT.md)               | Visión, usuarios, recorridos y alcance del MVP |
+| [METHODOLOGY.md](docs/METHODOLOGY.md)       | Normalización, agregación y snapshots          |
+| [DATA_SOURCES.md](docs/DATA_SOURCES.md)     | Puerta de calidad y métodos de obtención       |
+| [SOURCE_MATRIX.md](docs/SOURCE_MATRIX.md)   | Evaluación de las 31 fuentes candidatas        |
+| [Dataset de fase 1](data/phase-1/README.md) | Películas, observaciones y checksums           |
+| [DECISIONS.md](docs/DECISIONS.md)           | Decisiones aceptadas y propuestas              |
+| [ROADMAP.md](docs/ROADMAP.md)               | Fases y puertas de salida                      |
+| [AGENTS.md](AGENTS.md)                      | Reglas persistentes de trabajo                 |
+
+## Participar
+
+Runscars se construye por fases y cada una tiene una puerta de salida. Antes de
+proponer un cambio, revisa el [contrato de producto](docs/PRODUCT.md), las
+[decisiones vigentes](docs/DECISIONS.md) y las
+[reglas del repositorio](AGENTS.md).
+
+Las correcciones de fuentes, problemas reproducibles e ideas acotadas pueden
+abrirse como [issues](https://github.com/ortizserratosa/Runscars/issues).
+
+---
+
+Runscars es un proyecto independiente y no está afiliado con la Academy of
+Motion Picture Arts and Sciences.
