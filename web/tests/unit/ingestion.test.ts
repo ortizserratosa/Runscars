@@ -12,6 +12,7 @@ import {
   persistBatch,
   runConnectorSet,
 } from "../../../supabase/functions/_shared/ingestion/repository.mjs";
+import { CONNECTORS } from "../../../supabase/functions/_shared/ingestion/connectors.mjs";
 
 const fixtureDirectory = path.resolve(
   import.meta.dirname,
@@ -126,6 +127,31 @@ describe("professional ingestion adapters", () => {
       expect.objectContaining({ star_rating: "4" }),
     );
     expect(batch.publications[0].originalData).not.toHaveProperty("body");
+  });
+
+  it("limits scheduled Guardian discovery to the season catalog", async () => {
+    const payload = JSON.parse(await fixture("guardian.json"));
+    const batch = await CONNECTORS["guardian-content-api"]({
+      connector: {
+        endpoint_url: "https://content.guardianapis.com/search",
+        configuration: {
+          season_id: "oscars-2027",
+          catalog_only: true,
+        },
+      },
+      capturedAt,
+      secrets: { GUARDIAN_CONTENT_API_KEY: "fixture-key" },
+      filmIdentities: films,
+      fetcher: async () =>
+        ({
+          ok: true,
+          json: async () => payload,
+        }) as Response,
+    });
+
+    expect(batch.publications).toHaveLength(1);
+    expect(batch.publications[0].observations).toHaveLength(2);
+    expect(batch.publications[0].observations[0].subject).toBe("The Odyssey");
   });
 
   it("keeps only review URLs from the RogerEbert RSS fixture", async () => {

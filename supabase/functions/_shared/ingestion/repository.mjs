@@ -337,11 +337,16 @@ export async function runConnectorSet({
       const adapter = registry[connector.id];
       if (!adapter)
         throw new Error(`Conector no implementado: ${connector.id}`);
+      const filmIdentities =
+        connector.configuration?.catalog_only === true
+          ? await repository.filmIdentities(connector.configuration.season_id)
+          : [];
       const batch = await adapter({
         connector,
         capturedAt,
         fetcher,
         secrets,
+        filmIdentities,
       });
       results.push(await persistBatch({ batch, repository, runId }));
     } catch (error) {

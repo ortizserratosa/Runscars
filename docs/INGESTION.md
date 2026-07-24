@@ -52,14 +52,17 @@ datos por accidente.
 
 | Conector | Entrada | Señal | Estado |
 |---|---|---|---|
-| Guardian Content API | JSON documentado | Reseña y estrella estructurada | Implementado; inactivo hasta aportar `GUARDIAN_CONTENT_API_KEY` |
+| Guardian Content API | JSON documentado | Reseña y estrella estructurada | Activo; clave alojada solo en secretos de servidor |
 | RogerEbert.com | RSS oficial `/feed` | Reseña enlazada | Activo; solo acepta URLs bajo `/reviews/` |
 | AwardsWatch Best Picture | HTML con tabla bajo `BEST PICTURE` | Predicción ordenada de nominaciones | Activo |
 | Editorial manual | Manifiesto JSON v1 | Cualquiera de los tipos profesionales | Disponible por CLI, nunca programado |
 
 Guardian requiere una clave en cada petición y permite pedir campos y etiquetas
 concretos en `/search`; el adaptador solicita únicamente titular, autoría y
-`starRating`. Referencia:
+`starRating`. Antes de persistir, descarta publicaciones cuyo título no coincide
+exactamente con una película o título alternativo de la temporada; esas piezas
+no pertenecen al ámbito de Runscars y no deben llenar la cola editorial.
+Referencia:
 [Guardian Open Platform](https://open-platform.theguardian.com/documentation/).
 
 RogerEbert se usa como feed de descubrimiento. No se infiere una nota desde
@@ -127,8 +130,9 @@ restricción única, la URL de procedencia y la privacidad de runs/logs/cola.
 
 - Un cambio estructural de HTML hace fallar solo AwardsWatch y deja un evento
   `connector.failed`; no publica filas parciales silenciosamente.
-- Guardian permanece desactivado hasta disponer de clave. Activarlo no requiere
-  cambiar el adaptador, solo configurar el secreto y `is_active`.
+- Guardian está activo desde el 2026-07-24. Su clave existe únicamente en
+  `web/.env.local` para desarrollo y en los secretos de Edge Functions para
+  staging; no forma parte del seed, los logs ni Git.
 - La revisión de condiciones previa a una publicación comercial sigue abierta;
   `review-before-publish` permite discovery personal, no autoriza reutilizar
   cuerpos.
@@ -147,6 +151,15 @@ porque el feed del momento no contenía URLs `/reviews/`. La segunda llamada
 detectó las 10 observaciones como duplicadas e insertó cero. La base conserva
 una publicación, una captura y 10 observaciones con la URL canónica de
 AwardsWatch. Una llamada sin el secreto devolvió HTTP 401.
+
+Después de configurar la clave de Guardian, una primera ejecución amplia
+confirmó dos coincidencias del catálogo (`The Odyssey` y `The Invite`) y
+publicó cuatro observaciones originales: dos reseñas y dos notas. Las 94
+observaciones de películas ajenas a la temporada quedaron conservadas como
+`excluded` y sus revisiones se cerraron como `dismissed`. El conector se
+restringió entonces dinámicamente al catálogo: la ejecución de comprobación
+procesó solo esas dos publicaciones, reconoció las cuatro observaciones como
+duplicadas y no creó revisiones nuevas.
 
 ## Puerta de salida
 

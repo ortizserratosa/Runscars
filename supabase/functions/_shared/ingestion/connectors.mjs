@@ -1,4 +1,5 @@
 import {
+  normalizeIdentity,
   parseAwardsWatchFixture,
   parseGuardianFixture,
   parseRogerEbertFixture,
@@ -20,6 +21,10 @@ export const CONNECTORS = Object.freeze({
     capturedAt,
     fetcher = fetch,
     secrets = {},
+    filmIdentities = /** @type {Array<{
+      title: string;
+      alternate_titles?: string[];
+    }>} */ ([]),
   }) => {
     const apiKey = secrets.GUARDIAN_CONTENT_API_KEY;
     if (!apiKey) {
@@ -39,11 +44,26 @@ export const CONNECTORS = Object.freeze({
     if (!response.ok) {
       throw new Error(`HTTP ${response.status} al consultar Guardian`);
     }
-    return parseGuardianFixture(await response.json(), {
+    const batch = parseGuardianFixture(await response.json(), {
       capturedAt,
       endpointUrl: connector.endpoint_url,
       seasonId: connector.configuration.season_id,
     });
+    if (connector.configuration.catalog_only !== true) return batch;
+
+    const catalogTitles = new Set(
+      filmIdentities.flatMap((film) =>
+        [film.title, ...(film.alternate_titles ?? [])].map(normalizeIdentity),
+      ),
+    );
+    return {
+      ...batch,
+      publications: batch.publications.filter((publication) =>
+        publication.observations.some((observation) =>
+          catalogTitles.has(normalizeIdentity(observation.subject)),
+        ),
+      ),
+    };
   },
 
   "roger-ebert-rss": async ({ connector, capturedAt, fetcher = fetch }) => {

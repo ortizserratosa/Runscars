@@ -190,11 +190,12 @@ values
     'api_json',
     'https://content.guardianapis.com/search',
     'guardian-v1',
-    false,
+    true,
     '17 4 * * *',
     '{
       "season_id": "oscars-2027",
       "query": "film review",
+      "catalog_only": true,
       "requires_secret": "GUARDIAN_CONTENT_API_KEY"
     }'::jsonb
   ),
@@ -239,8 +240,9 @@ on conflict (id) do update set
 
 update public.sources
 set technical_status = case id
+  when 'guardian' then 'automated'::public.source_technical_status
   when 'roger-ebert' then 'automated'::public.source_technical_status
   when 'awardswatch' then 'automated'::public.source_technical_status
   else technical_status
 end
-where id in ('roger-ebert', 'awardswatch');
+where id in ('guardian', 'roger-ebert', 'awardswatch');

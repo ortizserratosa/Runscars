@@ -165,7 +165,8 @@ Prioridad para los primeros conectores profesionales de la fase 5:
 
 1. **Guardian Content API:** descubrir reseñas, autoría, fecha, URL y
    puntuación cuando esté estructurada; almacenar enlace y metadatos, no el
-   cuerpo completo.
+   cuerpo completo. La ejecución automática se limita dinámicamente a títulos
+   principales o alternativos del catálogo de la temporada.
 2. **RSS de RogerEbert.com:** descubrir publicaciones y luego exigir revisión
    editorial del matching y de la nota visible en la página canónica.
 
@@ -178,8 +179,8 @@ y cola de revisión para coincidencias dudosas.
    estructura verificada de la publicación de junio de 2026.
 
 Los tres conectores y la importación manual idempotente quedaron implementados
-en la fase 5. RogerEbert y AwardsWatch están activos en la tarea diaria;
-Guardian permanece preparado pero inactivo hasta configurar su API key.
+en la fase 5. Guardian, RogerEbert y AwardsWatch están activos en la tarea
+diaria; la API key de Guardian se mantiene únicamente como secreto de servidor.
 Variety, IndieWire y Awards Daily empiezan manuales. La ampliación a 28 fuentes
 no cambia esta prioridad: las nuevas fuentes se incorporarán por lotes, cada una
 con fixture y revisión de publicación.
