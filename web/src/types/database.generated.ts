@@ -202,6 +202,179 @@ export type Database = {
           },
         ];
       };
+      ingestion_review_items: {
+        Row: {
+          id: number;
+          queue_key: string;
+          run_id: number;
+          connector_id: string;
+          observation_id: number | null;
+          kind: Database["public"]["Enums"]["ingestion_review_kind"];
+          status: Database["public"]["Enums"]["ingestion_review_status"];
+          subject_label: string;
+          candidate_film_ids: string[];
+          candidate_person_ids: string[];
+          context: Json;
+          resolution_note: string | null;
+          resolved_at: string | null;
+          resolved_by: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id: number;
+          queue_key: string;
+          run_id: number;
+          connector_id: string;
+          observation_id?: number | null;
+          kind: Database["public"]["Enums"]["ingestion_review_kind"];
+          status?: Database["public"]["Enums"]["ingestion_review_status"];
+          subject_label: string;
+          candidate_film_ids?: string[];
+          candidate_person_ids?: string[];
+          context?: Json;
+          resolution_note?: string | null;
+          resolved_at?: string | null;
+          resolved_by?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          queue_key?: string;
+          run_id?: number;
+          connector_id?: string;
+          observation_id?: number | null;
+          kind?: Database["public"]["Enums"]["ingestion_review_kind"];
+          status?: Database["public"]["Enums"]["ingestion_review_status"];
+          subject_label?: string;
+          candidate_film_ids?: string[];
+          candidate_person_ids?: string[];
+          context?: Json;
+          resolution_note?: string | null;
+          resolved_at?: string | null;
+          resolved_by?: string | null;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "ingestion_review_items_connector_id_fkey";
+            columns: ["connector_id"];
+            isOneToOne: false;
+            referencedRelation: "source_connectors";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ingestion_review_items_observation_id_fkey";
+            columns: ["observation_id"];
+            isOneToOne: false;
+            referencedRelation: "professional_observations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ingestion_review_items_run_id_fkey";
+            columns: ["run_id"];
+            isOneToOne: false;
+            referencedRelation: "ingestion_runs";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      ingestion_run_events: {
+        Row: {
+          id: number;
+          run_id: number;
+          level: Database["public"]["Enums"]["ingestion_event_level"];
+          code: string;
+          message: string;
+          context: Json;
+          created_at: string;
+        };
+        Insert: {
+          id: number;
+          run_id: number;
+          level: Database["public"]["Enums"]["ingestion_event_level"];
+          code: string;
+          message: string;
+          context?: Json;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          run_id?: number;
+          level?: Database["public"]["Enums"]["ingestion_event_level"];
+          code?: string;
+          message?: string;
+          context?: Json;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "ingestion_run_events_run_id_fkey";
+            columns: ["run_id"];
+            isOneToOne: false;
+            referencedRelation: "ingestion_runs";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      ingestion_runs: {
+        Row: {
+          id: number;
+          run_key: string;
+          connector_id: string;
+          trigger: Database["public"]["Enums"]["ingestion_trigger"];
+          status: Database["public"]["Enums"]["ingestion_run_status"];
+          started_at: string;
+          finished_at: string | null;
+          publications_seen: number;
+          observations_seen: number;
+          observations_inserted: number;
+          observations_duplicate: number;
+          review_items_created: number;
+          error_summary: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id: number;
+          run_key: string;
+          connector_id: string;
+          trigger: Database["public"]["Enums"]["ingestion_trigger"];
+          status?: Database["public"]["Enums"]["ingestion_run_status"];
+          started_at: string;
+          finished_at?: string | null;
+          publications_seen?: number;
+          observations_seen?: number;
+          observations_inserted?: number;
+          observations_duplicate?: number;
+          review_items_created?: number;
+          error_summary?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          run_key?: string;
+          connector_id?: string;
+          trigger?: Database["public"]["Enums"]["ingestion_trigger"];
+          status?: Database["public"]["Enums"]["ingestion_run_status"];
+          started_at?: string;
+          finished_at?: string | null;
+          publications_seen?: number;
+          observations_seen?: number;
+          observations_inserted?: number;
+          observations_duplicate?: number;
+          review_items_created?: number;
+          error_summary?: string | null;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "ingestion_runs_connector_id_fkey";
+            columns: ["connector_id"];
+            isOneToOne: false;
+            referencedRelation: "source_connectors";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       people: {
         Row: {
           id: string;
@@ -231,6 +404,154 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "tmdb_people";
             referencedColumns: ["tmdb_id"];
+          },
+        ];
+      };
+      professional_observations: {
+        Row: {
+          id: number;
+          dedupe_key: string;
+          source_id: string;
+          publication_id: number;
+          capture_id: number;
+          run_id: number;
+          season_id: string;
+          film_id: string | null;
+          person_id: string | null;
+          category_id: string | null;
+          data_type: Database["public"]["Enums"]["professional_observation_type"];
+          prediction_intention:
+            Database["public"]["Enums"]["prediction_intention"] | null;
+          original_subject: string;
+          original_value: Json;
+          original_scale: Json | null;
+          source_url: string;
+          author: string | null;
+          published_at: string | null;
+          captured_at: string;
+          extractor_version: string;
+          participates: boolean;
+          state: Database["public"]["Enums"]["professional_observation_state"];
+          corrects_observation_id: number | null;
+          created_at: string;
+        };
+        Insert: {
+          id: number;
+          dedupe_key: string;
+          source_id: string;
+          publication_id: number;
+          capture_id: number;
+          run_id: number;
+          season_id: string;
+          film_id?: string | null;
+          person_id?: string | null;
+          category_id?: string | null;
+          data_type: Database["public"]["Enums"]["professional_observation_type"];
+          prediction_intention?:
+            Database["public"]["Enums"]["prediction_intention"] | null;
+          original_subject: string;
+          original_value: Json;
+          original_scale?: Json | null;
+          source_url: string;
+          author?: string | null;
+          published_at?: string | null;
+          captured_at: string;
+          extractor_version: string;
+          participates?: boolean;
+          state?: Database["public"]["Enums"]["professional_observation_state"];
+          corrects_observation_id?: number | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          dedupe_key?: string;
+          source_id?: string;
+          publication_id?: number;
+          capture_id?: number;
+          run_id?: number;
+          season_id?: string;
+          film_id?: string | null;
+          person_id?: string | null;
+          category_id?: string | null;
+          data_type?: Database["public"]["Enums"]["professional_observation_type"];
+          prediction_intention?:
+            Database["public"]["Enums"]["prediction_intention"] | null;
+          original_subject?: string;
+          original_value?: Json;
+          original_scale?: Json | null;
+          source_url?: string;
+          author?: string | null;
+          published_at?: string | null;
+          captured_at?: string;
+          extractor_version?: string;
+          participates?: boolean;
+          state?: Database["public"]["Enums"]["professional_observation_state"];
+          corrects_observation_id?: number | null;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "professional_observations_capture_id_fkey";
+            columns: ["capture_id"];
+            isOneToOne: false;
+            referencedRelation: "source_publication_captures";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "professional_observations_category_id_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "categories";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "professional_observations_corrects_observation_id_fkey";
+            columns: ["corrects_observation_id"];
+            isOneToOne: false;
+            referencedRelation: "professional_observations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "professional_observations_film_id_fkey";
+            columns: ["film_id"];
+            isOneToOne: false;
+            referencedRelation: "films";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "professional_observations_person_id_fkey";
+            columns: ["person_id"];
+            isOneToOne: false;
+            referencedRelation: "people";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "professional_observations_publication_id_fkey";
+            columns: ["publication_id"];
+            isOneToOne: false;
+            referencedRelation: "source_publications";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "professional_observations_run_id_fkey";
+            columns: ["run_id"];
+            isOneToOne: false;
+            referencedRelation: "ingestion_runs";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "professional_observations_season_id_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "seasons";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "professional_observations_source_id_fkey";
+            columns: ["source_id"];
+            isOneToOne: false;
+            referencedRelation: "sources";
+            referencedColumns: ["id"];
           },
         ];
       };
@@ -344,6 +665,150 @@ export type Database = {
           updated_at?: string;
         };
         Relationships: [];
+      };
+      source_connectors: {
+        Row: {
+          id: string;
+          source_id: string | null;
+          name: string;
+          kind: Database["public"]["Enums"]["connector_kind"];
+          endpoint_url: string | null;
+          extractor_version: string;
+          is_active: boolean;
+          schedule_cron: string | null;
+          configuration: Json;
+          last_success_at: string | null;
+          last_failure_at: string | null;
+          last_error: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id: string;
+          source_id?: string | null;
+          name: string;
+          kind: Database["public"]["Enums"]["connector_kind"];
+          endpoint_url?: string | null;
+          extractor_version: string;
+          is_active?: boolean;
+          schedule_cron?: string | null;
+          configuration?: Json;
+          last_success_at?: string | null;
+          last_failure_at?: string | null;
+          last_error?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          source_id?: string | null;
+          name?: string;
+          kind?: Database["public"]["Enums"]["connector_kind"];
+          endpoint_url?: string | null;
+          extractor_version?: string;
+          is_active?: boolean;
+          schedule_cron?: string | null;
+          configuration?: Json;
+          last_success_at?: string | null;
+          last_failure_at?: string | null;
+          last_error?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "source_connectors_source_id_fkey";
+            columns: ["source_id"];
+            isOneToOne: false;
+            referencedRelation: "sources";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      source_publication_captures: {
+        Row: {
+          id: number;
+          publication_id: number;
+          content_hash: string;
+          source_url: string;
+          original_data: Json;
+          captured_at: string;
+          extractor_version: string;
+          created_at: string;
+        };
+        Insert: {
+          id: number;
+          publication_id: number;
+          content_hash: string;
+          source_url: string;
+          original_data: Json;
+          captured_at: string;
+          extractor_version: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          publication_id?: number;
+          content_hash?: string;
+          source_url?: string;
+          original_data?: Json;
+          captured_at?: string;
+          extractor_version?: string;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "source_publication_captures_publication_id_fkey";
+            columns: ["publication_id"];
+            isOneToOne: false;
+            referencedRelation: "source_publications";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      source_publications: {
+        Row: {
+          id: number;
+          source_id: string;
+          external_id: string;
+          canonical_url: string;
+          title: string;
+          author: string | null;
+          published_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id: number;
+          source_id: string;
+          external_id: string;
+          canonical_url: string;
+          title: string;
+          author?: string | null;
+          published_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: number;
+          source_id?: string;
+          external_id?: string;
+          canonical_url?: string;
+          title?: string;
+          author?: string | null;
+          published_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "source_publications_source_id_fkey";
+            columns: ["source_id"];
+            isOneToOne: false;
+            referencedRelation: "sources";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       sources: {
         Row: {
@@ -595,8 +1060,24 @@ export type Database = {
     };
     Enums: {
       category_subject: "film" | "person";
+      connector_kind: "api_json" | "rss" | "html" | "manual";
       film_credit_kind: "cast" | "crew";
       film_release_status: "announced" | "upcoming" | "released";
+      ingestion_event_level: "info" | "warning" | "error";
+      ingestion_review_kind:
+        "film_match" | "person_match" | "category_match" | "invalid_value";
+      ingestion_review_status: "pending" | "resolved" | "dismissed";
+      ingestion_run_status: "running" | "succeeded" | "partial" | "failed";
+      ingestion_trigger: "manual" | "scheduled" | "fixture";
+      prediction_intention: "nomination" | "winner";
+      professional_observation_state:
+        "pending_review" | "published" | "corrected" | "excluded";
+      professional_observation_type:
+        | "review"
+        | "score_individual"
+        | "score_aggregate"
+        | "prediction_ordered"
+        | "prediction_selection";
       season_status:
         "preparation" | "active" | "nominations_announced" | "closed";
       source_editorial_status:

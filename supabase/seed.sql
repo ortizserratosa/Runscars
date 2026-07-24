@@ -159,3 +159,88 @@ on conflict (id) do update set
   technical_status = excluded.technical_status,
   publication_status = excluded.publication_status,
   last_reviewed_on = excluded.last_reviewed_on;
+
+insert into public.source_connectors (
+  id,
+  source_id,
+  name,
+  kind,
+  endpoint_url,
+  extractor_version,
+  is_active,
+  schedule_cron,
+  configuration
+)
+values
+  (
+    'manual-editorial',
+    null,
+    'Importación editorial manual',
+    'manual',
+    null,
+    'manual-v1',
+    false,
+    null,
+    '{"format_version": 1}'::jsonb
+  ),
+  (
+    'guardian-content-api',
+    'guardian',
+    'Guardian Content API',
+    'api_json',
+    'https://content.guardianapis.com/search',
+    'guardian-v1',
+    false,
+    '17 4 * * *',
+    '{
+      "season_id": "oscars-2027",
+      "query": "film review",
+      "requires_secret": "GUARDIAN_CONTENT_API_KEY"
+    }'::jsonb
+  ),
+  (
+    'roger-ebert-rss',
+    'roger-ebert',
+    'RogerEbert.com RSS',
+    'rss',
+    'https://www.rogerebert.com/feed',
+    'roger-ebert-v1',
+    true,
+    '17 4 * * *',
+    '{
+      "season_id": "oscars-2027",
+      "allowed_path_prefix": "/reviews/"
+    }'::jsonb
+  ),
+  (
+    'awardswatch-best-picture',
+    'awardswatch',
+    'AwardsWatch Best Picture',
+    'html',
+    'https://awardswatch.com/2027-oscar-predictions-best-picture-and-best-director-june/',
+    'awardswatch-v1',
+    true,
+    '17 4 * * *',
+    '{
+      "season_id": "oscars-2027",
+      "category_id": "best-picture",
+      "intention": "nomination"
+    }'::jsonb
+  )
+on conflict (id) do update set
+  source_id = excluded.source_id,
+  name = excluded.name,
+  kind = excluded.kind,
+  endpoint_url = excluded.endpoint_url,
+  extractor_version = excluded.extractor_version,
+  is_active = excluded.is_active,
+  schedule_cron = excluded.schedule_cron,
+  configuration = excluded.configuration;
+
+update public.sources
+set technical_status = case id
+  when 'roger-ebert' then 'automated'::public.source_technical_status
+  when 'awardswatch' then 'automated'::public.source_technical_status
+  else technical_status
+end
+where id in ('roger-ebert', 'awardswatch');
