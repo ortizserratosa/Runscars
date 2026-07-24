@@ -111,6 +111,10 @@ Comandos canónicos desde la raíz:
   `npm run db:types`: flujo local canónico de Supabase; requiere un runtime de
   contenedores compatible con Docker. El arranque crea la red local protegida
   `runscars-local`.
+- `npm run tmdb:search -- "<título>" --year <año>`: búsqueda de solo lectura.
+- `npm run tmdb:import`: importa el manifiesto de fase 4 de forma idempotente.
+- `npm run tmdb:match -- <film-id> <tmdb-id> --reason "<motivo>"`: corrección
+  editorial trazable. Los dos últimos comandos requieren secretos de servidor.
 
 Una tarea no está terminada hasta ejecutar las comprobaciones proporcionales al
 riesgo y comunicar sus resultados.

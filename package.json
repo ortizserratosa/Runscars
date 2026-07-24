@@ -26,7 +26,10 @@
     "db:reset": "supabase db reset --network-id runscars-local",
     "db:lint": "supabase db lint --local --level warning --network-id runscars-local",
     "db:types": "node web/scripts/generate-database-types.mjs && prettier --write web/src/types/database.generated.ts",
-    "db:types:supabase": "supabase gen types typescript --local --schema public"
+    "db:types:supabase": "supabase gen types typescript --local --schema public",
+    "tmdb:search": "node web/scripts/tmdb-catalog.mjs search",
+    "tmdb:import": "node web/scripts/tmdb-catalog.mjs import",
+    "tmdb:match": "node web/scripts/tmdb-catalog.mjs match"
   },
   "devDependencies": {
     "prettier": "3.9.6",

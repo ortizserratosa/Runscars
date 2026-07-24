@@ -13,7 +13,9 @@ const outputPath = path.join(
 
 const database = new PGlite();
 
-await database.exec("create role anon; create role authenticated;");
+await database.exec(
+  "create role anon; create role authenticated; create role service_role;",
+);
 
 const migrationFiles = (await readdir(migrationsDirectory))
   .filter((file) => file.endsWith(".sql"))

@@ -35,6 +35,7 @@ pasado para ocultar cambios de criterio.
 | D-015 | Catálogo de fuentes sin máximo rígido | Aceptada |
 | D-016 | Aplicación definitiva separada del prototipo | Aceptada |
 | D-017 | Validación SQL portable además del flujo Supabase | Aceptada |
+| D-018 | Catálogo TMDB desacoplado del runtime web | Aceptada |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -233,3 +234,22 @@ iniciar la fase 2.
 - **Límite:** PGlite es infraestructura de prueba, no ORM ni base de datos de
   producción. La puerta de fase 3 sigue exigiendo una ejecución real de
   `supabase db reset` antes del cierre.
+
+## D-018 · Catálogo TMDB desacoplado del runtime web
+
+- **Fecha:** 2026-07-24
+- **Estado:** Aceptada
+- **Decisión:** limitar las llamadas a TMDB a un importador de servidor y hacer
+  que las páginas públicas lean exclusivamente snapshots persistidos en
+  Supabase.
+- **Persistencia:** una respuesta reducida a los campos necesarios se identifica
+  por hash, conserva valor original, locale, URL y captura, y caduca a los 180
+  días. Una segunda captura idéntica actualiza la comprobación sin duplicar el
+  snapshot.
+- **Matching:** `films.tmdb_id` contiene el match activo; una función
+  transaccional exige usar `correction` para reemplazarlo y añade una entrada
+  append-only con ID anterior, motivo y actor.
+- **Motivo:** la web sigue funcionando durante una caída de TMDB, el token no
+  entra en el runtime público y las decisiones editoriales son auditables.
+- **Límite:** la importación programada y su interfaz administrativa pertenecen
+  a fases posteriores; en fase 4 el importador es una herramienta de CLI.

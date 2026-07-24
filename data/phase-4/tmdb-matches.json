@@ -1,0 +1,167 @@
+{
+  "version": 1,
+  "reviewedAt": "2026-07-24",
+  "locale": "es-ES",
+  "matches": [
+    {
+      "filmId": "the-odyssey",
+      "tmdbId": 1368337,
+      "query": "The Odyssey",
+      "method": "manual",
+      "reason": "Título original, estreno de 2026 y dirección de Christopher Nolan coinciden.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1368337"
+    },
+    {
+      "filmId": "dune-part-three",
+      "tmdbId": 1170608,
+      "query": "Dune: Part Three",
+      "method": "manual",
+      "reason": "Título original, tercera entrega y estreno de 2026 coinciden.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1170608"
+    },
+    {
+      "filmId": "wild-horse-nine",
+      "tmdbId": 891621,
+      "query": "Wild Horse Nine",
+      "method": "manual",
+      "reason": "Título, variante numérica y estreno de 2026 coinciden.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/891621"
+    },
+    {
+      "filmId": "project-hail-mary",
+      "tmdbId": 687163,
+      "query": "Project Hail Mary",
+      "method": "manual",
+      "reason": "Título original, estreno de 2026 y reparto principal coinciden.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/687163"
+    },
+    {
+      "filmId": "la-bola-negra",
+      "tmdbId": 1422041,
+      "query": "La Bola Negra",
+      "method": "manual",
+      "reason": "Título español y estreno de 2026 coinciden.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1422041"
+    },
+    {
+      "filmId": "fjord",
+      "tmdbId": 1401459,
+      "query": "Fjord",
+      "method": "manual",
+      "reason": "Título original, estreno de 2026 y dirección de Cristian Mungiu coinciden.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1401459"
+    },
+    {
+      "filmId": "digger",
+      "tmdbId": 1248832,
+      "query": "Digger",
+      "method": "manual",
+      "reason": "Título y estreno de 2026 distinguen esta película de los homónimos.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1248832"
+    },
+    {
+      "filmId": "the-debut",
+      "tmdbId": 1391239,
+      "query": "The Debut",
+      "method": "manual",
+      "reason": "Título y estreno de 2026 distinguen esta película de los homónimos.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1391239"
+    },
+    {
+      "filmId": "behemoth",
+      "tmdbId": 1452168,
+      "query": "Behemoth!",
+      "method": "manual",
+      "reason": "Título con exclamación y estreno de 2026 coinciden.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1452168"
+    },
+    {
+      "filmId": "cliff-booth",
+      "tmdbId": 1457866,
+      "query": "The Adventures of Cliff Booth",
+      "method": "manual",
+      "reason": "Título definitivo, personaje y estreno de 2026 coinciden.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1457866"
+    },
+    {
+      "filmId": "the-invite",
+      "tmdbId": 950028,
+      "query": "The Invite",
+      "method": "manual",
+      "reason": "Título y estreno de 2026 distinguen esta película de los homónimos.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/950028"
+    },
+    {
+      "filmId": "obsession",
+      "tmdbId": 1339713,
+      "query": "Obsession",
+      "method": "manual",
+      "reason": "Título, estreno de 2026 y referencia editorial de 2025/2026 coinciden.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1339713"
+    },
+    {
+      "filmId": "the-social-reckoning",
+      "tmdbId": 1281331,
+      "query": "The Social Reckoning",
+      "method": "manual",
+      "reason": "Título original y estreno de 2026 coinciden.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1281331"
+    },
+    {
+      "filmId": "fatherland",
+      "tmdbId": 1437696,
+      "query": "Fatherland",
+      "method": "manual",
+      "reason": "Título y estreno de 2026 distinguen esta película de los homónimos.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1437696"
+    },
+    {
+      "filmId": "all-of-a-sudden",
+      "tmdbId": 1476614,
+      "query": "Soudain All of a Sudden",
+      "method": "manual",
+      "reason": "Los títulos Soudain y All of a Sudden, el estreno de 2026 y Ryusuke Hamaguchi coinciden.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1476614"
+    },
+    {
+      "filmId": "being-heumann",
+      "tmdbId": 1050981,
+      "query": "Being Heumann",
+      "method": "manual",
+      "reason": "Título original y estreno de 2026 coinciden.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1050981"
+    },
+    {
+      "filmId": "michael",
+      "tmdbId": 936075,
+      "query": "Michael",
+      "method": "manual",
+      "reason": "Título, estreno de 2026 y biografía de Michael Jackson coinciden.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/936075"
+    },
+    {
+      "filmId": "sense-and-sensibility",
+      "tmdbId": 1503762,
+      "query": "Sense and Sensibility",
+      "method": "manual",
+      "reason": "Título y estreno de 2026 distinguen esta adaptación de las anteriores.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1503762"
+    },
+    {
+      "filmId": "saturn-return",
+      "tmdbId": 1541996,
+      "query": "Saturn Return",
+      "method": "manual",
+      "reason": "Dirección de Greg Kwedar, reparto e identificador IMDb de la película de 2026 coinciden.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1541996"
+    },
+    {
+      "filmId": "primetime",
+      "tmdbId": 1375441,
+      "query": "Primetime",
+      "method": "manual",
+      "reason": "Título y estreno de 2026 distinguen esta película de los homónimos.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1375441"
+    }
+  ]
+}

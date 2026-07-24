@@ -152,28 +152,32 @@ final de la fase 5, no en el discovery.
 - **Apoyo, no señal profesional:** TMDB; Academy; Cannes, Venice, TIFF y
   Telluride; BAFTA, Golden Globes y Critics Choice.
 
-## 7. Propuesta concreta de conectores
+## 7. Estrategia concreta de conectores
 
-Prioridad para los primeros tres conectores de la fase 5:
+El primer conector quedó implementado en la fase 4:
 
-1. **TMDB API:** búsqueda y detalle de película/persona; guardar el ID externo,
-   caché y atribución; nunca importar sus votos como señal Oscar.
-2. **Guardian Content API:** descubrir reseñas, autoría, fecha, URL y
+1. **TMDB API:** búsqueda y detalle de película/persona con token Bearer solo en
+   el importador; ID externo, snapshots locales de 180 días, imágenes,
+   atribución y correcciones auditables. La web no llama a TMDB durante una
+   visita y nunca importa sus votos como señal Oscar.
+
+Prioridad para los primeros conectores profesionales de la fase 5:
+
+1. **Guardian Content API:** descubrir reseñas, autoría, fecha, URL y
    puntuación cuando esté estructurada; almacenar enlace y metadatos, no el
    cuerpo completo.
-3. **RSS de RogerEbert.com:** descubrir publicaciones y luego exigir revisión
+2. **RSS de RogerEbert.com:** descubrir publicaciones y luego exigir revisión
    editorial del matching y de la nota visible en la página canónica.
 
 Cada conector usará fixtures guardados, una clave idempotente formada por
 `source_id + publication_id + film_id + data_type`, captura aislada por fuente
 y cola de revisión para coincidencias dudosas.
 
-Segunda oleada: prototipos HTML para Next Best Picture, AwardsWatch y Awards
-Radar. Sus páginas permitieron extraer listas ordenadas, pero el uso público
-requiere revisar condiciones y estabilidad antes de activarlos. Variety,
-IndieWire y Awards Daily empiezan manuales. La ampliación a 28 fuentes no cambia
-esta prioridad: las nuevas fuentes se incorporarán por lotes después de contar
-con importación manual idempotente y fixtures.
+El tercer conector profesional se elegirá entre los prototipos HTML de Next Best
+Picture, AwardsWatch y Awards Radar después de revisar condiciones y
+estabilidad. Variety, IndieWire y Awards Daily empiezan manuales. La ampliación
+a 28 fuentes no cambia esta prioridad: las nuevas fuentes se incorporarán por
+lotes después de contar con importación manual idempotente y fixtures.
 
 ## 8. Dataset de prueba
 

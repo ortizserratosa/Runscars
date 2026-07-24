@@ -43,6 +43,115 @@ export type Database = {
         };
         Relationships: [];
       };
+      film_credits: {
+        Row: {
+          film_id: string;
+          person_id: string;
+          tmdb_credit_id: string;
+          credit_kind: Database["public"]["Enums"]["film_credit_kind"];
+          role: string;
+          department: string | null;
+          billing_order: number | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          film_id: string;
+          person_id: string;
+          tmdb_credit_id: string;
+          credit_kind: Database["public"]["Enums"]["film_credit_kind"];
+          role: string;
+          department?: string | null;
+          billing_order?: number | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          film_id?: string;
+          person_id?: string;
+          tmdb_credit_id?: string;
+          credit_kind?: Database["public"]["Enums"]["film_credit_kind"];
+          role?: string;
+          department?: string | null;
+          billing_order?: number | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "film_credits_film_id_fkey";
+            columns: ["film_id"];
+            isOneToOne: false;
+            referencedRelation: "films";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "film_credits_person_id_fkey";
+            columns: ["person_id"];
+            isOneToOne: false;
+            referencedRelation: "people";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      film_tmdb_match_history: {
+        Row: {
+          id: number;
+          film_id: string;
+          previous_tmdb_id: number | null;
+          tmdb_id: number;
+          method: Database["public"]["Enums"]["tmdb_match_method"];
+          query: string | null;
+          reason: string;
+          actor: string;
+          created_at: string;
+        };
+        Insert: {
+          id: number;
+          film_id: string;
+          previous_tmdb_id?: number | null;
+          tmdb_id: number;
+          method: Database["public"]["Enums"]["tmdb_match_method"];
+          query?: string | null;
+          reason: string;
+          actor: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          film_id?: string;
+          previous_tmdb_id?: number | null;
+          tmdb_id?: number;
+          method?: Database["public"]["Enums"]["tmdb_match_method"];
+          query?: string | null;
+          reason?: string;
+          actor?: string;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "film_tmdb_match_history_film_id_fkey";
+            columns: ["film_id"];
+            isOneToOne: false;
+            referencedRelation: "films";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "film_tmdb_match_history_previous_tmdb_id_fkey";
+            columns: ["previous_tmdb_id"];
+            isOneToOne: false;
+            referencedRelation: "tmdb_movies";
+            referencedColumns: ["tmdb_id"];
+          },
+          {
+            foreignKeyName: "film_tmdb_match_history_tmdb_id_fkey";
+            columns: ["tmdb_id"];
+            isOneToOne: false;
+            referencedRelation: "tmdb_movies";
+            referencedColumns: ["tmdb_id"];
+          },
+        ];
+      };
       films: {
         Row: {
           id: string;
@@ -83,7 +192,47 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "films_tmdb_id_fkey";
+            columns: ["tmdb_id"];
+            isOneToOne: false;
+            referencedRelation: "tmdb_movies";
+            referencedColumns: ["tmdb_id"];
+          },
+        ];
+      };
+      people: {
+        Row: {
+          id: string;
+          name: string;
+          tmdb_id: number;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id: string;
+          name: string;
+          tmdb_id: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          tmdb_id?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "people_tmdb_id_fkey";
+            columns: ["tmdb_id"];
+            isOneToOne: false;
+            referencedRelation: "tmdb_people";
+            referencedColumns: ["tmdb_id"];
+          },
+        ];
       };
       season_categories: {
         Row: {
@@ -238,6 +387,202 @@ export type Database = {
         };
         Relationships: [];
       };
+      tmdb_movie_snapshots: {
+        Row: {
+          id: number;
+          tmdb_id: number;
+          locale: string;
+          content_hash: string;
+          title: string;
+          original_title: string;
+          original_language: string | null;
+          overview: string | null;
+          release_date: string | null;
+          runtime: number | null;
+          status: string | null;
+          tagline: string | null;
+          imdb_id: string | null;
+          poster_path: string | null;
+          backdrop_path: string | null;
+          genres: Json;
+          original_data: Json;
+          source_url: string;
+          fetched_at: string;
+          expires_at: string;
+          created_at: string;
+        };
+        Insert: {
+          id: number;
+          tmdb_id: number;
+          locale: string;
+          content_hash: string;
+          title: string;
+          original_title: string;
+          original_language?: string | null;
+          overview?: string | null;
+          release_date?: string | null;
+          runtime?: number | null;
+          status?: string | null;
+          tagline?: string | null;
+          imdb_id?: string | null;
+          poster_path?: string | null;
+          backdrop_path?: string | null;
+          genres?: Json;
+          original_data: Json;
+          source_url: string;
+          fetched_at: string;
+          expires_at: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          tmdb_id?: number;
+          locale?: string;
+          content_hash?: string;
+          title?: string;
+          original_title?: string;
+          original_language?: string | null;
+          overview?: string | null;
+          release_date?: string | null;
+          runtime?: number | null;
+          status?: string | null;
+          tagline?: string | null;
+          imdb_id?: string | null;
+          poster_path?: string | null;
+          backdrop_path?: string | null;
+          genres?: Json;
+          original_data?: Json;
+          source_url?: string;
+          fetched_at?: string;
+          expires_at?: string;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "tmdb_movie_snapshots_tmdb_id_fkey";
+            columns: ["tmdb_id"];
+            isOneToOne: false;
+            referencedRelation: "tmdb_movies";
+            referencedColumns: ["tmdb_id"];
+          },
+        ];
+      };
+      tmdb_movies: {
+        Row: {
+          tmdb_id: number;
+          last_checked_at: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          tmdb_id: number;
+          last_checked_at: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          tmdb_id?: number;
+          last_checked_at?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      tmdb_people: {
+        Row: {
+          tmdb_id: number;
+          last_checked_at: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          tmdb_id: number;
+          last_checked_at: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          tmdb_id?: number;
+          last_checked_at?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      tmdb_person_snapshots: {
+        Row: {
+          id: number;
+          tmdb_id: number;
+          locale: string;
+          content_hash: string;
+          name: string;
+          original_name: string | null;
+          known_for_department: string | null;
+          biography: string | null;
+          birthday: string | null;
+          deathday: string | null;
+          place_of_birth: string | null;
+          homepage_url: string | null;
+          imdb_id: string | null;
+          profile_path: string | null;
+          original_data: Json;
+          source_url: string;
+          fetched_at: string;
+          expires_at: string;
+          created_at: string;
+        };
+        Insert: {
+          id: number;
+          tmdb_id: number;
+          locale: string;
+          content_hash: string;
+          name: string;
+          original_name?: string | null;
+          known_for_department?: string | null;
+          biography?: string | null;
+          birthday?: string | null;
+          deathday?: string | null;
+          place_of_birth?: string | null;
+          homepage_url?: string | null;
+          imdb_id?: string | null;
+          profile_path?: string | null;
+          original_data: Json;
+          source_url: string;
+          fetched_at: string;
+          expires_at: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          tmdb_id?: number;
+          locale?: string;
+          content_hash?: string;
+          name?: string;
+          original_name?: string | null;
+          known_for_department?: string | null;
+          biography?: string | null;
+          birthday?: string | null;
+          deathday?: string | null;
+          place_of_birth?: string | null;
+          homepage_url?: string | null;
+          imdb_id?: string | null;
+          profile_path?: string | null;
+          original_data?: Json;
+          source_url?: string;
+          fetched_at?: string;
+          expires_at?: string;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "tmdb_person_snapshots_tmdb_id_fkey";
+            columns: ["tmdb_id"];
+            isOneToOne: false;
+            referencedRelation: "tmdb_people";
+            referencedColumns: ["tmdb_id"];
+          },
+        ];
+      };
     };
     Views: {
       [_ in never]: never;
@@ -250,6 +595,7 @@ export type Database = {
     };
     Enums: {
       category_subject: "film" | "person";
+      film_credit_kind: "cast" | "crew";
       film_release_status: "announced" | "upcoming" | "released";
       season_status:
         "preparation" | "active" | "nominations_announced" | "closed";
@@ -262,6 +608,7 @@ export type Database = {
         | "replace-before-publish";
       source_technical_status:
         "manual" | "prototype" | "automated" | "failing" | "retired";
+      tmdb_match_method: "search_exact" | "manual" | "correction";
     };
     CompositeTypes: {
       [_ in never]: never;
