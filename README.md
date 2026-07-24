@@ -79,13 +79,12 @@ deliberadamente pendientes de sus fases correspondientes.
 | 0    | Contrato, metodología y decisiones                    | ✅ Completada |
 | 1    | Discovery y dataset verificable                       | ✅ Completada |
 | 2    | Prototipo visual navegable                            | ✅ Completada |
-| 3    | Aplicación definitiva, base técnica y staging         | 🚧 En curso   |
+| 3    | Aplicación definitiva, base técnica y staging         | ✅ Completada |
 | 4–10 | Catálogo, ingesta, agregación, usuarios y lanzamiento | ⏳ Pendientes |
 
-La fase 3 ya cuenta con aplicación Next.js, migración y seed, RLS de solo
-lectura, tipos derivados, instalación limpia, CI y staging web. Quedan el reset
-oficial del stack local de Supabase y la base de datos remota de staging. El
-detalle verificable está en
+La fase 3 queda cerrada con aplicación Next.js, migración y seed reproducibles,
+RLS de solo lectura, tipos derivados, stack local oficial, CI y staging
+conectado a una base Supabase aislada. El detalle verificable está en
 [TECHNICAL_FOUNDATION.md](docs/TECHNICAL_FOUNDATION.md).
 
 ## Principios de datos
@@ -125,7 +124,15 @@ npm run dev
 ```
 
 La interfaz y las pruebas portables funcionan sin servicios externos. Para
-levantar también Supabase local se necesita un runtime compatible con Docker:
+levantar también Supabase local se necesita un runtime compatible con Docker.
+En macOS se ha verificado Colima:
+
+```bash
+brew install colima docker
+colima start --cpu 4 --memory 8 --disk 30
+```
+
+Después:
 
 ```bash
 cp web/.env.example web/.env.local
@@ -134,6 +141,9 @@ npm run db:reset
 npm run db:types
 npm run dev
 ```
+
+El arranque crea de forma idempotente una red Docker que limita los servicios
+locales a `127.0.0.1`.
 
 Consulta la [guía técnica de fase 3](docs/TECHNICAL_FOUNDATION.md) para enlazar
 las variables públicas locales y trabajar con migraciones.

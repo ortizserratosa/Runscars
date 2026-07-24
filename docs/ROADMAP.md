@@ -12,7 +12,7 @@ terminada por haber creado archivos o código, sino por cumplir esa puerta.
 | 0 | Contrato y registros | Completada |
 | 1 | Discovery y dataset de fuentes | Completada |
 | 2 | Prototipo visual navegable | Completada |
-| 3 | Base técnica y staging | En curso |
+| 3 | Base técnica y staging | Completada |
 | 4 | Catálogo TMDB | Pendiente |
 | 5 | Sistema de ingesta | Pendiente |
 | 6 | Agregación | Pendiente |
@@ -90,12 +90,10 @@ Cumplimiento detallado en [PROTOTYPE.md](PROTOTYPE.md).
 
 ## Fase 3 · Base técnica
 
-**En curso:** la aplicación Next.js definitiva, la migración inicial, el seed,
-los tipos derivados del esquema, la suite de pruebas y la definición de CI
-están implementados. La instalación limpia y el staging web en Vercel están
-verificados, y la CI se ha ejecutado correctamente desde el remoto público.
-Falta ejecutar el flujo oficial de Supabase con un runtime de contenedores y
-migrar su proyecto de staging antes de cerrar la fase.
+**Cerrada:** 2026-07-24. La aplicación Next.js definitiva, la migración inicial,
+el seed, los tipos derivados, la suite de pruebas y la CI son reproducibles. El
+flujo oficial local pasó sobre Supabase en Colima y el staging web de Vercel
+está conectado a un proyecto Supabase aislado, migrado y verificado.
 
 ### Entregables
 
