@@ -35,7 +35,7 @@ export default function BestPicturePage() {
               </h1>
               <p>
                 {consensusCandidates.length} candidatas observadas ·{" "}
-                {currentCut.sourceCount} listas ordenadas · cálculo hasta el{" "}
+                {currentCut.sourceCount} listas ordenadas · snapshot del{" "}
                 {currentCut.date}
               </p>
             </div>

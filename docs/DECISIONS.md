@@ -38,6 +38,9 @@ pasado para ocultar cambios de criterio.
 | D-018 | Catálogo TMDB desacoplado del runtime web | Aceptada |
 | D-019 | Ingesta append-only con matching conservador | Aceptada |
 | D-020 | Agregados derivados y snapshots diferidos | Aceptada |
+| D-021 | Snapshots como envolventes inmutables con puntero vigente | Aceptada |
+| D-022 | Evaluación versionada sobre cierres explícitos | Aceptada |
+| D-023 | Compatibilidad explícita para `brace-expansion` corregido | Aceptada |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -301,3 +304,56 @@ El 2026-07-24 los ejemplos de normalización y consenso de la fase 1 coincidiero
 con los resultados manuales. La interfaz expone observaciones, términos Borda,
 cobertura, desempates y cortes temporales. Los snapshots bloqueados permanecen
 fuera de alcance hasta la fase 7.
+
+## D-021 · Snapshots como envolventes inmutables con puntero vigente
+
+- **Fecha:** 2026-07-25
+- **Estado:** Aceptada
+- **Decisión:** persistir cada snapshot como una envolvente append-only con
+  agregado completo, evidencia, fuentes, versión, zona horaria y SHA-256
+  canónico. Los triggers impiden modificar o borrar la envolvente y sus enlaces.
+- **Correcciones:** una corrección crea otra envolvente con referencia y motivo;
+  un puntero separado identifica la versión vigente sin reescribir el historial.
+- **Periodicidad:** Vercel Cron invoca semanalmente el mismo motor TypeScript que
+  usa la aplicación. La programación solo bloquea observaciones publicadas de
+  fuentes `publishable` y omite de forma explícita un alcance sin evidencia.
+- **Motivo:** conservar exactamente entrada y salida, evitar duplicar el motor
+  de agregación en SQL o en una Edge Function y permitir publicar correcciones
+  sin convertir el snapshot original en un registro mutable.
+
+## D-022 · Evaluación versionada sobre cierres explícitos
+
+- **Fecha:** 2026-07-25
+- **Estado:** Aceptada
+- **Decisión:** usar `runscars-evaluation-v1` solo contra snapshots finales. El
+  cierre de nominaciones fija el tamaño y los IDs previstos; el cierre de
+  ganador fija la primera posición y conserva el ranking completo.
+- **Resultados:** nominaciones y ganadores oficiales son capturas append-only
+  con fuente, URL, publicación, captura, original y correcciones enlazadas.
+- **Agregado global:** sumar aciertos, predicciones y resultados oficiales entre
+  categorías antes de dividir; no promediar porcentajes de categorías.
+- **Límite:** un snapshot periódico sirve para evolución, pero nunca se evalúa
+  como cierre final. Mientras los Oscar 2027 no publiquen resultados, la
+  interfaz indica “pendiente” en lugar de usar datos inventados.
+
+## D-023 · Compatibilidad explícita para `brace-expansion` corregido
+
+- **Fecha:** 2026-07-25
+- **Estado:** Aceptada
+- **Decisión:** fijar la versión corregida `5.0.8` de `brace-expansion` mediante
+  `overrides` y aplicar tras cada instalación un parche local mínimo que expone
+  tanto la API CommonJS histórica como la actual. El código de expansión sigue
+  procediendo íntegramente del paquete oficial.
+- **Motivo:** el ecosistema ESLint instalado todavía consume la exportación
+  histórica, mientras que la corrección de seguridad solo está disponible en la
+  API actual. El parche mantiene `npm audit` y `npm ls` limpios sin ocultar
+  dependencias de desarrollo ni copiar la implementación de terceros.
+- **Retirada:** eliminar el parche cuando todos los consumidores transitivos
+  admitan directamente la API corregida.
+
+## Cierre de la fase 7
+
+El 2026-07-25 PostgreSQL conservó un snapshot byte a byte tras una importación
+posterior, rechazó su mutación y mantuvo original y corrección enlazados. Los
+ejemplos manuales de nominaciones y ganador coincidieron con
+`runscars-evaluation-v1`. La fase 8 no se ha iniciado.

@@ -13,6 +13,88 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      aggregate_snapshots: {
+        Row: {
+          id: string;
+          season_id: string;
+          category_id: string;
+          prediction_intention: Database["public"]["Enums"]["prediction_intention"];
+          kind: Database["public"]["Enums"]["aggregate_snapshot_kind"];
+          cutoff_at: string;
+          time_zone: string;
+          method_version: string;
+          schema_version: string;
+          content_hash: string;
+          payload: Json;
+          active_source_ids: string[];
+          locked_at: string;
+          locked_by: string;
+          corrects_snapshot_id: string | null;
+          correction_reason: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id: string;
+          season_id: string;
+          category_id: string;
+          prediction_intention: Database["public"]["Enums"]["prediction_intention"];
+          kind: Database["public"]["Enums"]["aggregate_snapshot_kind"];
+          cutoff_at: string;
+          time_zone: string;
+          method_version: string;
+          schema_version: string;
+          content_hash: string;
+          payload: Json;
+          active_source_ids: string[];
+          locked_at: string;
+          locked_by: string;
+          corrects_snapshot_id?: string | null;
+          correction_reason?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          season_id?: string;
+          category_id?: string;
+          prediction_intention?: Database["public"]["Enums"]["prediction_intention"];
+          kind?: Database["public"]["Enums"]["aggregate_snapshot_kind"];
+          cutoff_at?: string;
+          time_zone?: string;
+          method_version?: string;
+          schema_version?: string;
+          content_hash?: string;
+          payload?: Json;
+          active_source_ids?: string[];
+          locked_at?: string;
+          locked_by?: string;
+          corrects_snapshot_id?: string | null;
+          correction_reason?: string | null;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "aggregate_snapshots_category_id_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "categories";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "aggregate_snapshots_corrects_snapshot_id_fkey";
+            columns: ["corrects_snapshot_id"];
+            isOneToOne: false;
+            referencedRelation: "aggregate_snapshots";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "aggregate_snapshots_season_id_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "seasons";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       categories: {
         Row: {
           id: string;
@@ -42,6 +124,91 @@ export type Database = {
           updated_at?: string;
         };
         Relationships: [];
+      };
+      current_aggregate_snapshots: {
+        Row: {
+          season_id: string;
+          category_id: string;
+          prediction_intention: Database["public"]["Enums"]["prediction_intention"];
+          kind: Database["public"]["Enums"]["aggregate_snapshot_kind"];
+          snapshot_id: string;
+          published_at: string;
+        };
+        Insert: {
+          season_id: string;
+          category_id: string;
+          prediction_intention: Database["public"]["Enums"]["prediction_intention"];
+          kind: Database["public"]["Enums"]["aggregate_snapshot_kind"];
+          snapshot_id: string;
+          published_at?: string;
+        };
+        Update: {
+          season_id?: string;
+          category_id?: string;
+          prediction_intention?: Database["public"]["Enums"]["prediction_intention"];
+          kind?: Database["public"]["Enums"]["aggregate_snapshot_kind"];
+          snapshot_id?: string;
+          published_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "current_aggregate_snapshots_category_id_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "categories";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "current_aggregate_snapshots_season_id_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "seasons";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "current_aggregate_snapshots_snapshot_id_fkey";
+            columns: ["snapshot_id"];
+            isOneToOne: false;
+            referencedRelation: "aggregate_snapshots";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      current_official_result_sets: {
+        Row: {
+          season_id: string;
+          kind: Database["public"]["Enums"]["official_result_kind"];
+          result_set_id: string;
+          published_at: string;
+        };
+        Insert: {
+          season_id: string;
+          kind: Database["public"]["Enums"]["official_result_kind"];
+          result_set_id: string;
+          published_at?: string;
+        };
+        Update: {
+          season_id?: string;
+          kind?: Database["public"]["Enums"]["official_result_kind"];
+          result_set_id?: string;
+          published_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "current_official_result_sets_result_set_id_fkey";
+            columns: ["result_set_id"];
+            isOneToOne: false;
+            referencedRelation: "official_result_sets";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "current_official_result_sets_season_id_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "seasons";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       film_credits: {
         Row: {
@@ -375,6 +542,144 @@ export type Database = {
           },
         ];
       };
+      official_result_entries: {
+        Row: {
+          result_set_id: string;
+          category_id: string;
+          candidate_id: string;
+          film_id: string | null;
+          person_id: string | null;
+          outcome: Database["public"]["Enums"]["official_result_outcome"];
+          created_at: string;
+        };
+        Insert: {
+          result_set_id: string;
+          category_id: string;
+          candidate_id: string;
+          film_id?: string | null;
+          person_id?: string | null;
+          outcome: Database["public"]["Enums"]["official_result_outcome"];
+          created_at?: string;
+        };
+        Update: {
+          result_set_id?: string;
+          category_id?: string;
+          candidate_id?: string;
+          film_id?: string | null;
+          person_id?: string | null;
+          outcome?: Database["public"]["Enums"]["official_result_outcome"];
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "official_result_entries_category_id_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "categories";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "official_result_entries_film_id_fkey";
+            columns: ["film_id"];
+            isOneToOne: false;
+            referencedRelation: "films";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "official_result_entries_person_id_fkey";
+            columns: ["person_id"];
+            isOneToOne: false;
+            referencedRelation: "people";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "official_result_entries_result_set_id_fkey";
+            columns: ["result_set_id"];
+            isOneToOne: false;
+            referencedRelation: "official_result_sets";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      official_result_sets: {
+        Row: {
+          id: string;
+          season_id: string;
+          kind: Database["public"]["Enums"]["official_result_kind"];
+          source_id: string;
+          source_url: string;
+          author: string | null;
+          published_at: string;
+          captured_at: string;
+          schema_version: string;
+          content_hash: string;
+          payload: Json;
+          locked_at: string;
+          locked_by: string;
+          corrects_result_set_id: string | null;
+          correction_reason: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id: string;
+          season_id: string;
+          kind: Database["public"]["Enums"]["official_result_kind"];
+          source_id: string;
+          source_url: string;
+          author?: string | null;
+          published_at: string;
+          captured_at: string;
+          schema_version: string;
+          content_hash: string;
+          payload: Json;
+          locked_at: string;
+          locked_by: string;
+          corrects_result_set_id?: string | null;
+          correction_reason?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          season_id?: string;
+          kind?: Database["public"]["Enums"]["official_result_kind"];
+          source_id?: string;
+          source_url?: string;
+          author?: string | null;
+          published_at?: string;
+          captured_at?: string;
+          schema_version?: string;
+          content_hash?: string;
+          payload?: Json;
+          locked_at?: string;
+          locked_by?: string;
+          corrects_result_set_id?: string | null;
+          correction_reason?: string | null;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "official_result_sets_corrects_result_set_id_fkey";
+            columns: ["corrects_result_set_id"];
+            isOneToOne: false;
+            referencedRelation: "official_result_sets";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "official_result_sets_season_id_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "seasons";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "official_result_sets_source_id_fkey";
+            columns: ["source_id"];
+            isOneToOne: false;
+            referencedRelation: "sources";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       people: {
         Row: {
           id: string;
@@ -665,6 +970,96 @@ export type Database = {
           updated_at?: string;
         };
         Relationships: [];
+      };
+      snapshot_observations: {
+        Row: {
+          snapshot_id: string;
+          observation_id: number;
+          role: Database["public"]["Enums"]["snapshot_observation_role"];
+          created_at: string;
+        };
+        Insert: {
+          snapshot_id: string;
+          observation_id: number;
+          role: Database["public"]["Enums"]["snapshot_observation_role"];
+          created_at?: string;
+        };
+        Update: {
+          snapshot_id?: string;
+          observation_id?: number;
+          role?: Database["public"]["Enums"]["snapshot_observation_role"];
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "snapshot_observations_observation_id_fkey";
+            columns: ["observation_id"];
+            isOneToOne: false;
+            referencedRelation: "professional_observations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "snapshot_observations_snapshot_id_fkey";
+            columns: ["snapshot_id"];
+            isOneToOne: false;
+            referencedRelation: "aggregate_snapshots";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      snapshot_schedules: {
+        Row: {
+          id: string;
+          season_id: string;
+          category_id: string;
+          prediction_intention: Database["public"]["Enums"]["prediction_intention"];
+          kind: Database["public"]["Enums"]["aggregate_snapshot_kind"];
+          cron_expression: string;
+          time_zone: string;
+          is_active: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id: string;
+          season_id: string;
+          category_id: string;
+          prediction_intention: Database["public"]["Enums"]["prediction_intention"];
+          kind?: Database["public"]["Enums"]["aggregate_snapshot_kind"];
+          cron_expression: string;
+          time_zone?: string;
+          is_active?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          season_id?: string;
+          category_id?: string;
+          prediction_intention?: Database["public"]["Enums"]["prediction_intention"];
+          kind?: Database["public"]["Enums"]["aggregate_snapshot_kind"];
+          cron_expression?: string;
+          time_zone?: string;
+          is_active?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "snapshot_schedules_category_id_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "categories";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "snapshot_schedules_season_id_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "seasons";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       source_connectors: {
         Row: {
@@ -1059,6 +1454,7 @@ export type Database = {
       };
     };
     Enums: {
+      aggregate_snapshot_kind: "periodic" | "nomination_final" | "winner_final";
       category_subject: "film" | "person";
       connector_kind: "api_json" | "rss" | "html" | "manual";
       film_credit_kind: "cast" | "crew";
@@ -1069,6 +1465,8 @@ export type Database = {
       ingestion_review_status: "pending" | "resolved" | "dismissed";
       ingestion_run_status: "running" | "succeeded" | "partial" | "failed";
       ingestion_trigger: "manual" | "scheduled" | "fixture";
+      official_result_kind: "nominations" | "winners";
+      official_result_outcome: "nominee" | "winner";
       prediction_intention: "nomination" | "winner";
       professional_observation_state:
         "pending_review" | "published" | "corrected" | "excluded";
@@ -1080,6 +1478,7 @@ export type Database = {
         | "prediction_selection";
       season_status:
         "preparation" | "active" | "nominations_announced" | "closed";
+      snapshot_observation_role: "included" | "excluded";
       source_editorial_status:
         "candidate" | "sampled" | "selected" | "paused" | "rejected";
       source_publication_status:

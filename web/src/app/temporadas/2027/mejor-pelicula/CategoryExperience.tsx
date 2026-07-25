@@ -36,6 +36,7 @@ export function CategoryExperience() {
     calculationCuts.find((item) => item.id === cutId) ??
     calculationCuts.at(-1)!;
   const isCurrent = cut.id === calculationCuts.at(-1)?.id;
+  const isLocked = cut.entryKind === "locked_snapshot";
 
   const rankedCandidates = useMemo(
     () =>
@@ -72,7 +73,7 @@ export function CategoryExperience() {
         <div className="snapshot-heading">
           <div>
             <p className="section-index">EVOLUCIÓN</p>
-            <h2 id="snapshot-title">Recalcular hasta una fecha</h2>
+            <h2 id="snapshot-title">Consultar un corte temporal</h2>
           </div>
           <div className="snapshot-readout" aria-live="polite">
             <span>{cut.date}</span>
@@ -101,11 +102,24 @@ export function CategoryExperience() {
             </button>
           ))}
         </div>
-        <p className="calculation-cut-note">
-          Son cortes reproducibles sobre observaciones publicadas, no snapshots
-          bloqueados. Cada fecha acumula la última publicación disponible de
-          cada fuente.
-        </p>
+        {isLocked ? (
+          <div className="locked-snapshot-note">
+            <div>
+              <strong>Snapshot inmutable</strong>
+              <span>
+                {cut.observationCount} observaciones · {cut.snapshotId}
+              </span>
+            </div>
+            <code title={cut.contentHash ?? undefined}>
+              SHA-256 {cut.contentHash?.slice(0, 16)}…
+            </code>
+          </div>
+        ) : (
+          <p className="calculation-cut-note">
+            Este corte anterior se recalcula desde observaciones publicadas.
+            Cada fecha acumula la última publicación disponible de cada fuente.
+          </p>
+        )}
         {!cut.isConsensus ? (
           <p className="insufficient-note">
             <strong>Datos insuficientes:</strong> este corte todavía no alcanza
@@ -276,8 +290,9 @@ export function CategoryExperience() {
           <p className="section-index">CÁLCULO REPRODUCIBLE</p>
           <h2 id="method-title">Sin una caja negra.</h2>
           <p>
-            El resultado se deriva al abrir la vista; todavía no se persiste
-            como snapshot. La Fase 7 se encargará de bloquear cortes inmutables.
+            {isLocked
+              ? "El corte vigente conserva su entrada, salida y versión de método. Las importaciones posteriores no pueden alterarlo."
+              : "Este corte exploratorio se deriva de nuevo desde las observaciones publicadas hasta su fecha."}
           </p>
         </div>
         <div className="calculation-steps">
@@ -302,6 +317,36 @@ export function CategoryExperience() {
             cobertura, mediana, primeras posiciones y título.
           </p>
         </div>
+      </section>
+
+      <section
+        className="official-results-panel"
+        aria-labelledby="official-results-title"
+      >
+        <div>
+          <p className="section-index">RESULTADOS OFICIALES</p>
+          <h2 id="official-results-title">Evaluación aún pendiente.</h2>
+          <p>
+            La Academy todavía no ha publicado las nominaciones de los Oscar
+            2027. Cuando ocurra, Runscars comparará el cierre final —no este
+            snapshot periódico— y mostrará aciertos, falsos positivos, nominados
+            no previstos, precisión y cobertura.
+          </p>
+        </div>
+        <dl>
+          <div>
+            <dt>Cierre de nominaciones</dt>
+            <dd>Pendiente</dd>
+          </div>
+          <div>
+            <dt>Resultados oficiales</dt>
+            <dd>Pendiente</dd>
+          </div>
+          <div>
+            <dt>Método</dt>
+            <dd>runscars-evaluation-v1</dd>
+          </div>
+        </dl>
       </section>
 
       <section

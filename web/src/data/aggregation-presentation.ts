@@ -2,6 +2,7 @@ import {
   referenceCurrentPrediction,
   referencePredictionTimeline,
 } from "./phase6-reference";
+import { referenceLockedSnapshot } from "./phase7-reference";
 
 const tones = [
   "violet",
@@ -54,12 +55,17 @@ export type ConsensusCandidate = {
 
 export type CalculationCut = {
   id: string;
+  entryKind: "calculation_cut" | "locked_snapshot";
   shortDate: string;
   date: string;
   label: string;
   sourceCount: number;
   observationCount: number;
   isConsensus: boolean;
+  snapshotId: string | null;
+  contentHash: string | null;
+  lockedAt: string | null;
+  lockedBy: string | null;
   ranking: Array<{
     id: string;
     title: string;
@@ -123,11 +129,13 @@ export const consensusCandidates: ConsensusCandidate[] =
 export const calculationCuts: CalculationCut[] =
   referencePredictionTimeline.map((cut, index, timeline) => ({
     id: cut.cutoffDate,
+    entryKind:
+      index === timeline.length - 1 ? "locked_snapshot" : "calculation_cut",
     shortDate: dateLabel(cut.cutoffDate, "short").toUpperCase(),
     date: dateLabel(cut.cutoffDate, "long"),
     label:
       index === timeline.length - 1
-        ? "Corte de cálculo actual"
+        ? "Snapshot semanal bloqueado"
         : cut.isConsensus
           ? "Primer consenso calculable"
           : index === 0
@@ -136,6 +144,16 @@ export const calculationCuts: CalculationCut[] =
     sourceCount: cut.orderedSourceCount,
     observationCount: cut.includedObservationIds.length,
     isConsensus: cut.isConsensus,
+    snapshotId:
+      index === timeline.length - 1 ? referenceLockedSnapshot.id : null,
+    contentHash:
+      index === timeline.length - 1
+        ? referenceLockedSnapshot.contentHash
+        : null,
+    lockedAt:
+      index === timeline.length - 1 ? referenceLockedSnapshot.lockedAt : null,
+    lockedBy:
+      index === timeline.length - 1 ? referenceLockedSnapshot.lockedBy : null,
     ranking: cut.ranking.map((candidate) => ({
       id: candidate.filmId,
       title: candidate.filmTitle,

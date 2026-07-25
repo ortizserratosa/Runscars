@@ -1,0 +1,25 @@
+{
+  "formatVersion": 1,
+  "id": "official-nominations-reference",
+  "seasonId": "oscars-2027",
+  "kind": "nominations",
+  "source": {
+    "sourceId": "academy",
+    "sourceUrl": "https://www.oscars.org/reference-fixture",
+    "author": null,
+    "publishedAt": "2027-01-22T13:30:00Z"
+  },
+  "entries": [
+    {
+      "categoryId": "best-picture",
+      "candidateId": "the-odyssey",
+      "filmId": "the-odyssey",
+      "personId": null,
+      "outcome": "nominee"
+    }
+  ],
+  "originalData": {
+    "fixture": true,
+    "purpose": "prueba reproducible; no representa resultados reales"
+  }
+}

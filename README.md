@@ -75,7 +75,8 @@ Todas las apariciones de películas del fixture enlazan a una ficha canónica. E
 catálogo TMDB se sirve desde snapshots locales versionados. El primer sistema de
 ingesta profesional ya incorpora Guardian, RogerEbert y AwardsWatch con fixtures
 offline, revisión editorial y ejecuciones aisladas. El consenso se recalcula
-desde 48 observaciones y expone el término aportado por cada fuente.
+desde 48 observaciones, expone el término aportado por cada fuente y conserva el
+corte vigente como un snapshot inmutable con hash reproducible.
 
 ## Estado
 
@@ -88,11 +89,13 @@ desde 48 observaciones y expone el término aportado por cada fuente.
 | 4    | Catálogo TMDB versionado y fichas cinematográficas | ✅ Completada |
 | 5    | Ingesta profesional idempotente y programada       | ✅ Completada |
 | 6    | Agregación reproducible y evolución temporal       | ✅ Completada |
-| 7–10 | Snapshots, usuarios, administración y lanzamiento  | ⏳ Pendientes |
+| 7    | Snapshots inmutables y evaluación versionada       | ✅ Completada |
+| 8–10 | Usuarios, administración y lanzamiento             | ⏳ Pendientes |
 
-La fase 6 queda cerrada con normalización crítica, consenso Borda, variación
-temporal y explicación completa desde la observación hasta la cifra visible. El
-detalle verificable está en [AGGREGATION.md](docs/AGGREGATION.md).
+La fase 7 queda cerrada con bloqueo transaccional, correcciones enlazadas,
+snapshot semanal, resultados oficiales versionados y métricas reproducibles. La
+temporada activa indica correctamente que sus resultados aún están pendientes.
+El detalle verificable está en [SNAPSHOTS.md](docs/SNAPSHOTS.md).
 
 ## Principios de datos
 
@@ -110,7 +113,7 @@ detalle verificable está en [AGGREGATION.md](docs/AGGREGATION.md).
 - **Web:** Next.js 16, React 19 y TypeScript.
 - **Datos y autenticación:** PostgreSQL, Supabase y Row Level Security.
 - **Despliegue y tareas:** Vercel; Supabase Edge Functions/Cron en las fases de
-  ingesta.
+  ingesta y Vercel Cron para snapshots semanales.
 - **Calidad:** ESLint, Prettier, Vitest, PGlite y Playwright.
 - **Automatización:** GitHub Actions.
 
@@ -156,7 +159,8 @@ Consulta la [guía técnica de fase 3](docs/TECHNICAL_FOUNDATION.md) para enlaza
 las variables públicas locales, la [guía del catálogo](docs/TMDB_CATALOG.md)
 para TMDB y la [guía de ingesta](docs/INGESTION.md) para conectores y cargas
 manuales. La [guía de agregación](docs/AGGREGATION.md) documenta fórmulas,
-ejemplos esperados y la frontera con los snapshots de fase 7.
+ejemplos esperados y evolución. La
+[guía de snapshots](docs/SNAPSHOTS.md) cubre bloqueo, resultados y evaluación.
 
 ## Estructura
 
@@ -183,6 +187,7 @@ Runscars/
 | [ROADMAP.md](docs/ROADMAP.md)               | Fases y puertas de salida                      |
 | [INGESTION.md](docs/INGESTION.md)           | Conectores, observaciones, revisión y Cron     |
 | [AGGREGATION.md](docs/AGGREGATION.md)       | Cálculos, ejemplos manuales y evolución        |
+| [SNAPSHOTS.md](docs/SNAPSHOTS.md)           | Bloqueo, resultados oficiales y evaluación     |
 | [AGENTS.md](AGENTS.md)                      | Reglas persistentes de trabajo                 |
 
 ## Participar

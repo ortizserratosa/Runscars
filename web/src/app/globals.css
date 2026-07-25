@@ -1203,6 +1203,32 @@ select:focus-visible {
   font-size: 0.7rem;
 }
 
+.locked-snapshot-note {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 0.9rem 1.5rem;
+  border-top: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.7rem;
+}
+
+.locked-snapshot-note > div {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.locked-snapshot-note span {
+  color: rgba(242, 239, 230, 0.65);
+}
+
+.locked-snapshot-note code {
+  color: var(--acid);
+  font-size: 0.68rem;
+}
+
 .insufficient-note {
   margin: 0;
   padding: 0.85rem 1.5rem;
@@ -1451,6 +1477,53 @@ select:focus-visible {
   padding: 1rem;
   border-top: 1px solid var(--ink);
   font-size: 0.68rem;
+}
+
+.official-results-panel {
+  display: grid;
+  grid-template-columns: 1fr 0.9fr;
+  gap: 5rem;
+  margin-top: 2rem;
+  padding: 3rem;
+  border: 1px solid var(--ink);
+  background: var(--white);
+}
+
+.official-results-panel h2 {
+  max-width: 520px;
+  font-size: 3rem;
+}
+
+.official-results-panel > div > p:last-child {
+  max-width: 600px;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.official-results-panel dl {
+  align-self: start;
+  margin: 0;
+  border-top: 1px solid var(--ink);
+}
+
+.official-results-panel dl > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.official-results-panel dt {
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.official-results-panel dd {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 800;
 }
 
 .ranking-lab {
@@ -2629,6 +2702,11 @@ select:focus-visible {
     border-bottom: 1px solid var(--line);
   }
 
+  .locked-snapshot-note {
+    align-items: start;
+    flex-direction: column;
+  }
+
   .leaderboard-head {
     display: none;
   }
@@ -2666,7 +2744,8 @@ select:focus-visible {
   }
 
   .calculation-explainer,
-  .calculation-steps {
+  .calculation-steps,
+  .official-results-panel {
     grid-template-columns: 1fr;
   }
 
@@ -2683,6 +2762,11 @@ select:focus-visible {
 
   .calculation-steps > p {
     grid-column: 1;
+  }
+
+  .official-results-panel {
+    gap: 2rem;
+    padding: 1.4rem;
   }
 
   .ranking-lab {
