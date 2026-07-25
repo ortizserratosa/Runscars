@@ -1,6 +1,6 @@
 # Registro de fuentes
 
-**Estado:** fase 7.1 en integración; cobertura multcategoría validada
+**Estado:** fase 7.1 completada; cobertura multcategoría validada en staging
 **Última revisión:** 2026-07-25
 
 ## 1. Objetivo

@@ -17,8 +17,8 @@ terminada por haber creado archivos o código, sino por cumplir esa puerta.
 | 5    | Sistema de ingesta                          | Completada        |
 | 6    | Agregación                                  | Completada        |
 | 7    | Snapshots y evaluación                      | Completada        |
-| 7.1  | Cobertura multcategoría, archivo y mercados | Validando CI      |
-| 8    | Usuarios                                    | Bloqueada por 7.1 |
+| 7.1  | Cobertura multcategoría, archivo y mercados | Completada        |
+| 8    | Usuarios                                    | Pendiente         |
 | 9    | Administración editorial                    | Pendiente         |
 | 10   | QA y MVP desplegado                         | Pendiente         |
 
@@ -205,9 +205,9 @@ Cumplimiento detallado en [SNAPSHOTS.md](SNAPSHOTS.md).
 
 ## Fase 7.1 · Cobertura multcategoría, archivo y mercados
 
-**Obligatoria antes de usuarios.** Código, datos reales, automatizaciones y web
-están integrados en staging. La fase permanece abierta únicamente hasta
-confirmar la CI de la rama publicada.
+**Cerrada:** 2026-07-25. Código, datos reales, automatizaciones y web están
+integrados en staging. La CI de la rama publicada reprodujo la verificación
+completa en verde.
 
 ### Entregables
 
@@ -220,16 +220,16 @@ confirmar la CI de la rama publicada.
 - [x] archivo oficial Oscar 2026 de ocho categorías;
 - [x] ejecución programada real satisfactoria por conector;
 - [x] entorno desplegado y comprobado en verde;
-- [ ] CI en verde.
+- [x] CI en verde.
 
 ### Puerta de salida
 
 La lista completa y su evidencia se mantienen en [PHASE_7_1.md](PHASE_7_1.md).
-La fase 8 no puede comenzar mientras quede un elemento abierto.
+La fase 8 queda desbloqueada, pero no se ha iniciado.
 
 ## Fase 8 · Usuarios
 
-**Estado:** bloqueada hasta cerrar la fase 7.1.
+**Estado:** pendiente; la fase 7.1 ya está cerrada.
 
 ### Entregables
 

@@ -1,6 +1,6 @@
 # Fase 7.1 · Cobertura multcategoría, archivo y mercados
 
-**Estado:** integrada y verificada en staging; validación de CI pendiente
+**Estado:** completada y cerrada el 2026-07-25  
 **Última revisión:** 2026-07-25
 
 ## Alcance implementado
@@ -56,12 +56,13 @@ en Awards Daily, Next Best Picture y Midnight Critics Circle.
 - [x] Una ejecución programada real satisfactoria por conector.
 - [x] `format`, `lint`, `typecheck`, unitarias, DB, `build`, E2E, `audit` y
       `verify` completos.
-- [ ] CI en verde.
+- [x] CI en verde.
 - [x] Entorno desplegado y comprobado en verde.
 
-La fase 8 permanece bloqueada. El objetivo de cinco fuentes para los dos guiones
-también queda abierto: hoy no existe una publicación 2027 de AwardsWatch para
-esas categorías y no se atribuirá una lista que la fuente no haya publicado.
+La fase 8 queda desbloqueada, pero no se ha iniciado. El objetivo opcional de
+cinco fuentes para los dos guiones no bloquea el cierre: hoy no existe una
+publicación 2027 de AwardsWatch para esas categorías y no se atribuirá una lista
+que la fuente no haya publicado.
 
 La ejecución real de staging del 2026-07-25 terminó sin fallos en los seis
 conectores profesionales bajo trigger `scheduled`. La base alcanzó la cobertura
@@ -79,3 +80,7 @@ La web está desplegada en
 `DATABASE` y las ocho rutas de 2026 devolvieron nominados y ganador oficiales.
 El endpoint semanal de snapshots rechaza llamadas sin su secreto y Vercel tiene
 la programación del lunes a las 04:47 UTC.
+
+El check `verify` del PR de integración terminó en verde tras reproducir la
+instalación, formato, lint, tipos, unitarias, DB, build y auditoría. Con esta
+última evidencia queda cumplida la puerta de salida de la fase 7.1.

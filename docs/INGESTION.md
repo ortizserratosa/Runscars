@@ -1,6 +1,6 @@
 # Sistema de ingesta · fases 5 y 7.1
 
-**Estado:** fase 5 completada; ampliación 7.1 en integración
+**Estado:** fase 5 completada; ampliación 7.1 completada
 **Última revisión:** 2026-07-25
 
 ## Objetivo
