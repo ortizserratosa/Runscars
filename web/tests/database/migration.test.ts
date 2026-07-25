@@ -78,6 +78,39 @@ describe("versioned database foundation", () => {
     expect(result.rows[0]).toEqual({ films: 35, links: 35 });
   });
 
+  it("keeps content-addressed revisions for a mutable source URL", async () => {
+    await database.exec(await readFile(seedPath, "utf8"));
+    await database.exec(`
+      insert into public.source_publications (
+        source_id,
+        external_id,
+        canonical_url,
+        title
+      )
+      values
+        (
+          'awards-radar',
+          'best-picture@aaaaaaaaaaaaaaaa',
+          'https://awardsradar.com/best-picture/',
+          'Best Picture · revision A'
+        ),
+        (
+          'awards-radar',
+          'best-picture@bbbbbbbbbbbbbbbb',
+          'https://awardsradar.com/best-picture/',
+          'Best Picture · revision B'
+        );
+    `);
+
+    const result = await database.query<{ revisions: number }>(`
+      select count(*)::int as revisions
+      from public.source_publications
+      where source_id = 'awards-radar'
+        and canonical_url = 'https://awardsradar.com/best-picture/'
+    `);
+    expect(result.rows[0]?.revisions).toBe(2);
+  });
+
   it("models performances, one person across films and an ordered directing team", async () => {
     await database.exec(await readFile(seedPath, "utf8"));
     await database.exec(`

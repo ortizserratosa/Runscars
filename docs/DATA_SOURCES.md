@@ -208,6 +208,26 @@ por fuente, categoría e intención. La cobertura efectiva es de cinco rankings
 ordenados en las seis categorías que cubre AwardsWatch y cuatro en los dos
 guiones; Best Picture suma una sexta fuente como selección.
 
+Desde el 2026-07-25 ningún conector profesional depende de una publicación fija
+como estado actual:
+
+- Awards Daily consulta en cada run su búsqueda WordPress de predicciones 2027
+  y conserva la combinación mínima de publicaciones que aporta la lista más
+  reciente de cada categoría; el corte verificado más nuevo es del 24 de julio
+  de 2026 y contiene las ocho categorías públicas.
+- Awards Radar consulta sus ocho páginas de categoría, cuyo ranking visible
+  indica actualización del 20 de julio de 2026.
+- AwardsWatch descubre por archivo la publicación más reciente de cada
+  categoría.
+- Next Best Picture y Midnight Critics versionan por contenido sus páginas
+  vivas.
+- The Ringer consulta su archivo de Oscar y conserva la selección 2027 más
+  reciente.
+
+Una misma URL actualizable puede generar varias revisiones inmutables
+identificadas por contenido. Un run sin cambios no crea observaciones nuevas y
+deja un evento explícito `source.unchanged`.
+
 Kalshi y Polymarket usan sus API públicas en un proceso horario independiente.
 Sus contratos y capturas son append-only y no comparten tablas ni agregadores
 con las predicciones profesionales. El archivo Academy 2026 usa un manifiesto

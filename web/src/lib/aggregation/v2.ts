@@ -130,6 +130,48 @@ function effectiveAt(
   return observation.publishedAt ?? observation.capturedAt;
 }
 
+function comparePublicationRecency(
+  [leftId, left]: [string, PredictionObservationV2[]],
+  [rightId, right]: [string, PredictionObservationV2[]],
+) {
+  const leftObservation = left[0];
+  const rightObservation = right[0];
+  let dateDifference: number;
+
+  if (leftObservation.publicationUrl === rightObservation.publicationUrl) {
+    dateDifference =
+      instant(rightObservation.capturedAt) -
+      instant(leftObservation.capturedAt);
+    if (
+      dateDifference === 0 &&
+      leftObservation.publishedAt &&
+      rightObservation.publishedAt
+    ) {
+      dateDifference =
+        instant(rightObservation.publishedAt) -
+        instant(leftObservation.publishedAt);
+    } else if (dateDifference === 0 && rightObservation.publishedAt) {
+      return 1;
+    } else if (dateDifference === 0 && leftObservation.publishedAt) {
+      return -1;
+    }
+  } else if (leftObservation.publishedAt && rightObservation.publishedAt) {
+    dateDifference =
+      instant(rightObservation.publishedAt) -
+      instant(leftObservation.publishedAt);
+  } else if (rightObservation.publishedAt) {
+    return 1;
+  } else if (leftObservation.publishedAt) {
+    return -1;
+  } else {
+    dateDifference =
+      instant(effectiveAt(rightObservation)) -
+      instant(effectiveAt(leftObservation));
+  }
+
+  return dateDifference || rightId.localeCompare(leftId);
+}
+
 function median(values: number[]) {
   if (values.length === 0) return null;
   const ordered = [...values].sort((left, right) => left - right);
@@ -187,11 +229,7 @@ function selectActiveSources(observations: PredictionObservationV2[]) {
   const active: ActiveSource[] = [];
   for (const [sourceId, publications] of bySource) {
     const latestPublication = [...publications.entries()].sort(
-      ([leftId, left], [rightId, right]) => {
-        const dateDifference =
-          instant(effectiveAt(right[0])) - instant(effectiveAt(left[0]));
-        return dateDifference || rightId.localeCompare(leftId);
-      },
+      comparePublicationRecency,
     )[0];
     if (!latestPublication) continue;
 

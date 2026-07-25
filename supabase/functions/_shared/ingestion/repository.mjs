@@ -280,16 +280,16 @@ export class SupabaseIngestionRepository {
   }
 
   async savePublication(batch, publication) {
-    const existingByUrl = databaseError(
+    const existing = databaseError(
       await this.client
         .from("source_publications")
         .select("id")
         .eq("source_id", batch.sourceId)
-        .eq("canonical_url", publication.canonicalUrl)
+        .eq("external_id", publication.externalId)
         .maybeSingle(),
-      "No se pudo buscar la publicación por URL",
+      "No se pudo buscar la publicación por identidad",
     );
-    if (existingByUrl) {
+    if (existing) {
       databaseError(
         await this.client
           .from("source_publications")
@@ -298,10 +298,10 @@ export class SupabaseIngestionRepository {
             author: publication.author,
             published_at: publication.publishedAt,
           })
-          .eq("id", existingByUrl.id),
+          .eq("id", existing.id),
         "No se pudo actualizar la publicación",
       );
-      return existingByUrl.id;
+      return existing.id;
     }
     const data = databaseError(
       await this.client
@@ -345,7 +345,7 @@ export class SupabaseIngestionRepository {
         .select("id"),
       "No se pudo guardar la captura",
     );
-    if (data.length) return data[0].id;
+    if (data.length) return { id: data[0].id, inserted: true };
     const existing = databaseError(
       await this.client
         .from("source_publication_captures")
@@ -355,7 +355,7 @@ export class SupabaseIngestionRepository {
         .single(),
       "No se pudo recuperar la captura existente",
     );
-    return existing.id;
+    return { id: existing.id, inserted: false };
   }
 
   async saveObservation({
@@ -585,6 +585,8 @@ export class SupabaseIngestionRepository {
 export async function persistBatch({ batch, repository, runId }) {
   const counters = {
     publicationsSeen: batch.publications.length,
+    capturesInserted: 0,
+    capturesDuplicate: 0,
     observationsSeen: 0,
     observationsInserted: 0,
     observationsDuplicate: 0,
@@ -600,11 +602,17 @@ export async function persistBatch({ batch, repository, runId }) {
         prepared,
         publication,
       );
-      const captureId = await repository.saveCapture(
+      const capture = await repository.saveCapture(
         prepared,
         publicationId,
         publication,
       );
+      const captureId =
+        capture && typeof capture === "object" ? capture.id : capture;
+      if (capture && typeof capture === "object") {
+        if (capture.inserted) counters.capturesInserted += 1;
+        else counters.capturesDuplicate += 1;
+      }
 
       for (const observation of publication.observations) {
         counters.observationsSeen += 1;
@@ -633,6 +641,18 @@ export async function persistBatch({ batch, repository, runId }) {
     }
 
     const finishedAt = new Date().toISOString();
+    await repository.addEvent(
+      runId,
+      "info",
+      counters.capturesInserted > 0 ? "source.updated" : "source.unchanged",
+      counters.capturesInserted > 0
+        ? "Se encontraron capturas nuevas"
+        : "No se encontraron cambios en las publicaciones",
+      {
+        capturesInserted: counters.capturesInserted,
+        capturesDuplicate: counters.capturesDuplicate,
+      },
+    );
     await repository.addEvent(
       runId,
       "info",
@@ -669,85 +689,103 @@ export async function runConnectorSet({
   secrets = {},
   now = () => new Date(),
 }) {
-  const results = [];
-
-  for (const connector of connectors) {
-    const capturedAt = now().toISOString();
-    const runKey = `${connector.id}:${trigger}:${capturedAt}`;
-    let runId = null;
-    try {
-      runId = await repository.beginRun({
-        connectorId: connector.id,
-        trigger,
-        startedAt: capturedAt,
-        runKey,
-      });
-      const adapter = registry[connector.id];
-      if (!adapter)
-        throw new Error(`Conector no implementado: ${connector.id}`);
-      const filmIdentities =
-        connector.configuration?.catalog_only === true
-          ? await repository.filmIdentities(connector.configuration.season_id)
-          : [];
-      const batch = await adapter({
-        connector,
-        capturedAt,
-        fetcher,
-        secrets,
-        filmIdentities,
-      });
-      if (secrets.TMDB_READ_ACCESS_TOKEN) {
-        const expansion = await expandCatalogFromBatch({
-          batch,
-          repository,
-          token: secrets.TMDB_READ_ACCESS_TOKEN,
-          fetcher,
+  return Promise.all(
+    connectors.map(async (connector) => {
+      const capturedAt = now().toISOString();
+      const runKey = `${connector.id}:${trigger}:${capturedAt}`;
+      let runId = null;
+      try {
+        runId = await repository.beginRun({
+          connectorId: connector.id,
+          trigger,
+          startedAt: capturedAt,
+          runKey,
         });
-        if (expansion.imported.length || expansion.ambiguous.length) {
+        const adapter = registry[connector.id];
+        if (!adapter)
+          throw new Error(`Conector no implementado: ${connector.id}`);
+        const filmIdentities =
+          connector.configuration?.catalog_only === true
+            ? await repository.filmIdentities(connector.configuration.season_id)
+            : [];
+        const batch = await adapter({
+          connector,
+          capturedAt,
+          fetcher,
+          secrets,
+          filmIdentities,
+        });
+        if (batch.discovery) {
+          const partial =
+            Array.isArray(batch.discovery.skippedUrls) &&
+            batch.discovery.skippedUrls.length > 0;
           await repository.addEvent(
             runId,
-            expansion.ambiguous.length ? "warning" : "info",
-            "catalog.expansion",
-            "Expansión automática de catálogo completada",
-            expansion,
+            partial ? "warning" : "info",
+            partial ? "discovery.partial" : "discovery.checked",
+            partial
+              ? "Discovery completado con publicaciones omitidas"
+              : "Discovery completado sin incidencias",
+            batch.discovery,
           );
         }
-      }
-      results.push(await persistBatch({ batch, repository, runId }));
-    } catch (error) {
-      const errorSummary =
-        error instanceof Error ? error.message : "Error desconocido";
-      const counters = error?.ingestionCounters ?? {
-        publicationsSeen: 0,
-        observationsSeen: 0,
-        observationsInserted: 0,
-        observationsDuplicate: 0,
-        reviewItemsCreated: 0,
-      };
-      const finishedAt = new Date().toISOString();
-      if (runId !== null) {
-        await repository.addEvent(
+        if (secrets.TMDB_READ_ACCESS_TOKEN) {
+          const expansion = await expandCatalogFromBatch({
+            batch,
+            repository,
+            token: secrets.TMDB_READ_ACCESS_TOKEN,
+            fetcher,
+          });
+          if (expansion.imported.length || expansion.ambiguous.length) {
+            await repository.addEvent(
+              runId,
+              expansion.ambiguous.length ? "warning" : "info",
+              "catalog.expansion",
+              "Expansión automática de catálogo completada",
+              expansion,
+            );
+          }
+        }
+        return await persistBatch({ batch, repository, runId });
+      } catch (error) {
+        const errorSummary =
+          error instanceof Error ? error.message : "Error desconocido";
+        const counters = error?.ingestionCounters ?? {
+          publicationsSeen: 0,
+          capturesInserted: 0,
+          capturesDuplicate: 0,
+          observationsSeen: 0,
+          observationsInserted: 0,
+          observationsDuplicate: 0,
+          reviewItemsCreated: 0,
+        };
+        const finishedAt = new Date().toISOString();
+        if (runId !== null) {
+          await repository.addEvent(
+            runId,
+            "error",
+            "connector.failed",
+            errorSummary,
+          );
+          await repository.finishRun(runId, {
+            ...counters,
+            status: "failed",
+            finishedAt,
+            errorSummary,
+          });
+          await repository.markConnector(
+            connector.id,
+            finishedAt,
+            errorSummary,
+          );
+        }
+        return {
+          connectorId: connector.id,
           runId,
-          "error",
-          "connector.failed",
-          errorSummary,
-        );
-        await repository.finishRun(runId, {
-          ...counters,
           status: "failed",
-          finishedAt,
-          errorSummary,
-        });
-        await repository.markConnector(connector.id, finishedAt, errorSummary);
+          error: errorSummary,
+        };
       }
-      results.push({
-        connectorId: connector.id,
-        runId,
-        status: "failed",
-        error: errorSummary,
-      });
-    }
-  }
-
-  return results;
+    }),
+  );
 }

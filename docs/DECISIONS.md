@@ -409,3 +409,35 @@ ejemplos manuales de nominaciones y ganador coincidieron con
   predicciones anteriores a Runscars.
 - **Motivo:** ofrecer una temporada cerrada verificable sin fabricar una serie
   temporal que no fue capturada en su momento.
+
+## D-028 · Discovery diario y revisiones inmutables de páginas vivas
+
+- **Fecha:** 2026-07-25
+- **Estado:** Aceptada
+- **Decisión:** cada ejecución profesional consulta primero el índice, archivo
+  o página viva de su fuente. Awards Daily descubre artículos mediante su API
+  pública de WordPress; AwardsWatch y The Ringer recorren sus archivos; Awards
+  Radar consulta una página actualizable por categoría; Next Best Picture y
+  Midnight Critics comprueban directamente sus páginas vivas.
+- **Selección:** se ingieren las publicaciones elegibles recientes y el
+  agregado conserva, por categoría e intención, la de fecha más reciente. Una
+  publicación que omite una categoría no invalida la lista anterior de esa
+  categoría. Entre URLs distintas tiene prioridad la fecha de publicación; una
+  URL histórica sin fecha no puede desplazar una publicación fechada. Dentro de
+  una misma URL viva tiene prioridad la revisión capturada más recientemente.
+- **Páginas vivas:** cuando una URL conserva su dirección pero cambia el
+  ranking, cada contenido estructurado genera una publicación inmutable
+  distinta. Repetir contenido idéntico reutiliza la revisión y no duplica
+  observaciones. La identidad de revisión incorpora también la versión del
+  extractor, para que una corrección de parsing no mezcle filas antiguas y
+  nuevas bajo la misma publicación.
+- **Auditoría:** toda ejecución satisfactoria registra `discovery.checked` o
+  `discovery.partial` y después `source.updated` o `source.unchanged`. Así, la
+  ausencia de cambios también queda demostrada.
+- **Ejecución:** los conectores se ejecutan en paralelo y conservan runs,
+  eventos y fallos independientes. Esto mantiene el conjunto dentro del tiempo
+  máximo de la Edge Function sin convertir el fallo de una fuente en un fallo
+  global.
+- **Motivo:** una URL fijada a mayo o abril no representa la predicción vigente,
+  y mezclar varias revisiones de una página mutable dentro de una sola
+  publicación produciría rankings inválidos.

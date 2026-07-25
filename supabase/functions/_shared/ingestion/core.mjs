@@ -531,6 +531,15 @@ export async function prepareBatch(batch, filmIdentities) {
 
   for (const publication of batch.publications) {
     const contentHash = await sha256(publication.originalData);
+    const structuredContentHash = await sha256({
+      extractor_version: batch.extractorVersion,
+      original_data: publication.originalData,
+      observations: publication.observations,
+    });
+    const publicationExternalId =
+      publication.isMutable === true
+        ? `${publication.externalId}@${structuredContentHash.slice(0, 16)}`
+        : publication.externalId;
     const preparedObservations = [];
 
     for (const observation of publication.observations) {
@@ -639,7 +648,7 @@ export async function prepareBatch(batch, filmIdentities) {
       }
       const dedupeKey = await sha256({
         source_id: batch.sourceId,
-        publication_id: publication.externalId,
+        publication_id: publicationExternalId,
         author: publication.author,
         subject_id:
           candidate?.id ??
@@ -681,6 +690,7 @@ export async function prepareBatch(batch, filmIdentities) {
 
     preparedPublications.push({
       ...publication,
+      externalId: publicationExternalId,
       contentHash,
       observations: preparedObservations,
     });

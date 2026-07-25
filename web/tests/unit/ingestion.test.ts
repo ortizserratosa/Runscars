@@ -14,6 +14,8 @@ import {
 } from "../../../supabase/functions/_shared/ingestion/repository.mjs";
 import { CONNECTORS } from "../../../supabase/functions/_shared/ingestion/connectors.mjs";
 import {
+  discoverLatestRingerBestPictureArticle,
+  discoverWordPressPredictionUrls,
   parseAwardsDailyFixture,
   parseAwardsRadarFixture,
   parseAwardsWatchArticleFixture,
@@ -68,6 +70,7 @@ class MemoryRepository {
   events: Array<{ runId: number; level: string; code: string }> = [];
   nextRun = 1;
   nextPublication = 1;
+  publications = new Map<string, number>();
 
   async beginRun(values: { connectorId: string }) {
     const id = this.nextRun++;
@@ -77,8 +80,15 @@ class MemoryRepository {
   async filmIdentities() {
     return films;
   }
-  async savePublication() {
-    return this.nextPublication++;
+  async savePublication(
+    batch: { sourceId: string },
+    publication: { externalId: string },
+  ) {
+    const key = `${batch.sourceId}:${publication.externalId}`;
+    if (!this.publications.has(key)) {
+      this.publications.set(key, this.nextPublication++);
+    }
+    return this.publications.get(key);
   }
   async ensureCandidate() {}
   async saveCapture(
@@ -87,8 +97,12 @@ class MemoryRepository {
     publication: { contentHash: string },
   ) {
     const key = `${publicationId}:${publication.contentHash}`;
-    if (!this.captures.has(key)) this.captures.set(key, this.captures.size + 1);
-    return this.captures.get(key);
+    if (!this.captures.has(key)) {
+      const id = this.captures.size + 1;
+      this.captures.set(key, id);
+      return { id, inserted: true };
+    }
+    return { id: this.captures.get(key), inserted: false };
   }
   async saveObservation({
     observation,
@@ -303,6 +317,296 @@ describe("professional ingestion adapters", () => {
     expect(batch.publications[0].observations.at(-1)).toEqual(
       expect.objectContaining({ filmSubject: "Fatherland" }),
     );
+  });
+
+  it("recognizes Awards Daily's latest compact headings and URL date", () => {
+    const batch = parseAwardsDailyFixture(
+      `
+        <link rel="canonical" href="https://www.awardsdaily.com/2026/07/24/latest/" />
+        <h1>2027 Oscar Predictions</h1>
+        <p>Best Picture<br />The Odyssey<br />Project Hail Mary</p>
+        <p>Director<br />Christopher Nolan, The Odyssey</p>
+        <p>Actor<br />Matt Damon, The Odyssey</p>
+        <p>Actress<br />Julianne Moore, The Debut</p>
+        <p>Supporting Actor<br />Sam Rockwell, Wild Horse Nine</p>
+        <p>Supporting Actress<br />Anne Hathaway, The Odyssey</p>
+        <p>Original Screenplay<br />Fjord</p>
+        <p>Adapted Screenplay<br />The Odyssey</p>
+      `,
+      {
+        connectorId: "awards-daily-predictions",
+        capturedAt,
+        endpointUrl: "https://www.awardsdaily.com/2026/07/24/latest/",
+        seasonId: "oscars-2027",
+      },
+    );
+
+    expect(batch.publications[0].publishedAt).toBe("2026-07-24T00:00:00.000Z");
+    expect(
+      new Set(
+        batch.publications[0].observations.map(
+          (observation: { categoryId: string }) => observation.categoryId,
+        ),
+      ),
+    ).toEqual(
+      new Set([
+        "best-picture",
+        "directing",
+        "actor",
+        "actress",
+        "supporting-actor",
+        "supporting-actress",
+        "original-screenplay",
+        "adapted-screenplay",
+      ]),
+    );
+  });
+
+  it("normalizes verified source spellings without changing raw values", () => {
+    const batch = parseAwardsDailyFixture(
+      `
+        <link rel="canonical" href="https://www.awardsdaily.com/2026/07/24/latest/" />
+        <p>Best Picture<br />The Debut<br />Dune III</p>
+        <p>Director<br />Christian Mungiu, Fjord<br />Javiers, La Bola Negra</p>
+        <p>Actor<br />Sebastien Stan, Fjord</p>
+      `,
+      {
+        connectorId: "awards-daily-predictions",
+        capturedAt,
+        endpointUrl: "https://www.awardsdaily.com/2026/07/24/latest/",
+        seasonId: "oscars-2027",
+      },
+    );
+    const observations = batch.publications[0].observations;
+
+    expect(
+      observations.map(
+        (observation: {
+          filmSubject: string;
+          peopleSubjects: string[];
+          originalValue: { raw: string };
+        }) => ({
+          film: observation.filmSubject,
+          people: observation.peopleSubjects,
+          raw: observation.originalValue.raw,
+        }),
+      ),
+    ).toEqual([
+      { film: "The Debut", people: [], raw: "The Debut" },
+      { film: "Dune: Part Three", people: [], raw: "Dune III" },
+      {
+        film: "Fjord",
+        people: ["Cristian Mungiu"],
+        raw: "Christian Mungiu, Fjord",
+      },
+      {
+        film: "La Bola Negra",
+        people: ["Javier Ambrossi", "Javier Calvo"],
+        raw: "Javiers, La Bola Negra",
+      },
+      {
+        film: "Fjord",
+        people: ["Sebastian Stan"],
+        raw: "Sebastien Stan, Fjord",
+      },
+    ]);
+  });
+
+  it("parses an updated mutable Awards Radar category page", () => {
+    const batch = parseAwardsRadarFixture(
+      `
+        <link rel="canonical" href="https://awardsradar.com/best-actor/" />
+        <h1>BEST ACTOR</h1>
+        <p>2027 Oscar Predictions</p>
+        <p>Updated July 20th, 2026</p>
+        <p>1. Tom Cruise – Digger</p>
+        <p>2. Matt Damon – The Odyssey</p>
+      `,
+      {
+        connectorId: "awards-radar-predictions",
+        capturedAt,
+        endpointUrl: "https://awardsradar.com/best-actor/",
+        seasonId: "oscars-2027",
+        categoryId: "actor",
+      },
+    );
+
+    expect(batch.publications[0].publishedAt).toBe("2026-07-20T00:00:00.000Z");
+    expect(batch.publications[0].observations).toEqual([
+      expect.objectContaining({
+        categoryId: "actor",
+        peopleSubjects: ["Tom Cruise"],
+      }),
+      expect.objectContaining({
+        categoryId: "actor",
+        peopleSubjects: ["Matt Damon"],
+      }),
+    ]);
+  });
+
+  it("preserves gapped source ranks with a fitting list length", () => {
+    const batch = parseAwardsRadarFixture(
+      `
+        <link rel="canonical" href="https://awardsradar.com/best-picture/" />
+        <h1>BEST PICTURE</h1>
+        <p>Updated July 20th, 2026</p>
+        <p>1. The Odyssey</p>
+        <p>2. Project Hail Mary</p>
+        <p>11. Tony</p>
+      `,
+      {
+        connectorId: "awards-radar-predictions",
+        capturedAt,
+        endpointUrl: "https://awardsradar.com/best-picture/",
+        seasonId: "oscars-2027",
+        categoryId: "best-picture",
+      },
+    );
+
+    expect(
+      batch.publications[0].observations.map(
+        (item: { originalValue: { list_length: number } }) =>
+          item.originalValue.list_length,
+      ),
+    ).toEqual([11, 11, 11]);
+  });
+
+  it("discovers current articles deterministically", () => {
+    expect(
+      discoverWordPressPredictionUrls(
+        [
+          {
+            subtype: "post",
+            title: "2027 Oscar Predictions: July 4",
+            url: "https://www.awardsdaily.com/2026/07/04/july/",
+          },
+          {
+            subtype: "post",
+            title: "2027 Oscar Predictions: July 24",
+            url: "https://www.awardsdaily.com/2026/07/24/latest/",
+          },
+          {
+            subtype: "post",
+            title: "2026 Oscar Predictions",
+            url: "https://www.awardsdaily.com/2025/07/24/old/",
+          },
+        ],
+        2027,
+      ),
+    ).toEqual([
+      "https://www.awardsdaily.com/2026/07/24/latest/",
+      "https://www.awardsdaily.com/2026/07/04/july/",
+    ]);
+
+    expect(
+      discoverLatestRingerBestPictureArticle(
+        `<a href="/2026/03/20/oscars/oscars-2027-predictions-best-picture">A Way-Too-Early 2027 Oscars Preview</a>`,
+      ),
+    ).toBe(
+      "https://www.theringer.com/2026/03/20/oscars/oscars-2027-predictions-best-picture",
+    );
+  });
+
+  it("ingests only the newest publication needed for each Awards Daily category", async () => {
+    const discoveryUrl = "https://www.awardsdaily.com/wp-json/search";
+    const newestUrl = "https://www.awardsdaily.com/2026/07/24/latest/";
+    const olderUrl = "https://www.awardsdaily.com/2026/07/04/older/";
+    const article = (url: string, title: string) => `
+      <link rel="canonical" href="${url}" />
+      <h1>${title}</h1>
+      <p>Best Picture<br />The Odyssey<br />Digger</p>
+      <p>Actor<br />Matt Damon, The Odyssey</p>
+    `;
+    const responses = new Map([
+      [
+        discoveryUrl,
+        JSON.stringify([
+          {
+            subtype: "post",
+            title: "2027 Oscar Predictions: latest",
+            url: newestUrl,
+          },
+          {
+            subtype: "post",
+            title: "2027 Oscar Predictions: older",
+            url: olderUrl,
+          },
+        ]),
+      ],
+      [newestUrl, article(newestUrl, "Latest")],
+      [olderUrl, article(olderUrl, "Older")],
+    ]);
+    const batch = await CONNECTORS["awards-daily-predictions"]({
+      connector: {
+        id: "awards-daily-predictions",
+        endpoint_url: discoveryUrl,
+        configuration: {
+          season_id: "oscars-2027",
+          ceremony_year: 2027,
+          discovery_limit: 12,
+        },
+      },
+      capturedAt,
+      fetcher: async (input: RequestInfo | URL) => {
+        const url = String(input);
+        const body = responses.get(url);
+        return new Response(body ?? "", {
+          status: body === undefined ? 404 : 200,
+          headers: {
+            "content-type":
+              url === discoveryUrl ? "application/json" : "text/html",
+          },
+        });
+      },
+    });
+
+    expect(batch.publications).toHaveLength(1);
+    expect(batch.publications[0].canonicalUrl).toBe(newestUrl);
+    expect(batch.discovery.supersededUrls).toEqual([olderUrl]);
+  });
+
+  it("stores each AwardsWatch extraction as an immutable content revision", async () => {
+    const hqUrl = "https://awardswatch.com/oscar-predictions-hq/";
+    const archiveUrl =
+      "https://awardswatch.com/category/predictions/2027-oscar-predictions/";
+    const categoryUrl = "https://awardswatch.com/predictions/best-picture/";
+    const articleUrl =
+      "https://awardswatch.com/2026/06/26/2027-oscar-predictions-best-picture/";
+    const responses = new Map([
+      [hqUrl, `<a href="${categoryUrl}">Best Picture</a>`],
+      [
+        archiveUrl,
+        `<a href="${articleUrl}">2027 Oscar Predictions: Best Picture June</a>`,
+      ],
+      [articleUrl, await fixture("awardswatch.html")],
+    ]);
+    const batch = await CONNECTORS["awardswatch-predictions"]({
+      connector: {
+        id: "awardswatch-predictions",
+        endpoint_url: hqUrl,
+        configuration: {
+          season_id: "oscars-2027",
+          ceremony_year: 2027,
+          archive_url: archiveUrl,
+          category_ids: ["best-picture"],
+        },
+      },
+      capturedAt,
+      fetcher: async (input: RequestInfo | URL) => {
+        const body = responses.get(String(input));
+        return new Response(body ?? "", {
+          status: body === undefined ? 404 : 200,
+        });
+      },
+    });
+
+    expect(batch.extractorVersion).toBe("awardswatch-multicategory-v4");
+    expect(batch.publications).toEqual([
+      expect.objectContaining({
+        isMutable: true,
+        observations: expect.any(Array),
+      }),
+    ]);
   });
 
   it("removes consensus markers without truncating hyphenated names", () => {
@@ -654,8 +958,108 @@ describe("professional ingestion adapters", () => {
 
     expect(first.observationsInserted).toBe(10);
     expect(second.observationsInserted).toBe(0);
+    expect(first.capturesInserted).toBe(1);
+    expect(second.capturesInserted).toBe(0);
+    expect(second.capturesDuplicate).toBe(1);
     expect(second.observationsDuplicate).toBe(10);
     expect(repository.observations).toHaveLength(10);
+    expect(repository.events).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ code: "source.updated" }),
+        expect.objectContaining({ code: "source.unchanged" }),
+      ]),
+    );
+  });
+
+  it("creates a complete immutable revision when a mutable page changes", async () => {
+    const mutable = {
+      connectorId: "mutable-source",
+      sourceId: "awards-radar",
+      extractorVersion: "awards-radar-v2",
+      seasonId: "oscars-2027",
+      capturedAt,
+      sourceUrl: "https://awardsradar.com/best-picture/",
+      publications: [
+        {
+          externalId: "best-picture",
+          canonicalUrl: "https://awardsradar.com/best-picture/",
+          title: "Best Picture",
+          author: null,
+          publishedAt: null,
+          isMutable: true,
+          originalData: { ranking: ["The Odyssey", "Digger"] },
+          observations: ["The Odyssey", "Digger"].map((subject, index) => ({
+            dataType: "prediction_ordered",
+            subject,
+            filmSubject: subject,
+            peopleSubjects: [],
+            originalValue: { rank: index + 1, list_length: 2 },
+            originalScale: null,
+            categoryId: "best-picture",
+            predictionIntention: "nomination",
+            participates: true,
+          })),
+        },
+      ],
+    };
+    const first = await prepareBatch(mutable, films);
+    const second = await prepareBatch(
+      {
+        ...mutable,
+        publications: [
+          {
+            ...mutable.publications[0],
+            originalData: { ranking: ["Digger", "The Odyssey"] },
+            observations: [...mutable.publications[0].observations]
+              .reverse()
+              .map((observation, index) => ({
+                ...observation,
+                originalValue: { rank: index + 1, list_length: 2 },
+              })),
+          },
+        ],
+      },
+      films,
+    );
+    const parserRevision = await prepareBatch(
+      {
+        ...mutable,
+        extractorVersion: "awards-radar-v3",
+        publications: [
+          {
+            ...mutable.publications[0],
+            observations: mutable.publications[0].observations.map(
+              (observation) => ({
+                ...observation,
+                originalValue: {
+                  ...observation.originalValue,
+                  list_length: 3,
+                },
+              }),
+            ),
+          },
+        ],
+      },
+      films,
+    );
+
+    expect(first.publications[0].externalId).not.toBe(
+      second.publications[0].externalId,
+    );
+    expect(first.publications[0].externalId).not.toBe(
+      parserRevision.publications[0].externalId,
+    );
+    expect(first.publications[0].observations).toHaveLength(2);
+    expect(second.publications[0].observations).toHaveLength(2);
+    expect(
+      first.publications[0].observations.map(
+        (observation: { dedupeKey: string }) => observation.dedupeKey,
+      ),
+    ).not.toEqual(
+      second.publications[0].observations.map(
+        (observation: { dedupeKey: string }) => observation.dedupeKey,
+      ),
+    );
   });
 
   it("continues with the next connector after an isolated failure", async () => {
@@ -668,6 +1072,13 @@ describe("professional ingestion adapters", () => {
       capturedAt,
       sourceUrl: "https://example.com/",
       publications: [],
+      discovery: {
+        checkedAt: capturedAt,
+        mode: "fixture",
+        publicationUrls: [],
+        latestCategoryUrls: {},
+        skippedUrls: [],
+      },
     };
     const results = await runConnectorSet({
       connectors: [{ id: "broken" }, { id: "healthy" }],
@@ -689,6 +1100,7 @@ describe("professional ingestion adapters", () => {
     expect(repository.events).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ level: "error", code: "connector.failed" }),
+        expect.objectContaining({ level: "info", code: "discovery.checked" }),
         expect.objectContaining({ level: "info", code: "connector.completed" }),
       ]),
     );

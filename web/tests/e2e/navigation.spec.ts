@@ -29,8 +29,10 @@ test("publishes all eight database-shaped category routes", async ({
   for (const [slug, name] of publicCategories) {
     await page.goto(`/temporadas/2027/${slug}`);
     await expect(page.getByRole("heading", { level: 1, name })).toBeVisible();
-    await expect(page.getByText("runscars-aggregation-v2")).toBeVisible();
-    await expect(page.getByText("umbral público alcanzado")).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Datos verificados" }),
+    ).toBeVisible();
+    await expect(page.getByText("fuentes · mínimo 4")).toBeVisible();
     await expect(
       page.getByRole("heading", { name: "Consenso profesional" }),
     ).toBeVisible();
@@ -59,7 +61,9 @@ test("shows both market providers separately when no market exists", async ({
   await expect(page.getByRole("heading", { name: "Polymarket" })).toBeVisible();
   await expect(page.getByText("Sin mercado disponible")).toHaveCount(2);
   await expect(
-    page.getByText("sus precios no participan en Borda"),
+    page.getByText(
+      "Kalshi y Polymarket se muestran por proveedor. No existe consenso de mercados y sus precios no participan en la predicción profesional.",
+    ),
   ).toBeVisible();
 });
 

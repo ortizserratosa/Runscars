@@ -1210,8 +1210,8 @@ select:focus-visible {
   align-items: center;
   padding: 0.9rem 1.5rem;
   border-top: 1px solid var(--ink);
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--acid);
+  color: var(--ink);
   font-size: 0.7rem;
 }
 
@@ -1221,12 +1221,15 @@ select:focus-visible {
 }
 
 .locked-snapshot-note span {
-  color: rgba(242, 239, 230, 0.65);
+  color: rgba(26, 26, 25, 0.68);
 }
 
-.locked-snapshot-note code {
-  color: var(--acid);
-  font-size: 0.68rem;
+.locked-snapshot-note > span {
+  max-width: 260px;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  text-align: right;
+  text-transform: uppercase;
 }
 
 .insufficient-note {
@@ -1408,7 +1411,7 @@ select:focus-visible {
   white-space: nowrap;
 }
 
-.source-calculations code,
+.source-calculations .source-position,
 .calculation-explainer code,
 .calculation-proof code {
   font-family: var(--mono);
@@ -1586,6 +1589,21 @@ select:focus-visible {
   grid-column: 1 / -1;
   color: var(--muted);
   font-size: 0.65rem;
+}
+
+.market-provider .market-label {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.market-provider .market-label > strong {
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.1;
+}
+
+.market-provider .market-label > small {
+  grid-column: auto;
 }
 
 .archive-nominees {
@@ -2837,7 +2855,7 @@ select:focus-visible {
     grid-template-columns: 1fr auto;
   }
 
-  .source-calculations > a code {
+  .source-calculations > a .source-position {
     display: none;
   }
 

@@ -121,6 +121,29 @@ primeros medios aportan rankings cuando los publican; The Ringer aporta solo una
 selección de Mejor película. Los extractores estructurados conservan también
 categorías adicionales, cuya visibilidad pública se decide en `categories`.
 
+Antes de extraer, cada adaptador comprueba la ubicación vigente: búsqueda
+WordPress en Awards Daily, archivo por categoría en AwardsWatch, ocho páginas
+vivas en Awards Radar, páginas vivas en Next Best Picture y Midnight Critics, y
+archivo de Oscar en The Ringer. El run registra la lista de URLs comprobadas y
+el último URL elegible por categoría. Después registra `source.updated` si
+apareció contenido nuevo o `source.unchanged` si todos los hashes ya existían.
+
+Las páginas reconsultadas, incluidas las publicaciones de AwardsWatch y las
+páginas vivas, se guardan como revisiones inmutables por hash del contenido
+estructurado y de la versión del extractor. Esto evita que filas antiguas y
+nuevas formen una lista ordenada inválida y permite repetir el run de forma
+idempotente.
+
+Al seleccionar el corte vigente, una publicación fechada prevalece sobre una
+URL histórica sin fecha. Si varias revisiones comparten URL, prevalece la
+captura más reciente. Los números originales con saltos se conservan y la
+longitud de la lista nunca queda por debajo del mayor puesto publicado.
+
+Los conectores profesionales se ejecutan en paralelo dentro de la Edge
+Function. Cada uno conserva su propio run y captura sus propios fallos; el
+resultado general solo es parcial cuando uno de ellos falla. Así, comprobar las
+seis fuentes cabe dentro del límite operativo sin perder aislamiento.
+
 Un título ausente se consulta en TMDB solo desde servidor. La importación
 automática exige una coincidencia única exacta y compatible con la temporada;
 después, las personas solo se buscan en sus créditos. Película, persona, equipo

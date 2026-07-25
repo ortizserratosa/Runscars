@@ -139,6 +139,19 @@ const TEAM_CATEGORIES = new Set([
   "original-screenplay",
   "adapted-screenplay",
 ]);
+const SOURCE_FILM_ALIASES = new Map([
+  ["adventures of cliff booth", "The Adventures of Cliff Booth"],
+  ["dune iii", "Dune: Part Three"],
+  ["sense and sensibillity", "Sense and Sensibility"],
+  ["the social recknoing", "The Social Reckoning"],
+]);
+const SOURCE_PERSON_ALIASES = new Map([
+  ["christian mungiu", "Cristian Mungiu"],
+  ["inde navarette", "Inde Navarrette"],
+  ["mariana di girolam o", "Mariana di Girolamo"],
+  ["parke r posey", "Parker Posey"],
+  ["sebastien stan", "Sebastian Stan"],
+]);
 
 const HTML_ENTITIES = Object.freeze({
   amp: "&",
@@ -229,14 +242,20 @@ function metaContent(html, property) {
 
 function publicationMetadata(html, endpointUrl, sourceId, capturedAt) {
   const url = canonicalUrl(html, endpointUrl);
+  const pathDate = new URL(url).pathname.match(
+    /\/(\d{4})\/(\d{2})\/(\d{2})(?:\/|$)/,
+  );
   const published =
     metaContent(html, "article:published_time") ??
     html.match(/<time\b[^>]*datetime=(?:"([^"]+)"|'([^']+)')/i)?.[1] ??
     html.match(/<time\b[^>]*datetime=(?:"([^"]+)"|'([^']+)')/i)?.[2] ??
+    (pathDate
+      ? `${pathDate[1]}-${pathDate[2]}-${pathDate[3]}T00:00:00Z`
+      : null) ??
     null;
   const title =
-    metaContent(html, "og:title") ??
-    stripTags(html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1] ?? "") ??
+    metaContent(html, "og:title") ||
+    stripTags(html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1] ?? "") ||
     `${sourceId} Oscar predictions`;
   return {
     externalId: new URL(url).pathname.replace(/^\/|\/$/g, "") || sourceId,
@@ -257,22 +276,52 @@ function headingCategory(line) {
     .replace(/^THE\s+/i, "")
     .trim();
   for (const [categoryId, aliases] of CATEGORY_DEFINITIONS) {
-    if (aliases.some((alias) => normalized === alias)) return categoryId;
+    if (
+      aliases.some(
+        (alias) => normalized.toLocaleUpperCase() === alias.toLocaleUpperCase(),
+      )
+    ) {
+      return categoryId;
+    }
   }
   return null;
 }
 
+function updatedPredictionDate(lines) {
+  const value = lines.find((line) =>
+    /^Updated\s+[A-Z][a-z]+\s+\d{1,2}(?:st|nd|rd|th)?,\s+\d{4}$/i.test(line),
+  );
+  if (!value) return null;
+  const parsed = Date.parse(
+    `${value
+      .replace(/^Updated\s+/i, "")
+      .replace(/(\d{1,2})(?:st|nd|rd|th)/i, "$1")} UTC`,
+  );
+  return Number.isNaN(parsed) ? null : new Date(parsed).toISOString();
+}
+
 function peopleFromText(value) {
+  if (/^(?:The\s+)?Javiers$/i.test(value.trim())) {
+    return ["Javier Ambrossi", "Javier Calvo"];
+  }
   return value
     .split(/\s+(?:and|&)\s+|,\s*/i)
     .map((person) => person.replace(/\s+\([^()]+\)\s*$/u, "").trim())
-    .filter(Boolean);
+    .filter(Boolean)
+    .map(
+      (person) =>
+        SOURCE_PERSON_ALIASES.get(person.toLocaleLowerCase()) ?? person,
+    );
+}
+
+function filmFromText(value) {
+  return SOURCE_FILM_ALIASES.get(value.toLocaleLowerCase()) ?? value;
 }
 
 function subjectParts(categoryId, raw) {
   const clean = raw
     .replace(/[⬆⬇↔]+/gu, "")
-    .replace(/\s+(?:NEW|RETURNING|DEBUT)\s*$/i, "")
+    .replace(/\s+(?:NEW|RETURNING|DEBUT)\s*$/, "")
     .replace(
       /\s+\((?:Netflix|NEON|A24|MUBI|TBD|[^()]*(?:Pictures|Studios|Studio|Films|Film|Entertainment|Universal|Amazon|Columbia|Focus|Searchlight|Warner|Lionsgate))[^()]*\)\s*$/i,
       "",
@@ -286,7 +335,7 @@ function subjectParts(categoryId, raw) {
   if (!PERSON_CATEGORIES.has(categoryId)) {
     return {
       subject: clean,
-      filmSubject: clean,
+      filmSubject: filmFromText(clean),
       peopleSubjects: [],
       workTitle: null,
     };
@@ -295,7 +344,7 @@ function subjectParts(categoryId, raw) {
   if (dash) {
     return {
       subject: clean,
-      filmSubject: dash[2].trim(),
+      filmSubject: filmFromText(dash[2].trim()),
       peopleSubjects: peopleFromText(dash[1]),
       workTitle: null,
     };
@@ -304,7 +353,7 @@ function subjectParts(categoryId, raw) {
   if (parts.length >= 2) {
     return {
       subject: clean,
-      filmSubject: parts.at(-1).trim(),
+      filmSubject: filmFromText(parts.at(-1).trim()),
       peopleSubjects: parts.slice(0, -1).flatMap(peopleFromText),
       workTitle: null,
     };
@@ -350,7 +399,10 @@ function buildBatch({
 }) {
   const observations = [];
   for (const [categoryId, rows] of rowsByCategory) {
-    const listLength = rows.length;
+    const listLength = Math.max(
+      rows.length,
+      ...rows.map((row) => row.rank ?? 0),
+    );
     observations.push(
       ...rows.map((row, index) =>
         observation(
@@ -468,28 +520,49 @@ export function parseAwardsDailyFixture(
 
 export function parseAwardsRadarFixture(
   html,
-  { connectorId, capturedAt, endpointUrl, seasonId },
+  {
+    connectorId,
+    capturedAt,
+    endpointUrl,
+    seasonId,
+    categoryId = /** @type {string | null} */ (null),
+  },
 ) {
-  const publication = publicationMetadata(
+  const metadata = publicationMetadata(
     html,
     endpointUrl,
     "awards-radar",
     capturedAt,
   );
   const lines = htmlLines(html);
-  const start = Math.max(
-    lines.findIndex((line) => line === "BEST PICTURE"),
-    0,
-  );
+  const updatedAt = updatedPredictionDate(lines);
+  const publication = {
+    ...metadata,
+    publishedAt: updatedAt ?? metadata.publishedAt,
+  };
+  const updateMarker = lines.findIndex((line) => /^Updated\s+/i.test(line));
+  const categoryHeading = categoryId
+    ? CATEGORY_DEFINITIONS.find(([id]) => id === categoryId)?.[1]?.[0]
+    : null;
+  const parsingLines =
+    categoryId && categoryHeading
+      ? [categoryHeading, ...lines.slice(Math.max(updateMarker + 1, 0))]
+      : lines;
+  const start = categoryId
+    ? 0
+    : Math.max(
+        parsingLines.findIndex((line) => line === "BEST PICTURE"),
+        0,
+      );
   return buildBatch({
     connectorId,
     sourceId: "awards-radar",
-    extractorVersion: "awards-radar-v1",
+    extractorVersion: "awards-radar-v3",
     seasonId,
     capturedAt,
     sourceUrl: publication.canonicalUrl,
     publication,
-    rowsByCategory: parseHeadingLists(lines, {
+    rowsByCategory: parseHeadingLists(parsingLines, {
       numbered: true,
       contentStart: start,
       maxRows: 10,
@@ -631,7 +704,8 @@ export function parseAwardsWatchArticleFixture(
     "awardswatch",
     capturedAt,
   );
-  const lines = htmlLines(html);
+  const article = html.match(/<article\b[\s\S]*?<\/article>/i)?.[0] ?? html;
+  const lines = htmlLines(article);
   const categoryAliases =
     CATEGORY_DEFINITIONS.find(([id]) => id === categoryId)?.[1] ?? [];
   const sectionStart = lines.reduce(
@@ -685,8 +759,66 @@ export function discoverAwardsWatchCategoryUrls(html) {
   return discovered;
 }
 
-export function discoverLatestAwardsWatchArticle(html, ceremonyYear = 2027) {
+function datedUrlValue(value) {
+  const match = new URL(value).pathname.match(
+    /\/(\d{4})\/(\d{2})\/(\d{2})(?:\/|$)/,
+  );
+  return match ? `${match[1]}-${match[2]}-${match[3]}` : "";
+}
+
+export function discoverWordPressPredictionUrls(payload, ceremonyYear = 2027) {
+  if (!Array.isArray(payload)) {
+    throw new Error("El discovery WordPress no devolvió una lista");
+  }
+  const titlePattern = new RegExp(
+    `${ceremonyYear}\\s+Oscar\\s+Predictions`,
+    "i",
+  );
+  return payload
+    .flatMap((entry) => {
+      if (
+        !entry ||
+        entry.subtype !== "post" ||
+        typeof entry.title !== "string" ||
+        typeof entry.url !== "string" ||
+        !titlePattern.test(stripTags(entry.title))
+      ) {
+        return [];
+      }
+      try {
+        return [httpsUrl(entry.url, "WordPress prediction URL")];
+      } catch {
+        return [];
+      }
+    })
+    .filter((url, index, urls) => urls.indexOf(url) === index)
+    .sort(
+      (left, right) =>
+        datedUrlValue(right).localeCompare(datedUrlValue(left)) ||
+        right.localeCompare(left),
+    );
+}
+
+const AWARDSWATCH_TITLE_PATTERNS = Object.freeze({
+  "best-picture": /\bBEST PICTURE\b/i,
+  directing: /\bBEST DIRECTOR\b/i,
+  actor: /\bBEST ACTOR\b/i,
+  actress: /\bBEST ACTRESS\b/i,
+  "supporting-actor": /\bSUPPORTING ACTOR\b/i,
+  "supporting-actress": /\bSUPPORTING ACTRESS\b/i,
+  "original-screenplay": /\bORIGINAL SCREENPLAY\b/i,
+  "adapted-screenplay": /\bADAPTED SCREENPLAY\b/i,
+});
+
+export function discoverLatestAwardsWatchArticle(
+  html,
+  ceremonyYear = 2027,
+  categoryId = /** @type {string | null} */ (null),
+) {
   const candidates = [];
+  const categoryPattern = categoryId
+    ? AWARDSWATCH_TITLE_PATTERNS[categoryId]
+    : null;
   for (const match of html.matchAll(
     /<a\b[^>]*href=(?:"([^"]+)"|'([^']+)')[^>]*>([\s\S]*?)<\/a>/gi,
   )) {
@@ -695,12 +827,49 @@ export function discoverLatestAwardsWatchArticle(html, ceremonyYear = 2027) {
     if (
       url &&
       new RegExp(`${ceremonyYear} Oscar Predictions`, "i").test(label) &&
+      (!categoryPattern || categoryPattern.test(label)) &&
       !/\/category\//.test(url)
     ) {
       candidates.push(httpsUrl(url, "AwardsWatch article URL"));
     }
   }
   return candidates[0] ?? null;
+}
+
+export function discoverLatestRingerBestPictureArticle(
+  html,
+  ceremonyYear = 2027,
+) {
+  const candidates = [];
+  for (const match of html.matchAll(
+    /<a\b[^>]*href=(?:"([^"]+)"|'([^']+)')[^>]*>([\s\S]*?)<\/a>/gi,
+  )) {
+    const label = stripTags(match[3]);
+    const rawUrl = match[1] ?? match[2];
+    if (!rawUrl) continue;
+    let url;
+    try {
+      url = new URL(rawUrl, "https://www.theringer.com/").toString();
+    } catch {
+      continue;
+    }
+    if (
+      new URL(url).hostname === "www.theringer.com" &&
+      new RegExp(`${ceremonyYear}.*(?:Oscar|Best Picture)`, "i").test(label) &&
+      /\/oscars\//.test(new URL(url).pathname)
+    ) {
+      candidates.push(httpsUrl(url, "The Ringer prediction URL"));
+    }
+  }
+  return (
+    candidates
+      .filter((url, index, urls) => urls.indexOf(url) === index)
+      .sort(
+        (left, right) =>
+          datedUrlValue(right).localeCompare(datedUrlValue(left)) ||
+          right.localeCompare(left),
+      )[0] ?? null
+  );
 }
 
 export function parseRingerSelectionFixture(

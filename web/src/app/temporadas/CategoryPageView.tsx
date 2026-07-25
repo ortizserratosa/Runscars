@@ -66,11 +66,11 @@ function ActiveCategory({
             </div>
             <div className="category-hero-stat">
               <span>Cobertura</span>
-              <strong>{aggregate?.orderedSourceCount ?? 0}/4</strong>
+              <strong>{aggregate?.orderedSourceCount ?? 0}</strong>
               <small>
                 {aggregate?.isConsensus
-                  ? "umbral público alcanzado"
-                  : "datos insuficientes"}
+                  ? "fuentes · mínimo 4"
+                  : "fuentes · mínimo 4 pendiente"}
               </small>
             </div>
           </div>
@@ -81,8 +81,8 @@ function ActiveCategory({
         <section className="snapshot-panel">
           <div className="snapshot-heading">
             <div>
-              <p className="section-index">SNAPSHOT V2</p>
-              <h2>Estado reproducible</h2>
+              <p className="section-index">ACTUALIZACIÓN</p>
+              <h2>Datos verificados</h2>
             </div>
             <div className="snapshot-readout">
               <span>
@@ -90,29 +90,36 @@ function ActiveCategory({
                   ? dateLabel(view.snapshot.lockedAt)
                   : "pendiente"}
               </span>
-              <strong>{view.dataState.toUpperCase()}</strong>
+              <strong>
+                {view.dataState === "database"
+                  ? "PUBLICADA"
+                  : view.dataState === "fixture"
+                    ? "DEMOSTRACIÓN"
+                    : "PENDIENTE"}
+              </strong>
             </div>
           </div>
           {view.snapshot ? (
             <div className="locked-snapshot-note">
               <div>
-                <strong>{view.snapshot.id}</strong>
+                <strong>Consenso profesional archivado</strong>
                 <span>
                   {aggregate?.includedObservationIds.length ?? 0} observaciones
-                  incluidas · {aggregate?.methodVersion}
+                  contrastadas y conservadas con su procedencia
                 </span>
               </div>
-              <code>{view.snapshot.contentHash}</code>
+              <span>
+                Las nuevas publicaciones generan una actualización nueva
+              </span>
             </div>
           ) : (
             <p className="insufficient-note">
-              Aún no existe un snapshot v2 publicable en la base de datos.
+              Aún no existe una actualización publicable para esta categoría.
             </p>
           )}
           {view.dataState === "fixture" ? (
             <p className="calculation-cut-note">
-              Fixture reproducible de desarrollo/pruebas. Producción no recurre
-              a este dataset.
+              Datos de demostración disponibles solo en desarrollo y pruebas.
             </p>
           ) : null}
         </section>
@@ -120,7 +127,7 @@ function ActiveCategory({
         <section className="leaderboard-section">
           <div className="section-heading split-heading">
             <div>
-              <p className="section-index">BORDA V2</p>
+              <p className="section-index">CONSENSO</p>
               <h2>Consenso profesional</h2>
             </div>
             <p>
@@ -202,19 +209,24 @@ function ActiveCategory({
                         >
                           <span>
                             {source.sourceName}
-                            <small>{source.publicationId}</small>
+                            <small>
+                              {source.publishedAt
+                                ? `Publicada ${dateLabel(source.publishedAt)}`
+                                : "Publicación verificada"}
+                            </small>
                           </span>
-                          <code>
+                          <span className="source-position">
                             {source.appearanceKind === "ordered"
-                              ? `${source.rank}/${source.listLength}`
+                              ? `Puesto ${source.rank} de ${source.listLength}`
                               : source.appearanceKind === "selection"
                                 ? "selección"
                                 : "ausente"}
-                          </code>
+                          </span>
                           <strong>
                             {source.points.toLocaleString("es-ES", {
                               maximumFractionDigits: 3,
-                            })}
+                            })}{" "}
+                            pts
                           </strong>
                         </a>
                       ))}
@@ -239,7 +251,8 @@ function ActiveCategory({
             </div>
             <p>
               Kalshi y Polymarket se muestran por proveedor. No existe consenso
-              de mercados y sus precios no participan en Borda.
+              de mercados y sus precios no participan en la predicción
+              profesional.
             </p>
           </div>
           <div className="market-provider-grid">
@@ -254,7 +267,10 @@ function ActiveCategory({
                       rel="noreferrer"
                       target="_blank"
                     >
-                      <span>{market.outcome}</span>
+                      <span className="market-label">
+                        <strong>{market.title}</strong>
+                        <small>{market.outcome}</small>
+                      </span>
                       <strong>
                         {market.probability === null
                           ? "—"
@@ -263,7 +279,7 @@ function ActiveCategory({
                               { maximumFractionDigits: 1 },
                             )}%`}
                       </strong>
-                      <small>{dateLabel(market.observedAt)}</small>
+                      <small>Actualizado {dateLabel(market.observedAt)}</small>
                     </a>
                   ))
                 ) : (

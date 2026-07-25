@@ -146,6 +146,82 @@ describe("generic prediction aggregation v2", () => {
     expect(result.includedObservationIds).toEqual(["old-1", "old-2"]);
   });
 
+  it("does not let an undated legacy URL supersede a dated publication", () => {
+    const first = candidate("candidate-first", "Actor One — Film", "film-one", [
+      "Actor One",
+    ]);
+    const second = candidate(
+      "candidate-second",
+      "Actor Two — Film",
+      "film-two",
+      ["Actor Two"],
+    );
+    const legacy = [
+      observation("legacy-1", "source", first, 1),
+      observation("legacy-2", "source", second, 2),
+    ].map((item) => ({
+      ...item,
+      publicationId: "legacy-undated",
+      publicationUrl: "https://example.com/legacy-undated",
+      publishedAt: null,
+      capturedAt: "2026-07-25T15:00:00Z",
+    }));
+    const current = [
+      observation("current-1", "source", second, 1, "current-dated"),
+      observation("current-2", "source", first, 2, "current-dated"),
+    ];
+
+    const result = aggregatePredictionsV2([...legacy, ...current], {
+      seasonId: "oscars-2027",
+      categoryId: "actor",
+      intention: "nomination",
+      cutoffDate: "2026-07-25",
+    });
+
+    expect(result.sourceLists[0].publicationId).toBe("current-dated");
+    expect(result.includedObservationIds).toEqual(["current-1", "current-2"]);
+  });
+
+  it("uses the latest captured revision of a mutable URL", () => {
+    const first = candidate("candidate-first", "Actor One — Film", "film-one", [
+      "Actor One",
+    ]);
+    const second = candidate(
+      "candidate-second",
+      "Actor Two — Film",
+      "film-two",
+      ["Actor Two"],
+    );
+    const mutableUrl = "https://example.com/live-predictions";
+    const oldRevision = [
+      observation("old-1", "source", first, 1),
+      observation("old-2", "source", second, 2),
+    ].map((item) => ({
+      ...item,
+      publicationUrl: mutableUrl,
+      capturedAt: "2026-07-24T04:17:00Z",
+    }));
+    const newRevision = [
+      observation("new-1", "source", second, 1, "source-new"),
+      observation("new-2", "source", first, 2, "source-new"),
+    ].map((item) => ({
+      ...item,
+      publicationUrl: mutableUrl,
+      publishedAt: null,
+      capturedAt: "2026-07-25T04:17:00Z",
+    }));
+
+    const result = aggregatePredictionsV2([...oldRevision, ...newRevision], {
+      seasonId: "oscars-2027",
+      categoryId: "actor",
+      intention: "nomination",
+      cutoffDate: "2026-07-25",
+    });
+
+    expect(result.sourceLists[0].publicationId).toBe("source-new");
+    expect(result.includedObservationIds).toEqual(["new-1", "new-2"]);
+  });
+
   it("locks candidate IDs rather than legacy film IDs", async () => {
     const aggregate = phase71FixtureAggregate("actor");
     const payload = createPredictionSnapshotPayloadV2(aggregate, {

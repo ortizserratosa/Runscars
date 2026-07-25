@@ -6,7 +6,7 @@ export default function FilmNotFound() {
       <p className="section-index">PELÍCULA NO ENCONTRADA</p>
       <h1>Esta ficha todavía no existe.</h1>
       <p>
-        Solo mostramos películas presentes en el fixture verificable de la
+        Solo mostramos películas presentes en el catálogo verificado de la
         temporada.
       </p>
       <Link className="primary-button" href="/temporadas/2027">

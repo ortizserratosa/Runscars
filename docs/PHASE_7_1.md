@@ -40,6 +40,10 @@ en Awards Daily, Next Best Picture y Midnight Critics Circle.
 - Mercados Kalshi y Polymarket: `17 * * * *`.
 - Los fallos se aíslan por conector o proveedor.
 - Una publicación nueva conserva la lista anterior de categorías omitidas.
+- Cada run descubre primero la publicación vigente y deja evidencia explícita
+  de actualización, ausencia de cambios o discovery parcial.
+- Las páginas vivas conservan revisiones inmutables por contenido; no mezclan
+  posiciones antiguas y nuevas bajo una misma publicación.
 
 ## Verificación y puerta de salida
 
@@ -69,6 +73,13 @@ conectores profesionales bajo trigger `scheduled`. La base alcanzó la cobertura
 de la tabla, cerró editorialmente todas las incidencias (`0` pendientes) y creó
 ocho snapshots v2; repetir el mismo corte devolvió ocho `unchanged`.
 
+Una nueva ejecución programada posterior comprobó el discovery actual de los
+seis medios en paralelo y terminó por HTTP 200. Awards Daily seleccionó el
+artículo del 24 de julio para todas las categorías, Awards Radar leyó sus ocho
+páginas actualizadas en julio y AwardsWatch encontró las publicaciones de julio
+para interpretación. Los seis runs registraron `source.unchanged`, insertaron
+cero observaciones y mantuvieron la cola editorial en `0`.
+
 Kalshi devolvió cero mercados Oscar abiertos y Polymarket 65 contratos; ambos
 procesos terminaron correctamente y crearon cero observaciones profesionales.
 El archivo oficial conserva 45 nominaciones y ocho ganadores y su segunda
@@ -77,7 +88,8 @@ las 04:17 UTC para profesionales y cada hora al minuto 17 para mercados.
 
 La web está desplegada en
 <https://runscars-staging.vercel.app>. Las ocho rutas de 2027 devolvieron datos
-`DATABASE` y las ocho rutas de 2026 devolvieron nominados y ganador oficiales.
+reales de Supabase y las ocho rutas de 2026 devolvieron nominados y ganador
+oficiales.
 El endpoint semanal de snapshots rechaza llamadas sin su secreto y Vercel tiene
 la programación del lunes a las 04:47 UTC.
 

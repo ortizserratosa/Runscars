@@ -120,7 +120,7 @@ async function marketViews(
   const contractsResult = await supabase
     .from("market_contracts")
     .select(
-      "id,provider,market_title,outcome_label,source_url,market_price_snapshots(probability,volume,open_interest,observed_at)",
+      "id,provider,market_title,outcome_label,source_url,closes_at,resolved_at,market_price_snapshots(probability,volume,open_interest,observed_at)",
     )
     .eq("season_id", "oscars-2027")
     .eq("category_id", categoryId);
@@ -134,6 +134,12 @@ async function marketViews(
   for (const contract of contractsResult.data ?? []) {
     const provider = contract.provider as string;
     if (provider !== "kalshi" && provider !== "polymarket") {
+      continue;
+    }
+    if (
+      contract.resolved_at ||
+      (contract.closes_at && Date.parse(contract.closes_at) <= Date.now())
+    ) {
       continue;
     }
     const snapshots = [...(contract.market_price_snapshots ?? [])].sort(
@@ -154,6 +160,15 @@ async function marketViews(
       observedAt: latest.observed_at,
       sourceUrl: contract.source_url,
     });
+  }
+  for (const provider of ["kalshi", "polymarket"] as const) {
+    markets[provider] = markets[provider]
+      .sort(
+        (left, right) =>
+          (right.volume ?? 0) - (left.volume ?? 0) ||
+          (right.probability ?? 0) - (left.probability ?? 0),
+      )
+      .slice(0, 8);
   }
   return markets;
 }
