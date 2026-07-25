@@ -11,7 +11,7 @@ export function SiteFooter() {
         <Link href="/temporadas/2027">Oscar 2027</Link>
         <Link href="/fuentes/awardswatch">Trazabilidad</Link>
         <Link href="/creditos">Créditos</Link>
-        <span>Agregación · Fase 6</span>
+        <span>Snapshots · Fase 7</span>
       </div>
     </footer>
   );

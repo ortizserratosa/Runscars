@@ -1,7 +1,7 @@
 # Metodología
 
-**Estado:** metodología de señales profesionales e ingesta original operativas
-**Última revisión:** 2026-07-24
+**Estado:** agregación, snapshots y evaluación profesional operativos
+**Última revisión:** 2026-07-25
 
 ## 1. Principios
 
@@ -194,8 +194,8 @@ determinista entre dos cortes de cálculo consecutivos. Cada corte:
 
 Un valor positivo significa subida, uno negativo bajada y cero estabilidad. Una
 candidatura sin posición anterior se marca como nueva. Estos cortes no son
-snapshots y pueden recalcularse; su bloqueo e inmutabilidad empiezan en la
-fase 7.
+snapshots y pueden recalcularse; su bloqueo e inmutabilidad se incorporaron en
+la fase 7.
 
 ## 5. Rankings de usuarios
 
@@ -235,6 +235,16 @@ opcional y la visibilidad pública requerirá una preferencia explícita.
 - identificador o hash reproducible;
 - persona o proceso que lo bloqueó.
 
+La implementación `runscars-snapshot-v1` calcula el SHA-256 sobre una
+serialización JSON canónica del contenido metodológico. El proceso y el instante
+de bloqueo, el ID y la cadena de corrección se guardan como metadatos, pero no
+alteran el hash del agregado.
+
+Un snapshot periódico no convierte automáticamente las primeras posiciones en
+una selección final. El cierre de nominaciones fija y conserva el número de
+candidaturas previstas; el cierre de ganador fija una primera posición y
+conserva el ranking completo.
+
 ### 7.3 Inmutabilidad
 
 Un snapshot bloqueado no se modifica. Si se descubre un error:
@@ -243,6 +253,9 @@ Un snapshot bloqueado no se modifica. Si se descubre un error:
 2. se documenta la corrección;
 3. se crea un snapshot corregido enlazado;
 4. la interfaz indica cuál es oficial y por qué.
+
+La versión vigente vive en un puntero separado. Cambiar ese puntero no modifica
+ningún snapshot ni resultado oficial previo.
 
 ## 8. Evaluación del acierto
 
@@ -266,6 +279,11 @@ Por categoría:
 
 La fórmula no se cambiará después de conocer los resultados sin publicar una
 nueva versión metodológica.
+
+La versión inicial es `runscars-evaluation-v1`. Para métricas globales se suman
+primero aciertos, predicciones y resultados oficiales de todas las categorías y
+después se calculan las razones. No se usa una media simple de porcentajes por
+categoría.
 
 ## 9. Datos insuficientes
 

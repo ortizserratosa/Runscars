@@ -246,3 +246,32 @@ set technical_status = case id
   else technical_status
 end
 where id in ('guardian', 'roger-ebert', 'awardswatch');
+
+insert into public.snapshot_schedules (
+  id,
+  season_id,
+  category_id,
+  prediction_intention,
+  kind,
+  cron_expression,
+  time_zone,
+  is_active
+)
+values (
+  'oscars-2027-best-picture-nomination-weekly',
+  'oscars-2027',
+  'best-picture',
+  'nomination',
+  'periodic',
+  '47 4 * * 1',
+  'UTC',
+  true
+)
+on conflict (id) do update set
+  season_id = excluded.season_id,
+  category_id = excluded.category_id,
+  prediction_intention = excluded.prediction_intention,
+  kind = excluded.kind,
+  cron_expression = excluded.cron_expression,
+  time_zone = excluded.time_zone,
+  is_active = excluded.is_active;

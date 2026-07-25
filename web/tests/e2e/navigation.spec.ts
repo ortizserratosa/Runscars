@@ -40,6 +40,16 @@ test("exposes application health without leaking configuration", async ({
   });
 });
 
+test("rejects unauthenticated weekly snapshot invocations", async ({
+  request,
+}) => {
+  const response = await request.get("/api/cron/snapshots");
+  expect(response.status()).toBe(401);
+  await expect(response.json()).resolves.toEqual({
+    error: "No autorizado",
+  });
+});
+
 test("keeps film pages available without a TMDB token at runtime", async ({
   page,
 }) => {
@@ -62,6 +72,11 @@ test("explains and recalculates prediction consensus from its observations", asy
   ).toBeVisible();
   await expect(page.getByText("runscars-aggregation-v1")).toBeVisible();
   await expect(page.getByText("48 observaciones incluidas")).toBeVisible();
+  await expect(page.getByText("Snapshot inmutable")).toBeVisible();
+  await expect(page.getByText("SHA-256 1f57ec9b3076e01c…")).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Evaluación aún pendiente." }),
+  ).toBeVisible();
   await expect(
     page.getByText("Media de 4 listas ordenadas = 97,50 / 100"),
   ).toBeVisible();
@@ -73,6 +88,9 @@ test("explains and recalculates prediction consensus from its observations", asy
   ).toBeVisible();
   await expect(
     page.getByText("este corte todavía no alcanza las tres listas ordenadas"),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Este corte anterior se recalcula"),
   ).toBeVisible();
 });
 

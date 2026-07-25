@@ -1,7 +1,7 @@
 # Registro de fuentes
 
-**Estado:** fase 5 completada; primer corte de ingesta operativo
-**Última revisión:** 2026-07-24
+**Estado:** fase 7 completada; ingesta profesional y resultados versionados
+**Última revisión:** 2026-07-25
 
 ## 1. Objetivo
 
@@ -184,6 +184,11 @@ diaria; la API key de Guardian se mantiene únicamente como secreto de servidor.
 Variety, IndieWire y Awards Daily empiezan manuales. La ampliación a 28 fuentes
 no cambia esta prioridad: las nuevas fuentes se incorporarán por lotes, cada una
 con fixture y revisión de publicación.
+
+La fase 7 añade una importación manual separada para la Academy. Nominaciones y
+ganadores se guardan como resultados oficiales, nunca como predicciones, con
+URL, publicación, captura, valor original, hash y versión inmutable. El fixture
+solo prueba el contrato y está rotulado como no real.
 
 ## 8. Dataset de prueba
 

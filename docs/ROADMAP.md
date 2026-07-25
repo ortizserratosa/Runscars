@@ -1,6 +1,6 @@
 # Hoja de ruta
 
-**Última revisión:** 2026-07-24
+**Última revisión:** 2026-07-25
 
 Cada fase tiene una puerta de salida verificable. Una fase no se considera
 terminada por haber creado archivos o código, sino por cumplir esa puerta.
@@ -16,7 +16,7 @@ terminada por haber creado archivos o código, sino por cumplir esa puerta.
 | 4 | Catálogo TMDB | Completada |
 | 5 | Sistema de ingesta | Completada |
 | 6 | Agregación | Completada |
-| 7 | Snapshots y evaluación | Pendiente |
+| 7 | Snapshots y evaluación | Completada |
 | 8 | Usuarios | Pendiente |
 | 9 | Administración editorial | Pendiente |
 | 10 | QA y MVP desplegado | Pendiente |
@@ -184,18 +184,24 @@ Cumplimiento detallado en [AGGREGATION.md](AGGREGATION.md).
 
 ## Fase 7 · Snapshots y evaluación
 
+**Cerrada:** 2026-07-25. Los snapshots y resultados son append-only, las
+correcciones generan versiones enlazadas, el proceso semanal está programado y
+`runscars-evaluation-v1` coincide con los ejemplos manuales.
+
 ### Entregables
 
-- snapshots periódicos;
-- cierres de nominaciones y ganadores;
-- bloqueo e historial de correcciones;
-- resultados oficiales;
-- métricas de acierto.
+- [x] snapshots periódicos;
+- [x] cierres de nominaciones y ganadores;
+- [x] bloqueo e historial de correcciones;
+- [x] resultados oficiales;
+- [x] métricas de acierto.
 
 ### Puerta de salida
 
 Un snapshot bloqueado permanece idéntico tras nuevas importaciones y las métricas
 de acierto coinciden con ejemplos manuales.
+
+Cumplimiento detallado en [SNAPSHOTS.md](SNAPSHOTS.md).
 
 ## Fase 8 · Usuarios
 

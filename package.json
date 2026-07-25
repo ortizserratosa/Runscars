@@ -10,6 +10,7 @@
   },
   "scripts": {
     "dev": "npm --workspace web run dev",
+    "postinstall": "node scripts/patch-brace-expansion.mjs",
     "build": "npm --workspace web run build",
     "format": "prettier --check \"web/**/*.{ts,tsx,mjs,css,json,md}\" \"supabase/functions/**/*.{ts,mjs,json}\" \"scripts/**/*.mjs\" package.json .prettierrc.json",
     "format:write": "prettier --write \"web/**/*.{ts,tsx,mjs,css,json,md}\" \"supabase/functions/**/*.{ts,mjs,json}\" \"scripts/**/*.mjs\" package.json .prettierrc.json",
@@ -30,13 +31,18 @@
     "tmdb:search": "node web/scripts/tmdb-catalog.mjs search",
     "tmdb:import": "node web/scripts/tmdb-catalog.mjs import",
     "tmdb:match": "node web/scripts/tmdb-catalog.mjs match",
-    "ingest:manual": "node web/scripts/ingestion.mjs manual"
+    "ingest:manual": "node web/scripts/ingestion.mjs manual",
+    "results:import": "node web/scripts/official-results.mjs import"
   },
   "devDependencies": {
+    "brace-expansion": "5.0.8",
+    "eslint": "9.39.4",
+    "eslint-config-next": "16.2.11",
     "prettier": "3.9.6",
     "supabase": "2.109.1"
   },
   "overrides": {
+    "brace-expansion": "$brace-expansion",
     "next": {
       "postcss": "8.5.22",
       "sharp": "0.35.3"

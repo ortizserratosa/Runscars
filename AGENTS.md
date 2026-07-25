@@ -117,6 +117,9 @@ Comandos canónicos desde la raíz:
   editorial trazable. Los dos últimos comandos requieren secretos de servidor.
 - `npm run ingest:manual -- <manifiesto.json>`: carga profesional manual,
   versionada e idempotente; requiere credenciales de servidor.
+- `npm run results:import -- <manifiesto.json>`: registra nominaciones o
+  ganadores oficiales con procedencia y bloqueo inmutable; requiere credenciales
+  de servidor.
 
 Una tarea no está terminada hasta ejecutar las comprobaciones proporcionales al
 riesgo y comunicar sus resultados.

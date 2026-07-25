@@ -10,8 +10,8 @@
 
 La aplicación calcula recepción crítica y predicciones profesionales desde
 observaciones publicadas, sin mezclarlas entre sí ni con la comunidad. La salida
-no se guarda como un agregado mutable: la fase 7 persistirá snapshots junto con
-sus observaciones, versión y hash.
+no se guarda como un agregado mutable: la fase 7 la envuelve en snapshots junto
+con sus observaciones, versión y hash.
 
 El módulo puro vive en `web/src/lib/aggregation/`. No consulta red ni base de
 datos y puede recibir observaciones de cualquier repositorio. El fixture
@@ -136,4 +136,4 @@ fuentes externas.
 
 Con estos ejemplos coincidentes y la trazabilidad visible, la puerta de salida
 de la fase 6 queda cumplida. La inmutabilidad, correcciones de snapshots y
-evaluación contra resultados siguen reservadas a la fase 7.
+evaluación contra resultados se implementaron después en la fase 7.
