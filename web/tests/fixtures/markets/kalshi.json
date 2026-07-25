@@ -1,0 +1,20 @@
+{
+  "markets": [
+    {
+      "ticker": "KXOSCARPIC-27-ODYSSEY",
+      "event_ticker": "KXOSCARPIC-27",
+      "title": "Oscar Best Picture winner",
+      "yes_sub_title": "The Odyssey",
+      "last_price_dollars": "0.42",
+      "volume_fp": "1200.5",
+      "open_interest_fp": "320",
+      "close_time": "2027-03-14T20:00:00Z"
+    },
+    {
+      "ticker": "KXWEATHER-27",
+      "event_ticker": "KXWEATHER",
+      "title": "New York temperature",
+      "last_price_dollars": "0.50"
+    }
+  ]
+}

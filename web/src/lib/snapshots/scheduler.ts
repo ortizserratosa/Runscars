@@ -2,10 +2,16 @@ import "server-only";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { z } from "zod";
 import type { PredictionObservation } from "../aggregation";
+import type {
+  CategoryCandidatePerson,
+  PredictionObservationV2,
+} from "../aggregation/v2";
 import type { LockedPredictionSnapshot } from ".";
+import type { LockedPredictionSnapshotV2 } from "./v2";
 import {
   type SnapshotSchedule,
   type SnapshotSchedulerRepository,
+  type SnapshotSchedulerRepositoryV2,
 } from "./scheduler-core";
 
 export * from "./scheduler-core";
@@ -34,7 +40,9 @@ function numberFromJson(value: unknown) {
   return typeof value === "number" && Number.isFinite(value) ? value : null;
 }
 
-export class SupabaseSnapshotSchedulerRepository implements SnapshotSchedulerRepository {
+export class SupabaseSnapshotSchedulerRepository
+  implements SnapshotSchedulerRepository, SnapshotSchedulerRepositoryV2
+{
   private readonly client: SupabaseClient;
 
   constructor(environment = process.env) {
@@ -233,6 +241,208 @@ export class SupabaseSnapshotSchedulerRepository implements SnapshotSchedulerRep
     return (
       databaseError(result, `No se pudo bloquear el snapshot ${snapshot.id}`) ??
       false
+    );
+  }
+
+  async predictionObservationsV2(schedule: SnapshotSchedule) {
+    const observations =
+      databaseError(
+        await this.client
+          .from("professional_observations")
+          .select(
+            "id, source_id, publication_id, category_candidate_id, data_type, original_subject, original_value, author, published_at, captured_at, participates, state",
+          )
+          .eq("season_id", schedule.seasonId)
+          .eq("category_id", schedule.categoryId)
+          .eq("prediction_intention", schedule.intention)
+          .eq("state", "published")
+          .eq("participates", true)
+          .not("category_candidate_id", "is", null)
+          .in("data_type", ["prediction_ordered", "prediction_selection"]),
+        `No se pudieron cargar observaciones v2 para ${schedule.id}`,
+      ) ?? [];
+    const sourceIds = [...new Set(observations.map((row) => row.source_id))];
+    const publicationIds = [
+      ...new Set(observations.map((row) => row.publication_id)),
+    ];
+    const candidateIds = [
+      ...new Set(
+        observations.flatMap((row) =>
+          row.category_candidate_id ? [row.category_candidate_id] : [],
+        ),
+      ),
+    ];
+    if (
+      sourceIds.length === 0 ||
+      publicationIds.length === 0 ||
+      candidateIds.length === 0
+    ) {
+      return [];
+    }
+
+    const [sourceResult, publicationResult, candidateResult] =
+      await Promise.all([
+        this.client
+          .from("sources")
+          .select("id, name, publication_status")
+          .in("id", sourceIds),
+        this.client
+          .from("source_publications")
+          .select("id, external_id, canonical_url")
+          .in("id", publicationIds),
+        this.client
+          .from("category_candidates")
+          .select(
+            "id, season_id, category_id, display_label, work_title, films(id,title), category_candidate_people(person_id,role,display_order,people(id,name))",
+          )
+          .in("id", candidateIds),
+      ]);
+    const sources =
+      databaseError(sourceResult, "No se pudieron cargar las fuentes") ?? [];
+    const publications =
+      databaseError(
+        publicationResult,
+        "No se pudieron cargar las publicaciones",
+      ) ?? [];
+    const candidates =
+      databaseError(
+        candidateResult,
+        "No se pudieron cargar las candidaturas",
+      ) ?? [];
+    const sourceById = new Map(
+      sources
+        .filter((source) => source.publication_status === "publishable")
+        .map((source) => [source.id, source]),
+    );
+    const publicationById = new Map(
+      publications.map((publication) => [publication.id, publication]),
+    );
+    const candidateById = new Map(
+      candidates.map((candidate) => [candidate.id, candidate]),
+    );
+
+    return observations.flatMap((row): PredictionObservationV2[] => {
+      const source = sourceById.get(row.source_id);
+      const publication = publicationById.get(row.publication_id);
+      const candidate = row.category_candidate_id
+        ? candidateById.get(row.category_candidate_id)
+        : null;
+      const originalValue =
+        row.original_value !== null &&
+        typeof row.original_value === "object" &&
+        !Array.isArray(row.original_value)
+          ? (row.original_value as JsonRecord)
+          : {};
+      if (
+        !source ||
+        !publication ||
+        !candidate ||
+        (row.data_type !== "prediction_ordered" &&
+          row.data_type !== "prediction_selection")
+      ) {
+        return [];
+      }
+      const film = Array.isArray(candidate.films)
+        ? candidate.films[0]
+        : candidate.films;
+      const people = (candidate.category_candidate_people ?? []).flatMap(
+        (link): CategoryCandidatePerson[] => {
+          const person = Array.isArray(link.people)
+            ? link.people[0]
+            : link.people;
+          return person
+            ? [
+                {
+                  id: person.id,
+                  name: person.name,
+                  role: link.role,
+                  displayOrder: link.display_order,
+                },
+              ]
+            : [];
+        },
+      );
+      people.sort((left, right) => left.displayOrder - right.displayOrder);
+
+      return [
+        {
+          id: String(row.id),
+          sourceId: source.id,
+          sourceName: source.name,
+          publicationId: publication.external_id,
+          publicationUrl: publication.canonical_url,
+          author: row.author,
+          publishedAt: row.published_at,
+          capturedAt: row.captured_at,
+          seasonId: schedule.seasonId,
+          categoryId: schedule.categoryId,
+          intention: schedule.intention,
+          candidate: {
+            id: candidate.id,
+            seasonId: candidate.season_id,
+            categoryId: candidate.category_id,
+            label: candidate.display_label,
+            film: film ? { id: film.id, title: film.title } : null,
+            workTitle: candidate.work_title,
+            people,
+          },
+          participates: row.participates,
+          state: row.state,
+          dataType: row.data_type,
+          rank:
+            row.data_type === "prediction_ordered"
+              ? numberFromJson(originalValue.rank)
+              : null,
+          listLength:
+            row.data_type === "prediction_ordered"
+              ? numberFromJson(originalValue.list_length)
+              : null,
+          originalValue:
+            typeof originalValue.raw === "string"
+              ? originalValue.raw
+              : row.original_subject,
+        },
+      ];
+    });
+  }
+
+  async lockV2(snapshot: LockedPredictionSnapshotV2) {
+    const includedObservationIds =
+      snapshot.payload.includedObservationIds.map(Number);
+    const excludedObservationIds =
+      snapshot.payload.excludedObservationIds.map(Number);
+    if (
+      [...includedObservationIds, ...excludedObservationIds].some(
+        (id) => !Number.isSafeInteger(id) || id <= 0,
+      )
+    ) {
+      throw new Error("El snapshot v2 contiene IDs no persistidos");
+    }
+    const result = await this.client.rpc("lock_aggregate_snapshot", {
+      snapshot_id: snapshot.id,
+      snapshot_season_id: snapshot.payload.seasonId,
+      snapshot_category_id: snapshot.payload.categoryId,
+      snapshot_intention: snapshot.payload.intention,
+      snapshot_kind: snapshot.payload.kind,
+      snapshot_cutoff_at: snapshot.payload.cutoffAt,
+      snapshot_time_zone: snapshot.payload.timeZone,
+      snapshot_method_version: snapshot.payload.methodVersion,
+      snapshot_schema_version: snapshot.payload.schemaVersion,
+      snapshot_content_hash: snapshot.contentHash,
+      snapshot_payload: snapshot.payload,
+      snapshot_active_source_ids: snapshot.payload.activeSourceIds,
+      included_observation_ids: includedObservationIds,
+      excluded_observation_ids: excludedObservationIds,
+      snapshot_locked_at: snapshot.lockedAt,
+      snapshot_locked_by: snapshot.lockedBy,
+      corrected_snapshot_id: snapshot.correctsSnapshotId,
+      snapshot_correction_reason: snapshot.correctionReason,
+    });
+    return (
+      databaseError(
+        result,
+        `No se pudo bloquear el snapshot v2 ${snapshot.id}`,
+      ) ?? false
     );
   }
 }

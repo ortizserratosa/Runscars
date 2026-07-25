@@ -104,6 +104,8 @@ export type Database = {
           is_active: boolean;
           created_at: string;
           updated_at: string;
+          is_public: boolean;
+          candidate_kind: string;
         };
         Insert: {
           id: string;
@@ -113,6 +115,8 @@ export type Database = {
           is_active?: boolean;
           created_at?: string;
           updated_at?: string;
+          is_public?: boolean;
+          candidate_kind?: string;
         };
         Update: {
           id?: string;
@@ -122,8 +126,175 @@ export type Database = {
           is_active?: boolean;
           created_at?: string;
           updated_at?: string;
+          is_public?: boolean;
+          candidate_kind?: string;
         };
         Relationships: [];
+      };
+      category_candidate_match_history: {
+        Row: {
+          id: number;
+          source_id: string;
+          season_id: string;
+          category_id: string;
+          normalized_subject: string;
+          category_candidate_id: string;
+          match_kind: string;
+          reason: string;
+          actor: string;
+          created_at: string;
+        };
+        Insert: {
+          id: number;
+          source_id: string;
+          season_id: string;
+          category_id: string;
+          normalized_subject: string;
+          category_candidate_id: string;
+          match_kind: string;
+          reason: string;
+          actor: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          source_id?: string;
+          season_id?: string;
+          category_id?: string;
+          normalized_subject?: string;
+          category_candidate_id?: string;
+          match_kind?: string;
+          reason?: string;
+          actor?: string;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "category_candidate_match_history_category_candidate_id_fkey";
+            columns: ["category_candidate_id"];
+            isOneToOne: false;
+            referencedRelation: "category_candidates";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "category_candidate_match_history_category_id_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "categories";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "category_candidate_match_history_season_id_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "seasons";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "category_candidate_match_history_source_id_fkey";
+            columns: ["source_id"];
+            isOneToOne: false;
+            referencedRelation: "sources";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      category_candidate_people: {
+        Row: {
+          category_candidate_id: string;
+          person_id: string;
+          role: string;
+          display_order: number;
+          created_at: string;
+        };
+        Insert: {
+          category_candidate_id: string;
+          person_id: string;
+          role: string;
+          display_order: number;
+          created_at?: string;
+        };
+        Update: {
+          category_candidate_id?: string;
+          person_id?: string;
+          role?: string;
+          display_order?: number;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "category_candidate_people_category_candidate_id_fkey";
+            columns: ["category_candidate_id"];
+            isOneToOne: false;
+            referencedRelation: "category_candidates";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "category_candidate_people_person_id_fkey";
+            columns: ["person_id"];
+            isOneToOne: false;
+            referencedRelation: "people";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      category_candidates: {
+        Row: {
+          id: string;
+          season_id: string;
+          category_id: string;
+          film_id: string | null;
+          work_title: string | null;
+          display_label: string;
+          identity_key: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id: string;
+          season_id: string;
+          category_id: string;
+          film_id?: string | null;
+          work_title?: string | null;
+          display_label: string;
+          identity_key: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          season_id?: string;
+          category_id?: string;
+          film_id?: string | null;
+          work_title?: string | null;
+          display_label?: string;
+          identity_key?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "category_candidates_category_id_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "categories";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "category_candidates_film_id_fkey";
+            columns: ["film_id"];
+            isOneToOne: false;
+            referencedRelation: "films";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "category_candidates_season_id_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "seasons";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       current_aggregate_snapshots: {
         Row: {
@@ -206,6 +377,60 @@ export type Database = {
             columns: ["season_id"];
             isOneToOne: false;
             referencedRelation: "seasons";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      film_credit_match_history: {
+        Row: {
+          id: number;
+          film_id: string;
+          person_id: string;
+          tmdb_credit_id: string;
+          role: string;
+          department: string | null;
+          source_url: string;
+          reason: string;
+          actor: string;
+          created_at: string;
+        };
+        Insert: {
+          id: number;
+          film_id: string;
+          person_id: string;
+          tmdb_credit_id: string;
+          role: string;
+          department?: string | null;
+          source_url: string;
+          reason: string;
+          actor: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          film_id?: string;
+          person_id?: string;
+          tmdb_credit_id?: string;
+          role?: string;
+          department?: string | null;
+          source_url?: string;
+          reason?: string;
+          actor?: string;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "film_credit_match_history_film_id_fkey";
+            columns: ["film_id"];
+            isOneToOne: false;
+            referencedRelation: "films";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "film_credit_match_history_person_id_fkey";
+            columns: ["person_id"];
+            isOneToOne: false;
+            referencedRelation: "people";
             referencedColumns: ["id"];
           },
         ];
@@ -542,6 +767,261 @@ export type Database = {
           },
         ];
       };
+      market_capture_runs: {
+        Row: {
+          id: number;
+          connector_id: string;
+          run_key: string;
+          status: Database["public"]["Enums"]["ingestion_run_status"];
+          started_at: string;
+          finished_at: string | null;
+          contracts_seen: number;
+          snapshots_inserted: number;
+          snapshots_duplicate: number;
+          error_summary: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id: number;
+          connector_id: string;
+          run_key: string;
+          status?: Database["public"]["Enums"]["ingestion_run_status"];
+          started_at: string;
+          finished_at?: string | null;
+          contracts_seen?: number;
+          snapshots_inserted?: number;
+          snapshots_duplicate?: number;
+          error_summary?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          connector_id?: string;
+          run_key?: string;
+          status?: Database["public"]["Enums"]["ingestion_run_status"];
+          started_at?: string;
+          finished_at?: string | null;
+          contracts_seen?: number;
+          snapshots_inserted?: number;
+          snapshots_duplicate?: number;
+          error_summary?: string | null;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "market_capture_runs_connector_id_fkey";
+            columns: ["connector_id"];
+            isOneToOne: false;
+            referencedRelation: "market_connectors";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      market_connectors: {
+        Row: {
+          id: string;
+          source_id: string;
+          provider: Database["public"]["Enums"]["market_provider"];
+          endpoint_url: string;
+          extractor_version: string;
+          schedule_cron: string;
+          is_active: boolean;
+          configuration: Json;
+          last_success_at: string | null;
+          last_failure_at: string | null;
+          last_error: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id: string;
+          source_id: string;
+          provider: Database["public"]["Enums"]["market_provider"];
+          endpoint_url: string;
+          extractor_version: string;
+          schedule_cron?: string;
+          is_active?: boolean;
+          configuration?: Json;
+          last_success_at?: string | null;
+          last_failure_at?: string | null;
+          last_error?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          source_id?: string;
+          provider?: Database["public"]["Enums"]["market_provider"];
+          endpoint_url?: string;
+          extractor_version?: string;
+          schedule_cron?: string;
+          is_active?: boolean;
+          configuration?: Json;
+          last_success_at?: string | null;
+          last_failure_at?: string | null;
+          last_error?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "market_connectors_source_id_fkey";
+            columns: ["source_id"];
+            isOneToOne: false;
+            referencedRelation: "sources";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      market_contracts: {
+        Row: {
+          id: number;
+          provider: Database["public"]["Enums"]["market_provider"];
+          source_id: string;
+          external_market_id: string;
+          external_contract_id: string;
+          season_id: string | null;
+          category_id: string | null;
+          category_candidate_id: string | null;
+          market_title: string;
+          outcome_label: string;
+          source_url: string;
+          closes_at: string | null;
+          resolved_at: string | null;
+          original_data: Json;
+          captured_at: string;
+          created_at: string;
+        };
+        Insert: {
+          id: number;
+          provider: Database["public"]["Enums"]["market_provider"];
+          source_id: string;
+          external_market_id: string;
+          external_contract_id: string;
+          season_id?: string | null;
+          category_id?: string | null;
+          category_candidate_id?: string | null;
+          market_title: string;
+          outcome_label: string;
+          source_url: string;
+          closes_at?: string | null;
+          resolved_at?: string | null;
+          original_data: Json;
+          captured_at: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          provider?: Database["public"]["Enums"]["market_provider"];
+          source_id?: string;
+          external_market_id?: string;
+          external_contract_id?: string;
+          season_id?: string | null;
+          category_id?: string | null;
+          category_candidate_id?: string | null;
+          market_title?: string;
+          outcome_label?: string;
+          source_url?: string;
+          closes_at?: string | null;
+          resolved_at?: string | null;
+          original_data?: Json;
+          captured_at?: string;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "market_contracts_category_candidate_id_fkey";
+            columns: ["category_candidate_id"];
+            isOneToOne: false;
+            referencedRelation: "category_candidates";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "market_contracts_category_id_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "categories";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "market_contracts_season_id_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "seasons";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "market_contracts_source_id_fkey";
+            columns: ["source_id"];
+            isOneToOne: false;
+            referencedRelation: "sources";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      market_price_snapshots: {
+        Row: {
+          id: number;
+          contract_id: number;
+          run_id: number;
+          content_hash: string;
+          probability: number | null;
+          original_price: number | null;
+          original_currency: string | null;
+          volume: number | null;
+          open_interest: number | null;
+          observed_at: string;
+          captured_at: string;
+          original_data: Json;
+          created_at: string;
+        };
+        Insert: {
+          id: number;
+          contract_id: number;
+          run_id: number;
+          content_hash: string;
+          probability?: number | null;
+          original_price?: number | null;
+          original_currency?: string | null;
+          volume?: number | null;
+          open_interest?: number | null;
+          observed_at: string;
+          captured_at: string;
+          original_data: Json;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          contract_id?: number;
+          run_id?: number;
+          content_hash?: string;
+          probability?: number | null;
+          original_price?: number | null;
+          original_currency?: string | null;
+          volume?: number | null;
+          open_interest?: number | null;
+          observed_at?: string;
+          captured_at?: string;
+          original_data?: Json;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "market_price_snapshots_contract_id_fkey";
+            columns: ["contract_id"];
+            isOneToOne: false;
+            referencedRelation: "market_contracts";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "market_price_snapshots_run_id_fkey";
+            columns: ["run_id"];
+            isOneToOne: false;
+            referencedRelation: "market_capture_runs";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       official_result_entries: {
         Row: {
           result_set_id: string;
@@ -551,6 +1031,7 @@ export type Database = {
           person_id: string | null;
           outcome: Database["public"]["Enums"]["official_result_outcome"];
           created_at: string;
+          category_candidate_id: string | null;
         };
         Insert: {
           result_set_id: string;
@@ -560,6 +1041,7 @@ export type Database = {
           person_id?: string | null;
           outcome: Database["public"]["Enums"]["official_result_outcome"];
           created_at?: string;
+          category_candidate_id?: string | null;
         };
         Update: {
           result_set_id?: string;
@@ -569,8 +1051,16 @@ export type Database = {
           person_id?: string | null;
           outcome?: Database["public"]["Enums"]["official_result_outcome"];
           created_at?: string;
+          category_candidate_id?: string | null;
         };
         Relationships: [
+          {
+            foreignKeyName: "official_result_entries_category_candidate_id_fkey";
+            columns: ["category_candidate_id"];
+            isOneToOne: false;
+            referencedRelation: "category_candidates";
+            referencedColumns: ["id"];
+          },
           {
             foreignKeyName: "official_result_entries_category_id_fkey";
             columns: ["category_id"];
@@ -687,6 +1177,7 @@ export type Database = {
           tmdb_id: number;
           created_at: string;
           updated_at: string;
+          alternate_names: string[];
         };
         Insert: {
           id: string;
@@ -694,6 +1185,7 @@ export type Database = {
           tmdb_id: number;
           created_at?: string;
           updated_at?: string;
+          alternate_names?: string[];
         };
         Update: {
           id?: string;
@@ -701,6 +1193,7 @@ export type Database = {
           tmdb_id?: number;
           created_at?: string;
           updated_at?: string;
+          alternate_names?: string[];
         };
         Relationships: [
           {
@@ -739,6 +1232,7 @@ export type Database = {
           state: Database["public"]["Enums"]["professional_observation_state"];
           corrects_observation_id: number | null;
           created_at: string;
+          category_candidate_id: string | null;
         };
         Insert: {
           id: number;
@@ -766,6 +1260,7 @@ export type Database = {
           state?: Database["public"]["Enums"]["professional_observation_state"];
           corrects_observation_id?: number | null;
           created_at?: string;
+          category_candidate_id?: string | null;
         };
         Update: {
           id?: number;
@@ -793,6 +1288,7 @@ export type Database = {
           state?: Database["public"]["Enums"]["professional_observation_state"];
           corrects_observation_id?: number | null;
           created_at?: string;
+          category_candidate_id?: string | null;
         };
         Relationships: [
           {
@@ -800,6 +1296,13 @@ export type Database = {
             columns: ["capture_id"];
             isOneToOne: false;
             referencedRelation: "source_publication_captures";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "professional_observations_category_candidate_id_fkey";
+            columns: ["category_candidate_id"];
+            isOneToOne: false;
+            referencedRelation: "category_candidates";
             referencedColumns: ["id"];
           },
           {
@@ -1465,6 +1968,7 @@ export type Database = {
       ingestion_review_status: "pending" | "resolved" | "dismissed";
       ingestion_run_status: "running" | "succeeded" | "partial" | "failed";
       ingestion_trigger: "manual" | "scheduled" | "fixture";
+      market_provider: "kalshi" | "polymarket";
       official_result_kind: "nominations" | "winners";
       official_result_outcome: "nominee" | "winner";
       prediction_intention: "nomination" | "winner";

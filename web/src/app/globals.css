@@ -1526,6 +1526,102 @@ select:focus-visible {
   font-weight: 800;
 }
 
+.category-source-details {
+  border-top: 1px dashed var(--line);
+  padding: 0.85rem 1.4rem 1.4rem 70px;
+}
+
+.category-source-details summary {
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.category-source-details .source-calculations {
+  margin-top: 0.8rem;
+}
+
+.market-panel {
+  margin-top: 6rem;
+}
+
+.market-provider-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.market-provider {
+  border: 1px solid var(--ink);
+  background: var(--white);
+}
+
+.market-provider h3,
+.market-provider > p {
+  margin: 0;
+  padding: 1rem 1.2rem;
+}
+
+.market-provider h3 {
+  border-bottom: 1px solid var(--ink);
+  font-size: 1.5rem;
+}
+
+.market-provider > p {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.market-provider > a {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.25rem 1rem;
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.market-provider > a small {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  font-size: 0.65rem;
+}
+
+.archive-nominees {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-top: 1px solid var(--ink);
+}
+
+.archive-nominees article {
+  min-height: 150px;
+  padding: 1.4rem;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.archive-nominees article.winner {
+  background: var(--acid);
+}
+
+.archive-nominees article > span {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  font-weight: 800;
+}
+
+.archive-nominees h3 {
+  margin: 1.2rem 0 0.4rem;
+  font-size: 1.5rem;
+}
+
+.archive-nominees p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
 .ranking-lab {
   display: grid;
   grid-template-columns: 0.7fr 1.3fr;
@@ -2544,7 +2640,9 @@ select:focus-visible {
   .category-title-row,
   .film-hero-grid,
   .film-signal-section,
-  .source-title-row {
+  .source-title-row,
+  .market-provider-grid,
+  .archive-nominees {
     grid-template-columns: 1fr;
   }
 

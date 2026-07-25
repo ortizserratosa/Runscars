@@ -31,8 +31,10 @@
     "tmdb:search": "node web/scripts/tmdb-catalog.mjs search",
     "tmdb:import": "node web/scripts/tmdb-catalog.mjs import",
     "tmdb:match": "node web/scripts/tmdb-catalog.mjs match",
+    "candidate:match": "node web/scripts/category-candidate-match.mjs match",
     "ingest:manual": "node web/scripts/ingestion.mjs manual",
-    "results:import": "node web/scripts/official-results.mjs import"
+    "results:import": "node web/scripts/official-results.mjs import",
+    "results:archive": "node web/scripts/official-results.mjs archive"
   },
   "devDependencies": {
     "brace-expansion": "5.0.8",

@@ -1,7 +1,7 @@
-# Sistema de ingesta · fase 5
+# Sistema de ingesta · fases 5 y 7.1
 
-**Estado:** completada
-**Fecha de cierre:** 2026-07-24
+**Estado:** fase 5 completada; ampliación 7.1 en integración
+**Última revisión:** 2026-07-25
 
 ## Objetivo
 
@@ -22,6 +22,8 @@ son observaciones distintas aunque procedan de la misma publicación.
 | `source_publication_captures` | Campos originales necesarios, inmutables y deduplicados por hash |
 | `professional_observations` | Valor y escala originales, procedencia, matching y participación |
 | `ingestion_review_items` | Cola privada para identidades o valores dudosos |
+| `category_candidates` | Identidad genérica de película u obra y personas |
+| `category_candidate_people` | Colaboradores ordenados de la candidatura |
 
 Una observación publicada puede recorrerse hasta `source_url`, publicación,
 autor, fecha de publicación, captura y versión del extractor. No existe ningún
@@ -111,6 +113,28 @@ npx supabase db query --linked --file supabase/schedules/run-ingestion-daily.sql
 `--no-verify-jwt` es intencionado: la función aplica su propio secreto de
 alta entropía en `x-runscars-cron-secret`. Una llamada sin él recibe 401.
 
+### Ampliación multcategoría
+
+La tarea diaria ejecuta de forma aislada AwardsWatch, Awards Daily, Awards
+Radar, Next Best Picture, Midnight Critics Circle y The Ringer. Los cinco
+primeros medios aportan rankings cuando los publican; The Ringer aporta solo una
+selección de Mejor película. Los extractores estructurados conservan también
+categorías adicionales, cuya visibilidad pública se decide en `categories`.
+
+Un título ausente se consulta en TMDB solo desde servidor. La importación
+automática exige una coincidencia única exacta y compatible con la temporada;
+después, las personas solo se buscan en sus créditos. Película, persona, equipo
+o categoría se pueden corregir con:
+
+```bash
+npm run candidate:match -- <observation-id> <candidate-id> \
+  --kind <film|person|team|category> --reason "<motivo>"
+```
+
+Los mercados se ejecutan cada hora mediante `run-markets`. Kalshi y Polymarket
+se paginan, se filtran por Oscar y se guardan en tablas append-only. Un fallo de
+un proveedor no bloquea al otro y ninguno escribe observaciones profesionales.
+
 ## Pruebas sin red
 
 Los fixtures de `web/tests/fixtures/ingestion/` contienen solo la estructura y
@@ -120,6 +144,8 @@ campos mínimos necesarios:
 - `roger-ebert.xml`;
 - `awardswatch.html`;
 - `manual.json`.
+- fixtures HTML de las seis fuentes de predicción multcategoría;
+- fixtures JSON de Kalshi y Polymarket.
 
 Vitest no llama a ninguna fuente. Comprueba los tres parsers, el formato manual,
 matching exacto y por título alternativo, cola de revisión, reimportación y
@@ -160,6 +186,23 @@ observaciones de películas ajenas a la temporada quedaron conservadas como
 restringió entonces dinámicamente al catálogo: la ejecución de comprobación
 procesó solo esas dos publicaciones, reconoció las cuatro observaciones como
 duplicadas y no creó revisiones nuevas.
+
+El 2026-07-25 se desplegó la ampliación multcategoría. Los seis conectores de
+predicción completaron una ejecución real con trigger `scheduled`; cinco
+aportaron rankings y The Ringer una selección de Mejor película. La revisión
+editorial vinculó seis erratas inequívocas y excluyó las obras sin match único,
+conservando siempre el valor original. La cola quedó en `0` pendientes.
+
+Los extractores corrigieron además tres casos descubiertos en staging: identidad
+de publicación estable por URL aunque cambie su ID externo, encabezados
+alternativos de categorías técnicas y elección determinista del crédito
+relevante cuando una persona figura como guionista y directora. Repetir el
+archivo oficial 2026 confirmó que esas candidaturas son idempotentes.
+
+El Cron `runscars-ingestion-daily` está activo a las 04:17 UTC y
+`runscars-markets-hourly` al minuto 17 de cada hora. La primera captura de
+mercados terminó con Kalshi sin contratos Oscar abiertos y Polymarket con 65;
+ninguno creó observaciones profesionales.
 
 ## Puerta de salida
 

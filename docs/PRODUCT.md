@@ -1,7 +1,7 @@
 # Contrato de producto
 
 **Estado:** contrato aceptado para el MVP
-**Última revisión:** 2026-07-24
+**Última revisión:** 2026-07-25
 
 ## 1. Visión
 
@@ -66,6 +66,12 @@ cero a cinco estrellas. Siempre se muestra también la escala original.
 Rankings o selecciones de expertos sobre posibles nominados y posibles
 ganadores. Cada predicción tiene categoría, fecha, fuente e intención.
 
+### Mercados
+
+Contratos y precios de mercados de predicción. Se muestran por proveedor y con
+su valor original; no se promedian entre sí ni participan en el consenso
+profesional Borda.
+
 ### Comunidad
 
 Rankings realizados por usuarios y su estado de visionado. Los datos de la
@@ -96,6 +102,9 @@ original. En el prototipo se priorizará la incorporación manual.
 8. Guion adaptado.
 
 Las categorías se modelarán como datos configurables, no como columnas fijas.
+Una candidatura puede representar una película, una obra y un conjunto ordenado
+de personas. Las categorías adicionales detectadas se conservan, pero solo se
+publican cuando alcanzan la cobertura aprobada.
 
 ### Fuentes
 
@@ -108,6 +117,9 @@ Las categorías se modelarán como datos configurables, no como columnas fijas.
 - Importación manual disponible para el resto.
 - Una fuente seleccionada puede activarse gradualmente; solo sus observaciones
   elegibles participan en el agregado correspondiente.
+- En el corte 7.1, cada categoría pública requiere cuatro rankings ordenados
+  automáticos independientes; Mejor película incorpora además The Ringer como
+  selección y alcanza seis medios automáticos.
 
 ### Actualización y snapshots
 
@@ -181,6 +193,8 @@ Las categorías se modelarán como datos configurables, no como columnas fijas.
 | RF-12 | Administrar matching, exclusiones, importaciones y snapshots |
 | RF-13 | Mostrar frescura y estado de las fuentes |
 | RF-14 | Funcionar correctamente en móvil y escritorio |
+| RF-15 | Mostrar mercados separados por proveedor y fuera del agregado profesional |
+| RF-16 | Publicar las ocho categorías desde datos persistidos y archivar Oscar 2026 |
 
 ## 9. Fuera del MVP
 
@@ -207,7 +221,8 @@ Las categorías se modelarán como datos configurables, no como columnas fijas.
 
 ## 11. Glosario
 
-- **Candidatura:** película o persona considerada dentro de una categoría.
+- **Candidatura:** identidad canónica de temporada, categoría, película u obra y
+  conjunto de personas consideradas.
 - **Observación:** dato individual capturado de una fuente.
 - **Predicción de nominación:** selección sobre quién recibirá nominación.
 - **Predicción de ganador:** selección sobre quién ganará entre candidatos.

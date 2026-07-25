@@ -1,0 +1,287 @@
+{
+  "formatVersion": 2,
+  "seasonId": "oscars-2026",
+  "capturedAt": "2026-07-25T00:00:00.000Z",
+  "source": {
+    "sourceId": "academy",
+    "sourceUrl": "https://www.oscars.org/oscars/ceremonies/2026",
+    "author": "Academy of Motion Picture Arts and Sciences",
+    "nominationsPublishedAt": "2026-01-22T13:30:00.000Z",
+    "winnersPublishedAt": "2026-03-16T03:00:00.000Z"
+  },
+  "creditCorrections": [
+    {
+      "filmId": "it-was-just-an-accident",
+      "tmdbPersonId": 5464954,
+      "name": "Nader Saïvar",
+      "role": "Screenplay",
+      "department": "Writing",
+      "sourceUrl": "https://www.oscars.org/oscars/ceremonies/2026",
+      "reason": "Crédito oficial de candidatura ausente en los créditos TMDB de la película"
+    },
+    {
+      "filmId": "it-was-just-an-accident",
+      "tmdbPersonId": 129890,
+      "name": "Shadmehr Rastin",
+      "role": "Screenplay",
+      "department": "Writing",
+      "sourceUrl": "https://www.oscars.org/oscars/ceremonies/2026",
+      "reason": "Crédito oficial de candidatura ausente en los créditos TMDB de la película"
+    },
+    {
+      "filmId": "it-was-just-an-accident",
+      "tmdbPersonId": 5464955,
+      "name": "Mehdi Mahmoudian",
+      "role": "Screenplay",
+      "department": "Writing",
+      "sourceUrl": "https://www.oscars.org/oscars/ceremonies/2026",
+      "reason": "Crédito oficial de candidatura ausente en los créditos TMDB de la película"
+    }
+  ],
+  "categories": [
+    {
+      "categoryId": "best-picture",
+      "candidates": [
+        { "filmId": "bugonia", "filmTitle": "Bugonia" },
+        { "filmId": "f1", "filmTitle": "F1" },
+        { "filmId": "frankenstein-2025", "filmTitle": "Frankenstein" },
+        { "filmId": "hamnet", "filmTitle": "Hamnet" },
+        { "filmId": "marty-supreme", "filmTitle": "Marty Supreme" },
+        {
+          "filmId": "one-battle-after-another",
+          "filmTitle": "One Battle After Another",
+          "winner": true
+        },
+        { "filmId": "the-secret-agent", "filmTitle": "The Secret Agent" },
+        {
+          "filmId": "sentimental-value",
+          "filmTitle": "Sentimental Value"
+        },
+        { "filmId": "sinners", "filmTitle": "Sinners" },
+        { "filmId": "train-dreams", "filmTitle": "Train Dreams" }
+      ]
+    },
+    {
+      "categoryId": "directing",
+      "candidates": [
+        {
+          "filmId": "one-battle-after-another",
+          "filmTitle": "One Battle After Another",
+          "people": ["Paul Thomas Anderson"],
+          "winner": true
+        },
+        {
+          "filmId": "hamnet",
+          "filmTitle": "Hamnet",
+          "people": ["Chloé Zhao"]
+        },
+        {
+          "filmId": "marty-supreme",
+          "filmTitle": "Marty Supreme",
+          "people": ["Josh Safdie"]
+        },
+        {
+          "filmId": "sentimental-value",
+          "filmTitle": "Sentimental Value",
+          "people": ["Joachim Trier"]
+        },
+        {
+          "filmId": "sinners",
+          "filmTitle": "Sinners",
+          "people": ["Ryan Coogler"]
+        }
+      ]
+    },
+    {
+      "categoryId": "actor",
+      "candidates": [
+        {
+          "filmId": "marty-supreme",
+          "filmTitle": "Marty Supreme",
+          "people": ["Timothée Chalamet"]
+        },
+        {
+          "filmId": "one-battle-after-another",
+          "filmTitle": "One Battle After Another",
+          "people": ["Leonardo DiCaprio"]
+        },
+        {
+          "filmId": "blue-moon",
+          "filmTitle": "Blue Moon",
+          "people": ["Ethan Hawke"]
+        },
+        {
+          "filmId": "sinners",
+          "filmTitle": "Sinners",
+          "people": ["Michael B. Jordan"],
+          "winner": true
+        },
+        {
+          "filmId": "the-secret-agent",
+          "filmTitle": "The Secret Agent",
+          "people": ["Wagner Moura"]
+        }
+      ]
+    },
+    {
+      "categoryId": "actress",
+      "candidates": [
+        {
+          "filmId": "if-i-had-legs-id-kick-you",
+          "filmTitle": "If I Had Legs I'd Kick You",
+          "people": ["Rose Byrne"]
+        },
+        {
+          "filmId": "hamnet",
+          "filmTitle": "Hamnet",
+          "people": ["Jessie Buckley"],
+          "winner": true
+        },
+        {
+          "filmId": "song-sung-blue",
+          "filmTitle": "Song Sung Blue",
+          "people": ["Kate Hudson"]
+        },
+        {
+          "filmId": "sentimental-value",
+          "filmTitle": "Sentimental Value",
+          "people": ["Renate Reinsve"]
+        },
+        {
+          "filmId": "bugonia",
+          "filmTitle": "Bugonia",
+          "people": ["Emma Stone"]
+        }
+      ]
+    },
+    {
+      "categoryId": "supporting-actor",
+      "candidates": [
+        {
+          "filmId": "one-battle-after-another",
+          "filmTitle": "One Battle After Another",
+          "people": ["Benicio del Toro"]
+        },
+        {
+          "filmId": "frankenstein-2025",
+          "filmTitle": "Frankenstein",
+          "people": ["Jacob Elordi"]
+        },
+        {
+          "filmId": "sinners",
+          "filmTitle": "Sinners",
+          "people": ["Delroy Lindo"]
+        },
+        {
+          "filmId": "one-battle-after-another",
+          "filmTitle": "One Battle After Another",
+          "people": ["Sean Penn"],
+          "winner": true
+        },
+        {
+          "filmId": "sentimental-value",
+          "filmTitle": "Sentimental Value",
+          "people": ["Stellan Skarsgård"]
+        }
+      ]
+    },
+    {
+      "categoryId": "supporting-actress",
+      "candidates": [
+        {
+          "filmId": "sentimental-value",
+          "filmTitle": "Sentimental Value",
+          "people": ["Elle Fanning"]
+        },
+        {
+          "filmId": "sentimental-value",
+          "filmTitle": "Sentimental Value",
+          "people": ["Inga Ibsdotter Lilleaas"]
+        },
+        {
+          "filmId": "weapons",
+          "filmTitle": "Weapons",
+          "people": ["Amy Madigan"],
+          "winner": true
+        },
+        {
+          "filmId": "sinners",
+          "filmTitle": "Sinners",
+          "people": ["Wunmi Mosaku"]
+        },
+        {
+          "filmId": "one-battle-after-another",
+          "filmTitle": "One Battle After Another",
+          "people": ["Teyana Taylor"]
+        }
+      ]
+    },
+    {
+      "categoryId": "adapted-screenplay",
+      "candidates": [
+        {
+          "filmId": "bugonia",
+          "filmTitle": "Bugonia",
+          "people": ["Will Tracy"]
+        },
+        {
+          "filmId": "frankenstein-2025",
+          "filmTitle": "Frankenstein",
+          "people": ["Guillermo del Toro"]
+        },
+        {
+          "filmId": "hamnet",
+          "filmTitle": "Hamnet",
+          "people": ["Chloé Zhao", "Maggie O'Farrell"]
+        },
+        {
+          "filmId": "one-battle-after-another",
+          "filmTitle": "One Battle After Another",
+          "people": ["Paul Thomas Anderson"],
+          "winner": true
+        },
+        {
+          "filmId": "train-dreams",
+          "filmTitle": "Train Dreams",
+          "people": ["Clint Bentley", "Greg Kwedar"]
+        }
+      ]
+    },
+    {
+      "categoryId": "original-screenplay",
+      "candidates": [
+        {
+          "filmId": "blue-moon",
+          "filmTitle": "Blue Moon",
+          "people": ["Robert Kaplow"]
+        },
+        {
+          "filmId": "it-was-just-an-accident",
+          "filmTitle": "It Was Just an Accident",
+          "people": [
+            "Jafar Panahi",
+            "Nader Saïvar",
+            "Shadmehr Rastin",
+            "Mehdi Mahmoudian"
+          ]
+        },
+        {
+          "filmId": "marty-supreme",
+          "filmTitle": "Marty Supreme",
+          "people": ["Ronald Bronstein", "Josh Safdie"]
+        },
+        {
+          "filmId": "sentimental-value",
+          "filmTitle": "Sentimental Value",
+          "people": ["Eskil Vogt", "Joachim Trier"]
+        },
+        {
+          "filmId": "sinners",
+          "filmTitle": "Sinners",
+          "people": ["Ryan Coogler"],
+          "winner": true
+        }
+      ]
+    }
+  ]
+}

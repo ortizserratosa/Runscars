@@ -388,6 +388,9 @@ deno_version = 2
 [functions.run-ingestion]
 verify_jwt = false
 
+[functions.run-markets]
+verify_jwt = false
+
 [analytics]
 enabled = false
 port = 54327

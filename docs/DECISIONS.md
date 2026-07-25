@@ -1,6 +1,6 @@
 # Registro de decisiones
 
-**Última revisión:** 2026-07-24
+**Última revisión:** 2026-07-25
 
 ## Cómo usar este registro
 
@@ -41,6 +41,10 @@ pasado para ocultar cambios de criterio.
 | D-021 | Snapshots como envolventes inmutables con puntero vigente | Aceptada |
 | D-022 | Evaluación versionada sobre cierres explícitos | Aceptada |
 | D-023 | Compatibilidad explícita para `brace-expansion` corregido | Aceptada |
+| D-024 | Candidatura genérica y contratos v2 compatibles | Aceptada |
+| D-025 | Cobertura profesional mínima por medio y categoría | Aceptada |
+| D-026 | Mercados separados y append-only | Aceptada |
+| D-027 | Archivo oficial sin predicciones históricas | Aceptada |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -357,3 +361,51 @@ El 2026-07-25 PostgreSQL conservó un snapshot byte a byte tras una importación
 posterior, rechazó su mutación y mantuvo original y corrección enlazados. Los
 ejemplos manuales de nominaciones y ganador coincidieron con
 `runscars-evaluation-v1`. La fase 8 no se ha iniciado.
+
+## D-024 · Candidatura genérica y contratos v2 compatibles
+
+- **Fecha:** 2026-07-25
+- **Estado:** Aceptada
+- **Decisión:** identificar cada candidatura mediante temporada, categoría,
+  película u obra y conjunto de personas; conservar además el orden de
+  presentación de los colaboradores.
+- **Versionado:** `runscars-aggregation-v2`, `runscars-snapshot-v2` y
+  `runscars-evaluation-v2` exponen `candidateId`, película, obra y personas. Los
+  contratos v1 y todos sus snapshots permanecen inmutables y reproducibles.
+- **Motivo:** soportar sin excepciones interpretaciones, guiones y equipos, así
+  como dos intérpretes de una película o una persona con varias películas.
+
+## D-025 · Cobertura profesional mínima por medio y categoría
+
+- **Fecha:** 2026-07-25
+- **Estado:** Aceptada
+- **Decisión:** una categoría pública necesita al menos cuatro rankings
+  ordenados automáticos y publicables; el objetivo operativo inicial es cinco.
+  Una fuente manual, un mercado o varios expertos del mismo medio cuentan cero,
+  cero y una fuente respectivamente a efectos del mínimo.
+- **Temporalidad:** se usa la publicación elegible más reciente por fuente,
+  categoría e intención. Una publicación posterior que omite una categoría no
+  borra la última lista elegible de esa categoría.
+- **Consecuencia:** las categorías adicionales se ingieren si el formato es
+  estructurado, pero permanecen no públicas hasta alcanzar su propia cobertura.
+
+## D-026 · Mercados separados y append-only
+
+- **Fecha:** 2026-07-25
+- **Estado:** Aceptada
+- **Decisión:** Kalshi y Polymarket se capturan cada hora en contratos y
+  snapshots append-only por proveedor. Se conserva el valor original y no se
+  calcula consenso entre mercados.
+- **Límite:** un precio o probabilidad de mercado nunca se convierte en una
+  observación profesional ni participa en Borda. La falta de mercado no bloquea
+  una categoría ni la fase.
+
+## D-027 · Archivo oficial sin predicciones históricas
+
+- **Fecha:** 2026-07-25
+- **Estado:** Aceptada
+- **Decisión:** importar nominaciones y ganadores oficiales de Oscar 2026 para
+  las ocho categorías, con sus películas, obras y personas, sin reconstruir
+  predicciones anteriores a Runscars.
+- **Motivo:** ofrecer una temporada cerrada verificable sin fabricar una serie
+  temporal que no fue capturada en su momento.

@@ -1,5 +1,5 @@
 import {
-  runScheduledSnapshots,
+  runScheduledSnapshotsV2,
   SupabaseSnapshotSchedulerRepository,
 } from "../../../../lib/snapshots/scheduler";
 
@@ -17,7 +17,7 @@ export async function GET(request: Request) {
   }
 
   try {
-    const results = await runScheduledSnapshots(
+    const results = await runScheduledSnapshotsV2(
       new SupabaseSnapshotSchedulerRepository(),
     );
     const failed = results.filter(

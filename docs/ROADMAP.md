@@ -7,19 +7,20 @@ terminada por haber creado archivos o código, sino por cumplir esa puerta.
 
 ## Estado general
 
-| Fase | Entregable principal | Estado |
-|---|---|---|
-| 0 | Contrato y registros | Completada |
-| 1 | Discovery y dataset de fuentes | Completada |
-| 2 | Prototipo visual navegable | Completada |
-| 3 | Base técnica y staging | Completada |
-| 4 | Catálogo TMDB | Completada |
-| 5 | Sistema de ingesta | Completada |
-| 6 | Agregación | Completada |
-| 7 | Snapshots y evaluación | Completada |
-| 8 | Usuarios | Pendiente |
-| 9 | Administración editorial | Pendiente |
-| 10 | QA y MVP desplegado | Pendiente |
+| Fase | Entregable principal                        | Estado            |
+| ---- | ------------------------------------------- | ----------------- |
+| 0    | Contrato y registros                        | Completada        |
+| 1    | Discovery y dataset de fuentes              | Completada        |
+| 2    | Prototipo visual navegable                  | Completada        |
+| 3    | Base técnica y staging                      | Completada        |
+| 4    | Catálogo TMDB                               | Completada        |
+| 5    | Sistema de ingesta                          | Completada        |
+| 6    | Agregación                                  | Completada        |
+| 7    | Snapshots y evaluación                      | Completada        |
+| 7.1  | Cobertura multcategoría, archivo y mercados | Validando CI      |
+| 8    | Usuarios                                    | Bloqueada por 7.1 |
+| 9    | Administración editorial                    | Pendiente         |
+| 10   | QA y MVP desplegado                         | Pendiente         |
 
 ## Fase 0 · Contrato y registros
 
@@ -63,7 +64,7 @@ calidad; el fixture contiene 20 películas y 69 observaciones trazables. La fase
 - [x] Cada fuente seleccionada tiene un método viable.
 - [x] El dataset puede alimentar el prototipo sin depender de datos inventados.
 - [x] Se han actualizado `DATA_SOURCES.md`, `METHODOLOGY.md` y las decisiones
-  afectadas.
+      afectadas.
 
 ## Fase 2 · Prototipo visual
 
@@ -109,14 +110,13 @@ está conectado a un proyecto Supabase aislado, migrado y verificado.
 Desde una copia limpia se puede instalar, migrar, cargar datos, probar, compilar
 y desplegar siguiendo la documentación.
 
-Seguimiento detallado en
-[TECHNICAL_FOUNDATION.md](TECHNICAL_FOUNDATION.md).
+Seguimiento detallado en [TECHNICAL_FOUNDATION.md](TECHNICAL_FOUNDATION.md).
 
 ## Fase 4 · Catálogo TMDB
 
 **Cerrada:** 2026-07-24. Las 20 películas del fixture tienen match revisado,
-snapshot persistido, créditos y fichas enlazadas. El catálogo está desplegado
-en staging y no hace llamadas a TMDB durante una visita.
+snapshot persistido, créditos y fichas enlazadas. El catálogo está desplegado en
+staging y no hace llamadas a TMDB durante una visita.
 
 ### Entregables
 
@@ -198,12 +198,38 @@ correcciones generan versiones enlazadas, el proceso semanal está programado y
 
 ### Puerta de salida
 
-Un snapshot bloqueado permanece idéntico tras nuevas importaciones y las métricas
-de acierto coinciden con ejemplos manuales.
+Un snapshot bloqueado permanece idéntico tras nuevas importaciones y las
+métricas de acierto coinciden con ejemplos manuales.
 
 Cumplimiento detallado en [SNAPSHOTS.md](SNAPSHOTS.md).
 
+## Fase 7.1 · Cobertura multcategoría, archivo y mercados
+
+**Obligatoria antes de usuarios.** Código, datos reales, automatizaciones y web
+están integrados en staging. La fase permanece abierta únicamente hasta
+confirmar la CI de la rama publicada.
+
+### Entregables
+
+- [x] candidatura genérica y agregación, snapshot y evaluación v2;
+- [x] cinco rankings automáticos en seis categorías y cuatro en los dos guiones;
+- [x] seis fuentes automáticas aplicables a Mejor película;
+- [x] ocho rutas públicas leídas desde Supabase;
+- [x] categorías adicionales ingeribles y ocultas por configuración;
+- [x] Kalshi y Polymarket append-only, separados de Borda;
+- [x] archivo oficial Oscar 2026 de ocho categorías;
+- [x] ejecución programada real satisfactoria por conector;
+- [x] entorno desplegado y comprobado en verde;
+- [ ] CI en verde.
+
+### Puerta de salida
+
+La lista completa y su evidencia se mantienen en [PHASE_7_1.md](PHASE_7_1.md).
+La fase 8 no puede comenzar mientras quede un elemento abierto.
+
 ## Fase 8 · Usuarios
+
+**Estado:** bloqueada hasta cerrar la fase 7.1.
 
 ### Entregables
 

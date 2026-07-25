@@ -1,6 +1,6 @@
 # Registro de fuentes
 
-**Estado:** fase 7 completada; ingesta profesional y resultados versionados
+**Estado:** fase 7.1 en integración; cobertura multcategoría validada
 **Última revisión:** 2026-07-25
 
 ## 1. Objetivo
@@ -20,6 +20,7 @@ antes de publicar.
 - `prediction`: rankings de nominaciones o ganadores.
 - `review`: reseñas y extractos enlazables.
 - `festival`: selecciones, premios y proyecciones.
+- `market`: contratos y precios de mercados de predicción.
 
 Una fuente puede tener más de un tipo, pero cada conector debe declarar qué datos
 usa realmente.
@@ -190,6 +191,29 @@ ganadores se guardan como resultados oficiales, nunca como predicciones, con
 URL, publicación, captura, valor original, hash y versión inmutable. El fixture
 solo prueba el contrato y está rotulado como no real.
 
+### Conectores automáticos de la fase 7.1
+
+| Fuente | Cobertura real validada el 2026-07-25 | Tratamiento |
+|---|---|---|
+| AwardsWatch | Película, dirección y cuatro categorías interpretativas | Ranking ordenado |
+| Awards Daily | Ocho públicas y categorías adicionales | Ranking ordenado |
+| Awards Radar | Ocho públicas | Ranking ordenado |
+| Next Best Picture | Ocho públicas y categorías adicionales | Un consenso del medio |
+| Midnight Critics Circle | Ocho públicas y categorías adicionales | Un consenso del medio |
+| The Ringer | Mejor película | Selección sin Borda |
+
+Cada adaptador conserva captura original, hash, publicación, URL, autor cuando
+existe, fecha, versión e idempotencia. La última publicación elegible se conserva
+por fuente, categoría e intención. La cobertura efectiva es de cinco rankings
+ordenados en las seis categorías que cubre AwardsWatch y cuatro en los dos
+guiones; Best Picture suma una sexta fuente como selección.
+
+Kalshi y Polymarket usan sus API públicas en un proceso horario independiente.
+Sus contratos y capturas son append-only y no comparten tablas ni agregadores
+con las predicciones profesionales. El archivo Academy 2026 usa un manifiesto
+oficial v2 idempotente con las ocho categorías; no reconstruye predicciones
+históricas.
+
 ## 8. Dataset de prueba
 
 El [dataset de fase 1](../data/phase-1/README.md) contiene:
@@ -224,6 +248,10 @@ ninguna fecha, nota o posición se estima.
 - El Content API de Guardian necesita clave y respeto de sus condiciones.
 - El HTML de AwardsWatch puede cambiar; el conector falla de forma aislada y
   exige actualizar el fixture antes de aceptar una nueva estructura.
+- AwardsWatch todavía no ha publicado páginas 2027 de guion en su archivo. Los
+  dos guiones cumplen el mínimo con cuatro medios, pero el objetivo inicial de
+  cinco permanece abierto hasta que exista una quinta publicación verificable o
+  se apruebe una sustituta automatizable.
 - The New York Times, The Washington Post y The Ankler tienen paywall completo:
   Runscars solo guardará metadatos, enlaces y valores que pueda verificar.
 - Las tres subpuntuaciones de Little White Lies no forman una nota única sin una
