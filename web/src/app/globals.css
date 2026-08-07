@@ -1585,12 +1585,22 @@ select:focus-visible {
   font-size: 1.5rem;
 }
 
+.market-intention h4 {
+  margin: 0;
+  padding: 0.7rem 1.2rem;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+}
+
 .market-provider > p {
   color: var(--muted);
   font-size: 0.75rem;
 }
 
-.market-provider > a {
+.market-intention a {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 0.25rem 1rem;
@@ -1598,7 +1608,7 @@ select:focus-visible {
   border-bottom: 1px solid var(--line);
 }
 
-.market-provider > a small {
+.market-intention a > small {
   grid-column: 1 / -1;
   color: var(--muted);
   font-size: 0.65rem;

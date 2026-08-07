@@ -72,18 +72,47 @@ function isOscarMarket(value) {
   return /\boscars?\b|academy awards/i.test(value);
 }
 
-export function parseKalshiMarkets(payload, { capturedAt, seasonId }) {
+function isOpenAt(value, capturedAt) {
+  const closesAt = isoOrNull(value);
+  return !closesAt || Date.parse(closesAt) > Date.parse(capturedAt);
+}
+
+function matchesCeremonyYear(value, ceremonyYear) {
+  if (!ceremonyYear) return true;
+  const year = String(ceremonyYear);
+  const shortYear = year.slice(-2);
+  return (
+    new RegExp(`\\b${year}\\b`).test(value) ||
+    new RegExp(`-${shortYear}(?:-|\\b)`).test(value)
+  );
+}
+
+export function parseKalshiMarkets(
+  payload,
+  { capturedAt, seasonId, ceremonyYear },
+) {
   if (!payload || !Array.isArray(payload.markets)) {
     throw new Error("Kalshi devolvió una respuesta inválida");
   }
   return payload.markets
-    .filter((market) =>
-      isOscarMarket(
-        [market.title, market.subtitle, market.event_ticker, market.ticker]
-          .filter(Boolean)
-          .join(" "),
-      ),
-    )
+    .filter((market) => {
+      const identity = [
+        market.title,
+        market.subtitle,
+        market.event_ticker,
+        market.ticker,
+      ]
+        .filter(Boolean)
+        .join(" ");
+      return (
+        isOscarMarket(identity) &&
+        matchesCeremonyYear(identity, ceremonyYear) &&
+        market.status !== "closed" &&
+        market.status !== "settled" &&
+        !market.settlement_ts &&
+        isOpenAt(market.close_time, capturedAt)
+      );
+    })
     .map((market) => {
       const ticker = requiredText(market.ticker, "Kalshi ticker");
       const title = requiredText(
@@ -141,15 +170,34 @@ function jsonArray(value) {
   }
 }
 
-export function parsePolymarketEvents(payload, { capturedAt, seasonId }) {
+export function parsePolymarketEvents(
+  payload,
+  { capturedAt, seasonId, ceremonyYear },
+) {
   const events = Array.isArray(payload) ? payload : payload?.events;
   if (!Array.isArray(events)) {
     throw new Error("Polymarket devolvió una respuesta inválida");
   }
   const contracts = [];
   for (const event of events) {
-    if (!isOscarMarket(`${event.title ?? ""} ${event.slug ?? ""}`)) continue;
+    const eventIdentity = `${event.title ?? ""} ${event.slug ?? ""}`;
+    if (
+      !isOscarMarket(eventIdentity) ||
+      !matchesCeremonyYear(eventIdentity, ceremonyYear) ||
+      event.active === false ||
+      event.closed === true ||
+      !isOpenAt(event.endDate, capturedAt)
+    ) {
+      continue;
+    }
     for (const market of event.markets ?? []) {
+      if (
+        market.active === false ||
+        market.closed === true ||
+        !isOpenAt(market.endDate ?? event.endDate, capturedAt)
+      ) {
+        continue;
+      }
       const marketId = requiredText(String(market.id), "Polymarket market id");
       const outcomes = jsonArray(market.outcomes);
       const prices = jsonArray(market.outcomePrices);
@@ -162,6 +210,14 @@ export function parsePolymarketEvents(payload, { capturedAt, seasonId }) {
         market.question ?? event.title,
         "Polymarket question",
       );
+      const candidateLabel =
+        market.groupItemTitle ??
+        title
+          .replace(/^will\s+/i, "")
+          .replace(
+            /\s+(?:win|be nominated for)\s+(?:the\s+)?(?:oscar for\s+)?best[\s\S]*$/i,
+            "",
+          );
       contracts.push({
         provider: "polymarket",
         sourceId: "polymarket",
@@ -169,16 +225,9 @@ export function parsePolymarketEvents(payload, { capturedAt, seasonId }) {
         externalContractId: String(tokenIds[selectedIndex] ?? marketId),
         seasonId,
         categoryId: categoryFromMarketText(`${event.title} ${title}`),
-        candidateLabel:
-          market.groupItemTitle ??
-          title
-            .replace(/^will\s+/i, "")
-            .replace(
-              /\s+(?:win|be nominated for)\s+(?:the\s+)?(?:oscar for\s+)?best[\s\S]*$/i,
-              "",
-            ),
+        candidateLabel,
         marketTitle: title,
-        outcomeLabel: String(outcomes[selectedIndex] ?? "Yes"),
+        outcomeLabel: candidateLabel,
         sourceUrl: `https://polymarket.com/event/${event.slug}`,
         closesAt: isoOrNull(market.endDate ?? event.endDate),
         resolvedAt:

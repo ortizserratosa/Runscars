@@ -336,6 +336,12 @@ proveedores y ninguna captura de mercado puede convertirse en observación
 profesional ni entrar en Borda. La ausencia se representa como “sin mercado
 disponible”.
 
+El discovery exige que la ceremonia coincida de forma explícita con la temporada
+activa y que el contrato siga abierto. Kalshi se consulta por series de
+categoría; Polymarket por eventos activos de la ceremonia. La interfaz etiqueta
+por separado mercados de nominación y de ganador y muestra, como máximo, los
+cuatro de mayor volumen de cada intención y proveedor en una categoría.
+
 ## 11. Calibraciones de la fase 1
 
 El dataset capturado el 2026-07-24 fija estas reglas iniciales:

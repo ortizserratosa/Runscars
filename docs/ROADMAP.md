@@ -238,6 +238,11 @@ prototipo y presenta, en cada categoría, la variación frente al snapshot
 periódico inmediatamente anterior. Es una implementación del recorrido R1 y de
 la metodología ya aceptada; no cambia la puerta de 7.1 ni inicia la fase 8.
 
+El mantenimiento 7.1.3 acota los mercados a la ceremonia vigente, descubre las
+series Oscar de Kalshi sin depender del orden global y separa nominación de
+ganador por proveedor en cada categoría. Corrige la integración ya incluida en
+7.1 y tampoco inicia la fase 8.
+
 ## Fase 8 · Usuarios
 
 **Estado:** pendiente; la fase 7.1 ya está cerrada.

@@ -165,9 +165,12 @@ npm run candidate:match -- <observation-id> <candidate-id> \
   --kind <film|person|team|category> --reason "<motivo>"
 ```
 
-Los mercados se ejecutan cada hora mediante `run-markets`. Kalshi y Polymarket
-se paginan, se filtran por Oscar y se guardan en tablas append-only. Un fallo de
-un proveedor no bloquea al otro y ninguno escribe observaciones profesionales.
+Los mercados se ejecutan cada hora mediante `run-markets`. Kalshi pagina las
+series configuradas de nominación y ganador de las ocho categorías públicas;
+Polymarket descubre eventos activos de la ceremonia configurada. Ambos rechazan
+otra ceremonia y contratos cerrados o resueltos antes de guardar tablas
+append-only. Un fallo de un proveedor no bloquea al otro y ninguno escribe
+observaciones profesionales.
 
 ## Pruebas sin red
 
@@ -239,6 +242,19 @@ El Cron `runscars-ingestion-daily` está activo a las 04:17 UTC y
 `runscars-markets-hourly` al minuto 17 de cada hora. La primera captura de
 mercados terminó con Kalshi sin contratos Oscar abiertos y Polymarket con 65;
 ninguno creó observaciones profesionales.
+
+La revisión del 2026-08-07 demostró que aquel resultado era un fallo de
+discovery: las 65 filas de Polymarket correspondían a contratos cerrados en
+2025 y la paginación global de Kalshi terminaba antes de sus series Oscar. Las
+APIs oficiales ofrecen ahora 356 contratos Kalshi 2027, con nominación y ganador
+en las ocho categorías, y 158 contratos Polymarket mapeados a esas categorías:
+ganador en las ocho y nominación en Mejor película y Actor.
+
+Los extractores v2 se desplegaron y ejecutaron contra staging. Polymarket insertó
+242 snapshots en el run 610. Kalshi conservó un primer fallo por límite de
+peticiones en el run 609 y lo reintentó con espera progresiva: el run 611 insertó
+356 snapshots. El versionado y el sufijo de reintento mantienen ambos intentos
+trazables sin reescribir el fallo.
 
 El mantenimiento 7.1.1 del 2026-08-07 recuperó como `failed` el run 153, que
 había quedado `running` tras una terminación de Edge, y registró

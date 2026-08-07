@@ -57,6 +57,25 @@ test("shows movement against the immediately previous category update", async ({
   ).toBeVisible();
 });
 
+test("keeps current market signals separated by provider and intention", async ({
+  page,
+}) => {
+  await page.goto("/temporadas/2027/mejor-pelicula");
+  const markets = page.getByRole("region", { name: "Señales separadas" });
+  await expect(markets.getByRole("heading", { name: "Kalshi" })).toBeVisible();
+  await expect(
+    markets.getByRole("heading", { name: "Polymarket" }),
+  ).toBeVisible();
+  await expect(
+    markets.getByRole("heading", { name: "Nominación" }),
+  ).toBeVisible();
+  await expect(markets.getByRole("heading", { name: "Ganador" })).toHaveCount(
+    2,
+  );
+  await expect(markets.getByText("72%")).toBeVisible();
+  await expect(markets.getByText("34%")).toBeVisible();
+});
+
 test("shows six Best Picture media but never gives The Ringer Borda points", async ({
   page,
 }) => {
@@ -68,7 +87,7 @@ test("shows six Best Picture media but never gives The Ringer Borda points", asy
   await expect(ringer).toContainText("0");
 });
 
-test("shows both market providers separately when no market exists", async ({
+test("explains that provider signals never form a market consensus", async ({
   page,
 }) => {
   await page.goto("/temporadas/2027/direccion");
@@ -77,7 +96,7 @@ test("shows both market providers separately when no market exists", async ({
   ).toBeVisible();
   await expect(page.getByRole("heading", { name: "Kalshi" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Polymarket" })).toBeVisible();
-  await expect(page.getByText("Sin mercado disponible")).toHaveCount(2);
+  await expect(page.getByText("Sin mercado disponible")).toHaveCount(0);
   await expect(
     page.getByText(
       "Kalshi y Polymarket se muestran por proveedor. No existe consenso de mercados y sus precios no participan en la predicción profesional.",

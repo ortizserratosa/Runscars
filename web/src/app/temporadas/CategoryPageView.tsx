@@ -283,28 +283,48 @@ function ActiveCategory({
               <article className="market-provider" key={provider}>
                 <h3>{provider === "kalshi" ? "Kalshi" : "Polymarket"}</h3>
                 {view.markets[provider].length ? (
-                  view.markets[provider].map((market) => (
-                    <a
-                      href={market.sourceUrl}
-                      key={`${market.title}-${market.outcome}`}
-                      rel="noreferrer"
-                      target="_blank"
-                    >
-                      <span className="market-label">
-                        <strong>{market.title}</strong>
-                        <small>{market.outcome}</small>
-                      </span>
-                      <strong>
-                        {market.probability === null
-                          ? "—"
-                          : `${(market.probability * 100).toLocaleString(
-                              "es-ES",
-                              { maximumFractionDigits: 1 },
-                            )}%`}
-                      </strong>
-                      <small>Actualizado {dateLabel(market.observedAt)}</small>
-                    </a>
-                  ))
+                  <div className="market-intention-list">
+                    {(["nomination", "winner"] as const).map((intention) => {
+                      const markets = view.markets[provider].filter(
+                        (market) => market.intention === intention,
+                      );
+                      if (!markets.length) return null;
+                      return (
+                        <section className="market-intention" key={intention}>
+                          <h4>
+                            {intention === "nomination"
+                              ? "Nominación"
+                              : "Ganador"}
+                          </h4>
+                          {markets.map((market) => (
+                            <a
+                              href={market.sourceUrl}
+                              key={`${market.intention}-${market.title}-${market.outcome}`}
+                              rel="noreferrer"
+                              target="_blank"
+                            >
+                              <span className="market-label">
+                                <strong>{market.outcome}</strong>
+                                <small>{market.title}</small>
+                              </span>
+                              <strong>
+                                {market.probability === null
+                                  ? "—"
+                                  : `${(
+                                      market.probability * 100
+                                    ).toLocaleString("es-ES", {
+                                      maximumFractionDigits: 1,
+                                    })}%`}
+                              </strong>
+                              <small>
+                                Actualizado {dateLabel(market.observedAt)}
+                              </small>
+                            </a>
+                          ))}
+                        </section>
+                      );
+                    })}
+                  </div>
                 ) : (
                   <p>Sin mercado disponible</p>
                 )}

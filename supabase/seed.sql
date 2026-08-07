@@ -529,20 +529,37 @@ values
     'kalshi',
     'kalshi',
     'https://external-api.kalshi.com/trade-api/v2/markets',
-    'kalshi-v1',
+    'kalshi-v2',
     '17 * * * *',
     true,
-    '{"query":"Oscar","season_id":"oscars-2027"}'::jsonb
+    '{
+      "ceremony_year": 2027,
+      "season_id": "oscars-2027",
+      "series_tickers": [
+        "KXOSCARNOMPIC", "KXOSCARPIC",
+        "KXOSCARNOMDIR", "KXOSCARDIR",
+        "KXOSCARNOMACTO", "KXOSCARACTO",
+        "KXOSCARNOMACTR", "KXOSCARACTR",
+        "KXOSCARNOMSUPACTO", "KXOSCARSUPACTO",
+        "KXOSCARNOMSUPACTR", "KXOSCARSUPACTR",
+        "KXOSCARNOMSPLAY", "KXOSCARSPLAY",
+        "KXOSCARNOMASPLAY", "KXOSCARASPLAY"
+      ]
+    }'::jsonb
   ),
   (
     'polymarket-oscars',
     'polymarket',
     'polymarket',
     'https://gamma-api.polymarket.com/markets',
-    'polymarket-v1',
+    'polymarket-v2',
     '17 * * * *',
     true,
-    '{"query":"Oscars","season_id":"oscars-2027"}'::jsonb
+    '{
+      "ceremony_year": 2027,
+      "query": "Oscars 2027",
+      "season_id": "oscars-2027"
+    }'::jsonb
   )
 on conflict (id) do update set
   source_id = excluded.source_id,
