@@ -9,6 +9,13 @@ const supabaseEnvironmentSchema = z.object({
     .refine((value) => !value.startsWith("replace-with-")),
 });
 
+const supabaseAdminEnvironmentSchema = supabaseEnvironmentSchema.extend({
+  SUPABASE_SERVICE_ROLE_KEY: z
+    .string()
+    .min(20)
+    .refine((value) => !value.startsWith("replace-with-")),
+});
+
 export function isSupabaseConfigured() {
   return supabaseEnvironmentSchema.safeParse({
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -20,5 +27,13 @@ export function getSupabaseEnvironment() {
   return supabaseEnvironmentSchema.parse({
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
     NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  });
+}
+
+export function getSupabaseAdminEnvironment() {
+  return supabaseAdminEnvironmentSchema.parse({
+    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
   });
 }

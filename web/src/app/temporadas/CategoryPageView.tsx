@@ -1,9 +1,11 @@
 import Link from "next/link";
+import { Movement } from "../components/Movement";
 import type {
   ActiveCategoryView,
   ArchiveCategoryView,
 } from "../../lib/categories/data";
 import type { PublicCategoryId } from "../../lib/categories/config";
+import { UserRankingPanel } from "./UserRankingPanel";
 
 type CategoryDefinition = {
   id: PublicCategoryId;
@@ -108,9 +110,21 @@ function ActiveCategory({
                   contrastadas y conservadas con su procedencia
                 </span>
               </div>
-              <span>
-                Las nuevas publicaciones generan una actualización nueva
-              </span>
+              <div className="snapshot-comparison">
+                <span>
+                  Las nuevas publicaciones generan una actualización nueva
+                </span>
+                {view.snapshot.previous ? (
+                  <strong>
+                    Cambios frente a{" "}
+                    {dateLabel(view.snapshot.previous.lockedAt)}
+                  </strong>
+                ) : (
+                  <strong>
+                    Primer corte disponible · sin comparación anterior
+                  </strong>
+                )}
+              </div>
             </div>
           ) : (
             <p className="insufficient-note">
@@ -142,7 +156,7 @@ function ActiveCategory({
                 <span>Candidatura</span>
                 <span>Respaldo</span>
                 <span>Puntos</span>
-                <span />
+                <span>Cambio</span>
               </div>
               {aggregate.ranking.map((candidate) => (
                 <div className="leaderboard-item" key={candidate.candidateId}>
@@ -195,7 +209,17 @@ function ActiveCategory({
                         />
                       </div>
                     </div>
-                    <span />
+                    {view.snapshot?.previous ? (
+                      <Movement value={candidate.movement} />
+                    ) : (
+                      <span
+                        aria-label="Sin actualización anterior"
+                        className="movement neutral"
+                        title="Sin actualización anterior"
+                      >
+                        —
+                      </span>
+                    )}
                   </div>
                   <details className="category-source-details">
                     <summary>Ver procedencia y cálculo</summary>
@@ -260,28 +284,48 @@ function ActiveCategory({
               <article className="market-provider" key={provider}>
                 <h3>{provider === "kalshi" ? "Kalshi" : "Polymarket"}</h3>
                 {view.markets[provider].length ? (
-                  view.markets[provider].map((market) => (
-                    <a
-                      href={market.sourceUrl}
-                      key={`${market.title}-${market.outcome}`}
-                      rel="noreferrer"
-                      target="_blank"
-                    >
-                      <span className="market-label">
-                        <strong>{market.title}</strong>
-                        <small>{market.outcome}</small>
-                      </span>
-                      <strong>
-                        {market.probability === null
-                          ? "—"
-                          : `${(market.probability * 100).toLocaleString(
-                              "es-ES",
-                              { maximumFractionDigits: 1 },
-                            )}%`}
-                      </strong>
-                      <small>Actualizado {dateLabel(market.observedAt)}</small>
-                    </a>
-                  ))
+                  <div className="market-intention-list">
+                    {(["nomination", "winner"] as const).map((intention) => {
+                      const markets = view.markets[provider].filter(
+                        (market) => market.intention === intention,
+                      );
+                      if (!markets.length) return null;
+                      return (
+                        <section className="market-intention" key={intention}>
+                          <h4>
+                            {intention === "nomination"
+                              ? "Nominación"
+                              : "Ganador"}
+                          </h4>
+                          {markets.map((market) => (
+                            <a
+                              href={market.sourceUrl}
+                              key={`${market.intention}-${market.title}-${market.outcome}`}
+                              rel="noreferrer"
+                              target="_blank"
+                            >
+                              <span className="market-label">
+                                <strong>{market.outcome}</strong>
+                                <small>{market.title}</small>
+                              </span>
+                              <strong>
+                                {market.probability === null
+                                  ? "—"
+                                  : `${(
+                                      market.probability * 100
+                                    ).toLocaleString("es-ES", {
+                                      maximumFractionDigits: 1,
+                                    })}%`}
+                              </strong>
+                              <small>
+                                Actualizado {dateLabel(market.observedAt)}
+                              </small>
+                            </a>
+                          ))}
+                        </section>
+                      );
+                    })}
+                  </div>
                 ) : (
                   <p>Sin mercado disponible</p>
                 )}
@@ -289,6 +333,15 @@ function ActiveCategory({
             ))}
           </div>
         </section>
+
+        <UserRankingPanel
+          candidates={(aggregate?.ranking ?? []).map((candidate) => ({
+            id: candidate.candidateId,
+            label: candidate.label,
+          }))}
+          categoryId={category.id}
+          categoryName={category.name}
+        />
       </div>
     </>
   );

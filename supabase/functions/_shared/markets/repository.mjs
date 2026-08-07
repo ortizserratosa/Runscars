@@ -54,20 +54,28 @@ export class SupabaseMarketRepository {
     });
   }
 
-  async beginRun(connectorId, capturedAt) {
+  async beginRun(connectorId, extractorVersion, capturedAt) {
     const hourlyBucket = new Date(capturedAt).toISOString().slice(0, 13);
-    const runKey = `${connectorId}:${hourlyBucket}`;
+    const baseRunKey = `${connectorId}:${extractorVersion}:${hourlyBucket}`;
     const existing = await this.client
       .from("market_capture_runs")
       .select("id,status")
-      .eq("run_key", runKey)
+      .eq("run_key", baseRunKey)
       .maybeSingle();
     if (existing.error) {
       throw new Error(
         `No se pudo buscar la ejecución: ${existing.error.message}`,
       );
     }
-    if (existing.data) return { ...existing.data, repeated: true };
+    if (existing.data && existing.data.status !== "failed") {
+      return { ...existing.data, repeated: true };
+    }
+    const runKey = existing.data
+      ? `${baseRunKey}:retry:${new Date(capturedAt)
+          .toISOString()
+          .slice(14)
+          .replaceAll(/[^0-9]/g, "")}`
+      : baseRunKey;
     const data = databaseError(
       await this.client
         .from("market_capture_runs")
@@ -194,7 +202,11 @@ export async function runMarketConnectors({
   const results = [];
   for (const connector of connectors) {
     const capturedAt = now().toISOString();
-    const run = await repository.beginRun(connector.id, capturedAt);
+    const run = await repository.beginRun(
+      connector.id,
+      connector.extractor_version,
+      capturedAt,
+    );
     if (run.repeated && run.status !== "running") {
       results.push({
         connectorId: connector.id,

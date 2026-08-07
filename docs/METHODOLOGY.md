@@ -1,7 +1,7 @@
 # Metodología
 
 **Estado:** agregación, snapshots y evaluación profesional operativos
-**Última revisión:** 2026-07-25
+**Última revisión:** 2026-08-07
 
 ## 1. Principios
 
@@ -213,6 +213,20 @@ candidatura sin posición anterior se marca como nueva. Estos cortes no son
 snapshots y pueden recalcularse; su bloqueo e inmutabilidad se incorporaron en
 la fase 7.
 
+### 4.6 Variación entre snapshots públicos
+
+Desde la fase 7, la página de una categoría compara el snapshot periódico
+vigente con el snapshot bloqueado inmediatamente anterior del mismo alcance y
+versión metodológica. La variación mantiene la fórmula
+`posición_anterior - posición_actual`: un valor positivo es una subida, uno
+negativo una bajada, cero indica estabilidad y una candidatura ausente en el
+corte anterior aparece como nueva.
+
+La interfaz muestra la fecha exacta del corte usado como comparación. Si no
+existe un snapshot anterior, no atribuye movimientos. La comparación se deriva
+al leer las dos envolventes inmutables; no modifica el payload ni el hash de
+ninguna de ellas.
+
 ## 5. Rankings de usuarios
 
 - Se agregan separadamente de los expertos.
@@ -223,12 +237,17 @@ la fase 7.
 - Su entrada en un consenso público queda fuera de la fase 1 y necesita una
   decisión aceptada antes de implementar la fase 8; no se extrapolarán las
   posiciones ausentes mientras tanto.
+- La visibilidad pública de un ranking requiere además que su perfil propietario
+  sea público. Esta condición de lectura no cambia las posiciones guardadas.
 
 ## 6. Estado de visionado
 
 El estado pertenece al usuario y a la película, no a una candidatura concreta.
 Los valores iniciales son `no indicado` y `vista`. La fecha de visionado será
 opcional y la visibilidad pública requerirá una preferencia explícita.
+La ausencia de una fila representa `no indicado`; desmarcar una película elimina
+esa fila. Los visionados solo se publican cuando perfil y preferencia específica
+son públicos.
 
 ## 7. Snapshots
 
@@ -321,6 +340,12 @@ volumen, interés abierto, URL, fechas y payload. No se calcula un consenso entr
 proveedores y ninguna captura de mercado puede convertirse en observación
 profesional ni entrar en Borda. La ausencia se representa como “sin mercado
 disponible”.
+
+El discovery exige que la ceremonia coincida de forma explícita con la temporada
+activa y que el contrato siga abierto. Kalshi se consulta por series de
+categoría; Polymarket por eventos activos de la ceremonia. La interfaz etiqueta
+por separado mercados de nominación y de ganador y muestra, como máximo, los
+cuatro de mayor volumen de cada intención y proveedor en una categoría.
 
 ## 11. Calibraciones de la fase 1
 

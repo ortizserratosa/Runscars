@@ -1,31 +1,97 @@
 import Link from "next/link";
 import { Movement } from "./components/Movement";
 import { PosterBlock } from "./components/PosterBlock";
-import {
-  calculationCuts,
-  consensusCandidates,
-} from "../data/aggregation-presentation";
+import { consensusCandidates } from "../data/aggregation-presentation";
 import { getReferenceCriticalReception } from "../data/phase6-reference";
 import { filmHref } from "../data/films";
+import { getCategoryView } from "../lib/categories/data";
 
-const topThree = consensusCandidates.slice(0, 3);
-const leader = topThree[0];
-const currentCut = calculationCuts.at(-1)!;
-const fjordPosition =
-  consensusCandidates.findIndex((candidate) => candidate.id === "fjord") + 1;
 const odysseyCritical = getReferenceCriticalReception("the-odyssey").scores[0];
+const tones = ["violet", "acid", "rust"] as const;
 
-export default function Home() {
+function dateLabel(value: string) {
+  return new Intl.DateTimeFormat("es-ES", {
+    dateStyle: "long",
+    timeZone: "UTC",
+  }).format(new Date(value));
+}
+
+function sourceDateLabel(value: string) {
+  return new Intl.DateTimeFormat("es-ES", {
+    dateStyle: "medium",
+    timeZone: "UTC",
+  }).format(new Date(value));
+}
+
+export default async function Home() {
+  const categoryView = await getCategoryView(2027, "best-picture");
+  if (categoryView.mode !== "active") {
+    throw new Error("La portada necesita la temporada activa de Oscar 2027");
+  }
+  const liveRanking = categoryView.aggregate?.ranking ?? [];
+  const ranking = liveRanking.length
+    ? liveRanking.map((candidate, index) => ({
+        id: candidate.film?.id ?? candidate.candidateId,
+        href: candidate.film
+          ? filmHref(candidate.film.id)
+          : "/temporadas/2027/mejor-pelicula",
+        title: candidate.label,
+        score: candidate.scoreOutOf100,
+        coverage: `${candidate.appearances}/${candidate.applicableSourceCount}`,
+        firsts: candidate.firstPlaceCount,
+        movement: candidate.movement,
+        tone: tones[index % tones.length],
+        contributions: candidate.sourceContributions,
+      }))
+    : consensusCandidates.map((candidate, index) => ({
+        ...candidate,
+        href: filmHref(candidate.id),
+        tone: tones[index % tones.length],
+        contributions: [],
+      }));
+  const topThree = ranking.slice(0, 3);
+  const leader = topThree[0];
+  const rising = categoryView.snapshot?.previous
+    ? ranking.find(
+        (candidate) => candidate.movement !== null && candidate.movement > 0,
+      )
+    : null;
+  const currentDate = categoryView.snapshot
+    ? dateLabel(categoryView.snapshot.lockedAt)
+    : "actualización pendiente";
+  const liveReceipts = leader.contributions
+    .filter((source) => source.appeared)
+    .slice(0, 3)
+    .map((source) => ({
+      name: source.sourceName,
+      detail:
+        source.appearanceKind === "ordered"
+          ? `${leader.title} · #${source.rank}`
+          : `${leader.title} · selección`,
+      date: source.publishedAt
+        ? `Publicada ${sourceDateLabel(source.publishedAt)}`
+        : "Publicación verificada",
+      href: leader.href,
+    }));
+  const receipts = liveReceipts.length
+    ? liveReceipts
+    : [
+        {
+          name: "Consenso profesional",
+          detail: leader.title,
+          date: "Actualización pendiente",
+          href: leader.href,
+        },
+      ];
+
   return (
     <main>
       <section className="home-hero page-shell">
         <div className="eyebrow-row">
-          <span className="eyebrow">
-            Cuaderno de temporada · {currentCut.date}
-          </span>
+          <span className="eyebrow">Cuaderno de temporada · {currentDate}</span>
           <span className="data-note">
-            {currentCut.sourceCount} listas ordenadas ·{" "}
-            {consensusCandidates.length} películas
+            {categoryView.aggregate?.orderedSourceCount ?? 0} listas ordenadas ·{" "}
+            {ranking.length} películas
           </span>
         </div>
 
@@ -56,10 +122,10 @@ export default function Home() {
 
           <div className="hero-board">
             <div className="hero-board-label">
-              <span>La favorita hoy</span>
+              <span>Líder del corte</span>
               <span>Consenso</span>
             </div>
-            <Link href={filmHref(leader.id)}>
+            <Link href={leader.href}>
               <PosterBlock
                 title={leader.title}
                 tone="violet"
@@ -91,17 +157,28 @@ export default function Home() {
       <section className="ticker" aria-label="Resumen del último corte">
         <div className="page-shell ticker-inner">
           <span className="ticker-label">Último corte</span>
-          <Link href={filmHref(leader.id)}>
-            {leader.title} conserva el nº 1
-          </Link>
+          <Link href={leader.href}>{leader.title} lidera el consenso</Link>
           <span className="ticker-separator" aria-hidden="true">
             ◆
           </span>
-          <Link href={filmHref("fjord")}>Fjord sube al nº {fjordPosition}</Link>
+          {rising ? (
+            <Link href={rising.href}>
+              {rising.title} sube {rising.movement}{" "}
+              {rising.movement === 1 ? "puesto" : "puestos"}
+            </Link>
+          ) : (
+            <span>Sin subidas en las primeras posiciones</span>
+          )}
           <span className="ticker-separator" aria-hidden="true">
             ◆
           </span>
-          <span>Ocho categorías públicas con cobertura multifuente</span>
+          <span>
+            {categoryView.snapshot?.previous
+              ? `Comparado con ${dateLabel(
+                  categoryView.snapshot.previous.lockedAt,
+                )}`
+              : "Primer corte disponible"}
+          </span>
         </div>
       </section>
 
@@ -121,7 +198,7 @@ export default function Home() {
           {topThree.map((candidate, index) => (
             <Link
               className={`podium-card podium-${index + 1}`}
-              href={filmHref(candidate.id)}
+              href={candidate.href}
               key={candidate.id}
             >
               <PosterBlock
@@ -133,7 +210,17 @@ export default function Home() {
               <div className="podium-copy">
                 <div>
                   <span className="rank-label">Nº {index + 1}</span>
-                  <Movement value={candidate.movement} />
+                  {categoryView.snapshot?.previous ? (
+                    <Movement value={candidate.movement} />
+                  ) : (
+                    <span
+                      aria-label="Sin actualización anterior"
+                      className="movement neutral"
+                      title="Sin actualización anterior"
+                    >
+                      —
+                    </span>
+                  )}
                 </div>
                 <h3>{candidate.title}</h3>
                 <p>
@@ -167,7 +254,7 @@ export default function Home() {
                 <strong>{leader.coverage}</strong>
                 <span>
                   fuentes sitúan a{" "}
-                  <Link href={filmHref(leader.id)}>{leader.title}</Link>
+                  <Link href={leader.href}>{leader.title}</Link>
                 </span>
               </div>
               <Link href="/temporadas/2027/mejor-pelicula">
@@ -192,12 +279,12 @@ export default function Home() {
             <article className="signal-card community-card">
               <span className="signal-number">C</span>
               <p className="signal-type">Comunidad</p>
-              <h3>Rankings de usuarios en la fase 8</h3>
+              <h3>Tu ranking, con tu privacidad</h3>
               <div className="signal-stat">
-                <strong>SEPARADA</strong>
-                <span>nunca alterará el consenso profesional</span>
+                <strong>ACTIVA</strong>
+                <span>una señal separada del consenso profesional</span>
               </div>
-              <Link href="/temporadas/2027">Explorar categorías →</Link>
+              <Link href="/acceso">Crear mi perfil →</Link>
             </article>
           </div>
         </div>
@@ -218,31 +305,19 @@ export default function Home() {
             Ver una fuente por dentro
           </Link>
         </div>
-        <div className="receipt-stack" aria-label="Ejemplos de fuentes">
-          <div className="receipt receipt-one">
-            <span>AwardsWatch</span>
-            <strong>
-              <Link href={filmHref("the-odyssey")}>The Odyssey</Link> · #1
-            </strong>
-            <small>Mark Johnson · 15 jul 2026</small>
-          </div>
-          <div className="receipt receipt-two">
-            <span>Awards Daily</span>
-            <strong>
-              <Link href={filmHref("project-hail-mary")}>
-                Project Hail Mary
-              </Link>{" "}
-              · #1
-            </strong>
-            <small>Sasha Stone · 4 jul 2026</small>
-          </div>
-          <div className="receipt receipt-three">
-            <span>Next Best Picture</span>
-            <strong>
-              <Link href={filmHref("the-odyssey")}>The Odyssey</Link> · #1
-            </strong>
-            <small>Equipo editorial · 23 jul 2026</small>
-          </div>
+        <div className="receipt-stack" aria-label="Fuentes del corte vigente">
+          {receipts.map((receipt, index) => (
+            <div
+              className={`receipt receipt-${["one", "two", "three"][index]}`}
+              key={receipt.name}
+            >
+              <span>{receipt.name}</span>
+              <strong>
+                <Link href={receipt.href}>{receipt.detail}</Link>
+              </strong>
+              <small>{receipt.date}</small>
+            </div>
+          ))}
         </div>
       </section>
     </main>

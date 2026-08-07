@@ -13,7 +13,29 @@ describe("versioned database foundation", () => {
   beforeEach(async () => {
     database = new PGlite();
     await database.exec(
-      "create role anon; create role authenticated; create role service_role;",
+      `
+        create role anon;
+        create role authenticated;
+        create role service_role;
+        create schema auth;
+        create table auth.users (
+          id uuid primary key,
+          email text,
+          raw_user_meta_data jsonb not null default '{}'::jsonb
+        );
+        create function auth.uid()
+        returns uuid
+        language sql
+        stable
+        as $$
+          select nullif(
+            current_setting('request.jwt.claim.sub', true),
+            ''
+          )::uuid
+        $$;
+        grant usage on schema auth to anon, authenticated, service_role;
+        grant execute on function auth.uid() to anon, authenticated, service_role;
+      `,
     );
 
     const migrationFiles = (await readdir(migrationsDirectory))
@@ -1026,6 +1048,189 @@ describe("versioned database foundation", () => {
           '2027-01-22T13:45:00Z',
           'anonymous'
         )
+      `),
+    ).rejects.toThrow();
+  });
+
+  it("isolates private community data and exposes only explicitly public rows", async () => {
+    await database.exec(await readFile(seedPath, "utf8"));
+    await database.exec(`
+      insert into auth.users (id, email, raw_user_meta_data)
+      values
+        (
+          '11111111-1111-4111-8111-111111111111',
+          'one@example.test',
+          '{"display_name":"Usuario Uno"}'::jsonb
+        ),
+        (
+          '22222222-2222-4222-8222-222222222222',
+          'two@example.test',
+          '{"display_name":"Usuario Dos"}'::jsonb
+        );
+
+      insert into public.category_candidates (
+        id,
+        season_id,
+        category_id,
+        film_id,
+        display_label,
+        identity_key
+      )
+      values (
+        'phase-8-the-odyssey',
+        'oscars-2027',
+        'best-picture',
+        'the-odyssey',
+        'The Odyssey',
+        repeat('8', 64)
+      );
+
+      set role authenticated;
+      select set_config(
+        'request.jwt.claim.sub',
+        '11111111-1111-4111-8111-111111111111',
+        false
+      );
+      select public.save_my_ranking(
+        'oscars-2027',
+        'best-picture',
+        array['phase-8-the-odyssey'],
+        false
+      );
+      insert into public.user_film_states (user_id, film_id, watched_at)
+      values (
+        '11111111-1111-4111-8111-111111111111',
+        'the-odyssey',
+        '2026-08-07T12:00:00Z'
+      );
+    `);
+
+    await database.exec(`
+      select set_config(
+        'request.jwt.claim.sub',
+        '22222222-2222-4222-8222-222222222222',
+        false
+      );
+    `);
+    const privateRows = await database.query<{
+      profiles: number;
+      rankings: number;
+      entries: number;
+      watched: number;
+    }>(`
+      select
+        (
+          select count(*)::int
+          from public.user_profiles
+          where user_id = '11111111-1111-4111-8111-111111111111'
+        ) as profiles,
+        (
+          select count(*)::int
+          from public.user_rankings
+          where user_id = '11111111-1111-4111-8111-111111111111'
+        ) as rankings,
+        (
+          select count(*)::int
+          from public.user_ranking_entries
+          where user_id = '11111111-1111-4111-8111-111111111111'
+        ) as entries,
+        (
+          select count(*)::int
+          from public.user_film_states
+          where user_id = '11111111-1111-4111-8111-111111111111'
+        ) as watched
+    `);
+    expect(privateRows.rows[0]).toEqual({
+      profiles: 0,
+      rankings: 0,
+      entries: 0,
+      watched: 0,
+    });
+
+    const forbiddenUpdate = await database.query<{ changed: number }>(`
+      with changed as (
+        update public.user_rankings
+        set is_public = true
+        where user_id = '11111111-1111-4111-8111-111111111111'
+        returning 1
+      )
+      select count(*)::int as changed from changed
+    `);
+    expect(forbiddenUpdate.rows[0]?.changed).toBe(0);
+
+    await database.exec(`
+      select set_config(
+        'request.jwt.claim.sub',
+        '11111111-1111-4111-8111-111111111111',
+        false
+      );
+      update public.user_profiles
+      set is_public = true, watched_is_public = true
+      where user_id = '11111111-1111-4111-8111-111111111111';
+      update public.user_rankings
+      set is_public = true
+      where user_id = '11111111-1111-4111-8111-111111111111';
+      select set_config(
+        'request.jwt.claim.sub',
+        '22222222-2222-4222-8222-222222222222',
+        false
+      );
+    `);
+
+    const publicRows = await database.query<{
+      profiles: number;
+      rankings: number;
+      entries: number;
+      watched: number;
+    }>(`
+      select
+        (
+          select count(*)::int
+          from public.user_profiles
+          where user_id = '11111111-1111-4111-8111-111111111111'
+        ) as profiles,
+        (
+          select count(*)::int
+          from public.user_rankings
+          where user_id = '11111111-1111-4111-8111-111111111111'
+        ) as rankings,
+        (
+          select count(*)::int
+          from public.user_ranking_entries
+          where user_id = '11111111-1111-4111-8111-111111111111'
+        ) as entries,
+        (
+          select count(*)::int
+          from public.user_film_states
+          where user_id = '11111111-1111-4111-8111-111111111111'
+        ) as watched
+    `);
+    expect(publicRows.rows[0]).toEqual({
+      profiles: 1,
+      rankings: 1,
+      entries: 1,
+      watched: 1,
+    });
+
+    await expect(
+      database.exec(`
+        insert into public.user_ranking_entries (
+          ranking_id,
+          user_id,
+          season_id,
+          category_id,
+          category_candidate_id,
+          position
+        )
+        select
+          id,
+          '22222222-2222-4222-8222-222222222222',
+          season_id,
+          category_id,
+          'phase-8-the-odyssey',
+          2
+        from public.user_rankings
+        where user_id = '11111111-1111-4111-8111-111111111111'
       `),
     ).rejects.toThrow();
   });

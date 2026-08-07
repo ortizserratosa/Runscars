@@ -235,10 +235,12 @@ de `Rose`, `Ink`, `Elsinore` y `Possible Love` se documentan en un manifiesto y
 se aplican mediante migraciones TMDB trazables.
 
 Kalshi y Polymarket usan sus API públicas en un proceso horario independiente.
-Sus contratos y capturas son append-only y no comparten tablas ni agregadores
-con las predicciones profesionales. El archivo Academy 2026 usa un manifiesto
-oficial v2 idempotente con las ocho categorías; no reconstruye predicciones
-históricas.
+Kalshi consulta las series 2027 de nominación y ganador de cada categoría
+pública; Polymarket selecciona únicamente eventos activos rotulados como Oscar
+2027. Sus contratos y capturas son append-only y no comparten tablas ni
+agregadores con las predicciones profesionales. El archivo Academy 2026 usa un
+manifiesto oficial v2 idempotente con las ocho categorías; no reconstruye
+predicciones históricas.
 
 ## 8. Dataset de prueba
 

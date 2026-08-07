@@ -21,6 +21,10 @@ test("keeps professional, critical and community signals visibly separate", asyn
   await expect(page.getByText("Predicciones", { exact: true })).toBeVisible();
   await expect(page.getByText("Crítica", { exact: true })).toBeVisible();
   await expect(page.getByText("Comunidad", { exact: true })).toBeVisible();
+  await expect(
+    page.getByText("Cuaderno de temporada · 25 de julio de 2026"),
+  ).toBeVisible();
+  await expect(page.getByText("Equipo editorial · 23 jul 2026")).toHaveCount(0);
 });
 
 test("publishes all eight database-shaped category routes", async ({
@@ -36,7 +40,40 @@ test("publishes all eight database-shaped category routes", async ({
     await expect(
       page.getByRole("heading", { name: "Consenso profesional" }),
     ).toBeVisible();
+    await expect(
+      page.getByText("Cambios frente a", { exact: false }),
+    ).toBeVisible();
   }
+});
+
+test("shows movement against the immediately previous category update", async ({
+  page,
+}) => {
+  await page.goto("/temporadas/2027/mejor-pelicula");
+  await expect(page.getByLabel("Sube 1 posición").first()).toBeVisible();
+  await expect(page.getByLabel("Baja 1 posición").first()).toBeVisible();
+  await expect(
+    page.getByLabel("Nueva desde la actualización anterior").last(),
+  ).toBeVisible();
+});
+
+test("keeps current market signals separated by provider and intention", async ({
+  page,
+}) => {
+  await page.goto("/temporadas/2027/mejor-pelicula");
+  const markets = page.getByRole("region", { name: "Señales separadas" });
+  await expect(markets.getByRole("heading", { name: "Kalshi" })).toBeVisible();
+  await expect(
+    markets.getByRole("heading", { name: "Polymarket" }),
+  ).toBeVisible();
+  await expect(
+    markets.getByRole("heading", { name: "Nominación" }),
+  ).toBeVisible();
+  await expect(markets.getByRole("heading", { name: "Ganador" })).toHaveCount(
+    2,
+  );
+  await expect(markets.getByText("72%")).toBeVisible();
+  await expect(markets.getByText("34%")).toBeVisible();
 });
 
 test("shows six Best Picture media but never gives The Ringer Borda points", async ({
@@ -50,7 +87,7 @@ test("shows six Best Picture media but never gives The Ringer Borda points", asy
   await expect(ringer).toContainText("0");
 });
 
-test("shows both market providers separately when no market exists", async ({
+test("explains that provider signals never form a market consensus", async ({
   page,
 }) => {
   await page.goto("/temporadas/2027/direccion");
@@ -59,7 +96,7 @@ test("shows both market providers separately when no market exists", async ({
   ).toBeVisible();
   await expect(page.getByRole("heading", { name: "Kalshi" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Polymarket" })).toBeVisible();
-  await expect(page.getByText("Sin mercado disponible")).toHaveCount(2);
+  await expect(page.getByText("Sin mercado disponible")).toHaveCount(0);
   await expect(
     page.getByText(
       "Kalshi y Polymarket se muestran por proveedor. No existe consenso de mercados y sus precios no participan en la predicción profesional.",
@@ -123,4 +160,48 @@ test("keeps film pages available without a TMDB token at runtime", async ({
     page.getByRole("heading", { level: 1, name: "Project Hail Mary" }),
   ).toBeVisible();
   await expect(page.getByText("La ficha sigue disponible")).toBeVisible();
+});
+
+test("offers account access while keeping private actions behind authentication", async ({
+  page,
+  request,
+}) => {
+  await page.goto("/acceso");
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Tu temporada, en orden." }),
+  ).toBeVisible();
+  await expect(page.getByRole("button", { name: "Entrar" })).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Crear cuenta" }),
+  ).toBeVisible();
+
+  const exportResponse = await request.get("/api/cuenta/exportar");
+  expect(exportResponse.status()).toBe(401);
+});
+
+test("keeps user rankings separate and private before login", async ({
+  page,
+}) => {
+  await page.goto("/temporadas/2027/mejor-pelicula");
+  await expect(
+    page.getByRole("heading", {
+      name: "Tu ranking de Mejor película",
+    }),
+  ).toBeVisible();
+  await expect(page.getByText("Privado por defecto")).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Consenso profesional" }),
+  ).toBeVisible();
+});
+
+test("replaces the simulated watched toggle with an authenticated flow", async ({
+  page,
+}) => {
+  await page.goto("/peliculas/the-odyssey");
+  await expect(
+    page.getByRole("heading", { name: "¿Ya la has visto?" }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Inicia sesión para guardar este estado de forma privada."),
+  ).toBeVisible();
 });

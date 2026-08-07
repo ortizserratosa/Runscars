@@ -1,6 +1,6 @@
 # Hoja de ruta
 
-**Última revisión:** 2026-07-25
+**Última revisión:** 2026-08-07
 
 Cada fase tiene una puerta de salida verificable. Una fase no se considera
 terminada por haber creado archivos o código, sino por cumplir esa puerta.
@@ -18,7 +18,7 @@ terminada por haber creado archivos o código, sino por cumplir esa puerta.
 | 6    | Agregación                                  | Completada        |
 | 7    | Snapshots y evaluación                      | Completada        |
 | 7.1  | Cobertura multcategoría, archivo y mercados | Completada        |
-| 8    | Usuarios                                    | Pendiente         |
+| 8    | Usuarios                                    | Completada        |
 | 9    | Administración editorial                    | Pendiente         |
 | 10   | QA y MVP desplegado                         | Pendiente         |
 
@@ -233,9 +233,21 @@ catálogo verificado antes de avanzar. No reabre la puerta de salida ni inicia
 la fase siguiente. El segundo snapshot de control restauró y verificó la
 cobertura objetivo; el primero se conserva como versión inmutable.
 
+El mantenimiento 7.1.2 elimina de la portada el corte estático heredado del
+prototipo y presenta, en cada categoría, la variación frente al snapshot
+periódico inmediatamente anterior. Es una implementación del recorrido R1 y de
+la metodología ya aceptada; no cambia la puerta de 7.1 ni inicia la fase 8.
+
+El mantenimiento 7.1.3 acota los mercados a la ceremonia vigente, descubre las
+series Oscar de Kalshi sin depender del orden global y separa nominación de
+ganador por proveedor en cada categoría. Corrige la integración ya incluida en
+7.1 y tampoco inicia la fase 8.
+
 ## Fase 8 · Usuarios
 
-**Estado:** pendiente; la fase 7.1 ya está cerrada.
+**Cerrada:** 2026-08-07. Supabase Auth, sesión SSR, perfiles, rankings
+parciales, visionados, visibilidad, exportación y borrado están integrados en
+staging. La puerta se comprobó con dos identidades reales y RLS.
 
 ### Entregables
 
@@ -250,6 +262,10 @@ cobertura objetivo; el primero se conserva como versión inmutable.
 
 Dos usuarios no pueden leer datos privados ni modificar datos ajenos; un usuario
 puede exportar o eliminar sus datos previstos.
+
+El diseño, la implementación y la evidencia de la puerta se mantienen en
+[PHASE_8.md](PHASE_8.md). D-014 permanece como `Propuesta`: la fase guarda y
+muestra rankings individuales, pero no publica un consenso comunitario.
 
 ## Fase 9 · Administración editorial
 

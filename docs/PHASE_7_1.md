@@ -132,3 +132,50 @@ UTC, las ocho rutas públicas y la salud de base por HTTP 200, rechazo 401 del
 cron sin secreto y 18 recorridos E2E en escritorio y móvil. Staging quedó
 desplegado con Next.js 16.3.0 y dependencias auditadas sin vulnerabilidades
 conocidas.
+
+## Mantenimiento 7.1.2 · fecha vigente y movimientos
+
+El 2026-08-07 se eliminó de la portada el corte estático del 23 de julio que
+seguía procediendo del fixture de fase 6. Portada y categorías usan ahora el
+snapshot vigente de Supabase; los ejemplos de procedencia de la portada se
+derivan de las contribuciones incluidas en ese mismo corte.
+
+Cada categoría carga además el snapshot periódico inmediatamente anterior del
+mismo alcance, esquema y método. La vista calcula
+`posición_anterior - posición_actual` sin alterar ninguna envolvente: muestra
+subida, bajada, estabilidad o nueva entrada y declara la fecha exacta de
+comparación. Si no existe una versión anterior, no atribuye movimiento.
+
+La comprobación contra los datos reales encontró dos subidas y cuatro bajadas en
+Actor y una subida y una bajada en Dirección frente al corte previo; las otras
+seis categorías conservaron sus posiciones. Las pruebas reproducibles cubren
+subida, bajada, estabilidad y nueva entrada, además de los ocho rankings en
+escritorio y móvil.
+
+El despliegue de control `dpl_7B1BQ7hYGJrHJdpo6Xn88dgNsR8P` quedó publicado en
+<https://runscars-staging.vercel.app>. La comprobación visual confirmó en
+portada el 7 de agosto y, en Actor, la comparación entre los cortes de las 13:02
+y las 12:55 UTC con `↑ 1` para Tom Cruise, `↓ 1` para John Malkovich y `↑ 3`
+para Brad Pitt.
+
+## Mantenimiento 7.1.3 · mercados de la ceremonia vigente
+
+El 2026-08-07 se corrigió el discovery de mercados sin iniciar la fase 8. Kalshi
+deja de recorrer una fracción del listado global y consulta las 16 series de
+nominación y ganador correspondientes a las ocho categorías públicas.
+Polymarket exige un evento activo identificado como Oscar 2027. Ambos
+extractores descartan otra ceremonia y contratos cerrados o resueltos.
+
+La comprobación directa de las APIs encontró 356 contratos Kalshi: nominación y
+ganador en las ocho categorías. Polymarket devolvió 242 contratos Oscar 2027, de
+los que 158 corresponden a las categorías públicas: ganador en las ocho y
+nominación en Mejor película y Actor. La interfaz conserva proveedor e intención
+por separado y limita cada bloque a los cuatro contratos con mayor volumen.
+
+La captura real de Polymarket quedó registrada en el run 610 con 242 snapshots.
+El primer intento Kalshi, run 609, conserva el fallo `HTTP 429`; tras añadir
+reintentos progresivos, el run 611 insertó 356 snapshots sin errores. El
+despliegue `dpl_BeBwaLvy2147awo36RhrYkehN7Jc` publicó ambos proveedores en
+<https://runscars-staging.vercel.app>. Las ocho rutas muestran mercados vigentes
+sin “Sin mercado disponible” y conservan nominación, ganador y proveedor como
+bloques separados.

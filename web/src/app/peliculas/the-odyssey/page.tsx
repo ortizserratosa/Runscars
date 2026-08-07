@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FilmCatalogDetails } from "../../components/FilmCatalogDetails";
+import { FilmWatchPanel } from "../../components/FilmWatchPanel";
 import { PosterBlock } from "../../components/PosterBlock";
 import { odysseyReviewLinks } from "../../data";
 import { consensusCandidates } from "../../../data/aggregation-presentation";
 import { getReferenceCriticalReception } from "../../../data/phase6-reference";
 import { getFilmCatalogDetail } from "../../../lib/repositories/catalog";
-import { FilmCommunity } from "./FilmCommunity";
 
 export async function generateMetadata(): Promise<Metadata> {
   const film = await getFilmCatalogDetail("the-odyssey");
@@ -261,7 +261,7 @@ export default async function FilmPage() {
               <h2>Tu señal sigue siendo tuya</h2>
             </div>
           </div>
-          <FilmCommunity />
+          <FilmWatchPanel filmId="the-odyssey" />
         </div>
       </section>
     </main>
