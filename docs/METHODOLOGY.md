@@ -237,12 +237,17 @@ ninguna de ellas.
 - Su entrada en un consenso público queda fuera de la fase 1 y necesita una
   decisión aceptada antes de implementar la fase 8; no se extrapolarán las
   posiciones ausentes mientras tanto.
+- La visibilidad pública de un ranking requiere además que su perfil propietario
+  sea público. Esta condición de lectura no cambia las posiciones guardadas.
 
 ## 6. Estado de visionado
 
 El estado pertenece al usuario y a la película, no a una candidatura concreta.
 Los valores iniciales son `no indicado` y `vista`. La fecha de visionado será
 opcional y la visibilidad pública requerirá una preferencia explícita.
+La ausencia de una fila representa `no indicado`; desmarcar una película elimina
+esa fila. Los visionados solo se publican cuando perfil y preferencia específica
+son públicos.
 
 ## 7. Snapshots
 

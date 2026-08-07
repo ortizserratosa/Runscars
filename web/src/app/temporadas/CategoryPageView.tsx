@@ -5,6 +5,7 @@ import type {
   ArchiveCategoryView,
 } from "../../lib/categories/data";
 import type { PublicCategoryId } from "../../lib/categories/config";
+import { UserRankingPanel } from "./UserRankingPanel";
 
 type CategoryDefinition = {
   id: PublicCategoryId;
@@ -332,6 +333,15 @@ function ActiveCategory({
             ))}
           </div>
         </section>
+
+        <UserRankingPanel
+          candidates={(aggregate?.ranking ?? []).map((candidate) => ({
+            id: candidate.candidateId,
+            label: candidate.label,
+          }))}
+          categoryId={category.id}
+          categoryName={category.name}
+        />
       </div>
     </>
   );

@@ -34,7 +34,8 @@
     "candidate:match": "node web/scripts/category-candidate-match.mjs match",
     "ingest:manual": "node web/scripts/ingestion.mjs manual",
     "results:import": "node web/scripts/official-results.mjs import",
-    "results:archive": "node web/scripts/official-results.mjs archive"
+    "results:archive": "node web/scripts/official-results.mjs archive",
+    "phase8:staging-check": "node web/scripts/phase-8-staging-check.mjs"
   },
   "devDependencies": {
     "brace-expansion": "5.0.9",

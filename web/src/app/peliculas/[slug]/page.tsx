@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FilmCatalogDetails } from "../../components/FilmCatalogDetails";
+import { FilmWatchPanel } from "../../components/FilmWatchPanel";
 import { PosterBlock } from "../../components/PosterBlock";
 import { consensusCandidates } from "../../../data/aggregation-presentation";
 import {
@@ -225,6 +226,17 @@ export default async function FilmPage({ params }: FilmPageProps) {
           <Link className="text-link" href="/temporadas/2027/mejor-pelicula">
             Volver a Mejor película
           </Link>
+        </div>
+
+        <div className="film-signal-section community-module">
+          <div className="module-heading">
+            <span className="signal-letter">C</span>
+            <div>
+              <p className="section-index">COMUNIDAD</p>
+              <h2>Tu señal sigue siendo tuya</h2>
+            </div>
+          </div>
+          <FilmWatchPanel filmId={slug} />
         </div>
       </section>
     </main>

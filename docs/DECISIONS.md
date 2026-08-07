@@ -48,6 +48,7 @@ pasado para ocultar cambios de criterio.
 | D-028 | Discovery diario y revisiones inmutables de páginas vivas | Aceptada |
 | D-029 | Recuperación de runs y revisión editorial vigente | Aceptada |
 | D-030 | Discovery de mercados acotado por ceremonia y serie | Aceptada |
+| D-031 | Identidad gestionada y privacidad comunitaria por capas | Aceptada |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -484,3 +485,24 @@ ejemplos manuales de nominaciones y ganador coincidieron con
 - **Versionado:** los extractores `kalshi-v2` y `polymarket-v2` generan runs
   horarios independientes de v1. Las capturas históricas permanecen inmutables,
   pero dejan de ser publicables al estar cerradas.
+
+## D-031 · Identidad gestionada y privacidad comunitaria por capas
+
+- **Fecha:** 2026-08-07
+- **Estado:** Aceptada
+- **Decisión:** Supabase Auth gestiona el acceso mediante correo y contraseña;
+  Next.js conserva la sesión SSR en cookies mediante PKCE. El correo no se
+  duplica en el esquema público.
+- **Autorización:** perfil, rankings y visionados derivan siempre la identidad de
+  la sesión verificada. Las acciones vuelven a autorizar en servidor y PostgreSQL
+  aplica RLS como barrera final.
+- **Privacidad:** el perfil y los visionados son privados por defecto. Un ranking
+  público solo puede leerse si el perfil también es público; publicar los
+  visionados requiere una preferencia adicional explícita.
+- **Portabilidad y borrado:** la exportación autenticada incluye cuenta, perfil,
+  rankings y visionados. El borrado exige la contraseña actual y usa la clave de
+  servicio únicamente en servidor para eliminar `auth.users`; las claves
+  foráneas eliminan en cascada todo el contenido comunitario.
+- **Límite:** D-014 sigue como `Propuesta`. Se guardan rankings parciales
+  individuales y posiciones explícitas, sin inferir ausencias ni publicar un
+  consenso comunitario.

@@ -1946,11 +1946,369 @@ export type Database = {
           },
         ];
       };
+      user_film_states: {
+        Row: {
+          user_id: string;
+          film_id: string;
+          watched_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          user_id: string;
+          film_id: string;
+          watched_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          user_id?: string;
+          film_id?: string;
+          watched_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "user_film_states_film_id_fkey";
+            columns: ["film_id"];
+            isOneToOne: false;
+            referencedRelation: "films";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "user_film_states_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "user_profiles";
+            referencedColumns: ["user_id"];
+          },
+        ];
+      };
+      user_profiles: {
+        Row: {
+          user_id: string;
+          slug: string;
+          display_name: string;
+          is_public: boolean;
+          watched_is_public: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          user_id: string;
+          slug: string;
+          display_name: string;
+          is_public?: boolean;
+          watched_is_public?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          user_id?: string;
+          slug?: string;
+          display_name?: string;
+          is_public?: boolean;
+          watched_is_public?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "user_profiles_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      user_ranking_entries: {
+        Row: {
+          ranking_id: string;
+          user_id: string;
+          season_id: string;
+          category_id: string;
+          category_candidate_id: string;
+          position: number;
+          created_at: string;
+        };
+        Insert: {
+          ranking_id: string;
+          user_id: string;
+          season_id: string;
+          category_id: string;
+          category_candidate_id: string;
+          position: number;
+          created_at?: string;
+        };
+        Update: {
+          ranking_id?: string;
+          user_id?: string;
+          season_id?: string;
+          category_id?: string;
+          category_candidate_id?: string;
+          position?: number;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "category_candidates";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
+            columns: ["category_candidate_id"];
+            isOneToOne: false;
+            referencedRelation: "category_candidates";
+            referencedColumns: ["category_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "category_candidates";
+            referencedColumns: ["category_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "category_candidates";
+            referencedColumns: ["category_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
+            columns: ["category_candidate_id"];
+            isOneToOne: false;
+            referencedRelation: "category_candidates";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "category_candidates";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
+            columns: ["category_candidate_id"];
+            isOneToOne: false;
+            referencedRelation: "category_candidates";
+            referencedColumns: ["season_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "category_candidates";
+            referencedColumns: ["season_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "category_candidates";
+            referencedColumns: ["season_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["ranking_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["season_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["season_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["season_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["season_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["ranking_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["user_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["user_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["user_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["user_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["category_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["category_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["category_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["ranking_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["ranking_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["category_id"];
+          },
+        ];
+      };
+      user_rankings: {
+        Row: {
+          id: string;
+          user_id: string;
+          season_id: string;
+          category_id: string;
+          is_public: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          season_id: string;
+          category_id: string;
+          is_public?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          season_id?: string;
+          category_id?: string;
+          is_public?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "user_rankings_season_category_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "season_categories";
+            referencedColumns: ["category_id"];
+          },
+          {
+            foreignKeyName: "user_rankings_season_category_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "season_categories";
+            referencedColumns: ["category_id"];
+          },
+          {
+            foreignKeyName: "user_rankings_season_category_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "season_categories";
+            referencedColumns: ["season_id"];
+          },
+          {
+            foreignKeyName: "user_rankings_season_category_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "season_categories";
+            referencedColumns: ["season_id"];
+          },
+          {
+            foreignKeyName: "user_rankings_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "user_profiles";
+            referencedColumns: ["user_id"];
+          },
+        ];
+      };
     };
     Views: {
       [_ in never]: never;
     };
     Functions: {
+      save_my_ranking: {
+        Args: {
+          ranking_season_id: string;
+          ranking_category_id: string;
+          ranking_candidate_ids: string[];
+          ranking_is_public: boolean;
+        };
+        Returns: string;
+      };
       set_updated_at: {
         Args: Record<PropertyKey, never>;
         Returns: unknown;

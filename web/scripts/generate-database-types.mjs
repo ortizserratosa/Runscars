@@ -14,7 +14,29 @@ const outputPath = path.join(
 const database = new PGlite();
 
 await database.exec(
-  "create role anon; create role authenticated; create role service_role;",
+  `
+    create role anon;
+    create role authenticated;
+    create role service_role;
+    create schema auth;
+    create table auth.users (
+      id uuid primary key,
+      email text,
+      raw_user_meta_data jsonb not null default '{}'::jsonb
+    );
+    create function auth.uid()
+    returns uuid
+    language sql
+    stable
+    as $$
+      select nullif(
+        current_setting('request.jwt.claim.sub', true),
+        ''
+      )::uuid
+    $$;
+    grant usage on schema auth to anon, authenticated, service_role;
+    grant execute on function auth.uid() to anon, authenticated, service_role;
+  `,
 );
 
 const migrationFiles = (await readdir(migrationsDirectory))
@@ -200,6 +222,15 @@ ${tableTypes}
       [_ in never]: never;
     };
     Functions: {
+      save_my_ranking: {
+        Args: {
+          ranking_season_id: string;
+          ranking_category_id: string;
+          ranking_candidate_ids: string[];
+          ranking_is_public: boolean;
+        };
+        Returns: string;
+      };
       set_updated_at: {
         Args: Record<PropertyKey, never>;
         Returns: unknown;

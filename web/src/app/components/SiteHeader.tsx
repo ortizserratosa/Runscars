@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { Suspense } from "react";
+import { AccountNav } from "./AccountNav";
 
 export function SiteHeader() {
   return (
@@ -19,9 +21,15 @@ export function SiteHeader() {
           <span aria-hidden="true" />
           Oscar 2027
         </span>
-        <span className="ghost-button compact" aria-label="Entorno de staging">
-          Staging
-        </span>
+        <Suspense
+          fallback={
+            <span className="ghost-button compact" aria-hidden="true">
+              Cuenta
+            </span>
+          }
+        >
+          <AccountNav />
+        </Suspense>
       </div>
     </header>
   );

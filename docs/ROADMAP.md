@@ -245,7 +245,9 @@ ganador por proveedor en cada categoría. Corrige la integración ya incluida en
 
 ## Fase 8 · Usuarios
 
-**Estado:** pendiente; la fase 7.1 ya está cerrada.
+**Cerrada:** 2026-08-07. Supabase Auth, sesión SSR, perfiles, rankings
+parciales, visionados, visibilidad, exportación y borrado están integrados en
+staging. La puerta se comprobó con dos identidades reales y RLS.
 
 ### Entregables
 
@@ -260,6 +262,10 @@ ganador por proveedor en cada categoría. Corrige la integración ya incluida en
 
 Dos usuarios no pueden leer datos privados ni modificar datos ajenos; un usuario
 puede exportar o eliminar sus datos previstos.
+
+El diseño, la implementación y la evidencia de la puerta se mantienen en
+[PHASE_8.md](PHASE_8.md). D-014 permanece como `Propuesta`: la fase guarda y
+muestra rankings individuales, pero no publica un consenso comunitario.
 
 ## Fase 9 · Administración editorial
 

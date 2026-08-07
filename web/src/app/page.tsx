@@ -279,12 +279,12 @@ export default async function Home() {
             <article className="signal-card community-card">
               <span className="signal-number">C</span>
               <p className="signal-type">Comunidad</p>
-              <h3>Rankings de usuarios en la fase 8</h3>
+              <h3>Tu ranking, con tu privacidad</h3>
               <div className="signal-stat">
-                <strong>SEPARADA</strong>
-                <span>nunca alterará el consenso profesional</span>
+                <strong>ACTIVA</strong>
+                <span>una señal separada del consenso profesional</span>
               </div>
-              <Link href="/temporadas/2027">Explorar categorías →</Link>
+              <Link href="/acceso">Crear mi perfil →</Link>
             </article>
           </div>
         </div>

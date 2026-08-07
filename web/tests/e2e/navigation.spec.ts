@@ -161,3 +161,47 @@ test("keeps film pages available without a TMDB token at runtime", async ({
   ).toBeVisible();
   await expect(page.getByText("La ficha sigue disponible")).toBeVisible();
 });
+
+test("offers account access while keeping private actions behind authentication", async ({
+  page,
+  request,
+}) => {
+  await page.goto("/acceso");
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Tu temporada, en orden." }),
+  ).toBeVisible();
+  await expect(page.getByRole("button", { name: "Entrar" })).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Crear cuenta" }),
+  ).toBeVisible();
+
+  const exportResponse = await request.get("/api/cuenta/exportar");
+  expect(exportResponse.status()).toBe(401);
+});
+
+test("keeps user rankings separate and private before login", async ({
+  page,
+}) => {
+  await page.goto("/temporadas/2027/mejor-pelicula");
+  await expect(
+    page.getByRole("heading", {
+      name: "Tu ranking de Mejor película",
+    }),
+  ).toBeVisible();
+  await expect(page.getByText("Privado por defecto")).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Consenso profesional" }),
+  ).toBeVisible();
+});
+
+test("replaces the simulated watched toggle with an authenticated flow", async ({
+  page,
+}) => {
+  await page.goto("/peliculas/the-odyssey");
+  await expect(
+    page.getByRole("heading", { name: "¿Ya la has visto?" }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Inicia sesión para guardar este estado de forma privada."),
+  ).toBeVisible();
+});
