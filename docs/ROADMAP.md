@@ -18,7 +18,7 @@ terminada por haber creado archivos o código, sino por cumplir esa puerta.
 | 6    | Agregación                                  | Completada        |
 | 7    | Snapshots y evaluación                      | Completada        |
 | 7.1  | Cobertura multcategoría, archivo y mercados | Completada        |
-| 8    | Usuarios                                    | Pendiente         |
+| 8    | Usuarios                                    | Completada        |
 | 9    | Administración editorial                    | Pendiente         |
 | 10   | QA y MVP desplegado                         | Pendiente         |
 
