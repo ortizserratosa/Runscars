@@ -1,18 +1,20 @@
 import { randomUUID } from "node:crypto";
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
+import { createBrowserClient } from "@supabase/ssr";
 import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
 const browserFixturePath = process.env.PHASE8_BROWSER_FIXTURE_PATH
   ? path.resolve(process.env.PHASE8_BROWSER_FIXTURE_PATH)
   : null;
 
-if (!supabaseUrl || !anonKey || !serviceRoleKey) {
+if (!supabaseUrl || !anonKey || !serviceRoleKey || !siteUrl) {
   throw new Error(
-    "Faltan NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY o SUPABASE_SERVICE_ROLE_KEY.",
+    "Faltan las variables públicas de Supabase, NEXT_PUBLIC_SITE_URL o SUPABASE_SERVICE_ROLE_KEY.",
   );
 }
 if (browserFixturePath && !browserFixturePath.startsWith("/tmp/")) {
@@ -168,6 +170,45 @@ try {
     );
   });
 
+  const cookieJar = new Map();
+  const exportClient = createBrowserClient(supabaseUrl, anonKey, {
+    cookies: {
+      getAll() {
+        return [...cookieJar.entries()].map(([name, value]) => ({
+          name,
+          value,
+        }));
+      },
+      setAll(cookies) {
+        cookies.forEach(({ name, value }) => cookieJar.set(name, value));
+      },
+    },
+  });
+  const exportLogin = await exportClient.auth.signInWithPassword({
+    email: users[0].email,
+    password,
+  });
+  if (exportLogin.error) throw exportLogin.error;
+  const exportResponse = await fetch(new URL("/api/cuenta/exportar", siteUrl), {
+    headers: {
+      Cookie: [...cookieJar.entries()]
+        .map(([name, value]) => `${name}=${value}`)
+        .join("; "),
+    },
+  });
+  const exportPayload = await exportResponse.json();
+  assert(exportResponse.status === 200, "La exportación autenticada falló.");
+  assert(
+    exportPayload.schemaVersion === "runscars-user-export-v1",
+    "La exportación no respeta el contrato versionado.",
+  );
+  assert(
+    exportPayload.rankings?.length === 1 &&
+      exportPayload.rankingEntries?.length === 1 &&
+      exportPayload.watchedFilms?.length === 1,
+    "La exportación no contiene todos los datos propios.",
+  );
+
   if (browserFixturePath) {
     await writeFile(
       browserFixturePath,
@@ -186,6 +227,7 @@ try {
       privateRowsVisibleToSecondUser: 0,
       foreignRowsModified: 0,
       explicitlyPublicRowsVisible: 4,
+      authenticatedExportStatus: exportResponse.status,
       browserFixtureCreated: Boolean(browserFixturePath),
     }),
   );
