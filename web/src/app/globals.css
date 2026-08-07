@@ -1232,6 +1232,19 @@ select:focus-visible {
   text-transform: uppercase;
 }
 
+.locked-snapshot-note .snapshot-comparison {
+  justify-items: end;
+  max-width: 330px;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.snapshot-comparison strong {
+  color: var(--ink);
+}
+
 .insufficient-note {
   margin: 0;
   padding: 0.85rem 1.5rem;
@@ -1247,7 +1260,7 @@ select:focus-visible {
 .leaderboard-head,
 .leaderboard-row {
   display: grid;
-  grid-template-columns: 70px minmax(220px, 1fr) 155px 150px 38px;
+  grid-template-columns: 70px minmax(220px, 1fr) 155px 150px 58px;
   gap: 1rem;
   align-items: center;
 }
@@ -2823,12 +2836,18 @@ select:focus-visible {
     flex-direction: column;
   }
 
+  .locked-snapshot-note .snapshot-comparison {
+    justify-items: start;
+    max-width: none;
+    text-align: left;
+  }
+
   .leaderboard-head {
     display: none;
   }
 
   .leaderboard-row {
-    grid-template-columns: 44px 1fr 62px 34px;
+    grid-template-columns: 44px 1fr 62px 52px;
     gap: 0.6rem;
     min-height: 78px;
   }

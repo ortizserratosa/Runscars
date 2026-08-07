@@ -3,10 +3,12 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import archive2026 from "../../../data/phase-7/oscars-2026.json";
 import {
   phase71FixtureAggregate,
+  phase71FixturePreviousAggregate,
   phase71FixtureSeasonSummary,
 } from "../../data/phase71-fixture";
 import type { PredictionAggregateV2 } from "../aggregation/v2";
 import { isSupabaseConfigured } from "../environment";
+import { compareSnapshotMovements } from "../snapshots/movements";
 import { createSupabaseServerClient } from "../supabase/server";
 import { PUBLIC_CATEGORIES, type PublicCategoryId } from "./config";
 
@@ -31,6 +33,10 @@ export type ActiveCategoryView = {
     id: string;
     contentHash: string;
     lockedAt: string;
+    previous: {
+      id: string;
+      lockedAt: string;
+    } | null;
   } | null;
 };
 
@@ -64,16 +70,24 @@ function allowFixture() {
 }
 
 function fixtureActive(categoryId: PublicCategoryId): ActiveCategoryView {
+  const aggregate = compareSnapshotMovements(
+    phase71FixtureAggregate(categoryId),
+    phase71FixturePreviousAggregate(categoryId),
+  );
   return {
     mode: "active",
     seasonYear: 2027,
-    aggregate: phase71FixtureAggregate(categoryId),
+    aggregate,
     markets: { kalshi: [], polymarket: [] },
     dataState: "fixture",
     snapshot: {
       id: `periodic-oscars-2027-${categoryId}-nomination-2026-07-25-fixture`,
       contentHash: "fixture-v2-no-persistent-hash",
       lockedAt: "2026-07-25T04:47:00.000Z",
+      previous: {
+        id: `periodic-oscars-2027-${categoryId}-nomination-2026-07-20-fixture`,
+        lockedAt: "2026-07-20T04:47:00.000Z",
+      },
     },
   };
 }
@@ -199,7 +213,7 @@ async function activeCategoryFromDatabase(
   }
   const snapshotResult = await supabase
     .from("aggregate_snapshots")
-    .select("id,content_hash,locked_at,schema_version,payload")
+    .select("id,content_hash,locked_at,method_version,schema_version,payload")
     .eq("id", currentResult.data.snapshot_id)
     .single();
   if (snapshotResult.error) throw new Error(snapshotResult.error.message);
@@ -217,16 +231,43 @@ async function activeCategoryFromDatabase(
   const payload = row.payload as unknown as {
     aggregate: PredictionAggregateV2;
   };
+  const previousResult = await supabase
+    .from("aggregate_snapshots")
+    .select("id,locked_at,payload")
+    .eq("season_id", "oscars-2027")
+    .eq("category_id", categoryId)
+    .eq("prediction_intention", "nomination")
+    .eq("kind", "periodic")
+    .eq("method_version", row.method_version)
+    .eq("schema_version", "runscars-snapshot-v2")
+    .lt("locked_at", row.locked_at)
+    .order("locked_at", { ascending: false })
+    .order("id", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (previousResult.error) throw new Error(previousResult.error.message);
+  const previousPayload = previousResult.data?.payload as
+    { aggregate: PredictionAggregateV2 } | undefined;
+  const aggregate = compareSnapshotMovements(
+    payload.aggregate,
+    previousPayload?.aggregate ?? null,
+  );
   return {
     mode: "active",
     seasonYear: 2027,
-    aggregate: payload.aggregate,
+    aggregate,
     markets,
     dataState: "database",
     snapshot: {
       id: row.id,
       contentHash: row.content_hash,
       lockedAt: row.locked_at,
+      previous: previousResult.data
+        ? {
+            id: previousResult.data.id,
+            lockedAt: previousResult.data.locked_at,
+          }
+        : null,
     },
   };
 }

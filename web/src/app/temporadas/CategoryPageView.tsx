@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Movement } from "../components/Movement";
 import type {
   ActiveCategoryView,
   ArchiveCategoryView,
@@ -108,9 +109,21 @@ function ActiveCategory({
                   contrastadas y conservadas con su procedencia
                 </span>
               </div>
-              <span>
-                Las nuevas publicaciones generan una actualización nueva
-              </span>
+              <div className="snapshot-comparison">
+                <span>
+                  Las nuevas publicaciones generan una actualización nueva
+                </span>
+                {view.snapshot.previous ? (
+                  <strong>
+                    Cambios frente a{" "}
+                    {dateLabel(view.snapshot.previous.lockedAt)}
+                  </strong>
+                ) : (
+                  <strong>
+                    Primer corte disponible · sin comparación anterior
+                  </strong>
+                )}
+              </div>
             </div>
           ) : (
             <p className="insufficient-note">
@@ -142,7 +155,7 @@ function ActiveCategory({
                 <span>Candidatura</span>
                 <span>Respaldo</span>
                 <span>Puntos</span>
-                <span />
+                <span>Cambio</span>
               </div>
               {aggregate.ranking.map((candidate) => (
                 <div className="leaderboard-item" key={candidate.candidateId}>
@@ -195,7 +208,17 @@ function ActiveCategory({
                         />
                       </div>
                     </div>
-                    <span />
+                    {view.snapshot?.previous ? (
+                      <Movement value={candidate.movement} />
+                    ) : (
+                      <span
+                        aria-label="Sin actualización anterior"
+                        className="movement neutral"
+                        title="Sin actualización anterior"
+                      >
+                        —
+                      </span>
+                    )}
                   </div>
                   <details className="category-source-details">
                     <summary>Ver procedencia y cálculo</summary>

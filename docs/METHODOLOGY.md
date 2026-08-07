@@ -1,7 +1,7 @@
 # Metodología
 
 **Estado:** agregación, snapshots y evaluación profesional operativos
-**Última revisión:** 2026-07-25
+**Última revisión:** 2026-08-07
 
 ## 1. Principios
 
@@ -212,6 +212,20 @@ Un valor positivo significa subida, uno negativo bajada y cero estabilidad. Una
 candidatura sin posición anterior se marca como nueva. Estos cortes no son
 snapshots y pueden recalcularse; su bloqueo e inmutabilidad se incorporaron en
 la fase 7.
+
+### 4.6 Variación entre snapshots públicos
+
+Desde la fase 7, la página de una categoría compara el snapshot periódico
+vigente con el snapshot bloqueado inmediatamente anterior del mismo alcance y
+versión metodológica. La variación mantiene la fórmula
+`posición_anterior - posición_actual`: un valor positivo es una subida, uno
+negativo una bajada, cero indica estabilidad y una candidatura ausente en el
+corte anterior aparece como nueva.
+
+La interfaz muestra la fecha exacta del corte usado como comparación. Si no
+existe un snapshot anterior, no atribuye movimientos. La comparación se deriva
+al leer las dos envolventes inmutables; no modifica el payload ni el hash de
+ninguna de ellas.
 
 ## 5. Rankings de usuarios
 

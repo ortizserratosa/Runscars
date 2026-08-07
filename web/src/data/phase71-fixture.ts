@@ -322,6 +322,25 @@ export function phase71FixtureAggregate(categoryId: PublicCategoryId) {
   });
 }
 
+export function phase71FixturePreviousAggregate(categoryId: PublicCategoryId) {
+  const current = phase71FixtureAggregate(categoryId);
+  const ranking = [...current.ranking];
+
+  if (ranking.length >= 2) {
+    [ranking[0], ranking[1]] = [ranking[1], ranking[0]];
+  }
+
+  return {
+    ...current,
+    cutoffDate: "2026-07-20T04:47:00.000Z",
+    ranking: ranking.slice(0, -1).map((candidate, index) => ({
+      ...candidate,
+      position: index + 1,
+      movement: null,
+    })),
+  };
+}
+
 export const phase71FixtureSeasonSummary = PUBLIC_CATEGORIES.map((category) => {
   const aggregate = phase71FixtureAggregate(category.id);
   return {

@@ -21,6 +21,10 @@ test("keeps professional, critical and community signals visibly separate", asyn
   await expect(page.getByText("Predicciones", { exact: true })).toBeVisible();
   await expect(page.getByText("Crítica", { exact: true })).toBeVisible();
   await expect(page.getByText("Comunidad", { exact: true })).toBeVisible();
+  await expect(
+    page.getByText("Cuaderno de temporada · 25 de julio de 2026"),
+  ).toBeVisible();
+  await expect(page.getByText("Equipo editorial · 23 jul 2026")).toHaveCount(0);
 });
 
 test("publishes all eight database-shaped category routes", async ({
@@ -36,7 +40,21 @@ test("publishes all eight database-shaped category routes", async ({
     await expect(
       page.getByRole("heading", { name: "Consenso profesional" }),
     ).toBeVisible();
+    await expect(
+      page.getByText("Cambios frente a", { exact: false }),
+    ).toBeVisible();
   }
+});
+
+test("shows movement against the immediately previous category update", async ({
+  page,
+}) => {
+  await page.goto("/temporadas/2027/mejor-pelicula");
+  await expect(page.getByLabel("Sube 1 posición").first()).toBeVisible();
+  await expect(page.getByLabel("Baja 1 posición").first()).toBeVisible();
+  await expect(
+    page.getByLabel("Nueva desde la actualización anterior").last(),
+  ).toBeVisible();
 });
 
 test("shows six Best Picture media but never gives The Ringer Borda points", async ({

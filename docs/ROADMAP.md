@@ -1,6 +1,6 @@
 # Hoja de ruta
 
-**Última revisión:** 2026-07-25
+**Última revisión:** 2026-08-07
 
 Cada fase tiene una puerta de salida verificable. Una fase no se considera
 terminada por haber creado archivos o código, sino por cumplir esa puerta.
@@ -232,6 +232,11 @@ recupera runs abandonados, compacta la cola editorial activa y amplía el
 catálogo verificado antes de avanzar. No reabre la puerta de salida ni inicia
 la fase siguiente. El segundo snapshot de control restauró y verificó la
 cobertura objetivo; el primero se conserva como versión inmutable.
+
+El mantenimiento 7.1.2 elimina de la portada el corte estático heredado del
+prototipo y presenta, en cada categoría, la variación frente al snapshot
+periódico inmediatamente anterior. Es una implementación del recorrido R1 y de
+la metodología ya aceptada; no cambia la puerta de 7.1 ni inicia la fase 8.
 
 ## Fase 8 · Usuarios
 
