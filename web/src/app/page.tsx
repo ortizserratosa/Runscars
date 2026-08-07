@@ -101,7 +101,7 @@ export default function Home() {
           <span className="ticker-separator" aria-hidden="true">
             ◆
           </span>
-          <span>Next Best Picture completa el cuarto listado</span>
+          <span>Ocho categorías públicas con cobertura multifuente</span>
         </div>
       </section>
 
@@ -112,8 +112,8 @@ export default function Home() {
             <h2>La carrera ahora</h2>
           </div>
           <p>
-            Orden Borda normalizado entre las cuatro listas aplicables del
-            fixture. No representa una probabilidad.
+            Orden Borda normalizado entre rankings profesionales aplicables. No
+            representa una probabilidad.
           </p>
         </div>
 
@@ -191,15 +191,13 @@ export default function Home() {
 
             <article className="signal-card community-card">
               <span className="signal-number">C</span>
-              <p className="signal-type">Tu ranking</p>
-              <h3>¿Cómo ordenarías tú la carrera?</h3>
+              <p className="signal-type">Comunidad</p>
+              <h3>Rankings de usuarios en la fase 8</h3>
               <div className="signal-stat">
-                <strong>01—10</strong>
-                <span>simulación local, fuera del consenso</span>
+                <strong>SEPARADA</strong>
+                <span>nunca alterará el consenso profesional</span>
               </div>
-              <Link href="/temporadas/2027/mejor-pelicula#mi-ranking">
-                Crear ranking →
-              </Link>
+              <Link href="/temporadas/2027">Explorar categorías →</Link>
             </article>
           </div>
         </div>

@@ -87,6 +87,25 @@ las muestras son además entradas candidatas del dataset o pruebas del método.
 | `awards-radar` | [Best Picture](https://awardsradar.com/best-picture/) | [Predicciones de mitad de año](https://awardsradar.com/2026/07/03/year-in-advance-oscar-predictions-considering-first-half-contenders-and-whats-to-come-as-we-enter-the-second-half-of-2026/) |
 | `ankler` | [Predicciones tempranas](https://theankler.com/recklessly-early-oscar-predictions/) | [Predicciones finales](https://theankler.com/p/final-oscar-predictions-wholl-make) |
 
+## Ampliación de fase 7.1
+
+Estas cuatro fuentes amplían el inventario histórico de 31 candidatas sin
+reescribir el corte de fase 1:
+
+| ID | Fuente | Tipo | Cobertura y autoría | Método | Editorial | Técnico | Publicación | Riesgo principal |
+|---|---|---|---|---|---|---|---|---|
+| `midnight-critics` | Midnight Critics Circle | prediction | Consenso del círculo en ocho categorías y adicionales | HTML + captura | selected | automated | publishable | Errores tipográficos de colaboradores requieren matching conservador |
+| `the-ringer` | The Ringer | prediction | Selección editorial de Mejor película | HTML + captura | selected | automated | publishable | No publica un ranking numérico comparable |
+| `kalshi` | Kalshi | market | Contratos Oscar disponibles | API pública paginada | selected | automated | publishable | Puede no existir un mercado para una categoría |
+| `polymarket` | Polymarket | market | Eventos y contratos Oscar disponibles | Gamma API pública | selected | automated | publishable | Preguntas y eventos requieren matching por proveedor |
+
+| ID | Muestra 1 | Muestra 2 |
+|---|---|---|
+| `midnight-critics` | [Predicciones Oscar 2027](https://www.midnightcritics.com/predictions/2027-oscar-predictions) | [Archivo de predicciones](https://www.midnightcritics.com/predictions) |
+| `the-ringer` | [Previa de Mejor película 2027](https://www.theringer.com/2026/03/20/oscars/oscars-2027-predictions-best-picture-movies-contenders) | [Archivo Oscar](https://www.theringer.com/topic/oscars) |
+| `kalshi` | [Documentación de mercados](https://docs.kalshi.com/welcome) | [Paginación de mercados](https://docs.kalshi.com/getting_started/pagination) |
+| `polymarket` | [Visión general de datos](https://docs.polymarket.com/market-data/overview) | [Listado de eventos](https://docs.polymarket.com/api-reference/events/list-events) |
+
 ## Puerta de calidad
 
 Una candidata queda `selected` solo si cumple simultáneamente:

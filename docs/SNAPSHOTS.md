@@ -1,7 +1,7 @@
 # Snapshots y evaluación · fase 7
 
-**Estado:** completada
-**Fecha de cierre:** 2026-07-25
+**Estado:** fase 7 completada; ampliación v2 integrada en staging
+**Última revisión:** 2026-07-25
 
 ## Objetivo
 
@@ -49,6 +49,11 @@ publicable.
 El hash cubre el contenido metodológico. El ID, el proceso de bloqueo y la
 cadena de corrección permanecen como metadatos persistidos fuera de ese hash.
 
+`runscars-snapshot-v2` mantiene la misma envolvente, pero usa
+`runscars-aggregation-v2` y candidaturas genéricas con `candidateId`, película,
+obra y personas. La migración no modifica ninguna envolvente v1: su contenido y
+hash siguen siendo reproducibles byte a byte.
+
 Un snapshot periódico conserva todo el ranking, pero no fija una papeleta
 final. El cierre de nominaciones registra explícitamente cuántos candidatos
 selecciona y sus IDs; el cierre de ganador fija la primera posición.
@@ -60,11 +65,16 @@ Vercel Cron llama cada lunes a las **04:47 UTC** a
 programaciones activas y procesa cada alcance de forma aislada. Un fallo no
 impide intentar el siguiente.
 
-La primera programación cubre Oscar 2027, Mejor película y predicción de
-nominaciones. Si no existen observaciones de fuentes aprobadas para publicación,
+Las ocho programaciones cubren Oscar 2027 y predicción de nominaciones. Si no
+existen observaciones de fuentes aprobadas para publicación,
 el proceso devuelve `skipped` y no fabrica un snapshot vacío. La configuración
 de Vercel usa un `GET` autenticado mediante `Authorization: Bearer`, según la
 [documentación oficial de Cron](https://vercel.com/docs/cron-jobs/manage-cron-jobs).
+
+El 2026-07-25 staging bloqueó los ocho snapshots v2 con datos reales. Una
+segunda ejecución con el mismo corte devolvió ocho `unchanged`. Las 16 páginas
+de categoría —ocho activas y ocho de archivo— respondieron correctamente desde
+Supabase en <https://runscars-staging.vercel.app>.
 
 ## Resultados oficiales
 
@@ -82,9 +92,20 @@ que es un ejemplo reproducible y no un resultado real.
 Los Oscar 2027 todavía no tienen resultados oficiales. La interfaz muestra
 “pendiente” y no evalúa el snapshot periódico como si fuera un cierre final.
 
+El archivo real de Oscar 2026 se importa mediante:
+
+```bash
+npm run results:archive
+```
+
+El manifiesto v2 conserva los 45 nominados y los ocho ganadores de las ocho
+categorías públicas, con películas, intérpretes, guionistas y equipos. Genera
+dos resultados oficiales append-only y no reconstruye predicciones históricas.
+
 ## Evaluación
 
-`runscars-evaluation-v1` implementa las reglas de
+`runscars-evaluation-v2` aplica las mismas reglas por `candidateId`. La v1
+permanece disponible para reproducir sus cierres. Ambas implementan
 [METHODOLOGY.md](METHODOLOGY.md):
 
 - nominaciones: aciertos, falsos positivos, omitidos, precisión y cobertura;

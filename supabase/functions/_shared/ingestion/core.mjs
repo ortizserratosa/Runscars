@@ -78,6 +78,30 @@ function asArray(value) {
   return Array.isArray(value) ? value : [value];
 }
 
+function creditCategoryPriority(categoryId, credit) {
+  const department = normalizeIdentity(credit.department ?? "unknown");
+  const role = normalizeIdentity(credit.role ?? "unknown");
+  if (categoryId === "directing") {
+    return department === "directing" || role.includes("director") ? 0 : 1;
+  }
+  if (
+    categoryId === "original-screenplay" ||
+    categoryId === "adapted-screenplay"
+  ) {
+    return department === "writing" || /writer|screenplay|story/.test(role)
+      ? 0
+      : 1;
+  }
+  if (
+    ["actor", "actress", "supporting-actor", "supporting-actress"].includes(
+      categoryId,
+    )
+  ) {
+    return department === "acting" || /actor|actress|self/.test(role) ? 0 : 1;
+  }
+  return 0;
+}
+
 function decodeEntities(value) {
   const named = {
     amp: "&",
@@ -507,24 +531,127 @@ export async function prepareBatch(batch, filmIdentities) {
 
   for (const publication of batch.publications) {
     const contentHash = await sha256(publication.originalData);
+    const structuredContentHash = await sha256({
+      extractor_version: batch.extractorVersion,
+      original_data: publication.originalData,
+      observations: publication.observations,
+    });
+    const publicationExternalId =
+      publication.isMutable === true
+        ? `${publication.externalId}@${structuredContentHash.slice(0, 16)}`
+        : publication.externalId;
     const preparedObservations = [];
 
     for (const observation of publication.observations) {
+      const isPrediction =
+        observation.dataType === "prediction_ordered" ||
+        observation.dataType === "prediction_selection";
       const explicitFilm = observation.filmId
         ? filmIdentities.filter((film) => film.id === observation.filmId)
         : null;
       const matches =
-        explicitFilm ?? matchFilm(observation.subject, filmIdentities);
-      const filmId = matches.length === 1 ? matches[0].id : null;
-      const needsReview =
-        observation.personId === null || observation.personId === undefined
+        explicitFilm ??
+        matchFilm(
+          observation.filmSubject ?? observation.subject,
+          filmIdentities,
+        );
+      const matchedFilm = matches.length === 1 ? matches[0] : null;
+      const filmId = matchedFilm?.id ?? null;
+      const peopleSubjects = asArray(observation.peopleSubjects).filter(
+        (value) => typeof value === "string" && value.trim(),
+      );
+      const matchedPeople = [];
+      const ambiguousPeople = [];
+      for (const personSubject of peopleSubjects) {
+        const personMatches = (matchedFilm?.credits ?? [])
+          .filter((credit) =>
+            [credit.person.name, ...(credit.person.alternate_names ?? [])].some(
+              (name) =>
+                normalizeIdentity(name) === normalizeIdentity(personSubject),
+            ),
+          )
+          .toSorted(
+            (left, right) =>
+              creditCategoryPriority(observation.categoryId, left) -
+                creditCategoryPriority(observation.categoryId, right) ||
+              (left.billingOrder ?? Number.MAX_SAFE_INTEGER) -
+                (right.billingOrder ?? Number.MAX_SAFE_INTEGER) ||
+              String(left.role).localeCompare(String(right.role), "en"),
+          );
+        const uniquePeople = personMatches.filter(
+          (credit, index, credits) =>
+            credits.findIndex(
+              (candidate) => candidate.person.id === credit.person.id,
+            ) === index,
+        );
+        if (uniquePeople.length === 1) {
+          matchedPeople.push({
+            id: uniquePeople[0].person.id,
+            name: uniquePeople[0].person.name,
+            role: uniquePeople[0].role,
+            displayOrder: matchedPeople.length,
+          });
+        } else {
+          ambiguousPeople.push({
+            subject: personSubject,
+            candidateIds: uniquePeople.map((credit) => credit.person.id),
+          });
+        }
+      }
+      const categoryRequiresPerson = [
+        "directing",
+        "actor",
+        "actress",
+        "supporting-actor",
+        "supporting-actress",
+      ].includes(observation.categoryId);
+      const filmNeedsReview =
+        !observation.workTitle &&
+        (matches.length !== 1 || matchedFilm === null);
+      const personNeedsReview =
+        isPrediction &&
+        (ambiguousPeople.length > 0 ||
+          (categoryRequiresPerson && matchedPeople.length === 0));
+      const needsReview = isPrediction
+        ? filmNeedsReview || personNeedsReview
+        : observation.personId === null || observation.personId === undefined
           ? filmId === null
           : false;
+      let candidate = null;
+      if (isPrediction && !needsReview) {
+        const identityKey = await sha256({
+          season_id: batch.seasonId,
+          category_id: observation.categoryId,
+          film_id: filmId,
+          work_title: observation.workTitle
+            ? normalizeIdentity(observation.workTitle)
+            : null,
+          person_ids: matchedPeople.map((person) => person.id).sort(),
+        });
+        const peopleLabel = matchedPeople
+          .map((person) => person.name)
+          .join(", ");
+        const workLabel =
+          matchedFilm?.title ?? observation.workTitle ?? observation.subject;
+        candidate = {
+          id: `candidate-${identityKey.slice(0, 24)}`,
+          identityKey,
+          seasonId: batch.seasonId,
+          categoryId: observation.categoryId,
+          filmId,
+          workTitle: observation.workTitle ?? null,
+          displayLabel: peopleLabel
+            ? `${peopleLabel} — ${workLabel}`
+            : workLabel,
+          people: matchedPeople,
+        };
+      }
       const dedupeKey = await sha256({
         source_id: batch.sourceId,
-        publication_id: publication.externalId,
+        publication_id: publicationExternalId,
         author: publication.author,
         subject_id:
+          candidate?.id ??
           filmId ??
           observation.personId ??
           normalizeIdentity(observation.subject),
@@ -539,17 +666,22 @@ export async function prepareBatch(batch, filmIdentities) {
         dedupeKey,
         filmId,
         personId: observation.personId ?? null,
+        candidate,
+        categoryCandidateId: candidate?.id ?? null,
         state: needsReview ? "pending_review" : "published",
         participates: needsReview ? false : observation.participates,
         review: needsReview
           ? {
-              kind: "film_match",
+              kind: personNeedsReview ? "person_match" : "film_match",
               subjectLabel: observation.subject,
               candidateFilmIds: matches.map((match) => match.id),
+              candidatePersonIds: ambiguousPeople.flatMap(
+                (person) => person.candidateIds,
+              ),
               queueKey: await sha256({
                 connector_id: batch.connectorId,
                 dedupe_key: dedupeKey,
-                kind: "film_match",
+                kind: personNeedsReview ? "person_match" : "film_match",
               }),
             }
           : null,
@@ -558,6 +690,7 @@ export async function prepareBatch(batch, filmIdentities) {
 
     preparedPublications.push({
       ...publication,
+      externalId: publicationExternalId,
       contentHash,
       observations: preparedObservations,
     });

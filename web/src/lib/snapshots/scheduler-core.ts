@@ -8,6 +8,15 @@ import {
   type LockedPredictionSnapshot,
   type PredictionSnapshotKind,
 } from ".";
+import {
+  aggregatePredictionsV2,
+  type PredictionObservationV2,
+} from "../aggregation/v2";
+import {
+  createPredictionSnapshotPayloadV2,
+  lockPredictionSnapshotV2,
+  type LockedPredictionSnapshotV2,
+} from "./v2";
 
 export type SnapshotSchedule = {
   id: string;
@@ -42,6 +51,14 @@ export interface SnapshotSchedulerRepository {
     schedule: SnapshotSchedule,
   ): Promise<PredictionObservation[]>;
   lock(snapshot: LockedPredictionSnapshot): Promise<boolean>;
+}
+
+export interface SnapshotSchedulerRepositoryV2 {
+  activeSchedules(): Promise<SnapshotSchedule[]>;
+  predictionObservationsV2(
+    schedule: SnapshotSchedule,
+  ): Promise<PredictionObservationV2[]>;
+  lockV2(snapshot: LockedPredictionSnapshotV2): Promise<boolean>;
 }
 
 export async function runScheduledSnapshots(
@@ -101,6 +118,70 @@ export async function runScheduledSnapshots(
           error instanceof Error
             ? error.message
             : "Fallo desconocido al crear el snapshot",
+      });
+    }
+  }
+
+  return results;
+}
+
+export async function runScheduledSnapshotsV2(
+  repository: SnapshotSchedulerRepositoryV2,
+  now = new Date(),
+): Promise<ScheduledSnapshotResult[]> {
+  const schedules = await repository.activeSchedules();
+  const lockedAt = now.toISOString();
+  const results: ScheduledSnapshotResult[] = [];
+
+  for (const schedule of schedules) {
+    try {
+      const observations = await repository.predictionObservationsV2(schedule);
+      if (observations.length === 0) {
+        results.push({
+          scheduleId: schedule.id,
+          status: "skipped",
+          reason: "No hay observaciones v2 publicables",
+        });
+        continue;
+      }
+      const aggregate = aggregatePredictionsV2(observations, {
+        seasonId: schedule.seasonId,
+        categoryId: schedule.categoryId,
+        intention: schedule.intention,
+        cutoffDate: lockedAt,
+      });
+      if (aggregate.includedObservationIds.length === 0) {
+        results.push({
+          scheduleId: schedule.id,
+          status: "skipped",
+          reason: "No hay listas v2 válidas para bloquear",
+        });
+        continue;
+      }
+      const payload = createPredictionSnapshotPayloadV2(aggregate, {
+        kind: schedule.kind,
+        cutoffAt: lockedAt,
+        timeZone: schedule.timeZone,
+      });
+      const snapshot = await lockPredictionSnapshotV2(payload, {
+        lockedAt,
+        lockedBy: "vercel-cron:snapshots-weekly-v2",
+      });
+      const created = await repository.lockV2(snapshot);
+      results.push({
+        scheduleId: schedule.id,
+        status: created ? "created" : "unchanged",
+        snapshotId: snapshot.id,
+        contentHash: snapshot.contentHash,
+      });
+    } catch (error) {
+      results.push({
+        scheduleId: schedule.id,
+        status: "failed",
+        error:
+          error instanceof Error
+            ? error.message
+            : "Fallo desconocido al crear el snapshot v2",
       });
     }
   }

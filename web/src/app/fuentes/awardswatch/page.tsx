@@ -5,7 +5,7 @@ import { filmHrefForLabel } from "../../../data/films";
 
 export const metadata: Metadata = {
   title: "AwardsWatch · Fuente",
-  description: "Trazabilidad de AwardsWatch en el fixture de Runscars.",
+  description: "Trazabilidad de AwardsWatch en Runscars.",
 };
 
 const sourceUrl =
@@ -75,8 +75,8 @@ export default function SourcePage() {
               <strong>Nominación</strong>
             </div>
             <div>
-              <span>Extractor</span>
-              <strong>manual-v1</strong>
+              <span>Verificación</span>
+              <strong>Captura automatizada</strong>
             </div>
           </div>
 
@@ -133,11 +133,11 @@ export default function SourcePage() {
               </div>
               <div>
                 <dt>Estado técnico</dt>
-                <dd>Prototipo</dd>
+                <dd>Automatizada</dd>
               </div>
               <div>
                 <dt>Publicación</dt>
-                <dd>Revisar antes</dd>
+                <dd>Publicable</dd>
               </div>
               <div>
                 <dt>Frecuencia</dt>
@@ -168,8 +168,8 @@ export default function SourcePage() {
             <div>
               <strong>Fuente al día</strong>
               <p>
-                9 días desde la publicación del fixture. El aviso se activa a
-                los 45.
+                La tarea diaria comprueba si existe una publicación más
+                reciente.
               </p>
             </div>
           </div>

@@ -104,7 +104,7 @@ export default async function FilmPage() {
               </h1>
               <p className="film-deck">
                 {film.tmdb?.tagline ??
-                  "Lidera el consenso del fixture con tres primeras posiciones y presencia en las cuatro listas aplicables."}
+                  "Lidera el consenso profesional por respaldo y posición en las listas aplicables."}
               </p>
               <div className="film-score-strip">
                 <div>

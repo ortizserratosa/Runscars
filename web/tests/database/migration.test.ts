@@ -50,18 +50,32 @@ describe("versioned database foundation", () => {
     `);
 
     expect(result.rows[0]).toEqual({
-      seasons: 1,
-      categories: 8,
-      films: 20,
-      sources: 19,
-      connectors: 4,
+      seasons: 2,
+      categories: 21,
+      films: 39,
+      sources: 23,
+      connectors: 11,
     });
 
     const schedules = await database.query<{ schedules: number }>(`
       select count(*)::int as schedules
       from public.snapshot_schedules
     `);
-    expect(schedules.rows[0]?.schedules).toBe(1);
+    expect(schedules.rows[0]?.schedules).toBe(8);
+
+    const awardsDaily = await database.query<{
+      extractor_version: string;
+      endpoint_url: string;
+    }>(`
+      select extractor_version, endpoint_url
+      from public.source_connectors
+      where id = 'awards-daily-predictions'
+    `);
+    expect(awardsDaily.rows[0]).toEqual({
+      extractor_version: "awards-daily-v3",
+      endpoint_url:
+        "https://www.awardsdaily.com/wp-json/wp/v2/search?search=2027%20Oscar%20Predictions&per_page=20&_fields=id,url,title,subtype",
+    });
   });
 
   it("can load the seed twice without duplicating records", async () => {
@@ -75,7 +89,261 @@ describe("versioned database foundation", () => {
         (select count(*)::int from public.season_films) as links
     `);
 
-    expect(result.rows[0]).toEqual({ films: 20, links: 20 });
+    expect(result.rows[0]).toEqual({ films: 39, links: 39 });
+  });
+
+  it("keeps content-addressed revisions for a mutable source URL", async () => {
+    await database.exec(await readFile(seedPath, "utf8"));
+    await database.exec(`
+      insert into public.source_publications (
+        source_id,
+        external_id,
+        canonical_url,
+        title
+      )
+      values
+        (
+          'awards-radar',
+          'best-picture@aaaaaaaaaaaaaaaa',
+          'https://awardsradar.com/best-picture/',
+          'Best Picture · revision A'
+        ),
+        (
+          'awards-radar',
+          'best-picture@bbbbbbbbbbbbbbbb',
+          'https://awardsradar.com/best-picture/',
+          'Best Picture · revision B'
+        );
+    `);
+
+    const result = await database.query<{ revisions: number }>(`
+      select count(*)::int as revisions
+      from public.source_publications
+      where source_id = 'awards-radar'
+        and canonical_url = 'https://awardsradar.com/best-picture/'
+    `);
+    expect(result.rows[0]?.revisions).toBe(2);
+  });
+
+  it("models performances, one person across films and an ordered directing team", async () => {
+    await database.exec(await readFile(seedPath, "utf8"));
+    await database.exec(`
+      insert into public.tmdb_people (tmdb_id, last_checked_at)
+      values
+        (900001, '2026-07-25T12:00:00Z'),
+        (900002, '2026-07-25T12:00:00Z');
+
+      insert into public.people (id, name, tmdb_id)
+      values
+        ('fixture-person-one', 'Fixture Person One', 900001),
+        ('fixture-person-two', 'Fixture Person Two', 900002);
+
+      insert into public.category_candidates (
+        id,
+        season_id,
+        category_id,
+        film_id,
+        display_label,
+        identity_key
+      )
+      values
+        (
+          'candidate-actor-one-odyssey',
+          'oscars-2027',
+          'actor',
+          'the-odyssey',
+          'Fixture Person One — The Odyssey',
+          repeat('1', 64)
+        ),
+        (
+          'candidate-actor-two-odyssey',
+          'oscars-2027',
+          'actor',
+          'the-odyssey',
+          'Fixture Person Two — The Odyssey',
+          repeat('2', 64)
+        ),
+        (
+          'candidate-actor-one-dune',
+          'oscars-2027',
+          'actor',
+          'dune-part-three',
+          'Fixture Person One — Dune: Part Three',
+          repeat('3', 64)
+        ),
+        (
+          'candidate-directing-team',
+          'oscars-2027',
+          'directing',
+          'the-odyssey',
+          'Fixture Person One, Fixture Person Two — The Odyssey',
+          repeat('4', 64)
+        );
+
+      insert into public.category_candidate_people (
+        category_candidate_id,
+        person_id,
+        role,
+        display_order
+      )
+      values
+        ('candidate-actor-one-odyssey', 'fixture-person-one', 'Actor', 0),
+        ('candidate-actor-two-odyssey', 'fixture-person-two', 'Actor', 0),
+        ('candidate-actor-one-dune', 'fixture-person-one', 'Actor', 0),
+        ('candidate-directing-team', 'fixture-person-one', 'Director', 0),
+        ('candidate-directing-team', 'fixture-person-two', 'Director', 1);
+    `);
+
+    const result = await database.query<{
+      same_film_candidates: number;
+      one_person_films: number;
+      team_size: number;
+      team_order: string;
+    }>(`
+      select
+        (
+          select count(*)::int
+          from public.category_candidates
+          where category_id = 'actor' and film_id = 'the-odyssey'
+        ) as same_film_candidates,
+        (
+          select count(distinct candidates.film_id)::int
+          from public.category_candidate_people as links
+          join public.category_candidates as candidates
+            on candidates.id = links.category_candidate_id
+          where links.person_id = 'fixture-person-one'
+            and candidates.category_id = 'actor'
+        ) as one_person_films,
+        (
+          select count(*)::int
+          from public.category_candidate_people
+          where category_candidate_id = 'candidate-directing-team'
+        ) as team_size,
+        (
+          select string_agg(person_id, ',' order by display_order)
+          from public.category_candidate_people
+          where category_candidate_id = 'candidate-directing-team'
+        ) as team_order
+    `);
+
+    expect(result.rows[0]).toEqual({
+      same_film_candidates: 2,
+      one_person_films: 2,
+      team_size: 2,
+      team_order: "fixture-person-one,fixture-person-two",
+    });
+  });
+
+  it("keeps market prices append-only and outside professional observations", async () => {
+    await database.exec(await readFile(seedPath, "utf8"));
+    await database.exec(`
+      insert into public.market_capture_runs (
+        connector_id,
+        run_key,
+        status,
+        started_at,
+        finished_at
+      )
+      values (
+        'kalshi-oscars',
+        'kalshi-fixture-run',
+        'succeeded',
+        '2026-07-25T12:00:00Z',
+        '2026-07-25T12:00:01Z'
+      );
+
+      insert into public.market_contracts (
+        provider,
+        source_id,
+        external_market_id,
+        external_contract_id,
+        season_id,
+        category_id,
+        market_title,
+        outcome_label,
+        source_url,
+        original_data,
+        captured_at
+      )
+      values (
+        'kalshi',
+        'kalshi',
+        'KXOSCARPIC-27',
+        'KXOSCARPIC-27-ODYSSEY',
+        'oscars-2027',
+        'best-picture',
+        'Oscar Best Picture winner',
+        'The Odyssey',
+        'https://kalshi.com/markets/kxoscarpic-27-odyssey',
+        '{"last_price_dollars":"0.42"}'::jsonb,
+        '2026-07-25T12:00:00Z'
+      );
+
+      insert into public.market_price_snapshots (
+        contract_id,
+        run_id,
+        content_hash,
+        probability,
+        original_price,
+        original_currency,
+        volume,
+        open_interest,
+        observed_at,
+        captured_at,
+        original_data
+      )
+      select
+        contracts.id,
+        runs.id,
+        repeat('9', 64),
+        0.42,
+        0.42,
+        'USD',
+        1200.5,
+        320,
+        '2026-07-25T12:00:00Z',
+        '2026-07-25T12:00:00Z',
+        '{"last_price_dollars":"0.42"}'::jsonb
+      from public.market_contracts as contracts
+      cross join public.market_capture_runs as runs
+      where contracts.external_contract_id = 'KXOSCARPIC-27-ODYSSEY'
+        and runs.run_key = 'kalshi-fixture-run';
+    `);
+
+    await expect(
+      database.exec(`
+        update public.market_price_snapshots
+        set probability = 0.50
+        where content_hash = repeat('9', 64)
+      `),
+    ).rejects.toThrow("immutable");
+
+    await expect(
+      database.exec(`
+        insert into public.professional_observations (
+          dedupe_key,
+          source_id,
+          season_id,
+          data_type,
+          original_subject,
+          original_value,
+          source_url,
+          captured_at,
+          extractor_version
+        )
+        values (
+          repeat('8', 64),
+          'kalshi',
+          'oscars-2027',
+          'market',
+          'The Odyssey',
+          '{"probability":0.42}'::jsonb,
+          'https://kalshi.com/markets/example',
+          '2026-07-25T12:00:00Z',
+          'invalid-market-v1'
+        )
+      `),
+    ).rejects.toThrow();
   });
 
   it("exposes reference data as read-only through the public roles", async () => {

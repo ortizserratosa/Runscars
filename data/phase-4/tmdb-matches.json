@@ -162,6 +162,126 @@
       "method": "manual",
       "reason": "Título y estreno de 2026 distinguen esta película de los homónimos.",
       "evidenceUrl": "https://www.themoviedb.org/movie/1375441"
+    },
+    {
+      "filmId": "one-battle-after-another",
+      "tmdbId": 1054867,
+      "query": "One Battle After Another",
+      "method": "search_exact",
+      "reason": "Título exacto y estreno de 2025 producen una única coincidencia elegible.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1054867"
+    },
+    {
+      "filmId": "bugonia",
+      "tmdbId": 701387,
+      "query": "Bugonia",
+      "method": "search_exact",
+      "reason": "Título exacto y estreno de 2025 producen una única coincidencia elegible.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/701387"
+    },
+    {
+      "filmId": "f1",
+      "tmdbId": 911430,
+      "query": "F1",
+      "method": "search_exact",
+      "reason": "Título exacto y estreno de 2025 distinguen la película de las coincidencias históricas.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/911430"
+    },
+    {
+      "filmId": "frankenstein-2025",
+      "tmdbId": 1062722,
+      "query": "Frankenstein",
+      "method": "search_exact",
+      "reason": "Título exacto, estreno de 2025 y dirección de Guillermo del Toro distinguen la obra.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1062722"
+    },
+    {
+      "filmId": "hamnet",
+      "tmdbId": 858024,
+      "query": "Hamnet",
+      "method": "search_exact",
+      "reason": "Título exacto y estreno de 2025 producen una única coincidencia elegible.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/858024"
+    },
+    {
+      "filmId": "marty-supreme",
+      "tmdbId": 1317288,
+      "query": "Marty Supreme",
+      "method": "search_exact",
+      "reason": "Título exacto y estreno de 2025 producen una única coincidencia elegible.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1317288"
+    },
+    {
+      "filmId": "the-secret-agent",
+      "tmdbId": 1220564,
+      "query": "The Secret Agent",
+      "method": "search_exact",
+      "reason": "Título exacto y estreno de 2025 distinguen la película de homónimos.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1220564"
+    },
+    {
+      "filmId": "sentimental-value",
+      "tmdbId": 1124566,
+      "query": "Sentimental Value",
+      "method": "search_exact",
+      "reason": "Título exacto y estreno de 2025 distinguen la película elegible.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1124566"
+    },
+    {
+      "filmId": "sinners",
+      "tmdbId": 1233413,
+      "query": "Sinners",
+      "method": "search_exact",
+      "reason": "Título exacto y estreno de 2025 distinguen la película elegible.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1233413"
+    },
+    {
+      "filmId": "train-dreams",
+      "tmdbId": 1241983,
+      "query": "Train Dreams",
+      "method": "search_exact",
+      "reason": "Título exacto y estreno de 2025 producen una única coincidencia elegible.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1241983"
+    },
+    {
+      "filmId": "blue-moon",
+      "tmdbId": 1299655,
+      "query": "Blue Moon",
+      "method": "search_exact",
+      "reason": "Título exacto y estreno de 2025 distinguen la película de homónimos.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1299655"
+    },
+    {
+      "filmId": "if-i-had-legs-id-kick-you",
+      "tmdbId": 1160360,
+      "query": "If I Had Legs I'd Kick You",
+      "method": "search_exact",
+      "reason": "Título exacto y estreno de 2025 producen una única coincidencia elegible.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1160360"
+    },
+    {
+      "filmId": "song-sung-blue",
+      "tmdbId": 1371185,
+      "query": "Song Sung Blue",
+      "method": "search_exact",
+      "reason": "Título exacto y estreno de 2025 distinguen la película del documental homónimo.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1371185"
+    },
+    {
+      "filmId": "weapons",
+      "tmdbId": 1078605,
+      "query": "Weapons",
+      "method": "search_exact",
+      "reason": "Título exacto y estreno de 2025 distinguen la película de homónimos.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1078605"
+    },
+    {
+      "filmId": "it-was-just-an-accident",
+      "tmdbId": 1456349,
+      "query": "It Was Just an Accident",
+      "method": "search_exact",
+      "reason": "Título internacional exacto y estreno de 2025 producen una única coincidencia elegible.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1456349"
     }
   ]
 }

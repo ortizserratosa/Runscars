@@ -69,7 +69,7 @@ function personId(tmdbId) {
 }
 
 function selectCredits(rawCredits) {
-  const cast = (rawCredits?.cast ?? []).slice(0, 8).map((credit) => ({
+  const cast = (rawCredits?.cast ?? []).slice(0, 30).map((credit) => ({
     tmdbPersonId: credit.id,
     personId: personId(credit.id),
     name: credit.name,
@@ -85,7 +85,7 @@ function selectCredits(rawCredits) {
 
   const crew = (rawCredits?.crew ?? [])
     .filter((credit) => RELEVANT_CREW_JOBS.has(credit.job))
-    .slice(0, 12)
+    .slice(0, 30)
     .map((credit) => ({
       tmdbPersonId: credit.id,
       personId: personId(credit.id),
@@ -196,6 +196,9 @@ export function buildPersonSnapshot(
   const originalData = {
     id: rawPerson.id,
     name: rawPerson.name,
+    also_known_as: (rawPerson.also_known_as ?? []).filter(
+      (name) => typeof name === "string" && name.trim(),
+    ),
     original_name: nullableText(rawPerson.original_name),
     known_for_department: nullableText(rawPerson.known_for_department),
     biography: nullableText(rawPerson.biography),
@@ -216,6 +219,9 @@ export function buildPersonSnapshot(
     person: {
       id: personId(rawPerson.id),
       name: rawPerson.name,
+      alternate_names: (rawPerson.also_known_as ?? []).filter(
+        (name) => typeof name === "string" && name.trim(),
+      ),
       tmdb_id: rawPerson.id,
     },
     snapshot: {
@@ -296,6 +302,15 @@ export class TmdbClient {
         evidenceUrl: `https://www.themoviedb.org/movie/${id}`,
       }),
     );
+  }
+
+  async searchPeople(query) {
+    const response = await this.request("/search/person", {
+      query,
+      include_adult: false,
+      language: "en-US",
+    });
+    return (response.results ?? []).map(({ id, name }) => ({ id, name }));
   }
 
   fetchMovie(tmdbId, locale) {
@@ -418,6 +433,52 @@ export class SupabaseCatalogRepository {
     );
   }
 
+  async addEditorialCredit({
+    filmId,
+    personId: targetPersonId,
+    tmdbCreditId,
+    role,
+    department,
+    sourceUrl,
+    reason,
+    actor,
+  }) {
+    assertSupabase(
+      await this.supabase.from("film_credits").upsert(
+        {
+          film_id: filmId,
+          person_id: targetPersonId,
+          tmdb_credit_id: tmdbCreditId,
+          credit_kind: "crew",
+          role,
+          department,
+          billing_order: null,
+        },
+        { onConflict: "film_id,tmdb_credit_id", ignoreDuplicates: true },
+      ),
+      "No se pudo guardar el crédito editorial",
+    );
+    assertSupabase(
+      await this.supabase.from("film_credit_match_history").upsert(
+        {
+          film_id: filmId,
+          person_id: targetPersonId,
+          tmdb_credit_id: tmdbCreditId,
+          role,
+          department,
+          source_url: sourceUrl,
+          reason,
+          actor,
+        },
+        {
+          onConflict: "film_id,person_id,role,source_url",
+          ignoreDuplicates: true,
+        },
+      ),
+      "No se pudo auditar el crédito editorial",
+    );
+  }
+
   async recordMatch(match, method, actor) {
     return assertSupabase(
       await this.supabase.rpc("record_film_tmdb_match", {
@@ -458,9 +519,9 @@ export async function importCatalogMatch({
   for (const credit of uniqueCredits) {
     let personSnapshot = null;
     try {
-      const rawPerson = await client.fetchPerson(credit.tmdbPersonId, locale);
+      const rawPerson = await client.fetchPerson(credit.tmdbPersonId, "en-US");
       personSnapshot = buildPersonSnapshot(rawPerson, {
-        locale,
+        locale: "en-US",
         fetchedAt: now(),
       });
     } catch (error) {

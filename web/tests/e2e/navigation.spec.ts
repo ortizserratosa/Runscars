@@ -1,31 +1,98 @@
 import { expect, test } from "@playwright/test";
 
-test("keeps professional and community signals visibly separate", async ({
+const publicCategories = [
+  ["mejor-pelicula", "Mejor película"],
+  ["direccion", "Dirección"],
+  ["actor-protagonista", "Actor protagonista"],
+  ["actriz-protagonista", "Actriz protagonista"],
+  ["actor-de-reparto", "Actor de reparto"],
+  ["actriz-de-reparto", "Actriz de reparto"],
+  ["guion-original", "Guion original"],
+  ["guion-adaptado", "Guion adaptado"],
+] as const;
+
+test("keeps professional, critical and community signals visibly separate", async ({
   page,
 }) => {
   await page.goto("/");
-
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
     "La carrera",
   );
   await expect(page.getByText("Predicciones", { exact: true })).toBeVisible();
   await expect(page.getByText("Crítica", { exact: true })).toBeVisible();
-  await expect(page.getByText("Tu ranking", { exact: true })).toBeVisible();
+  await expect(page.getByText("Comunidad", { exact: true })).toBeVisible();
 });
 
-test("opens a detail page from a non-leading film appearance", async ({
+test("publishes all eight database-shaped category routes", async ({
   page,
 }) => {
-  await page.goto("/temporadas/2027");
+  for (const [slug, name] of publicCategories) {
+    await page.goto(`/temporadas/2027/${slug}`);
+    await expect(page.getByRole("heading", { level: 1, name })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Datos verificados" }),
+    ).toBeVisible();
+    await expect(page.getByText("fuentes · mínimo 4")).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Consenso profesional" }),
+    ).toBeVisible();
+  }
+});
+
+test("shows six Best Picture media but never gives The Ringer Borda points", async ({
+  page,
+}) => {
+  await page.goto("/temporadas/2027/mejor-pelicula");
+  await expect(page.getByText("5 rankings ordenados · 6 medios")).toBeVisible();
+  await page.getByText("Ver procedencia y cálculo").first().click();
+  const ringer = page.getByRole("link", { name: /The Ringer/ }).first();
+  await expect(ringer).toContainText("selección");
+  await expect(ringer).toContainText("0");
+});
+
+test("shows both market providers separately when no market exists", async ({
+  page,
+}) => {
+  await page.goto("/temporadas/2027/direccion");
+  await expect(
+    page.getByRole("heading", { name: "Señales separadas" }),
+  ).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Kalshi" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Polymarket" })).toBeVisible();
+  await expect(page.getByText("Sin mercado disponible")).toHaveCount(2);
+  await expect(
+    page.getByText(
+      "Kalshi y Polymarket se muestran por proveedor. No existe consenso de mercados y sus precios no participan en la predicción profesional.",
+    ),
+  ).toBeVisible();
+});
+
+test("opens a film detail from a non-leading candidate", async ({ page }) => {
+  await page.goto("/temporadas/2027/mejor-pelicula");
   await page
     .getByRole("link", { name: "Project Hail Mary", exact: true })
     .click();
-
   await expect(page).toHaveURL(/\/peliculas\/project-hail-mary$/);
   await expect(
     page.getByRole("heading", { level: 1, name: "Project Hail Mary" }),
   ).toBeVisible();
-  await expect(page.getByText("Lo que sí está verificado")).toBeVisible();
+});
+
+test("exposes the closed official 2026 archive without historical predictions", async ({
+  page,
+}) => {
+  await page.goto("/temporadas/2026/mejor-pelicula");
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Mejor película" }),
+  ).toBeVisible();
+  await expect(page.getByText("CERRADA", { exact: true })).toBeVisible();
+  await expect(
+    page.getByText("sin reconstrucción de predicciones históricas"),
+  ).toBeVisible();
+  await expect(page.getByText("GANADOR", { exact: true })).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "One Battle After Another" }),
+  ).toBeVisible();
 });
 
 test("exposes application health without leaking configuration", async ({
@@ -45,67 +112,15 @@ test("rejects unauthenticated weekly snapshot invocations", async ({
 }) => {
   const response = await request.get("/api/cron/snapshots");
   expect(response.status()).toBe(401);
-  await expect(response.json()).resolves.toEqual({
-    error: "No autorizado",
-  });
+  await expect(response.json()).resolves.toEqual({ error: "No autorizado" });
 });
 
 test("keeps film pages available without a TMDB token at runtime", async ({
   page,
 }) => {
   await page.goto("/peliculas/project-hail-mary");
-
   await expect(
     page.getByRole("heading", { level: 1, name: "Project Hail Mary" }),
   ).toBeVisible();
   await expect(page.getByText("La ficha sigue disponible")).toBeVisible();
-  await expect(page.getByText("Lo que sí está verificado")).toBeVisible();
-});
-
-test("explains and recalculates prediction consensus from its observations", async ({
-  page,
-}) => {
-  await page.goto("/temporadas/2027/mejor-pelicula");
-
-  await expect(
-    page.getByRole("heading", { name: "Consenso de nominación" }),
-  ).toBeVisible();
-  await expect(page.getByText("runscars-aggregation-v1")).toBeVisible();
-  await expect(page.getByText("48 observaciones incluidas")).toBeVisible();
-  await expect(page.getByText("Snapshot inmutable")).toBeVisible();
-  await expect(page.getByText("SHA-256 1f57ec9b3076e01c…")).toBeVisible();
-  await expect(
-    page.getByRole("heading", { name: "Evaluación aún pendiente." }),
-  ).toBeVisible();
-  await expect(
-    page.getByText("Media de 4 listas ordenadas = 97,50 / 100"),
-  ).toBeVisible();
-
-  await page.getByRole("button", { name: "15 JUL 2 listas" }).click();
-
-  await expect(
-    page.getByRole("heading", { name: "Señal editorial" }),
-  ).toBeVisible();
-  await expect(
-    page.getByText("este corte todavía no alcanza las tres listas ordenadas"),
-  ).toBeVisible();
-  await expect(
-    page.getByText("Este corte anterior se recalcula"),
-  ).toBeVisible();
-});
-
-test("shows ordered, selected and absent contributions on every film page", async ({
-  page,
-}) => {
-  await page.goto("/peliculas/the-social-reckoning");
-
-  await expect(
-    page.getByRole("heading", { level: 1, name: "The Social Reckoning" }),
-  ).toBeVisible();
-  await expect(page.getByText("10,00", { exact: true }).first()).toBeVisible();
-  await expect(page.getByText("2/4", { exact: true })).toBeVisible();
-  await expect(page.getByText("Selección publicada sin orden")).toBeVisible();
-  await expect(
-    page.getByText("Ausente de la publicación").first(),
-  ).toBeVisible();
 });

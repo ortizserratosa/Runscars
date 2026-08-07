@@ -22,7 +22,7 @@ Toda observación externa guardará:
 - fecha de publicación;
 - fecha y hora de captura;
 - temporada;
-- película, persona y categoría aplicables;
+- candidatura canónica, categoría, película u obra y personas ordenadas;
 - tipo de dato;
 - valor y escala originales;
 - valor normalizado cuando proceda;
@@ -36,7 +36,16 @@ Desde la fase 5, la publicación y su captura se identifican por claves e hashes
 estables. El matching automático solo acepta una coincidencia exacta contra el
 título principal o alternativo de la temporada. Una coincidencia ausente o
 ambigua deja la observación pendiente, sin participación, y genera revisión
-editorial. La fase 6 no podrá agregar observaciones pendientes.
+editorial. Desde la fase 7.1, una película solo se resuelve automáticamente
+cuando título o alias y temporada producen una coincidencia única; las personas
+se resuelven únicamente dentro de sus créditos. Si TMDB confirma de forma
+inequívoca una película ausente, el importador incorpora película, personas y
+créditos antes de reintentar. Una observación pendiente nunca participa.
+
+La identidad `CategoryCandidate` combina temporada, categoría, película u obra y
+el conjunto de personas. El conjunto identifica la candidatura y su orden
+conserva cómo se presenta el equipo. Así pueden coexistir dos intérpretes de la
+misma película, una persona con varias películas y equipos de dirección.
 
 ### 2.1 Elegibilidad de una fuente
 
@@ -176,10 +185,17 @@ usa únicamente la publicación elegible más reciente de cada fuente:
 - una fuente con solo selección cuenta para cobertura, pero no entra en el
   denominador Borda.
 
-La implementación `runscars-aggregation-v1` representa los puntos decimales con
+La implementación `runscars-aggregation-v2` representa los puntos decimales con
 doce posiciones estables antes de ordenar. Esto elimina artefactos binarios —por
 ejemplo `0,65` frente a `0,649999…`— sin redondear para presentación ni alterar
-un empate matemático. Después se aplican los desempates de la sección 4.2.
+un empate matemático. Su salida usa `candidateId`, película, obra y personas. La
+versión v1 permanece disponible exclusivamente para reproducir snapshots
+históricos.
+
+La publicación elegible más reciente se elige por fuente, categoría e intención:
+si una publicación nueva omite una categoría, no elimina la última lista
+elegible anterior de esa categoría. Un medio aporta una sola fuente aunque
+publique varios autores, miembros o bloques.
 
 ### 4.5 Variación durante la fase 6
 
@@ -235,10 +251,11 @@ opcional y la visibilidad pública requerirá una preferencia explícita.
 - identificador o hash reproducible;
 - persona o proceso que lo bloqueó.
 
-La implementación `runscars-snapshot-v1` calcula el SHA-256 sobre una
+La implementación `runscars-snapshot-v2` calcula el SHA-256 sobre una
 serialización JSON canónica del contenido metodológico. El proceso y el instante
 de bloqueo, el ID y la cadena de corrección se guardan como metadatos, pero no
-alteran el hash del agregado.
+alteran el hash del agregado. `runscars-snapshot-v1` y sus hashes no se
+reinterpretan ni se migran.
 
 Un snapshot periódico no convierte automáticamente las primeras posiciones en
 una selección final. El cierre de nominaciones fija y conserva el número de
@@ -280,7 +297,8 @@ Por categoría:
 La fórmula no se cambiará después de conocer los resultados sin publicar una
 nueva versión metodológica.
 
-La versión inicial es `runscars-evaluation-v1`. Para métricas globales se suman
+La versión genérica es `runscars-evaluation-v2`; compara `candidateId` y conserva
+película, obra y personas. La v1 permanece reproducible. Para métricas globales se suman
 primero aciertos, predicciones y resultados oficiales de todas las categorías y
 después se calculan las razones. No se usa una media simple de porcentajes por
 categoría.
@@ -291,9 +309,20 @@ La interfaz mostrará “datos insuficientes” en vez de presentar un agregado
 inestable como definitivo. Para recepción crítica se aplica el mínimo de tres
 reseñas numéricas independientes de la sección 3. Para predicciones, una
 candidatura puede mostrarse desde una lista, pero no se denomina “consenso”
-hasta que existan al menos tres listas ordenadas aplicables.
+hasta que existan al menos cuatro listas ordenadas automáticas y publicables.
+Una fuente manual, un mercado o varios expertos del mismo medio no completan
+este mínimo.
 
-## 10. Calibraciones de la fase 1
+## 10. Mercados
+
+Kalshi y Polymarket se capturan por separado en un registro append-only. Se
+conservan proveedor, IDs externos, contrato, precio o probabilidad original,
+volumen, interés abierto, URL, fechas y payload. No se calcula un consenso entre
+proveedores y ninguna captura de mercado puede convertirse en observación
+profesional ni entrar en Borda. La ausencia se representa como “sin mercado
+disponible”.
+
+## 11. Calibraciones de la fase 1
 
 El dataset capturado el 2026-07-24 fija estas reglas iniciales:
 

@@ -55,6 +55,7 @@ Deno.serve(async (request) => {
       trigger: payload.trigger === "manual" ? "manual" : "scheduled",
       secrets: {
         GUARDIAN_CONTENT_API_KEY: Deno.env.get("GUARDIAN_CONTENT_API_KEY"),
+        TMDB_READ_ACCESS_TOKEN: Deno.env.get("TMDB_READ_ACCESS_TOKEN"),
       },
     });
     const failed = results.filter(

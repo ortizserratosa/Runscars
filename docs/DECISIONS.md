@@ -1,6 +1,6 @@
 # Registro de decisiones
 
-**Última revisión:** 2026-07-24
+**Última revisión:** 2026-08-07
 
 ## Cómo usar este registro
 
@@ -41,6 +41,12 @@ pasado para ocultar cambios de criterio.
 | D-021 | Snapshots como envolventes inmutables con puntero vigente | Aceptada |
 | D-022 | Evaluación versionada sobre cierres explícitos | Aceptada |
 | D-023 | Compatibilidad explícita para `brace-expansion` corregido | Aceptada |
+| D-024 | Candidatura genérica y contratos v2 compatibles | Aceptada |
+| D-025 | Cobertura profesional mínima por medio y categoría | Aceptada |
+| D-026 | Mercados separados y append-only | Aceptada |
+| D-027 | Archivo oficial sin predicciones históricas | Aceptada |
+| D-028 | Discovery diario y revisiones inmutables de páginas vivas | Aceptada |
+| D-029 | Recuperación de runs y revisión editorial vigente | Aceptada |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -179,6 +185,10 @@ las decisiones D-001 a D-011 quedan aceptadas y la fase 0 se considera cerrada.
   con una o dos críticas.
 - **Reabrir si:** fixtures posteriores muestran demasiadas películas bloqueadas
   o una cadencia editorial distinta.
+- **Revisión posterior:** D-025 reemplaza únicamente el mínimo profesional de
+  tres listas por cuatro rankings automáticos y publicables por categoría. La
+  deduplicación, el mínimo crítico y la ventana de frescura de esta decisión
+  siguen vigentes.
 
 ## D-014 · Consenso de rankings parciales de usuarios
 
@@ -357,3 +367,102 @@ El 2026-07-25 PostgreSQL conservó un snapshot byte a byte tras una importación
 posterior, rechazó su mutación y mantuvo original y corrección enlazados. Los
 ejemplos manuales de nominaciones y ganador coincidieron con
 `runscars-evaluation-v1`. La fase 8 no se ha iniciado.
+
+## D-024 · Candidatura genérica y contratos v2 compatibles
+
+- **Fecha:** 2026-07-25
+- **Estado:** Aceptada
+- **Decisión:** identificar cada candidatura mediante temporada, categoría,
+  película u obra y conjunto de personas; conservar además el orden de
+  presentación de los colaboradores.
+- **Versionado:** `runscars-aggregation-v2`, `runscars-snapshot-v2` y
+  `runscars-evaluation-v2` exponen `candidateId`, película, obra y personas. Los
+  contratos v1 y todos sus snapshots permanecen inmutables y reproducibles.
+- **Motivo:** soportar sin excepciones interpretaciones, guiones y equipos, así
+  como dos intérpretes de una película o una persona con varias películas.
+
+## D-025 · Cobertura profesional mínima por medio y categoría
+
+- **Fecha:** 2026-07-25
+- **Estado:** Aceptada
+- **Decisión:** una categoría pública necesita al menos cuatro rankings
+  ordenados automáticos y publicables; el objetivo operativo inicial es cinco.
+  Una fuente manual, un mercado o varios expertos del mismo medio cuentan cero,
+  cero y una fuente respectivamente a efectos del mínimo.
+- **Temporalidad:** se usa la publicación elegible más reciente por fuente,
+  categoría e intención. Una publicación posterior que omite una categoría no
+  borra la última lista elegible de esa categoría.
+- **Consecuencia:** las categorías adicionales se ingieren si el formato es
+  estructurado, pero permanecen no públicas hasta alcanzar su propia cobertura.
+
+## D-026 · Mercados separados y append-only
+
+- **Fecha:** 2026-07-25
+- **Estado:** Aceptada
+- **Decisión:** Kalshi y Polymarket se capturan cada hora en contratos y
+  snapshots append-only por proveedor. Se conserva el valor original y no se
+  calcula consenso entre mercados.
+- **Límite:** un precio o probabilidad de mercado nunca se convierte en una
+  observación profesional ni participa en Borda. La falta de mercado no bloquea
+  una categoría ni la fase.
+
+## D-027 · Archivo oficial sin predicciones históricas
+
+- **Fecha:** 2026-07-25
+- **Estado:** Aceptada
+- **Decisión:** importar nominaciones y ganadores oficiales de Oscar 2026 para
+  las ocho categorías, con sus películas, obras y personas, sin reconstruir
+  predicciones anteriores a Runscars.
+- **Motivo:** ofrecer una temporada cerrada verificable sin fabricar una serie
+  temporal que no fue capturada en su momento.
+
+## D-028 · Discovery diario y revisiones inmutables de páginas vivas
+
+- **Fecha:** 2026-07-25
+- **Estado:** Aceptada
+- **Decisión:** cada ejecución profesional consulta primero el índice, archivo
+  o página viva de su fuente. Awards Daily descubre artículos mediante su API
+  pública de WordPress; AwardsWatch y The Ringer recorren sus archivos; Awards
+  Radar consulta una página actualizable por categoría; Next Best Picture y
+  Midnight Critics comprueban directamente sus páginas vivas.
+- **Selección:** se ingieren las publicaciones elegibles recientes y el
+  agregado conserva, por categoría e intención, la de fecha más reciente. Una
+  publicación que omite una categoría no invalida la lista anterior de esa
+  categoría. Entre URLs distintas tiene prioridad la fecha de publicación; una
+  URL histórica sin fecha no puede desplazar una publicación fechada. Dentro de
+  una misma URL viva tiene prioridad la revisión capturada más recientemente.
+- **Páginas vivas:** cuando una URL conserva su dirección pero cambia el
+  ranking, cada contenido estructurado genera una publicación inmutable
+  distinta. Repetir contenido idéntico reutiliza la revisión y no duplica
+  observaciones. La identidad de revisión incorpora también la versión del
+  extractor, para que una corrección de parsing no mezcle filas antiguas y
+  nuevas bajo la misma publicación.
+- **Auditoría:** toda ejecución satisfactoria registra `discovery.checked` o
+  `discovery.partial` y después `source.updated` o `source.unchanged`. Así, la
+  ausencia de cambios también queda demostrada.
+- **Ejecución:** los conectores se ejecutan en paralelo y conservan runs,
+  eventos y fallos independientes. Esto mantiene el conjunto dentro del tiempo
+  máximo de la Edge Function sin convertir el fallo de una fuente en un fallo
+  global.
+- **Motivo:** una URL fijada a mayo o abril no representa la predicción vigente,
+  y mezclar varias revisiones de una página mutable dentro de una sola
+  publicación produciría rankings inválidos.
+
+## D-029 · Recuperación de runs y revisión editorial vigente
+
+- **Fecha:** 2026-08-07
+- **Estado:** Aceptada
+- **Decisión:** antes de iniciar un conector, cerrar como `failed` cualquier run
+  suyo que siga `running` después de 15 minutos y registrar
+  `connector.abandoned`. La migración de mantenimiento aplica la misma regla a
+  runs ya abandonados.
+- **Cola editorial:** las observaciones y revisiones históricas permanecen
+  trazables, pero solo la revisión más reciente de un mismo conector, tipo,
+  temporada, categoría y rótulo normalizado queda `pending`; las anteriores se
+  marcan `dismissed` como sustituidas.
+- **Motivo:** una terminación forzada de Edge no ejecuta el cierre normal, y una
+  página viva puede generar revisiones inmutables repetidas del mismo problema.
+  Ninguno de esos casos debe aparentar actividad eterna ni multiplicar trabajo
+  editorial.
+- **Límite:** el cierre por abandono no reintenta por sí solo ni altera
+  observaciones; el siguiente run conserva el aislamiento normal por fuente.

@@ -1,0 +1,21 @@
+[
+  {
+    "id": "event-oscars-2027",
+    "slug": "oscars-best-picture-2027",
+    "title": "Oscars 2027 Best Picture",
+    "markets": [
+      {
+        "id": "market-odyssey",
+        "question": "Will The Odyssey win Best Picture at the Oscars?",
+        "groupItemTitle": "The Odyssey",
+        "outcomes": "[\"Yes\",\"No\"]",
+        "outcomePrices": "[\"0.41\",\"0.59\"]",
+        "clobTokenIds": "[\"yes-token\",\"no-token\"]",
+        "volumeNum": 900,
+        "openInterest": 150,
+        "updatedAt": "2026-07-25T12:00:00Z",
+        "endDate": "2027-03-14T20:00:00Z"
+      }
+    ]
+  }
+]

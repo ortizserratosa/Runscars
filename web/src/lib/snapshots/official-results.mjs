@@ -1,10 +1,12 @@
 import { createClient } from "@supabase/supabase-js";
 import {
   canonicalJson,
+  prepareBatch,
   sha256,
 } from "../../../../supabase/functions/_shared/ingestion/core.mjs";
 
 export const SNAPSHOT_SCHEMA_VERSION = "runscars-snapshot-v1";
+export const SNAPSHOT_SCHEMA_VERSION_V2 = "runscars-snapshot-v2";
 
 function requiredText(value, field) {
   if (typeof value !== "string" || value.trim() === "") {
@@ -144,6 +146,167 @@ export async function prepareOfficialResultsManifest(
     correctsResultSetId: correctionId,
     correctionReason,
     payload,
+  };
+}
+
+export async function prepareOfficialArchiveV2(
+  archive,
+  filmIdentities,
+  { lockedBy },
+) {
+  if (!archive || archive.formatVersion !== 2) {
+    throw new Error("El archivo oficial debe usar formatVersion 2");
+  }
+  const seasonId = requiredText(archive.seasonId, "seasonId");
+  const capturedAt = isoInstant(archive.capturedAt, "capturedAt");
+  const sourceId = requiredText(archive.source?.sourceId, "sourceId");
+  const sourceUrl = httpsUrl(archive.source?.sourceUrl, "sourceUrl");
+  const rawCandidates = archive.categories.flatMap((category) =>
+    category.candidates.map((candidate) => ({
+      categoryId: category.categoryId,
+      ...candidate,
+    })),
+  );
+  const prepared = await prepareBatch(
+    {
+      connectorId: "academy-archive-2026",
+      sourceId,
+      extractorVersion: "academy-archive-v1",
+      seasonId,
+      capturedAt,
+      sourceUrl,
+      publications: [
+        {
+          externalId: "oscars-ceremony-2026",
+          canonicalUrl: sourceUrl,
+          title: "The 98th Academy Awards | 2026",
+          author: archive.source.author ?? null,
+          publishedAt: archive.source.winnersPublishedAt,
+          originalData: archive,
+          observations: rawCandidates.map((candidate) => ({
+            dataType: "prediction_selection",
+            subject: candidate.people?.length
+              ? `${candidate.people.join(", ")} — ${candidate.filmTitle}`
+              : candidate.filmTitle,
+            filmSubject: candidate.filmTitle,
+            peopleSubjects: candidate.people ?? [],
+            workTitle: candidate.workTitle ?? null,
+            originalValue: {
+              official_nominee: true,
+              official_winner: candidate.winner === true,
+            },
+            originalScale: null,
+            categoryId: candidate.categoryId,
+            predictionIntention: "nomination",
+            participates: false,
+            filmId: candidate.filmId,
+            personId: null,
+          })),
+        },
+      ],
+    },
+    filmIdentities,
+  );
+  const observations = prepared.publications[0].observations;
+  const unresolved = observations.filter(
+    (observation) => observation.review || !observation.candidate,
+  );
+  if (unresolved.length) {
+    throw new Error(
+      `Archivo 2026 pendiente de matching: ${unresolved
+        .map((observation) => observation.subject)
+        .join("; ")}`,
+    );
+  }
+
+  const candidateByScope = new Map(
+    observations.map((observation) => [
+      `${observation.categoryId}::${observation.filmId}::${
+        observation.peopleSubjects?.join("|") ?? ""
+      }`,
+      observation.candidate,
+    ]),
+  );
+  const candidates = [
+    ...new Map(
+      observations.map((observation) => [
+        observation.candidate.id,
+        observation.candidate,
+      ]),
+    ).values(),
+  ];
+
+  async function resultSet(kind) {
+    const publishedAt = isoInstant(
+      kind === "nominations"
+        ? archive.source.nominationsPublishedAt
+        : archive.source.winnersPublishedAt,
+      `${kind}.publishedAt`,
+    );
+    const selected =
+      kind === "nominations"
+        ? rawCandidates
+        : rawCandidates.filter((candidate) => candidate.winner === true);
+    const entries = selected
+      .map((candidate) => {
+        const canonical = candidateByScope.get(
+          `${candidate.categoryId}::${candidate.filmId}::${
+            candidate.people?.join("|") ?? ""
+          }`,
+        );
+        if (!canonical) {
+          throw new Error(`No existe candidatura para ${candidate.filmTitle}`);
+        }
+        return {
+          categoryId: candidate.categoryId,
+          candidateId: canonical.id,
+          categoryCandidateId: canonical.id,
+          outcome: kind === "nominations" ? "nominee" : "winner",
+        };
+      })
+      .sort(
+        (left, right) =>
+          left.categoryId.localeCompare(right.categoryId, "en") ||
+          left.candidateId.localeCompare(right.candidateId, "en"),
+      );
+    const payload = {
+      schemaVersion: SNAPSHOT_SCHEMA_VERSION_V2,
+      seasonId,
+      kind,
+      source: {
+        sourceId,
+        sourceUrl,
+        author: archive.source.author ?? null,
+        publishedAt,
+        capturedAt,
+      },
+      entries,
+      originalData: {
+        connector: "academy-archive-2026",
+        canonicalSourceUrl: sourceUrl,
+        archivedCategories: archive.categories,
+      },
+    };
+    const contentHash = await sha256(canonicalJson(payload));
+    return {
+      id: [
+        kind,
+        seasonId,
+        publishedAt.slice(0, 10),
+        contentHash.slice(0, 12),
+      ].join("-"),
+      contentHash,
+      lockedAt: capturedAt,
+      lockedBy: requiredText(lockedBy, "lockedBy"),
+      correctsResultSetId: null,
+      correctionReason: null,
+      payload,
+    };
+  }
+
+  return {
+    candidates,
+    resultSets: [await resultSet("nominations"), await resultSet("winners")],
   };
 }
 

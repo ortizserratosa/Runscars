@@ -117,6 +117,10 @@ Comandos canónicos desde la raíz:
   editorial trazable. Los dos últimos comandos requieren secretos de servidor.
 - `npm run ingest:manual -- <manifiesto.json>`: carga profesional manual,
   versionada e idempotente; requiere credenciales de servidor.
+- `npm run results:archive`: importa nominaciones y ganadores oficiales de
+  Oscar 2026 de forma idempotente.
+- `npm run candidate:match -- <observation-id> <candidate-id> --kind <tipo>
+  --reason "<motivo>"`: corrección editorial trazable de candidaturas.
 - `npm run results:import -- <manifiesto.json>`: registra nominaciones o
   ganadores oficiales con procedencia y bloqueo inmutable; requiere credenciales
   de servidor.

@@ -1,0 +1,451 @@
+import "server-only";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import archive2026 from "../../../data/phase-7/oscars-2026.json";
+import {
+  phase71FixtureAggregate,
+  phase71FixtureSeasonSummary,
+} from "../../data/phase71-fixture";
+import type { PredictionAggregateV2 } from "../aggregation/v2";
+import { isSupabaseConfigured } from "../environment";
+import { createSupabaseServerClient } from "../supabase/server";
+import { PUBLIC_CATEGORIES, type PublicCategoryId } from "./config";
+
+export type MarketView = {
+  provider: "kalshi" | "polymarket";
+  title: string;
+  outcome: string;
+  probability: number | null;
+  volume: number | null;
+  openInterest: number | null;
+  observedAt: string;
+  sourceUrl: string;
+};
+
+export type ActiveCategoryView = {
+  mode: "active";
+  seasonYear: 2027;
+  aggregate: PredictionAggregateV2 | null;
+  markets: Record<"kalshi" | "polymarket", MarketView[]>;
+  dataState: "database" | "fixture" | "unavailable";
+  snapshot: {
+    id: string;
+    contentHash: string;
+    lockedAt: string;
+  } | null;
+};
+
+export type ArchiveCandidateView = {
+  candidateId: string;
+  label: string;
+  film: { id: string; title: string } | null;
+  people: { id: string; name: string; role: string; displayOrder: number }[];
+  winner: boolean;
+};
+
+export type ArchiveCategoryView = {
+  mode: "archive";
+  seasonYear: 2026;
+  nominees: ArchiveCandidateView[];
+  sourceUrl: string;
+  capturedAt: string;
+  dataState: "database" | "fixture" | "unavailable";
+};
+
+export type CategoryView = ActiveCategoryView | ArchiveCategoryView;
+
+type UntypedClient = SupabaseClient;
+
+function client() {
+  return createSupabaseServerClient() as unknown as UntypedClient;
+}
+
+function allowFixture() {
+  return process.env.NODE_ENV !== "production";
+}
+
+function fixtureActive(categoryId: PublicCategoryId): ActiveCategoryView {
+  return {
+    mode: "active",
+    seasonYear: 2027,
+    aggregate: phase71FixtureAggregate(categoryId),
+    markets: { kalshi: [], polymarket: [] },
+    dataState: "fixture",
+    snapshot: {
+      id: `periodic-oscars-2027-${categoryId}-nomination-2026-07-25-fixture`,
+      contentHash: "fixture-v2-no-persistent-hash",
+      lockedAt: "2026-07-25T04:47:00.000Z",
+    },
+  };
+}
+
+function fixtureArchive(categoryId: PublicCategoryId): ArchiveCategoryView {
+  const category = archive2026.categories.find(
+    (item) => item.categoryId === categoryId,
+  );
+  const candidates = (category?.candidates ?? []) as Array<{
+    filmId: string;
+    filmTitle: string;
+    people?: string[];
+    winner?: boolean;
+  }>;
+  return {
+    mode: "archive",
+    seasonYear: 2026,
+    nominees: candidates.map((candidate) => ({
+      candidateId: `archive-${categoryId}-${candidate.filmId}-${
+        candidate.people?.join("-") ?? "film"
+      }`,
+      label: candidate.people?.length
+        ? `${candidate.people.join(", ")} — ${candidate.filmTitle}`
+        : candidate.filmTitle,
+      film: { id: candidate.filmId, title: candidate.filmTitle },
+      people: (candidate.people ?? []).map((name, displayOrder) => ({
+        id: `archive-person-${displayOrder}`,
+        name,
+        role: categoryId === "directing" ? "Director" : "Official credit",
+        displayOrder,
+      })),
+      winner: candidate.winner === true,
+    })),
+    sourceUrl: archive2026.source.sourceUrl,
+    capturedAt: archive2026.capturedAt,
+    dataState: "fixture",
+  };
+}
+
+async function marketViews(
+  supabase: UntypedClient,
+  categoryId: PublicCategoryId,
+) {
+  const contractsResult = await supabase
+    .from("market_contracts")
+    .select(
+      "id,provider,market_title,outcome_label,source_url,closes_at,resolved_at,market_price_snapshots(probability,volume,open_interest,observed_at)",
+    )
+    .eq("season_id", "oscars-2027")
+    .eq("category_id", categoryId);
+  if (contractsResult.error) {
+    throw new Error(contractsResult.error.message);
+  }
+  const markets: Record<"kalshi" | "polymarket", MarketView[]> = {
+    kalshi: [],
+    polymarket: [],
+  };
+  for (const contract of contractsResult.data ?? []) {
+    const provider = contract.provider as string;
+    if (provider !== "kalshi" && provider !== "polymarket") {
+      continue;
+    }
+    if (
+      contract.resolved_at ||
+      (contract.closes_at && Date.parse(contract.closes_at) <= Date.now())
+    ) {
+      continue;
+    }
+    const snapshots = [...(contract.market_price_snapshots ?? [])].sort(
+      (left, right) =>
+        Date.parse(right.observed_at) - Date.parse(left.observed_at),
+    );
+    const latest = snapshots[0];
+    if (!latest) continue;
+    markets[provider].push({
+      provider,
+      title: contract.market_title,
+      outcome: contract.outcome_label,
+      probability:
+        latest.probability === null ? null : Number(latest.probability),
+      volume: latest.volume === null ? null : Number(latest.volume),
+      openInterest:
+        latest.open_interest === null ? null : Number(latest.open_interest),
+      observedAt: latest.observed_at,
+      sourceUrl: contract.source_url,
+    });
+  }
+  for (const provider of ["kalshi", "polymarket"] as const) {
+    markets[provider] = markets[provider]
+      .sort(
+        (left, right) =>
+          (right.volume ?? 0) - (left.volume ?? 0) ||
+          (right.probability ?? 0) - (left.probability ?? 0),
+      )
+      .slice(0, 8);
+  }
+  return markets;
+}
+
+async function activeCategoryFromDatabase(
+  categoryId: PublicCategoryId,
+): Promise<ActiveCategoryView> {
+  const supabase = client();
+  const currentResult = await supabase
+    .from("current_aggregate_snapshots")
+    .select("snapshot_id")
+    .eq("season_id", "oscars-2027")
+    .eq("category_id", categoryId)
+    .eq("prediction_intention", "nomination")
+    .eq("kind", "periodic")
+    .maybeSingle();
+  if (currentResult.error) throw new Error(currentResult.error.message);
+  const markets = await marketViews(supabase, categoryId);
+  if (!currentResult.data) {
+    return {
+      mode: "active",
+      seasonYear: 2027,
+      aggregate: null,
+      markets,
+      dataState: "database",
+      snapshot: null,
+    };
+  }
+  const snapshotResult = await supabase
+    .from("aggregate_snapshots")
+    .select("id,content_hash,locked_at,schema_version,payload")
+    .eq("id", currentResult.data.snapshot_id)
+    .single();
+  if (snapshotResult.error) throw new Error(snapshotResult.error.message);
+  const row = snapshotResult.data;
+  if (row.schema_version !== "runscars-snapshot-v2") {
+    return {
+      mode: "active",
+      seasonYear: 2027,
+      aggregate: null,
+      markets,
+      dataState: "database",
+      snapshot: null,
+    };
+  }
+  const payload = row.payload as unknown as {
+    aggregate: PredictionAggregateV2;
+  };
+  return {
+    mode: "active",
+    seasonYear: 2027,
+    aggregate: payload.aggregate,
+    markets,
+    dataState: "database",
+    snapshot: {
+      id: row.id,
+      contentHash: row.content_hash,
+      lockedAt: row.locked_at,
+    },
+  };
+}
+
+async function archiveCategoryFromDatabase(
+  categoryId: PublicCategoryId,
+): Promise<ArchiveCategoryView> {
+  const supabase = client();
+  const [nominationsResult, winnersResult] = await Promise.all([
+    supabase
+      .from("current_official_result_sets")
+      .select("official_result_sets(id,source_url,captured_at,payload)")
+      .eq("season_id", "oscars-2026")
+      .eq("kind", "nominations")
+      .maybeSingle(),
+    supabase
+      .from("current_official_result_sets")
+      .select("official_result_sets(payload)")
+      .eq("season_id", "oscars-2026")
+      .eq("kind", "winners")
+      .maybeSingle(),
+  ]);
+  if (nominationsResult.error) throw new Error(nominationsResult.error.message);
+  if (winnersResult.error) throw new Error(winnersResult.error.message);
+  const nominationsRow = Array.isArray(
+    nominationsResult.data?.official_result_sets,
+  )
+    ? nominationsResult.data.official_result_sets[0]
+    : nominationsResult.data?.official_result_sets;
+  const winnersRow = Array.isArray(winnersResult.data?.official_result_sets)
+    ? winnersResult.data.official_result_sets[0]
+    : winnersResult.data?.official_result_sets;
+  if (!nominationsRow || !winnersRow) {
+    return {
+      mode: "archive",
+      seasonYear: 2026,
+      nominees: [],
+      sourceUrl: "https://www.oscars.org/oscars/ceremonies/2026",
+      capturedAt: "",
+      dataState: "database",
+    };
+  }
+  const nominationEntries = (
+    nominationsRow.payload as unknown as {
+      entries: Array<{
+        categoryId: string;
+        categoryCandidateId: string;
+      }>;
+    }
+  ).entries.filter((entry) => entry.categoryId === categoryId);
+  const winnerIds = new Set(
+    (
+      winnersRow.payload as unknown as {
+        entries: Array<{
+          categoryId: string;
+          categoryCandidateId: string;
+        }>;
+      }
+    ).entries
+      .filter((entry) => entry.categoryId === categoryId)
+      .map((entry) => entry.categoryCandidateId),
+  );
+  const candidateIds = nominationEntries.map(
+    (entry) => entry.categoryCandidateId,
+  );
+  if (candidateIds.length === 0) {
+    return {
+      mode: "archive",
+      seasonYear: 2026,
+      nominees: [],
+      sourceUrl: nominationsRow.source_url,
+      capturedAt: nominationsRow.captured_at,
+      dataState: "database",
+    };
+  }
+  const candidatesResult = await supabase
+    .from("category_candidates")
+    .select(
+      "id,display_label,films(id,title),category_candidate_people(role,display_order,people(id,name))",
+    )
+    .in("id", candidateIds);
+  if (candidatesResult.error) throw new Error(candidatesResult.error.message);
+  const candidateById = new Map(
+    (candidatesResult.data ?? []).map((candidate) => [candidate.id, candidate]),
+  );
+  const nominees = nominationEntries.flatMap((entry) => {
+    const candidate = candidateById.get(entry.categoryCandidateId);
+    if (!candidate) return [];
+    const film = Array.isArray(candidate.films)
+      ? candidate.films[0]
+      : candidate.films;
+    const people = (candidate.category_candidate_people ?? [])
+      .flatMap((link) => {
+        const person = Array.isArray(link.people)
+          ? link.people[0]
+          : link.people;
+        return person
+          ? [
+              {
+                id: person.id,
+                name: person.name,
+                role: link.role,
+                displayOrder: link.display_order,
+              },
+            ]
+          : [];
+      })
+      .sort((left, right) => left.displayOrder - right.displayOrder);
+    return [
+      {
+        candidateId: candidate.id,
+        label: candidate.display_label,
+        film: film ? { id: film.id, title: film.title } : null,
+        people,
+        winner: winnerIds.has(candidate.id),
+      },
+    ];
+  });
+  nominees.sort(
+    (left, right) =>
+      Number(right.winner) - Number(left.winner) ||
+      left.label.localeCompare(right.label, "es"),
+  );
+  return {
+    mode: "archive",
+    seasonYear: 2026,
+    nominees,
+    sourceUrl: nominationsRow.source_url,
+    capturedAt: nominationsRow.captured_at,
+    dataState: "database",
+  };
+}
+
+export async function getCategoryView(
+  seasonYear: 2026 | 2027,
+  categoryId: PublicCategoryId,
+): Promise<CategoryView> {
+  if (!isSupabaseConfigured()) {
+    if (allowFixture()) {
+      return seasonYear === 2027
+        ? fixtureActive(categoryId)
+        : fixtureArchive(categoryId);
+    }
+    return seasonYear === 2027
+      ? {
+          mode: "active",
+          seasonYear,
+          aggregate: null,
+          markets: { kalshi: [], polymarket: [] },
+          dataState: "unavailable",
+          snapshot: null,
+        }
+      : {
+          mode: "archive",
+          seasonYear,
+          nominees: [],
+          sourceUrl: "https://www.oscars.org/oscars/ceremonies/2026",
+          capturedAt: "",
+          dataState: "unavailable",
+        };
+  }
+  try {
+    return seasonYear === 2027
+      ? await activeCategoryFromDatabase(categoryId)
+      : await archiveCategoryFromDatabase(categoryId);
+  } catch {
+    if (allowFixture()) {
+      return seasonYear === 2027
+        ? fixtureActive(categoryId)
+        : fixtureArchive(categoryId);
+    }
+    return seasonYear === 2027
+      ? {
+          mode: "active",
+          seasonYear,
+          aggregate: null,
+          markets: { kalshi: [], polymarket: [] },
+          dataState: "unavailable",
+          snapshot: null,
+        }
+      : {
+          mode: "archive",
+          seasonYear,
+          nominees: [],
+          sourceUrl: "https://www.oscars.org/oscars/ceremonies/2026",
+          capturedAt: "",
+          dataState: "unavailable",
+        };
+  }
+}
+
+export async function getSeasonSummary(seasonYear: 2026 | 2027) {
+  if (seasonYear === 2027 && (!isSupabaseConfigured() || allowFixture())) {
+    if (!isSupabaseConfigured()) return phase71FixtureSeasonSummary;
+  }
+  const views = await Promise.all(
+    PUBLIC_CATEGORIES.map(async (category) => ({
+      category,
+      view: await getCategoryView(seasonYear, category.id),
+    })),
+  );
+  return views.map(({ category, view }) => {
+    if (view.mode === "active") {
+      return {
+        ...category,
+        candidateCount: view.aggregate?.ranking.length ?? 0,
+        orderedSourceCount: view.aggregate?.orderedSourceCount ?? 0,
+        applicableSourceCount: view.aggregate?.applicableSourceCount ?? 0,
+        updatedAt: view.snapshot?.lockedAt ?? null,
+        isPublic: view.aggregate?.isConsensus ?? false,
+      };
+    }
+    return {
+      ...category,
+      candidateCount: view.nominees.length,
+      orderedSourceCount: 0,
+      applicableSourceCount: 1,
+      updatedAt: view.capturedAt || null,
+      isPublic: view.nominees.length > 0,
+    };
+  });
+}
