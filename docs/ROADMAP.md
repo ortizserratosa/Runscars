@@ -227,6 +227,12 @@ completa en verde.
 La lista completa y su evidencia se mantienen en [PHASE_7_1.md](PHASE_7_1.md).
 La fase 8 queda desbloqueada, pero no se ha iniciado.
 
+El mantenimiento 7.1.1 del 2026-08-07 corrige el parser de Awards Daily,
+recupera runs abandonados, compacta la cola editorial activa y amplía el
+catálogo verificado antes de avanzar. No reabre la puerta de salida ni inicia
+la fase siguiente. El segundo snapshot de control restauró y verificó la
+cobertura objetivo; el primero se conserva como versión inmutable.
+
 ## Fase 8 · Usuarios
 
 **Estado:** pendiente; la fase 7.1 ya está cerrada.

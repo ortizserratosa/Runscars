@@ -312,7 +312,7 @@ values
     'AwardsWatch Oscar Predictions HQ',
     'html',
     'https://awardswatch.com/oscar-predictions-hq/',
-    'awardswatch-multicategory-v2',
+    'awardswatch-multicategory-v4',
     true,
     '17 4 * * *',
     '{
@@ -327,7 +327,8 @@ values
         "supporting-actress",
         "original-screenplay",
         "adapted-screenplay"
-      ]
+      ],
+      "archive_url": "https://awardswatch.com/category/predictions/film-predictions/oscars-predictions/2027-oscar-predictions/"
     }'::jsonb
   ),
   (
@@ -335,22 +336,40 @@ values
     'awards-daily',
     'Awards Daily Oscar predictions',
     'html',
-    'https://www.awardsdaily.com/2026/05/04/may-predictions-and-temperature-check-on-all-oscar-categories/',
-    'awards-daily-v1',
+    'https://www.awardsdaily.com/wp-json/wp/v2/search?search=2027%20Oscar%20Predictions&per_page=20&_fields=id,url,title,subtype',
+    'awards-daily-v3',
     true,
     '17 4 * * *',
-    '{"season_id":"oscars-2027"}'::jsonb
+    '{
+      "season_id": "oscars-2027",
+      "ceremony_year": 2027,
+      "discovery_url": "https://www.awardsdaily.com/wp-json/wp/v2/search?search=2027%20Oscar%20Predictions&per_page=20&_fields=id,url,title,subtype",
+      "discovery_limit": 12
+    }'::jsonb
   ),
   (
     'awards-radar-predictions',
     'awards-radar',
     'Awards Radar Oscar predictions',
     'html',
-    'https://awardsradar.com/2026/04/10/year-in-advance-oscar-predictions-far-out-thoughts-on-what-the-academy-might-be-thinking-in-2027-part-two/',
-    'awards-radar-v1',
+    'https://awardsradar.com/predictions/',
+    'awards-radar-v3',
     true,
     '17 4 * * *',
-    '{"season_id":"oscars-2027"}'::jsonb
+    '{
+      "season_id": "oscars-2027",
+      "ceremony_year": 2027,
+      "category_urls": {
+        "best-picture": "https://awardsradar.com/best-picture/",
+        "directing": "https://awardsradar.com/best-director/",
+        "actor": "https://awardsradar.com/best-actor/",
+        "actress": "https://awardsradar.com/best-actress/",
+        "supporting-actor": "https://awardsradar.com/best-supporting-actor/",
+        "supporting-actress": "https://awardsradar.com/best-supporting-actress/",
+        "original-screenplay": "https://awardsradar.com/best-original-screenplay/",
+        "adapted-screenplay": "https://awardsradar.com/best-adapted-screenplay/"
+      }
+    }'::jsonb
   ),
   (
     'next-best-picture-predictions',
@@ -358,10 +377,14 @@ values
     'Next Best Picture Oscar predictions',
     'html',
     'https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars',
-    'next-best-picture-v1',
+    'next-best-picture-v2',
     true,
     '17 4 * * *',
-    '{"season_id":"oscars-2027"}'::jsonb
+    '{
+      "season_id": "oscars-2027",
+      "ceremony_year": 2027,
+      "discovery_mode": "mutable-page"
+    }'::jsonb
   ),
   (
     'midnight-critics-predictions',
@@ -369,21 +392,30 @@ values
     'Midnight Critics Circle consensus',
     'html',
     'https://www.midnightcritics.com/predictions/2027-oscar-predictions',
-    'midnight-critics-v1',
+    'midnight-critics-v2',
     true,
     '17 4 * * *',
-    '{"season_id":"oscars-2027"}'::jsonb
+    '{
+      "season_id": "oscars-2027",
+      "ceremony_year": 2027,
+      "discovery_mode": "mutable-page"
+    }'::jsonb
   ),
   (
     'ringer-best-picture',
     'the-ringer',
     'The Ringer Best Picture selections',
     'html',
-    'https://www.theringer.com/2026/03/20/oscars/oscars-2027-predictions-best-picture-movies-contenders',
-    'the-ringer-v1',
+    'https://www.theringer.com/topic/oscars',
+    'the-ringer-v2',
     true,
     '17 4 * * *',
-    '{"season_id":"oscars-2027","category_id":"best-picture"}'::jsonb
+    '{
+      "season_id": "oscars-2027",
+      "category_id": "best-picture",
+      "ceremony_year": 2027,
+      "article_fallback_url": "https://www.theringer.com/2026/03/20/oscars/oscars-2027-predictions-best-picture-movies-contenders"
+    }'::jsonb
   ),
   (
     'academy-archive-2026',

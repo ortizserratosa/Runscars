@@ -68,6 +68,7 @@ class MemoryRepository {
   captures = new Map();
   reviews = new Map();
   events: Array<{ runId: number; level: string; code: string }> = [];
+  semanticResolutions: string[] = [];
   nextRun = 1;
   nextPublication = 1;
   publications = new Map<string, number>();
@@ -76,6 +77,38 @@ class MemoryRepository {
     const id = this.nextRun++;
     this.runs.set(id, { ...values, status: "running" });
     return id;
+  }
+  async failStaleRuns({
+    connectorId,
+    staleBefore,
+    recoveredAt,
+  }: {
+    connectorId: string;
+    staleBefore: string;
+    recoveredAt: string;
+  }) {
+    let recovered = 0;
+    for (const [id, run] of this.runs) {
+      if (
+        run.connectorId === connectorId &&
+        run.status === "running" &&
+        run.startedAt < staleBefore
+      ) {
+        this.runs.set(id, {
+          ...run,
+          status: "failed",
+          finishedAt: recoveredAt,
+          errorSummary: "abandoned",
+        });
+        this.events.push({
+          runId: id,
+          level: "error",
+          code: "connector.abandoned",
+        });
+        recovered += 1;
+      }
+    }
+    return recovered;
   }
   async filmIdentities() {
     return films;
@@ -107,17 +140,18 @@ class MemoryRepository {
   async saveObservation({
     observation,
   }: {
-    observation: { dedupeKey: string };
+    observation: { dedupeKey: string; state: string };
   }) {
     if (this.observations.has(observation.dedupeKey)) {
       return {
         id: this.observations.get(observation.dedupeKey),
         inserted: false,
+        state: observation.state,
       };
     }
     const id = this.observations.size + 1;
     this.observations.set(observation.dedupeKey, id);
-    return { id, inserted: true };
+    return { id, inserted: true, state: observation.state };
   }
   async saveReviewItem({
     observation,
@@ -130,6 +164,13 @@ class MemoryRepository {
   }
   async addEvent(runId: number, level: string, code: string) {
     this.events.push({ runId, level, code });
+  }
+  async resolveSemanticReviewItems({
+    observation,
+  }: {
+    observation: { subject: string };
+  }) {
+    this.semanticResolutions.push(observation.subject);
   }
   async finishRun(runId: number, result: { status: string }) {
     this.runs.set(runId, { ...this.runs.get(runId), ...result });
@@ -332,6 +373,7 @@ describe("professional ingestion adapters", () => {
         <p>Supporting Actress<br />Anne Hathaway, The Odyssey</p>
         <p>Original Screenplay<br />Fjord</p>
         <p>Adapted Screenplay<br />The Odyssey</p>
+        <p>Makeup and Hair<br />Digger</p>
       `,
       {
         connectorId: "awards-daily-predictions",
@@ -358,17 +400,47 @@ describe("professional ingestion adapters", () => {
         "supporting-actress",
         "original-screenplay",
         "adapted-screenplay",
+        "makeup-hairstyling",
       ]),
     );
+  });
+
+  it("limits Awards Daily parsing to the article and skips alternate rows", () => {
+    const batch = parseAwardsDailyFixture(
+      `
+        <link rel="canonical" href="https://www.awardsdaily.com/2026/08/07/latest/" />
+        <div class="content-inner">
+          <p>Best Picture<br />The Odyssey<br />Digger<br />Alt. Ink</p>
+          <div class="video"><div><iframe title="Trailer"></iframe></div></div>
+          <p>Actor<br />Matt Damon, The Odyssey</p>
+          <div class="jeg_post_tags">Tags: 2027 Oscar Predictions</div>
+        </div>
+        <div class="post-nav">Previous Post<br />Oscar Podcast Ep: 90</div>
+      `,
+      {
+        connectorId: "awards-daily-predictions",
+        capturedAt,
+        endpointUrl: "https://www.awardsdaily.com/2026/08/07/latest/",
+        seasonId: "oscars-2027",
+      },
+    );
+
+    expect(batch.extractorVersion).toBe("awards-daily-v3");
+    expect(
+      batch.publications[0].observations.map(
+        (observation: { originalValue: { raw: string } }) =>
+          observation.originalValue.raw,
+      ),
+    ).toEqual(["The Odyssey", "Digger", "Matt Damon, The Odyssey"]);
   });
 
   it("normalizes verified source spellings without changing raw values", () => {
     const batch = parseAwardsDailyFixture(
       `
         <link rel="canonical" href="https://www.awardsdaily.com/2026/07/24/latest/" />
-        <p>Best Picture<br />The Debut<br />Dune III</p>
-        <p>Director<br />Christian Mungiu, Fjord<br />Javiers, La Bola Negra</p>
-        <p>Actor<br />Sebastien Stan, Fjord</p>
+        <p>Best Picture<br />The Debut<br />Dune III<br />Wewulf</p>
+        <p>Director<br />Christian Mungiu, Fjord<br />Javiers, La Bola Negra<br />Los Jovis, La Bola Begra</p>
+        <p>Actor<br />Sebastien Stan, Fjord<br />Cho Yeo-jong, Possible Love</p>
       `,
       {
         connectorId: "awards-daily-predictions",
@@ -394,6 +466,7 @@ describe("professional ingestion adapters", () => {
     ).toEqual([
       { film: "The Debut", people: [], raw: "The Debut" },
       { film: "Dune: Part Three", people: [], raw: "Dune III" },
+      { film: "Werwulf", people: [], raw: "Wewulf" },
       {
         film: "Fjord",
         people: ["Cristian Mungiu"],
@@ -405,9 +478,19 @@ describe("professional ingestion adapters", () => {
         raw: "Javiers, La Bola Negra",
       },
       {
+        film: "La Bola Negra",
+        people: ["Javier Ambrossi", "Javier Calvo"],
+        raw: "Los Jovis, La Bola Begra",
+      },
+      {
         film: "Fjord",
         people: ["Sebastian Stan"],
         raw: "Sebastien Stan, Fjord",
+      },
+      {
+        film: "Possible Love",
+        people: ["Cho Yeo-jeong"],
+        raw: "Cho Yeo-jong, Possible Love",
       },
     ]);
   });
@@ -562,6 +645,7 @@ describe("professional ingestion adapters", () => {
 
     expect(batch.publications).toHaveLength(1);
     expect(batch.publications[0].canonicalUrl).toBe(newestUrl);
+    expect(batch.publications[0].isMutable).toBe(true);
     expect(batch.discovery.supersededUrls).toEqual([olderUrl]);
   });
 
@@ -1103,6 +1187,48 @@ describe("professional ingestion adapters", () => {
         expect.objectContaining({ level: "info", code: "discovery.checked" }),
         expect.objectContaining({ level: "info", code: "connector.completed" }),
       ]),
+    );
+  });
+
+  it("closes an abandoned connector run before retrying it", async () => {
+    const repository = new MemoryRepository();
+    repository.runs.set(41, {
+      connectorId: "healthy",
+      status: "running",
+      startedAt: "2026-07-24T14:00:00Z",
+    });
+    repository.nextRun = 42;
+
+    const results = await runConnectorSet({
+      connectors: [{ id: "healthy" }],
+      registry: {
+        healthy: async () => ({
+          connectorId: "healthy",
+          sourceId: "awardswatch",
+          extractorVersion: "test-v1",
+          seasonId: "oscars-2027",
+          capturedAt,
+          sourceUrl: "https://example.com/",
+          publications: [],
+        }),
+      },
+      repository,
+      trigger: "fixture",
+      now: () => new Date(capturedAt),
+    });
+
+    expect(repository.runs.get(41)).toEqual(
+      expect.objectContaining({ status: "failed", errorSummary: "abandoned" }),
+    );
+    expect(results[0]).toEqual(
+      expect.objectContaining({ status: "succeeded" }),
+    );
+    expect(repository.events).toContainEqual(
+      expect.objectContaining({
+        runId: 41,
+        level: "error",
+        code: "connector.abandoned",
+      }),
     );
   });
 });

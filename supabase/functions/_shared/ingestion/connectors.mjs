@@ -258,12 +258,14 @@ export const CONNECTORS = Object.freeze({
           fetcher,
         );
         batches.push(
-          parseAwardsDailyFixture(html, {
-            connectorId: connector.id,
-            capturedAt,
-            endpointUrl: articleUrl,
-            seasonId: connector.configuration.season_id,
-          }),
+          mutableBatch(
+            parseAwardsDailyFixture(html, {
+              connectorId: connector.id,
+              capturedAt,
+              endpointUrl: articleUrl,
+              seasonId: connector.configuration.season_id,
+            }),
+          ),
         );
       } catch (error) {
         const item = {
@@ -281,7 +283,7 @@ export const CONNECTORS = Object.freeze({
     return mergeBatches(latest.selected, {
       mode: "wordpress-search",
       indexUrl: discoveryUrl,
-      extractorVersion: "awards-daily-v2",
+      extractorVersion: "awards-daily-v3",
       candidatesFound: candidates.length,
       ignoredUrls,
       supersededUrls: latest.supersededUrls,

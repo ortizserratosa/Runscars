@@ -1,7 +1,7 @@
 # Registro de fuentes
 
 **Estado:** fase 7.1 completada; cobertura multcategoría validada en staging
-**Última revisión:** 2026-07-25
+**Última revisión:** 2026-08-07
 
 ## 1. Objetivo
 
@@ -213,7 +213,7 @@ como estado actual:
 
 - Awards Daily consulta en cada run su búsqueda WordPress de predicciones 2027
   y conserva la combinación mínima de publicaciones que aporta la lista más
-  reciente de cada categoría; el corte verificado más nuevo es del 24 de julio
+  reciente de cada categoría; el corte verificado más nuevo es del 31 de julio
   de 2026 y contiene las ocho categorías públicas.
 - Awards Radar consulta sus ocho páginas de categoría, cuyo ranking visible
   indica actualización del 20 de julio de 2026.
@@ -227,6 +227,12 @@ como estado actual:
 Una misma URL actualizable puede generar varias revisiones inmutables
 identificadas por contenido. Un run sin cambios no crea observaciones nuevas y
 deja un evento explícito `source.unchanged`.
+
+El mantenimiento del 2026-08-07 acotó Awards Daily al cuerpo editorial,
+descartó sus filas `Alt.` y separó `Makeup and Hair` de vestuario. Las
+coincidencias dudosas siguen requiriendo revisión; las identidades verificadas
+de `Rose`, `Ink`, `Elsinore` y `Possible Love` se documentan en un manifiesto y
+se aplican mediante migraciones TMDB trazables.
 
 Kalshi y Polymarket usan sus API públicas en un proceso horario independiente.
 Sus contratos y capturas son append-only y no comparten tablas ni agregadores

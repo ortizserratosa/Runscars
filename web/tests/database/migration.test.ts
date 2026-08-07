@@ -52,7 +52,7 @@ describe("versioned database foundation", () => {
     expect(result.rows[0]).toEqual({
       seasons: 2,
       categories: 21,
-      films: 35,
+      films: 39,
       sources: 23,
       connectors: 11,
     });
@@ -62,6 +62,20 @@ describe("versioned database foundation", () => {
       from public.snapshot_schedules
     `);
     expect(schedules.rows[0]?.schedules).toBe(8);
+
+    const awardsDaily = await database.query<{
+      extractor_version: string;
+      endpoint_url: string;
+    }>(`
+      select extractor_version, endpoint_url
+      from public.source_connectors
+      where id = 'awards-daily-predictions'
+    `);
+    expect(awardsDaily.rows[0]).toEqual({
+      extractor_version: "awards-daily-v3",
+      endpoint_url:
+        "https://www.awardsdaily.com/wp-json/wp/v2/search?search=2027%20Oscar%20Predictions&per_page=20&_fields=id,url,title,subtype",
+    });
   });
 
   it("can load the seed twice without duplicating records", async () => {
@@ -75,7 +89,7 @@ describe("versioned database foundation", () => {
         (select count(*)::int from public.season_films) as links
     `);
 
-    expect(result.rows[0]).toEqual({ films: 35, links: 35 });
+    expect(result.rows[0]).toEqual({ films: 39, links: 39 });
   });
 
   it("keeps content-addressed revisions for a mutable source URL", async () => {

@@ -266,6 +266,44 @@ export class SupabaseIngestionRepository {
     return data.id;
   }
 
+  async failStaleRuns({ connectorId, staleBefore, recoveredAt }) {
+    const staleRuns = databaseError(
+      await this.client
+        .from("ingestion_runs")
+        .update({
+          status: "failed",
+          finished_at: recoveredAt,
+          error_summary:
+            "Ejecución abandonada; recuperada antes de iniciar un nuevo intento",
+        })
+        .eq("connector_id", connectorId)
+        .eq("status", "running")
+        .lt("started_at", staleBefore)
+        .select("id"),
+      "No se pudieron recuperar las ejecuciones abandonadas",
+    );
+    if (staleRuns.length) {
+      databaseError(
+        await this.client.from("ingestion_run_events").insert(
+          staleRuns.map(({ id }) => ({
+            run_id: id,
+            level: "error",
+            code: "connector.abandoned",
+            message:
+              "La ejecución se cerró al superar el umbral operativo sin terminar",
+            context: {
+              recovered_at: recoveredAt,
+              stale_before: staleBefore,
+              recovery_connector_id: connectorId,
+            },
+          })),
+        ),
+        "No se pudo auditar la recuperación de ejecuciones abandonadas",
+      );
+    }
+    return staleRuns.length;
+  }
+
   async addEvent(runId, level, code, message, context = {}) {
     databaseError(
       await this.client.from("ingestion_run_events").insert({
@@ -398,7 +436,14 @@ export class SupabaseIngestionRepository {
         observationId: equivalent.id,
         previousState: equivalent.state,
       });
-      return { id: equivalent.id, inserted: false };
+      return {
+        id: equivalent.id,
+        inserted: false,
+        state:
+          equivalent.state === "pending_review"
+            ? observation.state
+            : equivalent.state,
+      };
     }
 
     const data = databaseError(
@@ -434,7 +479,9 @@ export class SupabaseIngestionRepository {
         .select("id"),
       "No se pudo guardar la observación",
     );
-    if (data.length) return { id: data[0].id, inserted: true };
+    if (data.length) {
+      return { id: data[0].id, inserted: true, state: observation.state };
+    }
     const existing = databaseError(
       await this.client
         .from("professional_observations")
@@ -449,7 +496,14 @@ export class SupabaseIngestionRepository {
       observationId: existing.id,
       previousState: existing.state,
     });
-    return { id: existing.id, inserted: false };
+    return {
+      id: existing.id,
+      inserted: false,
+      state:
+        existing.state === "pending_review"
+          ? observation.state
+          : existing.state,
+    };
   }
 
   async reconcilePendingObservation({
@@ -521,7 +575,25 @@ export class SupabaseIngestionRepository {
     );
   }
 
-  async saveReviewItem({ connectorId, runId, observationId, observation }) {
+  async saveReviewItem({
+    connectorId,
+    runId,
+    observationId,
+    observation,
+    seasonId,
+  }) {
+    const subjectKey = observation.review.subjectLabel
+      .trim()
+      .replace(/\s+/gu, " ")
+      .toLocaleLowerCase();
+    const reviewContext = {
+      observation_dedupe_key: observation.dedupeKey,
+      film_subject: observation.filmSubject ?? null,
+      people_subjects: observation.peopleSubjects ?? [],
+      season_id: seasonId,
+      category_id: observation.categoryId ?? null,
+      subject_key: subjectKey,
+    };
     const data = databaseError(
       await this.client
         .from("ingestion_review_items")
@@ -535,18 +607,66 @@ export class SupabaseIngestionRepository {
             subject_label: observation.review.subjectLabel,
             candidate_film_ids: observation.review.candidateFilmIds,
             candidate_person_ids: observation.review.candidatePersonIds ?? [],
-            context: {
-              observation_dedupe_key: observation.dedupeKey,
-              film_subject: observation.filmSubject ?? null,
-              people_subjects: observation.peopleSubjects ?? [],
-            },
+            context: reviewContext,
           },
           { onConflict: "queue_key", ignoreDuplicates: true },
         )
         .select("id"),
       "No se pudo guardar la revisión",
     );
+    if (data.length) {
+      databaseError(
+        await this.client
+          .from("ingestion_review_items")
+          .update({
+            status: "dismissed",
+            resolution_note:
+              "Sustituida por una revisión más reciente del mismo sujeto",
+            resolved_at: new Date().toISOString(),
+            resolved_by: connectorId,
+          })
+          .eq("connector_id", connectorId)
+          .eq("kind", observation.review.kind)
+          .eq("status", "pending")
+          .neq("id", data[0].id)
+          .contains("context", {
+            season_id: seasonId,
+            category_id: observation.categoryId ?? null,
+            subject_key: subjectKey,
+          }),
+        "No se pudieron cerrar las revisiones sustituidas",
+      );
+    }
     return data.length > 0;
+  }
+
+  async resolveSemanticReviewItems({ connectorId, observation, seasonId }) {
+    const subjectKey = observation.subject
+      .trim()
+      .replace(/\s+/gu, " ")
+      .toLocaleLowerCase();
+    const reviewKind =
+      observation.peopleSubjects?.length > 0 ? "person_match" : "film_match";
+    databaseError(
+      await this.client
+        .from("ingestion_review_items")
+        .update({
+          status: "resolved",
+          resolution_note:
+            "Resuelta por una revisión posterior con coincidencia exacta",
+          resolved_at: new Date().toISOString(),
+          resolved_by: connectorId,
+        })
+        .eq("connector_id", connectorId)
+        .eq("kind", reviewKind)
+        .eq("status", "pending")
+        .contains("context", {
+          season_id: seasonId,
+          category_id: observation.categoryId ?? null,
+          subject_key: subjectKey,
+        }),
+      "No se pudieron cerrar las revisiones resueltas por una revisión posterior",
+    );
   }
 
   async finishRun(runId, result) {
@@ -628,12 +748,21 @@ export async function persistBatch({ batch, repository, runId }) {
         if (saved.inserted) counters.observationsInserted += 1;
         else counters.observationsDuplicate += 1;
 
-        if (observation.review) {
+        if (saved.state === "published" && observation.categoryCandidateId) {
+          await repository.resolveSemanticReviewItems?.({
+            connectorId: prepared.connectorId,
+            observation,
+            seasonId: prepared.seasonId,
+          });
+        }
+
+        if (observation.review && saved.state === "pending_review") {
           const created = await repository.saveReviewItem({
             connectorId: prepared.connectorId,
             runId,
             observationId: saved.id,
             observation,
+            seasonId: prepared.seasonId,
           });
           if (created) counters.reviewItemsCreated += 1;
         }
@@ -692,9 +821,17 @@ export async function runConnectorSet({
   return Promise.all(
     connectors.map(async (connector) => {
       const capturedAt = now().toISOString();
+      const staleBefore = new Date(
+        new Date(capturedAt).valueOf() - 15 * 60 * 1000,
+      ).toISOString();
       const runKey = `${connector.id}:${trigger}:${capturedAt}`;
       let runId = null;
       try {
+        await repository.failStaleRuns?.({
+          connectorId: connector.id,
+          staleBefore,
+          recoveredAt: capturedAt,
+        });
         runId = await repository.beginRun({
           connectorId: connector.id,
           trigger,

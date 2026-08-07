@@ -1,7 +1,7 @@
 # Fase 7.1 · Cobertura multcategoría, archivo y mercados
 
 **Estado:** completada y cerrada el 2026-07-25  
-**Última revisión:** 2026-07-25
+**Última revisión:** 2026-08-07
 
 ## Alcance implementado
 
@@ -96,3 +96,39 @@ la programación del lunes a las 04:47 UTC.
 El check `verify` del PR de integración terminó en verde tras reproducir la
 instalación, formato, lint, tipos, unitarias, DB, build y auditoría. Con esta
 última evidencia queda cumplida la puerta de salida de la fase 7.1.
+
+## Mantenimiento 7.1.1 previo a usuarios
+
+El 2026-08-07 se abrió un corte de mantenimiento sin iniciar la fase 8. El
+parser de Awards Daily quedó acotado al contenido editorial y reconoce
+`Makeup and Hair`; las filas alternativas, etiquetas y navegación se excluyen
+sin modificar su valor original. Un manifiesto versionado documenta las
+coincidencias editoriales verificadas de `Rose`, `Ink`, `Elsinore` y
+`Possible Love`; las migraciones aplican las identidades y los créditos
+necesarios, incluido el de Samantha Morton en `The Odyssey`, con URL, motivo y
+actor trazables.
+
+Los runs abandonados se cierran tras 15 minutos con un evento auditable. La
+cola editorial conserva todas las revisiones, pero solo mantiene pendiente la
+versión semántica más reciente. Estas medidas endurecen la operación ya cerrada
+de 7.1 y no cambian la puerta, el alcance ni las decisiones pendientes de
+usuarios.
+
+La validación real cerró el run abandonado 153 y ejecutó después los cuatro
+conectores afectados sin fallos. Awards Daily generó una revisión completa de
+79 observaciones con identidad ligada a contenido y extractor. La cola pasó de
+109 revisiones repetidas a siete pendientes únicas, todas en categorías todavía
+no públicas; las ocho categorías públicas quedaron en cero.
+
+El snapshot manual de control detectó primero una revisión incompleta de Awards
+Daily. Esa versión permanece bloqueada e inmutable. Tras corregir la identidad
+de publicación se generó un segundo corte, también bloqueado, y el puntero
+vigente quedó en el de las 13:02 UTC: cinco rankings ordenados en seis
+categorías, cuatro en los dos guiones y seis fuentes aplicables en Mejor
+película. Los ocho consensos son válidos.
+
+El mismo corte confirmó 2 contratos de Kalshi y 65 de Polymarket a las 12:17
+UTC, las ocho rutas públicas y la salud de base por HTTP 200, rechazo 401 del
+cron sin secreto y 18 recorridos E2E en escritorio y móvil. Staging quedó
+desplegado con Next.js 16.3.0 y dependencias auditadas sin vulnerabilidades
+conocidas.

@@ -113,6 +113,7 @@ const CATEGORY_DEFINITIONS = Object.freeze([
       "BEST MAKEUP AND HAIRSTYLING",
       "Best Makeup and Hairstyling",
       "MAKEUP AND HAIRSTYLING",
+      "MAKEUP AND HAIR",
       "MAKEUP",
     ],
   ],
@@ -142,10 +143,13 @@ const TEAM_CATEGORIES = new Set([
 const SOURCE_FILM_ALIASES = new Map([
   ["adventures of cliff booth", "The Adventures of Cliff Booth"],
   ["dune iii", "Dune: Part Three"],
+  ["la bola begra", "La Bola Negra"],
   ["sense and sensibillity", "Sense and Sensibility"],
   ["the social recknoing", "The Social Reckoning"],
+  ["wewulf", "Werwulf"],
 ]);
 const SOURCE_PERSON_ALIASES = new Map([
+  ["cho yeo-jong", "Cho Yeo-jeong"],
   ["christian mungiu", "Cristian Mungiu"],
   ["inde navarette", "Inde Navarrette"],
   ["mariana di girolam o", "Mariana di Girolamo"],
@@ -197,6 +201,30 @@ function htmlLines(html) {
     .split(/\n/)
     .map((line) => line.replace(/\s+/g, " ").trim())
     .filter(Boolean);
+}
+
+function divContentByClass(html, className) {
+  const openingTags = /<div\b[^>]*>/gi;
+  let opening;
+  while ((opening = openingTags.exec(html))) {
+    const classAttribute = opening[0].match(
+      /\bclass\s*=\s*(?:"([^"]*)"|'([^']*)')/i,
+    );
+    const classes = classAttribute?.[1] ?? classAttribute?.[2] ?? "";
+    if (!classes.split(/\s+/u).includes(className)) continue;
+
+    const contentStart = openingTags.lastIndex;
+    const nestedDivs = /<\/?div\b[^>]*>/gi;
+    nestedDivs.lastIndex = contentStart;
+    let depth = 1;
+    let nested;
+    while ((nested = nestedDivs.exec(html))) {
+      depth += /^<\//u.test(nested[0]) ? -1 : 1;
+      if (depth === 0) return html.slice(contentStart, nested.index);
+    }
+    return html.slice(contentStart);
+  }
+  return null;
 }
 
 function requiredText(value, field) {
@@ -301,7 +329,7 @@ function updatedPredictionDate(lines) {
 }
 
 function peopleFromText(value) {
-  if (/^(?:The\s+)?Javiers$/i.test(value.trim())) {
+  if (/^(?:(?:The\s+)?Javiers|Los\s+Jovis)$/i.test(value.trim())) {
     return ["Javier Ambrossi", "Javier Calvo"];
   }
   return value
@@ -455,7 +483,11 @@ function parseHeadingLists(
       if (!rowsByCategory.has(heading)) rowsByCategory.set(heading, []);
       continue;
     }
-    if (!categoryId || /^\(?alts?:/i.test(line) || /^-+$/.test(line)) {
+    if (
+      !categoryId ||
+      /^\(?alts?(?:[.:\s)]|$)/i.test(line) ||
+      /^-+$/.test(line)
+    ) {
       continue;
     }
     const rankMatch = line.match(/^(\d+)\s*[.)]\s+(.+)$/);
@@ -496,7 +528,12 @@ export function parseAwardsDailyFixture(
     "awards-daily",
     capturedAt,
   );
-  const lines = htmlLines(html);
+  const articleLines = htmlLines(
+    divContentByClass(html, "content-inner") ?? html,
+  );
+  const footerStart = articleLines.findIndex((line) => /^Tags:/i.test(line));
+  const lines =
+    footerStart === -1 ? articleLines : articleLines.slice(0, footerStart);
   const start = Math.max(
     lines.findIndex((line) => line === "Best Picture"),
     0,
@@ -509,7 +546,7 @@ export function parseAwardsDailyFixture(
   return buildBatch({
     connectorId,
     sourceId: "awards-daily",
-    extractorVersion: "awards-daily-v1",
+    extractorVersion: "awards-daily-v3",
     seasonId,
     capturedAt,
     sourceUrl: publication.canonicalUrl,

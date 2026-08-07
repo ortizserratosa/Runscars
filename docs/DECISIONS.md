@@ -1,6 +1,6 @@
 # Registro de decisiones
 
-**Última revisión:** 2026-07-25
+**Última revisión:** 2026-08-07
 
 ## Cómo usar este registro
 
@@ -45,6 +45,8 @@ pasado para ocultar cambios de criterio.
 | D-025 | Cobertura profesional mínima por medio y categoría | Aceptada |
 | D-026 | Mercados separados y append-only | Aceptada |
 | D-027 | Archivo oficial sin predicciones históricas | Aceptada |
+| D-028 | Discovery diario y revisiones inmutables de páginas vivas | Aceptada |
+| D-029 | Recuperación de runs y revisión editorial vigente | Aceptada |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -183,6 +185,10 @@ las decisiones D-001 a D-011 quedan aceptadas y la fase 0 se considera cerrada.
   con una o dos críticas.
 - **Reabrir si:** fixtures posteriores muestran demasiadas películas bloqueadas
   o una cadencia editorial distinta.
+- **Revisión posterior:** D-025 reemplaza únicamente el mínimo profesional de
+  tres listas por cuatro rankings automáticos y publicables por categoría. La
+  deduplicación, el mínimo crítico y la ventana de frescura de esta decisión
+  siguen vigentes.
 
 ## D-014 · Consenso de rankings parciales de usuarios
 
@@ -441,3 +447,22 @@ ejemplos manuales de nominaciones y ganador coincidieron con
 - **Motivo:** una URL fijada a mayo o abril no representa la predicción vigente,
   y mezclar varias revisiones de una página mutable dentro de una sola
   publicación produciría rankings inválidos.
+
+## D-029 · Recuperación de runs y revisión editorial vigente
+
+- **Fecha:** 2026-08-07
+- **Estado:** Aceptada
+- **Decisión:** antes de iniciar un conector, cerrar como `failed` cualquier run
+  suyo que siga `running` después de 15 minutos y registrar
+  `connector.abandoned`. La migración de mantenimiento aplica la misma regla a
+  runs ya abandonados.
+- **Cola editorial:** las observaciones y revisiones históricas permanecen
+  trazables, pero solo la revisión más reciente de un mismo conector, tipo,
+  temporada, categoría y rótulo normalizado queda `pending`; las anteriores se
+  marcan `dismissed` como sustituidas.
+- **Motivo:** una terminación forzada de Edge no ejecuta el cierre normal, y una
+  página viva puede generar revisiones inmutables repetidas del mismo problema.
+  Ninguno de esos casos debe aparentar actividad eterna ni multiplicar trabajo
+  editorial.
+- **Límite:** el cierre por abandono no reintenta por sí solo ni altera
+  observaciones; el siguiente run conserva el aislamiento normal por fuente.

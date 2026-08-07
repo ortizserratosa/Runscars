@@ -1,7 +1,7 @@
 # Sistema de ingesta · fases 5 y 7.1
 
 **Estado:** fase 5 completada; ampliación 7.1 completada
-**Última revisión:** 2026-07-25
+**Última revisión:** 2026-08-07
 
 ## Objetivo
 
@@ -43,6 +43,12 @@ mayúsculas ni diacríticos, contra título o título alternativo del catálogo 
 temporada. Cero o varias coincidencias dejan la observación en
 `pending_review`, sin participación, y crean una entrada idempotente en la
 cola. No se acepta automáticamente ninguna similitud difusa.
+
+Las páginas vivas pueden producir varias observaciones inmutables para el mismo
+rótulo. La cola mantiene pendiente solo la revisión semántica más reciente por
+conector, tipo, temporada y categoría; las anteriores se conservan como
+`dismissed`. Esto reduce trabajo repetido sin borrar la procedencia ni el valor
+original.
 
 Los roles públicos solo leen publicaciones y observaciones `published` cuando
 la fuente también tiene `publication_status = publishable`. Conectores,
@@ -144,6 +150,11 @@ Function. Cada uno conserva su propio run y captura sus propios fallos; el
 resultado general solo es parcial cuando uno de ellos falla. Así, comprobar las
 seis fuentes cabe dentro del límite operativo sin perder aislamiento.
 
+Antes de abrir un nuevo run, el conector cierra como `failed` cualquier intento
+propio que continúe `running` tras 15 minutos y añade el evento
+`connector.abandoned`. El nuevo intento no hereda contadores ni estado del
+anterior.
+
 Un título ausente se consulta en TMDB solo desde servidor. La importación
 automática exige una coincidencia única exacta y compatible con la temporada;
 después, las personas solo se buscan en sus créditos. Película, persona, equipo
@@ -179,6 +190,8 @@ restricción única, la URL de procedencia y la privacidad de runs/logs/cola.
 
 - Un cambio estructural de HTML hace fallar solo AwardsWatch y deja un evento
   `connector.failed`; no publica filas parciales silenciosamente.
+- Awards Daily limita el extractor al cuerpo editorial, corta antes de
+  etiquetas o navegación y descarta filas rotuladas como alternativas.
 - Guardian está activo desde el 2026-07-24. Su clave existe únicamente en
   `web/.env.local` para desarrollo y en los secretos de Edge Functions para
   staging; no forma parte del seed, los logs ni Git.
@@ -226,6 +239,18 @@ El Cron `runscars-ingestion-daily` está activo a las 04:17 UTC y
 `runscars-markets-hourly` al minuto 17 de cada hora. La primera captura de
 mercados terminó con Kalshi sin contratos Oscar abiertos y Polymarket con 65;
 ninguno creó observaciones profesionales.
+
+El mantenimiento 7.1.1 del 2026-08-07 recuperó como `failed` el run 153, que
+había quedado `running` tras una terminación de Edge, y registró
+`connector.abandoned`. Cuatro ejecuciones de comprobación posteriores
+terminaron `succeeded`. Awards Daily insertó una revisión completa de 79
+observaciones con `awards-daily-v3`; repetirla no creó revisiones editoriales.
+
+La cola pasó de 109 pendientes acumuladas a siete identidades vigentes. Todas
+pertenecen a categorías no públicas de Next Best Picture (documental, canción y
+sonido) y permanecen sin participar porque el rótulo no identifica de forma
+inequívoca una candidatura. Las ocho categorías públicas no conservan ninguna
+revisión pendiente.
 
 ## Puerta de salida
 

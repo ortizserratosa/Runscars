@@ -20,7 +20,7 @@ if (packageFiles.length === 0) {
 let patched = 0;
 for (const packageFile of packageFiles) {
   const packageJson = JSON.parse(readFileSync(packageFile, "utf8"));
-  if (packageJson.version !== "5.0.8") {
+  if (packageJson.version !== "5.0.9") {
     throw new Error(
       `Versión inesperada de brace-expansion: ${packageJson.version}`,
     );

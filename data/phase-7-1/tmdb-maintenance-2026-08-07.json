@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "reviewedAt": "2026-08-07",
+  "locale": "es-ES",
+  "matches": [
+    {
+      "filmId": "rose-2026",
+      "tmdbId": 1176962,
+      "query": "Rose",
+      "method": "manual",
+      "reason": "Título, año y reparto con Sandra Hüller distinguen esta película del homónimo de 2026.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1176962-rose"
+    },
+    {
+      "filmId": "ink",
+      "tmdbId": 1532610,
+      "query": "Ink",
+      "method": "manual",
+      "reason": "Título, dirección de Danny Boyle y distribución de Netflix identifican la película citada por las fuentes.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1532610-ink"
+    },
+    {
+      "filmId": "elsinore",
+      "tmdbId": 1599230,
+      "query": "Elsinore",
+      "method": "manual",
+      "reason": "Título y reparto con Andrew Scott y Olivia Colman identifican la película citada por las fuentes.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1599230-elsinore"
+    },
+    {
+      "filmId": "possible-love",
+      "tmdbId": 1483525,
+      "query": "Possible Love",
+      "method": "manual",
+      "reason": "Título y reparto con Cho Yeo-jeong identifican la película de Netflix citada por la fuente.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1483525"
+    },
+    {
+      "filmId": "the-odyssey",
+      "tmdbId": 1368337,
+      "query": "The Odyssey",
+      "method": "manual",
+      "reason": "Se refrescan los créditos verificados para reconciliar la observación de Samantha Morton.",
+      "evidenceUrl": "https://www.themoviedb.org/movie/1368337"
+    }
+  ]
+}
