@@ -108,6 +108,19 @@ describe("versioned database foundation", () => {
       endpoint_url:
         "https://www.awardsdaily.com/wp-json/wp/v2/search?search=2027%20Oscar%20Predictions&per_page=20&_fields=id,url,title,subtype",
     });
+
+    const marketVersions = await database.query<{
+      id: string;
+      extractor_version: string;
+    }>(`
+      select id, extractor_version
+      from public.market_connectors
+      order by id
+    `);
+    expect(marketVersions.rows).toEqual([
+      { id: "kalshi-oscars", extractor_version: "kalshi-v3" },
+      { id: "polymarket-oscars", extractor_version: "polymarket-v3" },
+    ]);
   });
 
   it("can load the seed twice without duplicating records", async () => {

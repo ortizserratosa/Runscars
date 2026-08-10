@@ -68,6 +68,38 @@ function isoOrNull(value) {
   return Number.isNaN(date.valueOf()) ? null : date.toISOString();
 }
 
+function kalshiPriceData(market) {
+  return {
+    ticker: market.ticker,
+    last_price_dollars: market.last_price_dollars ?? null,
+    yes_bid_dollars: market.yes_bid_dollars ?? null,
+    last_price: market.last_price ?? null,
+    volume_fp: market.volume_fp ?? null,
+    volume: market.volume ?? null,
+    open_interest_fp: market.open_interest_fp ?? null,
+    open_interest: market.open_interest ?? null,
+    ts: market.ts ?? null,
+  };
+}
+
+function polymarketContractData(event, market) {
+  const { markets: _markets, ...eventData } = event;
+  return { event: eventData, market };
+}
+
+function polymarketPriceData(market, selectedIndex) {
+  return {
+    market_id: market.id,
+    selected_index: selectedIndex,
+    outcomes: market.outcomes ?? null,
+    outcome_prices: market.outcomePrices ?? null,
+    volume_num: market.volumeNum ?? null,
+    volume: market.volume ?? null,
+    open_interest: market.openInterest ?? null,
+    updated_at: market.updatedAt ?? null,
+  };
+}
+
 function isOscarMarket(value) {
   return /\boscars?\b|academy awards/i.test(value);
 }
@@ -154,9 +186,11 @@ export function parseKalshiMarkets(
           numeric(market.open_interest_fp) ?? numeric(market.open_interest),
         observedAt: isoOrNull(market.ts) ?? new Date(capturedAt).toISOString(),
         capturedAt: new Date(capturedAt).toISOString(),
-        originalData: market,
+        contractOriginalData: market,
+        priceOriginalData: kalshiPriceData(market),
       };
-    });
+    })
+    .filter((contract) => contract.categoryId !== null);
 }
 
 function jsonArray(value) {
@@ -218,13 +252,15 @@ export function parsePolymarketEvents(
             /\s+(?:win|be nominated for)\s+(?:the\s+)?(?:oscar for\s+)?best[\s\S]*$/i,
             "",
           );
+      const categoryId = categoryFromMarketText(`${event.title} ${title}`);
+      if (!categoryId) continue;
       contracts.push({
         provider: "polymarket",
         sourceId: "polymarket",
         externalMarketId: requiredText(String(event.id), "Polymarket event id"),
         externalContractId: String(tokenIds[selectedIndex] ?? marketId),
         seasonId,
-        categoryId: categoryFromMarketText(`${event.title} ${title}`),
+        categoryId,
         candidateLabel,
         marketTitle: title,
         outcomeLabel: candidateLabel,
@@ -242,7 +278,8 @@ export function parsePolymarketEvents(
         observedAt:
           isoOrNull(market.updatedAt) ?? new Date(capturedAt).toISOString(),
         capturedAt: new Date(capturedAt).toISOString(),
-        originalData: { event, market },
+        contractOriginalData: polymarketContractData(event, market),
+        priceOriginalData: polymarketPriceData(market, selectedIndex),
       });
     }
   }
@@ -269,11 +306,9 @@ export async function prepareMarketContracts(contracts, candidates) {
         external_contract_id: contract.externalContractId,
         probability: contract.probability,
         original_price: contract.originalPrice,
+        original_currency: contract.originalCurrency,
         volume: contract.volume,
         open_interest: contract.openInterest,
-        observed_at: contract.observedAt,
-        captured_at: contract.capturedAt,
-        original_data: contract.originalData,
       });
       return { ...contract, categoryCandidateId, contentHash };
     }),

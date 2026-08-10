@@ -51,6 +51,7 @@ pasado para ocultar cambios de criterio.
 | D-031 | Identidad gestionada y privacidad comunitaria por capas | Aceptada |
 | D-032 | Cortes públicos solo ante cambios efectivos de proveedor | Aceptada |
 | D-033 | Predicción y evolución como superficie principal | Aceptada |
+| D-034 | Capturas de mercado compactas y efectivas | Aceptada |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -560,3 +561,24 @@ ejemplos manuales de nominaciones y ganador coincidieron con
 - **Consecuencia:** las superficies públicas deben compartir el snapshot
   vigente. Portada, categoría, película y fuente no mantienen cifras de
   referencia paralelas.
+
+## D-034 · Capturas de mercado compactas y efectivas
+
+- **Fecha:** 2026-08-10
+- **Estado:** Aceptada
+- **Decisión:** conservar por contrato el payload original necesario para
+  identificarlo y, en cada captura, únicamente los campos originales que
+  forman la señal de precio. El hash de una captura depende de probabilidad,
+  precio, divisa, volumen e interés abierto; la hora de comprobación no crea por
+  sí sola un nuevo estado.
+- **Alcance:** solo se persisten contratos que se puedan asignar a una de las
+  ocho categorías públicas. Kalshi y Polymarket siguen separados, horarios y
+  fuera de Borda.
+- **Corrección de staging:** las capturas de los extractores v2 repetían el
+  evento completo de Polymarket y hacían único el hash con `captured_at`. Se
+  autoriza una limpieza única que conserva el estado más reciente de cada
+  contrato publicable y elimina contratos sin categoría. No modifica snapshots
+  profesionales, resultados oficiales ni datos comunitarios.
+- **Refina:** D-026 y D-030. Desde `kalshi-v3` y `polymarket-v3`, los estados
+  efectivos vuelven a ser append-only; una comprobación idéntica se registra en
+  el run, no como otra captura de precio.

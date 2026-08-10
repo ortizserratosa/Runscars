@@ -110,7 +110,7 @@ export class SupabaseMarketRepository {
               source_url: contract.sourceUrl,
               closes_at: contract.closesAt,
               resolved_at: contract.resolvedAt,
-              original_data: contract.originalData,
+              original_data: contract.contractOriginalData,
               captured_at: contract.capturedAt,
             },
             {
@@ -150,7 +150,7 @@ export class SupabaseMarketRepository {
               open_interest: contract.openInterest,
               observed_at: contract.observedAt,
               captured_at: contract.capturedAt,
-              original_data: contract.originalData,
+              original_data: contract.priceOriginalData,
             },
             { onConflict: "contract_id,content_hash", ignoreDuplicates: true },
           )

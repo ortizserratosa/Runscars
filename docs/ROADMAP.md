@@ -245,6 +245,17 @@ series Oscar de Kalshi sin depender del orden global y separa nominación de
 ganador por proveedor en cada categoría. Corrige la integración ya incluida en
 7.1 y tampoco inicia la fase 8.
 
+El mantenimiento 7.1.4 corrige el crecimiento accidental de los extractores de
+mercado v2: limita la persistencia a las ocho categorías, separa el payload del
+contrato de los campos originales de precio y deduplica por estado efectivo. La
+limpieza única y compactación de staging se rige por D-034; no altera snapshots
+profesionales ni reabre la fase.
+
+**Cerrado:** 2026-08-10. Staging quedó en 63 MB tras conservar 581 contratos y
+581 estados v2 útiles. La captura de control v3 añadió 516 estados compactos y
+su repetición fue idempotente; Kalshi, Polymarket y el cron horario quedaron
+activos.
+
 ## Fase 8 · Usuarios
 
 **Cerrada:** 2026-08-07. Supabase Auth, sesión SSR, perfiles, rankings

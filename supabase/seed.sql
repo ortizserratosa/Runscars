@@ -529,7 +529,7 @@ values
     'kalshi',
     'kalshi',
     'https://external-api.kalshi.com/trade-api/v2/markets',
-    'kalshi-v2',
+    'kalshi-v3',
     '17 * * * *',
     true,
     '{
@@ -552,7 +552,7 @@ values
     'polymarket',
     'polymarket',
     'https://gamma-api.polymarket.com/markets',
-    'polymarket-v2',
+    'polymarket-v3',
     '17 * * * *',
     true,
     '{

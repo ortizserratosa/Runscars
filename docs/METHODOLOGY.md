@@ -361,16 +361,20 @@ este mínimo.
 
 ## 10. Mercados
 
-Kalshi y Polymarket se capturan por separado en un registro append-only. Se
-conservan proveedor, IDs externos, contrato, precio o probabilidad original,
-volumen, interés abierto, URL, fechas y payload. No se calcula un consenso entre
-proveedores y ninguna captura de mercado puede convertirse en observación
-profesional ni entrar en Borda. La ausencia se representa como “sin mercado
-disponible”.
+Kalshi y Polymarket se capturan por separado en un registro append-only de
+estados efectivos. Se conservan proveedor, IDs externos, contrato, precio o
+probabilidad original, volumen, interés abierto, URL y fechas. El payload de
+contrato se conserva una vez; cada captura guarda solo los campos originales de
+precio que forman la señal. Una comprobación con probabilidad, precio, divisa,
+volumen e interés abierto idénticos no crea otra captura. No se calcula un
+consenso entre proveedores y ninguna captura de mercado puede convertirse en
+observación profesional ni entrar en Borda. La ausencia se representa como
+“sin mercado disponible”.
 
 El discovery exige que la ceremonia coincida de forma explícita con la temporada
-activa y que el contrato siga abierto. Kalshi se consulta por series de
-categoría; Polymarket por eventos activos de la ceremonia. La interfaz etiqueta
+activa, que el contrato siga abierto y que pueda asignarse a una de las ocho
+categorías públicas. Kalshi se consulta por series de categoría; Polymarket por
+eventos activos de la ceremonia. La interfaz etiqueta
 por separado mercados de nominación y de ganador. Resume primero el contrato
 con mayor probabilidad de cada intención y proveedor; el detalle muestra como
 máximo cuatro, ordenados por probabilidad, volumen y nombre.

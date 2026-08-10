@@ -35,7 +35,13 @@ describe("market ingestion", () => {
       volume: 1200.5,
       openInterest: 320,
     });
-    expect(contracts[0].originalData.ticker).toBe("KXOSCARPIC-27-ODYSSEY");
+    expect(contracts[0].contractOriginalData.ticker).toBe(
+      "KXOSCARPIC-27-ODYSSEY",
+    );
+    expect(contracts[0].priceOriginalData).toMatchObject({
+      ticker: "KXOSCARPIC-27-ODYSSEY",
+      last_price_dollars: "0.42",
+    });
   });
 
   it("reads Polymarket YES token price without mixing providers", async () => {
@@ -52,6 +58,13 @@ describe("market ingestion", () => {
       candidateLabel: "The Odyssey",
       outcomeLabel: "The Odyssey",
       probability: 0.41,
+    });
+    expect(contracts[0].contractOriginalData.event).not.toHaveProperty(
+      "markets",
+    );
+    expect(contracts[0].priceOriginalData).toMatchObject({
+      market_id: "market-odyssey",
+      selected_index: 0,
     });
   });
 
@@ -93,6 +106,25 @@ describe("market ingestion", () => {
             closed: true,
           },
         ],
+        {
+          capturedAt,
+          seasonId: "oscars-2027",
+          ceremonyYear: 2027,
+        },
+      ),
+    ).toHaveLength(0);
+  });
+
+  it("rejects Oscar contracts outside the eight public categories", async () => {
+    const kalshi = await fixture("kalshi.json");
+    const unknownCategory = {
+      ...kalshi.markets[0],
+      title: "Will The Odyssey win Best Cinematography at the Oscars 2027?",
+      subtitle: "Best Cinematography",
+    };
+    expect(
+      parseKalshiMarkets(
+        { markets: [unknownCategory] },
         {
           capturedAt,
           seasonId: "oscars-2027",
@@ -210,15 +242,38 @@ describe("market ingestion", () => {
     ).toBeNull();
   });
 
-  it("creates an idempotency hash from the append-only capture", async () => {
-    const contracts = parseKalshiMarkets(await fixture("kalshi.json"), {
+  it("hashes the effective price state instead of the capture time", async () => {
+    const payload = await fixture("kalshi.json");
+    const contracts = parseKalshiMarkets(payload, {
       capturedAt,
       seasonId: "oscars-2027",
       ceremonyYear: 2027,
     });
+    const laterContracts = parseKalshiMarkets(payload, {
+      capturedAt: "2026-07-25T13:00:00Z",
+      seasonId: "oscars-2027",
+      ceremonyYear: 2027,
+    });
+    const changedContracts = parseKalshiMarkets(
+      {
+        markets: [
+          {
+            ...payload.markets[0],
+            last_price_dollars: "0.43",
+          },
+        ],
+      },
+      {
+        capturedAt: "2026-07-25T13:00:00Z",
+        seasonId: "oscars-2027",
+        ceremonyYear: 2027,
+      },
+    );
     const first = await prepareMarketContracts(contracts, []);
-    const second = await prepareMarketContracts(contracts, []);
+    const second = await prepareMarketContracts(laterContracts, []);
+    const changed = await prepareMarketContracts(changedContracts, []);
     expect(first[0].contentHash).toBe(second[0].contentHash);
+    expect(changed[0].contentHash).not.toBe(first[0].contentHash);
     expect(first[0]).not.toHaveProperty("dataType");
     expect(first[0]).not.toHaveProperty("participates");
   });

@@ -45,5 +45,14 @@ efectivo. Una segunda invocación inmediata devolvió ocho estados `unchanged` y
 mantuvo el total de snapshots periódicos en 76. El check de Fase 8 confirmó
 aislamiento de cuentas, publicación explícita y exportación autenticada.
 
+Tras el cierre, D-034 corrigió en staging el crecimiento accidental de las
+capturas de mercado v2. La corrección conserva la separación pública de
+proveedores y no modifica ningún corte profesional de esta fase. La intervención
+del 10 de agosto redujo la base de 1554 MB a 63 MB, conservó 581 contratos
+publicables con su último estado y dejó cero referencias huérfanas. La captura
+de control v3 guardó 516 estados efectivos con un payload medio de 229 bytes;
+una repetición inmediata devolvió `unchanged` para ambos proveedores. El cron
+horario quedó activo en `17 * * * *`.
+
 La puerta queda verde. La Fase 9 puede comenzar como consola operativa mínima,
 pero no se inicia como parte de este corte.
