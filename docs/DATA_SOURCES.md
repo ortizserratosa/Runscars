@@ -1,7 +1,7 @@
 # Registro de fuentes
 
-**Estado:** fase 7.1 completada; cobertura multcategoría validada en staging
-**Última revisión:** 2026-08-07
+**Estado:** fase 8.5 en integración; fuentes públicas derivadas de datos reales
+**Última revisión:** 2026-08-10
 
 ## 1. Objetivo
 
@@ -51,6 +51,12 @@ estabilidad, trazabilidad y coste de mantenimiento.
 `selected` no significa que la fuente esté activa en todos los snapshots ni que
 aporte un voto profesional. La activación pertenece a cada importación y
 snapshot, y el tipo de observación decide si participa en un agregado.
+
+El índice público no enumera candidatas sin datos: muestra fuentes presentes en
+el corte profesional vigente o con observaciones críticas publicadas. La ficha
+de cada fuente deriva publicaciones, capturas, valores originales y categorías
+de las tablas persistidas; no conserva una captura de ejemplo como estado
+actual.
 
 ### Estado técnico
 
@@ -207,6 +213,11 @@ existe, fecha, versión e idempotencia. La última publicación elegible se cons
 por fuente, categoría e intención. La cobertura efectiva es de cinco rankings
 ordenados en las seis categorías que cubre AwardsWatch y cuatro en los dos
 guiones; Best Picture suma una sexta fuente como selección.
+
+La frescura pública separa tres instantes: publicación activa, último cambio
+efectivo que alteró un corte y última comprobación correcta del conector. Un
+fallo posterior al último éxito se muestra como incidencia sin exponer el error
+interno ni retirar automáticamente el último dato verificable.
 
 Desde el 2026-07-25 ningún conector profesional depende de una publicación fija
 como estado actual:

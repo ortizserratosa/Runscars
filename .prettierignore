@@ -1,6 +1,7 @@
 data/phase-1/*.csv
 prototype/
 web/.next/
+web/AGENTS.md
 web/coverage/
 web/playwright-report/
 web/test-results/

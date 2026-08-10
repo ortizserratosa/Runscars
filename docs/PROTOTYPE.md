@@ -33,13 +33,13 @@ El color siempre se acompaña de texto, posición o etiqueta.
 | `/temporadas/2027` | Estado de temporada y ocho categorías configurables |
 | `/temporadas/2027/mejor-pelicula` | Consenso, respaldo por fuente, evolución y ranking simulado |
 | `/peliculas/the-odyssey` | Predicciones, valores críticos originales, agregados contextuales y reseñas |
-| `/fuentes/awardswatch` | Autor, fecha, captura, lista original y efecto metodológico |
+| `/fuentes/[slug]` | Autor, publicación, captura, lista original y efecto metodológico de cada fuente activa |
 
 ## Datos y estados
 
 - Los rankings se calculan a partir de las cuatro listas ordenadas del fixture.
-- El selector temporal usa cortes reproducibles del 4, 15, 20 y 23 de julio de
-  2026; no inventa snapshots.
+- El selector temporal usa los cortes efectivos persistidos y conserva su ID en
+  `?corte=<snapshot-id>`; los cortes redundantes no se presentan como cambios.
 - Los cortes con una o dos listas muestran `datos insuficientes`.
 - Rotten Tomatoes y Metacritic aparecen como contexto y no como votos.
 - Las categorías sin observaciones muestran `Pendiente de ingesta`.

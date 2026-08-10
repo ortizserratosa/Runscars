@@ -9,6 +9,11 @@ Runscars permite entender cómo evoluciona la carrera a los Oscar y comparar esa
 evolución con el resultado final. Reúne señales dispersas sin ocultar de dónde
 proceden ni convertirlas en una nota única difícil de interpretar.
 
+La superficie principal del MVP es el seguimiento transparente de predicciones
+profesionales: quién lidera, qué fuentes sostienen cada posición y qué cambio
+efectivo originó cada corte. Crítica, mercados y comunidad son lentes
+complementarias y nunca alteran ese consenso.
+
 ## 2. Preguntas que debe responder
 
 - ¿Qué películas y candidaturas están siendo mejor recibidas por la crítica?
@@ -59,7 +64,10 @@ La interfaz usará una etiqueta inequívoca como
 ### Recepción crítica
 
 Puntuaciones publicadas por críticos o medios y normalizadas a una escala de
-cero a cinco estrellas. Siempre se muestra también la escala original.
+cero a cinco estrellas. Siempre se muestra también la escala original. Solo se
+promociona como agregado cuando existen al menos tres puntuaciones individuales
+independientes; con menos cobertura aparece únicamente en la ficha relacionada
+y rotulada como insuficiente.
 
 ### Predicciones
 
@@ -130,6 +138,8 @@ publican cuando alcanzan la cobertura aprobada.
   producen comparaciones intradía ni dos cortes públicos con la misma fecha.
 - Selector de cortes reales por categoría; cada corte reproduce su ranking y se
   compara con el corte real inmediatamente anterior.
+- La interfaz distingue la fecha de publicación del proveedor, la fecha del
+  último cambio efectivo y la última comprobación correcta del conector.
 - Snapshot final de predicción de nominaciones.
 - Snapshot final de predicción de ganadores.
 - Comparación posterior con resultados oficiales.
@@ -156,7 +166,8 @@ publican cuando alcanzan la cobertura aprobada.
 
 1. El visitante abre la ficha.
 2. Ve metadatos y material gráfico obtenido mediante TMDB.
-3. Consulta puntuaciones originales y normalizadas.
+3. Consulta puntuaciones originales y normalizadas cuando existen observaciones
+   reales; sin el umbral mínimo no se publica una media.
 4. Consulta categorías, predicciones y reseñas relacionadas.
 
 ### R3. Crear un ranking
@@ -185,7 +196,7 @@ publican cuando alcanzan la cobertura aprobada.
 | ID | Requisito |
 |---|---|
 | RF-01 | Navegar por temporada y categoría sin cuenta |
-| RF-02 | Mostrar recepción crítica y predicciones en módulos separados |
+| RF-02 | Mantener recepción crítica separada y promocionarla solo con cobertura suficiente |
 | RF-03 | Mostrar procedencia y fecha de cada dato profesional |
 | RF-04 | Mantener fichas canónicas de película y persona |
 | RF-05 | Importar metadatos de TMDB con corrección manual |

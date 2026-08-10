@@ -8,8 +8,20 @@ type CategorySummary = {
   orderedSourceCount: number;
   applicableSourceCount: number;
   updatedAt: string | null;
+  previousUpdatedAt: string | null;
+  changedSources: string[];
+  leader: { label: string; position: number; movement: number | null } | null;
+  topMover: { label: string; position: number; movement: number } | null;
   isPublic: boolean;
 };
+
+function dateLabel(value: string | null) {
+  if (!value) return "pendiente";
+  return new Intl.DateTimeFormat("es-ES", {
+    dateStyle: "medium",
+    timeZone: "UTC",
+  }).format(new Date(value));
+}
 
 export function SeasonPageView({
   year,
@@ -23,6 +35,16 @@ export function SeasonPageView({
   categories: CategorySummary[];
 }) {
   const active = year === 2027;
+  const recentChanges = active
+    ? categories
+        .filter((category) => category.updatedAt && category.previousUpdatedAt)
+        .sort(
+          (left, right) =>
+            Date.parse(right.updatedAt ?? "") -
+            Date.parse(left.updatedAt ?? ""),
+        )
+        .slice(0, 4)
+    : [];
   return (
     <main>
       <section className="season-hero">
@@ -61,6 +83,40 @@ export function SeasonPageView({
 
       <section className="page-shell season-layout">
         <div className="season-main">
+          {recentChanges.length ? (
+            <section className="season-movements">
+              <div className="section-heading compact-heading">
+                <div>
+                  <p className="section-index">ÚLTIMOS MOVIMIENTOS</p>
+                  <h2>Qué cambió en la temporada</h2>
+                </div>
+              </div>
+              <div className="season-movement-grid">
+                {recentChanges.map((category) => (
+                  <Link
+                    href={`/temporadas/${year}/${category.slug}`}
+                    key={category.id}
+                  >
+                    <span>{dateLabel(category.updatedAt)}</span>
+                    <h3>{category.name}</h3>
+                    {category.topMover ? (
+                      <p>
+                        <strong>+{category.topMover.movement}</strong>{" "}
+                        {category.topMover.label}
+                      </p>
+                    ) : (
+                      <p>Líder: {category.leader?.label ?? "pendiente"}</p>
+                    )}
+                    <small>
+                      {category.changedSources.length
+                        ? `Cambió: ${category.changedSources.join(", ")}`
+                        : "Primer estado disponible"}
+                    </small>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          ) : null}
           <div className="section-heading compact-heading">
             <div>
               <p className="section-index">CATEGORÍAS</p>
@@ -86,6 +142,12 @@ export function SeasonPageView({
                       ? `${category.orderedSourceCount} rankings ordenados · ${category.applicableSourceCount} medios`
                       : `${category.candidateCount} nominados oficiales`}
                   </p>
+                  {active && category.leader ? (
+                    <small>
+                      Líder: {category.leader.label} · cambio{" "}
+                      {dateLabel(category.updatedAt)}
+                    </small>
+                  ) : null}
                 </div>
                 <strong>{category.candidateCount || "—"}</strong>
                 <span className="category-arrow" aria-hidden="true">

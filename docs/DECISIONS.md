@@ -1,6 +1,6 @@
 # Registro de decisiones
 
-**Última revisión:** 2026-08-07
+**Última revisión:** 2026-08-10
 
 ## Cómo usar este registro
 
@@ -50,6 +50,7 @@ pasado para ocultar cambios de criterio.
 | D-030 | Discovery de mercados acotado por ceremonia y serie | Aceptada |
 | D-031 | Identidad gestionada y privacidad comunitaria por capas | Aceptada |
 | D-032 | Cortes públicos solo ante cambios efectivos de proveedor | Aceptada |
+| D-033 | Predicción y evolución como superficie principal | Aceptada |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -327,9 +328,11 @@ fuera de alcance hasta la fase 7.
   canónico. Los triggers impiden modificar o borrar la envolvente y sus enlaces.
 - **Correcciones:** una corrección crea otra envolvente con referencia y motivo;
   un puntero separado identifica la versión vigente sin reescribir el historial.
-- **Periodicidad:** Vercel Cron invoca semanalmente el mismo motor TypeScript que
-  usa la aplicación. La programación solo bloquea observaciones publicadas de
-  fuentes `publishable` y omite de forma explícita un alcance sin evidencia.
+- **Periodicidad original:** Vercel Cron invocaba semanalmente el mismo motor
+  TypeScript que usa la aplicación. D-032 reemplazó esa frecuencia por una
+  comprobación diaria que solo crea cortes ante cambios efectivos. Se mantiene
+  la regla de bloquear únicamente observaciones publicadas de fuentes
+  `publishable` y omitir un alcance sin evidencia.
 - **Motivo:** conservar exactamente entrada y salida, evitar duplicar el motor
   de agregación en SQL o en una Edge Function y permitir publicar correcciones
   sin convertir el snapshot original en un registro mutable.
@@ -353,7 +356,7 @@ fuera de alcance hasta la fase 7.
 
 - **Fecha:** 2026-07-25
 - **Estado:** Aceptada
-- **Decisión:** fijar la versión corregida `5.0.8` de `brace-expansion` mediante
+- **Decisión:** fijar la versión corregida `5.0.9` de `brace-expansion` mediante
   `overrides` y aplicar tras cada instalación un parche local mínimo que expone
   tanto la API CommonJS histórica como la actual. El código de expansión sigue
   procediendo íntegramente del paquete oficial.
@@ -537,3 +540,23 @@ ejemplos manuales de nominaciones y ganador coincidieron con
 - **Reemplaza:** la periodicidad semanal de D-009. Se mantiene la ingesta diaria
   y se sustituyen los snapshots semanales por cortes diarios condicionados a
   cambios reales.
+
+## D-033 · Predicción y evolución como superficie principal
+
+- **Fecha:** 2026-08-10
+- **Estado:** Aceptada
+- **Decisión:** presentar el consenso profesional, su evolución entre cortes
+  reales y la procedencia como recorrido principal del MVP. La portada no
+  promete una señal crítica agregada mientras la cobertura no alcanza el umbral
+  metodológico.
+- **Crítica:** una ficha puede mostrar puntuaciones y reseñas reales con valor
+  original, normalización y aviso de insuficiencia. Solo tres puntuaciones
+  individuales independientes permiten publicar media o promoción agregada.
+- **Mercados:** permanecen separados de Borda y se resumen por proveedor e
+  intención; el detalle continúa disponible sin calcular consenso entre
+  mercados.
+- **Comunidad:** el ranking personal conserva su espacio propio y D-014 sigue
+  como `Propuesta`; no se publica consenso comunitario.
+- **Consecuencia:** las superficies públicas deben compartir el snapshot
+  vigente. Portada, categoría, película y fuente no mantienen cifras de
+  referencia paralelas.

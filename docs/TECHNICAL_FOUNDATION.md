@@ -131,8 +131,11 @@ La aplicación está desplegada en el proyecto aislado `runscars-staging`:
 - el proyecto Supabase `runscars-staging` está en `eu-west-3` y contiene los
   recuentos esperados del seed.
 
-El proyecto de Vercel usa `web/` como raíz de despliegue y configura estas
-variables públicas:
+El proyecto de Vercel usa `web/` como raíz de despliegue y el preset Next.js.
+Como el lockfile y el parche de compatibilidad están en la raíz del monorepo,
+su instalación reproducible es `cd .. && npm ci --include=dev`; el build se
+ejecuta dentro de `web/` y lee `web/vercel.json`. Configura estas variables
+públicas:
 
 - `NEXT_PUBLIC_SITE_URL`;
 - `NEXT_PUBLIC_SUPABASE_URL`;

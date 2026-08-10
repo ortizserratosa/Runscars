@@ -45,6 +45,108 @@ function ActiveCategory({
   view: ActiveCategoryView;
 }) {
   const aggregate = view.aggregate;
+  const ranking = aggregate?.ranking ?? [];
+  const visibleRanking = ranking.slice(0, 10);
+  const remainingRanking = ranking.slice(10);
+  const renderCandidate = (candidate: (typeof ranking)[number]) => (
+    <div className="leaderboard-item" key={candidate.candidateId}>
+      <div className="leaderboard-row">
+        <span className="leaderboard-rank">
+          {String(candidate.position).padStart(2, "0")}
+        </span>
+        <div className="leaderboard-title">
+          <strong>
+            {candidate.film ? (
+              <Link href={`/peliculas/${candidate.film.id}`}>
+                {candidate.label}
+              </Link>
+            ) : (
+              candidate.label
+            )}
+          </strong>
+          <small>{candidateSubtitle(candidate)}</small>
+        </div>
+        <div className="coverage-cell">
+          <span>
+            {candidate.appearances}/{candidate.applicableSourceCount}
+          </span>
+          <div className="coverage-dots" aria-hidden="true">
+            {Array.from(
+              { length: candidate.applicableSourceCount },
+              (_, index) => (
+                <i
+                  className={index < candidate.appearances ? "filled" : ""}
+                  key={index}
+                />
+              ),
+            )}
+          </div>
+        </div>
+        <div className="points-cell">
+          <strong>
+            {candidate.scoreOutOf100.toLocaleString("es-ES", {
+              minimumFractionDigits: 1,
+              maximumFractionDigits: 1,
+            })}
+          </strong>
+          <div className="micro-bar">
+            <span
+              style={{
+                width: `${Math.max(candidate.scoreOutOf100, 1)}%`,
+              }}
+            />
+          </div>
+        </div>
+        {view.snapshot?.previous ? (
+          <Movement value={candidate.movement} />
+        ) : (
+          <span
+            aria-label="Sin corte real anterior"
+            className="movement neutral"
+            title="Sin corte real anterior"
+          >
+            —
+          </span>
+        )}
+      </div>
+      <details className="category-source-details">
+        <summary>Ver procedencia y cálculo</summary>
+        <div className="source-calculations">
+          {candidate.sourceContributions.map((source) => (
+            <a
+              data-source-id={source.sourceId}
+              href={source.publicationUrl}
+              key={source.sourceId}
+              rel="noreferrer"
+              target="_blank"
+            >
+              <span>
+                {source.sourceName}
+                <small>
+                  {source.publishedAt
+                    ? `Publicada ${dateLabel(source.publishedAt)}`
+                    : "Publicación verificada"}
+                </small>
+              </span>
+              <span className="source-position">
+                {source.appearanceKind === "ordered"
+                  ? `Puesto ${source.rank} de ${source.listLength}`
+                  : source.appearanceKind === "selection"
+                    ? "selección"
+                    : "ausente"}
+              </span>
+              <strong>
+                {source.points.toLocaleString("es-ES", {
+                  maximumFractionDigits: 3,
+                })}{" "}
+                pts
+              </strong>
+            </a>
+          ))}
+        </div>
+      </details>
+    </div>
+  );
   return (
     <>
       <section className="category-hero">
@@ -117,13 +219,11 @@ function ActiveCategory({
                     key={cut.id}
                     scroll={false}
                   >
-                    <span>
-                      {index === 0 ? "Último cambio" : `Corte ${index + 1}`}
-                    </span>
+                    <span>{index === 0 ? "Actual" : "Cambio efectivo"}</span>
                     <strong>{dateLabel(cut.lockedAt)}</strong>
                     <small>
                       {cut.changedSources.length
-                        ? cut.changedSources.join(", ")
+                        ? `Cambió: ${cut.changedSources.join(", ")}`
                         : "Primer estado disponible"}
                     </small>
                   </Link>
@@ -157,6 +257,62 @@ function ActiveCategory({
                   )}
                 </div>
               </div>
+              {view.sourceFreshness.length ? (
+                <details className="source-freshness-panel">
+                  <summary>
+                    Estado y fechas de {view.sourceFreshness.length} fuentes
+                  </summary>
+                  {!view.snapshot.isLatest ? (
+                    <p className="historical-freshness-note">
+                      Publicación y cambio pertenecen al corte seleccionado. La
+                      comprobación técnica refleja el estado actual del
+                      conector.
+                    </p>
+                  ) : null}
+                  <div className="source-freshness-grid">
+                    {view.sourceFreshness.map((source) => (
+                      <article key={source.sourceId}>
+                        <div>
+                          <Link href={`/fuentes/${source.sourceId}`}>
+                            {source.sourceName}
+                          </Link>
+                          <span
+                            className={`source-health-chip ${source.status}`}
+                          >
+                            {source.status === "ok"
+                              ? "Correcta"
+                              : source.status === "failed"
+                                ? "Incidencia"
+                                : "Sin estado"}
+                          </span>
+                        </div>
+                        <dl>
+                          <div>
+                            <dt>Publicada</dt>
+                            <dd>
+                              {source.publishedAt
+                                ? dateLabel(source.publishedAt)
+                                : "sin fecha"}
+                            </dd>
+                          </div>
+                          <div>
+                            <dt>Cambió el ranking</dt>
+                            <dd>{dateLabel(source.lastChangedAt)}</dd>
+                          </div>
+                          <div>
+                            <dt>Comprobación correcta</dt>
+                            <dd>
+                              {source.lastSuccessfulCheckAt
+                                ? dateLabel(source.lastSuccessfulCheckAt)
+                                : "sin automatización"}
+                            </dd>
+                          </div>
+                        </dl>
+                      </article>
+                    ))}
+                  </div>
+                </details>
+              ) : null}
             </>
           ) : (
             <p className="insufficient-note">
@@ -181,7 +337,7 @@ function ActiveCategory({
               cobertura, nunca puntos Borda.
             </p>
           </div>
-          {aggregate?.ranking.length ? (
+          {ranking.length ? (
             <div className="leaderboard">
               <div className="leaderboard-head" aria-hidden="true">
                 <span>Pos.</span>
@@ -190,106 +346,13 @@ function ActiveCategory({
                 <span>Puntos</span>
                 <span>Cambio</span>
               </div>
-              {aggregate.ranking.map((candidate) => (
-                <div className="leaderboard-item" key={candidate.candidateId}>
-                  <div className="leaderboard-row">
-                    <span className="leaderboard-rank">
-                      {String(candidate.position).padStart(2, "0")}
-                    </span>
-                    <div className="leaderboard-title">
-                      <strong>
-                        {candidate.film ? (
-                          <Link href={`/peliculas/${candidate.film.id}`}>
-                            {candidate.label}
-                          </Link>
-                        ) : (
-                          candidate.label
-                        )}
-                      </strong>
-                      <small>{candidateSubtitle(candidate)}</small>
-                    </div>
-                    <div className="coverage-cell">
-                      <span>
-                        {candidate.appearances}/
-                        {candidate.applicableSourceCount}
-                      </span>
-                      <div className="coverage-dots" aria-hidden="true">
-                        {Array.from(
-                          { length: candidate.applicableSourceCount },
-                          (_, index) => (
-                            <i
-                              className={
-                                index < candidate.appearances ? "filled" : ""
-                              }
-                              key={index}
-                            />
-                          ),
-                        )}
-                      </div>
-                    </div>
-                    <div className="points-cell">
-                      <strong>
-                        {candidate.scoreOutOf100.toLocaleString("es-ES", {
-                          maximumFractionDigits: 1,
-                        })}
-                      </strong>
-                      <div className="micro-bar">
-                        <span
-                          style={{
-                            width: `${Math.max(candidate.scoreOutOf100, 1)}%`,
-                          }}
-                        />
-                      </div>
-                    </div>
-                    {view.snapshot?.previous ? (
-                      <Movement value={candidate.movement} />
-                    ) : (
-                      <span
-                        aria-label="Sin corte real anterior"
-                        className="movement neutral"
-                        title="Sin corte real anterior"
-                      >
-                        —
-                      </span>
-                    )}
-                  </div>
-                  <details className="category-source-details">
-                    <summary>Ver procedencia y cálculo</summary>
-                    <div className="source-calculations">
-                      {candidate.sourceContributions.map((source) => (
-                        <a
-                          href={source.publicationUrl}
-                          key={source.sourceId}
-                          rel="noreferrer"
-                          target="_blank"
-                        >
-                          <span>
-                            {source.sourceName}
-                            <small>
-                              {source.publishedAt
-                                ? `Publicada ${dateLabel(source.publishedAt)}`
-                                : "Publicación verificada"}
-                            </small>
-                          </span>
-                          <span className="source-position">
-                            {source.appearanceKind === "ordered"
-                              ? `Puesto ${source.rank} de ${source.listLength}`
-                              : source.appearanceKind === "selection"
-                                ? "selección"
-                                : "ausente"}
-                          </span>
-                          <strong>
-                            {source.points.toLocaleString("es-ES", {
-                              maximumFractionDigits: 3,
-                            })}{" "}
-                            pts
-                          </strong>
-                        </a>
-                      ))}
-                    </div>
-                  </details>
-                </div>
-              ))}
+              {visibleRanking.map(renderCandidate)}
+              {remainingRanking.length ? (
+                <details className="leaderboard-more">
+                  <summary>Ver posiciones 11–{ranking.length}</summary>
+                  <div>{remainingRanking.map(renderCandidate)}</div>
+                </details>
+              ) : null}
             </div>
           ) : (
             <p className="insufficient-note">
@@ -317,48 +380,94 @@ function ActiveCategory({
               <article className="market-provider" key={provider}>
                 <h3>{provider === "kalshi" ? "Kalshi" : "Polymarket"}</h3>
                 {view.markets[provider].length ? (
-                  <div className="market-intention-list">
-                    {(["nomination", "winner"] as const).map((intention) => {
-                      const markets = view.markets[provider].filter(
-                        (market) => market.intention === intention,
-                      );
-                      if (!markets.length) return null;
-                      return (
-                        <section className="market-intention" key={intention}>
-                          <h4>
-                            {intention === "nomination"
-                              ? "Nominación"
-                              : "Ganador"}
-                          </h4>
-                          {markets.map((market) => (
-                            <a
-                              href={market.sourceUrl}
-                              key={`${market.intention}-${market.title}-${market.outcome}`}
-                              rel="noreferrer"
-                              target="_blank"
-                            >
-                              <span className="market-label">
-                                <strong>{market.outcome}</strong>
-                                <small>{market.title}</small>
-                              </span>
-                              <strong>
-                                {market.probability === null
-                                  ? "—"
-                                  : `${(
-                                      market.probability * 100
-                                    ).toLocaleString("es-ES", {
-                                      maximumFractionDigits: 1,
-                                    })}%`}
-                              </strong>
-                              <small>
-                                Actualizado {dateLabel(market.observedAt)}
-                              </small>
-                            </a>
-                          ))}
-                        </section>
-                      );
-                    })}
-                  </div>
+                  <>
+                    <div className="market-provider-summary">
+                      {(["nomination", "winner"] as const).map((intention) => {
+                        const leader = view.markets[provider].find(
+                          (market) => market.intention === intention,
+                        );
+                        if (!leader) return null;
+                        return (
+                          <a
+                            href={leader.sourceUrl}
+                            key={intention}
+                            rel="noreferrer"
+                            target="_blank"
+                          >
+                            <span>
+                              {intention === "nomination"
+                                ? "Mayor señal de nominación"
+                                : "Mayor señal de ganador"}
+                            </span>
+                            <strong>{leader.outcome}</strong>
+                            <em>
+                              {leader.probability === null
+                                ? "—"
+                                : `${(leader.probability * 100).toLocaleString(
+                                    "es-ES",
+                                    { maximumFractionDigits: 1 },
+                                  )}%`}
+                            </em>
+                            <small>
+                              Observado {dateLabel(leader.observedAt)}
+                            </small>
+                          </a>
+                        );
+                      })}
+                    </div>
+                    <details className="market-details">
+                      <summary>
+                        Ver {view.markets[provider].length} contratos
+                      </summary>
+                      <div className="market-intention-list">
+                        {(["nomination", "winner"] as const).map(
+                          (intention) => {
+                            const markets = view.markets[provider].filter(
+                              (market) => market.intention === intention,
+                            );
+                            if (!markets.length) return null;
+                            return (
+                              <section
+                                className="market-intention"
+                                key={intention}
+                              >
+                                <h4>
+                                  {intention === "nomination"
+                                    ? "Nominación"
+                                    : "Ganador"}
+                                </h4>
+                                {markets.map((market) => (
+                                  <a
+                                    href={market.sourceUrl}
+                                    key={`${market.intention}-${market.title}-${market.outcome}`}
+                                    rel="noreferrer"
+                                    target="_blank"
+                                  >
+                                    <span className="market-label">
+                                      <strong>{market.outcome}</strong>
+                                      <small>{market.title}</small>
+                                    </span>
+                                    <strong>
+                                      {market.probability === null
+                                        ? "—"
+                                        : `${(
+                                            market.probability * 100
+                                          ).toLocaleString("es-ES", {
+                                            maximumFractionDigits: 1,
+                                          })}%`}
+                                    </strong>
+                                    <small>
+                                      Actualizado {dateLabel(market.observedAt)}
+                                    </small>
+                                  </a>
+                                ))}
+                              </section>
+                            );
+                          },
+                        )}
+                      </div>
+                    </details>
+                  </>
                 ) : (
                   <p>Sin mercado disponible</p>
                 )}

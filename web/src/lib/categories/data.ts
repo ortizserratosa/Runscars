@@ -4,11 +4,16 @@ import archive2026 from "../../../data/phase-7/oscars-2026.json";
 import {
   phase71FixtureAggregate,
   phase71FixturePreviousAggregate,
-  phase71FixtureSeasonSummary,
 } from "../../data/phase71-fixture";
 import type { PredictionAggregateV2 } from "../aggregation/v2";
 import { isSupabaseConfigured } from "../environment";
+import { selectMarketSignals } from "../markets/presentation";
 import { compareSnapshotMovements } from "../snapshots/movements";
+import {
+  sourceFreshnessForCut,
+  type ConnectorFreshnessState,
+  type SourceFreshnessView,
+} from "../snapshots/freshness";
 import {
   buildRealProviderCuts,
   type SnapshotHistoryEntry,
@@ -34,6 +39,7 @@ export type ActiveCategoryView = {
   aggregate: PredictionAggregateV2 | null;
   markets: Record<"kalshi" | "polymarket", MarketView[]>;
   dataState: "database" | "fixture" | "unavailable";
+  sourceFreshness: SourceFreshnessView[];
   snapshot: {
     id: string;
     contentHash: string;
@@ -88,11 +94,13 @@ function allowFixture() {
 function activeViewFromHistory({
   snapshots,
   markets,
+  connectorFreshness = new Map(),
   dataState,
   selectedSnapshotId,
 }: {
   snapshots: SnapshotHistoryEntry[];
   markets: Record<"kalshi" | "polymarket", MarketView[]>;
+  connectorFreshness?: Map<string, ConnectorFreshnessState>;
   dataState: ActiveCategoryView["dataState"];
   selectedSnapshotId?: string;
 }): ActiveCategoryView {
@@ -124,6 +132,11 @@ function activeViewFromHistory({
       : null,
     markets,
     dataState,
+    sourceFreshness: sourceFreshnessForCut(
+      cuts,
+      selectedIndex,
+      connectorFreshness,
+    ),
     snapshot: selected
       ? {
           id: selected.id,
@@ -213,6 +226,15 @@ function fixtureActive(
     },
     dataState: "fixture",
     selectedSnapshotId,
+    connectorFreshness: new Map(
+      currentAggregate.sourceLists.map((source) => [
+        source.sourceId,
+        {
+          lastSuccessfulCheckAt: "2026-07-25T03:30:00.000Z",
+          lastFailureAt: null,
+        },
+      ]),
+    ),
   });
 }
 
@@ -276,10 +298,7 @@ async function marketViews(
   if (contractsResult.error) {
     throw new Error(contractsResult.error.message);
   }
-  const markets: Record<"kalshi" | "polymarket", MarketView[]> = {
-    kalshi: [],
-    polymarket: [],
-  };
+  const marketRows: MarketView[] = [];
   for (const contract of contractsResult.data ?? []) {
     const provider = contract.provider as string;
     if (provider !== "kalshi" && provider !== "polymarket") {
@@ -297,7 +316,7 @@ async function marketViews(
     );
     const latest = snapshots[0];
     if (!latest) continue;
-    markets[provider].push({
+    marketRows.push({
       provider,
       intention: marketIntention(
         contract.external_market_id,
@@ -314,20 +333,7 @@ async function marketViews(
       sourceUrl: contract.source_url,
     });
   }
-  for (const provider of ["kalshi", "polymarket"] as const) {
-    markets[provider] = (["nomination", "winner"] as const).flatMap(
-      (intention) =>
-        markets[provider]
-          .filter((market) => market.intention === intention)
-          .sort(
-            (left, right) =>
-              (right.volume ?? 0) - (left.volume ?? 0) ||
-              (right.probability ?? 0) - (left.probability ?? 0),
-          )
-          .slice(0, 4),
-    );
-  }
-  return markets;
+  return selectMarketSignals(marketRows);
 }
 
 async function activeCategoryFromDatabase(
@@ -352,6 +358,7 @@ async function activeCategoryFromDatabase(
       aggregate: null,
       markets,
       dataState: "database",
+      sourceFreshness: [],
       snapshot: null,
       currentCandidates: [],
     };
@@ -370,6 +377,7 @@ async function activeCategoryFromDatabase(
       aggregate: null,
       markets,
       dataState: "database",
+      sourceFreshness: [],
       snapshot: null,
       currentCandidates: [],
     };
@@ -410,9 +418,45 @@ async function activeCategoryFromDatabase(
       ];
     },
   );
+  const sourceIds = [
+    ...new Set(
+      snapshots.flatMap((snapshot) =>
+        snapshot.aggregate.sourceLists.map((source) => source.sourceId),
+      ),
+    ),
+  ];
+  const connectorFreshness = new Map<string, ConnectorFreshnessState>();
+  if (sourceIds.length) {
+    const connectorResult = await supabase
+      .from("public_source_freshness")
+      .select("source_id,last_successful_check_at,last_failure_at")
+      .in("source_id", sourceIds);
+    for (const connector of connectorResult.error
+      ? []
+      : (connectorResult.data ?? [])) {
+      if (!connector.source_id) continue;
+      const previous = connectorFreshness.get(connector.source_id);
+      const latest = (left: string | null, right: string | null) => {
+        if (!left) return right;
+        if (!right) return left;
+        return Date.parse(right) > Date.parse(left) ? right : left;
+      };
+      connectorFreshness.set(connector.source_id, {
+        lastSuccessfulCheckAt: latest(
+          previous?.lastSuccessfulCheckAt ?? null,
+          connector.last_successful_check_at,
+        ),
+        lastFailureAt: latest(
+          previous?.lastFailureAt ?? null,
+          connector.last_failure_at,
+        ),
+      });
+    }
+  }
   return activeViewFromHistory({
     snapshots,
     markets,
+    connectorFreshness,
     dataState: "database",
     selectedSnapshotId,
   });
@@ -567,6 +611,7 @@ export async function getCategoryView(
           aggregate: null,
           markets: { kalshi: [], polymarket: [] },
           dataState: "unavailable",
+          sourceFreshness: [],
           snapshot: null,
           currentCandidates: [],
         }
@@ -596,6 +641,7 @@ export async function getCategoryView(
           aggregate: null,
           markets: { kalshi: [], polymarket: [] },
           dataState: "unavailable",
+          sourceFreshness: [],
           snapshot: null,
           currentCandidates: [],
         }
@@ -611,9 +657,6 @@ export async function getCategoryView(
 }
 
 export async function getSeasonSummary(seasonYear: 2026 | 2027) {
-  if (seasonYear === 2027 && (!isSupabaseConfigured() || allowFixture())) {
-    if (!isSupabaseConfigured()) return phase71FixtureSeasonSummary;
-  }
   const views = await Promise.all(
     PUBLIC_CATEGORIES.map(async (category) => ({
       category,
@@ -622,12 +665,39 @@ export async function getSeasonSummary(seasonYear: 2026 | 2027) {
   );
   return views.map(({ category, view }) => {
     if (view.mode === "active") {
+      const ranking = view.aggregate?.ranking ?? [];
+      const leader = ranking[0] ?? null;
+      const topMover = ranking
+        .filter((candidate) => (candidate.movement ?? 0) > 0)
+        .sort(
+          (left, right) =>
+            (right.movement ?? 0) - (left.movement ?? 0) ||
+            left.position - right.position ||
+            left.label.localeCompare(right.label, "es"),
+        )[0];
+      const selectedCut = view.snapshot?.cuts.find((cut) => cut.isSelected);
       return {
         ...category,
         candidateCount: view.aggregate?.ranking.length ?? 0,
         orderedSourceCount: view.aggregate?.orderedSourceCount ?? 0,
         applicableSourceCount: view.aggregate?.applicableSourceCount ?? 0,
         updatedAt: view.snapshot?.lockedAt ?? null,
+        previousUpdatedAt: view.snapshot?.previous?.lockedAt ?? null,
+        changedSources: selectedCut?.changedSources ?? [],
+        leader: leader
+          ? {
+              label: leader.label,
+              position: leader.position,
+              movement: leader.movement,
+            }
+          : null,
+        topMover: topMover
+          ? {
+              label: topMover.label,
+              position: topMover.position,
+              movement: topMover.movement ?? 0,
+            }
+          : null,
         isPublic: view.aggregate?.isConsensus ?? false,
       };
     }
@@ -637,6 +707,10 @@ export async function getSeasonSummary(seasonYear: 2026 | 2027) {
       orderedSourceCount: 0,
       applicableSourceCount: 1,
       updatedAt: view.capturedAt || null,
+      previousUpdatedAt: null,
+      changedSources: [],
+      leader: null,
+      topMover: null,
       isPublic: view.nominees.length > 0,
     };
   });

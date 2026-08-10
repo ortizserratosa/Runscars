@@ -665,6 +665,39 @@ describe("versioned database foundation", () => {
     ).rejects.toThrow();
   });
 
+  it("exposes only sanitized source freshness to public roles", async () => {
+    await database.exec(await readFile(seedPath, "utf8"));
+    await database.exec(`
+      update public.source_connectors
+      set
+        last_success_at = '2026-08-10T04:17:00Z',
+        last_failure_at = '2026-08-09T04:17:00Z',
+        last_error = 'private diagnostic detail'
+      where source_id = 'awardswatch';
+      set role anon;
+    `);
+
+    const result = await database.query<{
+      source_id: string;
+      last_successful_check_at: string | Date;
+      last_failure_at: string | Date;
+    }>(`
+      select source_id, last_successful_check_at, last_failure_at
+      from public.public_source_freshness
+      where source_id = 'awardswatch'
+    `);
+    expect(result.rows[0]?.source_id).toBe("awardswatch");
+    expect(
+      new Date(result.rows[0]!.last_successful_check_at).toISOString(),
+    ).toBe("2026-08-10T04:17:00.000Z");
+    expect(new Date(result.rows[0]!.last_failure_at).toISOString()).toBe(
+      "2026-08-09T04:17:00.000Z",
+    );
+    await expect(
+      database.query("select last_error from public.public_source_freshness"),
+    ).rejects.toThrow();
+  });
+
   it("keeps locked snapshots identical after later imports and links corrections", async () => {
     await database.exec(await readFile(seedPath, "utf8"));
     await database.exec(`

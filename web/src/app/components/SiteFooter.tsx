@@ -9,7 +9,7 @@ export function SiteFooter() {
       </div>
       <div className="footer-links">
         <Link href="/temporadas/2027">Oscar 2027</Link>
-        <Link href="/fuentes/awardswatch">Trazabilidad</Link>
+        <Link href="/fuentes">Trazabilidad</Link>
         <Link href="/creditos">Créditos</Link>
         <span>Datos verificables · Fuentes separadas</span>
       </div>

@@ -1363,6 +1363,24 @@ export type Database = {
           },
         ];
       };
+      public_source_freshness: {
+        Row: {
+          source_id: string | null;
+          last_successful_check_at: string | null;
+          last_failure_at: string | null;
+        };
+        Insert: {
+          source_id?: string | null;
+          last_successful_check_at?: string | null;
+          last_failure_at?: string | null;
+        };
+        Update: {
+          source_id?: string | null;
+          last_successful_check_at?: string | null;
+          last_failure_at?: string | null;
+        };
+        Relationships: [];
+      };
       season_categories: {
         Row: {
           season_id: string;

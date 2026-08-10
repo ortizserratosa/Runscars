@@ -11,7 +11,7 @@ const publicCategories = [
   ["guion-adaptado", "Guion adaptado"],
 ] as const;
 
-test("keeps professional, critical and community signals visibly separate", async ({
+test("focuses the homepage on consensus, evolution and personal rankings", async ({
   page,
 }) => {
   await page.goto("/");
@@ -19,7 +19,7 @@ test("keeps professional, critical and community signals visibly separate", asyn
     "La carrera",
   );
   await expect(page.getByText("Predicciones", { exact: true })).toBeVisible();
-  await expect(page.getByText("Crítica", { exact: true })).toBeVisible();
+  await expect(page.getByText("Evolución", { exact: true })).toBeVisible();
   await expect(page.getByText("Comunidad", { exact: true })).toBeVisible();
   await expect(
     page.getByText("Cuaderno de temporada · 25 de julio de 2026"),
@@ -63,9 +63,10 @@ test("selects a real provider cut through a stable URL", async ({ page }) => {
     name: "Seleccionar corte real",
   });
   await expect(selector.getByRole("link")).toHaveCount(2);
-  await expect(
-    selector.getByRole("link", { name: /Último cambio/ }),
-  ).toHaveAttribute("aria-current", "page");
+  await expect(selector.getByRole("link", { name: /Actual/ })).toHaveAttribute(
+    "aria-current",
+    "page",
+  );
 
   await selector.getByRole("link").nth(1).click();
 
@@ -85,14 +86,173 @@ test("keeps current market signals separated by provider and intention", async (
   await expect(
     markets.getByRole("heading", { name: "Polymarket" }),
   ).toBeVisible();
+  for (const summary of await markets
+    .locator(".market-details summary")
+    .all()) {
+    await summary.click();
+  }
   await expect(
     markets.getByRole("heading", { name: "Nominación" }),
   ).toBeVisible();
   await expect(markets.getByRole("heading", { name: "Ganador" })).toHaveCount(
     2,
   );
-  await expect(markets.getByText("72%")).toBeVisible();
-  await expect(markets.getByText("34%")).toBeVisible();
+  await expect(markets.getByText("72%").first()).toBeVisible();
+  await expect(markets.getByText("34%").first()).toBeVisible();
+});
+
+test("distinguishes publication, effective change and connector checks", async ({
+  page,
+}) => {
+  await page.goto("/temporadas/2027/mejor-pelicula");
+  await page.getByText(/Estado y fechas de \d+ fuentes/).click();
+  await expect(
+    page.getByText("Publicada", { exact: true }).first(),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Cambió el ranking", { exact: true }).first(),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Comprobación correcta", { exact: true }).first(),
+  ).toBeVisible();
+});
+
+test("exposes dynamic source receipts", async ({ page }) => {
+  await page.goto("/fuentes");
+  await expect(
+    page.getByRole("heading", { level: 1, name: /Las fuentes/ }),
+  ).toBeVisible();
+  await page
+    .getByRole("link", { name: /AwardsWatch/ })
+    .first()
+    .click();
+  await expect(page).toHaveURL(/\/fuentes\/awardswatch$/);
+  await expect(
+    page.getByRole("heading", { level: 1, name: "AwardsWatch" }),
+  ).toBeVisible();
+  await expect(page.getByText("Último cambio efectivo").first()).toBeVisible();
+});
+
+test("keeps candidate data consistent across public surfaces", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const homeScore = (
+    await page.locator(".leader-score strong").textContent()
+  )?.trim();
+  const homeCoverage = (
+    await page.locator(".prediction-card .signal-stat strong").textContent()
+  )?.trim();
+  const leaderHref = await page.locator(".hero-board > a").getAttribute("href");
+  expect(leaderHref).toMatch(/^\/peliculas\//);
+  await page.locator(".receipt-source-list summary").click();
+  const homeSourceHrefs = (
+    await Promise.all(
+      (await page.locator(".receipt-source-list li > a").all()).map((link) =>
+        link.getAttribute("href"),
+      ),
+    )
+  ).filter((href): href is string => Boolean(href));
+  const homeSources = homeSourceHrefs
+    .map((href) => href?.split("/").at(-1) ?? "")
+    .filter(Boolean)
+    .sort();
+
+  await page.goto("/temporadas/2027/mejor-pelicula");
+  const categoryCandidate = page
+    .locator(".leaderboard-item")
+    .filter({ has: page.locator(`a[href="${leaderHref}"]`) })
+    .first();
+  const candidateLabel = (
+    await categoryCandidate.locator(".leaderboard-title strong").textContent()
+  )?.trim();
+  const categoryScore = (
+    await categoryCandidate.locator(".points-cell > strong").textContent()
+  )?.trim();
+  const categoryCoverage = (
+    await categoryCandidate.locator(".coverage-cell > span").textContent()
+  )?.trim();
+  await categoryCandidate.getByText("Ver procedencia y cálculo").click();
+  const categorySources = (
+    await Promise.all(
+      (await categoryCandidate.locator(".source-calculations a").all()).map(
+        (link) => link.getAttribute("data-source-id"),
+      ),
+    )
+  )
+    .filter(Boolean)
+    .sort();
+
+  expect(categoryScore).toBe(homeScore);
+  expect(categoryCoverage).toBe(homeCoverage);
+  expect(categorySources).toEqual(homeSources);
+
+  await page.goto(leaderHref ?? "/peliculas/the-odyssey");
+  await expect(page.locator(".film-score-strip strong").first()).toHaveText(
+    categoryScore ?? "",
+  );
+  await expect(page.locator(".film-score-strip strong").nth(1)).toHaveText(
+    categoryCoverage ?? "",
+  );
+  await expect(
+    page.getByRole("heading", {
+      name: "La misma lectura que en cada categoría",
+    }),
+  ).toBeVisible();
+  const filmCategory = page
+    .locator(".film-category-predictions article")
+    .filter({
+      has: page.getByRole("heading", { name: "Mejor película", exact: true }),
+    });
+  const filmSources = (
+    await Promise.all(
+      (await filmCategory.locator(".film-source-table a").all()).map((link) =>
+        link.getAttribute("href"),
+      ),
+    )
+  )
+    .map((href) => href?.split("/").at(-1) ?? "")
+    .filter(Boolean)
+    .sort();
+  expect(filmSources).toEqual(categorySources);
+
+  await page.goto(homeSourceHrefs[0] ?? "/fuentes/awards-daily");
+  const sourceCandidate = page
+    .locator(".source-ranking li")
+    .filter({ hasText: candidateLabel ?? "The Odyssey" })
+    .first();
+  const sourceConsensus = sourceCandidate.getByLabel(
+    `Consenso vigente de ${candidateLabel ?? "The Odyssey"}`,
+  );
+  await expect(sourceConsensus.locator(":scope > strong")).toHaveText(
+    categoryScore ?? "",
+  );
+  await expect(sourceConsensus).toContainText(`#1 · ${categoryCoverage}`);
+  const sourceIds = (
+    await Promise.all(
+      (await sourceConsensus.locator(".source-entry-sources a").all()).map(
+        (link) => link.getAttribute("href"),
+      ),
+    )
+  )
+    .map((href) => href?.split("/").at(-1) ?? "")
+    .filter(Boolean)
+    .sort();
+  expect(sourceIds).toEqual(categorySources);
+});
+
+test("offers complete navigation at a mobile viewport", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  await page.getByText("Menú", { exact: true }).click();
+  const navigation = page.getByRole("navigation", { name: "Navegación móvil" });
+  await expect(
+    navigation.getByRole("link", { name: "Temporada" }),
+  ).toBeVisible();
+  await expect(
+    navigation.getByRole("link", { name: "Categorías" }),
+  ).toBeVisible();
+  await expect(navigation.getByRole("link", { name: "Fuentes" })).toBeVisible();
 });
 
 test("shows six Best Picture media but never gives The Ringer Borda points", async ({

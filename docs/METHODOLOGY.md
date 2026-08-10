@@ -1,7 +1,7 @@
 # Metodología
 
 **Estado:** agregación, snapshots y evaluación profesional operativos
-**Última revisión:** 2026-08-07
+**Última revisión:** 2026-08-10
 
 ## 1. Principios
 
@@ -113,6 +113,10 @@ entrar en un orden público por media. Con una o dos se muestran los valores
 originales y “datos insuficientes”, sin posición agregada. “Independiente”
 significa una reseña canónica distinta; una sindicación o republicación del
 mismo autor y texto no crea otra puntuación.
+
+Hasta alcanzar ese umbral, la recepción no ocupa una señal principal de
+portada. Las observaciones verificables sí pueden aparecer en la ficha de la
+película, junto con su insuficiencia explícita.
 
 ### 3.4 Agregadores de terceros
 
@@ -367,8 +371,25 @@ disponible”.
 El discovery exige que la ceremonia coincida de forma explícita con la temporada
 activa y que el contrato siga abierto. Kalshi se consulta por series de
 categoría; Polymarket por eventos activos de la ceremonia. La interfaz etiqueta
-por separado mercados de nominación y de ganador y muestra, como máximo, los
-cuatro de mayor volumen de cada intención y proveedor en una categoría.
+por separado mercados de nominación y de ganador. Resume primero el contrato
+con mayor probabilidad de cada intención y proveedor; el detalle muestra como
+máximo cuatro, ordenados por probabilidad, volumen y nombre.
+
+### 10.1 Fechas públicas de una fuente
+
+La interfaz no usa “actualizado” como fecha ambigua:
+
+- **publicación:** `published_at` de la publicación activa incluida en el corte;
+- **cambio efectivo:** último corte real, hasta el seleccionado, en el que
+  cambiaron candidaturas, tipo de aparición, posición o longitud de lista;
+- **comprobación correcta:** `last_success_at` más reciente de los conectores de
+  la fuente;
+- **incidencia:** el estado es fallido si `last_failure_at` es posterior al
+  último éxito, sin publicar el texto interno del error.
+
+Al navegar por un corte histórico, publicación y cambio pertenecen a ese corte.
+La salud del conector se etiqueta como estado técnico actual y no se presenta
+como dato histórico.
 
 ## 11. Calibraciones de la fase 1
 

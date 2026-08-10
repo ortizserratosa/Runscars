@@ -6,8 +6,8 @@
 
 <p align="center">
   <strong>La carrera a los Oscar, con los recibos.</strong><br>
-  Crítica, predicciones y comunidad en un mismo lugar, sin convertirlas en una
-  señal opaca.
+  Predicciones profesionales, evolución y procedencia en un mismo lugar, sin
+  convertirlas en una señal opaca.
 </p>
 
 <p align="center">
@@ -28,10 +28,10 @@
 
 ## ¿Qué es Runscars?
 
-La conversación sobre los Oscar vive repartida entre reseñas, listas de
-predicciones, agregadores y rankings personales. Runscars reúne esas señales
-para mostrar cómo cambia la carrera durante la temporada y cuánto acertó cada
-consenso cuando llegan las nominaciones y los premios.
+La conversación sobre los Oscar vive repartida entre listas de predicciones,
+reseñas, mercados y rankings personales. Runscars hace transparente el consenso
+profesional para mostrar cómo cambia la carrera durante la temporada y cuánto
+acertó cuando llegan las nominaciones y los premios.
 
 La aplicación no busca fabricar una nota definitiva. Busca que cualquier
 posición se pueda entender, contrastar y rastrear hasta su fuente.
@@ -42,7 +42,7 @@ posición se pueda entender, contrastar y rastrear hasta su fuente.
 | **Predicciones profesionales** | ¿Quién aparece con más fuerza en la carrera?            | Expone medio, autor, fecha y lista original        |
 | **Comunidad**                  | ¿Qué ha visto y cómo ordena sus favoritas cada usuario? | Nunca altera los agregados profesionales           |
 
-> Tres señales. Tres lecturas distintas. Nunca promediadas entre sí.
+> Cada señal conserva su medida y procedencia. Nunca se promedian entre sí.
 
 ## El proyecto, en cifras
 
@@ -58,7 +58,7 @@ desarrollar y probar sin consultar fuentes externas en tiempo real.
 El staging actual conserva la identidad editorial validada en el prototipo y
 permite recorrer:
 
-- la [portada y sus tres señales](https://runscars-staging.vercel.app);
+- la [portada, el consenso y su evolución](https://runscars-staging.vercel.app);
 - la
   [temporada Oscar 2027](https://runscars-staging.vercel.app/temporadas/2027);
 - el
@@ -68,7 +68,7 @@ permite recorrer:
 - una
   [ficha de persona](https://runscars-staging.vercel.app/personas/tmdb-30614);
 - el
-  [recibo de una fuente](https://runscars-staging.vercel.app/fuentes/awardswatch);
+  [índice de fuentes y recibos](https://runscars-staging.vercel.app/fuentes);
 - los [créditos y atribución de TMDB](https://runscars-staging.vercel.app/creditos).
 
 Todas las apariciones de películas del fixture enlazan a una ficha canónica. El
@@ -90,10 +90,12 @@ corte vigente como un snapshot inmutable con hash reproducible.
 | 5    | Ingesta profesional idempotente y programada       | ✅ Completada |
 | 6    | Agregación reproducible y evolución temporal       | ✅ Completada |
 | 7    | Snapshots inmutables y evaluación versionada       | ✅ Completada |
-| 8–10 | Usuarios, administración y lanzamiento             | ⏳ Pendientes |
+| 8    | Usuarios y privacidad                              | ✅ Completada |
+| 8.5  | Integridad, frescura y foco de producto             | 🚧 En curso   |
+| 9–10 | Administración y lanzamiento                        | ⏳ Pendientes |
 
 La fase 7 queda cerrada con bloqueo transaccional, correcciones enlazadas,
-snapshot semanal, resultados oficiales versionados y métricas reproducibles. La
+snapshots diarios solo ante cambios efectivos, resultados oficiales versionados y métricas reproducibles. La
 temporada activa indica correctamente que sus resultados aún están pendientes.
 El detalle verificable está en [SNAPSHOTS.md](docs/SNAPSHOTS.md).
 
@@ -112,8 +114,8 @@ El detalle verificable está en [SNAPSHOTS.md](docs/SNAPSHOTS.md).
 
 - **Web:** Next.js 16, React 19 y TypeScript.
 - **Datos y autenticación:** PostgreSQL, Supabase y Row Level Security.
-- **Despliegue y tareas:** Vercel; Supabase Edge Functions/Cron en las fases de
-  ingesta y Vercel Cron para snapshots semanales.
+- **Despliegue y tareas:** Vercel; Supabase Edge Functions/Cron para ingesta y
+  Vercel Cron para cortes diarios condicionados a cambios efectivos.
 - **Calidad:** ESLint, Prettier, Vitest, PGlite y Playwright.
 - **Automatización:** GitHub Actions.
 

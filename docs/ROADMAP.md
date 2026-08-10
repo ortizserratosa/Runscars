@@ -1,6 +1,6 @@
 # Hoja de ruta
 
-**Última revisión:** 2026-08-07
+**Última revisión:** 2026-08-10
 
 Cada fase tiene una puerta de salida verificable. Una fase no se considera
 terminada por haber creado archivos o código, sino por cumplir esa puerta.
@@ -19,6 +19,7 @@ terminada por haber creado archivos o código, sino por cumplir esa puerta.
 | 7    | Snapshots y evaluación                      | Completada        |
 | 7.1  | Cobertura multcategoría, archivo y mercados | Completada        |
 | 8    | Usuarios                                    | Completada        |
+| 8.5  | Integridad, frescura y foco de producto      | En implementación |
 | 9    | Administración editorial                    | Pendiente         |
 | 10   | QA y MVP desplegado                         | Pendiente         |
 
@@ -185,8 +186,9 @@ Cumplimiento detallado en [AGGREGATION.md](AGGREGATION.md).
 ## Fase 7 · Snapshots y evaluación
 
 **Cerrada:** 2026-07-25. Los snapshots y resultados son append-only, las
-correcciones generan versiones enlazadas, el proceso semanal está programado y
-`runscars-evaluation-v1` coincide con los ejemplos manuales.
+correcciones generan versiones enlazadas y `runscars-evaluation-v1` coincide
+con los ejemplos manuales. La programación semanal original fue reemplazada
+por los cortes diarios efectivos de D-032.
 
 ### Entregables
 
@@ -273,6 +275,29 @@ Cada categoría permite seleccionar esos cortes y compara el ranking elegido con
 el corte real anterior. Los snapshots históricos redundantes se conservan, pero
 no aparecen como actualizaciones en la navegación. La decisión D-032 gobierna
 esta semántica y no inicia la fase 9.
+
+## Fase 8.5 · Integridad, frescura y foco de producto
+
+**En implementación:** unifica portada, películas y fuentes sobre snapshots y
+observaciones persistidas; distingue publicación, cambio y comprobación; resume
+temporada y mercados; y completa la navegación móvil antes de iniciar la
+administración editorial.
+
+### Entregables
+
+- fichas de película y fuente sin estados estáticos especiales;
+- fechas de frescura inequívocas por proveedor;
+- selector de cortes reales sin numeración relativa;
+- resumen de cambios por temporada y mercados plegables;
+- portada enfocada en consenso, evolución y ranking personal;
+- navegación y recorridos esenciales en móvil y escritorio.
+
+### Puerta de salida
+
+Portada, categoría, película y fuente muestran el mismo dato profesional; las
+tres fechas de proveedor se distinguen sin ambigüedad; la migración diaria, el
+cron y todos los checks pasan en staging. Evidencia en
+[PHASE_8_5.md](PHASE_8_5.md).
 
 ## Fase 9 · Administración editorial
 

@@ -1,12 +1,9 @@
 import Link from "next/link";
 import { Movement } from "./components/Movement";
 import { PosterBlock } from "./components/PosterBlock";
-import { consensusCandidates } from "../data/aggregation-presentation";
-import { getReferenceCriticalReception } from "../data/phase6-reference";
 import { filmHref } from "../data/films";
 import { getCategoryView } from "../lib/categories/data";
 
-const odysseyCritical = getReferenceCriticalReception("the-odyssey").scores[0];
 const tones = ["violet", "acid", "rust"] as const;
 
 function dateLabel(value: string) {
@@ -29,28 +26,26 @@ export default async function Home() {
     throw new Error("La portada necesita la temporada activa de Oscar 2027");
   }
   const liveRanking = categoryView.aggregate?.ranking ?? [];
-  const ranking = liveRanking.length
-    ? liveRanking.map((candidate, index) => ({
-        id: candidate.film?.id ?? candidate.candidateId,
-        href: candidate.film
-          ? filmHref(candidate.film.id)
-          : "/temporadas/2027/mejor-pelicula",
-        title: candidate.label,
-        score: candidate.scoreOutOf100,
-        coverage: `${candidate.appearances}/${candidate.applicableSourceCount}`,
-        firsts: candidate.firstPlaceCount,
-        movement: candidate.movement,
-        tone: tones[index % tones.length],
-        contributions: candidate.sourceContributions,
-      }))
-    : consensusCandidates.map((candidate, index) => ({
-        ...candidate,
-        href: filmHref(candidate.id),
-        tone: tones[index % tones.length],
-        contributions: [],
-      }));
+  const ranking = liveRanking.map((candidate, index) => ({
+    id: candidate.film?.id ?? candidate.candidateId,
+    href: candidate.film
+      ? filmHref(candidate.film.id)
+      : "/temporadas/2027/mejor-pelicula",
+    title: candidate.label,
+    score: candidate.scoreOutOf100,
+    coverage: `${candidate.appearances}/${candidate.applicableSourceCount}`,
+    firsts: candidate.firstPlaceCount,
+    movement: candidate.movement,
+    tone: tones[index % tones.length],
+    contributions: candidate.sourceContributions,
+  }));
   const topThree = ranking.slice(0, 3);
   const leader = topThree[0];
+  if (!leader) {
+    throw new Error(
+      "La portada necesita un corte publicable de Mejor película",
+    );
+  }
   const rising = categoryView.snapshot?.previous
     ? ranking.find(
         (candidate) => candidate.movement !== null && candidate.movement > 0,
@@ -61,7 +56,6 @@ export default async function Home() {
     : "actualización pendiente";
   const liveReceipts = leader.contributions
     .filter((source) => source.appeared)
-    .slice(0, 3)
     .map((source) => ({
       name: source.sourceName,
       detail:
@@ -71,7 +65,7 @@ export default async function Home() {
       date: source.publishedAt
         ? `Publicada ${sourceDateLabel(source.publishedAt)}`
         : "Publicación verificada",
-      href: leader.href,
+      href: `/fuentes/${source.sourceId}`,
     }));
   const receipts = liveReceipts.length
     ? liveReceipts
@@ -105,7 +99,7 @@ export default async function Home() {
             </h1>
             <p className="hero-intro">
               Sigue qué películas suben, quién las respalda y cómo cambia el
-              consenso. Crítica, predicciones y comunidad, sin mezclarlas.
+              consenso. Cada posición enlaza con la publicación que la sostiene.
             </p>
             <div className="hero-actions">
               <Link
@@ -137,8 +131,8 @@ export default async function Home() {
               <div>
                 <strong>
                   {leader.score.toLocaleString("es-ES", {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
+                    minimumFractionDigits: 1,
+                    maximumFractionDigits: 1,
                   })}
                 </strong>
                 <span>puntos Borda / 100</span>
@@ -237,11 +231,12 @@ export default async function Home() {
         <div className="page-shell">
           <div className="section-heading split-heading light-heading">
             <div>
-              <p className="section-index">02 / TRES SEÑALES</p>
-              <h2>Cada pregunta, su medida.</h2>
+              <p className="section-index">02 / TRES LECTURAS</p>
+              <h2>Consenso, evolución y tu lista.</h2>
             </div>
             <p>
-              Ninguna cifra mezcla voces profesionales con opinión de usuarios.
+              La historia profesional y la opinión personal permanecen
+              separadas.
             </p>
           </div>
 
@@ -262,18 +257,23 @@ export default async function Home() {
               </Link>
             </article>
 
-            <article className="signal-card critics-card">
+            <article className="signal-card evolution-card">
               <span className="signal-number">B</span>
-              <p className="signal-type">Crítica</p>
-              <h3>¿Cómo está siendo recibida?</h3>
+              <p className="signal-type">Evolución</p>
+              <h3>¿Qué cambió de verdad?</h3>
               <div className="signal-stat">
-                <strong>{odysseyCritical.originalDisplay}</strong>
+                <strong>{rising ? `+${rising.movement}` : "="}</strong>
                 <span>
-                  <Link href={filmHref("the-odyssey")}>The Odyssey</Link> · The
-                  Guardian
+                  {rising ? (
+                    <Link href={rising.href}>{rising.title}</Link>
+                  ) : (
+                    "sin subidas en las primeras posiciones"
+                  )}
                 </span>
               </div>
-              <Link href="/peliculas/the-odyssey">Ver puntuaciones →</Link>
+              <Link href="/temporadas/2027/mejor-pelicula">
+                Comparar cortes reales →
+              </Link>
             </article>
 
             <article className="signal-card community-card">
@@ -298,26 +298,36 @@ export default async function Home() {
             Cada movimiento conserva fuente, autor, fecha, valor original y
             momento de captura. El contexto nunca se disfraza de voto.
           </p>
-          <Link
-            className="primary-button dark-button"
-            href="/fuentes/awardswatch"
-          >
+          <Link className="primary-button dark-button" href="/fuentes">
             Ver una fuente por dentro
           </Link>
         </div>
-        <div className="receipt-stack" aria-label="Fuentes del corte vigente">
-          {receipts.map((receipt, index) => (
-            <div
-              className={`receipt receipt-${["one", "two", "three"][index]}`}
-              key={receipt.name}
-            >
-              <span>{receipt.name}</span>
-              <strong>
-                <Link href={receipt.href}>{receipt.detail}</Link>
-              </strong>
-              <small>{receipt.date}</small>
-            </div>
-          ))}
+        <div className="evidence-receipts">
+          <div className="receipt-stack" aria-label="Fuentes destacadas">
+            {receipts.slice(0, 3).map((receipt, index) => (
+              <div
+                className={`receipt receipt-${["one", "two", "three"][index]}`}
+                key={receipt.name}
+              >
+                <span>{receipt.name}</span>
+                <strong>
+                  <Link href={receipt.href}>{receipt.detail}</Link>
+                </strong>
+                <small>{receipt.date}</small>
+              </div>
+            ))}
+          </div>
+          <details className="receipt-source-list">
+            <summary>Las {receipts.length} fuentes del líder</summary>
+            <ul aria-label="Fuentes del corte vigente">
+              {receipts.map((receipt) => (
+                <li key={receipt.name}>
+                  <Link href={receipt.href}>{receipt.name}</Link>
+                  <span>{receipt.detail}</span>
+                </li>
+              ))}
+            </ul>
+          </details>
         </div>
       </section>
     </main>

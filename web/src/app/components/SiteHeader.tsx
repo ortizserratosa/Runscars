@@ -13,8 +13,17 @@ export function SiteHeader() {
       <nav className="main-nav" aria-label="Navegación principal">
         <Link href="/temporadas/2027">Temporada</Link>
         <Link href="/temporadas/2027/mejor-pelicula">Categorías</Link>
-        <Link href="/fuentes/awardswatch">Fuentes</Link>
+        <Link href="/fuentes">Fuentes</Link>
       </nav>
+
+      <details className="mobile-nav">
+        <summary aria-label="Abrir navegación">Menú</summary>
+        <nav aria-label="Navegación móvil">
+          <Link href="/temporadas/2027">Temporada</Link>
+          <Link href="/temporadas/2027/mejor-pelicula">Categorías</Link>
+          <Link href="/fuentes">Fuentes</Link>
+        </nav>
+      </details>
 
       <div className="header-actions">
         <span className="live-chip">
