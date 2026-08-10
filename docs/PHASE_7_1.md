@@ -45,6 +45,10 @@ en Awards Daily, Next Best Picture y Midnight Critics Circle.
 - Las páginas vivas conservan revisiones inmutables por contenido; no mezclan
   posiciones antiguas y nuevas bajo una misma publicación.
 
+La periodicidad semanal descrita aquí corresponde al cierre original de 7.1.
+D-032 la reemplaza, sin reabrir la fase, por una comprobación diaria que solo
+bloquea un corte cuando cambia una lista o selección profesional efectiva.
+
 ## Verificación y puerta de salida
 
 - [x] Fixtures de seis conectores profesionales y dos mercados.

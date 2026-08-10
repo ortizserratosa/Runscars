@@ -46,14 +46,33 @@ test("publishes all eight database-shaped category routes", async ({
   }
 });
 
-test("shows movement against the immediately previous category update", async ({
+test("shows movement against the immediately previous real cut", async ({
   page,
 }) => {
   await page.goto("/temporadas/2027/mejor-pelicula");
   await expect(page.getByLabel("Sube 1 posición").first()).toBeVisible();
   await expect(page.getByLabel("Baja 1 posición").first()).toBeVisible();
   await expect(
-    page.getByLabel("Nueva desde la actualización anterior").last(),
+    page.getByLabel("Nueva desde el corte real anterior").last(),
+  ).toBeVisible();
+});
+
+test("selects a real provider cut through a stable URL", async ({ page }) => {
+  await page.goto("/temporadas/2027/mejor-pelicula");
+  const selector = page.getByRole("navigation", {
+    name: "Seleccionar corte real",
+  });
+  await expect(selector.getByRole("link")).toHaveCount(2);
+  await expect(
+    selector.getByRole("link", { name: /Último cambio/ }),
+  ).toHaveAttribute("aria-current", "page");
+
+  await selector.getByRole("link").nth(1).click();
+
+  await expect(page).toHaveURL(/corte=periodic-oscars-2027-best-picture/);
+  await expect(page.getByText("Corte histórico seleccionado")).toBeVisible();
+  await expect(
+    page.getByText("Primer corte disponible · sin comparación anterior"),
   ).toBeVisible();
 });
 
@@ -82,7 +101,10 @@ test("shows six Best Picture media but never gives The Ringer Borda points", asy
   await page.goto("/temporadas/2027/mejor-pelicula");
   await expect(page.getByText("5 rankings ordenados · 6 medios")).toBeVisible();
   await page.getByText("Ver procedencia y cálculo").first().click();
-  const ringer = page.getByRole("link", { name: /The Ringer/ }).first();
+  const ringer = page
+    .locator(".source-calculations")
+    .getByRole("link", { name: /The Ringer/ })
+    .first();
   await expect(ringer).toContainText("selección");
   await expect(ringer).toContainText("0");
 });
@@ -99,7 +121,7 @@ test("explains that provider signals never form a market consensus", async ({
   await expect(page.getByText("Sin mercado disponible")).toHaveCount(0);
   await expect(
     page.getByText(
-      "Kalshi y Polymarket se muestran por proveedor. No existe consenso de mercados y sus precios no participan en la predicción profesional.",
+      "Kalshi y Polymarket se muestran por proveedor. No existe consenso de mercados y sus precios no participan en la predicción profesional. Reflejan su última captura y no el corte profesional seleccionado.",
     ),
   ).toBeVisible();
 });
@@ -144,7 +166,7 @@ test("exposes application health without leaking configuration", async ({
   });
 });
 
-test("rejects unauthenticated weekly snapshot invocations", async ({
+test("rejects unauthenticated provider-change snapshot invocations", async ({
   request,
 }) => {
   const response = await request.get("/api/cron/snapshots");

@@ -79,11 +79,21 @@ describe("versioned database foundation", () => {
       connectors: 11,
     });
 
-    const schedules = await database.query<{ schedules: number }>(`
-      select count(*)::int as schedules
+    const schedules = await database.query<{
+      schedules: number;
+      daily_schedules: number;
+    }>(`
+      select
+        count(*)::int as schedules,
+        count(*) filter (
+          where cron_expression = '47 4 * * *'
+        )::int as daily_schedules
       from public.snapshot_schedules
     `);
-    expect(schedules.rows[0]?.schedules).toBe(8);
+    expect(schedules.rows[0]).toEqual({
+      schedules: 8,
+      daily_schedules: 8,
+    });
 
     const awardsDaily = await database.query<{
       extractor_version: string;

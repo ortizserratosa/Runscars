@@ -102,30 +102,62 @@ function ActiveCategory({
             </div>
           </div>
           {view.snapshot ? (
-            <div className="locked-snapshot-note">
-              <div>
-                <strong>Consenso profesional archivado</strong>
-                <span>
-                  {aggregate?.includedObservationIds.length ?? 0} observaciones
-                  contrastadas y conservadas con su procedencia
-                </span>
-              </div>
-              <div className="snapshot-comparison">
-                <span>
-                  Las nuevas publicaciones generan una actualización nueva
-                </span>
-                {view.snapshot.previous ? (
+            <>
+              <nav
+                aria-label="Seleccionar corte real"
+                className="snapshot-selector"
+              >
+                {view.snapshot.cuts.map((cut, index) => (
+                  <Link
+                    aria-current={cut.isSelected ? "page" : undefined}
+                    className={cut.isSelected ? "active" : undefined}
+                    href={`/temporadas/2027/${category.slug}?corte=${encodeURIComponent(
+                      cut.id,
+                    )}`}
+                    key={cut.id}
+                    scroll={false}
+                  >
+                    <span>
+                      {index === 0 ? "Último cambio" : `Corte ${index + 1}`}
+                    </span>
+                    <strong>{dateLabel(cut.lockedAt)}</strong>
+                    <small>
+                      {cut.changedSources.length
+                        ? cut.changedSources.join(", ")
+                        : "Primer estado disponible"}
+                    </small>
+                  </Link>
+                ))}
+              </nav>
+              <div className="locked-snapshot-note">
+                <div>
                   <strong>
-                    Cambios frente a{" "}
-                    {dateLabel(view.snapshot.previous.lockedAt)}
+                    {view.snapshot.isLatest
+                      ? "Consenso profesional vigente"
+                      : "Corte histórico seleccionado"}
                   </strong>
-                ) : (
-                  <strong>
-                    Primer corte disponible · sin comparación anterior
-                  </strong>
-                )}
+                  <span>
+                    {aggregate?.includedObservationIds.length ?? 0}{" "}
+                    observaciones contrastadas y conservadas con su procedencia
+                  </span>
+                </div>
+                <div className="snapshot-comparison">
+                  <span>
+                    Solo un cambio efectivo de proveedor crea un corte
+                  </span>
+                  {view.snapshot.previous ? (
+                    <strong>
+                      Cambios frente al corte real de{" "}
+                      {dateLabel(view.snapshot.previous.lockedAt)}
+                    </strong>
+                  ) : (
+                    <strong>
+                      Primer corte disponible · sin comparación anterior
+                    </strong>
+                  )}
+                </div>
               </div>
-            </div>
+            </>
           ) : (
             <p className="insufficient-note">
               Aún no existe una actualización publicable para esta categoría.
@@ -213,9 +245,9 @@ function ActiveCategory({
                       <Movement value={candidate.movement} />
                     ) : (
                       <span
-                        aria-label="Sin actualización anterior"
+                        aria-label="Sin corte real anterior"
                         className="movement neutral"
-                        title="Sin actualización anterior"
+                        title="Sin corte real anterior"
                       >
                         —
                       </span>
@@ -276,7 +308,8 @@ function ActiveCategory({
             <p>
               Kalshi y Polymarket se muestran por proveedor. No existe consenso
               de mercados y sus precios no participan en la predicción
-              profesional.
+              profesional. Reflejan su última captura y no el corte profesional
+              seleccionado.
             </p>
           </div>
           <div className="market-provider-grid">
@@ -335,10 +368,7 @@ function ActiveCategory({
         </section>
 
         <UserRankingPanel
-          candidates={(aggregate?.ranking ?? []).map((candidate) => ({
-            id: candidate.candidateId,
-            label: candidate.label,
-          }))}
+          candidates={view.currentCandidates}
           categoryId={category.id}
           categoryName={category.name}
         />

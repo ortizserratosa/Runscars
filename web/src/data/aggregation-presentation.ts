@@ -135,7 +135,7 @@ export const calculationCuts: CalculationCut[] =
     date: dateLabel(cut.cutoffDate, "long"),
     label:
       index === timeline.length - 1
-        ? "Snapshot semanal bloqueado"
+        ? "Corte real bloqueado"
         : cut.isConsensus
           ? "Primer consenso calculable"
           : index === 0

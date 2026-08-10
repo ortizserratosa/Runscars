@@ -4,6 +4,7 @@ import { z } from "zod";
 import type { PredictionObservation } from "../aggregation";
 import type {
   CategoryCandidatePerson,
+  PredictionAggregateV2,
   PredictionObservationV2,
 } from "../aggregation/v2";
 import type { LockedPredictionSnapshot } from ".";
@@ -404,6 +405,52 @@ export class SupabaseSnapshotSchedulerRepository
         },
       ];
     });
+  }
+
+  async currentSnapshotV2(schedule: SnapshotSchedule) {
+    const pointer = databaseError(
+      await this.client
+        .from("current_aggregate_snapshots")
+        .select("snapshot_id")
+        .eq("season_id", schedule.seasonId)
+        .eq("category_id", schedule.categoryId)
+        .eq("prediction_intention", schedule.intention)
+        .eq("kind", schedule.kind)
+        .maybeSingle(),
+      `No se pudo cargar el corte vigente de ${schedule.id}`,
+    ) as { snapshot_id: string } | null;
+    if (!pointer) return null;
+
+    const snapshot = databaseError(
+      await this.client
+        .from("aggregate_snapshots")
+        .select("id, content_hash, schema_version, payload")
+        .eq("id", pointer.snapshot_id)
+        .maybeSingle(),
+      `No se pudo cargar el snapshot vigente de ${schedule.id}`,
+    ) as {
+      id: string;
+      content_hash: string;
+      schema_version: string;
+      payload: unknown;
+    } | null;
+    if (!snapshot || snapshot.schema_version !== "runscars-snapshot-v2") {
+      return null;
+    }
+    const payload = snapshot.payload as unknown as {
+      aggregate?: PredictionAggregateV2;
+    };
+    if (
+      !payload.aggregate ||
+      payload.aggregate.methodVersion !== "runscars-aggregation-v2"
+    ) {
+      return null;
+    }
+    return {
+      snapshotId: snapshot.id,
+      contentHash: snapshot.content_hash,
+      aggregate: payload.aggregate,
+    };
   }
 
   async lockV2(snapshot: LockedPredictionSnapshotV2) {

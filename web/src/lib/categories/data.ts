@@ -9,6 +9,10 @@ import {
 import type { PredictionAggregateV2 } from "../aggregation/v2";
 import { isSupabaseConfigured } from "../environment";
 import { compareSnapshotMovements } from "../snapshots/movements";
+import {
+  buildRealProviderCuts,
+  type SnapshotHistoryEntry,
+} from "../snapshots/provider-cuts";
 import { createSupabaseServerClient } from "../supabase/server";
 import { PUBLIC_CATEGORIES, type PublicCategoryId } from "./config";
 
@@ -34,11 +38,22 @@ export type ActiveCategoryView = {
     id: string;
     contentHash: string;
     lockedAt: string;
+    isLatest: boolean;
     previous: {
       id: string;
       lockedAt: string;
     } | null;
+    cuts: Array<{
+      id: string;
+      lockedAt: string;
+      changedSources: string[];
+      isSelected: boolean;
+    }>;
   } | null;
+  currentCandidates: Array<{
+    id: string;
+    label: string;
+  }>;
 };
 
 export type ArchiveCandidateView = {
@@ -70,15 +85,84 @@ function allowFixture() {
   return process.env.NODE_ENV !== "production";
 }
 
-function fixtureActive(categoryId: PublicCategoryId): ActiveCategoryView {
-  const aggregate = compareSnapshotMovements(
-    phase71FixtureAggregate(categoryId),
-    phase71FixturePreviousAggregate(categoryId),
+function activeViewFromHistory({
+  snapshots,
+  markets,
+  dataState,
+  selectedSnapshotId,
+}: {
+  snapshots: SnapshotHistoryEntry[];
+  markets: Record<"kalshi" | "polymarket", MarketView[]>;
+  dataState: ActiveCategoryView["dataState"];
+  selectedSnapshotId?: string;
+}): ActiveCategoryView {
+  const cuts = buildRealProviderCuts(snapshots);
+  const requestedIndex = selectedSnapshotId
+    ? cuts.findIndex((cut) => cut.id === selectedSnapshotId)
+    : -1;
+  const selectedIndex =
+    requestedIndex >= 0 ? requestedIndex : Math.max(0, cuts.length - 1);
+  const selected = cuts[selectedIndex] ?? null;
+  const previous = selectedIndex > 0 ? cuts[selectedIndex - 1] : null;
+  const latest = cuts.at(-1) ?? null;
+  const sourceNames = new Map(
+    cuts.flatMap((cut) =>
+      cut.aggregate.sourceLists.map(
+        (source) => [source.sourceId, source.sourceName] as const,
+      ),
+    ),
   );
+
+  return {
+    mode: "active",
+    seasonYear: 2027,
+    aggregate: selected
+      ? compareSnapshotMovements(
+          selected.aggregate,
+          previous?.aggregate ?? null,
+        )
+      : null,
+    markets,
+    dataState,
+    snapshot: selected
+      ? {
+          id: selected.id,
+          contentHash: selected.contentHash,
+          lockedAt: selected.lockedAt,
+          isLatest: selected.id === latest?.id,
+          previous: previous
+            ? {
+                id: previous.id,
+                lockedAt: previous.lockedAt,
+              }
+            : null,
+          cuts: [...cuts].reverse().map((cut) => ({
+            id: cut.id,
+            lockedAt: cut.lockedAt,
+            changedSources: cut.changedSourceIds.map(
+              (sourceId) => sourceNames.get(sourceId) ?? sourceId,
+            ),
+            isSelected: cut.id === selected.id,
+          })),
+        }
+      : null,
+    currentCandidates: (latest?.aggregate.ranking ?? []).map((candidate) => ({
+      id: candidate.candidateId,
+      label: candidate.label,
+    })),
+  };
+}
+
+function fixtureActive(
+  categoryId: PublicCategoryId,
+  selectedSnapshotId?: string,
+): ActiveCategoryView {
+  const currentAggregate = phase71FixtureAggregate(categoryId);
+  const previousAggregate = phase71FixturePreviousAggregate(categoryId);
   const marketLabel =
-    aggregate.ranking[0]?.people[0]?.name ??
-    aggregate.ranking[0]?.film?.title ??
-    aggregate.ranking[0]?.label ??
+    currentAggregate.ranking[0]?.people[0]?.name ??
+    currentAggregate.ranking[0]?.film?.title ??
+    currentAggregate.ranking[0]?.label ??
     "Candidatura";
   const fixtureMarket = (
     provider: "kalshi" | "polymarket",
@@ -101,10 +185,25 @@ function fixtureActive(categoryId: PublicCategoryId): ActiveCategoryView {
         ? "https://kalshi.com/markets"
         : "https://polymarket.com",
   });
-  return {
-    mode: "active",
-    seasonYear: 2027,
-    aggregate,
+  return activeViewFromHistory({
+    snapshots: [
+      {
+        id: `periodic-oscars-2027-${categoryId}-nomination-2026-07-20-fixture`,
+        contentHash: "fixture-v2-previous-persistent-hash",
+        lockedAt: "2026-07-20T04:47:00.000Z",
+        methodVersion: previousAggregate.methodVersion,
+        schemaVersion: "runscars-snapshot-v2",
+        aggregate: previousAggregate,
+      },
+      {
+        id: `periodic-oscars-2027-${categoryId}-nomination-2026-07-25-fixture`,
+        contentHash: "fixture-v2-current-persistent-hash",
+        lockedAt: "2026-07-25T04:47:00.000Z",
+        methodVersion: currentAggregate.methodVersion,
+        schemaVersion: "runscars-snapshot-v2",
+        aggregate: currentAggregate,
+      },
+    ],
     markets: {
       kalshi: [
         fixtureMarket("kalshi", "nomination", 0.72),
@@ -113,16 +212,8 @@ function fixtureActive(categoryId: PublicCategoryId): ActiveCategoryView {
       polymarket: [fixtureMarket("polymarket", "winner", 0.34)],
     },
     dataState: "fixture",
-    snapshot: {
-      id: `periodic-oscars-2027-${categoryId}-nomination-2026-07-25-fixture`,
-      contentHash: "fixture-v2-no-persistent-hash",
-      lockedAt: "2026-07-25T04:47:00.000Z",
-      previous: {
-        id: `periodic-oscars-2027-${categoryId}-nomination-2026-07-20-fixture`,
-        lockedAt: "2026-07-20T04:47:00.000Z",
-      },
-    },
-  };
+    selectedSnapshotId,
+  });
 }
 
 function fixtureArchive(categoryId: PublicCategoryId): ArchiveCategoryView {
@@ -241,6 +332,7 @@ async function marketViews(
 
 async function activeCategoryFromDatabase(
   categoryId: PublicCategoryId,
+  selectedSnapshotId?: string,
 ): Promise<ActiveCategoryView> {
   const supabase = client();
   const currentResult = await supabase
@@ -261,6 +353,7 @@ async function activeCategoryFromDatabase(
       markets,
       dataState: "database",
       snapshot: null,
+      currentCandidates: [],
     };
   }
   const snapshotResult = await supabase
@@ -278,50 +371,51 @@ async function activeCategoryFromDatabase(
       markets,
       dataState: "database",
       snapshot: null,
+      currentCandidates: [],
     };
   }
-  const payload = row.payload as unknown as {
-    aggregate: PredictionAggregateV2;
-  };
-  const previousResult = await supabase
+  const historyResult = await supabase
     .from("aggregate_snapshots")
-    .select("id,locked_at,payload")
+    .select("id,content_hash,locked_at,method_version,schema_version,payload")
     .eq("season_id", "oscars-2027")
     .eq("category_id", categoryId)
     .eq("prediction_intention", "nomination")
     .eq("kind", "periodic")
     .eq("method_version", row.method_version)
     .eq("schema_version", "runscars-snapshot-v2")
-    .lt("locked_at", row.locked_at)
-    .order("locked_at", { ascending: false })
-    .order("id", { ascending: false })
-    .limit(1)
-    .maybeSingle();
-  if (previousResult.error) throw new Error(previousResult.error.message);
-  const previousPayload = previousResult.data?.payload as
-    { aggregate: PredictionAggregateV2 } | undefined;
-  const aggregate = compareSnapshotMovements(
-    payload.aggregate,
-    previousPayload?.aggregate ?? null,
+    .lte("locked_at", row.locked_at)
+    .order("locked_at", { ascending: true })
+    .order("id", { ascending: true });
+  if (historyResult.error) throw new Error(historyResult.error.message);
+  const snapshots = (historyResult.data ?? []).flatMap(
+    (snapshot): SnapshotHistoryEntry[] => {
+      const historyPayload = snapshot.payload as unknown as {
+        aggregate?: PredictionAggregateV2;
+      };
+      if (
+        !historyPayload.aggregate ||
+        historyPayload.aggregate.methodVersion !== snapshot.method_version
+      ) {
+        return [];
+      }
+      return [
+        {
+          id: snapshot.id,
+          contentHash: snapshot.content_hash,
+          lockedAt: snapshot.locked_at,
+          methodVersion: snapshot.method_version,
+          schemaVersion: snapshot.schema_version,
+          aggregate: historyPayload.aggregate,
+        },
+      ];
+    },
   );
-  return {
-    mode: "active",
-    seasonYear: 2027,
-    aggregate,
+  return activeViewFromHistory({
+    snapshots,
     markets,
     dataState: "database",
-    snapshot: {
-      id: row.id,
-      contentHash: row.content_hash,
-      lockedAt: row.locked_at,
-      previous: previousResult.data
-        ? {
-            id: previousResult.data.id,
-            lockedAt: previousResult.data.locked_at,
-          }
-        : null,
-    },
-  };
+    selectedSnapshotId,
+  });
 }
 
 async function archiveCategoryFromDatabase(
@@ -456,11 +550,14 @@ async function archiveCategoryFromDatabase(
 export async function getCategoryView(
   seasonYear: 2026 | 2027,
   categoryId: PublicCategoryId,
+  options: {
+    snapshotId?: string;
+  } = {},
 ): Promise<CategoryView> {
   if (!isSupabaseConfigured()) {
     if (allowFixture()) {
       return seasonYear === 2027
-        ? fixtureActive(categoryId)
+        ? fixtureActive(categoryId, options.snapshotId)
         : fixtureArchive(categoryId);
     }
     return seasonYear === 2027
@@ -471,6 +568,7 @@ export async function getCategoryView(
           markets: { kalshi: [], polymarket: [] },
           dataState: "unavailable",
           snapshot: null,
+          currentCandidates: [],
         }
       : {
           mode: "archive",
@@ -483,12 +581,12 @@ export async function getCategoryView(
   }
   try {
     return seasonYear === 2027
-      ? await activeCategoryFromDatabase(categoryId)
+      ? await activeCategoryFromDatabase(categoryId, options.snapshotId)
       : await archiveCategoryFromDatabase(categoryId);
   } catch {
     if (allowFixture()) {
       return seasonYear === 2027
-        ? fixtureActive(categoryId)
+        ? fixtureActive(categoryId, options.snapshotId)
         : fixtureArchive(categoryId);
     }
     return seasonYear === 2027
@@ -499,6 +597,7 @@ export async function getCategoryView(
           markets: { kalshi: [], polymarket: [] },
           dataState: "unavailable",
           snapshot: null,
+          currentCandidates: [],
         }
       : {
           mode: "archive",

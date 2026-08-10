@@ -215,17 +215,35 @@ la fase 7.
 
 ### 4.6 Variación entre snapshots públicos
 
-Desde la fase 7, la página de una categoría compara el snapshot periódico
-vigente con el snapshot bloqueado inmediatamente anterior del mismo alcance y
-versión metodológica. La variación mantiene la fórmula
+Desde el mantenimiento previo a la fase 9, una ejecución programada solo crea
+un corte público cuando cambia el estado efectivo de al menos una fuente
+profesional del mismo alcance. Ese estado se define, por fuente, mediante las
+candidaturas presentes, su condición de ranking o selección y, cuando existe,
+su posición y longitud de lista. Cambios de hora de captura, URL, extractor o
+metadatos que no alteren esa superficie no crean un corte.
+
+Como la cadencia pública es diaria, varias envolventes bloqueadas en una misma
+fecha UTC se consolidan en el último estado del día antes de construir la
+navegación. Esto absorbe reintentos y ejecuciones manuales parciales: nunca se
+compara un corte público con otro de la misma fecha. Después se colapsan también
+los días consecutivos cuyo estado efectivo sea equivalente.
+
+La página de una categoría compara el corte seleccionado con el corte real
+inmediatamente anterior del mismo alcance y versión metodológica. Los snapshots
+históricos consecutivos con el mismo estado efectivo se conservan inmutables,
+pero se colapsan en la navegación y no se usan como referencia de movimiento.
+La variación mantiene la fórmula
 `posición_anterior - posición_actual`: un valor positivo es una subida, uno
 negativo una bajada, cero indica estabilidad y una candidatura ausente en el
 corte anterior aparece como nueva.
 
-La interfaz muestra la fecha exacta del corte usado como comparación. Si no
-existe un snapshot anterior, no atribuye movimientos. La comparación se deriva
-al leer las dos envolventes inmutables; no modifica el payload ni el hash de
-ninguna de ellas.
+La interfaz permite seleccionar cada corte real mediante una URL estable y
+muestra su instante y los proveedores que cambiaron. Si no existe un corte real
+anterior, no atribuye movimientos. La comparación se deriva al leer las
+envolventes inmutables; no modifica el payload ni el hash de ninguna de ellas.
+
+Los mercados no forman parte de esta identidad: Kalshi y Polymarket mantienen
+su cadencia y evolución append-only separadas y nunca provocan un corte Borda.
 
 ## 5. Rankings de usuarios
 
@@ -269,6 +287,11 @@ son públicos.
 - exclusiones;
 - identificador o hash reproducible;
 - persona o proceso que lo bloqueó.
+
+Un snapshot periódico programado solo se bloquea cuando su estado efectivo de
+proveedores difiere del puntero periódico vigente. Los cierres finales y las
+correcciones explícitas conservan sus reglas propias y no dependen de este
+filtro.
 
 La implementación `runscars-snapshot-v2` calcula el SHA-256 sobre una
 serialización JSON canónica del contenido metodológico. El proceso y el instante

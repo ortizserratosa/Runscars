@@ -499,7 +499,7 @@ select
   id,
   'nomination',
   'periodic',
-  '47 4 * * 1',
+  '47 4 * * *',
   'UTC',
   true
 from public.categories

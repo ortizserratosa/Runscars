@@ -1,7 +1,7 @@
 # Contrato de producto
 
 **Estado:** contrato aceptado para el MVP
-**Última revisión:** 2026-07-25
+**Última revisión:** 2026-08-10
 
 ## 1. Visión
 
@@ -124,7 +124,12 @@ publican cuando alcanzan la cobertura aprobada.
 ### Actualización y snapshots
 
 - Actualización automática diaria de conectores activos.
-- Snapshot público semanal.
+- Corte público tras la actualización diaria únicamente cuando cambia la
+  superficie efectiva de al menos un proveedor profesional.
+- Las ejecuciones de una misma fecha UTC se consolidan en su último estado; no
+  producen comparaciones intradía ni dos cortes públicos con la misma fecha.
+- Selector de cortes reales por categoría; cada corte reproduce su ranking y se
+  compara con el corte real inmediatamente anterior.
 - Snapshot final de predicción de nominaciones.
 - Snapshot final de predicción de ganadores.
 - Comparación posterior con resultados oficiales.
@@ -165,9 +170,9 @@ publican cuando alcanzan la cobertura aprobada.
 ### R4. Consultar la evolución
 
 1. El visitante abre una categoría.
-2. Elige un snapshot anterior.
+2. Elige un corte real anterior.
 3. Ve la clasificación tal como estaba entonces.
-4. Compara cambios con el estado actual.
+4. Compara sus cambios con el corte real inmediatamente anterior.
 
 ### R5. Medir el acierto
 
@@ -227,4 +232,6 @@ publican cuando alcanzan la cobertura aprobada.
 - **Predicción de nominación:** selección sobre quién recibirá nominación.
 - **Predicción de ganador:** selección sobre quién ganará entre candidatos.
 - **Snapshot:** estado versionado del agregado en un instante.
+- **Corte real:** snapshot periódico creado porque cambió la lista o selección
+  efectiva de al menos un proveedor profesional de ese alcance.
 - **Temporada activa:** temporada sobre la que todavía se publican predicciones.

@@ -267,6 +267,13 @@ El diseño, la implementación y la evidencia de la puerta se mantienen en
 [PHASE_8.md](PHASE_8.md). D-014 permanece como `Propuesta`: la fase guarda y
 muestra rankings individuales, pero no publica un consenso comunitario.
 
+El mantenimiento previo a la fase 9 sustituye el snapshot semanal por cortes
+diarios condicionados a cambios efectivos de los proveedores profesionales.
+Cada categoría permite seleccionar esos cortes y compara el ranking elegido con
+el corte real anterior. Los snapshots históricos redundantes se conservan, pero
+no aparecen como actualizaciones en la navegación. La decisión D-032 gobierna
+esta semántica y no inicia la fase 9.
+
 ## Fase 9 · Administración editorial
 
 ### Entregables

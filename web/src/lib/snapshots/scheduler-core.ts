@@ -10,8 +10,10 @@ import {
 } from ".";
 import {
   aggregatePredictionsV2,
+  type PredictionAggregateV2,
   type PredictionObservationV2,
 } from "../aggregation/v2";
+import { hasEffectiveProviderChanges } from "./provider-cuts";
 import {
   createPredictionSnapshotPayloadV2,
   lockPredictionSnapshotV2,
@@ -58,6 +60,11 @@ export interface SnapshotSchedulerRepositoryV2 {
   predictionObservationsV2(
     schedule: SnapshotSchedule,
   ): Promise<PredictionObservationV2[]>;
+  currentSnapshotV2(schedule: SnapshotSchedule): Promise<{
+    snapshotId: string;
+    contentHash: string;
+    aggregate: PredictionAggregateV2;
+  } | null>;
   lockV2(snapshot: LockedPredictionSnapshotV2): Promise<boolean>;
 }
 
@@ -158,6 +165,19 @@ export async function runScheduledSnapshotsV2(
         });
         continue;
       }
+      const current = await repository.currentSnapshotV2(schedule);
+      if (
+        current &&
+        !hasEffectiveProviderChanges(aggregate, current.aggregate)
+      ) {
+        results.push({
+          scheduleId: schedule.id,
+          status: "unchanged",
+          snapshotId: current.snapshotId,
+          contentHash: current.contentHash,
+        });
+        continue;
+      }
       const payload = createPredictionSnapshotPayloadV2(aggregate, {
         kind: schedule.kind,
         cutoffAt: lockedAt,
@@ -165,7 +185,7 @@ export async function runScheduledSnapshotsV2(
       });
       const snapshot = await lockPredictionSnapshotV2(payload, {
         lockedAt,
-        lockedBy: "vercel-cron:snapshots-weekly-v2",
+        lockedBy: "vercel-cron:snapshots-on-provider-change-v2",
       });
       const created = await repository.lockV2(snapshot);
       results.push({

@@ -4,7 +4,7 @@
   "crons": [
     {
       "path": "/api/cron/snapshots",
-      "schedule": "47 4 * * 1"
+      "schedule": "47 4 * * *"
     }
   ]
 }

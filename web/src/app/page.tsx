@@ -174,7 +174,7 @@ export default async function Home() {
           </span>
           <span>
             {categoryView.snapshot?.previous
-              ? `Comparado con ${dateLabel(
+              ? `Comparado con el corte real del ${dateLabel(
                   categoryView.snapshot.previous.lockedAt,
                 )}`
               : "Primer corte disponible"}
@@ -214,9 +214,9 @@ export default async function Home() {
                     <Movement value={candidate.movement} />
                   ) : (
                     <span
-                      aria-label="Sin actualización anterior"
+                      aria-label="Sin corte real anterior"
                       className="movement neutral"
-                      title="Sin actualización anterior"
+                      title="Sin corte real anterior"
                     >
                       —
                     </span>

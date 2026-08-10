@@ -2,9 +2,9 @@ export function Movement({ value }: { value: number | null }) {
   if (value === null) {
     return (
       <span
-        aria-label="Nueva desde la actualización anterior"
+        aria-label="Nueva desde el corte real anterior"
         className="movement neutral"
-        title="Nueva desde la actualización anterior"
+        title="Nueva desde el corte real anterior"
       >
         Nueva
       </span>
@@ -13,9 +13,9 @@ export function Movement({ value }: { value: number | null }) {
   if (value === 0) {
     return (
       <span
-        aria-label="Sin cambios desde la actualización anterior"
+        aria-label="Sin cambios desde el corte real anterior"
         className="movement neutral"
-        title="Sin cambios desde la actualización anterior"
+        title="Sin cambios desde el corte real anterior"
       >
         —
       </span>

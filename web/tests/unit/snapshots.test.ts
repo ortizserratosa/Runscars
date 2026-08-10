@@ -28,7 +28,10 @@ import {
   type SnapshotSchedulerRepositoryV2,
 } from "../../src/lib/snapshots/scheduler-core";
 import { referencePredictionObservations } from "../../src/data/phase6-reference";
-import { phase71FixtureObservations } from "../../src/data/phase71-fixture";
+import {
+  phase71FixtureAggregate,
+  phase71FixtureObservations,
+} from "../../src/data/phase71-fixture";
 import { PUBLIC_CATEGORIES } from "../../src/lib/categories/config";
 import type { LockedPredictionSnapshotV2 } from "../../src/lib/snapshots/v2";
 
@@ -162,9 +165,9 @@ describe("locked snapshots", () => {
     expect(locked[0].lockedBy).toBe("vercel-cron:snapshots-weekly");
   });
 
-  it("creates independent weekly v2 snapshots for all eight categories", async () => {
+  it("creates independent provider-change v2 snapshots for all eight categories", async () => {
     const schedules: SnapshotSchedule[] = PUBLIC_CATEGORIES.map((category) => ({
-      id: `weekly-${category.id}`,
+      id: `daily-${category.id}`,
       seasonId: "oscars-2027",
       categoryId: category.id,
       intention: "nomination",
@@ -181,6 +184,9 @@ describe("locked snapshots", () => {
           (item) => item.id === schedule.categoryId,
         )!;
         return phase71FixtureObservations(category.id);
+      },
+      async currentSnapshotV2() {
+        return null;
       },
       async lockV2(snapshot) {
         locked.push(snapshot);
@@ -203,6 +209,59 @@ describe("locked snapshots", () => {
         (snapshot) => snapshot.payload.schemaVersion === "runscars-snapshot-v2",
       ),
     ).toBe(true);
+    expect(
+      locked.every(
+        (snapshot) =>
+          snapshot.lockedBy === "vercel-cron:snapshots-on-provider-change-v2",
+      ),
+    ).toBe(true);
+  });
+
+  it("does not create a daily cut when every provider keeps the same effective list", async () => {
+    const schedule: SnapshotSchedule = {
+      id: "daily-best-picture",
+      seasonId: "oscars-2027",
+      categoryId: "best-picture",
+      intention: "nomination",
+      kind: "periodic",
+      timeZone: "UTC",
+    };
+    const current = phase71FixtureAggregate("best-picture");
+    let lockCalls = 0;
+    const repository: SnapshotSchedulerRepositoryV2 = {
+      async activeSchedules() {
+        return [schedule];
+      },
+      async predictionObservationsV2() {
+        return phase71FixtureObservations("best-picture");
+      },
+      async currentSnapshotV2() {
+        return {
+          snapshotId: "last-real-provider-cut",
+          contentHash: "a".repeat(64),
+          aggregate: current,
+        };
+      },
+      async lockV2() {
+        lockCalls += 1;
+        return true;
+      },
+    };
+
+    const results = await runScheduledSnapshotsV2(
+      repository,
+      new Date("2026-07-26T04:47:00Z"),
+    );
+
+    expect(results).toEqual([
+      {
+        scheduleId: schedule.id,
+        status: "unchanged",
+        snapshotId: "last-real-provider-cut",
+        contentHash: "a".repeat(64),
+      },
+    ]);
+    expect(lockCalls).toBe(0);
   });
 });
 

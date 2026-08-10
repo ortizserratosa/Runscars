@@ -26,7 +26,7 @@ pasado para ocultar cambios de criterio.
 | D-006 | Ocho categorías iniciales | Aceptada |
 | D-007 | Cinco ceremonias históricas en el MVP | Aceptada |
 | D-008 | Comentarios fuera del MVP | Aceptada |
-| D-009 | Actualización diaria y snapshot semanal | Aceptada |
+| D-009 | Actualización diaria y snapshot semanal | Reemplazada |
 | D-010 | Stack web gestionado | Aceptada |
 | D-011 | Consenso Borda normalizado | Aceptada |
 | D-012 | Agregadores críticos solo como contexto | Aceptada |
@@ -49,6 +49,7 @@ pasado para ocultar cambios de criterio.
 | D-029 | Recuperación de runs y revisión editorial vigente | Aceptada |
 | D-030 | Discovery de mercados acotado por ceremonia y serie | Aceptada |
 | D-031 | Identidad gestionada y privacidad comunitaria por capas | Aceptada |
+| D-032 | Cortes públicos solo ante cambios efectivos de proveedor | Aceptada |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -506,3 +507,33 @@ ejemplos manuales de nominaciones y ganador coincidieron con
 - **Límite:** D-014 sigue como `Propuesta`. Se guardan rankings parciales
   individuales y posiciones explícitas, sin inferir ausencias ni publicar un
   consenso comunitario.
+
+## D-032 · Cortes públicos solo ante cambios efectivos de proveedor
+
+- **Fecha:** 2026-08-07
+- **Estado:** Aceptada
+- **Decisión:** ejecutar el proceso de cortes después de la ingesta profesional
+  diaria y crear un snapshot periódico únicamente cuando cambie la superficie
+  efectiva de al menos una fuente del alcance: candidaturas presentes, tipo de
+  aparición, posición o longitud de lista.
+- **Navegación:** cada categoría ofrece sus cortes reales mediante una URL
+  estable. El ranking seleccionado se compara con el corte real inmediatamente
+  anterior del mismo alcance y método, no con una ejecución manual o
+  programada que conserve exactamente las mismas señales.
+- **Histórico:** los snapshots redundantes ya bloqueados permanecen inmutables,
+  pero la lectura los colapsa por estados consecutivos equivalentes. No se
+  borran ni se reescriben.
+- **Consolidación diaria (aclaración 2026-08-10):** si existen varias
+  envolventes de una categoría en la misma fecha UTC, la navegación conserva
+  únicamente la última como candidata a corte. Después aplica el colapso por
+  estado efectivo. Una comparación pública nunca enfrenta dos horas del mismo
+  día.
+- **No cambios:** una nueva captura, URL o versión de extractor con la misma
+  lista o selección efectiva no genera un corte. Una vuelta posterior a un
+  estado antiguo sí genera otro corte porque existe un cambio respecto al
+  estado inmediatamente anterior.
+- **Mercados:** Kalshi y Polymarket conservan capturas horarias separadas. No
+  participan en la identidad de un corte profesional ni en sus movimientos.
+- **Reemplaza:** la periodicidad semanal de D-009. Se mantiene la ingesta diaria
+  y se sustituyen los snapshots semanales por cortes diarios condicionados a
+  cambios reales.

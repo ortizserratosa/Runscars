@@ -1161,27 +1161,28 @@ select:focus-visible {
 }
 
 .snapshot-selector {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  overflow-x: auto;
   border-top: 1px solid var(--ink);
 }
 
-.snapshot-selector button {
+.snapshot-selector a {
   display: grid;
+  flex: 1 0 210px;
   gap: 0.3rem;
-  border: 0;
   border-right: 1px solid var(--line);
   padding: 1rem;
   background: transparent;
+  color: var(--ink);
   text-align: left;
-  cursor: pointer;
+  text-decoration: none;
 }
 
-.snapshot-selector button:last-child {
+.snapshot-selector a:last-child {
   border-right: 0;
 }
 
-.snapshot-selector button.active {
+.snapshot-selector a.active {
   background: var(--acid);
 }
 
@@ -1191,8 +1192,14 @@ select:focus-visible {
   font-weight: 800;
 }
 
+.snapshot-selector strong {
+  font-family: var(--serif);
+  font-size: 1rem;
+}
+
 .snapshot-selector small {
   color: var(--muted);
+  line-height: 1.35;
 }
 
 .calculation-cut-note {
@@ -2827,18 +2834,6 @@ select:focus-visible {
 
   .snapshot-readout {
     justify-items: start;
-  }
-
-  .snapshot-selector {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .snapshot-selector button:nth-child(2) {
-    border-right: 0;
-  }
-
-  .snapshot-selector button:nth-child(-n + 2) {
-    border-bottom: 1px solid var(--line);
   }
 
   .locked-snapshot-note {

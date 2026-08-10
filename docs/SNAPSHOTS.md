@@ -1,7 +1,7 @@
 # Snapshots y evaluación · fase 7
 
 **Estado:** fase 7 completada; ampliación v2 integrada en staging
-**Última revisión:** 2026-07-25
+**Última revisión:** 2026-08-10
 
 ## Objetivo
 
@@ -58,12 +58,25 @@ Un snapshot periódico conserva todo el ranking, pero no fija una papeleta
 final. El cierre de nominaciones registra explícitamente cuántos candidatos
 selecciona y sus IDs; el cierre de ganador fija la primera posición.
 
-## Automatización semanal
+## Automatización por cambios reales
 
-Vercel Cron llama cada lunes a las **04:47 UTC** a
+Vercel Cron llama cada día a las **04:47 UTC**, después de la ingesta
+profesional de las 04:17 UTC, a
 `/api/cron/snapshots`. El endpoint exige `CRON_SECRET`, carga las
 programaciones activas y procesa cada alcance de forma aislada. Un fallo no
 impide intentar el siguiente.
+
+Antes de bloquear una envolvente, el proceso compara por proveedor las
+candidaturas efectivas, el tipo de aparición y las posiciones y longitudes de
+lista contra el puntero vigente. Si ninguna fuente cambia, devuelve `unchanged`
+y no crea un snapshot. Los cambios de captura o metadatos sin efecto en las
+listas tampoco crean un corte.
+
+La web conserva todos los snapshots inmutables. Para navegación toma primero la
+última envolvente de cada fecha UTC y presenta después únicamente los estados
+diarios consecutivos distintos. El visitante puede seleccionar un corte real y
+la variación se calcula contra el corte real anterior, aunque entre ambos
+existan ejecuciones históricas redundantes o varios reintentos el mismo día.
 
 Las ocho programaciones cubren Oscar 2027 y predicción de nominaciones. Si no
 existen observaciones de fuentes aprobadas para publicación,
@@ -72,7 +85,7 @@ de Vercel usa un `GET` autenticado mediante `Authorization: Bearer`, según la
 [documentación oficial de Cron](https://vercel.com/docs/cron-jobs/manage-cron-jobs).
 
 El 2026-07-25 staging bloqueó los ocho snapshots v2 con datos reales. Una
-segunda ejecución con el mismo corte devolvió ocho `unchanged`. Las 16 páginas
+segunda ejecución con el mismo estado devolvió ocho `unchanged`. Las 16 páginas
 de categoría —ocho activas y ocho de archivo— respondieron correctamente desde
 Supabase en <https://runscars-staging.vercel.app>.
 
