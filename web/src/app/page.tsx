@@ -4,6 +4,8 @@ import { PosterBlock } from "./components/PosterBlock";
 import { filmHref } from "../data/films";
 import { getCategoryView } from "../lib/categories/data";
 
+export const dynamic = "force-dynamic";
+
 const tones = ["violet", "acid", "rust"] as const;
 
 function dateLabel(value: string) {
