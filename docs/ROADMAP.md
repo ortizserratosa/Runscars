@@ -19,7 +19,7 @@ terminada por haber creado archivos o código, sino por cumplir esa puerta.
 | 7    | Snapshots y evaluación                      | Completada        |
 | 7.1  | Cobertura multcategoría, archivo y mercados | Completada        |
 | 8    | Usuarios                                    | Completada        |
-| 8.5  | Integridad, frescura y foco de producto      | En implementación |
+| 8.5  | Integridad, frescura y foco de producto      | Completada        |
 | 9    | Administración editorial                    | Pendiente         |
 | 10   | QA y MVP desplegado                         | Pendiente         |
 
@@ -278,7 +278,7 @@ esta semántica y no inicia la fase 9.
 
 ## Fase 8.5 · Integridad, frescura y foco de producto
 
-**En implementación:** unifica portada, películas y fuentes sobre snapshots y
+**Cerrada:** 2026-08-10. Unifica portada, películas y fuentes sobre snapshots y
 observaciones persistidas; distingue publicación, cambio y comprobación; resume
 temporada y mercados; y completa la navegación móvil antes de iniciar la
 administración editorial.

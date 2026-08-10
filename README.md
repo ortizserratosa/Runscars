@@ -91,7 +91,7 @@ corte vigente como un snapshot inmutable con hash reproducible.
 | 6    | Agregación reproducible y evolución temporal       | ✅ Completada |
 | 7    | Snapshots inmutables y evaluación versionada       | ✅ Completada |
 | 8    | Usuarios y privacidad                              | ✅ Completada |
-| 8.5  | Integridad, frescura y foco de producto             | 🚧 En curso   |
+| 8.5  | Integridad, frescura y foco de producto             | ✅ Completada |
 | 9–10 | Administración y lanzamiento                        | ⏳ Pendientes |
 
 La fase 7 queda cerrada con bloqueo transaccional, correcciones enlazadas,

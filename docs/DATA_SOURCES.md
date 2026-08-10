@@ -1,6 +1,6 @@
 # Registro de fuentes
 
-**Estado:** fase 8.5 en integración; fuentes públicas derivadas de datos reales
+**Estado:** fase 8.5 cerrada; fuentes públicas derivadas de datos reales
 **Última revisión:** 2026-08-10
 
 ## 1. Objetivo

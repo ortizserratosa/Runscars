@@ -1,6 +1,6 @@
 # Fase 8.5 · Integridad, frescura y foco de producto
 
-**Estado:** en implementación
+**Estado:** cerrada
 **Última revisión:** 2026-08-10
 
 ## Objetivo
@@ -37,11 +37,13 @@ procedencia son la superficie principal según D-033.
       `skipped` justificable por alcance.
 - [x] salud web y base, ocho categorías, película y fuente verificadas en la URL
       estable de staging.
-- [ ] PR hacia `main` con CI en verde.
+- [x] [PR #4](https://github.com/ortizserratosa/Runscars/pull/4) hacia
+      `main`, lista para revisión y con CI en verde.
 
 La comprobación autenticada del 2026-08-10 creó cuatro cortes con cambio
 efectivo. Una segunda invocación inmediata devolvió ocho estados `unchanged` y
 mantuvo el total de snapshots periódicos en 76. El check de Fase 8 confirmó
 aislamiento de cuentas, publicación explícita y exportación autenticada.
 
-La fase no desbloquea la Fase 9 hasta completar todos estos puntos.
+La puerta queda verde. La Fase 9 puede comenzar como consola operativa mínima,
+pero no se inicia como parte de este corte.
