@@ -637,8 +637,10 @@ select:focus-visible {
 
 .signal-card {
   position: relative;
+  display: flex;
+  flex-direction: column;
   min-height: 390px;
-  padding: 2rem;
+  padding: 2rem 2rem 5rem;
   border-right: 1px solid rgba(242, 239, 230, 0.26);
 }
 
@@ -3244,7 +3246,16 @@ select:focus-visible {
   }
 
   .receipt-stack {
-    min-height: 350px;
+    display: grid;
+    min-height: 0;
+    gap: 1rem;
+  }
+
+  .receipt {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    transform: none;
   }
 
   .site-footer {
@@ -3492,6 +3503,16 @@ select:focus-visible {
   .source-title-row {
     display: grid;
     gap: 2rem;
+  }
+
+  .source-title-row > * {
+    min-width: 0;
+  }
+
+  .source-title-row h1 {
+    max-width: 100%;
+    font-size: clamp(3.2rem, 15vw, 5rem);
+    overflow-wrap: anywhere;
   }
 
   .source-logo-block {

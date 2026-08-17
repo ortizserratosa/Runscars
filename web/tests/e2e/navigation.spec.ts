@@ -255,6 +255,54 @@ test("offers complete navigation at a mobile viewport", async ({ page }) => {
   await expect(navigation.getByRole("link", { name: "Fuentes" })).toBeVisible();
 });
 
+test("keeps mobile homepage copy and receipts from overlapping", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  const collisions = await page.locator(".signal-card").evaluateAll((cards) =>
+    cards.map((card) => {
+      const stat = card.querySelector<HTMLElement>(".signal-stat");
+      const cta = card.querySelector<HTMLElement>(":scope > a");
+      if (!stat || !cta) return 0;
+      const statBox = stat.getBoundingClientRect();
+      const ctaBox = cta.getBoundingClientRect();
+      return Math.max(
+        0,
+        Math.min(statBox.bottom, ctaBox.bottom) -
+          Math.max(statBox.top, ctaBox.top),
+      );
+    }),
+  );
+  expect(collisions).toEqual([0, 0, 0]);
+
+  const receiptPositions = await page.locator(".receipt").evaluateAll((cards) =>
+    cards.map((card) => {
+      const box = card.getBoundingClientRect();
+      return { top: box.top, bottom: box.bottom };
+    }),
+  );
+  for (let index = 1; index < receiptPositions.length; index += 1) {
+    expect(receiptPositions[index].top).toBeGreaterThanOrEqual(
+      receiptPositions[index - 1].bottom,
+    );
+  }
+});
+
+test("keeps long source names inside the mobile viewport", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+
+  for (const slug of ["awardswatch", "midnight-critics"]) {
+    await page.goto(`/fuentes/${slug}`);
+    const widths = await page.evaluate(() => ({
+      client: document.documentElement.clientWidth,
+      scroll: document.documentElement.scrollWidth,
+    }));
+    expect(widths.scroll).toBeLessThanOrEqual(widths.client);
+  }
+});
+
 test("shows six Best Picture media but never gives The Ringer Borda points", async ({
   page,
 }) => {
