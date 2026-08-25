@@ -381,6 +381,89 @@ export type Database = {
           },
         ];
       };
+      editorial_actions: {
+        Row: {
+          id: number;
+          operation_key: string;
+          admin_user_id: string;
+          action_type: string;
+          entity_type: string;
+          entity_id: string;
+          reason: string;
+          before_state: Json | null;
+          after_state: Json | null;
+          created_at: string;
+        };
+        Insert: {
+          id: number;
+          operation_key: string;
+          admin_user_id: string;
+          action_type: string;
+          entity_type: string;
+          entity_id: string;
+          reason: string;
+          before_state?: Json | null;
+          after_state?: Json | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          operation_key?: string;
+          admin_user_id?: string;
+          action_type?: string;
+          entity_type?: string;
+          entity_id?: string;
+          reason?: string;
+          before_state?: Json | null;
+          after_state?: Json | null;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "editorial_actions_admin_user_id_fkey";
+            columns: ["admin_user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      editorial_admins: {
+        Row: {
+          user_id: string;
+          granted_by: string | null;
+          note: string | null;
+          created_at: string;
+        };
+        Insert: {
+          user_id: string;
+          granted_by?: string | null;
+          note?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          user_id?: string;
+          granted_by?: string | null;
+          note?: string | null;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "editorial_admins_granted_by_fkey";
+            columns: ["granted_by"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "editorial_admins_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       film_credit_match_history: {
         Row: {
           id: number;
@@ -2072,10 +2155,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
-            columns: ["season_id"];
+            columns: ["category_id"];
             isOneToOne: false;
             referencedRelation: "category_candidates";
-            referencedColumns: ["id"];
+            referencedColumns: ["season_id"];
           },
           {
             foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
@@ -2107,6 +2190,13 @@ export type Database = {
           },
           {
             foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "category_candidates";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
             columns: ["category_id"];
             isOneToOne: false;
             referencedRelation: "category_candidates";
@@ -2127,34 +2217,6 @@ export type Database = {
             referencedColumns: ["season_id"];
           },
           {
-            foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
-            columns: ["category_id"];
-            isOneToOne: false;
-            referencedRelation: "category_candidates";
-            referencedColumns: ["season_id"];
-          },
-          {
-            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
-            columns: ["season_id"];
-            isOneToOne: false;
-            referencedRelation: "user_rankings";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
-            columns: ["category_id"];
-            isOneToOne: false;
-            referencedRelation: "user_rankings";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
-            columns: ["ranking_id"];
-            isOneToOne: false;
-            referencedRelation: "user_rankings";
-            referencedColumns: ["season_id"];
-          },
-          {
             foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
             columns: ["user_id"];
             isOneToOne: false;
@@ -2202,6 +2264,48 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "user_rankings";
             referencedColumns: ["user_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["ranking_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["ranking_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["season_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["ranking_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["category_id"];
           },
           {
             foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
@@ -2220,27 +2324,6 @@ export type Database = {
           {
             foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
             columns: ["category_id"];
-            isOneToOne: false;
-            referencedRelation: "user_rankings";
-            referencedColumns: ["category_id"];
-          },
-          {
-            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
-            columns: ["ranking_id"];
-            isOneToOne: false;
-            referencedRelation: "user_rankings";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
-            columns: ["user_id"];
-            isOneToOne: false;
-            referencedRelation: "user_rankings";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
-            columns: ["ranking_id"];
             isOneToOne: false;
             referencedRelation: "user_rankings";
             referencedColumns: ["category_id"];
@@ -2278,6 +2361,13 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "user_rankings_season_category_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "season_categories";
+            referencedColumns: ["category_id"];
+          },
+          {
+            foreignKeyName: "user_rankings_season_category_fkey";
             columns: ["category_id"];
             isOneToOne: false;
             referencedRelation: "season_categories";
@@ -2285,21 +2375,14 @@ export type Database = {
           },
           {
             foreignKeyName: "user_rankings_season_category_fkey";
-            columns: ["season_id"];
-            isOneToOne: false;
-            referencedRelation: "season_categories";
-            referencedColumns: ["category_id"];
-          },
-          {
-            foreignKeyName: "user_rankings_season_category_fkey";
-            columns: ["season_id"];
+            columns: ["category_id"];
             isOneToOne: false;
             referencedRelation: "season_categories";
             referencedColumns: ["season_id"];
           },
           {
             foreignKeyName: "user_rankings_season_category_fkey";
-            columns: ["category_id"];
+            columns: ["season_id"];
             isOneToOne: false;
             referencedRelation: "season_categories";
             referencedColumns: ["season_id"];

@@ -1,6 +1,6 @@
 # Registro de decisiones
 
-**Última revisión:** 2026-08-10
+**Última revisión:** 2026-08-25
 
 ## Cómo usar este registro
 
@@ -52,6 +52,9 @@ pasado para ocultar cambios de criterio.
 | D-032 | Cortes públicos solo ante cambios efectivos de proveedor | Aceptada |
 | D-033 | Predicción y evolución como superficie principal | Aceptada |
 | D-034 | Capturas de mercado compactas y efectivas | Aceptada |
+| D-035 | Administración por allowlist y auditoría inmutable | Aceptada |
+| D-036 | Archivo público oficial versionado sin predicción retroactiva | Aceptada |
+| D-037 | Evaluación pública derivada de cierres y resultados vigentes | Aceptada |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -582,3 +585,49 @@ ejemplos manuales de nominaciones y ganador coincidieron con
 - **Refina:** D-026 y D-030. Desde `kalshi-v3` y `polymarket-v3`, los estados
   efectivos vuelven a ser append-only; una comprobación idéntica se registra en
   el run, no como otra captura de precio.
+
+## D-035 · Administración por allowlist y auditoría inmutable
+
+- **Fecha:** 2026-08-25
+- **Estado:** Aceptada
+- **Decisión:** autorizar la consola editorial mediante una allowlist privada
+  vinculada a `auth.users`, no mediante un campo editable del perfil ni una
+  afirmación del cliente. Cada Server Action vuelve a verificar sesión y rol.
+- **Mutaciones:** matching, exclusión, descarte y gobierno de fuentes se ejecutan
+  mediante funciones transaccionales de PostgreSQL. La clave de servicio solo
+  existe en servidor y ninguna función editorial se concede a `anon` o
+  `authenticated`.
+- **Auditoría:** cada operación registra administrador, motivo, entidad, estado
+  anterior y posterior cuando procede y una clave idempotente. La bitácora es
+  append-only; corregir una acción exige otra acción.
+- **Bootstrap:** conceder o revocar acceso es una operación local explícita por
+  correo o UUID (`admin:grant`, `admin:revoke`), nunca una pantalla pública.
+
+## D-036 · Archivo público oficial versionado sin predicción retroactiva
+
+- **Fecha:** 2026-08-25
+- **Estado:** Aceptada
+- **Decisión:** completar D-007 con manifiestos versionados y revisables de las
+  ceremonias 2022–2025 y conservar el archivo 2026 ya importable en Supabase.
+  Las cinco ediciones publican nominados y ganadores de las ocho categorías con
+  URL, autor y fecha de captura de Academy.
+- **Separación:** el archivo histórico es verdad oficial, no una reconstrucción
+  de expectativas. No se crean snapshots ni métricas retrospectivas para años
+  en los que Runscars no capturó predicciones.
+- **Operación vigente:** las nuevas nominaciones y ganadores se registran como
+  `official_result_sets` v2 inmutables desde la consola editorial. El manifiesto
+  histórico estático no sustituye ese flujo operativo.
+
+## D-037 · Evaluación pública derivada de cierres y resultados vigentes
+
+- **Fecha:** 2026-08-25
+- **Estado:** Aceptada
+- **Decisión:** calcular la página pública de evaluación desde los punteros
+  vigentes a snapshots finales y resultados oficiales v2. No se persiste otra
+  tabla de métricas que pueda divergir de esas versiones.
+- **Presentación:** nominaciones muestran precisión y cobertura; ganador muestra
+  si fue primero y su posición. Cada categoría conserva los IDs del snapshot y
+  del result set utilizados y la página agrega los numeradores, no medias de
+  porcentajes.
+- **Ausencia:** si falta un cierre o una publicación oficial compatible, la web
+  muestra estado pendiente y no fabrica una cifra.

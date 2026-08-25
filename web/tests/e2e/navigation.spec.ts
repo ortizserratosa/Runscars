@@ -253,6 +253,59 @@ test("offers complete navigation at a mobile viewport", async ({ page }) => {
     navigation.getByRole("link", { name: "Categorías" }),
   ).toBeVisible();
   await expect(navigation.getByRole("link", { name: "Fuentes" })).toBeVisible();
+  await expect(navigation.getByRole("link", { name: "Crítica" })).toBeVisible();
+  await expect(navigation.getByRole("link", { name: "Método" })).toBeVisible();
+});
+
+test("publishes methodology, evaluation and the five-edition archive", async ({
+  page,
+}) => {
+  await page.goto("/metodologia");
+  await expect(
+    page.getByRole("heading", {
+      level: 1,
+      name: /Una carrera, tres señales/,
+    }),
+  ).toBeVisible();
+  await expect(page.getByText(/puntos =/)).toBeVisible();
+
+  await page.goto("/evaluacion");
+  await expect(
+    page.getByRole("heading", {
+      level: 1,
+      name: /Las predicciones se cierran/,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByText(/no fabricamos predicciones históricas/i),
+  ).toBeVisible();
+
+  await page.goto("/archivo");
+  for (const year of [2026, 2025, 2024, 2023, 2022]) {
+    await expect(
+      page.getByRole("link", { name: new RegExp(`^Oscar ${year}:`) }),
+    ).toBeVisible();
+  }
+  await page.getByRole("link", { name: /^Oscar 2025:/ }).click();
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Oscar 2025" }),
+  ).toBeVisible();
+  await expect(page.getByText("GANADOR", { exact: true })).toHaveCount(8);
+});
+
+test("keeps the critical reception threshold explicit", async ({ page }) => {
+  await page.goto("/critica");
+  await expect(
+    page.getByRole("heading", { level: 1, name: /Lo que dice la crítica/ }),
+  ).toBeVisible();
+  await expect(page.getByText(/tres críticas independientes/i)).toBeVisible();
+});
+
+test("does not expose editorial administration to anonymous users", async ({
+  page,
+}) => {
+  await page.goto("/admin");
+  await expect(page).toHaveURL(/\/acceso$/);
 });
 
 test("keeps mobile homepage copy and receipts from overlapping", async ({

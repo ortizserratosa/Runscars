@@ -13,7 +13,9 @@ export function SiteHeader() {
       <nav className="main-nav" aria-label="Navegación principal">
         <Link href="/temporadas/2027">Temporada</Link>
         <Link href="/temporadas/2027/mejor-pelicula">Categorías</Link>
+        <Link href="/critica">Crítica</Link>
         <Link href="/fuentes">Fuentes</Link>
+        <Link href="/metodologia">Método</Link>
       </nav>
 
       <details className="mobile-nav">
@@ -21,7 +23,9 @@ export function SiteHeader() {
         <nav aria-label="Navegación móvil">
           <Link href="/temporadas/2027">Temporada</Link>
           <Link href="/temporadas/2027/mejor-pelicula">Categorías</Link>
+          <Link href="/critica">Crítica</Link>
           <Link href="/fuentes">Fuentes</Link>
+          <Link href="/metodologia">Método</Link>
         </nav>
       </details>
 

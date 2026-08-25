@@ -1,6 +1,6 @@
 # Hoja de ruta
 
-**Última revisión:** 2026-08-10
+**Última revisión:** 2026-08-25
 
 Cada fase tiene una puerta de salida verificable. Una fase no se considera
 terminada por haber creado archivos o código, sino por cumplir esa puerta.
@@ -20,7 +20,8 @@ terminada por haber creado archivos o código, sino por cumplir esa puerta.
 | 7.1  | Cobertura multcategoría, archivo y mercados | Completada        |
 | 8    | Usuarios                                    | Completada        |
 | 8.5  | Integridad, frescura y foco de producto      | Completada        |
-| 9    | Administración editorial                    | Pendiente         |
+| 9    | Administración editorial                    | Completada        |
+| 9.5  | Cierre funcional público                    | Completada        |
 | 10   | QA y MVP desplegado                         | Pendiente         |
 
 ## Fase 0 · Contrato y registros
@@ -312,6 +313,10 @@ cron y todos los checks pasan en staging. Evidencia en
 
 ## Fase 9 · Administración editorial
 
+**Cerrada:** 2026-08-25. La consola privada cubre cola editorial, catálogo,
+fuentes, conectores, ingestas, snapshots, resultados y auditoría. La allowlist,
+RLS y permisos de función impiden el acceso de usuarios ordinarios.
+
 ### Entregables
 
 - matching y correcciones;
@@ -326,13 +331,35 @@ cron y todos los checks pasan en staging. Evidencia en
 Un administrador puede resolver los errores habituales sin editar directamente
 la base de datos y un usuario normal no accede a esas funciones.
 
+Diseño, operación y evidencia en [PHASE_9.md](PHASE_9.md).
+
+## Fase 9.5 · Cierre funcional público
+
+**Cerrada:** 2026-08-25. Completa las funciones originales que no tenían aún
+una superficie pública integral antes de entrar en QA de lanzamiento.
+
+### Entregables
+
+- metodología pública;
+- archivo oficial navegable de Oscar 2022–2026 en ocho categorías;
+- evaluación por categoría y global desde cierres y resultados v2;
+- descubrimiento de recepción crítica sujeto al umbral metodológico.
+
+### Puerta de salida
+
+Un visitante puede entender el cálculo, recorrer las cinco ceremonias
+históricas, consultar el estado de evaluación sin cifras retrospectivas
+inventadas y descubrir recepción crítica sin mezclarla con predicciones.
+
+Alcance y evidencia en [PHASE_9_5.md](PHASE_9_5.md).
+
 ## Fase 10 · QA y MVP
 
 ### Entregables
 
 - pruebas end-to-end;
 - revisión móvil, accesibilidad y rendimiento;
-- página de metodología y créditos;
+- créditos y revisión legal/editorial final;
 - backup y restauración;
 - revisión de publicación de fuentes;
 - despliegue final.

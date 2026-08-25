@@ -1,7 +1,7 @@
 # Contrato de producto
 
 **Estado:** contrato aceptado para el MVP
-**Última revisión:** 2026-08-10
+**Última revisión:** 2026-08-25
 
 ## 1. Visión
 
@@ -210,7 +210,8 @@ publican cuando alcanzan la cobertura aprobada.
 | RF-13 | Mostrar frescura y estado de las fuentes |
 | RF-14 | Funcionar correctamente en móvil y escritorio |
 | RF-15 | Mostrar mercados separados por proveedor y fuera del agregado profesional |
-| RF-16 | Publicar las ocho categorías desde datos persistidos y archivar Oscar 2026 |
+| RF-16 | Publicar las ocho categorías desde datos persistidos y archivar Oscar 2022–2026 |
+| RF-17 | Publicar metodología y evaluación por categoría y global desde versiones bloqueadas |
 
 ## 9. Fuera del MVP
 

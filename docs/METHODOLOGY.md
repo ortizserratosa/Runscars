@@ -1,7 +1,7 @@
 # Metodología
 
 **Estado:** agregación, snapshots y evaluación profesional operativos
-**Última revisión:** 2026-08-10
+**Última revisión:** 2026-08-25
 
 ## 1. Principios
 

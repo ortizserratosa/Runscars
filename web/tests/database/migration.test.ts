@@ -1290,4 +1290,112 @@ describe("versioned database foundation", () => {
       `),
     ).rejects.toThrow();
   });
+
+  it("restricts editorial administration and keeps an immutable idempotent audit", async () => {
+    await database.exec(await readFile(seedPath, "utf8"));
+    await database.exec(`
+      insert into auth.users (id, email)
+      values
+        ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', 'admin@example.test'),
+        ('bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb', 'user@example.test');
+
+      insert into public.editorial_admins (user_id, note)
+      values (
+        'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',
+        'Administrador de prueba'
+      );
+
+      set role service_role;
+    `);
+
+    const updated = await database.query<{ state: unknown }>(`
+      select public.editorial_update_source(
+        'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',
+        'test-source-operation-0001',
+        'academy',
+        'selected',
+        'automated',
+        'publishable',
+        'Fuente oficial comprobada',
+        'Revisión editorial de prueba'
+      ) as state
+    `);
+    expect(updated.rows[0]?.state).toMatchObject({
+      id: "academy",
+      publication_status: "publishable",
+      notes: "Fuente oficial comprobada",
+    });
+
+    const firstAudit = await database.query<{ id: number }>(`
+      select public.record_editorial_action(
+        'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',
+        'test-idempotent-operation-0001',
+        'test.action',
+        'source',
+        'academy',
+        'Motivo de prueba',
+        null,
+        '{"ok":true}'::jsonb
+      ) as id
+    `);
+    const repeatedAudit = await database.query<{ id: number }>(`
+      select public.record_editorial_action(
+        'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',
+        'test-idempotent-operation-0001',
+        'test.action',
+        'source',
+        'academy',
+        'Motivo de prueba',
+        null,
+        '{"ok":true}'::jsonb
+      ) as id
+    `);
+    expect(repeatedAudit.rows[0]?.id).toBe(firstAudit.rows[0]?.id);
+
+    await database.exec("reset role;");
+    const actionCount = await database.query<{ actions: number }>(`
+      select count(*)::int as actions
+      from public.editorial_actions
+      where operation_key = 'test-idempotent-operation-0001'
+    `);
+    expect(actionCount.rows[0]?.actions).toBe(1);
+
+    await database.exec("set role service_role;");
+    await expect(
+      database.query(`
+        select public.editorial_update_source(
+          'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb',
+          'test-source-operation-0002',
+          'academy',
+          'selected',
+          'automated',
+          'publishable',
+          null,
+          'Intento no autorizado'
+        )
+      `),
+    ).rejects.toThrow("editorial administrator required");
+
+    await database.exec("reset role;");
+    await expect(
+      database.exec(`
+        update public.editorial_actions
+        set reason = 'Motivo alterado'
+        where operation_key = 'test-idempotent-operation-0001'
+      `),
+    ).rejects.toThrow("immutable");
+
+    await database.exec("set role anon;");
+    await expect(
+      database.query("select * from public.editorial_admins"),
+    ).rejects.toThrow();
+    await expect(
+      database.query("select * from public.editorial_actions"),
+    ).rejects.toThrow();
+    await expect(
+      database.query(
+        "select public.is_editorial_admin('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa')",
+      ),
+    ).rejects.toThrow();
+  });
 });

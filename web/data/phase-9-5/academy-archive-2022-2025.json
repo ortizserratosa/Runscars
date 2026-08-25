@@ -1,0 +1,561 @@
+{
+  "formatVersion": 1,
+  "capturedAt": "2026-08-25T12:00:00.000Z",
+  "source": {
+    "sourceId": "academy",
+    "author": "Academy of Motion Picture Arts and Sciences",
+    "urlTemplate": "https://www.oscars.org/oscars/ceremonies/{year}"
+  },
+  "editions": [
+    {
+      "ceremonyYear": 2025,
+      "eligibilityYear": 2024,
+      "ceremonyOn": "2025-03-02",
+      "categories": [
+        {
+          "categoryId": "best-picture",
+          "nominees": [
+            { "film": "Anora", "winner": true },
+            { "film": "The Brutalist" },
+            { "film": "A Complete Unknown" },
+            { "film": "Conclave" },
+            { "film": "Dune: Part Two" },
+            { "film": "Emilia Pérez" },
+            { "film": "I'm Still Here" },
+            { "film": "Nickel Boys" },
+            { "film": "The Substance" },
+            { "film": "Wicked" }
+          ]
+        },
+        {
+          "categoryId": "directing",
+          "nominees": [
+            { "film": "Anora", "people": ["Sean Baker"], "winner": true },
+            { "film": "The Brutalist", "people": ["Brady Corbet"] },
+            { "film": "A Complete Unknown", "people": ["James Mangold"] },
+            { "film": "Emilia Pérez", "people": ["Jacques Audiard"] },
+            { "film": "The Substance", "people": ["Coralie Fargeat"] }
+          ]
+        },
+        {
+          "categoryId": "actor",
+          "nominees": [
+            {
+              "film": "The Brutalist",
+              "people": ["Adrien Brody"],
+              "winner": true
+            },
+            { "film": "A Complete Unknown", "people": ["Timothée Chalamet"] },
+            { "film": "Sing Sing", "people": ["Colman Domingo"] },
+            { "film": "Conclave", "people": ["Ralph Fiennes"] },
+            { "film": "The Apprentice", "people": ["Sebastian Stan"] }
+          ]
+        },
+        {
+          "categoryId": "actress",
+          "nominees": [
+            { "film": "Anora", "people": ["Mikey Madison"], "winner": true },
+            { "film": "Wicked", "people": ["Cynthia Erivo"] },
+            { "film": "Emilia Pérez", "people": ["Karla Sofía Gascón"] },
+            { "film": "The Substance", "people": ["Demi Moore"] },
+            { "film": "I'm Still Here", "people": ["Fernanda Torres"] }
+          ]
+        },
+        {
+          "categoryId": "supporting-actor",
+          "nominees": [
+            {
+              "film": "A Real Pain",
+              "people": ["Kieran Culkin"],
+              "winner": true
+            },
+            { "film": "Anora", "people": ["Yura Borisov"] },
+            { "film": "A Complete Unknown", "people": ["Edward Norton"] },
+            { "film": "The Brutalist", "people": ["Guy Pearce"] },
+            { "film": "The Apprentice", "people": ["Jeremy Strong"] }
+          ]
+        },
+        {
+          "categoryId": "supporting-actress",
+          "nominees": [
+            {
+              "film": "Emilia Pérez",
+              "people": ["Zoe Saldaña"],
+              "winner": true
+            },
+            { "film": "A Complete Unknown", "people": ["Monica Barbaro"] },
+            { "film": "Wicked", "people": ["Ariana Grande"] },
+            { "film": "The Brutalist", "people": ["Felicity Jones"] },
+            { "film": "Conclave", "people": ["Isabella Rossellini"] }
+          ]
+        },
+        {
+          "categoryId": "original-screenplay",
+          "nominees": [
+            { "film": "Anora", "people": ["Sean Baker"], "winner": true },
+            {
+              "film": "The Brutalist",
+              "people": ["Brady Corbet", "Mona Fastvold"]
+            },
+            { "film": "A Real Pain", "people": ["Jesse Eisenberg"] },
+            {
+              "film": "September 5",
+              "people": ["Moritz Binder", "Tim Fehlbaum", "Alex David"]
+            },
+            { "film": "The Substance", "people": ["Coralie Fargeat"] }
+          ]
+        },
+        {
+          "categoryId": "adapted-screenplay",
+          "nominees": [
+            {
+              "film": "Conclave",
+              "people": ["Peter Straughan"],
+              "winner": true
+            },
+            {
+              "film": "A Complete Unknown",
+              "people": ["James Mangold", "Jay Cocks"]
+            },
+            {
+              "film": "Emilia Pérez",
+              "people": [
+                "Jacques Audiard",
+                "Thomas Bidegain",
+                "Léa Mysius",
+                "Nicolas Livecchi"
+              ]
+            },
+            {
+              "film": "Nickel Boys",
+              "people": ["RaMell Ross", "Joslyn Barnes"]
+            },
+            {
+              "film": "Sing Sing",
+              "people": [
+                "Clint Bentley",
+                "Greg Kwedar",
+                "Clarence Maclin",
+                "John 'Divine G' Whitfield"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ceremonyYear": 2024,
+      "eligibilityYear": 2023,
+      "ceremonyOn": "2024-03-10",
+      "categories": [
+        {
+          "categoryId": "best-picture",
+          "nominees": [
+            { "film": "Oppenheimer", "winner": true },
+            { "film": "American Fiction" },
+            { "film": "Anatomy of a Fall" },
+            { "film": "Barbie" },
+            { "film": "The Holdovers" },
+            { "film": "Killers of the Flower Moon" },
+            { "film": "Maestro" },
+            { "film": "Past Lives" },
+            { "film": "Poor Things" },
+            { "film": "The Zone of Interest" }
+          ]
+        },
+        {
+          "categoryId": "directing",
+          "nominees": [
+            {
+              "film": "Oppenheimer",
+              "people": ["Christopher Nolan"],
+              "winner": true
+            },
+            { "film": "Anatomy of a Fall", "people": ["Justine Triet"] },
+            {
+              "film": "Killers of the Flower Moon",
+              "people": ["Martin Scorsese"]
+            },
+            { "film": "Poor Things", "people": ["Yorgos Lanthimos"] },
+            { "film": "The Zone of Interest", "people": ["Jonathan Glazer"] }
+          ]
+        },
+        {
+          "categoryId": "actor",
+          "nominees": [
+            {
+              "film": "Oppenheimer",
+              "people": ["Cillian Murphy"],
+              "winner": true
+            },
+            { "film": "Maestro", "people": ["Bradley Cooper"] },
+            { "film": "Rustin", "people": ["Colman Domingo"] },
+            { "film": "The Holdovers", "people": ["Paul Giamatti"] },
+            { "film": "American Fiction", "people": ["Jeffrey Wright"] }
+          ]
+        },
+        {
+          "categoryId": "actress",
+          "nominees": [
+            { "film": "Poor Things", "people": ["Emma Stone"], "winner": true },
+            { "film": "Nyad", "people": ["Annette Bening"] },
+            {
+              "film": "Killers of the Flower Moon",
+              "people": ["Lily Gladstone"]
+            },
+            { "film": "Anatomy of a Fall", "people": ["Sandra Hüller"] },
+            { "film": "Maestro", "people": ["Carey Mulligan"] }
+          ]
+        },
+        {
+          "categoryId": "supporting-actor",
+          "nominees": [
+            {
+              "film": "Oppenheimer",
+              "people": ["Robert Downey Jr."],
+              "winner": true
+            },
+            { "film": "American Fiction", "people": ["Sterling K. Brown"] },
+            {
+              "film": "Killers of the Flower Moon",
+              "people": ["Robert De Niro"]
+            },
+            { "film": "Barbie", "people": ["Ryan Gosling"] },
+            { "film": "Poor Things", "people": ["Mark Ruffalo"] }
+          ]
+        },
+        {
+          "categoryId": "supporting-actress",
+          "nominees": [
+            {
+              "film": "The Holdovers",
+              "people": ["Da'Vine Joy Randolph"],
+              "winner": true
+            },
+            { "film": "Oppenheimer", "people": ["Emily Blunt"] },
+            { "film": "The Color Purple", "people": ["Danielle Brooks"] },
+            { "film": "Barbie", "people": ["America Ferrera"] },
+            { "film": "Nyad", "people": ["Jodie Foster"] }
+          ]
+        },
+        {
+          "categoryId": "original-screenplay",
+          "nominees": [
+            {
+              "film": "Anatomy of a Fall",
+              "people": ["Justine Triet", "Arthur Harari"],
+              "winner": true
+            },
+            { "film": "The Holdovers", "people": ["David Hemingson"] },
+            { "film": "Maestro", "people": ["Bradley Cooper", "Josh Singer"] },
+            {
+              "film": "May December",
+              "people": ["Samy Burch", "Alex Mechanik"]
+            },
+            { "film": "Past Lives", "people": ["Celine Song"] }
+          ]
+        },
+        {
+          "categoryId": "adapted-screenplay",
+          "nominees": [
+            {
+              "film": "American Fiction",
+              "people": ["Cord Jefferson"],
+              "winner": true
+            },
+            { "film": "Barbie", "people": ["Greta Gerwig", "Noah Baumbach"] },
+            { "film": "Oppenheimer", "people": ["Christopher Nolan"] },
+            { "film": "Poor Things", "people": ["Tony McNamara"] },
+            { "film": "The Zone of Interest", "people": ["Jonathan Glazer"] }
+          ]
+        }
+      ]
+    },
+    {
+      "ceremonyYear": 2023,
+      "eligibilityYear": 2022,
+      "ceremonyOn": "2023-03-12",
+      "categories": [
+        {
+          "categoryId": "best-picture",
+          "nominees": [
+            { "film": "Everything Everywhere All at Once", "winner": true },
+            { "film": "All Quiet on the Western Front" },
+            { "film": "Avatar: The Way of Water" },
+            { "film": "The Banshees of Inisherin" },
+            { "film": "Elvis" },
+            { "film": "The Fabelmans" },
+            { "film": "Tár" },
+            { "film": "Top Gun: Maverick" },
+            { "film": "Triangle of Sadness" },
+            { "film": "Women Talking" }
+          ]
+        },
+        {
+          "categoryId": "directing",
+          "nominees": [
+            {
+              "film": "Everything Everywhere All at Once",
+              "people": ["Daniel Kwan", "Daniel Scheinert"],
+              "winner": true
+            },
+            {
+              "film": "The Banshees of Inisherin",
+              "people": ["Martin McDonagh"]
+            },
+            { "film": "The Fabelmans", "people": ["Steven Spielberg"] },
+            { "film": "Tár", "people": ["Todd Field"] },
+            { "film": "Triangle of Sadness", "people": ["Ruben Östlund"] }
+          ]
+        },
+        {
+          "categoryId": "actor",
+          "nominees": [
+            {
+              "film": "The Whale",
+              "people": ["Brendan Fraser"],
+              "winner": true
+            },
+            { "film": "Elvis", "people": ["Austin Butler"] },
+            {
+              "film": "The Banshees of Inisherin",
+              "people": ["Colin Farrell"]
+            },
+            { "film": "Aftersun", "people": ["Paul Mescal"] },
+            { "film": "Living", "people": ["Bill Nighy"] }
+          ]
+        },
+        {
+          "categoryId": "actress",
+          "nominees": [
+            {
+              "film": "Everything Everywhere All at Once",
+              "people": ["Michelle Yeoh"],
+              "winner": true
+            },
+            { "film": "Tár", "people": ["Cate Blanchett"] },
+            { "film": "Blonde", "people": ["Ana de Armas"] },
+            { "film": "To Leslie", "people": ["Andrea Riseborough"] },
+            { "film": "The Fabelmans", "people": ["Michelle Williams"] }
+          ]
+        },
+        {
+          "categoryId": "supporting-actor",
+          "nominees": [
+            {
+              "film": "Everything Everywhere All at Once",
+              "people": ["Ke Huy Quan"],
+              "winner": true
+            },
+            {
+              "film": "The Banshees of Inisherin",
+              "people": ["Brendan Gleeson"]
+            },
+            { "film": "Causeway", "people": ["Brian Tyree Henry"] },
+            { "film": "The Fabelmans", "people": ["Judd Hirsch"] },
+            { "film": "The Banshees of Inisherin", "people": ["Barry Keoghan"] }
+          ]
+        },
+        {
+          "categoryId": "supporting-actress",
+          "nominees": [
+            {
+              "film": "Everything Everywhere All at Once",
+              "people": ["Jamie Lee Curtis"],
+              "winner": true
+            },
+            {
+              "film": "Black Panther: Wakanda Forever",
+              "people": ["Angela Bassett"]
+            },
+            { "film": "The Whale", "people": ["Hong Chau"] },
+            { "film": "The Banshees of Inisherin", "people": ["Kerry Condon"] },
+            {
+              "film": "Everything Everywhere All at Once",
+              "people": ["Stephanie Hsu"]
+            }
+          ]
+        },
+        {
+          "categoryId": "original-screenplay",
+          "nominees": [
+            {
+              "film": "Everything Everywhere All at Once",
+              "people": ["Daniel Kwan", "Daniel Scheinert"],
+              "winner": true
+            },
+            {
+              "film": "The Banshees of Inisherin",
+              "people": ["Martin McDonagh"]
+            },
+            {
+              "film": "The Fabelmans",
+              "people": ["Steven Spielberg", "Tony Kushner"]
+            },
+            { "film": "Tár", "people": ["Todd Field"] },
+            { "film": "Triangle of Sadness", "people": ["Ruben Östlund"] }
+          ]
+        },
+        {
+          "categoryId": "adapted-screenplay",
+          "nominees": [
+            {
+              "film": "Women Talking",
+              "people": ["Sarah Polley"],
+              "winner": true
+            },
+            {
+              "film": "All Quiet on the Western Front",
+              "people": ["Edward Berger", "Lesley Paterson", "Ian Stokell"]
+            },
+            {
+              "film": "Glass Onion: A Knives Out Mystery",
+              "people": ["Rian Johnson"]
+            },
+            { "film": "Living", "people": ["Kazuo Ishiguro"] },
+            {
+              "film": "Top Gun: Maverick",
+              "people": [
+                "Ehren Kruger",
+                "Eric Warren Singer",
+                "Christopher McQuarrie",
+                "Peter Craig",
+                "Justin Marks"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ceremonyYear": 2022,
+      "eligibilityYear": 2021,
+      "ceremonyOn": "2022-03-27",
+      "categories": [
+        {
+          "categoryId": "best-picture",
+          "nominees": [
+            { "film": "CODA", "winner": true },
+            { "film": "Belfast" },
+            { "film": "Don't Look Up" },
+            { "film": "Drive My Car" },
+            { "film": "Dune" },
+            { "film": "King Richard" },
+            { "film": "Licorice Pizza" },
+            { "film": "Nightmare Alley" },
+            { "film": "The Power of the Dog" },
+            { "film": "West Side Story" }
+          ]
+        },
+        {
+          "categoryId": "directing",
+          "nominees": [
+            {
+              "film": "The Power of the Dog",
+              "people": ["Jane Campion"],
+              "winner": true
+            },
+            { "film": "Belfast", "people": ["Kenneth Branagh"] },
+            { "film": "Drive My Car", "people": ["Ryusuke Hamaguchi"] },
+            { "film": "Licorice Pizza", "people": ["Paul Thomas Anderson"] },
+            { "film": "West Side Story", "people": ["Steven Spielberg"] }
+          ]
+        },
+        {
+          "categoryId": "actor",
+          "nominees": [
+            {
+              "film": "King Richard",
+              "people": ["Will Smith"],
+              "winner": true
+            },
+            { "film": "Being the Ricardos", "people": ["Javier Bardem"] },
+            {
+              "film": "The Power of the Dog",
+              "people": ["Benedict Cumberbatch"]
+            },
+            { "film": "tick, tick...BOOM!", "people": ["Andrew Garfield"] },
+            {
+              "film": "The Tragedy of Macbeth",
+              "people": ["Denzel Washington"]
+            }
+          ]
+        },
+        {
+          "categoryId": "actress",
+          "nominees": [
+            {
+              "film": "The Eyes of Tammy Faye",
+              "people": ["Jessica Chastain"],
+              "winner": true
+            },
+            { "film": "The Lost Daughter", "people": ["Olivia Colman"] },
+            { "film": "Parallel Mothers", "people": ["Penélope Cruz"] },
+            { "film": "Being the Ricardos", "people": ["Nicole Kidman"] },
+            { "film": "Spencer", "people": ["Kristen Stewart"] }
+          ]
+        },
+        {
+          "categoryId": "supporting-actor",
+          "nominees": [
+            { "film": "CODA", "people": ["Troy Kotsur"], "winner": true },
+            { "film": "Belfast", "people": ["Ciarán Hinds"] },
+            { "film": "The Power of the Dog", "people": ["Jesse Plemons"] },
+            { "film": "Being the Ricardos", "people": ["J.K. Simmons"] },
+            { "film": "The Power of the Dog", "people": ["Kodi Smit-McPhee"] }
+          ]
+        },
+        {
+          "categoryId": "supporting-actress",
+          "nominees": [
+            {
+              "film": "West Side Story",
+              "people": ["Ariana DeBose"],
+              "winner": true
+            },
+            { "film": "The Lost Daughter", "people": ["Jessie Buckley"] },
+            { "film": "Belfast", "people": ["Judi Dench"] },
+            { "film": "The Power of the Dog", "people": ["Kirsten Dunst"] },
+            { "film": "King Richard", "people": ["Aunjanue Ellis"] }
+          ]
+        },
+        {
+          "categoryId": "original-screenplay",
+          "nominees": [
+            {
+              "film": "Belfast",
+              "people": ["Kenneth Branagh"],
+              "winner": true
+            },
+            {
+              "film": "Don't Look Up",
+              "people": ["Adam McKay", "David Sirota"]
+            },
+            { "film": "King Richard", "people": ["Zach Baylin"] },
+            { "film": "Licorice Pizza", "people": ["Paul Thomas Anderson"] },
+            {
+              "film": "The Worst Person in the World",
+              "people": ["Eskil Vogt", "Joachim Trier"]
+            }
+          ]
+        },
+        {
+          "categoryId": "adapted-screenplay",
+          "nominees": [
+            { "film": "CODA", "people": ["Siân Heder"], "winner": true },
+            {
+              "film": "Drive My Car",
+              "people": ["Ryusuke Hamaguchi", "Takamasa Oe"]
+            },
+            {
+              "film": "Dune",
+              "people": ["Jon Spaihts", "Denis Villeneuve", "Eric Roth"]
+            },
+            { "film": "The Lost Daughter", "people": ["Maggie Gyllenhaal"] },
+            { "film": "The Power of the Dog", "people": ["Jane Campion"] }
+          ]
+        }
+      ]
+    }
+  ]
+}
