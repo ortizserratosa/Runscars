@@ -453,6 +453,20 @@ export function parseManualManifest(manifest, { capturedAt }) {
       publication.canonicalUrl,
       "publication.canonicalUrl",
     );
+    const discoveredVia = asArray(publication.discoveredVia).map(
+      (discovery) => ({
+        sourceId: requiredText(
+          discovery.sourceId,
+          "publication.discoveredVia.sourceId",
+        ),
+        url: requiredHttpsUrl(discovery.url, "publication.discoveredVia.url"),
+        discoveredAt: isoDate(
+          discovery.discoveredAt,
+          "publication.discoveredVia.discoveredAt",
+          true,
+        ),
+      }),
+    );
     return {
       externalId: requiredText(
         publication.externalId,
@@ -469,6 +483,7 @@ export function parseManualManifest(manifest, { capturedAt }) {
         "publication.publishedAt",
         true,
       ),
+      discoveredVia,
       originalData: publication.originalData ?? {
         manually_entered: true,
         title: publication.title,

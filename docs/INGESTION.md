@@ -29,6 +29,12 @@ Una observación publicada puede recorrerse hasta `source_url`, publicación,
 autor, fecha de publicación, captura y versión del extractor. No existe ningún
 campo normalizado ni agregado en esta fase.
 
+Una publicación manual puede incluir `discoveredVia`, una lista de índices como
+Metacritic, Rotten Tomatoes o FilmAffinity. Se persiste en
+`source_publication_discoveries` con la URL y fecha del hallazgo. El
+`source_id` de la observación sigue siendo el medio original; la URL del
+agregador no sustituye la procedencia canónica ni crea una crítica extra.
+
 La deduplicación usa un SHA-256 estable de fuente, publicación canónica,
 autoría, sujeto resuelto o rótulo original, tipo, categoría, intención y valor
 original. Una nueva captura idéntica reutiliza su hash; una publicación que
@@ -85,6 +91,31 @@ El formato reproducible se ejemplifica en
 `web/tests/fixtures/ingestion/manual.json`. Requiere `formatVersion`,
 `sourceId`, `seasonId`, publicaciones canónicas y observaciones con valor
 original.
+
+Para una pieza localizada en un agregador:
+
+```json
+{
+  "sourceId": "guardian",
+  "publications": [
+    {
+      "externalId": "film/2026/example-review",
+      "canonicalUrl": "https://www.theguardian.com/film/example-review",
+      "title": "Reseña original",
+      "discoveredVia": [
+        {
+          "sourceId": "metacritic",
+          "url": "https://www.metacritic.com/movie/example/critic-reviews/"
+        }
+      ]
+    }
+  ]
+}
+```
+
+La puntuación comunitaria de FilmAffinity no se importa como recepción
+profesional. Solo sus listados de críticas profesionales pueden servir como
+índice de descubrimiento.
 
 ```bash
 npm run ingest:manual -- web/tests/fixtures/ingestion/manual.json

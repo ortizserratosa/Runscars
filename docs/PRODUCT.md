@@ -64,10 +64,13 @@ La interfaz usará una etiqueta inequívoca como
 ### Recepción crítica
 
 Puntuaciones publicadas por críticos o medios y normalizadas a una escala de
-cero a cinco estrellas. Siempre se muestra también la escala original. Solo se
+cero a cinco estrellas. Los agregadores aprobados pueden descubrir esas piezas,
+pero cada crítica conserva su medio, autor y URL originales y se deduplica por
+publicación canónica. Siempre se muestra también la escala original. Solo se
 promociona como agregado cuando existen al menos tres puntuaciones individuales
 independientes; con menos cobertura aparece únicamente en la ficha relacionada
-y rotulada como insuficiente.
+y rotulada como insuficiente. Tomatometer y Metascore aparecen en una capa de
+contexto separada y no se mezclan con esta media.
 
 ### Predicciones
 
@@ -196,7 +199,7 @@ publican cuando alcanzan la cobertura aprobada.
 | ID | Requisito |
 |---|---|
 | RF-01 | Navegar por temporada y categoría sin cuenta |
-| RF-02 | Mantener recepción crítica separada y promocionarla solo con cobertura suficiente |
+| RF-02 | Mantener recepción crítica separada, deduplicar críticas descubiertas por agregadores y promocionarla solo con cobertura suficiente |
 | RF-03 | Mostrar procedencia y fecha de cada dato profesional |
 | RF-04 | Mantener fichas canónicas de película y persona |
 | RF-05 | Importar metadatos de TMDB con corrección manual |

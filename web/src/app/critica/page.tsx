@@ -13,7 +13,13 @@ export const dynamic = "force-dynamic";
 export default async function CriticalReceptionPage() {
   const ranking = await getCriticalReceptionRanking();
   const sufficient = ranking.filter((entry) => entry.aggregate.isSufficient);
-  const limited = ranking.filter((entry) => !entry.aggregate.isSufficient);
+  const limited = ranking.filter(
+    (entry) =>
+      !entry.aggregate.isSufficient && entry.aggregate.scores.length > 0,
+  );
+  const contextual = ranking.filter(
+    (entry) => entry.aggregate.contextualScores.length > 0,
+  );
 
   return (
     <main className="page-shell critical-page">
@@ -47,7 +53,7 @@ export default async function CriticalReceptionPage() {
             </li>
           ))}
         </ol>
-      ) : (
+      ) : !limited.length && !contextual.length ? (
         <section className="critical-empty">
           <h2>Todavía no hay una película con cobertura suficiente.</h2>
           <p>
@@ -55,7 +61,7 @@ export default async function CriticalReceptionPage() {
             elevamos una media con menos de tres notas independientes.
           </p>
         </section>
-      )}
+      ) : null}
 
       {limited.length ? (
         <section className="critical-limited">
@@ -69,6 +75,42 @@ export default async function CriticalReceptionPage() {
                 <strong>{entry.filmTitle}</strong>
                 <span>{entry.aggregate.scores.length}/3 críticas</span>
               </Link>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      {contextual.length ? (
+        <section className="critical-context">
+          <header>
+            <p className="section-index">AGREGADOS · CONTEXTO</p>
+            <h2>Consensos publicados por los agregadores</h2>
+            <p>
+              Tomatometer y Metascore conservan su escala y denominador. No son
+              una media Runscars y no se mezclan con las críticas individuales.
+            </p>
+          </header>
+          <div className="critical-context-grid">
+            {contextual.map((entry) => (
+              <article key={entry.filmId}>
+                <Link href={`/peliculas/${entry.filmId}`}>
+                  <h3>{entry.filmTitle}</h3>
+                </Link>
+                <div>
+                  {entry.aggregate.contextualScores.map((score) => (
+                    <a
+                      href={score.publicationUrl}
+                      key={score.id}
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      <span>{score.sourceName}</span>
+                      <strong>{score.originalDisplay}</strong>
+                      <small>{score.scaleLabel}</small>
+                    </a>
+                  ))}
+                </div>
+              </article>
             ))}
           </div>
         </section>

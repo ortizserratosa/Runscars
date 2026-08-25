@@ -126,7 +126,13 @@ en una reseña individual ni participan en la media Runscars. Pueden mostrarse
 como contexto claramente atribuido.
 
 Esta separación evita mezclar conceptos distintos y contar dos veces reseñas
-que también lleguen desde su medio original.
+que también lleguen desde su medio original. Los agregadores aprobados también
+pueden actuar como índices de descubrimiento: la observación individual se
+guarda con el medio, autor y URL de la publicación original, y la captura añade
+la URL del agregador que la encontró. Una misma publicación canónica conserva
+una sola voz aunque aparezca en varios índices. FilmAffinity se usa para su
+listado de críticas profesionales, no para convertir la valoración comunitaria
+en recepción profesional.
 
 ## 4. Predicciones
 

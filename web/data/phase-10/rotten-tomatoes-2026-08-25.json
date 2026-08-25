@@ -1,0 +1,71 @@
+{
+  "formatVersion": 1,
+  "sourceId": "rotten-tomatoes",
+  "seasonId": "oscars-2027",
+  "publications": [
+    {
+      "externalId": "the-odyssey-2026",
+      "canonicalUrl": "https://www.rottentomatoes.com/m/the_odyssey_2026",
+      "title": "The Odyssey",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "tomatometer",
+        "score": 94,
+        "critic_review_count": 500,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "The Odyssey",
+          "filmId": "the-odyssey",
+          "originalValue": {
+            "score": 94,
+            "critic_review_count": 500
+          },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Tomatometer approval",
+            "denominator": 500,
+            "interpretation": "percentage of positive professional reviews"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "project-hail-mary-2026",
+      "canonicalUrl": "https://www.rottentomatoes.com/m/project_hail_mary",
+      "title": "Project Hail Mary",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "tomatometer",
+        "score": 95,
+        "critic_review_count": 429,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "Project Hail Mary",
+          "filmId": "project-hail-mary",
+          "originalValue": {
+            "score": 95,
+            "critic_review_count": 429
+          },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Tomatometer approval",
+            "denominator": 429,
+            "interpretation": "percentage of positive professional reviews"
+          },
+          "participates": false
+        }
+      ]
+    }
+  ]
+}

@@ -357,6 +357,9 @@ Alcance y evidencia en [PHASE_9_5.md](PHASE_9_5.md).
 
 ### Entregables
 
+- discovery de crítica profesional a través de agregadores, con deduplicación y
+  trazabilidad hacia el medio original;
+- contexto público separado para agregados Tomatometer y Metascore;
 - pruebas end-to-end;
 - revisión móvil, accesibilidad y rendimiento;
 - control de cuotas y degradación segura de recursos externos;

@@ -9,6 +9,13 @@
       "title": "The Odyssey Reviews",
       "author": "Metacritic",
       "publishedAt": "2026-07-24T12:00:00Z",
+      "discoveredVia": [
+        {
+          "sourceId": "rotten-tomatoes",
+          "url": "https://www.rottentomatoes.com/m/the_odyssey_2026",
+          "discoveredAt": "2026-07-24T12:05:00Z"
+        }
+      ],
       "originalData": {
         "label": "Metascore",
         "value": 79,

@@ -1,0 +1,105 @@
+{
+  "formatVersion": 1,
+  "sourceId": "guardian",
+  "seasonId": "oscars-2027",
+  "publications": [
+    {
+      "externalId": "film/2026/jul/15/the-odyssey-review",
+      "canonicalUrl": "https://www.theguardian.com/film/2026/jul/15/the-odyssey-review-christopher-nolan-matt-damon",
+      "title": "The Odyssey review – Christopher Nolan returns",
+      "author": "Peter Bradshaw",
+      "publishedAt": "2026-07-15T08:00:00Z",
+      "discoveredVia": [
+        {
+          "sourceId": "metacritic",
+          "url": "https://www.metacritic.com/movie/the-odyssey-2026/critic-reviews/"
+        },
+        {
+          "sourceId": "rotten-tomatoes",
+          "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
+        },
+        {
+          "sourceId": "filmaffinity",
+          "url": "https://www.filmaffinity.com/es/latestreviews.php"
+        }
+      ],
+      "originalData": {
+        "discovery_only": true,
+        "source_capture": "guardian metadata"
+      },
+      "observations": [
+        {
+          "dataType": "review",
+          "subject": "The Odyssey",
+          "filmId": "the-odyssey",
+          "originalValue": {
+            "linked_review": true
+          }
+        },
+        {
+          "dataType": "score_individual",
+          "subject": "The Odyssey",
+          "filmId": "the-odyssey",
+          "originalValue": {
+            "score": 5
+          },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 5,
+            "unit": "stars"
+          },
+          "participates": true
+        }
+      ]
+    },
+    {
+      "externalId": "film/2026/mar/10/project-hail-mary-review",
+      "canonicalUrl": "https://www.theguardian.com/film/2026/mar/10/project-hail-mary-review-ryan-goslings-charm-carries-unserious-last-ditch-space-mission",
+      "title": "Project Hail Mary review – Ryan Gosling’s charm carries an unserious last-ditch space mission",
+      "author": "Peter Bradshaw",
+      "publishedAt": "2026-03-10T08:00:00Z",
+      "discoveredVia": [
+        {
+          "sourceId": "metacritic",
+          "url": "https://www.metacritic.com/movie/project-hail-mary/critic-reviews/"
+        },
+        {
+          "sourceId": "rotten-tomatoes",
+          "url": "https://www.rottentomatoes.com/m/project_hail_mary"
+        },
+        {
+          "sourceId": "filmaffinity",
+          "url": "https://www.filmaffinity.com/es/latestreviews.php"
+        }
+      ],
+      "originalData": {
+        "discovery_only": true,
+        "source_capture": "Guardian metadata"
+      },
+      "observations": [
+        {
+          "dataType": "review",
+          "subject": "Project Hail Mary",
+          "filmId": "project-hail-mary",
+          "originalValue": {
+            "linked_review": true
+          }
+        },
+        {
+          "dataType": "score_individual",
+          "subject": "Project Hail Mary",
+          "filmId": "project-hail-mary",
+          "originalValue": {
+            "score": 3
+          },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 5,
+            "unit": "stars"
+          },
+          "participates": true
+        }
+      ]
+    }
+  ]
+}

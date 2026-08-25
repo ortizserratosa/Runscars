@@ -1,0 +1,57 @@
+{
+  "formatVersion": 1,
+  "sourceId": "guardian",
+  "seasonId": "oscars-2027",
+  "publications": [
+    {
+      "externalId": "guardian-the-odyssey-2026-07-15",
+      "canonicalUrl": "https://www.theguardian.com/film/2026/jul/15/the-odyssey-review-christopher-nolan-matt-damon",
+      "title": "The Odyssey review – Christopher Nolan returns",
+      "author": "Peter Bradshaw",
+      "publishedAt": "2026-07-15T08:00:00Z",
+      "discoveredVia": [
+        {
+          "sourceId": "metacritic",
+          "url": "https://www.metacritic.com/movie/the-odyssey-2026/critic-reviews/"
+        },
+        {
+          "sourceId": "rotten-tomatoes",
+          "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
+        },
+        {
+          "sourceId": "filmaffinity",
+          "url": "https://www.filmaffinity.com/es/pro-reviews.php?movie-id=000000"
+        }
+      ],
+      "originalData": {
+        "discovery_only": true,
+        "canonical_review_id": "guardian-the-odyssey-2026-07-15"
+      },
+      "observations": [
+        {
+          "dataType": "review",
+          "subject": "The Odyssey",
+          "filmId": "the-odyssey",
+          "originalValue": {
+            "canonical_review_id": "guardian-the-odyssey-2026-07-15"
+          }
+        },
+        {
+          "dataType": "score_individual",
+          "subject": "The Odyssey",
+          "filmId": "the-odyssey",
+          "originalValue": {
+            "score": 5,
+            "canonical_review_id": "guardian-the-odyssey-2026-07-15"
+          },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 5,
+            "unit": "stars"
+          },
+          "participates": true
+        }
+      ]
+    }
+  ]
+}

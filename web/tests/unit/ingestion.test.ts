@@ -792,6 +792,24 @@ describe("professional ingestion adapters", () => {
     );
   });
 
+  it("preserves aggregator discovery without changing the original source", async () => {
+    const manifest = JSON.parse(await fixture("aggregator-discovered.json"));
+    const batch = parseManualManifest(manifest, { capturedAt });
+
+    expect(batch.sourceId).toBe("guardian");
+    expect(batch.publications[0].discoveredVia).toEqual([
+      expect.objectContaining({ sourceId: "metacritic" }),
+      expect.objectContaining({ sourceId: "rotten-tomatoes" }),
+      expect.objectContaining({ sourceId: "filmaffinity" }),
+    ]);
+    expect(batch.publications[0].observations[1]).toEqual(
+      expect.objectContaining({
+        dataType: "score_individual",
+        participates: true,
+      }),
+    );
+  });
+
   it("matches exact alternate titles and queues an unknown subject", async () => {
     const awards = parseAwardsWatchFixture(await fixture("awardswatch.html"), {
       capturedAt,

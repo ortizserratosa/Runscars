@@ -75,7 +75,7 @@ describe("versioned database foundation", () => {
       seasons: 2,
       categories: 21,
       films: 39,
-      sources: 23,
+      sources: 24,
       connectors: 11,
     });
 
@@ -406,6 +406,158 @@ describe("versioned database foundation", () => {
         values ('not-authorized', 'Not authorized')
       `),
     ).rejects.toThrow();
+  });
+
+  it("exposes aggregator context and only aggregator-discovered individual reviews", async () => {
+    await database.exec(await readFile(seedPath, "utf8"));
+    await database.exec(`
+      insert into public.ingestion_runs (
+        run_key,
+        connector_id,
+        trigger,
+        status,
+        started_at,
+        finished_at
+      ) values (
+        'critical-discovery-policy-test',
+        'manual-editorial',
+        'fixture',
+        'succeeded',
+        '2026-08-25T12:00:00Z',
+        '2026-08-25T12:00:01Z'
+      );
+
+      insert into public.source_publications (
+        source_id,
+        external_id,
+        canonical_url,
+        title,
+        author
+      ) values
+        (
+          'guardian',
+          'guardian-discovered-review',
+          'https://www.theguardian.com/film/discovered-review',
+          'Discovered review',
+          'Fixture Critic'
+        ),
+        (
+          'rotten-tomatoes',
+          'rotten-tomatoes-context',
+          'https://www.rottentomatoes.com/m/the_odyssey_2026',
+          'The Odyssey',
+          null
+        ),
+        (
+          'rotten-tomatoes',
+          'rotten-tomatoes-blocked-review',
+          'https://www.rottentomatoes.com/m/the_odyssey_2026/critics',
+          'The Odyssey critic reviews',
+          null
+        );
+
+      insert into public.source_publication_captures (
+        publication_id,
+        content_hash,
+        source_url,
+        original_data,
+        captured_at,
+        extractor_version
+      )
+      select
+        id,
+        repeat('a', 64),
+        canonical_url,
+        '{}'::jsonb,
+        '2026-08-25T12:00:00Z',
+        'database-test'
+      from public.source_publications
+      where external_id in (
+        'guardian-discovered-review',
+        'rotten-tomatoes-context',
+        'rotten-tomatoes-blocked-review'
+      );
+
+      insert into public.professional_observations (
+        dedupe_key,
+        source_id,
+        publication_id,
+        capture_id,
+        run_id,
+        season_id,
+        film_id,
+        data_type,
+        original_subject,
+        original_value,
+        original_scale,
+        source_url,
+        captured_at,
+        extractor_version,
+        participates,
+        state
+      )
+      select
+        repeat(token, 64),
+        source_id,
+        publications.id,
+        captures.id,
+        runs.id,
+        'oscars-2027',
+        'the-odyssey',
+        kind::public.professional_observation_type,
+        'The Odyssey',
+        value::jsonb,
+        nullif(scale, 'null')::jsonb,
+        publications.canonical_url,
+        '2026-08-25T12:00:00Z',
+        'database-test',
+        participates,
+        'published'
+      from (values
+        ('guardian-discovered-review', 'review', '{"canonical_review_id":"guardian-discovered-review"}', 'null', 'b', false),
+        ('rotten-tomatoes-context', 'score_aggregate', '{"score":94}', '{"minimum":0,"maximum":100,"unit":"Tomatometer","denominator":500}', 'c', false),
+        ('rotten-tomatoes-blocked-review', 'review', '{"canonical_review_id":"blocked"}', 'null', 'd', false)
+      ) as fixtures(external_id, kind, value, scale, token, participates)
+      join public.source_publications as publications
+        on publications.external_id = fixtures.external_id
+      join public.source_publication_captures as captures
+        on captures.publication_id = publications.id
+      cross join lateral (
+        select id
+        from public.ingestion_runs
+        where run_key = 'critical-discovery-policy-test'
+      ) as runs;
+
+      insert into public.source_publication_discoveries (
+        publication_id,
+        discovery_source_id,
+        discovery_url,
+        discovered_at
+      )
+      select
+        publications.id,
+        'metacritic',
+        'https://www.metacritic.com/movie/the-odyssey-2026/critic-reviews/',
+        '2026-08-25T12:00:00Z'
+      from public.source_publications as publications
+      where publications.external_id = 'guardian-discovered-review';
+
+      set role anon;
+    `);
+
+    const visible = await database.query<{
+      source_id: string;
+      data_type: string;
+    }>(`
+      select source_id, data_type
+      from public.professional_observations
+      where film_id = 'the-odyssey'
+      order by source_id, data_type
+    `);
+    expect(visible.rows).toEqual([
+      { source_id: "guardian", data_type: "review" },
+      { source_id: "rotten-tomatoes", data_type: "score_aggregate" },
+    ]);
   });
 
   it("keeps a matching audit trail without duplicating repeated imports", async () => {

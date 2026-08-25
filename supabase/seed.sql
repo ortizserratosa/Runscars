@@ -212,6 +212,7 @@ values
   ('awards-radar', 'Awards Radar', array['prediction'], 'https://awardsradar.com/', 'selected', 'prototype', 'review-before-publish', '2026-07-24'),
   ('awardswatch', 'AwardsWatch', array['prediction'], 'https://awardswatch.com/', 'selected', 'prototype', 'review-before-publish', '2026-07-24'),
   ('film-stage', 'The Film Stage', array['review'], 'https://thefilmstage.com/', 'selected', 'manual', 'review-before-publish', '2026-07-24'),
+  ('filmaffinity', 'FilmAffinity', array['review'], 'https://www.filmaffinity.com/', 'selected', 'manual', 'replace-before-publish', '2026-08-25'),
   ('guardian', 'The Guardian', array['review', 'score'], 'https://www.theguardian.com/film', 'selected', 'prototype', 'review-before-publish', '2026-07-24'),
   ('hollywood-reporter', 'The Hollywood Reporter', array['prediction', 'review'], 'https://www.hollywoodreporter.com/', 'selected', 'manual', 'review-before-publish', '2026-07-24'),
   ('latimes', 'Los Angeles Times', array['review'], 'https://www.latimes.com/entertainment-arts/movies', 'selected', 'manual', 'review-before-publish', '2026-07-24'),

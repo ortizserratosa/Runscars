@@ -21,6 +21,11 @@ import {
   phase71FixtureAggregate,
   phase71FixturePreviousAggregate,
 } from "../../data/phase71-fixture";
+import {
+  criticalCanonicalReviewId,
+  criticalOriginalDisplay,
+  criticalScaleLabel,
+} from "../critical/presentation";
 
 export type CurrentCategoryPredictionView = {
   categoryId: PublicCategoryId;
@@ -251,7 +256,7 @@ export async function getFilmCriticalView(
     const result = await supabase
       .from("professional_observations")
       .select(
-        "id,data_type,original_value,original_scale,author,published_at,captured_at,participates,state,sources(id,name),source_publications(external_id,canonical_url,title,author)",
+        "id,data_type,original_subject,original_value,original_scale,source_url,author,published_at,captured_at,participates,state,sources(id,name),source_publications(external_id,canonical_url,title,author)",
       )
       .eq("film_id", filmId)
       .eq("state", "published")
@@ -265,16 +270,18 @@ export async function getFilmCriticalView(
       const publication = Array.isArray(row.source_publications)
         ? row.source_publications[0]
         : row.source_publications;
-      if (!source || !publication) continue;
+      if (!source) continue;
+      const publicationUrl = publication?.canonical_url ?? row.source_url;
+      const publicationId = publication?.external_id ?? publicationUrl;
       if (row.data_type === "review") {
         reviews.push({
           id: String(row.id),
           sourceName: source.name,
-          title: publication.title,
-          author: row.author ?? publication.author,
+          title: publication?.title ?? row.original_subject,
+          author: row.author ?? publication?.author ?? null,
           publishedAt: row.published_at,
           capturedAt: row.captured_at,
-          publicationUrl: publication.canonical_url,
+          publicationUrl,
         });
         continue;
       }
@@ -293,9 +300,9 @@ export async function getFilmCriticalView(
         id: String(row.id),
         sourceId: source.id,
         sourceName: source.name,
-        publicationId: publication.external_id,
-        publicationUrl: publication.canonical_url,
-        author: row.author ?? publication.author,
+        publicationId,
+        publicationUrl,
+        author: row.author ?? publication?.author ?? null,
         publishedAt: row.published_at,
         capturedAt: row.captured_at,
         seasonId: "oscars-2027",
@@ -304,16 +311,17 @@ export async function getFilmCriticalView(
         participates: row.participates,
         state: row.state,
         dataType: row.data_type,
-        canonicalReviewId: publication.external_id,
-        originalDisplay:
-          numericValue !== null && scaleMax !== null
-            ? `${numericValue}/${scaleMax}`
-            : JSON.stringify(row.original_value),
+        canonicalReviewId: criticalCanonicalReviewId(original, publicationId),
+        originalDisplay: criticalOriginalDisplay({
+          dataType: row.data_type,
+          numericValue,
+          scaleMax,
+          scaleLabel: criticalScaleLabel(row.original_scale),
+        }),
         numericValue,
         scaleMin,
         scaleMax,
-        scaleLabel:
-          typeof scale.unit === "string" ? scale.unit : "escala original",
+        scaleLabel: criticalScaleLabel(row.original_scale),
       });
     }
     const aggregate = aggregateCriticalReception(observations, filmId);
@@ -339,7 +347,7 @@ export async function getCriticalReceptionRanking(): Promise<
     const result = await supabase
       .from("professional_observations")
       .select(
-        "id,film_id,data_type,original_value,original_scale,author,published_at,captured_at,participates,state,films(id,title),sources(id,name),source_publications(external_id,canonical_url,author)",
+        "id,film_id,data_type,original_subject,original_value,original_scale,source_url,author,published_at,captured_at,participates,state,films(id,title),sources(id,name),source_publications(external_id,canonical_url,author)",
       )
       .eq("season_id", "oscars-2027")
       .eq("state", "published")
@@ -361,7 +369,6 @@ export async function getCriticalReceptionRanking(): Promise<
         !row.film_id ||
         !film ||
         !source ||
-        !publication ||
         (row.data_type !== "score_individual" &&
           row.data_type !== "score_aggregate")
       ) {
@@ -371,6 +378,8 @@ export async function getCriticalReceptionRanking(): Promise<
       const scale = jsonRecord(row.original_scale);
       const numericValue = numeric(original.score ?? original.value);
       const scaleMax = numeric(scale.maximum ?? scale.max);
+      const publicationUrl = publication?.canonical_url ?? row.source_url;
+      const publicationId = publication?.external_id ?? publicationUrl;
       const entry = observationsByFilm.get(row.film_id) ?? {
         title: film.title,
         observations: [] as CriticalScoreObservation[],
@@ -379,9 +388,9 @@ export async function getCriticalReceptionRanking(): Promise<
         id: String(row.id),
         sourceId: source.id,
         sourceName: source.name,
-        publicationId: publication.external_id,
-        publicationUrl: publication.canonical_url,
-        author: row.author ?? publication.author,
+        publicationId,
+        publicationUrl,
+        author: row.author ?? publication?.author ?? null,
         publishedAt: row.published_at,
         capturedAt: row.captured_at,
         seasonId: "oscars-2027",
@@ -390,16 +399,17 @@ export async function getCriticalReceptionRanking(): Promise<
         participates: row.participates,
         state: row.state,
         dataType: row.data_type,
-        canonicalReviewId: publication.external_id,
-        originalDisplay:
-          numericValue !== null && scaleMax !== null
-            ? `${numericValue}/${scaleMax}`
-            : JSON.stringify(row.original_value),
+        canonicalReviewId: criticalCanonicalReviewId(original, publicationId),
+        originalDisplay: criticalOriginalDisplay({
+          dataType: row.data_type,
+          numericValue,
+          scaleMax,
+          scaleLabel: criticalScaleLabel(row.original_scale),
+        }),
         numericValue,
         scaleMin: numeric(scale.minimum ?? scale.min),
         scaleMax,
-        scaleLabel:
-          typeof scale.unit === "string" ? scale.unit : "escala original",
+        scaleLabel: criticalScaleLabel(row.original_scale),
       });
       observationsByFilm.set(row.film_id, entry);
     }

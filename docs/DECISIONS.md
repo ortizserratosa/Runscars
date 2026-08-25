@@ -55,6 +55,8 @@ pasado para ocultar cambios de criterio.
 | D-035 | Administración por allowlist y auditoría inmutable | Aceptada |
 | D-036 | Archivo público oficial versionado sin predicción retroactiva | Aceptada |
 | D-037 | Evaluación pública derivada de cierres y resultados vigentes | Aceptada |
+| D-038 | Imágenes directas ante agotamiento de transformaciones | Aceptada |
+| D-039 | Agregadores como descubridores, no como voces duplicadas | Aceptada |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -648,3 +650,25 @@ ejemplos manuales de nominaciones y ganador coincidieron con
   escrituras de la caché de imágenes de Vercel. El tráfico de imagen pasa
   directamente por el CDN de TMDB y se revisará rendimiento real antes de
   reconsiderar la optimización o contratar capacidad adicional.
+
+## D-039 · Agregadores como descubridores, no como voces duplicadas
+
+- **Fecha:** 2026-08-25
+- **Estado:** Aceptada
+- **Decisión:** Metacritic, Rotten Tomatoes y FilmAffinity pueden descubrir
+  reseñas profesionales, pero la observación individual conserva como fuente al
+  medio y al autor originales. Cada hallazgo guarda una relación de
+  descubrimiento con la URL del agregador. La reseña individual solo entra en
+  la media si su valor es atribuible y la observación queda publicada; el
+  agregador no se convierte en una crítica adicional.
+- **Presentación:** el ranking 0–5 deduplica por publicación original. Los
+  agregados Tomatometer y Metascore se muestran en un bloque contextual
+  separado, con su escala, denominador y fecha originales; nunca participan en
+  la media ni en el orden de críticas individuales.
+- **Motivo:** usar el trabajo de discovery de los agregadores aumenta cobertura
+  sin contar dos veces una reseña sindicada y mantiene una ruta auditable hasta
+  el medio que realmente publicó la crítica.
+- **Límite editorial:** FilmAffinity aporta descubrimiento de críticas
+  profesionales, no su puntuación comunitaria. No se copia el cuerpo ni los
+  extractos de las páginas agregadoras; se conserva solo la metadata necesaria,
+  el valor verificable y los enlaces.

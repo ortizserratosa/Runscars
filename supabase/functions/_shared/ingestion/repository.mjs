@@ -318,7 +318,7 @@ export class SupabaseIngestionRepository {
   }
 
   async savePublication(batch, publication) {
-    const existing = databaseError(
+    let existing = databaseError(
       await this.client
         .from("source_publications")
         .select("id")
@@ -327,6 +327,19 @@ export class SupabaseIngestionRepository {
         .maybeSingle(),
       "No se pudo buscar la publicación por identidad",
     );
+    if (!existing) {
+      existing = databaseError(
+        await this.client
+          .from("source_publications")
+          .select("id")
+          .eq("source_id", batch.sourceId)
+          .eq("canonical_url", publication.canonicalUrl)
+          .order("id", { ascending: true })
+          .limit(1)
+          .maybeSingle(),
+        "No se pudo buscar la publicación por URL canónica",
+      );
+    }
     if (existing) {
       databaseError(
         await this.client
@@ -339,6 +352,7 @@ export class SupabaseIngestionRepository {
           .eq("id", existing.id),
         "No se pudo actualizar la publicación",
       );
+      await this.savePublicationDiscoveries(batch, existing.id, publication);
       return existing.id;
     }
     const data = databaseError(
@@ -359,7 +373,33 @@ export class SupabaseIngestionRepository {
         .single(),
       "No se pudo guardar la publicación",
     );
+    await this.savePublicationDiscoveries(batch, data.id, publication);
     return data.id;
+  }
+
+  async savePublicationDiscoveries(batch, publicationId, publication) {
+    if (!publication.discoveredVia?.length) return;
+    databaseError(
+      await this.client.from("source_publication_discoveries").upsert(
+        publication.discoveredVia.map((discovery) => ({
+          publication_id: publicationId,
+          discovery_source_id: discovery.sourceId,
+          discovery_url: discovery.url,
+          discovered_at: discovery.discoveredAt ?? batch.capturedAt,
+          original_data: {
+            source_id: discovery.sourceId,
+            url: discovery.url,
+            discovered_at: discovery.discoveredAt ?? batch.capturedAt,
+            entered_manually: true,
+          },
+        })),
+        {
+          onConflict: "publication_id,discovery_source_id,discovery_url",
+          ignoreDuplicates: true,
+        },
+      ),
+      "No se pudo guardar la procedencia de descubrimiento",
+    );
   }
 
   async saveCapture(batch, publicationId, publication) {
