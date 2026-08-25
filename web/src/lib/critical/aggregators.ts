@@ -14,6 +14,13 @@ export type CriticalAggregatorHighlight = {
   >;
 };
 
+export function filterCriticalAggregatorFilms(
+  films: CriticalAggregatorFilm[],
+  predictedFilmIds: ReadonlySet<string>,
+) {
+  return films.filter((film) => predictedFilmIds.has(film.filmId));
+}
+
 export function groupCriticalAggregatorHighlights(
   films: CriticalAggregatorFilm[],
 ): CriticalAggregatorHighlight[] {

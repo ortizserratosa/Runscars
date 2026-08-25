@@ -680,8 +680,9 @@ ejemplos manuales de nominaciones y ganador coincidieron con
 - **Estado:** Aceptada
 - **Decisión:** la página pública de crítica muestra una lista independiente
   para cada agregador activo y ordena sus películas por el valor publicado por
-  ese agregador. Las críticas individuales se consultan en la ficha de cada
-  película, no en esta portada.
+  ese agregador, limitada a las películas que aparecen en las predicciones
+  activas. Las críticas individuales se consultan en la ficha de cada película,
+  no en esta portada.
 - **Navegación:** el menú superior enlaza solo con las raíces de cada sección
   (`/temporadas/2027`, `/critica`, `/archivo`, `/fuentes` y `/metodologia`). El
   archivo histórico es una sección de primer nivel para que las ediciones

@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
 import type { CriticalScoreObservation } from "../../src/lib/aggregation";
-import { groupCriticalAggregatorHighlights } from "../../src/lib/critical/aggregators";
+import {
+  filterCriticalAggregatorFilms,
+  groupCriticalAggregatorHighlights,
+} from "../../src/lib/critical/aggregators";
 
 function score(
   id: string,
@@ -35,6 +38,27 @@ function score(
 }
 
 describe("critical aggregator highlights", () => {
+  it("keeps only films that appear in the prediction set", () => {
+    const films = [
+      {
+        filmId: "predicted",
+        filmTitle: "Predicted",
+        contextualScores: [],
+      },
+      {
+        filmId: "outside",
+        filmTitle: "Outside",
+        contextualScores: [],
+      },
+    ];
+
+    expect(
+      filterCriticalAggregatorFilms(films, new Set(["predicted"])).map(
+        (film) => film.filmId,
+      ),
+    ).toEqual(["predicted"]);
+  });
+
   it("groups films by aggregator and orders each list by its published value", () => {
     const result = groupCriticalAggregatorHighlights([
       {

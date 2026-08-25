@@ -299,11 +299,12 @@ test("keeps the critical reception threshold explicit", async ({ page }) => {
   await expect(
     page.getByRole("heading", {
       level: 1,
-      name: "Las películas que están arriba.",
+      name: "Nuestras predicciones, con sus notas.",
     }),
   ).toBeVisible();
   await expect(page.getByText("Metacritic")).toBeVisible();
   await expect(page.getByText("Rotten Tomatoes")).toBeVisible();
+  await expect(page.getByText("The End of Oak Street")).toHaveCount(0);
 });
 
 test("does not expose editorial administration to anonymous users", async ({
