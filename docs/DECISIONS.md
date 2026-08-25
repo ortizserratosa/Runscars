@@ -57,6 +57,7 @@ pasado para ocultar cambios de criterio.
 | D-037 | Evaluación pública derivada de cierres y resultados vigentes | Aceptada |
 | D-038 | Imágenes directas ante agotamiento de transformaciones | Aceptada |
 | D-039 | Agregadores como descubridores, no como voces duplicadas | Aceptada |
+| D-040 | Crítica pública por agregador y navegación por secciones | Aceptada |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -672,3 +673,19 @@ ejemplos manuales de nominaciones y ganador coincidieron con
   profesionales, no su puntuación comunitaria. No se copia el cuerpo ni los
   extractos de las páginas agregadoras; se conserva solo la metadata necesaria,
   el valor verificable y los enlaces.
+
+## D-040 · Crítica pública por agregador y navegación por secciones
+
+- **Fecha:** 2026-08-25
+- **Estado:** Aceptada
+- **Decisión:** la página pública de crítica muestra una lista independiente
+  para cada agregador activo y ordena sus películas por el valor publicado por
+  ese agregador. Las críticas individuales se consultan en la ficha de cada
+  película, no en esta portada.
+- **Navegación:** el menú superior enlaza solo con las raíces de cada sección
+  (`/temporadas/2027`, `/critica`, `/archivo`, `/fuentes` y `/metodologia`). El
+  archivo histórico es una sección de primer nivel para que las ediciones
+  previas se encuentren sin atravesar una categoría activa.
+- **Motivo:** la página de crítica debe servir para descubrir rápidamente qué
+  destaca cada proveedor, sin mezclar señales ni obligar a leer explicación
+  metodológica antes de ver los datos.

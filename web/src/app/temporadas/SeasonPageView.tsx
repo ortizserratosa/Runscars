@@ -139,7 +139,7 @@ export function SeasonPageView({
                   <h3>{category.name}</h3>
                   <p>
                     {active
-                      ? `${category.orderedSourceCount} rankings ordenados · ${category.applicableSourceCount} medios`
+                      ? `${category.applicableSourceCount} medios con datos`
                       : `${category.candidateCount} nominados oficiales`}
                   </p>
                   {active && category.leader ? (
@@ -176,7 +176,7 @@ export function SeasonPageView({
             </div>
             <p>
               {active
-                ? "mínimo de rankings automáticos ordenados por categoría"
+                ? "medios con datos en la categoría menos cubierta"
                 : "candidaturas oficiales entre las ocho categorías"}
             </p>
             <div className="status-row">

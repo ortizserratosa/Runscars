@@ -164,8 +164,7 @@ function ActiveCategory({
               <h1>{category.name}</h1>
               <p>
                 {aggregate?.ranking.length ?? 0} candidaturas ·{" "}
-                {aggregate?.orderedSourceCount ?? 0} rankings ordenados ·{" "}
-                {aggregate?.applicableSourceCount ?? 0} medios aplicables
+                {aggregate?.applicableSourceCount ?? 0} medios
               </p>
             </div>
             <div className="category-hero-stat">
@@ -173,8 +172,8 @@ function ActiveCategory({
               <strong>{aggregate?.orderedSourceCount ?? 0}</strong>
               <small>
                 {aggregate?.isConsensus
-                  ? "fuentes · mínimo 4"
-                  : "fuentes · mínimo 4 pendiente"}
+                  ? "fuentes con consenso"
+                  : "fuentes · consenso pendiente"}
               </small>
             </div>
           </div>
@@ -356,8 +355,8 @@ function ActiveCategory({
             </div>
           ) : (
             <p className="insufficient-note">
-              No hay cuatro rankings ordenados publicables y emparejados para
-              esta categoría.
+              Aún faltan cuatro fuentes comparables para publicar esta
+              categoría.
             </p>
           )}
         </section>

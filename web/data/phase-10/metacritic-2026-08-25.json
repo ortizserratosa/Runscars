@@ -66,6 +66,325 @@
           "participates": false
         }
       ]
+    },
+    {
+      "externalId": "once-upon-a-time-in-harlem-2026",
+      "canonicalUrl": "https://www.metacritic.com/movie/once-upon-a-time-in-harlem/",
+      "title": "Once Upon a Time in Harlem",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "metascore",
+        "score": 94,
+        "critic_review_count": 10,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "Once Upon a Time in Harlem",
+          "filmId": "once-upon-a-time-in-harlem",
+          "originalValue": { "score": 94, "critic_review_count": 10 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Metascore",
+            "denominator": 10,
+            "interpretation": "weighted critic score"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "minotaur-2026",
+      "canonicalUrl": "https://www.metacritic.com/movie/minotaur/",
+      "title": "Minotaur",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "metascore",
+        "score": 91,
+        "critic_review_count": 13,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "Minotaur",
+          "filmId": "minotaur",
+          "originalValue": { "score": 91, "critic_review_count": 13 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Metascore",
+            "denominator": 13,
+            "interpretation": "weighted critic score"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "fatherland-2026",
+      "canonicalUrl": "https://www.metacritic.com/movie/fatherland/",
+      "title": "Fatherland",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "metascore",
+        "score": 90,
+        "critic_review_count": 19,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "Fatherland",
+          "filmId": "fatherland",
+          "originalValue": { "score": 90, "critic_review_count": 19 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Metascore",
+            "denominator": 19,
+            "interpretation": "weighted critic score"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "american-doctor-2026",
+      "canonicalUrl": "https://www.metacritic.com/movie/american-doctor/",
+      "title": "American Doctor",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "metascore",
+        "score": 87,
+        "critic_review_count": 11,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "American Doctor",
+          "filmId": "american-doctor",
+          "originalValue": { "score": 87, "critic_review_count": 11 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Metascore",
+            "denominator": 11,
+            "interpretation": "weighted critic score"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "josephine-2026",
+      "canonicalUrl": "https://www.metacritic.com/movie/josephine/",
+      "title": "Josephine",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "metascore",
+        "score": 86,
+        "critic_review_count": 14,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "Josephine",
+          "filmId": "josephine",
+          "originalValue": { "score": 86, "critic_review_count": 14 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Metascore",
+            "denominator": 14,
+            "interpretation": "weighted critic score"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "clarissa-2026",
+      "canonicalUrl": "https://www.metacritic.com/movie/clarissa/",
+      "title": "Clarissa",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "metascore",
+        "score": 86,
+        "critic_review_count": 10,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "Clarissa",
+          "filmId": "clarissa",
+          "originalValue": { "score": 86, "critic_review_count": 10 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Metascore",
+            "denominator": 10,
+            "interpretation": "weighted critic score"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "club-kid-2026",
+      "canonicalUrl": "https://www.metacritic.com/movie/club-kid/",
+      "title": "Club Kid",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "metascore",
+        "score": 85,
+        "critic_review_count": 12,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "Club Kid",
+          "filmId": "club-kid",
+          "originalValue": { "score": 85, "critic_review_count": 12 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Metascore",
+            "denominator": 12,
+            "interpretation": "weighted critic score"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "the-invite-2026",
+      "canonicalUrl": "https://www.metacritic.com/movie/the-invite/",
+      "title": "The Invite",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "metascore",
+        "score": 82,
+        "critic_review_count": 47,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "The Invite",
+          "filmId": "the-invite",
+          "originalValue": { "score": 82, "critic_review_count": 47 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Metascore",
+            "denominator": 47,
+            "interpretation": "weighted critic score"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "tony-2026",
+      "canonicalUrl": "https://www.metacritic.com/movie/tony/",
+      "title": "Tony",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "metascore",
+        "score": 75,
+        "critic_review_count": 37,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "Tony",
+          "filmId": "tony",
+          "originalValue": { "score": 75, "critic_review_count": 37 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Metascore",
+            "denominator": 37,
+            "interpretation": "weighted critic score"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "toy-story-5-2026",
+      "canonicalUrl": "https://www.metacritic.com/movie/toy-story-5/",
+      "title": "Toy Story 5",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "metascore",
+        "score": 73,
+        "critic_review_count": 55,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "Toy Story 5",
+          "filmId": "toy-story-5",
+          "originalValue": { "score": 73, "critic_review_count": 55 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Metascore",
+            "denominator": 55,
+            "interpretation": "weighted critic score"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "the-end-of-oak-street-2026",
+      "canonicalUrl": "https://www.metacritic.com/movie/the-end-of-oak-street/",
+      "title": "The End of Oak Street",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "metascore",
+        "score": 69,
+        "critic_review_count": 50,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "The End of Oak Street",
+          "filmId": "the-end-of-oak-street",
+          "originalValue": { "score": 69, "critic_review_count": 50 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Metascore",
+            "denominator": 50,
+            "interpretation": "weighted critic score"
+          },
+          "participates": false
+        }
+      ]
     }
   ]
 }

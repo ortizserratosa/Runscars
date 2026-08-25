@@ -36,7 +36,7 @@ test("publishes all eight database-shaped category routes", async ({
     await expect(
       page.getByRole("heading", { name: "Datos verificados" }),
     ).toBeVisible();
-    await expect(page.getByText("fuentes · mínimo 4")).toBeVisible();
+    await expect(page.getByText("fuentes con consenso")).toBeVisible();
     await expect(
       page.getByRole("heading", { name: "Consenso profesional" }),
     ).toBeVisible();
@@ -251,9 +251,10 @@ test("offers complete navigation at a mobile viewport", async ({ page }) => {
   ).toBeVisible();
   await expect(
     navigation.getByRole("link", { name: "Categorías" }),
-  ).toBeVisible();
+  ).toHaveCount(0);
   await expect(navigation.getByRole("link", { name: "Fuentes" })).toBeVisible();
   await expect(navigation.getByRole("link", { name: "Crítica" })).toBeVisible();
+  await expect(navigation.getByRole("link", { name: "Archivo" })).toBeVisible();
   await expect(navigation.getByRole("link", { name: "Método" })).toBeVisible();
 });
 
@@ -264,7 +265,7 @@ test("publishes methodology, evaluation and the five-edition archive", async ({
   await expect(
     page.getByRole("heading", {
       level: 1,
-      name: /Una carrera, tres señales/,
+      name: /Tres señales\. Cada una con sus propios datos/,
     }),
   ).toBeVisible();
   await expect(page.getByText(/puntos =/)).toBeVisible();
@@ -296,9 +297,13 @@ test("publishes methodology, evaluation and the five-edition archive", async ({
 test("keeps the critical reception threshold explicit", async ({ page }) => {
   await page.goto("/critica");
   await expect(
-    page.getByRole("heading", { level: 1, name: /Lo que dice la crítica/ }),
+    page.getByRole("heading", {
+      level: 1,
+      name: "Las películas que están arriba.",
+    }),
   ).toBeVisible();
-  await expect(page.getByText(/tres críticas independientes/i)).toBeVisible();
+  await expect(page.getByText("Metacritic")).toBeVisible();
+  await expect(page.getByText("Rotten Tomatoes")).toBeVisible();
 });
 
 test("does not expose editorial administration to anonymous users", async ({
@@ -360,7 +365,7 @@ test("shows six Best Picture media but never gives The Ringer Borda points", asy
   page,
 }) => {
   await page.goto("/temporadas/2027/mejor-pelicula");
-  await expect(page.getByText("5 rankings ordenados · 6 medios")).toBeVisible();
+  await expect(page.getByText("6 medios")).toBeVisible();
   await page.getByText("Ver procedencia y cálculo").first().click();
   const ringer = page
     .locator(".source-calculations")

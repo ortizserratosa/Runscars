@@ -86,8 +86,7 @@ export default async function Home() {
         <div className="eyebrow-row">
           <span className="eyebrow">Cuaderno de temporada · {currentDate}</span>
           <span className="data-note">
-            {categoryView.aggregate?.orderedSourceCount ?? 0} listas ordenadas ·{" "}
-            {ranking.length} películas
+            {ranking.length} películas en carrera
           </span>
         </div>
 
@@ -233,7 +232,7 @@ export default async function Home() {
         <div className="page-shell">
           <div className="section-heading split-heading light-heading">
             <div>
-              <p className="section-index">02 / TRES LECTURAS</p>
+              <p className="section-index">02 / TRES SEÑALES</p>
               <h2>Consenso, evolución y tu lista.</h2>
             </div>
             <p>

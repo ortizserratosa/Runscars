@@ -13,7 +13,7 @@ export default function ArchivePage() {
     <main className="page-shell archive-page">
       <header className="archive-hero">
         <p className="section-index">ARCHIVO OFICIAL</p>
-        <h1>Cinco ceremonias, sin retrospectiva inventada.</h1>
+        <h1>Las ediciones anteriores, en un solo sitio.</h1>
         <p>
           Nominados y ganadores confirmados por la Academy para las ocho
           categorías de Runscars. No reconstruimos predicciones que no se

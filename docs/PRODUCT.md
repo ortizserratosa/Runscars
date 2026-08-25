@@ -70,7 +70,9 @@ publicación canónica. Siempre se muestra también la escala original. Solo se
 promociona como agregado cuando existen al menos tres puntuaciones individuales
 independientes; con menos cobertura aparece únicamente en la ficha relacionada
 y rotulada como insuficiente. Tomatometer y Metascore aparecen en una capa de
-contexto separada y no se mezclan con esta media.
+contexto separada y no se mezclan con esta media. La página pública se organiza
+por agregador y muestra sus títulos destacados, mientras que las críticas
+individuales se consultan en la ficha de cada película.
 
 ### Predicciones
 
@@ -199,7 +201,7 @@ publican cuando alcanzan la cobertura aprobada.
 | ID | Requisito |
 |---|---|
 | RF-01 | Navegar por temporada y categoría sin cuenta |
-| RF-02 | Mantener recepción crítica separada, deduplicar críticas descubiertas por agregadores y promocionarla solo con cobertura suficiente |
+| RF-02 | Mantener recepción crítica separada, mostrar destacados por agregador, deduplicar críticas descubiertas por agregadores y promocionarla solo con cobertura suficiente |
 | RF-03 | Mostrar procedencia y fecha de cada dato profesional |
 | RF-04 | Mantener fichas canónicas de película y persona |
 | RF-05 | Importar metadatos de TMDB con corrección manual |

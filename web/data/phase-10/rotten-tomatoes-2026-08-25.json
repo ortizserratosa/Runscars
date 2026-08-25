@@ -66,6 +66,180 @@
           "participates": false
         }
       ]
+    },
+    {
+      "externalId": "tony-2026",
+      "canonicalUrl": "https://www.rottentomatoes.com/m/tony_2026",
+      "title": "Tony",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "tomatometer",
+        "score": 94,
+        "critic_review_count": 193,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "Tony",
+          "filmId": "tony",
+          "originalValue": { "score": 94, "critic_review_count": 193 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Tomatometer approval",
+            "denominator": 193,
+            "interpretation": "percentage of positive professional reviews"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "the-end-of-oak-street-2026",
+      "canonicalUrl": "https://www.rottentomatoes.com/m/the_end_of_oak_street",
+      "title": "The End of Oak Street",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "tomatometer",
+        "score": 86,
+        "critic_review_count": 293,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "The End of Oak Street",
+          "filmId": "the-end-of-oak-street",
+          "originalValue": { "score": 86, "critic_review_count": 293 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Tomatometer approval",
+            "denominator": 293,
+            "interpretation": "percentage of positive professional reviews"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "the-invite-2026",
+      "canonicalUrl": "https://www.rottentomatoes.com/m/the_invite",
+      "title": "The Invite",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "tomatometer",
+        "score": 97,
+        "critic_review_count": 276,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "The Invite",
+          "filmId": "the-invite",
+          "originalValue": { "score": 97, "critic_review_count": 276 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Tomatometer approval",
+            "denominator": 276,
+            "interpretation": "percentage of positive professional reviews"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "toy-story-5-2026",
+      "canonicalUrl": "https://www.rottentomatoes.com/m/toy_story_5",
+      "title": "Toy Story 5",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "tomatometer",
+        "score": 93,
+        "critic_review_count": 322,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "Toy Story 5",
+          "filmId": "toy-story-5",
+          "originalValue": { "score": 93, "critic_review_count": 322 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Tomatometer approval",
+            "denominator": 322,
+            "interpretation": "percentage of positive professional reviews"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "american-doctor-2026",
+      "canonicalUrl": "https://www.rottentomatoes.com/m/american_doctor",
+      "title": "American Doctor",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "tomatometer",
+        "score": 100,
+        "critic_review_count": 31,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "American Doctor",
+          "filmId": "american-doctor",
+          "originalValue": { "score": 100, "critic_review_count": 31 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Tomatometer approval",
+            "denominator": 31,
+            "interpretation": "percentage of positive professional reviews"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "disclosure-day-2026",
+      "canonicalUrl": "https://www.rottentomatoes.com/m/disclosure_day",
+      "title": "Disclosure Day",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "tomatometer",
+        "score": 80,
+        "critic_review_count": 433,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "Disclosure Day",
+          "filmId": "disclosure-day",
+          "originalValue": { "score": 80, "critic_review_count": 433 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Tomatometer approval",
+            "denominator": 433,
+            "interpretation": "percentage of positive professional reviews"
+          },
+          "participates": false
+        }
+      ]
     }
   ]
 }

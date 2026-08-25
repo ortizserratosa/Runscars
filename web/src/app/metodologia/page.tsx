@@ -11,7 +11,7 @@ export default function MethodologyPage() {
     <main className="page-shell methodology-page">
       <header className="methodology-hero">
         <p className="section-index">MÉTODO PÚBLICO · V2</p>
-        <h1>Una carrera, tres señales. Nunca un promedio opaco.</h1>
+        <h1>Tres señales. Cada una con sus propios datos.</h1>
         <p>
           Runscars presenta por separado recepción crítica, consenso de expertos
           y rankings de usuarios. Los mercados aparecen como contexto, no como
@@ -58,8 +58,7 @@ export default function MethodologyPage() {
           <p>
             El primer puesto recibe 1 y el último 1/longitud. Una selección sin
             orden solo confirma aparición; no inventa una posición. El consenso
-            público requiere al menos cuatro listas ordenadas automáticas y
-            publicables.
+            público requiere al menos cuatro fuentes automáticas y publicables.
           </p>
         </article>
         <article>
