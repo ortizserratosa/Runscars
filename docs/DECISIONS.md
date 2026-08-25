@@ -631,3 +631,20 @@ ejemplos manuales de nominaciones y ganador coincidieron con
   porcentajes.
 - **Ausencia:** si falta un cierre o una publicación oficial compatible, la web
   muestra estado pendiente y no fabrica una cifra.
+
+## D-038 · Imágenes TMDB sin transformación de Vercel
+
+- **Fecha:** 2026-08-25
+- **Estado:** Aceptada
+- **Decisión:** desactivar globalmente la optimización de `next/image` en
+  Vercel. Runscars solicita a TMDB variantes de tamaño explícitas (`w185`,
+  `w342` y `w500`) y las sirve directamente, conservando carga diferida,
+  dimensiones y estabilidad visual del componente de Next.js.
+- **Motivo:** el equipo Hobby alcanzó el límite mensual de 5.000
+  transformaciones. Vercel responde con error a transformaciones nuevas una vez
+  agotada la cuota; una limitación de facturación no debe convertir pósteres y
+  retratos en recursos rotos.
+- **Consecuencia:** no se generan nuevas transformaciones ni lecturas o
+  escrituras de la caché de imágenes de Vercel. El tráfico de imagen pasa
+  directamente por el CDN de TMDB y se revisará rendimiento real antes de
+  reconsiderar la optimización o contratar capacidad adicional.

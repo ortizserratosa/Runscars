@@ -359,6 +359,7 @@ Alcance y evidencia en [PHASE_9_5.md](PHASE_9_5.md).
 
 - pruebas end-to-end;
 - revisión móvil, accesibilidad y rendimiento;
+- control de cuotas y degradación segura de recursos externos;
 - créditos y revisión legal/editorial final;
 - backup y restauración;
 - revisión de publicación de fuentes;
