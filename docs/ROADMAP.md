@@ -361,6 +361,8 @@ Alcance y evidencia en [PHASE_9_5.md](PHASE_9_5.md).
   trazabilidad hacia el medio original;
 - página pública con una lista de películas destacadas por cada agregador, con
   Tomatometer y Metascore separados de las críticas individuales;
+- carga de valores numéricos de agregadores para las películas presentes en las
+  ocho categorías de predicción, sin inventar valores `TBD`;
 - pruebas end-to-end;
 - revisión móvil, accesibilidad y rendimiento;
 - control de cuotas y degradación segura de recursos externos;

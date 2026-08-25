@@ -240,6 +240,325 @@
           "participates": false
         }
       ]
+    },
+    {
+      "externalId": "clarissa-2026",
+      "canonicalUrl": "https://www.rottentomatoes.com/m/clarissa",
+      "title": "Clarissa",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "tomatometer",
+        "score": 100,
+        "critic_review_count": 17,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "Clarissa",
+          "filmId": "clarissa",
+          "originalValue": { "score": 100, "critic_review_count": 17 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Tomatometer approval",
+            "denominator": 17,
+            "interpretation": "percentage of positive professional reviews"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "club-kid-2026",
+      "canonicalUrl": "https://www.rottentomatoes.com/m/club_kid",
+      "title": "Club Kid",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "tomatometer",
+        "score": 100,
+        "critic_review_count": 27,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "Club Kid",
+          "filmId": "club-kid",
+          "originalValue": { "score": 100, "critic_review_count": 27 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Tomatometer approval",
+            "denominator": 27,
+            "interpretation": "percentage of positive professional reviews"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "fatherland-2026",
+      "canonicalUrl": "https://www.rottentomatoes.com/m/fatherland",
+      "title": "Fatherland",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "tomatometer",
+        "score": 50,
+        "critic_review_count": 6,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "Fatherland",
+          "filmId": "fatherland",
+          "originalValue": { "score": 50, "critic_review_count": 6 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Tomatometer approval",
+            "denominator": 6,
+            "interpretation": "percentage of positive professional reviews"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "fjord-2026",
+      "canonicalUrl": "https://www.rottentomatoes.com/m/fjord",
+      "title": "Fjord",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "tomatometer",
+        "score": 90,
+        "critic_review_count": 50,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "Fjord",
+          "filmId": "fjord",
+          "originalValue": { "score": 90, "critic_review_count": 50 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Tomatometer approval",
+            "denominator": 50,
+            "interpretation": "percentage of positive professional reviews"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "gentle-monster-2026",
+      "canonicalUrl": "https://www.rottentomatoes.com/m/gentle_monster",
+      "title": "Gentle Monster",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "tomatometer",
+        "score": 61,
+        "critic_review_count": 31,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "Gentle Monster",
+          "filmId": "gentle-monster",
+          "originalValue": { "score": 61, "critic_review_count": 31 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Tomatometer approval",
+            "denominator": 31,
+            "interpretation": "percentage of positive professional reviews"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "la-bola-negra-2026",
+      "canonicalUrl": "https://www.rottentomatoes.com/m/la_bola_negra",
+      "title": "La Bola Negra",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "tomatometer",
+        "score": 88,
+        "critic_review_count": 32,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "La Bola Negra",
+          "filmId": "la-bola-negra",
+          "originalValue": { "score": 88, "critic_review_count": 32 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Tomatometer approval",
+            "denominator": 32,
+            "interpretation": "percentage of positive professional reviews"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "michael-2026",
+      "canonicalUrl": "https://www.rottentomatoes.com/m/michael",
+      "title": "Michael",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "tomatometer",
+        "score": 38,
+        "critic_review_count": 307,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "Michael",
+          "filmId": "michael",
+          "originalValue": { "score": 38, "critic_review_count": 307 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Tomatometer approval",
+            "denominator": 307,
+            "interpretation": "percentage of positive professional reviews"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "paper-tiger-2026",
+      "canonicalUrl": "https://www.rottentomatoes.com/m/paper_tiger",
+      "title": "Paper Tiger",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "tomatometer",
+        "score": 83,
+        "critic_review_count": 52,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "Paper Tiger",
+          "filmId": "paper-tiger",
+          "originalValue": { "score": 83, "critic_review_count": 52 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Tomatometer approval",
+            "denominator": 52,
+            "interpretation": "percentage of positive professional reviews"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "rose-2026",
+      "canonicalUrl": "https://www.rottentomatoes.com/m/rose_2026",
+      "title": "Rose",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "tomatometer",
+        "score": 100,
+        "critic_review_count": 26,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "Rose",
+          "filmId": "rose-2026",
+          "originalValue": { "score": 100, "critic_review_count": 26 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Tomatometer approval",
+            "denominator": 26,
+            "interpretation": "percentage of positive professional reviews"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "saturn-return-2026",
+      "canonicalUrl": "https://www.rottentomatoes.com/m/saturn_return",
+      "title": "Saturn Return",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "tomatometer",
+        "score": 85,
+        "critic_review_count": 13,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "Saturn Return",
+          "filmId": "saturn-return",
+          "originalValue": { "score": 85, "critic_review_count": 13 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Tomatometer approval",
+            "denominator": 13,
+            "interpretation": "percentage of positive professional reviews"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "the-only-living-pickpocket-in-new-york-2026",
+      "canonicalUrl": "https://www.rottentomatoes.com/m/the_only_living_pickpocket_in_new_york",
+      "title": "The Only Living Pickpocket in New York",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "tomatometer",
+        "score": 100,
+        "critic_review_count": 26,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "The Only Living Pickpocket in New York",
+          "filmId": "the-only-living-pickpocket-in-new-york",
+          "originalValue": { "score": 100, "critic_review_count": 26 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Tomatometer approval",
+            "denominator": 26,
+            "interpretation": "percentage of positive professional reviews"
+          },
+          "participates": false
+        }
+      ]
     }
   ]
 }

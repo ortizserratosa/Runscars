@@ -385,6 +385,267 @@
           "participates": false
         }
       ]
+    },
+    {
+      "externalId": "all-of-a-sudden-2026",
+      "canonicalUrl": "https://www.metacritic.com/movie/all-of-a-sudden/",
+      "title": "All of a Sudden",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "metascore",
+        "score": 87,
+        "critic_review_count": 15,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "All of a Sudden",
+          "filmId": "all-of-a-sudden",
+          "originalValue": { "score": 87, "critic_review_count": 15 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Metascore",
+            "denominator": 15,
+            "interpretation": "weighted critic score"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "disclosure-day-2026",
+      "canonicalUrl": "https://www.metacritic.com/movie/disclosure-day/",
+      "title": "Disclosure Day",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "metascore",
+        "score": 74,
+        "critic_review_count": 63,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "Disclosure Day",
+          "filmId": "disclosure-day",
+          "originalValue": { "score": 74, "critic_review_count": 63 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Metascore",
+            "denominator": 63,
+            "interpretation": "weighted critic score"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "fjord-2026",
+      "canonicalUrl": "https://www.metacritic.com/movie/fjord/",
+      "title": "Fjord",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "metascore",
+        "score": 82,
+        "critic_review_count": 19,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "Fjord",
+          "filmId": "fjord",
+          "originalValue": { "score": 82, "critic_review_count": 19 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Metascore",
+            "denominator": 19,
+            "interpretation": "weighted critic score"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "gentle-monster-2026",
+      "canonicalUrl": "https://www.metacritic.com/movie/gentle-monster/",
+      "title": "Gentle Monster",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "metascore",
+        "score": 70,
+        "critic_review_count": 12,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "Gentle Monster",
+          "filmId": "gentle-monster",
+          "originalValue": { "score": 70, "critic_review_count": 12 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Metascore",
+            "denominator": 12,
+            "interpretation": "weighted critic score"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "the-black-ball-2026",
+      "canonicalUrl": "https://www.metacritic.com/movie/the-black-ball/",
+      "title": "La Bola Negra",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "metascore",
+        "score": 85,
+        "critic_review_count": 12,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "La Bola Negra",
+          "filmId": "la-bola-negra",
+          "originalValue": { "score": 85, "critic_review_count": 12 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Metascore",
+            "denominator": 12,
+            "interpretation": "weighted critic score"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "michael-2026",
+      "canonicalUrl": "https://www.metacritic.com/movie/michael-2026/",
+      "title": "Michael",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "metascore",
+        "score": 39,
+        "critic_review_count": 51,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "Michael",
+          "filmId": "michael",
+          "originalValue": { "score": 39, "critic_review_count": 51 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Metascore",
+            "denominator": 51,
+            "interpretation": "weighted critic score"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "rose-2026",
+      "canonicalUrl": "https://www.metacritic.com/movie/rose-2026/",
+      "title": "Rose",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "metascore",
+        "score": 88,
+        "critic_review_count": 13,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "Rose",
+          "filmId": "rose-2026",
+          "originalValue": { "score": 88, "critic_review_count": 13 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Metascore",
+            "denominator": 13,
+            "interpretation": "weighted critic score"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "sense-and-sensibility-2026",
+      "canonicalUrl": "https://www.metacritic.com/movie/sense-and-sensibility/",
+      "title": "Sense and Sensibility",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "metascore",
+        "score": 84,
+        "critic_review_count": 21,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "Sense and Sensibility",
+          "filmId": "sense-and-sensibility",
+          "originalValue": { "score": 84, "critic_review_count": 21 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Metascore",
+            "denominator": 21,
+            "interpretation": "weighted critic score"
+          },
+          "participates": false
+        }
+      ]
+    },
+    {
+      "externalId": "the-only-living-pickpocket-in-new-york-2026",
+      "canonicalUrl": "https://www.metacritic.com/movie/the-only-living-pickpocket-in-new-york/",
+      "title": "The Only Living Pickpocket in New York",
+      "author": null,
+      "publishedAt": null,
+      "originalData": {
+        "kind": "metascore",
+        "score": 83,
+        "critic_review_count": 10,
+        "captured_from": "official title page"
+      },
+      "observations": [
+        {
+          "dataType": "score_aggregate",
+          "subject": "The Only Living Pickpocket in New York",
+          "filmId": "the-only-living-pickpocket-in-new-york",
+          "originalValue": { "score": 83, "critic_review_count": 10 },
+          "originalScale": {
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "Metascore",
+            "denominator": 10,
+            "interpretation": "weighted critic score"
+          },
+          "participates": false
+        }
+      ]
     }
   ]
 }

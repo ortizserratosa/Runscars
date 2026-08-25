@@ -73,7 +73,8 @@ y rotulada como insuficiente. Tomatometer y Metascore aparecen en una capa de
 contexto separada y no se mezclan con esta media. La página pública se organiza
 por agregador y muestra sus títulos destacados entre las películas presentes en
 las predicciones activas, mientras que las críticas individuales se consultan
-en la ficha de cada película.
+en la ficha de cada película. Si un agregador todavía no ha publicado una nota,
+no se rellena con una estimación.
 
 ### Predicciones
 

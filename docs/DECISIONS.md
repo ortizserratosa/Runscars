@@ -58,6 +58,7 @@ pasado para ocultar cambios de criterio.
 | D-038 | Imágenes directas ante agotamiento de transformaciones | Aceptada |
 | D-039 | Agregadores como descubridores, no como voces duplicadas | Aceptada |
 | D-040 | Crítica pública por agregador y navegación por secciones | Aceptada |
+| D-041 | Cobertura crítica derivada de las predicciones activas | Aceptada |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -690,3 +691,17 @@ ejemplos manuales de nominaciones y ganador coincidieron con
 - **Motivo:** la página de crítica debe servir para descubrir rápidamente qué
   destaca cada proveedor, sin mezclar señales ni obligar a leer explicación
   metodológica antes de ver los datos.
+
+## D-041 · Cobertura crítica derivada de las predicciones activas
+
+- **Fecha:** 2026-08-25
+- **Estado:** Aceptada
+- **Decisión:** cada carga de Metacritic y Rotten Tomatoes debe incorporar los
+  valores numéricos publicados para las películas presentes en las ocho
+  categorías de predicción activas. La página solo muestra la intersección
+  entre esas predicciones y las observaciones de agregadores disponibles.
+- **Límite:** una página sin puntuación publicada, una puntuación `TBD` o una
+  película que todavía no tenga reseñas profesionales no se convierte en un
+  valor ficticio. Queda pendiente de la siguiente captura.
+- **Motivo:** las puntuaciones aportan contexto a la carrera que seguimos; no
+  deben convertir el índice del agregador en un catálogo paralelo.

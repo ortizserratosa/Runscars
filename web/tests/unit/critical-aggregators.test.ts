@@ -1,3 +1,5 @@
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 import { describe, expect, it } from "vitest";
 import type { CriticalScoreObservation } from "../../src/lib/aggregation";
 import {
@@ -38,6 +40,30 @@ function score(
 }
 
 describe("critical aggregator highlights", () => {
+  it("keeps La Bola Negra in both aggregate manifests", async () => {
+    const [metacritic, rottenTomatoes] = await Promise.all(
+      [
+        "../../data/phase-10/metacritic-2026-08-25.json",
+        "../../data/phase-10/rotten-tomatoes-2026-08-25.json",
+      ].map(async (relativePath) =>
+        JSON.parse(await readFile(path.join(__dirname, relativePath), "utf8")),
+      ),
+    );
+
+    expect(
+      metacritic.publications.find(
+        (publication: { externalId: string }) =>
+          publication.externalId === "the-black-ball-2026",
+      )?.observations[0].originalValue,
+    ).toMatchObject({ score: 85, critic_review_count: 12 });
+    expect(
+      rottenTomatoes.publications.find(
+        (publication: { externalId: string }) =>
+          publication.externalId === "la-bola-negra-2026",
+      )?.observations[0].originalValue,
+    ).toMatchObject({ score: 88, critic_review_count: 32 });
+  });
+
   it("keeps only films that appear in the prediction set", () => {
     const films = [
       {
