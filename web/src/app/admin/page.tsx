@@ -544,16 +544,16 @@ export default async function AdminPage({ searchParams }: PageProps) {
             action={runPeriodicSnapshotsAction}
             className="admin-card admin-form"
           >
-            <h3>Cortes por cambios de proveedor</h3>
+            <h3>Actualizaciones por cambios de proveedor</h3>
             <p>
-              Procesa todas las programaciones activas y no duplica un corte sin
-              cambios efectivos.
+              Procesa todas las programaciones activas y no duplica una
+              actualización sin cambios efectivos.
             </p>
             <label>
               Motivo
               <input
                 name="reason"
-                defaultValue="Comprobación editorial de cortes activos"
+                defaultValue="Comprobación editorial de actualizaciones activas"
                 required
               />
             </label>

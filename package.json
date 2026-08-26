@@ -30,6 +30,7 @@
     "db:types:supabase": "supabase gen types typescript --local --schema public",
     "tmdb:search": "node web/scripts/tmdb-catalog.mjs search",
     "tmdb:import": "node web/scripts/tmdb-catalog.mjs import",
+    "tmdb:refresh": "node web/scripts/tmdb-catalog.mjs refresh",
     "tmdb:match": "node web/scripts/tmdb-catalog.mjs match",
     "candidate:match": "node web/scripts/category-candidate-match.mjs match",
     "ingest:manual": "node web/scripts/ingestion.mjs manual",

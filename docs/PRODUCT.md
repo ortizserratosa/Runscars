@@ -1,7 +1,7 @@
 # Contrato de producto
 
 **Estado:** contrato aceptado para el MVP
-**Última revisión:** 2026-08-25
+**Última revisión:** 2026-08-26
 
 ## 1. Visión
 
@@ -31,7 +31,7 @@ metodología y resultados oficiales sin necesidad de una cuenta.
 
 ### Usuario registrado
 
-- Marca películas como vistas o no vistas.
+- Marca cada película como vista, no vista o no indicada.
 - Crea rankings por categoría.
 - Elige si sus rankings son públicos o privados.
 - Modifica o elimina sus propios datos.
@@ -63,18 +63,14 @@ La interfaz usará una etiqueta inequívoca como
 
 ### Recepción crítica
 
-Puntuaciones publicadas por críticos o medios y normalizadas a una escala de
-cero a cinco estrellas. Los agregadores aprobados pueden descubrir esas piezas,
-pero cada crítica conserva su medio, autor y URL originales y se deduplica por
-publicación canónica. Siempre se muestra también la escala original. Solo se
-promociona como agregado cuando existen al menos tres puntuaciones individuales
-independientes; con menos cobertura aparece únicamente en la ficha relacionada
-y rotulada como insuficiente. Tomatometer y Metascore aparecen en una capa de
-contexto separada y no se mezclan con esta media. La página pública se organiza
-por agregador y muestra sus títulos destacados entre las películas presentes en
-las predicciones activas, mientras que las críticas individuales se consultan
-en la ficha de cada película. Si un agregador todavía no ha publicado una nota,
-no se rellena con una estimación.
+Puntuaciones publicadas por críticos o medios originales y normalizadas a una
+escala de cero a cinco estrellas. Cada crítica conserva su medio, autor, URL y
+valor originales y se deduplica por publicación canónica. Siempre se muestra
+también la escala original. Solo se publica una media cuando existen al menos
+tres puntuaciones individuales independientes; con menos cobertura aparece
+únicamente el detalle disponible, rotulado como insuficiente. Metacritic,
+Rotten Tomatoes y FilmAffinity se conservan como discovery editorial privado y
+no exponen sus datos hasta obtener permiso, API o licencia compatible.
 
 ### Predicciones
 
@@ -89,8 +85,15 @@ profesional Borda.
 
 ### Comunidad
 
-Rankings realizados por usuarios y su estado de visionado. Los datos de la
-comunidad no alteran los agregados profesionales.
+Rankings realizados por usuarios y su estado de visionado. La comunidad permite
+descubrir quinielas públicas, abrir una quiniela canónica por categoría y
+compartirla mediante una tarjeta social. Los datos de la comunidad no alteran
+los agregados profesionales ni generan un consenso propio.
+
+La ausencia de una fila significa `unmarked`; las otras dos opciones son
+`watched` y `not_watched`. Un estado solo se muestra públicamente cuando la
+película está incluida en un ranking público y el perfil también es público.
+No se publica el historial de visionado ajeno a esos rankings.
 
 ### Reseñas
 
@@ -144,7 +147,7 @@ publican cuando alcanzan la cobertura aprobada.
 - Las ejecuciones de una misma fecha UTC se consolidan en su último estado; no
   producen comparaciones intradía ni dos cortes públicos con la misma fecha.
 - Selector de cortes reales por categoría; cada corte reproduce su ranking y se
-  compara con el corte real inmediatamente anterior.
+  compara con la actualización efectiva inmediatamente anterior.
 - La interfaz distingue la fecha de publicación del proveedor, la fecha del
   último cambio efectivo y la última comprobación correcta del conector.
 - Snapshot final de predicción de nominaciones.
@@ -153,12 +156,16 @@ publican cuando alcanzan la cobertura aprobada.
 
 ### Cuenta
 
-- Acceso mediante correo.
+- Altas nuevas mediante Google OAuth durante la beta pública. El acceso por
+  correo se conserva para cuentas existentes; las altas por correo vuelven al
+  disponer de dominio y SMTP propios.
+- Contraseñas nuevas de al menos 12 caracteres.
 - Perfil público mínimo.
 - Ranking por categoría.
 - Estado vista/no vista.
 - Visibilidad pública o privada.
 - Eliminación de cuenta y contenido propio.
+- Exportación de los datos propios y página de privacidad y seguridad.
 
 ## 7. Recorridos esenciales
 
@@ -185,12 +192,20 @@ publican cuando alcanzan la cobertura aprobada.
 4. Guarda el ranking como público o privado.
 5. Puede modificarlo o eliminarlo.
 
+### R6. Descubrir y compartir quinielas
+
+1. El visitante abre Comunidad y filtra por categoría o usuario.
+2. Abre un perfil público o una quiniela pública concreta.
+3. Consulta posiciones parciales y estados de visionado de las películas
+   incluidas.
+4. Comparte el enlace; la web social recibe una tarjeta Open Graph de 1200×630.
+
 ### R4. Consultar la evolución
 
 1. El visitante abre una categoría.
-2. Elige un corte real anterior.
+2. Elige una actualización efectiva anterior.
 3. Ve la clasificación tal como estaba entonces.
-4. Compara sus cambios con el corte real inmediatamente anterior.
+4. Compara sus cambios con la actualización efectiva inmediatamente anterior.
 
 ### R5. Medir el acierto
 
@@ -203,7 +218,7 @@ publican cuando alcanzan la cobertura aprobada.
 | ID | Requisito |
 |---|---|
 | RF-01 | Navegar por temporada y categoría sin cuenta |
-| RF-02 | Mantener recepción crítica separada, mostrar destacados por agregador, deduplicar críticas descubiertas por agregadores y promocionarla solo con cobertura suficiente |
+| RF-02 | Mantener recepción crítica separada, publicar solo medios originales aprobados, deduplicar críticas y promocionarla únicamente con cobertura suficiente |
 | RF-03 | Mostrar procedencia y fecha de cada dato profesional |
 | RF-04 | Mantener fichas canónicas de película y persona |
 | RF-05 | Importar metadatos de TMDB con corrección manual |
@@ -219,6 +234,9 @@ publican cuando alcanzan la cobertura aprobada.
 | RF-15 | Mostrar mercados separados por proveedor y fuera del agregado profesional |
 | RF-16 | Publicar las ocho categorías desde datos persistidos y archivar Oscar 2022–2026 |
 | RF-17 | Publicar metodología y evaluación por categoría y global desde versiones bloqueadas |
+| RF-18 | Descubrir quinielas públicas por temporada, categoría y usuario |
+| RF-19 | Compartir cada quiniela pública con enlace y tarjeta social adaptada |
+| RF-20 | Mantener estados de visionado de tres valores con visibilidad limitada al ranking público |
 
 ## 9. Fuera del MVP
 

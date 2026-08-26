@@ -368,6 +368,24 @@ export class SupabaseCatalogRepository {
     );
   }
 
+  async listSeasonFilmsWithTmdb(seasonId) {
+    const rows = assertSupabase(
+      await this.supabase
+        .from("season_films")
+        .select("film_id,films!inner(id,tmdb_id)")
+        .eq("season_id", seasonId)
+        .order("film_id"),
+      "No se pudo leer el catálogo de la temporada",
+    );
+
+    return rows.flatMap((row) => {
+      const film = Array.isArray(row.films) ? row.films[0] : row.films;
+      return Number.isInteger(film?.tmdb_id)
+        ? [{ filmId: row.film_id, tmdbId: film.tmdb_id }]
+        : [];
+    });
+  }
+
   async savePerson(credit, personSnapshot) {
     const identity = personSnapshot?.identity ?? {
       tmdb_id: credit.tmdbPersonId,
@@ -492,6 +510,27 @@ export class SupabaseCatalogRepository {
       "No se pudo registrar el emparejamiento",
     );
   }
+}
+
+export async function refreshCatalogSnapshots({
+  film,
+  locales,
+  client,
+  repository,
+  now = () => new Date(),
+}) {
+  for (const locale of locales) {
+    const rawMovie = await client.fetchMovie(film.tmdbId, locale);
+    await repository.saveMovie(
+      buildMovieSnapshot(rawMovie, { locale, fetchedAt: now() }),
+    );
+  }
+
+  return {
+    filmId: film.filmId,
+    tmdbId: film.tmdbId,
+    locales: [...locales],
+  };
 }
 
 export async function importCatalogMatch({

@@ -3,27 +3,34 @@ import { Movement } from "./components/Movement";
 import { PosterBlock } from "./components/PosterBlock";
 import { filmHref } from "../data/films";
 import { getCategoryView } from "../lib/categories/data";
+import { localeTag, localizedPath } from "../lib/i18n/config";
+import { getRequestLocale } from "../lib/i18n/server";
 
 export const dynamic = "force-dynamic";
 
 const tones = ["violet", "acid", "rust"] as const;
 
-function dateLabel(value: string) {
-  return new Intl.DateTimeFormat("es-ES", {
+function dateLabel(value: string, locale: "es" | "en") {
+  return new Intl.DateTimeFormat(localeTag(locale), {
     dateStyle: "long",
     timeZone: "UTC",
   }).format(new Date(value));
 }
 
-function sourceDateLabel(value: string) {
-  return new Intl.DateTimeFormat("es-ES", {
+function sourceDateLabel(value: string, locale: "es" | "en") {
+  return new Intl.DateTimeFormat(localeTag(locale), {
     dateStyle: "medium",
     timeZone: "UTC",
   }).format(new Date(value));
 }
 
 export default async function Home() {
-  const categoryView = await getCategoryView(2027, "best-picture");
+  const [categoryView, locale] = await Promise.all([
+    getCategoryView(2027, "best-picture"),
+    getRequestLocale(),
+  ]);
+  const en = locale === "en";
+  const href = (path: string) => localizedPath(path, locale);
   if (categoryView.mode !== "active") {
     throw new Error("La portada necesita la temporada activa de Oscar 2027");
   }
@@ -31,8 +38,8 @@ export default async function Home() {
   const ranking = liveRanking.map((candidate, index) => ({
     id: candidate.film?.id ?? candidate.candidateId,
     href: candidate.film
-      ? filmHref(candidate.film.id)
-      : "/temporadas/2027/mejor-pelicula",
+      ? href(filmHref(candidate.film.id))
+      : href("/temporadas/2027/mejor-pelicula"),
     title: candidate.label,
     score: candidate.scoreOutOf100,
     coverage: `${candidate.appearances}/${candidate.applicableSourceCount}`,
@@ -54,8 +61,10 @@ export default async function Home() {
       )
     : null;
   const currentDate = categoryView.snapshot
-    ? dateLabel(categoryView.snapshot.lockedAt)
-    : "actualización pendiente";
+    ? dateLabel(categoryView.snapshot.lockedAt, locale)
+    : en
+      ? "update pending"
+      : "actualización pendiente";
   const liveReceipts = leader.contributions
     .filter((source) => source.appeared)
     .map((source) => ({
@@ -63,19 +72,21 @@ export default async function Home() {
       detail:
         source.appearanceKind === "ordered"
           ? `${leader.title} · #${source.rank}`
-          : `${leader.title} · selección`,
+          : `${leader.title} · ${en ? "selection" : "selección"}`,
       date: source.publishedAt
-        ? `Publicada ${sourceDateLabel(source.publishedAt)}`
-        : "Publicación verificada",
-      href: `/fuentes/${source.sourceId}`,
+        ? `${en ? "Published" : "Publicada"} ${sourceDateLabel(source.publishedAt, locale)}`
+        : en
+          ? "Verified publication"
+          : "Publicación verificada",
+      href: href(`/fuentes/${source.sourceId}`),
     }));
   const receipts = liveReceipts.length
     ? liveReceipts
     : [
         {
-          name: "Consenso profesional",
+          name: en ? "Professional consensus" : "Consenso profesional",
           detail: leader.title,
-          date: "Actualización pendiente",
+          date: en ? "Update pending" : "Actualización pendiente",
           href: leader.href,
         },
       ];
@@ -84,41 +95,50 @@ export default async function Home() {
     <main>
       <section className="home-hero page-shell">
         <div className="eyebrow-row">
-          <span className="eyebrow">Cuaderno de temporada · {currentDate}</span>
+          <span className="eyebrow">
+            {en ? "Season notebook" : "Cuaderno de temporada"} · {currentDate}
+          </span>
           <span className="data-note">
-            {ranking.length} películas en carrera
+            {ranking.length}{" "}
+            {en ? "films in contention" : "películas en carrera"}
           </span>
         </div>
 
         <div className="hero-grid">
           <div className="hero-copy">
-            <p className="kicker">Oscar 2027 · películas de 2026</p>
+            <p className="kicker">
+              {en
+                ? "Oscar 2027 · 2026 films"
+                : "Oscar 2027 · películas de 2026"}
+            </p>
             <h1>
-              La carrera,
+              {en ? "The road to the Oscars," : "La carrera a los Oscar,"}
               <br />
-              <em>con los recibos.</em>
+              <em>{en ? "backed by data." : "datos en mano."}</em>
             </h1>
             <p className="hero-intro">
-              Sigue qué películas suben, quién las respalda y cómo cambia el
-              consenso. Cada posición enlaza con la publicación que la sostiene.
+              {en
+                ? "Follow which films lead the season, who backs them and how consensus changes in real time."
+                : "Sigue qué películas lideran la temporada, quién las respalda y cómo cambia el consenso en tiempo real."}
             </p>
             <div className="hero-actions">
               <Link
                 className="primary-button"
-                href="/temporadas/2027/mejor-pelicula"
+                href={href("/temporadas/2027/mejor-pelicula")}
               >
-                Ver Mejor película <span aria-hidden="true">↗</span>
+                {en ? "View Best Picture" : "Ver Mejor película"}{" "}
+                <span aria-hidden="true">↗</span>
               </Link>
-              <Link className="text-link" href="/temporadas/2027">
-                Explorar temporada
+              <Link className="text-link" href={href("/temporadas/2027")}>
+                {en ? "Explore the season" : "Explorar temporada"}
               </Link>
             </div>
           </div>
 
           <div className="hero-board">
             <div className="hero-board-label">
-              <span>Líder del corte</span>
-              <span>Consenso</span>
+              <span>{en ? "Leading film" : "Película líder"}</span>
+              <span>{en ? "Consensus" : "Consenso"}</span>
             </div>
             <Link href={leader.href}>
               <PosterBlock
@@ -131,16 +151,22 @@ export default async function Home() {
             <div className="leader-score">
               <div>
                 <strong>
-                  {leader.score.toLocaleString("es-ES", {
+                  {leader.score.toLocaleString(localeTag(locale), {
                     minimumFractionDigits: 1,
                     maximumFractionDigits: 1,
                   })}
                 </strong>
-                <span>puntos Borda / 100</span>
+                <span>
+                  {en ? "consensus points / 100" : "puntos de consenso / 100"}
+                </span>
               </div>
               <div
                 className="score-meter"
-                aria-label={`${leader.score.toLocaleString("es-ES")} puntos de 100`}
+                aria-label={`${leader.score.toLocaleString(localeTag(locale))} ${en ? "points out of 100" : "puntos de 100"}`}
+                aria-valuemax={100}
+                aria-valuemin={0}
+                aria-valuenow={leader.score}
+                role="progressbar"
               >
                 <span style={{ width: `${leader.score}%` }} />
               </div>
@@ -149,30 +175,52 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="ticker" aria-label="Resumen del último corte">
+      <section
+        className="ticker"
+        aria-label={
+          en ? "Latest update summary" : "Resumen de la última actualización"
+        }
+      >
         <div className="page-shell ticker-inner">
-          <span className="ticker-label">Último corte</span>
-          <Link href={leader.href}>{leader.title} lidera el consenso</Link>
+          <span className="ticker-label">
+            {en ? "Latest update" : "Última actualización"}
+          </span>
+          <Link href={leader.href}>
+            {leader.title} {en ? "leads consensus" : "lidera el consenso"}
+          </Link>
           <span className="ticker-separator" aria-hidden="true">
             ◆
           </span>
           {rising ? (
             <Link href={rising.href}>
-              {rising.title} sube {rising.movement}{" "}
-              {rising.movement === 1 ? "puesto" : "puestos"}
+              {rising.title} {en ? "rises" : "sube"} {rising.movement}{" "}
+              {en
+                ? rising.movement === 1
+                  ? "place"
+                  : "places"
+                : rising.movement === 1
+                  ? "puesto"
+                  : "puestos"}
             </Link>
           ) : (
-            <span>Sin subidas en las primeras posiciones</span>
+            <span>
+              {en
+                ? "No rises among the top positions"
+                : "Sin subidas en las primeras posiciones"}
+            </span>
           )}
           <span className="ticker-separator" aria-hidden="true">
             ◆
           </span>
           <span>
             {categoryView.snapshot?.previous
-              ? `Comparado con el corte real del ${dateLabel(
+              ? `${en ? "Compared with the update from" : "Comparado con la actualización del"} ${dateLabel(
                   categoryView.snapshot.previous.lockedAt,
+                  locale,
                 )}`
-              : "Primer corte disponible"}
+              : en
+                ? "First update available"
+                : "Primera actualización disponible"}
           </span>
         </div>
       </section>
@@ -180,12 +228,15 @@ export default async function Home() {
       <section className="page-shell section-block">
         <div className="section-heading split-heading">
           <div>
-            <p className="section-index">01 / CONSENSO</p>
-            <h2>La carrera ahora</h2>
+            <p className="section-index">
+              01 / {en ? "CONSENSUS" : "CONSENSO"}
+            </p>
+            <h2>{en ? "The race now" : "La carrera ahora"}</h2>
           </div>
           <p>
-            Orden Borda normalizado entre rankings profesionales aplicables. No
-            representa una probabilidad.
+            {en
+              ? "Weighted consensus based on specialist outlets. It reflects the current direction of professional predictions, not a mathematical probability."
+              : "Consenso ponderado basado en medios especializados. Refleja la tendencia actual de las predicciones, no una probabilidad matemática."}
           </p>
         </div>
 
@@ -204,14 +255,20 @@ export default async function Home() {
               />
               <div className="podium-copy">
                 <div>
-                  <span className="rank-label">Nº {index + 1}</span>
+                  <span className="rank-label">
+                    {en ? "No." : "Nº"} {index + 1}
+                  </span>
                   {categoryView.snapshot?.previous ? (
-                    <Movement value={candidate.movement} />
+                    <Movement locale={locale} value={candidate.movement} />
                   ) : (
                     <span
-                      aria-label="Sin corte real anterior"
+                      aria-label={
+                        en ? "No previous update" : "Sin actualización anterior"
+                      }
                       className="movement neutral"
-                      title="Sin corte real anterior"
+                      title={
+                        en ? "No previous update" : "Sin actualización anterior"
+                      }
                     >
                       —
                     </span>
@@ -219,8 +276,9 @@ export default async function Home() {
                 </div>
                 <h3>{candidate.title}</h3>
                 <p>
-                  {candidate.coverage} fuentes · {candidate.firsts} primeras
-                  posiciones
+                  {candidate.coverage} {en ? "sources" : "fuentes"} ·{" "}
+                  {candidate.firsts}{" "}
+                  {en ? "first places" : "primeras posiciones"}
                 </p>
               </div>
             </Link>
@@ -232,60 +290,86 @@ export default async function Home() {
         <div className="page-shell">
           <div className="section-heading split-heading light-heading">
             <div>
-              <p className="section-index">02 / TRES SEÑALES</p>
-              <h2>Consenso, evolución y tu lista.</h2>
+              <p className="section-index">
+                02 / {en ? "THREE SIGNALS" : "TRES SEÑALES"}
+              </p>
+              <h2>
+                {en
+                  ? "Consensus, movement and your list."
+                  : "Consenso, evolución y tu lista."}
+              </h2>
             </div>
             <p>
-              La historia profesional y la opinión personal permanecen
-              separadas.
+              {en
+                ? "Professional analysis and your own ballot, all in one place."
+                : "Análisis profesional y tu propia quiniela, en un solo lugar."}
             </p>
           </div>
 
           <div className="signal-grid">
             <article className="signal-card prediction-card">
               <span className="signal-number">A</span>
-              <p className="signal-type">Predicciones</p>
-              <h3>¿Quién aparece en las listas?</h3>
+              <p className="signal-type">
+                {en ? "Predictions" : "Predicciones"}
+              </p>
+              <h3>
+                {en
+                  ? "Who appears on the lists?"
+                  : "¿Quién aparece en las listas?"}
+              </h3>
               <div className="signal-stat">
                 <strong>{leader.coverage}</strong>
                 <span>
-                  fuentes sitúan a{" "}
+                  {en ? "sources include" : "fuentes sitúan a"}{" "}
                   <Link href={leader.href}>{leader.title}</Link>
                 </span>
               </div>
-              <Link href="/temporadas/2027/mejor-pelicula">
-                Abrir consenso →
+              <Link href={href("/temporadas/2027/mejor-pelicula")}>
+                {en ? "Open consensus →" : "Abrir consenso →"}
               </Link>
             </article>
 
             <article className="signal-card evolution-card">
               <span className="signal-number">B</span>
-              <p className="signal-type">Evolución</p>
-              <h3>¿Qué cambió de verdad?</h3>
+              <p className="signal-type">{en ? "Movement" : "Evolución"}</p>
+              <h3>{en ? "What really changed?" : "¿Qué cambió de verdad?"}</h3>
               <div className="signal-stat">
                 <strong>{rising ? `+${rising.movement}` : "="}</strong>
                 <span>
                   {rising ? (
                     <Link href={rising.href}>{rising.title}</Link>
+                  ) : en ? (
+                    "no rises among the top positions"
                   ) : (
                     "sin subidas en las primeras posiciones"
                   )}
                 </span>
               </div>
-              <Link href="/temporadas/2027/mejor-pelicula">
-                Comparar cortes reales →
+              <Link href={href("/temporadas/2027/mejor-pelicula")}>
+                {en ? "View change history →" : "Ver historial de cambios →"}
               </Link>
             </article>
 
             <article className="signal-card community-card">
               <span className="signal-number">C</span>
-              <p className="signal-type">Comunidad</p>
-              <h3>Tu ranking, con tu privacidad</h3>
+              <p className="signal-type">{en ? "Community" : "Comunidad"}</p>
+              <h3>{en ? "Your personal ballot" : "Tu quiniela personal"}</h3>
               <div className="signal-stat">
-                <strong>ACTIVA</strong>
-                <span>una señal separada del consenso profesional</span>
+                <strong>{en ? "Create" : "Crea"}</strong>
+                <span>
+                  {en
+                    ? "a personal ranking independent from professional consensus"
+                    : "un ranking personal independiente del consenso"}
+                </span>
               </div>
-              <Link href="/acceso">Crear mi perfil →</Link>
+              <Link href={href("/acceso")}>
+                {en ? "Create my ballot →" : "Crear mi quiniela →"}
+              </Link>
+              <Link href={href("/comunidad")}>
+                {en
+                  ? "Explore public ballots →"
+                  : "Explorar quinielas públicas →"}
+              </Link>
             </article>
           </div>
         </div>
@@ -293,18 +377,29 @@ export default async function Home() {
 
       <section className="page-shell section-block evidence-section">
         <div className="evidence-copy">
-          <p className="section-index">03 / TRAZABILIDAD</p>
-          <h2>De la posición a la publicación.</h2>
-          <p>
-            Cada movimiento conserva fuente, autor, fecha, valor original y
-            momento de captura. El contexto nunca se disfraza de voto.
+          <p className="section-index">
+            03 / {en ? "TRACEABILITY" : "TRAZABILIDAD"}
           </p>
-          <Link className="primary-button dark-button" href="/fuentes">
-            Ver una fuente por dentro
+          <h2>
+            {en
+              ? "From the position to the publication."
+              : "De la posición a la publicación."}
+          </h2>
+          <p>
+            {en
+              ? "Every movement records the source, author, date and original value. Full transparency without manipulated data."
+              : "Cada movimiento registra fuente, autor, fecha y dato original. Transparencia total sin datos manipulados."}
+          </p>
+          <Link className="primary-button dark-button" href={href("/fuentes")}>
+            {en ? "Explore sources" : "Explorar fuentes"}
           </Link>
         </div>
         <div className="evidence-receipts">
-          <div className="receipt-stack" aria-label="Fuentes destacadas">
+          <div
+            className="receipt-stack"
+            aria-label={en ? "Featured sources" : "Fuentes destacadas"}
+            role="group"
+          >
             {receipts.slice(0, 3).map((receipt, index) => (
               <div
                 className={`receipt receipt-${["one", "two", "three"][index]}`}
@@ -319,8 +414,16 @@ export default async function Home() {
             ))}
           </div>
           <details className="receipt-source-list">
-            <summary>Las {receipts.length} fuentes del líder</summary>
-            <ul aria-label="Fuentes del corte vigente">
+            <summary>
+              {en
+                ? `The leader's ${receipts.length} sources`
+                : `Las ${receipts.length} fuentes del líder`}
+            </summary>
+            <ul
+              aria-label={
+                en ? "Current ranking sources" : "Fuentes del ranking actual"
+              }
+            >
               {receipts.map((receipt) => (
                 <li key={receipt.name}>
                   <Link href={receipt.href}>{receipt.name}</Link>

@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { localizedCategoryName } from "../../lib/i18n/categories";
+import { localeTag, localizedPath, type Locale } from "../../lib/i18n/config";
+import { getRequestLocale } from "../../lib/i18n/server";
 
 type CategorySummary = {
   id: string;
@@ -15,15 +18,15 @@ type CategorySummary = {
   isPublic: boolean;
 };
 
-function dateLabel(value: string | null) {
-  if (!value) return "pendiente";
-  return new Intl.DateTimeFormat("es-ES", {
+function dateLabel(value: string | null, locale: Locale) {
+  if (!value) return locale === "en" ? "pending" : "pendiente";
+  return new Intl.DateTimeFormat(localeTag(locale), {
     dateStyle: "medium",
     timeZone: "UTC",
   }).format(new Date(value));
 }
 
-export function SeasonPageView({
+export async function SeasonPageView({
   year,
   eligibilityYear,
   status,
@@ -34,6 +37,8 @@ export function SeasonPageView({
   status: "ACTIVA" | "CERRADA";
   categories: CategorySummary[];
 }) {
+  const locale = await getRequestLocale();
+  const en = locale === "en";
   const active = year === 2027;
   const recentChanges = active
     ? categories
@@ -50,31 +55,45 @@ export function SeasonPageView({
       <section className="season-hero">
         <div className="page-shell">
           <div className="breadcrumb">
-            <Link href="/">Inicio</Link>
+            <Link href={localizedPath("/", locale)}>
+              {en ? "Home" : "Inicio"}
+            </Link>
             <span>/</span>
-            <span>Temporadas</span>
+            <span>{en ? "Seasons" : "Temporadas"}</span>
           </div>
           <div className="season-title-row">
             <div>
               <p className="kicker">
-                {active ? "Temporada activa" : "Archivo oficial"}
+                {active
+                  ? en
+                    ? "Active season"
+                    : "Temporada activa"
+                  : en
+                    ? "Official archive"
+                    : "Archivo oficial"}
               </p>
               <h1>
                 Oscar <em>{year}</em>
               </h1>
               <p>
-                Películas de {eligibilityYear} ·{" "}
+                {en ? "Films from" : "Películas de"} {eligibilityYear} ·{" "}
                 {active
-                  ? "predicciones profesionales"
-                  : "nominados y ganadores oficiales"}
+                  ? en
+                    ? "professional predictions"
+                    : "predicciones profesionales"
+                  : en
+                    ? "official nominees and winners"
+                    : "nominados y ganadores oficiales"}
               </p>
             </div>
             <div className="season-stamp">
-              <span>Estado</span>
-              <strong>{status}</strong>
+              <span>{en ? "Status" : "Estado"}</span>
+              <strong>
+                {en ? (status === "ACTIVA" ? "ACTIVE" : "CLOSED") : status}
+              </strong>
               <small>
                 {categories.filter((category) => category.isPublic).length}/8
-                categorías disponibles
+                {en ? "categories available" : "categorías disponibles"}
               </small>
             </div>
           </div>
@@ -87,30 +106,51 @@ export function SeasonPageView({
             <section className="season-movements">
               <div className="section-heading compact-heading">
                 <div>
-                  <p className="section-index">ÚLTIMOS MOVIMIENTOS</p>
-                  <h2>Qué cambió en la temporada</h2>
+                  <p className="section-index">
+                    {en ? "LATEST MOVEMENTS" : "ÚLTIMOS MOVIMIENTOS"}
+                  </p>
+                  <h2>
+                    {en
+                      ? "What changed this season"
+                      : "Qué cambió en la temporada"}
+                  </h2>
                 </div>
               </div>
               <div className="season-movement-grid">
                 {recentChanges.map((category) => (
                   <Link
-                    href={`/temporadas/${year}/${category.slug}`}
+                    href={localizedPath(
+                      `/temporadas/${year}/${category.slug}`,
+                      locale,
+                    )}
                     key={category.id}
                   >
-                    <span>{dateLabel(category.updatedAt)}</span>
-                    <h3>{category.name}</h3>
+                    <span>{dateLabel(category.updatedAt, locale)}</span>
+                    <h3>
+                      {localizedCategoryName(
+                        locale,
+                        category.id,
+                        category.name,
+                      )}
+                    </h3>
                     {category.topMover ? (
                       <p>
                         <strong>+{category.topMover.movement}</strong>{" "}
                         {category.topMover.label}
                       </p>
                     ) : (
-                      <p>Líder: {category.leader?.label ?? "pendiente"}</p>
+                      <p>
+                        {en ? "Leader" : "Líder"}:{" "}
+                        {category.leader?.label ??
+                          (en ? "pending" : "pendiente")}
+                      </p>
                     )}
                     <small>
                       {category.changedSources.length
-                        ? `Cambió: ${category.changedSources.join(", ")}`
-                        : "Primer estado disponible"}
+                        ? `${en ? "Changed" : "Cambió"}: ${category.changedSources.join(", ")}`
+                        : en
+                          ? "First available state"
+                          : "Primer estado disponible"}
                     </small>
                   </Link>
                 ))}
@@ -119,8 +159,14 @@ export function SeasonPageView({
           ) : null}
           <div className="section-heading compact-heading">
             <div>
-              <p className="section-index">CATEGORÍAS</p>
-              <h2>Ocho carreras, por separado</h2>
+              <p className="section-index">
+                {en ? "CATEGORIES" : "CATEGORÍAS"}
+              </p>
+              <h2>
+                {en
+                  ? "Eight races, kept separate"
+                  : "Ocho carreras, por separado"}
+              </h2>
             </div>
           </div>
           <div className="category-grid">
@@ -129,23 +175,29 @@ export function SeasonPageView({
                 className={`category-card ${
                   category.isPublic ? "active-category" : "muted-category"
                 }`}
-                href={`/temporadas/${year}/${category.slug}`}
+                href={localizedPath(
+                  `/temporadas/${year}/${category.slug}`,
+                  locale,
+                )}
                 key={category.id}
               >
                 <span className="category-index">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <div>
-                  <h3>{category.name}</h3>
+                  <h3>
+                    {localizedCategoryName(locale, category.id, category.name)}
+                  </h3>
                   <p>
                     {active
-                      ? `${category.applicableSourceCount} medios con datos`
-                      : `${category.candidateCount} nominados oficiales`}
+                      ? `${category.applicableSourceCount} ${en ? "outlets with data" : "medios con datos"}`
+                      : `${category.candidateCount} ${en ? "official nominees" : "nominados oficiales"}`}
                   </p>
                   {active && category.leader ? (
                     <small>
-                      Líder: {category.leader.label} · cambio{" "}
-                      {dateLabel(category.updatedAt)}
+                      {en ? "Leader" : "Líder"}: {category.leader.label} ·{" "}
+                      {en ? "updated" : "cambio"}{" "}
+                      {dateLabel(category.updatedAt, locale)}
                     </small>
                   ) : null}
                 </div>
@@ -160,7 +212,13 @@ export function SeasonPageView({
         <aside className="season-sidebar">
           <div className="sidebar-card source-status-card">
             <p className="section-index">
-              {active ? "COBERTURA PROFESIONAL" : "ARCHIVO"}
+              {active
+                ? en
+                  ? "PROFESSIONAL COVERAGE"
+                  : "COBERTURA PROFESIONAL"
+                : en
+                  ? "ARCHIVE"
+                  : "ARCHIVO"}
             </p>
             <div className="big-number">
               {active
@@ -176,19 +234,37 @@ export function SeasonPageView({
             </div>
             <p>
               {active
-                ? "medios con datos en la categoría menos cubierta"
-                : "candidaturas oficiales entre las ocho categorías"}
+                ? en
+                  ? "outlets with data in the least-covered category"
+                  : "medios con datos en la categoría menos cubierta"
+                : en
+                  ? "official nominees across the eight categories"
+                  : "candidaturas oficiales entre las ocho categorías"}
             </p>
             <div className="status-row">
               <span>
-                <i className="status-dot green" /> señales separadas
+                <i className="status-dot green" />{" "}
+                {en ? "separate signals" : "señales separadas"}
               </span>
               <span>
-                <i className="status-dot amber" /> procedencia visible
+                <i className="status-dot amber" />{" "}
+                {en ? "visible provenance" : "procedencia visible"}
               </span>
             </div>
-            <Link href={active ? "/temporadas/2026" : "/temporadas/2027"}>
-              {active ? "Abrir archivo 2026" : "Volver a Oscar 2027"} →
+            <Link
+              href={localizedPath(
+                active ? "/temporadas/2026" : "/temporadas/2027",
+                locale,
+              )}
+            >
+              {active
+                ? en
+                  ? "Open the 2026 archive"
+                  : "Abrir archivo 2026"
+                : en
+                  ? "Return to Oscar 2027"
+                  : "Volver a Oscar 2027"}{" "}
+              →
             </Link>
           </div>
         </aside>

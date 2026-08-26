@@ -2,23 +2,32 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { categoryById } from "../../lib/categories/config";
 import { requireCurrentUser } from "../../lib/auth/session";
+import { localeTag, localizedPath } from "../../lib/i18n/config";
+import { getRequestLocale } from "../../lib/i18n/server";
 import { deleteRankingAction } from "../comunidad/actions";
 import { signOutAction } from "../acceso/actions";
 import { DeleteAccountForm, ProfileForm } from "./AccountForms";
 
-export const metadata: Metadata = {
-  title: "Mi cuenta",
-  description: "Perfil, rankings, visionados y privacidad de Runscars.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const en = (await getRequestLocale()) === "en";
+  return {
+    title: en ? "My account" : "Mi cuenta",
+    description: en
+      ? "Runscars profile, rankings, watch states and privacy."
+      : "Perfil, rankings, visionados y privacidad de Runscars.",
+  };
+}
 
 export const dynamic = "force-dynamic";
 
 export default async function AccountPage() {
+  const locale = await getRequestLocale();
+  const en = locale === "en";
   const { supabase, user } = await requireCurrentUser();
   const [profileResult, rankingsResult, watchedResult] = await Promise.all([
     supabase
       .from("user_profiles")
-      .select("display_name,slug,is_public,watched_is_public,created_at")
+      .select("display_name,slug,is_public,created_at")
       .eq("user_id", user.id)
       .single(),
     supabase
@@ -28,13 +37,17 @@ export default async function AccountPage() {
       .order("updated_at", { ascending: false }),
     supabase
       .from("user_film_states")
-      .select("film_id,watched_at,films(title)")
+      .select("film_id,status,watched_at,films(title)")
       .eq("user_id", user.id)
       .order("updated_at", { ascending: false }),
   ]);
 
   if (profileResult.error) {
-    throw new Error("No se ha podido cargar el perfil.");
+    throw new Error(
+      en
+        ? "The profile could not be loaded."
+        : "No se ha podido cargar el perfil.",
+    );
   }
   const profile = profileResult.data;
 
@@ -42,34 +55,44 @@ export default async function AccountPage() {
     <main className="page-shell account-page">
       <header className="account-hero account-hero-row">
         <div>
-          <p className="section-index">MI CUENTA</p>
+          <p className="section-index">{en ? "MY ACCOUNT" : "MI CUENTA"}</p>
           <h1>{profile.display_name}</h1>
           <p>{user.email}</p>
         </div>
         <form action={signOutAction}>
-          <button className="ghost-button">Cerrar sesión</button>
+          <input name="locale" type="hidden" value={locale} />
+          <button className="ghost-button">
+            {en ? "Sign out" : "Cerrar sesión"}
+          </button>
         </form>
       </header>
 
       <div className="account-dashboard">
         <section className="account-card">
-          <p className="section-index">PERFIL Y PRIVACIDAD</p>
-          <h2>Tu presencia pública</h2>
-          <ProfileForm profile={profile} />
+          <p className="section-index">
+            {en ? "PROFILE AND PRIVACY" : "PERFIL Y PRIVACIDAD"}
+          </p>
+          <h2>{en ? "Your public presence" : "Tu presencia pública"}</h2>
+          <ProfileForm locale={locale} profile={profile} />
           {profile.is_public ? (
-            <Link className="text-link" href={`/usuarios/${profile.slug}`}>
-              Ver mi perfil público →
+            <Link
+              className="text-link"
+              href={localizedPath(`/usuarios/${profile.slug}`, locale)}
+            >
+              {en ? "View my public profile →" : "Ver mi perfil público →"}
             </Link>
           ) : (
             <p className="privacy-note">
-              Tu perfil no es visible para nadie más.
+              {en
+                ? "Your profile is not visible to anyone else."
+                : "Tu perfil no es visible para nadie más."}
             </p>
           )}
         </section>
 
         <section className="account-card">
           <p className="section-index">RANKINGS</p>
-          <h2>Versiones activas</h2>
+          <h2>{en ? "Active versions" : "Versiones activas"}</h2>
           {rankingsResult.data?.length ? (
             <div className="account-list">
               {rankingsResult.data.map((ranking) => {
@@ -77,22 +100,40 @@ export default async function AccountPage() {
                 return (
                   <article key={ranking.id}>
                     <div>
-                      <strong>{category?.name ?? ranking.category_id}</strong>
+                      <strong>
+                        {category
+                          ? en
+                            ? category.nameEn
+                            : category.name
+                          : ranking.category_id}
+                      </strong>
                       <small>
-                        {ranking.is_public ? "Público" : "Privado"} ·
-                        actualizado{" "}
-                        {new Intl.DateTimeFormat("es-ES", {
+                        {ranking.is_public
+                          ? en
+                            ? "Public"
+                            : "Público"
+                          : en
+                            ? "Private"
+                            : "Privado"}{" "}
+                        ·{en ? "updated" : "actualizado"}{" "}
+                        {new Intl.DateTimeFormat(localeTag(locale), {
                           dateStyle: "medium",
                         }).format(new Date(ranking.updated_at))}
                       </small>
                     </div>
                     <div className="inline-actions">
                       {category ? (
-                        <Link href={`/temporadas/2027/${category.slug}`}>
-                          Editar
+                        <Link
+                          href={localizedPath(
+                            `/temporadas/2027/${category.slug}`,
+                            locale,
+                          )}
+                        >
+                          {en ? "Edit" : "Editar"}
                         </Link>
                       ) : null}
                       <form action={deleteRankingAction}>
+                        <input name="locale" type="hidden" value={locale} />
                         <input
                           name="seasonId"
                           type="hidden"
@@ -103,7 +144,7 @@ export default async function AccountPage() {
                           type="hidden"
                           value={ranking.category_id}
                         />
-                        <button>Eliminar</button>
+                        <button>{en ? "Delete" : "Eliminar"}</button>
                       </form>
                     </div>
                   </article>
@@ -112,17 +153,24 @@ export default async function AccountPage() {
             </div>
           ) : (
             <p className="privacy-note">
-              Todavía no has guardado ningún ranking.
+              {en
+                ? "You have not saved any rankings yet."
+                : "Todavía no has guardado ningún ranking."}
             </p>
           )}
-          <Link className="text-link" href="/temporadas/2027">
-            Elegir una categoría →
+          <Link
+            className="text-link"
+            href={localizedPath("/temporadas/2027", locale)}
+          >
+            {en ? "Choose a category →" : "Elegir una categoría →"}
           </Link>
         </section>
 
         <section className="account-card">
-          <p className="section-index">VISTAS</p>
-          <h2>{watchedResult.data?.length ?? 0} películas</h2>
+          <p className="section-index">{en ? "WATCH STATES" : "VISIONADO"}</p>
+          <h2>
+            {watchedResult.data?.length ?? 0} {en ? "states" : "estados"}
+          </h2>
           {watchedResult.data?.length ? (
             <div className="account-list">
               {watchedResult.data.map((state) => {
@@ -131,36 +179,52 @@ export default async function AccountPage() {
                   : state.films;
                 return (
                   <article key={state.film_id}>
-                    <Link href={`/peliculas/${state.film_id}`}>
+                    <Link
+                      href={localizedPath(
+                        `/peliculas/${state.film_id}`,
+                        locale,
+                      )}
+                    >
                       {film?.title ?? state.film_id}
                     </Link>
                     <small>
-                      {state.watched_at
-                        ? new Intl.DateTimeFormat("es-ES", {
+                      {state.status === "watched" && state.watched_at
+                        ? new Intl.DateTimeFormat(localeTag(locale), {
                             dateStyle: "medium",
                           }).format(new Date(state.watched_at))
-                        : "Fecha no indicada"}
+                        : state.status === "not_watched"
+                          ? en
+                            ? "Not watched"
+                            : "No vista"
+                          : en
+                            ? "Unmarked"
+                            : "No indicada"}
                     </small>
                   </article>
                 );
               })}
             </div>
           ) : (
-            <p className="privacy-note">No has marcado ninguna película.</p>
+            <p className="privacy-note">
+              {en
+                ? "You have not marked any films."
+                : "No has marcado ninguna película."}
+            </p>
           )}
         </section>
 
         <section className="account-card data-card">
-          <p className="section-index">TUS DATOS</p>
-          <h2>Exportar o eliminar</h2>
+          <p className="section-index">{en ? "YOUR DATA" : "TUS DATOS"}</p>
+          <h2>{en ? "Export or delete" : "Exportar o eliminar"}</h2>
           <p>
-            La exportación incluye perfil, rankings y visionados. El borrado
-            elimina la identidad de acceso y todo el contenido asociado.
+            {en
+              ? "The export includes your profile, rankings and watch states. Deletion removes your sign-in identity and all associated content."
+              : "La exportación incluye perfil, rankings y visionados. El borrado elimina la identidad de acceso y todo el contenido asociado."}
           </p>
           <a className="primary-button dark-button" href="/api/cuenta/exportar">
-            Descargar JSON
+            {en ? "Download JSON" : "Descargar JSON"}
           </a>
-          <DeleteAccountForm />
+          <DeleteAccountForm locale={locale} />
         </section>
       </div>
     </main>

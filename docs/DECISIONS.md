@@ -59,6 +59,8 @@ pasado para ocultar cambios de criterio.
 | D-039 | Agregadores como descubridores, no como voces duplicadas | Aceptada |
 | D-040 | Crítica pública por agregador y navegación por secciones | Aceptada |
 | D-041 | Cobertura crítica derivada de las predicciones activas | Aceptada |
+| D-042 | Comunidad pública y visionado vinculado a quinielas | Aceptada |
+| D-043 | Acceso reforzado y proveedor social explícito | Aceptada |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -705,3 +707,103 @@ ejemplos manuales de nominaciones y ganador coincidieron con
   valor ficticio. Queda pendiente de la siguiente captura.
 - **Motivo:** las puntuaciones aportan contexto a la carrera que seguimos; no
   deben convertir el índice del agregador en un catálogo paralelo.
+
+## D-042 · Comunidad pública y visionado vinculado a quinielas
+
+- **Fecha:** 2026-08-25
+- **Estado:** Aceptada
+- **Decisión:** la unidad social de Runscars es una quiniela pública, no un post
+  ni un hilo. Comunidad descubre rankings individuales por temporada, categoría
+  y usuario; cada ranking tiene una ruta canónica y una tarjeta social
+  compartible. No se añaden comentarios, likes, seguidores ni consenso
+  comunitario en este corte.
+- **Visionado:** `user_film_states.status` admite `watched` y `not_watched`; la
+  ausencia de fila representa `unmarked`. Se muestran públicamente únicamente
+  los estados de películas incluidas en rankings públicos cuyo perfil también
+  sea público. Los estados de películas ajenas a esos rankings no se exponen.
+- **Compatibilidad:** `watched_is_public` permanece temporalmente como columna
+  legado, pero deja de gobernar la visibilidad y desaparece de la interfaz.
+- **Refina:** D-031 en la parte de visionados y privacidad; D-014 permanece como
+  `Propuesta` porque no se crea ningún agregado comunitario.
+
+## D-043 · Acceso reforzado y proveedor social explícito
+
+- **Fecha:** 2026-08-25
+- **Estado:** Aceptada
+- **Decisión:** mantener Supabase Auth como autoridad de identidad, exigir
+  confirmación de correo para el acceso por contraseña y aceptar contraseñas
+  nuevas de al menos 12 caracteres. Añadir Google OAuth como alternativa de
+  inicio de sesión, con el callback SSR de Runscars y sin guardar credenciales
+  del proveedor en el repositorio.
+- **Privacidad:** los perfiles permanecen privados por defecto, el correo no
+  se publica y la visibilidad de visionados sigue limitada a películas incluidas
+  en rankings públicos de perfiles públicos. La interfaz ofrece exportación y
+  borrado de la cuenta.
+- **Protección:** se conservan rotación de refresh tokens, límites de frecuencia
+  de Supabase y RLS. El login no bloquea cuentas antiguas por la nueva longitud;
+  la regla de 12 caracteres se aplica a altas nuevas.
+- **Activación (2026-08-26):** Google OAuth está publicado para usuarios
+  externos con los permisos básicos `openid`, `email` y `profile`. El callback
+  permanece en Supabase y la URL pública es `https://runscars.vercel.app`; el
+  alias de staging y desarrollo local siguen admitidos durante la transición.
+  La prueba completa terminó en `/cuenta` con una sesión válida. El Client
+  Secret vive únicamente en Google Cloud y Supabase; no forma parte del código.
+
+## D-044 · Agregadores privados hasta obtener permiso compatible
+
+- **Fecha:** 2026-08-26
+- **Estado:** Aceptada
+- **Decisión:** pausar Metacritic, Rotten Tomatoes y FilmAffinity como fuentes
+  públicas del lanzamiento. Sus capturas y relaciones de descubrimiento se
+  conservan para auditoría editorial, pero `anon` y `authenticated` no pueden
+  leerlas. Solo una fuente original con estado `publishable` puede exponer una
+  observación profesional.
+- **Motivo:** la revisión previa al lanzamiento encontró restricciones de
+  extracción, republicación, marca o licencia que no quedan satisfechas por una
+  captura manual con enlace. La trazabilidad no sustituye el permiso de uso.
+- **Presentación:** `/critica` se limita a puntuaciones individuales de medios
+  originales aprobados. La media normalizada sigue exigiendo tres críticas
+  independientes y nunca mezcla agregados contextuales con ese cálculo.
+- **Reapertura:** cada agregador puede volver a publicarse mediante una decisión
+  nueva que documente autorización, API o licencia, atribución requerida,
+  alcance permitido y método de actualización.
+- **Refina y suspende parcialmente:** D-039, D-040 y D-041 en lo relativo a la
+  publicación de datos de agregadores. Se conserva su modelo de deduplicación y
+  procedencia para un posible uso futuro autorizado.
+
+## D-045 · Altas nuevas por Google durante la beta pública
+
+- **Fecha:** 2026-08-26
+- **Estado:** Aceptada
+- **Decisión:** permitir la creación de cuentas nuevas mediante Google OAuth y
+  pausar las altas por correo mientras Runscars no disponga de dominio y SMTP
+  transaccional propios. Las cuentas de correo existentes pueden seguir
+  iniciando sesión.
+- **Motivo:** el remitente compartido de Supabase tiene límites y entregabilidad
+  propios de desarrollo. La beta no debe depender de un correo de confirmación
+  que no controlamos, y Google ya está verificado extremo a extremo.
+- **Aplicación:** la interfaz y la acción de servidor rechazan el alta por email.
+  Un hook `before-user-created` de Supabase aplica la misma regla aunque se
+  invoque Auth directamente; permite `google` y no participa en el inicio de
+  sesión de cuentas de correo existentes.
+- **Reapertura:** activar `NEXT_PUBLIC_EMAIL_SIGNUP_ENABLED` y
+  `auth.email.enable_signup` solo después de configurar remitente, SPF, DKIM y
+  DMARC, comprobar entrega y documentar recuperación de contraseña.
+- **Refina:** D-043 en el canal de alta; no cambia la autoridad de Supabase Auth,
+  RLS, la privacidad por defecto ni el mínimo de 12 caracteres cuando vuelva el
+  alta por contraseña.
+
+## D-046 · URL pública inicial y protección de deployments
+
+- **Fecha:** 2026-08-26
+- **Estado:** Aceptada
+- **Decisión:** publicar el MVP en `https://runscars.vercel.app` y conservar
+  `https://runscars-staging.vercel.app` como alias temporal del mismo deployment.
+  La protección SSO de Vercel se desactiva porque también bloqueaba el dominio
+  público `vercel.app`; las previews siguen sin indexación mediante `robots`.
+- **Motivo:** el lanzamiento necesita una URL estable y pública sin contratar
+  un dominio ni aceptar un gasto en nombre del propietario. El dominio canónico,
+  Supabase Auth y los callbacks de la aplicación usan la nueva URL.
+- **Reapertura:** cuando exista un dominio propio, añadirlo al proyecto, mover
+  canonical, Auth y la pantalla OAuth, y reactivar la protección de previews
+  con la excepción exclusiva del dominio público.

@@ -6,20 +6,30 @@ import { z } from "zod";
 import { requireCurrentUser } from "../../lib/auth/session";
 import {
   parseCandidateIds,
+  parseFilmStateUpdates,
+  filmWatchStateSchema,
   profileSchema,
   rankingSchema,
 } from "../../lib/community/validation";
 import { createSupabaseAdminClient } from "../../lib/supabase/server";
+import { isLocale, localizedPath, type Locale } from "../../lib/i18n/config";
 
 export type CommunityFormState = {
   message: string;
   tone: "error" | "success" | "idle";
 };
 
+function formLocale(formData: FormData): Locale {
+  const value = formData.get("locale");
+  return typeof value === "string" && isLocale(value) ? value : "es";
+}
+
 export async function saveRankingAction(
   _previous: CommunityFormState,
   formData: FormData,
 ): Promise<CommunityFormState> {
+  const locale = formLocale(formData);
+  const en = locale === "en";
   const fields = rankingSchema.safeParse({
     seasonId: formData.get("seasonId"),
     categoryId: formData.get("categoryId"),
@@ -28,13 +38,14 @@ export async function saveRankingAction(
   });
   if (!fields.success) {
     return {
-      message:
-        "El ranking debe contener entre 1 y 50 candidaturas sin repetir.",
+      message: en
+        ? "The ranking must contain between 1 and 50 unique candidates."
+        : "El ranking debe contener entre 1 y 50 candidaturas sin repetir.",
       tone: "error",
     };
   }
 
-  const { supabase } = await requireCurrentUser();
+  const { supabase, user } = await requireCurrentUser();
   const { error } = await supabase.rpc("save_my_ranking", {
     ranking_season_id: fields.data.seasonId,
     ranking_category_id: fields.data.categoryId,
@@ -43,14 +54,68 @@ export async function saveRankingAction(
   });
   if (error) {
     return {
-      message: "No hemos podido guardar el ranking. Recarga y vuelve a probar.",
+      message: en
+        ? "We could not save the ranking. Reload the page and try again."
+        : "No hemos podido guardar el ranking. Recarga y vuelve a probar.",
       tone: "error",
     };
   }
 
+  const filmStates = parseFilmStateUpdates(formData.get("filmStates"));
+  const unmarkedFilmIds = filmStates
+    .filter((state) => state.state === "unmarked")
+    .map((state) => state.filmId);
+  if (unmarkedFilmIds.length) {
+    const { error: deleteStatesError } = await supabase
+      .from("user_film_states")
+      .delete()
+      .eq("user_id", user.id)
+      .in("film_id", unmarkedFilmIds);
+    if (deleteStatesError) {
+      return {
+        message: en
+          ? "We could not save the watch states."
+          : "No hemos podido guardar los estados de visionado.",
+        tone: "error",
+      };
+    }
+  }
+  const markedFilmStates = filmStates.filter(
+    (
+      state,
+    ): state is (typeof filmStates)[number] & {
+      state: "watched" | "not_watched";
+    } => state.state !== "unmarked",
+  );
+  if (markedFilmStates.length) {
+    const now = new Date().toISOString();
+    const { error: upsertStatesError } = await supabase
+      .from("user_film_states")
+      .upsert(
+        markedFilmStates.map((state) => ({
+          user_id: user.id,
+          film_id: state.filmId,
+          status: state.state,
+          watched_at: state.state === "watched" ? now : null,
+        })),
+      );
+    if (upsertStatesError) {
+      return {
+        message: en
+          ? "We could not save the watch states."
+          : "No hemos podido guardar los estados de visionado.",
+        tone: "error",
+      };
+    }
+  }
+
   revalidatePath("/cuenta");
   revalidatePath("/temporadas/2027");
-  return { message: "Ranking guardado.", tone: "success" };
+  revalidatePath("/comunidad");
+  return {
+    message: en ? "Ranking saved." : "Ranking guardado.",
+    tone: "success",
+  };
 }
 
 export async function deleteRankingAction(formData: FormData) {
@@ -76,9 +141,9 @@ export async function deleteRankingAction(formData: FormData) {
   revalidatePath("/temporadas/2027");
 }
 
-export async function toggleWatchedAction(
+export async function setFilmStateAction(
   filmId: string,
-  watched: boolean,
+  state: string,
   formData: FormData,
 ) {
   void formData;
@@ -87,45 +152,46 @@ export async function toggleWatchedAction(
     .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
     .safeParse(filmId);
   if (!parsedFilmId.success) return;
+  const parsedState = filmWatchStateSchema.safeParse(state);
+  if (!parsedState.success) return;
 
   const { supabase, user } = await requireCurrentUser();
-  if (watched) {
-    await supabase.from("user_film_states").upsert({
-      user_id: user.id,
-      film_id: parsedFilmId.data,
-      watched_at: new Date().toISOString(),
-    });
-  } else {
+  if (parsedState.data === "unmarked") {
     await supabase
       .from("user_film_states")
       .delete()
       .eq("user_id", user.id)
       .eq("film_id", parsedFilmId.data);
+  } else {
+    await supabase.from("user_film_states").upsert({
+      user_id: user.id,
+      film_id: parsedFilmId.data,
+      status: parsedState.data,
+      watched_at:
+        parsedState.data === "watched" ? new Date().toISOString() : null,
+    });
   }
   revalidatePath(`/peliculas/${parsedFilmId.data}`);
   revalidatePath("/cuenta");
+  revalidatePath("/comunidad");
 }
 
 export async function updateProfileAction(
   _previous: CommunityFormState,
   formData: FormData,
 ): Promise<CommunityFormState> {
+  const locale = formLocale(formData);
+  const en = locale === "en";
   const fields = profileSchema.safeParse({
     displayName: formData.get("displayName"),
     slug: formData.get("slug"),
     isPublic: formData.get("isPublic") === "on",
-    watchedIsPublic: formData.get("watchedIsPublic") === "on",
   });
   if (!fields.success) {
     return {
-      message:
-        "Revisa el nombre, la dirección pública y las opciones de visibilidad.",
-      tone: "error",
-    };
-  }
-  if (fields.data.watchedIsPublic && !fields.data.isPublic) {
-    return {
-      message: "Para publicar visionados, el perfil también debe ser público.",
+      message: en
+        ? "Check the display name and public profile address."
+        : "Revisa el nombre y la dirección pública del perfil.",
       tone: "error",
     };
   }
@@ -137,28 +203,36 @@ export async function updateProfileAction(
       display_name: fields.data.displayName,
       slug: fields.data.slug,
       is_public: fields.data.isPublic,
-      watched_is_public: fields.data.watchedIsPublic,
     })
     .eq("user_id", user.id);
   if (error) {
     return {
       message:
         error.code === "23505"
-          ? "Esa dirección pública ya está ocupada."
-          : "No hemos podido guardar el perfil.",
+          ? en
+            ? "That public address is already taken."
+            : "Esa dirección pública ya está ocupada."
+          : en
+            ? "We could not save the profile."
+            : "No hemos podido guardar el perfil.",
       tone: "error",
     };
   }
 
   revalidatePath("/cuenta");
   revalidatePath(`/usuarios/${fields.data.slug}`);
-  return { message: "Perfil actualizado.", tone: "success" };
+  return {
+    message: en ? "Profile updated." : "Perfil actualizado.",
+    tone: "success",
+  };
 }
 
 export async function deleteAccountAction(
   _previous: CommunityFormState,
   formData: FormData,
 ): Promise<CommunityFormState> {
+  const locale = formLocale(formData);
+  const en = locale === "en";
   const fields = z
     .object({
       password: z.string().min(8).max(128),
@@ -170,7 +244,9 @@ export async function deleteAccountAction(
     });
   if (!fields.success) {
     return {
-      message: "Escribe ELIMINAR y confirma tu contraseña actual.",
+      message: en
+        ? "Type ELIMINAR and confirm your current password."
+        : "Escribe ELIMINAR y confirma tu contraseña actual.",
       tone: "error",
     };
   }
@@ -178,7 +254,9 @@ export async function deleteAccountAction(
   const { supabase, user } = await requireCurrentUser();
   if (!user.email) {
     return {
-      message: "La cuenta no tiene un correo verificable.",
+      message: en
+        ? "This account does not have a verifiable email address."
+        : "La cuenta no tiene un correo verificable.",
       tone: "error",
     };
   }
@@ -188,7 +266,12 @@ export async function deleteAccountAction(
       password: fields.data.password,
     });
   if (reauthenticationError) {
-    return { message: "La contraseña no es correcta.", tone: "error" };
+    return {
+      message: en
+        ? "The password is incorrect."
+        : "La contraseña no es correcta.",
+      tone: "error",
+    };
   }
 
   let admin;
@@ -196,18 +279,22 @@ export async function deleteAccountAction(
     admin = createSupabaseAdminClient();
   } catch {
     return {
-      message: "El borrado de cuenta no está configurado en este entorno.",
+      message: en
+        ? "Account deletion is not configured in this environment."
+        : "El borrado de cuenta no está configurado en este entorno.",
       tone: "error",
     };
   }
   const { error } = await admin.auth.admin.deleteUser(user.id, false);
   if (error) {
     return {
-      message: "No hemos podido eliminar la cuenta. Vuelve a intentarlo.",
+      message: en
+        ? "We could not delete the account. Try again."
+        : "No hemos podido eliminar la cuenta. Vuelve a intentarlo.",
       tone: "error",
     };
   }
 
   await supabase.auth.signOut({ scope: "local" });
-  redirect("/acceso?cuenta=eliminada");
+  redirect(localizedPath("/acceso?cuenta=eliminada", locale));
 }

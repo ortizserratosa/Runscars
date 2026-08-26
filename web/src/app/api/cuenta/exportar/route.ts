@@ -30,7 +30,7 @@ export async function GET() {
       .order("position"),
     supabase
       .from("user_film_states")
-      .select("film_id,watched_at,created_at,updated_at")
+      .select("film_id,status,watched_at,created_at,updated_at")
       .eq("user_id", user.id),
   ]);
 

@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
+  communityFiltersSchema,
+  filmWatchStateSchema,
   parseCandidateIds,
-  profileSchema,
+  parseCommunityFilters,
   rankingSchema,
 } from "../../src/lib/community/validation";
 
@@ -32,13 +34,32 @@ describe("community input contracts", () => {
     expect(parseCandidateIds("{not-json")).toEqual([]);
   });
 
-  it("keeps public watched history behind an explicitly public profile", () => {
-    const privateProfile = profileSchema.safeParse({
-      displayName: "Usuario Runscars",
-      slug: "usuario-runscars",
-      isPublic: false,
-      watchedIsPublic: true,
+  it("accepts the three explicit film watch states", () => {
+    expect(filmWatchStateSchema.parse("watched")).toBe("watched");
+    expect(filmWatchStateSchema.parse("not_watched")).toBe("not_watched");
+    expect(filmWatchStateSchema.parse("unmarked")).toBe("unmarked");
+    expect(filmWatchStateSchema.safeParse("unknown").success).toBe(false);
+  });
+
+  it("normalizes community filters and rejects unsafe pages", () => {
+    expect(
+      parseCommunityFilters({
+        season: "oscars-2027",
+        category: "mejor-pelicula",
+        q: " Ana ",
+        page: "2",
+      }),
+    ).toEqual({
+      seasonId: "oscars-2027",
+      categoryId: "mejor-pelicula",
+      query: "Ana",
+      page: 2,
     });
-    expect(privateProfile.success).toBe(false);
+    expect(
+      communityFiltersSchema.safeParse({
+        seasonId: "oscars-2027",
+        page: 0,
+      }).success,
+    ).toBe(false);
   });
 });

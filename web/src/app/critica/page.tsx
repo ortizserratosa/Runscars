@@ -1,27 +1,31 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
-  filterCriticalAggregatorFilms,
-  groupCriticalAggregatorHighlights,
-} from "../../lib/critical/aggregators";
-import {
   getCriticalReceptionRanking,
   getCurrentCategoryPredictions,
 } from "../../lib/repositories/signals";
+import { localizedPath } from "../../lib/i18n/config";
+import { getRequestLocale } from "../../lib/i18n/server";
 
-export const metadata: Metadata = {
-  title: "Agregadores",
-  description:
-    "Las notas de Metacritic y Rotten Tomatoes para nuestras predicciones.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const en = (await getRequestLocale()) === "en";
+  return {
+    title: en ? "Critical reception" : "Recepción crítica",
+    description: en
+      ? "Independent professional reviews for films in our predictions."
+      : "Críticas profesionales independientes para nuestras predicciones.",
+  };
+}
 
 export const dynamic = "force-dynamic";
 
 export default async function CriticalReceptionPage() {
-  const [ranking, predictions] = await Promise.all([
+  const [ranking, predictions, locale] = await Promise.all([
     getCriticalReceptionRanking(),
     getCurrentCategoryPredictions(),
+    getRequestLocale(),
   ]);
+  const en = locale === "en";
   const predictedFilmIds = new Set(
     predictions.flatMap((prediction) =>
       prediction.aggregate.ranking.flatMap((candidate) =>
@@ -29,48 +33,85 @@ export default async function CriticalReceptionPage() {
       ),
     ),
   );
-  const aggregators = groupCriticalAggregatorHighlights(
-    filterCriticalAggregatorFilms(
-      ranking.map((entry) => ({
-        filmId: entry.filmId,
-        filmTitle: entry.filmTitle,
-        contextualScores: entry.aggregate.contextualScores,
-      })),
-      predictedFilmIds,
-    ),
+  const criticalFilms = ranking.filter(
+    (entry) =>
+      predictedFilmIds.has(entry.filmId) && entry.aggregate.scores.length > 0,
   );
 
   return (
     <main className="page-shell critical-page">
       <header className="critical-hero">
-        <p className="section-index">CRÍTICA · AGREGADORES</p>
-        <h1>Nuestras predicciones, con sus notas.</h1>
+        <p className="section-index">
+          {en ? "CRITICS · ORIGINAL SOURCES" : "CRÍTICA · FUENTES ORIGINALES"}
+        </p>
+        <h1>
+          {en
+            ? "Professional criticism, source by source."
+            : "La crítica profesional, fuente a fuente."}
+        </h1>
         <p>
-          Metacritic y Rotten Tomatoes para las películas que aparecen en
-          nuestras predicciones.
+          {en
+            ? "We publish only attributable scores from approved original outlets. A normalized average appears after three independent reviews and always remains separate from professional predictions."
+            : "Publicamos solo notas atribuibles de medios originales aprobados. La media normalizada aparece a partir de tres críticas independientes y siempre permanece separada de las predicciones profesionales."}
         </p>
       </header>
 
-      {aggregators.length ? (
-        <section aria-label="Puntuaciones de agregadores para nuestras predicciones">
+      {criticalFilms.length ? (
+        <section
+          aria-label={
+            en
+              ? "Professional reviews for our predictions"
+              : "Críticas profesionales para nuestras predicciones"
+          }
+        >
           <div className="aggregator-grid">
-            {aggregators.map((aggregator) => (
-              <article className="aggregator-card" key={aggregator.sourceId}>
+            {criticalFilms.map((entry) => (
+              <article className="aggregator-card" key={entry.filmId}>
                 <header>
                   <div>
-                    <p className="section-index">AGREGADOR</p>
-                    <h2>{aggregator.sourceName}</h2>
+                    <p className="section-index">
+                      {en ? "CRITICAL RECEPTION" : "RECEPCIÓN CRÍTICA"}
+                    </p>
+                    <h2>
+                      <Link
+                        href={localizedPath(
+                          `/peliculas/${entry.filmId}`,
+                          locale,
+                        )}
+                      >
+                        {entry.filmTitle}
+                      </Link>
+                    </h2>
                   </div>
-                  <span className="rank-label">Puntuación</span>
+                  <span className="rank-label">
+                    {entry.aggregate.isSufficient && entry.aggregate.statistics
+                      ? `${entry.aggregate.statistics.mean.toLocaleString(
+                          en ? "en-GB" : "es-ES",
+                          {
+                            minimumFractionDigits: 1,
+                            maximumFractionDigits: 1,
+                          },
+                        )}/5`
+                      : `${entry.aggregate.scores.length}/${entry.aggregate.minimumRequired}`}
+                  </span>
                 </header>
                 <ol>
-                  {aggregator.scores.map((score, index) => (
+                  {entry.aggregate.scores.map((score, index) => (
                     <li key={score.id}>
                       <span>{String(index + 1).padStart(2, "0")}</span>
-                      <Link href={`/peliculas/${score.filmId}`}>
-                        <strong>{score.filmTitle}</strong>
-                        <small>{score.scaleLabel}</small>
-                      </Link>
+                      <a
+                        href={score.publicationUrl}
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <strong>{score.sourceName}</strong>
+                        <small>
+                          {score.author ??
+                            (en
+                              ? "Original publication"
+                              : "Publicación original")}
+                        </small>
+                      </a>
                       <a
                         href={score.publicationUrl}
                         rel="noreferrer"
@@ -81,14 +122,29 @@ export default async function CriticalReceptionPage() {
                     </li>
                   ))}
                 </ol>
+                {!entry.aggregate.isSufficient ? (
+                  <p className="insufficient-note">
+                    {en
+                      ? "No average is published until there are three independent reviews."
+                      : "No se publica una media hasta reunir tres críticas independientes."}
+                  </p>
+                ) : null}
               </article>
             ))}
           </div>
         </section>
       ) : (
         <section className="critical-empty">
-          <h2>Aún no hay notas de agregadores.</h2>
-          <p>Volveremos a esta lista cuando haya nuevas capturas.</p>
+          <h2>
+            {en
+              ? "There are no publishable reviews yet."
+              : "Aún no hay críticas publicables."}
+          </h2>
+          <p>
+            {en
+              ? "This section will open when independent original outlets have approved, attributable scores."
+              : "Esta sección se abrirá cuando haya notas atribuibles de medios originales aprobados e independientes."}
+          </p>
         </section>
       )}
     </main>

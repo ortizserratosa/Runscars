@@ -108,9 +108,9 @@ calidad y forman el catálogo elegible del MVP; pueden activarse gradualmente.
 |---|---|---|---|---|
 | `tmdb` | Metadatos | API documentada | Conector automático | publishable |
 | `academy` | Reglas y resultados | Manual asistido de HTML/PDF oficial | Importador oficial versionado | publishable |
-| `rotten-tomatoes` | Agregado crítico contextual | Captura manual fechada | Mantener manual o sustituir tras revisión | replace-before-publish |
-| `metacritic` | Agregado crítico contextual | Captura manual fechada | Mantener manual o sustituir tras revisión | replace-before-publish |
-| `filmaffinity` | Discovery de críticas profesionales y ficha contextual | Captura manual fechada | Mantener manual; no importar su valoración comunitaria | replace-before-publish |
+| `rotten-tomatoes` | Agregado crítico contextual | Pausado; captura privada | Requiere permiso o licencia antes de volver a publicar | review-before-publish |
+| `metacritic` | Agregado crítico contextual | Pausado; captura privada | Requiere permiso o licencia antes de volver a publicar | review-before-publish |
+| `filmaffinity` | Discovery de críticas profesionales y ficha contextual | Pausado; captura privada | Requiere permiso o licencia; no importar su valoración comunitaria | review-before-publish |
 | `roger-ebert` | Reseñas y notas individuales | RSS para descubrir + revisión manual | Conector RSS con fixture | review-before-publish |
 | `guardian` | Reseñas y notas individuales | Content API + revisión editorial | Conector API con fixture | review-before-publish |
 | `variety` | Predicciones y reseñas | RSS/HTML para descubrir + captura manual | Prototipo solo si la revisión lo permite | review-before-publish |
@@ -285,11 +285,11 @@ ninguna fecha, nota o posición se estima.
 
 ## 10. Riesgos abiertos
 
-- `rotten-tomatoes`, `metacritic` y `filmaffinity` están
-  `replace-before-publish`; sus enlaces sirven para descubrir piezas
-  originales, pero no sustituyen al medio ni habilitan por sí solos una nota
-  individual. Pueden desactivarse sin perder la señal crítica individual ya
-  publicada.
+- `rotten-tomatoes`, `metacritic` y `filmaffinity` están pausadas y
+  `review-before-publish` tras la revisión de lanzamiento de 2026-08-26. Sus
+  capturas y enlaces de descubrimiento son privados hasta contar con permiso o
+  licencia compatible. La señal crítica individual solo puede publicarse desde
+  el medio original si esa fuente supera su propia revisión.
 - El Content API de Guardian necesita clave y respeto de sus condiciones.
 - El HTML de AwardsWatch puede cambiar; el conector falla de forma aislada y
   exige actualizar el fixture antes de aceptar una nueva estructura.

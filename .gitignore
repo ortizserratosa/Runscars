@@ -9,6 +9,7 @@ playwright-report/
 test-results/
 .vercel/
 web/.vercel/
+.codex/
 supabase/.branches/
 supabase/.temp/
 *.tsbuildinfo

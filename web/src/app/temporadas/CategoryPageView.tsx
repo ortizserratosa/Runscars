@@ -5,18 +5,23 @@ import type {
   ArchiveCategoryView,
 } from "../../lib/categories/data";
 import type { PublicCategoryId } from "../../lib/categories/config";
+import { localeTag, localizedPath, type Locale } from "../../lib/i18n/config";
+import { getRequestLocale } from "../../lib/i18n/server";
+import { PublicRankingModule } from "../comunidad/PublicRankingModule";
 import { UserRankingPanel } from "./UserRankingPanel";
 
 type CategoryDefinition = {
   id: PublicCategoryId;
   slug: string;
   name: string;
+  nameEn: string;
   shortName: string;
+  shortNameEn: string;
 };
 
-function dateLabel(value: string) {
-  if (!value) return "sin captura";
-  return new Intl.DateTimeFormat("es-ES", {
+function dateLabel(value: string, locale: Locale) {
+  if (!value) return locale === "en" ? "no capture" : "sin captura";
+  return new Intl.DateTimeFormat(localeTag(locale), {
     dateStyle: "medium",
     timeStyle: "short",
     timeZone: "UTC",
@@ -40,10 +45,14 @@ function candidateSubtitle(candidate: {
 function ActiveCategory({
   category,
   view,
+  locale,
 }: {
   category: CategoryDefinition;
   view: ActiveCategoryView;
+  locale: Locale;
 }) {
+  const en = locale === "en";
+  const categoryName = en ? category.nameEn : category.name;
   const aggregate = view.aggregate;
   const ranking = aggregate?.ranking ?? [];
   const visibleRanking = ranking.slice(0, 10);
@@ -57,7 +66,9 @@ function ActiveCategory({
         <div className="leaderboard-title">
           <strong>
             {candidate.film ? (
-              <Link href={`/peliculas/${candidate.film.id}`}>
+              <Link
+                href={localizedPath(`/peliculas/${candidate.film.id}`, locale)}
+              >
                 {candidate.label}
               </Link>
             ) : (
@@ -84,7 +95,7 @@ function ActiveCategory({
         </div>
         <div className="points-cell">
           <strong>
-            {candidate.scoreOutOf100.toLocaleString("es-ES", {
+            {candidate.scoreOutOf100.toLocaleString(localeTag(locale), {
               minimumFractionDigits: 1,
               maximumFractionDigits: 1,
             })}
@@ -98,19 +109,23 @@ function ActiveCategory({
           </div>
         </div>
         {view.snapshot?.previous ? (
-          <Movement value={candidate.movement} />
+          <Movement locale={locale} value={candidate.movement} />
         ) : (
           <span
-            aria-label="Sin corte real anterior"
+            aria-label={
+              en ? "No previous update" : "Sin actualización anterior"
+            }
             className="movement neutral"
-            title="Sin corte real anterior"
+            title={en ? "No previous update" : "Sin actualización anterior"}
           >
             —
           </span>
         )}
       </div>
       <details className="category-source-details">
-        <summary>Ver procedencia y cálculo</summary>
+        <summary>
+          {en ? "View provenance and calculation" : "Ver procedencia y cálculo"}
+        </summary>
         <div className="source-calculations">
           {candidate.sourceContributions.map((source) => (
             <a
@@ -124,22 +139,28 @@ function ActiveCategory({
                 {source.sourceName}
                 <small>
                   {source.publishedAt
-                    ? `Publicada ${dateLabel(source.publishedAt)}`
-                    : "Publicación verificada"}
+                    ? `${en ? "Published" : "Publicada"} ${dateLabel(source.publishedAt, locale)}`
+                    : en
+                      ? "Verified publication"
+                      : "Publicación verificada"}
                 </small>
               </span>
               <span className="source-position">
                 {source.appearanceKind === "ordered"
-                  ? `Puesto ${source.rank} de ${source.listLength}`
+                  ? `${en ? "Rank" : "Puesto"} ${source.rank} ${en ? "of" : "de"} ${source.listLength}`
                   : source.appearanceKind === "selection"
-                    ? "selección"
-                    : "ausente"}
+                    ? en
+                      ? "selection"
+                      : "selección"
+                    : en
+                      ? "absent"
+                      : "ausente"}
               </span>
               <strong>
-                {source.points.toLocaleString("es-ES", {
+                {source.points.toLocaleString(localeTag(locale), {
                   maximumFractionDigits: 3,
                 })}{" "}
-                pts
+                {en ? "pts" : "pts"}
               </strong>
             </a>
           ))}
@@ -152,28 +173,42 @@ function ActiveCategory({
       <section className="category-hero">
         <div className="page-shell">
           <div className="breadcrumb">
-            <Link href="/">Inicio</Link>
+            <Link href={localizedPath("/", locale)}>
+              {en ? "Home" : "Inicio"}
+            </Link>
             <span>/</span>
-            <Link href="/temporadas/2027">Oscar 2027</Link>
+            <Link href={localizedPath("/temporadas/2027", locale)}>
+              Oscar 2027
+            </Link>
             <span>/</span>
-            <span>{category.name}</span>
+            <span>{categoryName}</span>
           </div>
           <div className="category-title-row">
             <div>
-              <p className="kicker">Predicción profesional de nominaciones</p>
-              <h1>{category.name}</h1>
+              <p className="kicker">
+                {en
+                  ? "Professional nomination predictions"
+                  : "Predicción profesional de nominaciones"}
+              </p>
+              <h1>{categoryName}</h1>
               <p>
-                {aggregate?.ranking.length ?? 0} candidaturas ·{" "}
-                {aggregate?.applicableSourceCount ?? 0} medios
+                {aggregate?.ranking.length ?? 0}{" "}
+                {en ? "candidates" : "candidaturas"} ·{" "}
+                {aggregate?.applicableSourceCount ?? 0}{" "}
+                {en ? "outlets" : "medios"}
               </p>
             </div>
             <div className="category-hero-stat">
-              <span>Cobertura</span>
+              <span>{en ? "Coverage" : "Cobertura"}</span>
               <strong>{aggregate?.orderedSourceCount ?? 0}</strong>
               <small>
                 {aggregate?.isConsensus
-                  ? "fuentes con consenso"
-                  : "fuentes · consenso pendiente"}
+                  ? en
+                    ? "sources in consensus"
+                    : "fuentes con consenso"
+                  : en
+                    ? "sources · consensus pending"
+                    : "fuentes · consenso pendiente"}
               </small>
             </div>
           </div>
@@ -184,46 +219,67 @@ function ActiveCategory({
         <section className="snapshot-panel">
           <div className="snapshot-heading">
             <div>
-              <p className="section-index">ACTUALIZACIÓN</p>
-              <h2>Datos verificados</h2>
+              <p className="section-index">{en ? "UPDATE" : "ACTUALIZACIÓN"}</p>
+              <h2>{en ? "Verified data" : "Datos verificados"}</h2>
             </div>
             <div className="snapshot-readout">
               <span>
                 {view.snapshot
-                  ? dateLabel(view.snapshot.lockedAt)
-                  : "pendiente"}
+                  ? dateLabel(view.snapshot.lockedAt, locale)
+                  : en
+                    ? "pending"
+                    : "pendiente"}
               </span>
               <strong>
                 {view.dataState === "database"
-                  ? "PUBLICADA"
+                  ? en
+                    ? "PUBLISHED"
+                    : "PUBLICADA"
                   : view.dataState === "fixture"
-                    ? "DEMOSTRACIÓN"
-                    : "PENDIENTE"}
+                    ? en
+                      ? "DEMO"
+                      : "DEMOSTRACIÓN"
+                    : en
+                      ? "PENDING"
+                      : "PENDIENTE"}
               </strong>
             </div>
           </div>
           {view.snapshot ? (
             <>
               <nav
-                aria-label="Seleccionar corte real"
+                aria-label={en ? "Select update" : "Seleccionar actualización"}
                 className="snapshot-selector"
               >
                 {view.snapshot.cuts.map((cut, index) => (
                   <Link
                     aria-current={cut.isSelected ? "page" : undefined}
                     className={cut.isSelected ? "active" : undefined}
-                    href={`/temporadas/2027/${category.slug}?corte=${encodeURIComponent(
-                      cut.id,
-                    )}`}
+                    href={localizedPath(
+                      `/temporadas/2027/${category.slug}?corte=${encodeURIComponent(
+                        cut.id,
+                      )}`,
+                      locale,
+                    )}
                     key={cut.id}
                     scroll={false}
                   >
-                    <span>{index === 0 ? "Actual" : "Cambio efectivo"}</span>
-                    <strong>{dateLabel(cut.lockedAt)}</strong>
+                    <span>
+                      {index === 0
+                        ? en
+                          ? "Current"
+                          : "Actual"
+                        : en
+                          ? "Effective change"
+                          : "Cambio efectivo"}
+                    </span>
+                    <strong>{dateLabel(cut.lockedAt, locale)}</strong>
                     <small>
                       {cut.changedSources.length
-                        ? `Cambió: ${cut.changedSources.join(", ")}`
-                        : "Primer estado disponible"}
+                        ? `${en ? "Changed" : "Cambió"}: ${cut.changedSources.join(", ")}`
+                        : en
+                          ? "First available state"
+                          : "Primer estado disponible"}
                     </small>
                   </Link>
                 ))}
@@ -232,26 +288,38 @@ function ActiveCategory({
                 <div>
                   <strong>
                     {view.snapshot.isLatest
-                      ? "Consenso profesional vigente"
-                      : "Corte histórico seleccionado"}
+                      ? en
+                        ? "Current professional consensus"
+                        : "Consenso profesional vigente"
+                      : en
+                        ? "Selected historical update"
+                        : "Actualización histórica seleccionada"}
                   </strong>
                   <span>
                     {aggregate?.includedObservationIds.length ?? 0}{" "}
-                    observaciones contrastadas y conservadas con su procedencia
+                    {en
+                      ? "verified observations preserved with their provenance"
+                      : "observaciones contrastadas y conservadas con su procedencia"}
                   </span>
                 </div>
                 <div className="snapshot-comparison">
                   <span>
-                    Solo un cambio efectivo de proveedor crea un corte
+                    {en
+                      ? "Only an effective source change creates an update"
+                      : "Solo un cambio efectivo de proveedor crea una actualización"}
                   </span>
                   {view.snapshot.previous ? (
                     <strong>
-                      Cambios frente al corte real de{" "}
-                      {dateLabel(view.snapshot.previous.lockedAt)}
+                      {en
+                        ? "Changes from the update on"
+                        : "Cambios frente a la actualización del"}{" "}
+                      {dateLabel(view.snapshot.previous.lockedAt, locale)}
                     </strong>
                   ) : (
                     <strong>
-                      Primer corte disponible · sin comparación anterior
+                      {en
+                        ? "First available update · no previous comparison"
+                        : "Primera actualización disponible · sin comparación anterior"}
                     </strong>
                   )}
                 </div>
@@ -259,51 +327,76 @@ function ActiveCategory({
               {view.sourceFreshness.length ? (
                 <details className="source-freshness-panel">
                   <summary>
-                    Estado y fechas de {view.sourceFreshness.length} fuentes
+                    {en ? "Status and dates for" : "Estado y fechas de"}{" "}
+                    {view.sourceFreshness.length} {en ? "sources" : "fuentes"}
                   </summary>
                   {!view.snapshot.isLatest ? (
                     <p className="historical-freshness-note">
-                      Publicación y cambio pertenecen al corte seleccionado. La
-                      comprobación técnica refleja el estado actual del
-                      conector.
+                      {en
+                        ? "Publication and change dates belong to the selected update. The technical check reflects the connector's current state."
+                        : "Publicación y cambio pertenecen a la actualización seleccionada. La comprobación técnica refleja el estado actual del conector."}
                     </p>
                   ) : null}
                   <div className="source-freshness-grid">
                     {view.sourceFreshness.map((source) => (
                       <article key={source.sourceId}>
                         <div>
-                          <Link href={`/fuentes/${source.sourceId}`}>
+                          <Link
+                            href={localizedPath(
+                              `/fuentes/${source.sourceId}`,
+                              locale,
+                            )}
+                          >
                             {source.sourceName}
                           </Link>
                           <span
                             className={`source-health-chip ${source.status}`}
                           >
                             {source.status === "ok"
-                              ? "Correcta"
+                              ? en
+                                ? "Healthy"
+                                : "Correcta"
                               : source.status === "failed"
-                                ? "Incidencia"
-                                : "Sin estado"}
+                                ? en
+                                  ? "Incident"
+                                  : "Incidencia"
+                                : en
+                                  ? "No status"
+                                  : "Sin estado"}
                           </span>
                         </div>
                         <dl>
                           <div>
-                            <dt>Publicada</dt>
+                            <dt>{en ? "Published" : "Publicada"}</dt>
                             <dd>
                               {source.publishedAt
-                                ? dateLabel(source.publishedAt)
-                                : "sin fecha"}
+                                ? dateLabel(source.publishedAt, locale)
+                                : en
+                                  ? "no date"
+                                  : "sin fecha"}
                             </dd>
                           </div>
                           <div>
-                            <dt>Cambió el ranking</dt>
-                            <dd>{dateLabel(source.lastChangedAt)}</dd>
+                            <dt>
+                              {en ? "Ranking changed" : "Cambió el ranking"}
+                            </dt>
+                            <dd>{dateLabel(source.lastChangedAt, locale)}</dd>
                           </div>
                           <div>
-                            <dt>Comprobación correcta</dt>
+                            <dt>
+                              {en
+                                ? "Last successful check"
+                                : "Comprobación correcta"}
+                            </dt>
                             <dd>
                               {source.lastSuccessfulCheckAt
-                                ? dateLabel(source.lastSuccessfulCheckAt)
-                                : "sin automatización"}
+                                ? dateLabel(
+                                    source.lastSuccessfulCheckAt,
+                                    locale,
+                                  )
+                                : en
+                                  ? "not automated"
+                                  : "sin automatización"}
                             </dd>
                           </div>
                         </dl>
@@ -315,12 +408,16 @@ function ActiveCategory({
             </>
           ) : (
             <p className="insufficient-note">
-              Aún no existe una actualización publicable para esta categoría.
+              {en
+                ? "There is no publishable update for this category yet."
+                : "Aún no existe una actualización publicable para esta categoría."}
             </p>
           )}
           {view.dataState === "fixture" ? (
             <p className="calculation-cut-note">
-              Datos de demostración disponibles solo en desarrollo y pruebas.
+              {en
+                ? "Demo data is available only in development and tests."
+                : "Datos de demostración disponibles solo en desarrollo y pruebas."}
             </p>
           ) : null}
         </section>
@@ -328,35 +425,40 @@ function ActiveCategory({
         <section className="leaderboard-section">
           <div className="section-heading split-heading">
             <div>
-              <p className="section-index">CONSENSO</p>
-              <h2>Consenso profesional</h2>
+              <p className="section-index">{en ? "CONSENSUS" : "CONSENSO"}</p>
+              <h2>{en ? "Professional consensus" : "Consenso profesional"}</h2>
             </div>
             <p>
-              Cada medio pesa una vez. Las selecciones sin orden aportan
-              cobertura, nunca puntos Borda.
+              {en
+                ? "Each outlet counts once. Unordered selections add coverage, never consensus points."
+                : "Cada medio pesa una vez. Las selecciones sin orden aportan cobertura, nunca puntos de consenso."}
             </p>
           </div>
           {ranking.length ? (
             <div className="leaderboard">
               <div className="leaderboard-head" aria-hidden="true">
-                <span>Pos.</span>
-                <span>Candidatura</span>
-                <span>Respaldo</span>
-                <span>Puntos</span>
-                <span>Cambio</span>
+                <span>{en ? "Pos." : "Pos."}</span>
+                <span>{en ? "Candidate" : "Candidatura"}</span>
+                <span>{en ? "Backing" : "Respaldo"}</span>
+                <span>{en ? "Points" : "Puntos"}</span>
+                <span>{en ? "Change" : "Cambio"}</span>
               </div>
               {visibleRanking.map(renderCandidate)}
               {remainingRanking.length ? (
                 <details className="leaderboard-more">
-                  <summary>Ver posiciones 11–{ranking.length}</summary>
+                  <summary>
+                    {en ? "View positions" : "Ver posiciones"} 11–
+                    {ranking.length}
+                  </summary>
                   <div>{remainingRanking.map(renderCandidate)}</div>
                 </details>
               ) : null}
             </div>
           ) : (
             <p className="insufficient-note">
-              Aún faltan cuatro fuentes comparables para publicar esta
-              categoría.
+              {en
+                ? "Four comparable sources are still needed to publish this category."
+                : "Aún faltan cuatro fuentes comparables para publicar esta categoría."}
             </p>
           )}
         </section>
@@ -364,14 +466,15 @@ function ActiveCategory({
         <section className="market-panel" aria-labelledby="market-title">
           <div className="section-heading split-heading">
             <div>
-              <p className="section-index">MERCADOS</p>
-              <h2 id="market-title">Señales separadas</h2>
+              <p className="section-index">{en ? "MARKETS" : "MERCADOS"}</p>
+              <h2 id="market-title">
+                {en ? "Separate signals" : "Señales separadas"}
+              </h2>
             </div>
             <p>
-              Kalshi y Polymarket se muestran por proveedor. No existe consenso
-              de mercados y sus precios no participan en la predicción
-              profesional. Reflejan su última captura y no el corte profesional
-              seleccionado.
+              {en
+                ? "Kalshi and Polymarket are shown by provider. There is no market consensus and their prices do not participate in professional predictions. They reflect the latest market capture, not the selected professional update."
+                : "Kalshi y Polymarket se muestran por proveedor. No existe consenso de mercados y sus precios no participan en la predicción profesional. Reflejan su última captura y no la actualización profesional seleccionada."}
             </p>
           </div>
           <div className="market-provider-grid">
@@ -395,20 +498,25 @@ function ActiveCategory({
                           >
                             <span>
                               {intention === "nomination"
-                                ? "Mayor señal de nominación"
-                                : "Mayor señal de ganador"}
+                                ? en
+                                  ? "Strongest nomination signal"
+                                  : "Mayor señal de nominación"
+                                : en
+                                  ? "Strongest winner signal"
+                                  : "Mayor señal de ganador"}
                             </span>
                             <strong>{leader.outcome}</strong>
                             <em>
                               {leader.probability === null
                                 ? "—"
                                 : `${(leader.probability * 100).toLocaleString(
-                                    "es-ES",
+                                    localeTag(locale),
                                     { maximumFractionDigits: 1 },
                                   )}%`}
                             </em>
                             <small>
-                              Observado {dateLabel(leader.observedAt)}
+                              {en ? "Observed" : "Observado"}{" "}
+                              {dateLabel(leader.observedAt, locale)}
                             </small>
                           </a>
                         );
@@ -416,7 +524,8 @@ function ActiveCategory({
                     </div>
                     <details className="market-details">
                       <summary>
-                        Ver {view.markets[provider].length} contratos
+                        {en ? "View" : "Ver"} {view.markets[provider].length}{" "}
+                        {en ? "contracts" : "contratos"}
                       </summary>
                       <div className="market-intention-list">
                         {(["nomination", "winner"] as const).map(
@@ -432,8 +541,12 @@ function ActiveCategory({
                               >
                                 <h4>
                                   {intention === "nomination"
-                                    ? "Nominación"
-                                    : "Ganador"}
+                                    ? en
+                                      ? "Nomination"
+                                      : "Nominación"
+                                    : en
+                                      ? "Winner"
+                                      : "Ganador"}
                                 </h4>
                                 {markets.map((market) => (
                                   <a
@@ -451,12 +564,13 @@ function ActiveCategory({
                                         ? "—"
                                         : `${(
                                             market.probability * 100
-                                          ).toLocaleString("es-ES", {
+                                          ).toLocaleString(localeTag(locale), {
                                             maximumFractionDigits: 1,
                                           })}%`}
                                     </strong>
                                     <small>
-                                      Actualizado {dateLabel(market.observedAt)}
+                                      {en ? "Updated" : "Actualizado"}{" "}
+                                      {dateLabel(market.observedAt, locale)}
                                     </small>
                                   </a>
                                 ))}
@@ -468,7 +582,7 @@ function ActiveCategory({
                     </details>
                   </>
                 ) : (
-                  <p>Sin mercado disponible</p>
+                  <p>{en ? "No market available" : "Sin mercado disponible"}</p>
                 )}
               </article>
             ))}
@@ -480,6 +594,10 @@ function ActiveCategory({
           categoryId={category.id}
           categoryName={category.name}
         />
+        <PublicRankingModule
+          categoryId={category.id}
+          categoryName={category.name}
+        />
       </div>
     </>
   );
@@ -488,34 +606,48 @@ function ActiveCategory({
 function ArchiveCategory({
   category,
   view,
+  locale,
 }: {
   category: CategoryDefinition;
   view: ArchiveCategoryView;
+  locale: Locale;
 }) {
+  const en = locale === "en";
+  const categoryName = en ? category.nameEn : category.name;
   return (
     <>
       <section className="category-hero archive-hero">
         <div className="page-shell">
           <div className="breadcrumb">
-            <Link href="/">Inicio</Link>
+            <Link href={localizedPath("/", locale)}>
+              {en ? "Home" : "Inicio"}
+            </Link>
             <span>/</span>
-            <Link href="/temporadas/2026">Oscar 2026</Link>
+            <Link href={localizedPath("/temporadas/2026", locale)}>
+              Oscar 2026
+            </Link>
             <span>/</span>
-            <span>{category.name}</span>
+            <span>{categoryName}</span>
           </div>
           <div className="category-title-row">
             <div>
-              <p className="kicker">Archivo oficial · temporada cerrada</p>
-              <h1>{category.name}</h1>
+              <p className="kicker">
+                {en
+                  ? "Official archive · completed season"
+                  : "Archivo oficial · temporada cerrada"}
+              </p>
+              <h1>{categoryName}</h1>
               <p>
-                {view.nominees.length} nominaciones oficiales · sin
-                reconstrucción de predicciones históricas
+                {view.nominees.length}{" "}
+                {en
+                  ? "official nominations · no reconstruction of historical predictions"
+                  : "nominaciones oficiales · sin reconstrucción de predicciones históricas"}
               </p>
             </div>
             <div className="category-hero-stat">
-              <span>Estado</span>
-              <strong>CERRADA</strong>
-              <small>ceremonia de 2026</small>
+              <span>{en ? "Status" : "Estado"}</span>
+              <strong>{en ? "CLOSED" : "CERRADA"}</strong>
+              <small>{en ? "2026 ceremony" : "ceremonia de 2026"}</small>
             </div>
           </div>
         </div>
@@ -525,14 +657,14 @@ function ArchiveCategory({
           <div className="section-heading split-heading">
             <div>
               <p className="section-index">ACADEMY</p>
-              <h2>Nominados y ganador</h2>
+              <h2>{en ? "Nominees and winner" : "Nominados y ganador"}</h2>
             </div>
             <p>
               <a href={view.sourceUrl} rel="noreferrer" target="_blank">
-                Archivo oficial ↗
+                {en ? "Official archive ↗" : "Archivo oficial ↗"}
               </a>
               {view.capturedAt
-                ? ` · capturado ${dateLabel(view.capturedAt)}`
+                ? ` · ${en ? "captured" : "capturado"} ${dateLabel(view.capturedAt, locale)}`
                 : ""}
             </p>
           </div>
@@ -543,10 +675,23 @@ function ArchiveCategory({
                   className={candidate.winner ? "winner" : ""}
                   key={candidate.candidateId}
                 >
-                  <span>{candidate.winner ? "GANADOR" : "NOMINADO"}</span>
+                  <span>
+                    {candidate.winner
+                      ? en
+                        ? "WINNER"
+                        : "GANADOR"
+                      : en
+                        ? "NOMINEE"
+                        : "NOMINADO"}
+                  </span>
                   <h3>
                     {candidate.film ? (
-                      <Link href={`/peliculas/${candidate.film.id}`}>
+                      <Link
+                        href={localizedPath(
+                          `/peliculas/${candidate.film.id}`,
+                          locale,
+                        )}
+                      >
                         {candidate.label}
                       </Link>
                     ) : (
@@ -559,8 +704,9 @@ function ArchiveCategory({
             </div>
           ) : (
             <p className="insufficient-note">
-              El archivo oficial v2 todavía no está disponible en la base de
-              datos.
+              {en
+                ? "The official v2 archive is not available in the database yet."
+                : "El archivo oficial v2 todavía no está disponible en la base de datos."}
             </p>
           )}
         </section>
@@ -569,19 +715,20 @@ function ArchiveCategory({
   );
 }
 
-export function CategoryPageView({
+export async function CategoryPageView({
   category,
   view,
 }: {
   category: CategoryDefinition;
   view: ActiveCategoryView | ArchiveCategoryView;
 }) {
+  const locale = await getRequestLocale();
   return (
     <main>
       {view.mode === "active" ? (
-        <ActiveCategory category={category} view={view} />
+        <ActiveCategory category={category} locale={locale} view={view} />
       ) : (
-        <ArchiveCategory category={category} view={view} />
+        <ArchiveCategory category={category} locale={locale} view={view} />
       )}
     </main>
   );

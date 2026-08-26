@@ -3,7 +3,22 @@ import { NextResponse, type NextRequest } from "next/server";
 import type { Database } from "../../types/database.generated";
 
 export async function updateSupabaseSession(request: NextRequest) {
-  let response = NextResponse.next({ request });
+  return updateSupabaseSessionWithResponse(request);
+}
+
+export async function updateSupabaseSessionWithResponse(
+  request: NextRequest,
+  options: { requestHeaders?: Headers; rewriteUrl?: URL } = {},
+) {
+  const createResponse = () =>
+    options.rewriteUrl
+      ? NextResponse.rewrite(options.rewriteUrl, {
+          request: { headers: options.requestHeaders ?? request.headers },
+        })
+      : NextResponse.next({
+          request: { headers: options.requestHeaders ?? request.headers },
+        });
+  let response = createResponse();
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
@@ -20,7 +35,7 @@ export async function updateSupabaseSession(request: NextRequest) {
         cookiesToSet.forEach(({ name, value }) => {
           request.cookies.set(name, value);
         });
-        response = NextResponse.next({ request });
+        response = createResponse();
         cookiesToSet.forEach(({ name, value, options }) => {
           response.cookies.set(name, value, options);
         });

@@ -2096,6 +2096,7 @@ export type Database = {
         Row: {
           user_id: string;
           film_id: string;
+          status: "watched" | "not_watched";
           watched_at: string | null;
           created_at: string;
           updated_at: string;
@@ -2103,6 +2104,7 @@ export type Database = {
         Insert: {
           user_id: string;
           film_id: string;
+          status?: "watched" | "not_watched";
           watched_at?: string | null;
           created_at?: string;
           updated_at?: string;
@@ -2110,6 +2112,7 @@ export type Database = {
         Update: {
           user_id?: string;
           film_id?: string;
+          status?: "watched" | "not_watched";
           watched_at?: string | null;
           created_at?: string;
           updated_at?: string;

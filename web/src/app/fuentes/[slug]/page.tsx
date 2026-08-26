@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { localizedCategoryNameBySlug } from "../../../lib/i18n/categories";
+import { localeTag, localizedPath } from "../../../lib/i18n/config";
+import { getRequestLocale } from "../../../lib/i18n/server";
 import { getSourceDetail } from "../../../lib/repositories/sources";
 
 type SourcePageProps = { params: Promise<{ slug: string }> };
 
-function dateLabel(value: string | null, time = false) {
-  if (!value) return "Sin dato";
-  return new Intl.DateTimeFormat("es-ES", {
+function dateLabel(value: string | null, locale: "es" | "en", time = false) {
+  if (!value) return locale === "en" ? "No data" : "Sin dato";
+  return new Intl.DateTimeFormat(localeTag(locale), {
     dateStyle: "medium",
     ...(time ? { timeStyle: "short" as const } : {}),
     timeZone: "UTC",
@@ -29,16 +32,22 @@ export async function generateMetadata({
 }: SourcePageProps): Promise<Metadata> {
   const { slug } = await params;
   const source = await getSourceDetail(slug);
+  const locale = await getRequestLocale();
   return source
     ? {
-        title: `${source.name} · Fuente`,
-        description: `Publicaciones y estado verificable de ${source.name} en Runscars.`,
+        title: `${source.name} · ${locale === "en" ? "Source" : "Fuente"}`,
+        description:
+          locale === "en"
+            ? `Publications and verifiable status for ${source.name} on Runscars.`
+            : `Publicaciones y estado verificable de ${source.name} en Runscars.`,
       }
-    : { title: "Fuente no encontrada" };
+    : { title: locale === "en" ? "Source not found" : "Fuente no encontrada" };
 }
 
 export default async function SourcePage({ params }: SourcePageProps) {
   const { slug } = await params;
+  const locale = await getRequestLocale();
+  const isEnglish = locale === "en";
   const source = await getSourceDetail(slug);
   if (!source) notFound();
   const activePublication = source.categories[0]?.publication;
@@ -48,9 +57,13 @@ export default async function SourcePage({ params }: SourcePageProps) {
       <section className="source-hero">
         <div className="page-shell">
           <div className="breadcrumb">
-            <Link href="/">Inicio</Link>
+            <Link href={localizedPath("/", locale)}>
+              {isEnglish ? "Home" : "Inicio"}
+            </Link>
             <span>/</span>
-            <Link href="/fuentes">Fuentes</Link>
+            <Link href={localizedPath("/fuentes", locale)}>
+              {isEnglish ? "Sources" : "Fuentes"}
+            </Link>
             <span>/</span>
             <span>{source.name}</span>
           </div>
@@ -64,14 +77,20 @@ export default async function SourcePage({ params }: SourcePageProps) {
                   .join("")
                   .toUpperCase()}
               </span>
-              <small>FUENTE</small>
+              <small>{isEnglish ? "SOURCE" : "FUENTE"}</small>
             </div>
             <div>
-              <p className="kicker">Fuente activa · procedencia</p>
+              <p className="kicker">
+                {isEnglish
+                  ? "Active source · provenance"
+                  : "Fuente activa · procedencia"}
+              </p>
               <h1>{source.name}</h1>
               <p>
                 {source.notes ??
-                  "Publicaciones y observaciones conservadas con valor original, fecha y captura."}
+                  (isEnglish
+                    ? "Publications and observations preserved with their original value, date and capture."
+                    : "Publicaciones y observaciones conservadas con valor original, fecha y captura.")}
               </p>
             </div>
             <a
@@ -80,7 +99,9 @@ export default async function SourcePage({ params }: SourcePageProps) {
               rel="noreferrer"
               target="_blank"
             >
-              Abrir publicación original ↗
+              {isEnglish
+                ? "Open original publication ↗"
+                : "Abrir publicación original ↗"}
             </a>
           </div>
         </div>
@@ -96,52 +117,77 @@ export default async function SourcePage({ params }: SourcePageProps) {
               >
                 <div className="source-capture-header">
                   <div>
-                    <p className="section-index">PUBLICACIÓN ACTIVA</p>
-                    <h2>{category.categoryName}</h2>
+                    <p className="section-index">
+                      {isEnglish ? "ACTIVE PUBLICATION" : "PUBLICACIÓN ACTIVA"}
+                    </p>
+                    <h2>
+                      {localizedCategoryNameBySlug(
+                        locale,
+                        category.categorySlug,
+                        category.categoryName,
+                      )}
+                    </h2>
                     <p>{category.publication.title}</p>
                   </div>
                   <span className="verified-badge">
-                    ✓ Procedencia verificada
+                    {isEnglish
+                      ? "✓ Verified provenance"
+                      : "✓ Procedencia verificada"}
                   </span>
                 </div>
 
                 <div className="capture-metadata">
                   <div>
-                    <span>Autor</span>
+                    <span>{isEnglish ? "Author" : "Autor"}</span>
                     <strong>
-                      {category.publication.author ?? "No indicado"}
+                      {category.publication.author ??
+                        (isEnglish ? "Not provided" : "No indicado")}
                     </strong>
                   </div>
                   <div>
-                    <span>Publicada</span>
+                    <span>{isEnglish ? "Published" : "Publicada"}</span>
                     <strong>
-                      {dateLabel(category.publication.publishedAt)}
+                      {dateLabel(category.publication.publishedAt, locale)}
                     </strong>
                   </div>
                   <div>
-                    <span>Capturada</span>
+                    <span>{isEnglish ? "Captured" : "Capturada"}</span>
                     <strong>
-                      {dateLabel(category.publication.capturedAt, true)}
+                      {dateLabel(category.publication.capturedAt, locale, true)}
                     </strong>
                   </div>
                   <div>
-                    <span>Último cambio efectivo</span>
-                    <strong>{dateLabel(category.lastChangedAt, true)}</strong>
+                    <span>
+                      {isEnglish
+                        ? "Latest effective change"
+                        : "Último cambio efectivo"}
+                    </span>
+                    <strong>
+                      {dateLabel(category.lastChangedAt, locale, true)}
+                    </strong>
                   </div>
                 </div>
 
                 <div className="source-ranking-section">
                   <div className="section-heading compact-heading">
                     <div>
-                      <p className="section-index">VALORES ORIGINALES</p>
-                      <h2>Lista que participa</h2>
+                      <p className="section-index">
+                        {isEnglish ? "ORIGINAL VALUES" : "VALORES ORIGINALES"}
+                      </p>
+                      <h2>
+                        {isEnglish ? "Included list" : "Lista que participa"}
+                      </h2>
                     </div>
                     <span className="aggregate-chip">
                       {category.entries.some(
                         (entry) => entry.appearanceKind === "ordered",
                       )
-                        ? "Participa en Borda"
-                        : "Solo cobertura"}
+                        ? isEnglish
+                          ? "Included in consensus"
+                          : "Participa en el consenso"
+                        : isEnglish
+                          ? "Coverage only"
+                          : "Solo cobertura"}
                     </span>
                   </div>
                   <ol className="source-ranking">
@@ -155,31 +201,44 @@ export default async function SourcePage({ params }: SourcePageProps) {
                         <div className="source-entry-copy">
                           <strong>{entry.label}</strong>
                           <span className="original-value">
-                            Original: {originalLabel(entry.originalValue)}
+                            {isEnglish ? "Original" : "Original"}:{" "}
+                            {originalLabel(entry.originalValue)}
                           </span>
                         </div>
                         <div
-                          aria-label={`Consenso vigente de ${entry.label}`}
+                          aria-label={`${isEnglish ? "Current consensus for" : "Consenso vigente de"} ${entry.label}`}
                           className="source-entry-consensus"
                         >
-                          <span>Consenso vigente</span>
+                          <span>
+                            {isEnglish
+                              ? "Current consensus"
+                              : "Consenso vigente"}
+                          </span>
                           <strong>
-                            {entry.aggregateScore.toLocaleString("es-ES", {
-                              minimumFractionDigits: 1,
-                              maximumFractionDigits: 1,
-                            })}
+                            {entry.aggregateScore.toLocaleString(
+                              localeTag(locale),
+                              {
+                                minimumFractionDigits: 1,
+                                maximumFractionDigits: 1,
+                              },
+                            )}
                           </strong>
                           <small>
                             #{entry.aggregatePosition} ·{" "}
                             {entry.aggregateCoverage}
                           </small>
                           <small className="source-entry-sources">
-                            Fuentes:{" "}
+                            {isEnglish ? "Sources" : "Fuentes"}:{" "}
                             {entry.aggregateSources.map(
                               (aggregateSource, index) => (
                                 <span key={aggregateSource.id}>
                                   {index ? ", " : ""}
-                                  <Link href={`/fuentes/${aggregateSource.id}`}>
+                                  <Link
+                                    href={localizedPath(
+                                      `/fuentes/${aggregateSource.id}`,
+                                      locale,
+                                    )}
+                                  >
                                     {aggregateSource.name}
                                   </Link>
                                 </span>
@@ -192,54 +251,91 @@ export default async function SourcePage({ params }: SourcePageProps) {
                   </ol>
                   <Link
                     className="text-link"
-                    href={`/temporadas/2027/${category.categorySlug}`}
+                    href={localizedPath(
+                      `/temporadas/2027/${category.categorySlug}`,
+                      locale,
+                    )}
                   >
-                    Ver su efecto en {category.categoryName}
+                    {isEnglish ? "View its effect on" : "Ver su efecto en"}{" "}
+                    {localizedCategoryNameBySlug(
+                      locale,
+                      category.categorySlug,
+                      category.categoryName,
+                    )}
                   </Link>
                 </div>
               </article>
             ))
           ) : (
             <p className="insufficient-note">
-              Esta fuente tiene observaciones críticas publicadas, pero no forma
-              parte de un corte profesional vigente.
+              {isEnglish
+                ? "This source has published critical observations, but it is not part of a current professional update."
+                : "Esta fuente tiene observaciones críticas publicadas, pero no forma parte de una actualización profesional vigente."}
             </p>
           )}
         </div>
 
         <aside className="source-sidebar">
           <div className="sidebar-card source-health">
-            <p className="section-index">ESTADO ACTUAL</p>
+            <p className="section-index">
+              {isEnglish ? "CURRENT STATUS" : "ESTADO ACTUAL"}
+            </p>
             <dl>
               <div>
-                <dt>Estado técnico</dt>
+                <dt>{isEnglish ? "Technical status" : "Estado técnico"}</dt>
                 <dd>{source.technicalStatus}</dd>
               </div>
               <div>
-                <dt>Publicación</dt>
+                <dt>{isEnglish ? "Publication" : "Publicación"}</dt>
                 <dd>{source.publicationStatus}</dd>
               </div>
               <div>
-                <dt>Última comprobación correcta</dt>
-                <dd>{dateLabel(source.lastSuccessfulCheckAt, true)}</dd>
+                <dt>
+                  {isEnglish
+                    ? "Latest successful verification"
+                    : "Última comprobación correcta"}
+                </dt>
+                <dd>{dateLabel(source.lastSuccessfulCheckAt, locale, true)}</dd>
               </div>
               {source.health === "failed" ? (
                 <div>
-                  <dt>Incidencia más reciente</dt>
-                  <dd>{dateLabel(source.lastFailureAt, true)}</dd>
+                  <dt>
+                    {isEnglish
+                      ? "Most recent issue"
+                      : "Incidencia más reciente"}
+                  </dt>
+                  <dd>{dateLabel(source.lastFailureAt, locale, true)}</dd>
                 </div>
               ) : null}
             </dl>
           </div>
 
           <div className="sidebar-card methodology-card">
-            <p className="section-index">TRES FECHAS</p>
+            <p className="section-index">
+              {isEnglish ? "THREE DATES" : "TRES FECHAS"}
+            </p>
             <ul>
-              <li>Publicación: cuándo el medio publicó la lista</li>
-              <li>Cambio: cuándo alteró el ranking de Runscars</li>
-              <li>Comprobación: cuándo el conector terminó correctamente</li>
+              <li>
+                {isEnglish
+                  ? "Publication: when the outlet published the list"
+                  : "Publicación: cuándo el medio publicó la lista"}
+              </li>
+              <li>
+                {isEnglish
+                  ? "Change: when it changed the Runscars ranking"
+                  : "Cambio: cuándo alteró el ranking de Runscars"}
+              </li>
+              <li>
+                {isEnglish
+                  ? "Verification: when the connector completed successfully"
+                  : "Comprobación: cuándo el conector terminó correctamente"}
+              </li>
             </ul>
-            <Link href="/fuentes">Volver a todas las fuentes →</Link>
+            <Link href={localizedPath("/fuentes", locale)}>
+              {isEnglish
+                ? "Back to all sources →"
+                : "Volver a todas las fuentes →"}
+            </Link>
           </div>
 
           <div className="sidebar-card stale-card">
@@ -249,13 +345,21 @@ export default async function SourcePage({ params }: SourcePageProps) {
             <div>
               <strong>
                 {source.health === "ok"
-                  ? "Comprobación correcta"
+                  ? isEnglish
+                    ? "Verification successful"
+                    : "Comprobación correcta"
                   : source.health === "failed"
-                    ? "Incidencia reciente"
-                    : "Sin automatización comprobable"}
+                    ? isEnglish
+                      ? "Recent issue"
+                      : "Incidencia reciente"
+                    : isEnglish
+                      ? "No verifiable automation"
+                      : "Sin automatización comprobable"}
               </strong>
               <p>
-                Este estado es actual, incluso al consultar un corte histórico.
+                {isEnglish
+                  ? "This status is current, even when viewing a historical update."
+                  : "Este estado es actual, incluso al consultar una actualización histórica."}
               </p>
             </div>
           </div>

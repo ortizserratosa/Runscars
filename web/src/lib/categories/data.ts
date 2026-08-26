@@ -59,6 +59,7 @@ export type ActiveCategoryView = {
   currentCandidates: Array<{
     id: string;
     label: string;
+    filmId: string | null;
   }>;
 };
 
@@ -162,6 +163,7 @@ function activeViewFromHistory({
     currentCandidates: (latest?.aggregate.ranking ?? []).map((candidate) => ({
       id: candidate.candidateId,
       label: candidate.label,
+      filmId: candidate.film?.id ?? null,
     })),
   };
 }

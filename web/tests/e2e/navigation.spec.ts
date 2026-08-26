@@ -20,7 +20,9 @@ test("focuses the homepage on consensus, evolution and personal rankings", async
   );
   await expect(page.getByText("Predicciones", { exact: true })).toBeVisible();
   await expect(page.getByText("Evolución", { exact: true })).toBeVisible();
-  await expect(page.getByText("Comunidad", { exact: true })).toBeVisible();
+  await expect(
+    page.locator(".community-card").getByText("Comunidad", { exact: true }),
+  ).toBeVisible();
   await expect(
     page.getByText("Cuaderno de temporada · 25 de julio de 2026"),
   ).toBeVisible();
@@ -53,14 +55,14 @@ test("shows movement against the immediately previous real cut", async ({
   await expect(page.getByLabel("Sube 1 posición").first()).toBeVisible();
   await expect(page.getByLabel("Baja 1 posición").first()).toBeVisible();
   await expect(
-    page.getByLabel("Nueva desde el corte real anterior").last(),
+    page.getByLabel("Nueva desde la última actualización").last(),
   ).toBeVisible();
 });
 
 test("selects a real provider cut through a stable URL", async ({ page }) => {
   await page.goto("/temporadas/2027/mejor-pelicula");
   const selector = page.getByRole("navigation", {
-    name: "Seleccionar corte real",
+    name: "Seleccionar actualización",
   });
   await expect(selector.getByRole("link")).toHaveCount(2);
   await expect(selector.getByRole("link", { name: /Actual/ })).toHaveAttribute(
@@ -71,9 +73,13 @@ test("selects a real provider cut through a stable URL", async ({ page }) => {
   await selector.getByRole("link").nth(1).click();
 
   await expect(page).toHaveURL(/corte=periodic-oscars-2027-best-picture/);
-  await expect(page.getByText("Corte histórico seleccionado")).toBeVisible();
   await expect(
-    page.getByText("Primer corte disponible · sin comparación anterior"),
+    page.getByText("Actualización histórica seleccionada"),
+  ).toBeVisible();
+  await expect(
+    page.getByText(
+      "Primera actualización disponible · sin comparación anterior",
+    ),
   ).toBeVisible();
 });
 
@@ -258,6 +264,40 @@ test("offers complete navigation at a mobile viewport", async ({ page }) => {
   await expect(navigation.getByRole("link", { name: "Método" })).toBeVisible();
 });
 
+test("discovers public rankings and keeps community filters in the URL", async ({
+  page,
+}) => {
+  await page.goto("/comunidad");
+  await expect(
+    page.getByRole("heading", { level: 1, name: /La temporada/ }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Todas las categorías" }),
+  ).toBeVisible();
+  await expect(page.getByLabel("Buscar usuario")).toBeVisible();
+  await page.getByLabel("Categoría").selectOption("mejor-pelicula");
+  await page.getByRole("button", { name: "Filtrar" }).click();
+  await expect(page).toHaveURL(
+    /\/comunidad\?season=oscars-2027&q=&category=mejor-pelicula/,
+  );
+  await expect(page.getByText(/quinielas públicas encontradas/)).toBeVisible();
+});
+
+test("does not expose a private profile and publishes the social image route", async ({
+  page,
+  request,
+}) => {
+  const privateProfile = await page.request.get(
+    "/usuarios/usuario-no-publicado/mejor-pelicula",
+  );
+  expect(privateProfile.status()).toBe(404);
+  const image = await request.get(
+    "/usuarios/usuario-no-publicado/mejor-pelicula/opengraph-image",
+  );
+  expect(image.status()).toBe(200);
+  expect(image.headers()["content-type"]).toContain("image/png");
+});
+
 test("publishes methodology, evaluation and the five-edition archive", async ({
   page,
 }) => {
@@ -299,12 +339,79 @@ test("keeps the critical reception threshold explicit", async ({ page }) => {
   await expect(
     page.getByRole("heading", {
       level: 1,
-      name: "Nuestras predicciones, con sus notas.",
+      name: "La crítica profesional, fuente a fuente.",
     }),
   ).toBeVisible();
-  await expect(page.getByText("Metacritic")).toBeVisible();
-  await expect(page.getByText("Rotten Tomatoes")).toBeVisible();
-  await expect(page.getByText("The End of Oak Street")).toHaveCount(0);
+  await expect(page.getByText("Metacritic")).toHaveCount(0);
+  await expect(page.getByText("Rotten Tomatoes")).toHaveCount(0);
+  await expect(page.getByText(/tres críticas independientes/)).toBeVisible();
+});
+
+test("publishes equivalent English routes and language metadata", async ({
+  page,
+}) => {
+  await page.goto("/en");
+  await expect(page.locator("html")).toHaveAttribute("lang", "en-GB");
+  await expect(
+    page.getByRole("heading", { level: 1, name: /The road to the Oscars/ }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Explore the season", exact: true }),
+  ).toHaveAttribute("href", "/en/temporadas/2027");
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    "href",
+    "http://127.0.0.1:3000/en",
+  );
+  await expect(page.locator('link[hreflang="es"]')).toHaveAttribute(
+    "href",
+    "http://127.0.0.1:3000",
+  );
+
+  await page.goto("/en/temporadas/2027/mejor-pelicula");
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Best Picture" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Professional consensus" }),
+  ).toBeVisible();
+
+  await page.goto("/en/privacidad");
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Privacy and security." }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("watched, not watched or unmarked"),
+  ).toBeVisible();
+});
+
+test("switches language while preserving the current route", async ({
+  page,
+}) => {
+  await page.goto("/fuentes");
+  await page.getByRole("link", { name: "Switch to English" }).click();
+  await expect(page).toHaveURL(/\/en\/fuentes$/);
+  await expect(
+    page.getByRole("heading", { level: 1, name: /Sources/ }),
+  ).toBeVisible();
+  await page.getByRole("link", { name: "Cambiar a español" }).click();
+  await expect(page).toHaveURL(/\/fuentes$/);
+  await expect(page.locator("html")).toHaveAttribute("lang", "es-ES");
+});
+
+test("serves launch SEO and security controls", async ({ request }) => {
+  const response = await request.get("/");
+  expect(response.headers()["content-security-policy"]).toContain(
+    "frame-ancestors 'none'",
+  );
+  expect(response.headers()["x-content-type-options"]).toBe("nosniff");
+  expect(response.headers()["x-frame-options"]).toBe("DENY");
+
+  const robots = await request.get("/robots.txt");
+  expect(await robots.text()).toContain("Disallow: /");
+
+  const sitemap = await request.get("/sitemap.xml");
+  expect(sitemap.ok()).toBe(true);
+  expect(await sitemap.text()).toContain("/en/temporadas/2027");
 });
 
 test("does not expose editorial administration to anonymous users", async ({
@@ -335,6 +442,19 @@ test("keeps mobile homepage copy and receipts from overlapping", async ({
     }),
   );
   expect(collisions).toEqual([0, 0, 0]);
+
+  const communityLinkOverlap = await page
+    .locator(".community-card > a")
+    .evaluateAll((links) => {
+      if (links.length !== 2) return -1;
+      const first = links[0].getBoundingClientRect();
+      const second = links[1].getBoundingClientRect();
+      return Math.max(
+        0,
+        Math.min(first.bottom, second.bottom) - Math.max(first.top, second.top),
+      );
+    });
+  expect(communityLinkOverlap).toBe(0);
 
   const receiptPositions = await page.locator(".receipt").evaluateAll((cards) =>
     cards.map((card) => {
@@ -388,7 +508,7 @@ test("explains that provider signals never form a market consensus", async ({
   await expect(page.getByText("Sin mercado disponible")).toHaveCount(0);
   await expect(
     page.getByText(
-      "Kalshi y Polymarket se muestran por proveedor. No existe consenso de mercados y sus precios no participan en la predicción profesional. Reflejan su última captura y no el corte profesional seleccionado.",
+      "Kalshi y Polymarket se muestran por proveedor. No existe consenso de mercados y sus precios no participan en la predicción profesional. Reflejan su última captura y no la actualización profesional seleccionada.",
     ),
   ).toBeVisible();
 });
@@ -460,12 +580,27 @@ test("offers account access while keeping private actions behind authentication"
     page.getByRole("heading", { level: 1, name: "Tu temporada, en orden." }),
   ).toBeVisible();
   await expect(page.getByRole("button", { name: "Entrar" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Crear cuenta" })).toHaveCount(
+    0,
+  );
   await expect(
-    page.getByRole("button", { name: "Crear cuenta" }),
+    page.getByRole("button", { name: "Continuar con Google" }),
+  ).toBeVisible();
+  await expect(
+    page.getByText(/las cuentas nuevas se crean con Google/),
   ).toBeVisible();
 
   const exportResponse = await request.get("/api/cuenta/exportar");
   expect(exportResponse.status()).toBe(401);
+});
+
+test("explains privacy and account security", async ({ page }) => {
+  await page.goto("/privacidad");
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Privacidad y seguridad." }),
+  ).toBeVisible();
+  await expect(page.getByText("al menos 12 caracteres")).toBeVisible();
+  await expect(page.getByText("vista, no vista o no indicada")).toBeVisible();
 });
 
 test("keeps user rankings separate and private before login", async ({

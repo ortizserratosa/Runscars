@@ -5,13 +5,16 @@ import type {
   FilmCatalogDetail,
 } from "../../lib/repositories/catalog";
 import { tmdbImageUrl } from "../../lib/tmdb/images";
+import { localeTag, localizedPath, type Locale } from "../../lib/i18n/config";
 
 function CreditList({
   credits,
   title,
+  locale,
 }: {
   credits: CatalogCredit[];
   title: string;
+  locale: Locale;
 }) {
   if (credits.length === 0) {
     return null;
@@ -25,7 +28,7 @@ function CreditList({
           const profileUrl = tmdbImageUrl(credit.profilePath, "w185");
           return (
             <Link
-              href={`/personas/${credit.personId}`}
+              href={localizedPath(`/personas/${credit.personId}`, locale)}
               key={`${credit.personId}-${credit.role}`}
             >
               <span className="credit-portrait">
@@ -47,19 +50,30 @@ function CreditList({
   );
 }
 
-export function FilmCatalogDetails({ film }: { film: FilmCatalogDetail }) {
+export function FilmCatalogDetails({
+  film,
+  locale,
+}: {
+  film: FilmCatalogDetail;
+  locale: Locale;
+}) {
+  const en = locale === "en";
   if (!film.tmdb) {
     return (
       <section className="film-signal-section catalog-module">
         <div className="module-heading">
           <span className="signal-letter">M</span>
           <div>
-            <p className="section-index">METADATOS</p>
-            <h2>La ficha sigue disponible</h2>
+            <p className="section-index">{en ? "METADATA" : "METADATOS"}</p>
+            <h2>
+              {en
+                ? "The film page remains available"
+                : "La ficha sigue disponible"}
+            </h2>
             <p>
-              Este entorno no tiene una captura TMDB vigente. Runscars conserva
-              y muestra el dataset editorial sin consultar la API durante la
-              visita.
+              {en
+                ? "This environment does not have a current TMDB capture. Runscars preserves and displays the editorial dataset without calling the API during your visit."
+                : "Este entorno no tiene una captura TMDB vigente. Runscars conserva y muestra el dataset editorial sin consultar la API durante la visita."}
             </p>
           </div>
         </div>
@@ -80,11 +94,18 @@ export function FilmCatalogDetails({ film }: { film: FilmCatalogDetail }) {
       <div className="module-heading">
         <span className="signal-letter">M</span>
         <div>
-          <p className="section-index">METADATOS CINEMATOGRÁFICOS</p>
-          <h2>La película, fuera de la carrera</h2>
+          <p className="section-index">
+            {en ? "FILM METADATA" : "METADATOS CINEMATOGRÁFICOS"}
+          </p>
+          <h2>
+            {en
+              ? "The film beyond the race"
+              : "La película, fuera de la carrera"}
+          </h2>
           <p>
-            Metadatos servidos desde la copia local de Runscars. No participan
-            en las predicciones ni en la recepción crítica.
+            {en
+              ? "Metadata is served from the local Runscars copy. It does not participate in predictions or critical reception."
+              : "Metadatos servidos desde la copia local de Runscars. No participan en las predicciones ni en la recepción crítica."}
           </p>
         </div>
       </div>
@@ -96,37 +117,45 @@ export function FilmCatalogDetails({ film }: { film: FilmCatalogDetail }) {
       <dl className="catalog-facts">
         {originalDiffers ? (
           <div>
-            <dt>Título original</dt>
+            <dt>{en ? "Original title" : "Título original"}</dt>
             <dd>{film.tmdb.originalTitle}</dd>
           </div>
         ) : null}
         {film.tmdb.runtime ? (
           <div>
-            <dt>Duración</dt>
+            <dt>{en ? "Runtime" : "Duración"}</dt>
             <dd>{film.tmdb.runtime} min</dd>
           </div>
         ) : null}
         {film.tmdb.originalLanguage ? (
           <div>
-            <dt>Idioma original</dt>
+            <dt>{en ? "Original language" : "Idioma original"}</dt>
             <dd>{film.tmdb.originalLanguage.toUpperCase()}</dd>
           </div>
         ) : null}
         {film.tmdb.genres.length > 0 ? (
           <div>
-            <dt>Géneros</dt>
+            <dt>{en ? "Genres" : "Géneros"}</dt>
             <dd>{film.tmdb.genres.map((genre) => genre.name).join(" · ")}</dd>
           </div>
         ) : null}
       </dl>
 
-      <CreditList credits={cast} title="Reparto" />
-      <CreditList credits={crew} title="Equipo seleccionado" />
+      <CreditList
+        credits={cast}
+        locale={locale}
+        title={en ? "Cast" : "Reparto"}
+      />
+      <CreditList
+        credits={crew}
+        locale={locale}
+        title={en ? "Selected crew" : "Equipo seleccionado"}
+      />
 
       <p className="catalog-provenance">
-        Captura:{" "}
+        {en ? "Captured" : "Captura"}:{" "}
         <time dateTime={film.tmdb.fetchedAt}>
-          {new Intl.DateTimeFormat("es-ES", {
+          {new Intl.DateTimeFormat(localeTag(locale), {
             day: "numeric",
             month: "short",
             year: "numeric",
@@ -134,7 +163,7 @@ export function FilmCatalogDetails({ film }: { film: FilmCatalogDetail }) {
         </time>
         .{" "}
         <a href={film.tmdb.url} rel="noreferrer" target="_blank">
-          Comprobar en TMDB ↗
+          {en ? "View on TMDB ↗" : "Comprobar en TMDB ↗"}
         </a>
       </p>
     </section>

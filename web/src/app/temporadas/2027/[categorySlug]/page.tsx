@@ -5,6 +5,7 @@ import {
   categoryBySlug,
 } from "../../../../lib/categories/config";
 import { getCategoryView } from "../../../../lib/categories/data";
+import { getRequestLocale } from "../../../../lib/i18n/server";
 import { CategoryPageView } from "../../CategoryPageView";
 
 export function generateStaticParams() {
@@ -21,9 +22,13 @@ export async function generateMetadata({
   const { categorySlug } = await params;
   const category = categoryBySlug(categorySlug);
   if (!category) return {};
+  const en = (await getRequestLocale()) === "en";
+  const name = en ? category.nameEn : category.name;
   return {
-    title: `${category.name} · Oscar 2027`,
-    description: `Consenso profesional verificable de ${category.name} para los Oscar 2027.`,
+    title: `${name} · Oscar 2027`,
+    description: en
+      ? `Verifiable professional consensus for ${name} at the 2027 Oscars.`
+      : `Consenso profesional verificable de ${name} para los Oscar 2027.`,
   };
 }
 

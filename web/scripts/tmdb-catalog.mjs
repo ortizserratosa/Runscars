@@ -4,6 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   importCatalogMatch,
+  refreshCatalogSnapshots,
   SupabaseCatalogRepository,
   TmdbClient,
   tmdbManifestSchema,
@@ -137,10 +138,54 @@ async function correctMatch(args) {
   );
 }
 
+async function refreshSeason(args) {
+  const seasonId = option(args, "--season") ?? "oscars-2027";
+  const locales = (option(args, "--locales") ?? "es-ES,en-US")
+    .split(",")
+    .map((locale) => locale.trim())
+    .filter(Boolean);
+  if (!locales.length) {
+    throw new Error("--locales requiere al menos un idioma");
+  }
+
+  const catalogRepository = repository();
+  const films = await catalogRepository.listSeasonFilmsWithTmdb(seasonId);
+  const tmdbClient = client();
+  const failures = [];
+
+  for (const film of films) {
+    try {
+      await refreshCatalogSnapshots({
+        film,
+        locales,
+        client: tmdbClient,
+        repository: catalogRepository,
+      });
+      console.log(
+        `Actualizada ${film.filmId} → TMDB ${film.tmdbId} (${locales.join(", ")})`,
+      );
+    } catch (error) {
+      failures.push(film.filmId);
+      console.error(
+        `Falló ${film.filmId}: ${
+          error instanceof Error ? error.message : "error desconocido"
+        }`,
+      );
+    }
+  }
+
+  if (failures.length) {
+    throw new Error(
+      `La actualización terminó con ${failures.length} fallo(s): ${failures.join(", ")}`,
+    );
+  }
+}
+
 function printHelp() {
   console.log(`Uso:
   npm run tmdb:search -- "<título>" [--year 2026]
   npm run tmdb:import -- [ruta-al-manifiesto]
+  npm run tmdb:refresh -- [--season oscars-2027] [--locales es-ES,en-US]
   npm run tmdb:match -- <film-id> <tmdb-id> --reason "<motivo>" [--query "<consulta>"]`);
 }
 
@@ -156,6 +201,9 @@ try {
       break;
     case "match":
       await correctMatch(args);
+      break;
+    case "refresh":
+      await refreshSeason(args);
       break;
     case "help":
     case "--help":

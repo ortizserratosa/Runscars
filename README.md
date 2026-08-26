@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <a href="https://runscars-staging.vercel.app"><strong>Explorar el staging →</strong></a>
+  <a href="https://runscars.vercel.app"><strong>Explorar Runscars →</strong></a>
   ·
   <a href="docs/PRODUCT.md">Producto</a>
   ·
@@ -58,18 +58,18 @@ desarrollar y probar sin consultar fuentes externas en tiempo real.
 El staging actual conserva la identidad editorial validada en el prototipo y
 permite recorrer:
 
-- la [portada, el consenso y su evolución](https://runscars-staging.vercel.app);
+- la [portada, el consenso y su evolución](https://runscars.vercel.app);
 - la
-  [temporada Oscar 2027](https://runscars-staging.vercel.app/temporadas/2027);
+  [temporada Oscar 2027](https://runscars.vercel.app/temporadas/2027);
 - el
-  [consenso de Mejor película](https://runscars-staging.vercel.app/temporadas/2027/mejor-pelicula);
+  [consenso de Mejor película](https://runscars.vercel.app/temporadas/2027/mejor-pelicula);
 - una
-  [ficha de película](https://runscars-staging.vercel.app/peliculas/the-odyssey);
+  [ficha de película](https://runscars.vercel.app/peliculas/the-odyssey);
 - una
-  [ficha de persona](https://runscars-staging.vercel.app/personas/tmdb-30614);
+  [ficha de persona](https://runscars.vercel.app/personas/tmdb-30614);
 - el
-  [índice de fuentes y recibos](https://runscars-staging.vercel.app/fuentes);
-- los [créditos y atribución de TMDB](https://runscars-staging.vercel.app/creditos).
+  [índice de fuentes y trazabilidad](https://runscars.vercel.app/fuentes);
+- los [créditos y atribución de TMDB](https://runscars.vercel.app/creditos).
 
 Todas las apariciones de películas del fixture enlazan a una ficha canónica. El
 catálogo TMDB se sirve desde snapshots locales versionados. El primer sistema de

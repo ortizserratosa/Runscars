@@ -113,6 +113,8 @@ Comandos canónicos desde la raíz:
   `runscars-local`.
 - `npm run tmdb:search -- "<título>" --year <año>`: búsqueda de solo lectura.
 - `npm run tmdb:import`: importa el manifiesto de fase 4 de forma idempotente.
+- `npm run tmdb:refresh`: renueva en `es-ES` y `en-US` las capturas TMDB de la
+  temporada activa sin modificar sus emparejamientos.
 - `npm run tmdb:match -- <film-id> <tmdb-id> --reason "<motivo>"`: corrección
   editorial trazable. Los dos últimos comandos requieren secretos de servidor.
 - `npm run ingest:manual -- <manifiesto.json>`: carga profesional manual,

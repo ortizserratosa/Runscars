@@ -3,6 +3,7 @@ import {
   buildMovieSnapshot,
   buildPersonSnapshot,
   importCatalogMatch,
+  refreshCatalogSnapshots,
   TmdbClient,
 } from "../../src/lib/tmdb/catalog.mjs";
 
@@ -175,5 +176,40 @@ describe("TMDB catalog", () => {
     expect(personHashes.size).toBe(2);
     expect(history).toHaveLength(1);
     expect(savedCredits).toBe(2);
+  });
+
+  it("refreshes both public locales without changing matches or credits", async () => {
+    const locales: string[] = [];
+    const saved: string[] = [];
+    const client = {
+      async fetchMovie(_tmdbId: number, locale: string) {
+        locales.push(locale);
+        return {
+          ...rawMovie,
+          title: locale === "en-US" ? "The Odyssey" : "La odisea",
+        };
+      },
+    };
+    const repository = {
+      async saveMovie(movie: ReturnType<typeof buildMovieSnapshot>) {
+        saved.push(movie.snapshot.locale);
+      },
+    };
+
+    const result = await refreshCatalogSnapshots({
+      film: { filmId: "the-odyssey", tmdbId: 1368337 },
+      locales: ["es-ES", "en-US"],
+      client,
+      repository,
+      now: () => new Date("2026-08-26T10:00:00Z"),
+    });
+
+    expect(locales).toEqual(["es-ES", "en-US"]);
+    expect(saved).toEqual(["es-ES", "en-US"]);
+    expect(result).toEqual({
+      filmId: "the-odyssey",
+      tmdbId: 1368337,
+      locales: ["es-ES", "en-US"],
+    });
   });
 });

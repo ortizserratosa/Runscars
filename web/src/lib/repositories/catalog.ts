@@ -111,6 +111,7 @@ function fixtureDetail(slug: string): FilmCatalogDetail | null {
 
 export async function getFilmCatalogDetail(
   slug: string,
+  locale: "es-ES" | "en-US" = "es-ES",
 ): Promise<FilmCatalogDetail | null> {
   const fallback = fixtureDetail(slug);
   if (!fallback || !isSupabaseConfigured()) {
@@ -149,17 +150,18 @@ export async function getFilmCatalogDetail(
     }
 
     const now = new Date().toISOString();
-    const { data: snapshot, error: snapshotError } = await supabase
+    const { data: snapshots, error: snapshotError } = await supabase
       .from("tmdb_movie_snapshots")
       .select(
-        "tmdb_id, title, original_title, original_language, overview, release_date, runtime, status, tagline, imdb_id, poster_path, backdrop_path, genres, fetched_at, expires_at",
+        "tmdb_id, locale, title, original_title, original_language, overview, release_date, runtime, status, tagline, imdb_id, poster_path, backdrop_path, genres, fetched_at, expires_at",
       )
       .eq("tmdb_id", film.tmdb_id)
-      .eq("locale", "es-ES")
+      .in("locale", locale === "es-ES" ? ["es-ES"] : ["en-US", "es-ES"])
       .gt("expires_at", now)
-      .order("fetched_at", { ascending: false })
-      .limit(1)
-      .maybeSingle();
+      .order("fetched_at", { ascending: false });
+
+    const snapshot =
+      snapshots?.find((item) => item.locale === locale) ?? snapshots?.[0];
 
     if (snapshotError || !snapshot) {
       return detail;
@@ -183,6 +185,7 @@ export async function getFilmCatalogDetail(
       expiresAt: snapshot.expires_at,
       url: `https://www.themoviedb.org/movie/${snapshot.tmdb_id}`,
     };
+    detail.title = snapshot.title || detail.title;
 
     const { data: creditRows, error: creditsError } = await supabase
       .from("film_credits")
@@ -214,7 +217,10 @@ export async function getFilmCatalogDetail(
       .from("tmdb_person_snapshots")
       .select("tmdb_id, profile_path, fetched_at")
       .in("tmdb_id", tmdbPersonIds)
-      .eq("locale", "es-ES")
+      .in(
+        "locale",
+        locale === "es-ES" ? ["es-ES", "en-US"] : ["en-US", "es-ES"],
+      )
       .gt("expires_at", now)
       .order("fetched_at", { ascending: false });
 
@@ -256,6 +262,7 @@ export async function getFilmCatalogDetail(
 
 export async function getPersonCatalogDetail(
   personId: string,
+  locale: "es-ES" | "en-US" = "es-ES",
 ): Promise<PersonCatalogDetail | null> {
   if (!isSupabaseConfigured()) {
     return null;
@@ -273,17 +280,21 @@ export async function getPersonCatalogDetail(
       return null;
     }
 
-    const { data: snapshot, error: snapshotError } = await supabase
+    const { data: snapshots, error: snapshotError } = await supabase
       .from("tmdb_person_snapshots")
       .select(
-        "tmdb_id, original_name, known_for_department, biography, birthday, deathday, place_of_birth, homepage_url, imdb_id, profile_path, fetched_at, expires_at",
+        "tmdb_id, locale, original_name, known_for_department, biography, birthday, deathday, place_of_birth, homepage_url, imdb_id, profile_path, fetched_at, expires_at",
       )
       .eq("tmdb_id", person.tmdb_id)
-      .eq("locale", "es-ES")
+      .in(
+        "locale",
+        locale === "es-ES" ? ["es-ES", "en-US"] : ["en-US", "es-ES"],
+      )
       .gt("expires_at", new Date().toISOString())
-      .order("fetched_at", { ascending: false })
-      .limit(1)
-      .maybeSingle();
+      .order("fetched_at", { ascending: false });
+
+    const snapshot =
+      snapshots?.find((item) => item.locale === locale) ?? snapshots?.[0];
 
     if (snapshotError || !snapshot) {
       return null;

@@ -1,6 +1,6 @@
 # Hoja de ruta
 
-**Última revisión:** 2026-08-25
+**Última revisión:** 2026-08-26
 
 Cada fase tiene una puerta de salida verificable. Una fase no se considera
 terminada por haber creado archivos o código, sino por cumplir esa puerta.
@@ -22,7 +22,7 @@ terminada por haber creado archivos o código, sino por cumplir esa puerta.
 | 8.5  | Integridad, frescura y foco de producto      | Completada        |
 | 9    | Administración editorial                    | Completada        |
 | 9.5  | Cierre funcional público                    | Completada        |
-| 10   | QA y MVP desplegado                         | Pendiente         |
+| 10   | QA y MVP desplegado                         | Completada        |
 
 ## Fase 0 · Contrato y registros
 
@@ -263,6 +263,12 @@ activos.
 parciales, visionados, visibilidad, exportación y borrado están integrados en
 staging. La puerta se comprobó con dos identidades reales y RLS.
 
+El mantenimiento de seguridad de 2026-08-25 añade confirmación de correo,
+contraseñas nuevas de al menos 12 caracteres, acceso Google OAuth con callback
+de staging y una página pública de privacidad. El proveedor quedó activo el
+2026-08-26 con audiencia externa, permisos básicos y una prueba completa hasta
+`/cuenta`; sus credenciales no se guardan en el repositorio.
+
 ### Entregables
 
 - autenticación;
@@ -355,14 +361,23 @@ Alcance y evidencia en [PHASE_9_5.md](PHASE_9_5.md).
 
 ## Fase 10 · QA y MVP
 
+**Cerrada:** 2026-08-26. El MVP bilingüe está publicado en
+<https://runscars.vercel.app>, con catálogo completo en ambos idiomas, política
+de altas solo por Google, backup restaurado y la verificación local y remota en
+verde.
+
 ### Entregables
 
-- discovery de crítica profesional a través de agregadores, con deduplicación y
-  trazabilidad hacia el medio original;
-- página pública con una lista de películas destacadas por cada agregador, con
-  Tomatometer y Metascore separados de las críticas individuales;
-- carga de valores numéricos de agregadores para las películas presentes en las
-  ocho categorías de predicción, sin inventar valores `TBD`;
+- hub de Comunidad con filtros por temporada, categoría y usuario;
+- rutas públicas de perfil y quiniela por categoría;
+- estados de visionado explícitos con visibilidad limitada a rankings públicos;
+- compartir por enlace y tarjeta social Open Graph de 1200×630;
+- recepción crítica basada únicamente en medios originales publicables, con
+  deduplicación y trazabilidad hasta cada pieza;
+- media normalizada solo con tres o más críticas independientes y cobertura
+  insuficiente declarada sin inventar valores;
+- agregadores con discovery privado y sin exposición pública hasta documentar
+  permiso, API o licencia compatible;
 - pruebas end-to-end;
 - revisión móvil, accesibilidad y rendimiento;
 - control de cuotas y degradación segura de recursos externos;
@@ -373,11 +388,14 @@ Alcance y evidencia en [PHASE_9_5.md](PHASE_9_5.md).
 
 ### Puerta de salida
 
-- Los recorridos esenciales pasan en producción.
-- Los checks automáticos están en verde.
-- Se ha probado una restauración.
-- No quedan fuentes activas marcadas `replace-before-publish`.
-- Existe una URL estable del MVP.
+- [x] Los recorridos esenciales pasan en producción.
+- [x] Los checks automáticos están en verde.
+- [x] Se ha probado una restauración.
+- [x] No quedan fuentes activas marcadas `replace-before-publish`.
+- [x] Existe una URL estable del MVP.
+
+Evidencia detallada en [PHASE_10.md](PHASE_10.md) y operación en
+[OPERATIONS.md](OPERATIONS.md).
 
 ## Definition of Done del MVP
 

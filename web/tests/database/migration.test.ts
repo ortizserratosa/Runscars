@@ -137,6 +137,30 @@ describe("versioned database foundation", () => {
     expect(result.rows[0]).toEqual({ films: 39, links: 39 });
   });
 
+  it("allows Google signups and rejects direct email signups", async () => {
+    const google = await database.query<{ result: Record<string, never> }>(`
+      select public.hook_allow_google_signup_only(
+        '{"user":{"app_metadata":{"provider":"google"}}}'::jsonb
+      ) as result
+    `);
+    const email = await database.query<{
+      result: { error: { http_code: number; message: string } };
+    }>(`
+      select public.hook_allow_google_signup_only(
+        '{"user":{"app_metadata":{"provider":"email"}}}'::jsonb
+      ) as result
+    `);
+
+    expect(google.rows[0]?.result).toEqual({});
+    expect(email.rows[0]?.result).toEqual({
+      error: {
+        http_code: 403,
+        message:
+          "New accounts are available through Google during the public beta.",
+      },
+    });
+  });
+
   it("keeps content-addressed revisions for a mutable source URL", async () => {
     await database.exec(await readFile(seedPath, "utf8"));
     await database.exec(`
@@ -408,7 +432,7 @@ describe("versioned database foundation", () => {
     ).rejects.toThrow();
   });
 
-  it("exposes aggregator context and only aggregator-discovered individual reviews", async () => {
+  it("keeps aggregator data private until licensed", async () => {
     await database.exec(await readFile(seedPath, "utf8"));
     await database.exec(`
       insert into public.ingestion_runs (
@@ -554,9 +578,42 @@ describe("versioned database foundation", () => {
       where film_id = 'the-odyssey'
       order by source_id, data_type
     `);
-    expect(visible.rows).toEqual([
-      { source_id: "guardian", data_type: "review" },
-      { source_id: "rotten-tomatoes", data_type: "score_aggregate" },
+    expect(visible.rows).toEqual([]);
+
+    await expect(
+      database.query(`
+        select discovery_source_id
+        from public.source_publication_discoveries
+      `),
+    ).rejects.toThrow();
+
+    await database.exec("reset role;");
+    const statuses = await database.query<{
+      id: string;
+      editorial_status: string;
+      publication_status: string;
+    }>(`
+      select id, editorial_status, publication_status
+      from public.sources
+      where id in ('metacritic', 'rotten-tomatoes', 'filmaffinity')
+      order by id
+    `);
+    expect(statuses.rows).toEqual([
+      {
+        id: "filmaffinity",
+        editorial_status: "paused",
+        publication_status: "review-before-publish",
+      },
+      {
+        id: "metacritic",
+        editorial_status: "paused",
+        publication_status: "review-before-publish",
+      },
+      {
+        id: "rotten-tomatoes",
+        editorial_status: "paused",
+        publication_status: "review-before-publish",
+      },
     ]);
   });
 
@@ -1305,12 +1362,20 @@ describe("versioned database foundation", () => {
         array['phase-8-the-odyssey'],
         false
       );
-      insert into public.user_film_states (user_id, film_id, watched_at)
-      values (
-        '11111111-1111-4111-8111-111111111111',
-        'the-odyssey',
-        '2026-08-07T12:00:00Z'
-      );
+      insert into public.user_film_states (user_id, film_id, status, watched_at)
+      values
+        (
+          '11111111-1111-4111-8111-111111111111',
+          'the-odyssey',
+          'watched',
+          '2026-08-07T12:00:00Z'
+        ),
+        (
+          '11111111-1111-4111-8111-111111111111',
+          'project-hail-mary',
+          'not_watched',
+          null
+        );
     `);
 
     await database.exec(`
@@ -1325,6 +1390,7 @@ describe("versioned database foundation", () => {
       rankings: number;
       entries: number;
       watched: number;
+      unranked: number;
     }>(`
       select
         (
@@ -1347,12 +1413,19 @@ describe("versioned database foundation", () => {
           from public.user_film_states
           where user_id = '11111111-1111-4111-8111-111111111111'
         ) as watched
+        ,(
+          select count(*)::int
+          from public.user_film_states
+          where user_id = '11111111-1111-4111-8111-111111111111'
+            and film_id = 'project-hail-mary'
+        ) as unranked
     `);
     expect(privateRows.rows[0]).toEqual({
       profiles: 0,
       rankings: 0,
       entries: 0,
       watched: 0,
+      unranked: 0,
     });
 
     const forbiddenUpdate = await database.query<{ changed: number }>(`
@@ -1373,7 +1446,7 @@ describe("versioned database foundation", () => {
         false
       );
       update public.user_profiles
-      set is_public = true, watched_is_public = true
+      set is_public = true
       where user_id = '11111111-1111-4111-8111-111111111111';
       update public.user_rankings
       set is_public = true
@@ -1390,6 +1463,7 @@ describe("versioned database foundation", () => {
       rankings: number;
       entries: number;
       watched: number;
+      unranked: number;
     }>(`
       select
         (
@@ -1412,12 +1486,19 @@ describe("versioned database foundation", () => {
           from public.user_film_states
           where user_id = '11111111-1111-4111-8111-111111111111'
         ) as watched
+        ,(
+          select count(*)::int
+          from public.user_film_states
+          where user_id = '11111111-1111-4111-8111-111111111111'
+            and film_id = 'project-hail-mary'
+        ) as unranked
     `);
     expect(publicRows.rows[0]).toEqual({
       profiles: 1,
       rankings: 1,
       entries: 1,
       watched: 1,
+      unranked: 0,
     });
 
     await expect(
