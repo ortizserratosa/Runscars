@@ -27,9 +27,6 @@ export async function SiteFooter() {
         <Link href={href("/metodologia")}>
           {en ? "Methodology" : "Metodología"}
         </Link>
-        <Link href={href("/critica")}>
-          {en ? "Critical reception" : "Recepción crítica"}
-        </Link>
         <Link href={href("/comunidad")}>{en ? "Community" : "Comunidad"}</Link>
         <Link href={href("/privacidad")}>
           {en ? "Privacy and security" : "Privacidad y seguridad"}

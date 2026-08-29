@@ -1,7 +1,7 @@
 # Contrato de producto
 
 **Estado:** contrato aceptado para el MVP
-**Última revisión:** 2026-08-26
+**Última revisión:** 2026-08-29
 
 ## 1. Visión
 
@@ -11,8 +11,8 @@ proceden ni convertirlas en una nota única difícil de interpretar.
 
 La superficie principal del MVP es el seguimiento transparente de predicciones
 profesionales: quién lidera, qué fuentes sostienen cada posición y qué cambio
-efectivo originó cada corte. Crítica, mercados y comunidad son lentes
-complementarias y nunca alteran ese consenso.
+efectivo originó cada corte. El Metascore en las fichas, los mercados y la
+comunidad son contextos complementarios y nunca alteran ese consenso.
 
 ## 2. Preguntas que debe responder
 
@@ -63,14 +63,16 @@ La interfaz usará una etiqueta inequívoca como
 
 ### Recepción crítica
 
-Puntuaciones publicadas por críticos o medios originales y normalizadas a una
-escala de cero a cinco estrellas. Cada crítica conserva su medio, autor, URL y
-valor originales y se deduplica por publicación canónica. Siempre se muestra
-también la escala original. Solo se publica una media cuando existen al menos
-tres puntuaciones individuales independientes; con menos cobertura aparece
-únicamente el detalle disponible, rotulado como insuficiente. Metacritic,
-Rotten Tomatoes y FilmAffinity se conservan como discovery editorial privado y
-no exponen sus datos hasta obtener permiso, API o licencia compatible.
+La recepción externa no tiene pestaña ni ranking propio. Cuando existe una
+captura válida, la ficha de una película puede mostrar su Metascore original
+sobre 100, el número de críticas, la fecha de consulta y un enlace directo a la
+ficha del título en Metacritic. Se presenta con atribución conforme a las reglas
+del proveedor, sin copiar reseñas, sin normalizar el valor y sin incorporarlo al
+consenso profesional.
+
+Rotten Tomatoes, FilmAffinity y el discovery por agregadores permanecen
+privados. Las puntuaciones y reseñas individuales conservadas en el modelo no
+se convierten en una superficie pública independiente en este corte.
 
 ### Predicciones
 
@@ -218,7 +220,7 @@ publican cuando alcanzan la cobertura aprobada.
 | ID | Requisito |
 |---|---|
 | RF-01 | Navegar por temporada y categoría sin cuenta |
-| RF-02 | Mantener recepción crítica separada, publicar solo medios originales aprobados, deduplicar críticas y promocionarla únicamente con cobertura suficiente |
+| RF-02 | Mostrar Metascore solo como contexto atribuido en la ficha de una película, sin normalizarlo, ordenar el catálogo ni mezclarlo con el consenso |
 | RF-03 | Mostrar procedencia y fecha de cada dato profesional |
 | RF-04 | Mantener fichas canónicas de película y persona |
 | RF-05 | Importar metadatos de TMDB con corrección manual |

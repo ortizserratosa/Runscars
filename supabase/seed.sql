@@ -217,7 +217,7 @@ values
   ('hollywood-reporter', 'The Hollywood Reporter', array['prediction', 'review'], 'https://www.hollywoodreporter.com/', 'selected', 'manual', 'review-before-publish', '2026-07-24'),
   ('latimes', 'Los Angeles Times', array['review'], 'https://www.latimes.com/entertainment-arts/movies', 'selected', 'manual', 'review-before-publish', '2026-07-24'),
   ('little-white-lies', 'Little White Lies', array['review', 'score'], 'https://lwlies.com/', 'selected', 'manual', 'review-before-publish', '2026-07-24'),
-  ('metacritic', 'Metacritic', array['score', 'review'], 'https://www.metacritic.com/movie/', 'paused', 'manual', 'review-before-publish', '2026-08-26'),
+  ('metacritic', 'Metacritic', array['score', 'review'], 'https://www.metacritic.com/movie/', 'selected', 'manual', 'review-before-publish', '2026-08-29'),
   ('next-best-picture', 'Next Best Picture', array['prediction', 'review'], 'https://nextbestpicture.com/', 'selected', 'prototype', 'review-before-publish', '2026-07-24'),
   ('midnight-critics', 'Midnight Critics Circle', array['prediction'], 'https://www.midnightcritics.com/', 'selected', 'automated', 'publishable', '2026-07-25'),
   ('the-ringer', 'The Ringer', array['prediction'], 'https://www.theringer.com/', 'selected', 'automated', 'publishable', '2026-07-25'),

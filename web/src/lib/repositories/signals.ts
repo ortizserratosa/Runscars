@@ -1,9 +1,4 @@
 import "server-only";
-import {
-  aggregateCriticalReception,
-  type CriticalReceptionAggregate,
-  type CriticalScoreObservation,
-} from "../aggregation";
 import type { PredictionAggregateV2 } from "../aggregation/v2";
 import { compareSnapshotMovements } from "../snapshots/movements";
 import {
@@ -22,10 +17,10 @@ import {
   phase71FixturePreviousAggregate,
 } from "../../data/phase71-fixture";
 import {
-  criticalCanonicalReviewId,
-  criticalOriginalDisplay,
-  criticalScaleLabel,
-} from "../critical/presentation";
+  isMetacriticTitleUrl,
+  parseMetacriticValues,
+} from "../critical/metacritic";
+import { referenceCriticalScoreObservations } from "../../data/phase6-reference";
 
 export type CurrentCategoryPredictionView = {
   categoryId: PublicCategoryId;
@@ -45,25 +40,11 @@ export type FilmPredictionView = {
   candidate: PredictionAggregateV2["ranking"][number];
 };
 
-export type LinkedReviewView = {
-  id: string;
-  sourceName: string;
-  title: string;
-  author: string | null;
-  publishedAt: string | null;
-  capturedAt: string;
+export type MetacriticScoreView = {
+  score: number;
+  reviewCount: number | null;
   publicationUrl: string;
-};
-
-export type FilmCriticalView = {
-  aggregate: CriticalReceptionAggregate;
-  reviews: LinkedReviewView[];
-};
-
-export type CriticalReceptionRankingEntry = {
-  filmId: string;
-  filmTitle: string;
-  aggregate: CriticalReceptionAggregate;
+  capturedAt: string;
 };
 
 type SnapshotRow = {
@@ -236,202 +217,62 @@ export async function getFilmPredictions(
   });
 }
 
-function jsonRecord(value: unknown): Record<string, unknown> {
-  return typeof value === "object" && value !== null && !Array.isArray(value)
-    ? (value as Record<string, unknown>)
-    : {};
-}
-
-function numeric(value: unknown) {
-  return typeof value === "number" && Number.isFinite(value) ? value : null;
-}
-
-export async function getFilmCriticalView(
-  filmId: string,
-  filmTitle: string,
-): Promise<FilmCriticalView | null> {
-  if (!isSupabaseConfigured()) return null;
-  try {
-    const supabase = createSupabaseServerClient();
-    const result = await supabase
-      .from("professional_observations")
-      .select(
-        "id,data_type,original_subject,original_value,original_scale,source_url,author,published_at,captured_at,participates,state,sources(id,name),source_publications(external_id,canonical_url,title,author)",
-      )
-      .eq("film_id", filmId)
-      .eq("state", "published")
-      .in("data_type", ["review", "score_individual", "score_aggregate"])
-      .order("published_at", { ascending: false, nullsFirst: false });
-    if (result.error) throw new Error(result.error.message);
-    const observations: CriticalScoreObservation[] = [];
-    const reviews: LinkedReviewView[] = [];
-    for (const row of result.data ?? []) {
-      const source = Array.isArray(row.sources) ? row.sources[0] : row.sources;
-      const publication = Array.isArray(row.source_publications)
-        ? row.source_publications[0]
-        : row.source_publications;
-      if (!source) continue;
-      const publicationUrl = publication?.canonical_url ?? row.source_url;
-      const publicationId = publication?.external_id ?? publicationUrl;
-      if (row.data_type === "review") {
-        reviews.push({
-          id: String(row.id),
-          sourceName: source.name,
-          title: publication?.title ?? row.original_subject,
-          author: row.author ?? publication?.author ?? null,
-          publishedAt: row.published_at,
-          capturedAt: row.captured_at,
-          publicationUrl,
-        });
-        continue;
-      }
-      if (
-        row.data_type !== "score_individual" &&
-        row.data_type !== "score_aggregate"
-      ) {
-        continue;
-      }
-      const original = jsonRecord(row.original_value);
-      const scale = jsonRecord(row.original_scale);
-      const numericValue = numeric(original.score ?? original.value);
-      const scaleMin = numeric(scale.minimum ?? scale.min);
-      const scaleMax = numeric(scale.maximum ?? scale.max);
-      observations.push({
-        id: String(row.id),
-        sourceId: source.id,
-        sourceName: source.name,
-        publicationId,
-        publicationUrl,
-        author: row.author ?? publication?.author ?? null,
-        publishedAt: row.published_at,
-        capturedAt: row.captured_at,
-        seasonId: "oscars-2027",
-        filmId,
-        filmTitle,
-        participates: row.participates,
-        state: row.state,
-        dataType: row.data_type,
-        canonicalReviewId: criticalCanonicalReviewId(original, publicationId),
-        originalDisplay: criticalOriginalDisplay({
-          dataType: row.data_type,
-          numericValue,
-          scaleMax,
-          scaleLabel: criticalScaleLabel(row.original_scale),
-        }),
-        numericValue,
-        scaleMin,
-        scaleMax,
-        scaleLabel: criticalScaleLabel(row.original_scale),
-      });
-    }
-    const aggregate = aggregateCriticalReception(observations, filmId);
-    if (
-      aggregate.scores.length === 0 &&
-      aggregate.contextualScores.length === 0 &&
-      reviews.length === 0
-    ) {
-      return null;
-    }
-    return { aggregate, reviews };
-  } catch {
+function fixtureMetacriticScore(filmId: string): MetacriticScoreView | null {
+  const observation = referenceCriticalScoreObservations.find(
+    (item) =>
+      item.filmId === filmId &&
+      item.sourceId === "metacritic" &&
+      item.dataType === "score_aggregate" &&
+      item.state === "published",
+  );
+  if (
+    !observation ||
+    observation.numericValue === null ||
+    !isMetacriticTitleUrl(observation.publicationUrl)
+  ) {
     return null;
   }
+  const countMatch = observation.scaleLabel.match(/(\d[\d,]*)\s+critic/i);
+  return {
+    score: observation.numericValue,
+    reviewCount: countMatch ? Number(countMatch[1].replaceAll(",", "")) : null,
+    publicationUrl: observation.publicationUrl,
+    capturedAt: observation.capturedAt,
+  };
 }
 
-export async function getCriticalReceptionRanking(): Promise<
-  CriticalReceptionRankingEntry[]
-> {
-  if (!isSupabaseConfigured()) return [];
+export async function getFilmMetacriticScore(
+  filmId: string,
+): Promise<MetacriticScoreView | null> {
+  if (!isSupabaseConfigured()) return fixtureMetacriticScore(filmId);
   try {
     const supabase = createSupabaseServerClient();
     const result = await supabase
       .from("professional_observations")
-      .select(
-        "id,film_id,data_type,original_subject,original_value,original_scale,source_url,author,published_at,captured_at,participates,state,films(id,title),sources(id,name),source_publications(external_id,canonical_url,author)",
-      )
-      .eq("season_id", "oscars-2027")
+      .select("original_value,original_scale,source_url,captured_at")
+      .eq("film_id", filmId)
+      .eq("source_id", "metacritic")
+      .eq("data_type", "score_aggregate")
       .eq("state", "published")
-      .not("film_id", "is", null)
-      .in("data_type", ["score_individual", "score_aggregate"]);
+      .order("captured_at", { ascending: false })
+      .limit(5);
     if (result.error) throw new Error(result.error.message);
 
-    const observationsByFilm = new Map<
-      string,
-      { title: string; observations: CriticalScoreObservation[] }
-    >();
     for (const row of result.data ?? []) {
-      const film = Array.isArray(row.films) ? row.films[0] : row.films;
-      const source = Array.isArray(row.sources) ? row.sources[0] : row.sources;
-      const publication = Array.isArray(row.source_publications)
-        ? row.source_publications[0]
-        : row.source_publications;
-      if (
-        !row.film_id ||
-        !film ||
-        !source ||
-        (row.data_type !== "score_individual" &&
-          row.data_type !== "score_aggregate")
-      ) {
-        continue;
-      }
-      const original = jsonRecord(row.original_value);
-      const scale = jsonRecord(row.original_scale);
-      const numericValue = numeric(original.score ?? original.value);
-      const scaleMax = numeric(scale.maximum ?? scale.max);
-      const publicationUrl = publication?.canonical_url ?? row.source_url;
-      const publicationId = publication?.external_id ?? publicationUrl;
-      const entry = observationsByFilm.get(row.film_id) ?? {
-        title: film.title,
-        observations: [] as CriticalScoreObservation[],
-      };
-      entry.observations.push({
-        id: String(row.id),
-        sourceId: source.id,
-        sourceName: source.name,
-        publicationId,
-        publicationUrl,
-        author: row.author ?? publication?.author ?? null,
-        publishedAt: row.published_at,
+      const values = parseMetacriticValues(
+        row.original_value,
+        row.original_scale,
+      );
+      if (!values || !isMetacriticTitleUrl(row.source_url)) continue;
+      return {
+        ...values,
+        publicationUrl: row.source_url,
         capturedAt: row.captured_at,
-        seasonId: "oscars-2027",
-        filmId: row.film_id,
-        filmTitle: film.title,
-        participates: row.participates,
-        state: row.state,
-        dataType: row.data_type,
-        canonicalReviewId: criticalCanonicalReviewId(original, publicationId),
-        originalDisplay: criticalOriginalDisplay({
-          dataType: row.data_type,
-          numericValue,
-          scaleMax,
-          scaleLabel: criticalScaleLabel(row.original_scale),
-        }),
-        numericValue,
-        scaleMin: numeric(scale.minimum ?? scale.min),
-        scaleMax,
-        scaleLabel: criticalScaleLabel(row.original_scale),
-      });
-      observationsByFilm.set(row.film_id, entry);
+      };
     }
-
-    return [...observationsByFilm.entries()]
-      .map(([filmId, entry]) => ({
-        filmId,
-        filmTitle: entry.title,
-        aggregate: aggregateCriticalReception(entry.observations, filmId),
-      }))
-      .sort((left, right) => {
-        if (left.aggregate.isSufficient !== right.aggregate.isSufficient) {
-          return left.aggregate.isSufficient ? -1 : 1;
-        }
-        return (
-          (right.aggregate.statistics?.mean ?? -1) -
-            (left.aggregate.statistics?.mean ?? -1) ||
-          left.filmTitle.localeCompare(right.filmTitle, "es")
-        );
-      });
+    return null;
   } catch {
-    return [];
+    return null;
   }
 }
 

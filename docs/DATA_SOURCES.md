@@ -1,7 +1,7 @@
 # Registro de fuentes
 
 **Estado:** fase 8.5 cerrada; fuentes públicas derivadas de datos reales
-**Última revisión:** 2026-08-10
+**Última revisión:** 2026-08-29
 
 ## 1. Objetivo
 
@@ -109,7 +109,7 @@ calidad y forman el catálogo elegible del MVP; pueden activarse gradualmente.
 | `tmdb` | Metadatos | API documentada | Conector automático | publishable |
 | `academy` | Reglas y resultados | Manual asistido de HTML/PDF oficial | Importador oficial versionado | publishable |
 | `rotten-tomatoes` | Agregado crítico contextual | Pausado; captura privada | Requiere permiso o licencia antes de volver a publicar | review-before-publish |
-| `metacritic` | Agregado crítico contextual | Pausado; captura privada | Requiere permiso o licencia antes de volver a publicar | review-before-publish |
+| `metacritic` | Metascore contextual por película | Captura manual atribuida | Solo valor, denominador, fecha y enlace conforme a las reglas del proveedor; sin reseñas ni ranking propio | review-before-publish |
 | `filmaffinity` | Discovery de críticas profesionales y ficha contextual | Pausado; captura privada | Requiere permiso o licencia; no importar su valoración comunitaria | review-before-publish |
 | `roger-ebert` | Reseñas y notas individuales | RSS para descubrir + revisión manual | Conector RSS con fixture | review-before-publish |
 | `guardian` | Reseñas y notas individuales | Content API + revisión editorial | Conector API con fixture | review-before-publish |
@@ -141,17 +141,21 @@ calidad y forman el catálogo elegible del MVP; pueden activarse gradualmente.
 | `screen-daily` | Reseñas | RSS/manual | Metadatos y enlace si la pieza queda tras paywall | review-before-publish |
 | `ankler` | Predicciones firmadas | Newsletter/manual | Solo listas o selecciones explícitas | review-before-publish |
 
-`Rotten Tomatoes` y `Metacritic` no aportan votos a la media Runscars: sus
-agregados se conservan como contexto según D-012. La selección incluye
-deliberadamente fuentes manuales; el contrato del MVP exige tres conectores al
-final de la fase 5, no en el discovery.
+`Metacritic` no aporta votos a la media Runscars: su Metascore se muestra como
+contexto atribuido exclusivamente en la ficha de la película, según D-047.
+`Rotten Tomatoes` y `FilmAffinity` siguen sin exposición pública. La selección
+incluye deliberadamente fuentes manuales; el contrato del MVP exige tres
+conectores al final de la fase 5, no en el discovery.
 
 ### Cobertura profesional
 
 - **Puntuaciones individuales:** Guardian, RogerEbert.com, IndieWire, Slant,
   Little White Lies y The Washington Post cuando el valor original sea
   verificable. Las escalas especiales no se convierten sin regla aprobada.
-- **Agregados contextuales:** Rotten Tomatoes y Metacritic; no aportan votos.
+- **Contexto agregado público:** Metacritic en fichas de película; no aporta
+  votos ni permite ordenar el catálogo.
+- **Agregadores privados:** Rotten Tomatoes y FilmAffinity, incluidos sus datos
+  de discovery.
 - **Predicciones:** Variety, The Hollywood Reporter, IndieWire, Next Best
   Picture, AwardsWatch, Awards Daily, Awards Radar y The Ankler.
 - **Reseñas:** RogerEbert.com, Guardian, Variety, The Hollywood Reporter,

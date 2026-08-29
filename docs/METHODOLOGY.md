@@ -125,6 +125,13 @@ Metascore se guardan con su denominador y fecha de captura, pero no se convierte
 en una reseña individual ni participan en la media Runscars. Pueden mostrarse
 como contexto claramente atribuido.
 
+En la superficie pública vigente solo se muestra Metascore y únicamente dentro
+de la ficha de la película. Se conserva el valor original sobre 100, el número
+de críticas, la ficha canónica del título y la fecha de captura. No se calcula
+una media Runscars, no se ordenan películas por Metascore y la ausencia de dato
+no se rellena. Rotten Tomatoes, FilmAffinity, las reseñas descubiertas y las
+relaciones de discovery permanecen privadas.
+
 Esta separación evita mezclar conceptos distintos y contar dos veces reseñas
 que también lleguen desde su medio original. Los agregadores aprobados también
 pueden actuar como índices de descubrimiento: la observación individual se

@@ -432,7 +432,7 @@ describe("versioned database foundation", () => {
     ).rejects.toThrow();
   });
 
-  it("keeps aggregator data private until licensed", async () => {
+  it("exposes only attributed Metascores and keeps other aggregator data private", async () => {
     await database.exec(await readFile(seedPath, "utf8"));
     await database.exec(`
       insert into public.ingestion_runs (
@@ -464,6 +464,13 @@ describe("versioned database foundation", () => {
           'https://www.theguardian.com/film/discovered-review',
           'Discovered review',
           'Fixture Critic'
+        ),
+        (
+          'metacritic',
+          'metacritic-context',
+          'https://www.metacritic.com/movie/the-odyssey-2026/',
+          'The Odyssey',
+          null
         ),
         (
           'rotten-tomatoes',
@@ -498,6 +505,7 @@ describe("versioned database foundation", () => {
       from public.source_publications
       where external_id in (
         'guardian-discovered-review',
+        'metacritic-context',
         'rotten-tomatoes-context',
         'rotten-tomatoes-blocked-review'
       );
@@ -539,6 +547,7 @@ describe("versioned database foundation", () => {
         'published'
       from (values
         ('guardian-discovered-review', 'review', '{"canonical_review_id":"guardian-discovered-review"}', 'null', 'b', false),
+        ('metacritic-context', 'score_aggregate', '{"score":88,"critic_review_count":63}', '{"minimum":0,"maximum":100,"unit":"Metascore","denominator":63}', 'e', false),
         ('rotten-tomatoes-context', 'score_aggregate', '{"score":94}', '{"minimum":0,"maximum":100,"unit":"Tomatometer","denominator":500}', 'c', false),
         ('rotten-tomatoes-blocked-review', 'review', '{"canonical_review_id":"blocked"}', 'null', 'd', false)
       ) as fixtures(external_id, kind, value, scale, token, participates)
@@ -578,7 +587,9 @@ describe("versioned database foundation", () => {
       where film_id = 'the-odyssey'
       order by source_id, data_type
     `);
-    expect(visible.rows).toEqual([]);
+    expect(visible.rows).toEqual([
+      { source_id: "metacritic", data_type: "score_aggregate" },
+    ]);
 
     await expect(
       database.query(`
@@ -606,7 +617,7 @@ describe("versioned database foundation", () => {
       },
       {
         id: "metacritic",
-        editorial_status: "paused",
+        editorial_status: "selected",
         publication_status: "review-before-publish",
       },
       {

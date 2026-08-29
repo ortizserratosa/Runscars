@@ -1,6 +1,6 @@
 # Hoja de ruta
 
-**Última revisión:** 2026-08-26
+**Última revisión:** 2026-08-29
 
 Cada fase tiene una puerta de salida verificable. Una fase no se considera
 terminada por haber creado archivos o código, sino por cumplir esa puerta.
@@ -385,6 +385,14 @@ verde.
 - backup y restauración;
 - revisión de publicación de fuentes;
 - despliegue final.
+
+### Ajuste posterior al lanzamiento · 2026-08-29
+
+- retirada de la pestaña y del sitemap de recepción crítica;
+- redirección permanente de `/critica` a la temporada activa;
+- Metascore atribuido dentro de las fichas con dato disponible, sin
+  normalización ni participación en el consenso;
+- Rotten Tomatoes, FilmAffinity y discovery continúan privados.
 
 ### Puerta de salida
 

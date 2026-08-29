@@ -1,6 +1,6 @@
 # Registro de decisiones
 
-**Última revisión:** 2026-08-25
+**Última revisión:** 2026-08-29
 
 ## Cómo usar este registro
 
@@ -61,6 +61,10 @@ pasado para ocultar cambios de criterio.
 | D-041 | Cobertura crítica derivada de las predicciones activas | Aceptada |
 | D-042 | Comunidad pública y visionado vinculado a quinielas | Aceptada |
 | D-043 | Acceso reforzado y proveedor social explícito | Aceptada |
+| D-044 | Agregadores privados hasta obtener permiso compatible | Aceptada |
+| D-045 | Altas nuevas por Google durante la beta pública | Aceptada |
+| D-046 | URL pública inicial y protección de deployments | Aceptada |
+| D-047 | Metascore atribuido en fichas y retirada de la pestaña Crítica | Aceptada |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -807,3 +811,30 @@ ejemplos manuales de nominaciones y ganador coincidieron con
 - **Reapertura:** cuando exista un dominio propio, añadirlo al proyecto, mover
   canonical, Auth y la pantalla OAuth, y reactivar la protección de previews
   con la excepción exclusiva del dominio público.
+
+## D-047 · Metascore atribuido en fichas y retirada de la pestaña Crítica
+
+- **Fecha:** 2026-08-29
+- **Estado:** Aceptada
+- **Decisión de producto:** retirar `Crítica` de la navegación y del sitemap.
+  La ruta antigua `/critica` redirige permanentemente a la temporada activa. La
+  recepción externa deja de ser un ranking o destino independiente y pasa a ser
+  información contextual de la película.
+- **Alcance aplicado:** mostrar únicamente la observación numérica publicada
+  más reciente de tipo `score_aggregate` y fuente `metacritic` en la ficha de la
+  película correspondiente. Se conservan valor original sobre 100, número de
+  críticas, URL de la ficha del título y fecha de captura. No se copian reseñas,
+  extractos ni cuerpo editorial.
+- **Atribución:** usar `Metacritic` y `Metascore` con su capitalización, colores
+  de rango, la línea `Based on N critics` cuando exista denominador y el enlace
+  `See all critic reviews on metacritic.com`, todos dirigidos a la ficha del
+  título. Créditos identifica al proveedor y enlaza sus reglas de uso.
+- **Separación:** el Metascore no se normaliza, no participa en el consenso de
+  predicciones, no crea una crítica individual y no se usa para ordenar
+  películas. Si no existe un dato válido no se muestra ningún sustituto.
+- **Privacidad:** Rotten Tomatoes, FilmAffinity, las relaciones de discovery y
+  cualquier observación de Metacritic que no sea `score_aggregate` continúan
+  privadas para `anon` y `authenticated`.
+- **Refina:** D-012 y D-044 para este uso atribuido y acotado de Metacritic.
+  Reemplaza D-040 y D-041 únicamente en su presentación pública; se mantiene la
+  procedencia histórica y el modelo de datos.

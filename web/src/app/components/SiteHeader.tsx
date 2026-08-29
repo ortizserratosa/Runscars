@@ -27,7 +27,6 @@ export async function SiteHeader() {
         <Link href={href("/temporadas/2027")}>
           {en ? "Season" : "Temporada"}
         </Link>
-        <Link href={href("/critica")}>{en ? "Critics" : "Crítica"}</Link>
         <Link href={href("/archivo")}>{en ? "Archive" : "Archivo"}</Link>
         <Link href={href("/fuentes")}>{en ? "Sources" : "Fuentes"}</Link>
         <Link href={href("/metodologia")}>{en ? "Method" : "Método"}</Link>
@@ -42,7 +41,6 @@ export async function SiteHeader() {
           <Link href={href("/temporadas/2027")}>
             {en ? "Season" : "Temporada"}
           </Link>
-          <Link href={href("/critica")}>{en ? "Critics" : "Crítica"}</Link>
           <Link href={href("/archivo")}>{en ? "Archive" : "Archivo"}</Link>
           <Link href={href("/fuentes")}>{en ? "Sources" : "Fuentes"}</Link>
           <Link href={href("/metodologia")}>{en ? "Method" : "Método"}</Link>

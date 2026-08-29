@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FilmCatalogDetails } from "../../components/FilmCatalogDetails";
 import { FilmWatchPanel } from "../../components/FilmWatchPanel";
+import { MetacriticScoreCard } from "../../components/MetacriticScoreCard";
 import { Movement } from "../../components/Movement";
 import { PosterBlock } from "../../components/PosterBlock";
 import {
@@ -10,7 +11,7 @@ import {
   listFixtureFilmIds,
 } from "../../../lib/repositories/catalog";
 import {
-  getFilmCriticalView,
+  getFilmMetacriticScore,
   getFilmPredictions,
 } from "../../../lib/repositories/signals";
 import { localizedCategoryName } from "../../../lib/i18n/categories";
@@ -69,9 +70,9 @@ export default async function FilmPage({ params }: FilmPageProps) {
   const film = await getFilmCatalogDetail(slug, en ? "en-US" : "es-ES");
   if (!film) notFound();
 
-  const [predictions, critical] = await Promise.all([
+  const [predictions, metacriticScore] = await Promise.all([
     getFilmPredictions(slug),
-    getFilmCriticalView(slug, film.title),
+    getFilmMetacriticScore(slug),
   ]);
   const primaryPrediction =
     predictions.find(
@@ -198,6 +199,10 @@ export default async function FilmPage({ params }: FilmPageProps) {
       <section className="page-shell film-content">
         <FilmCatalogDetails film={film} locale={locale} />
 
+        {metacriticScore ? (
+          <MetacriticScoreCard locale={locale} score={metacriticScore} />
+        ) : null}
+
         {predictions.length ? (
           <div className="film-signal-section prediction-module">
             <div className="module-heading">
@@ -303,154 +308,6 @@ export default async function FilmPage({ params }: FilmPageProps) {
                       : "Abrir clasificación y cálculo completo"}
                   </Link>
                 </article>
-              ))}
-            </div>
-          </div>
-        ) : null}
-
-        {critical ? (
-          <div className="film-signal-section critics-module">
-            <div className="module-heading">
-              <span className="signal-letter">B</span>
-              <div>
-                <p className="section-index">
-                  {en
-                    ? "VERIFIED CRITICAL RECEPTION"
-                    : "RECEPCIÓN CRÍTICA VERIFICADA"}
-                </p>
-                <h2>
-                  {en
-                    ? "Only when real data exists"
-                    : "Solo cuando hay datos reales"}
-                </h2>
-                <p>
-                  {en
-                    ? "Individual scores are normalised; aggregators remain separate context."
-                    : "Las puntuaciones individuales se normalizan; los agregadores permanecen como contexto separado."}
-                </p>
-              </div>
-            </div>
-            {critical.aggregate.scores.length ||
-            critical.aggregate.contextualScores.length ? (
-              <div className="review-score-grid">
-                {critical.aggregate.scores.map((score) => (
-                  <a
-                    href={score.publicationUrl}
-                    key={score.id}
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    <div className="review-source-line">
-                      <span>{score.sourceName}</span>
-                      <small>{dateLabel(score.publishedAt, locale)}</small>
-                    </div>
-                    <strong>{score.originalDisplay}</strong>
-                    <p>
-                      {score.author ??
-                        (en ? "Author not provided" : "Autor no indicado")}
-                    </p>
-                    <span className="normalized-label">
-                      {formatNumber(
-                        score.normalization.normalizedValue,
-                        locale,
-                        2,
-                      )}
-                      /5
-                    </span>
-                    <small>
-                      {en ? "Individual score" : "Puntuación individual"}
-                    </small>
-                  </a>
-                ))}
-                {critical.aggregate.contextualScores.map((score) => (
-                  <a
-                    href={score.publicationUrl}
-                    key={score.id}
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    <div className="review-source-line">
-                      <span>{score.sourceName}</span>
-                      <small>{dateLabel(score.publishedAt, locale)}</small>
-                    </div>
-                    <strong>{score.originalDisplay}</strong>
-                    <p>
-                      {score.author ??
-                        (en ? "Contextual aggregate" : "Agregado contextual")}
-                    </p>
-                    <span className="context-label">
-                      {en ? "Not included" : "No participa"}
-                    </span>
-                    <small>{score.scaleLabel}</small>
-                  </a>
-                ))}
-              </div>
-            ) : null}
-            {critical.aggregate.isSufficient &&
-            critical.aggregate.statistics ? (
-              <p className="calculation-proof">
-                {en ? "Mean of" : "Media de"}{" "}
-                {critical.aggregate.statistics.count}{" "}
-                {en ? "scores" : "puntuaciones"}:{" "}
-                <strong>
-                  {formatNumber(critical.aggregate.statistics.mean, locale, 2)}{" "}
-                  / 5
-                </strong>
-                .
-              </p>
-            ) : (
-              <p className="insufficient-note">
-                <strong>
-                  {en ? "Insufficient data:" : "Datos insuficientes:"}
-                </strong>{" "}
-                {en
-                  ? `there are ${critical.aggregate.scores.length} verifiable individual scores. ${critical.aggregate.minimumRequired} are required to publish a mean.`
-                  : `hay ${critical.aggregate.scores.length} puntuaciones individuales verificables. Se necesitan ${critical.aggregate.minimumRequired} para publicar una media.`}
-              </p>
-            )}
-          </div>
-        ) : null}
-
-        {critical?.reviews.length ? (
-          <div className="film-signal-section reviews-module">
-            <div className="module-heading">
-              <span className="signal-letter">R</span>
-              <div>
-                <p className="section-index">
-                  {en ? "LINKED REVIEWS" : "RESEÑAS ENLAZADAS"}
-                </p>
-                <h2>
-                  {en
-                    ? "Reviews with a byline and date"
-                    : "Lecturas con firma y fecha"}
-                </h2>
-                <p>
-                  {en
-                    ? "Runscars links to the canonical publication and does not copy its body."
-                    : "Runscars enlaza la pieza canónica y no copia su cuerpo."}
-                </p>
-              </div>
-            </div>
-            <div className="review-link-list">
-              {critical.reviews.map((review) => (
-                <a
-                  href={review.publicationUrl}
-                  key={review.id}
-                  rel="noreferrer"
-                  target="_blank"
-                >
-                  <span>{dateLabel(review.publishedAt, locale)}</span>
-                  <div>
-                    <strong>{review.sourceName}</strong>
-                    <p>
-                      {review.title}
-                      {review.author ? ` · ${review.author}` : ""}
-                    </p>
-                  </div>
-                  <span className="review-arrow" aria-hidden="true">
-                    ↗
-                  </span>
-                </a>
               ))}
             </div>
           </div>

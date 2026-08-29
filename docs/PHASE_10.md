@@ -45,3 +45,11 @@ terminal o el panel de Vercel. Speed Insights añade coste y no se activa sin es
 autorización. Ambos clientes están integrados, pero estas activaciones opcionales
 no forman parte de la puerta del MVP; salud, runtime logs y runbook sí están
 operativos.
+
+## Ajuste posterior al cierre · 2026-08-29
+
+Se retiró la pestaña pública de crítica y su entrada en el sitemap. La ruta
+antigua redirige a la temporada activa. Las fichas con observación disponible
+muestran el Metascore original, denominador, enlace canónico y fecha de captura
+con la presentación descrita por Metacritic. El dato no se normaliza ni participa
+en el consenso; Rotten Tomatoes, FilmAffinity y discovery siguen privados.

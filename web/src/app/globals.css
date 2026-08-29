@@ -2565,6 +2565,97 @@ select:focus-visible {
   padding-block: 6rem;
 }
 
+.metacritic-film-card {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 5rem;
+  align-items: center;
+  padding-block: 3rem;
+  border-top: 1px solid var(--ink);
+}
+
+.metacritic-lockup {
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+  width: fit-content;
+  color: var(--ink);
+}
+
+.metacritic-lockup:hover .metacritic-wordmark strong,
+.metacritic-context-copy .text-link:hover {
+  color: var(--violet);
+}
+
+.metascore-value {
+  display: grid;
+  place-items: center;
+  width: 94px;
+  height: 94px;
+  flex: 0 0 94px;
+  color: #111;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.metascore-value--positive {
+  background: #66cc33;
+}
+
+.metascore-value--mixed {
+  background: #ffcc33;
+}
+
+.metascore-value--negative {
+  background: #ff0000;
+  color: #fff;
+}
+
+.metacritic-wordmark {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.metacritic-wordmark strong,
+.metacritic-credit-wordmark {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.55rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+.metacritic-wordmark small {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.metacritic-wordmark span,
+.metacritic-context-copy > small {
+  color: var(--muted);
+  font-size: 0.68rem;
+}
+
+.metacritic-context-copy h2 {
+  max-width: 700px;
+  font-size: 2.4rem;
+}
+
+.metacritic-context-copy > p:not(.section-index) {
+  max-width: 740px;
+  margin: 0.8rem 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.metacritic-context-copy > small {
+  display: block;
+  margin-top: 0.8rem;
+}
+
 .film-signal-section {
   display: grid;
   grid-template-columns: 360px 1fr;
@@ -3472,6 +3563,19 @@ select:focus-visible {
   font-weight: 800;
 }
 
+.metacritic-credit-wordmark {
+  width: fit-content;
+  padding: 0.9rem 1.1rem;
+  border: 2px solid var(--ink);
+  color: var(--ink);
+  font-size: 1.8rem;
+}
+
+.metacritic-credit-wordmark:hover {
+  border-color: var(--violet);
+  color: var(--violet);
+}
+
 .credits-note {
   margin: 3rem 0 0 330px;
   color: var(--muted);
@@ -3520,6 +3624,11 @@ select:focus-visible {
     gap: 3rem;
   }
 
+  .metacritic-film-card {
+    grid-template-columns: 280px 1fr;
+    gap: 3rem;
+  }
+
   .ranking-lab {
     grid-template-columns: 1fr;
   }
@@ -3551,6 +3660,7 @@ select:focus-visible {
   .season-title-row,
   .category-title-row,
   .film-hero-grid,
+  .metacritic-film-card,
   .film-signal-section,
   .source-title-row,
   .market-provider-grid,

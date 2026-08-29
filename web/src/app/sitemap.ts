@@ -7,7 +7,6 @@ const PUBLIC_ROUTES = [
   "/temporadas/2027",
   "/temporadas/2026",
   "/archivo",
-  "/critica",
   "/fuentes",
   "/metodologia",
   "/evaluacion",

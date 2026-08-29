@@ -259,7 +259,9 @@ test("offers complete navigation at a mobile viewport", async ({ page }) => {
     navigation.getByRole("link", { name: "Categorías" }),
   ).toHaveCount(0);
   await expect(navigation.getByRole("link", { name: "Fuentes" })).toBeVisible();
-  await expect(navigation.getByRole("link", { name: "Crítica" })).toBeVisible();
+  await expect(navigation.getByRole("link", { name: "Crítica" })).toHaveCount(
+    0,
+  );
   await expect(navigation.getByRole("link", { name: "Archivo" })).toBeVisible();
   await expect(navigation.getByRole("link", { name: "Método" })).toBeVisible();
 });
@@ -334,17 +336,31 @@ test("publishes methodology, evaluation and the five-edition archive", async ({
   await expect(page.getByText("GANADOR", { exact: true })).toHaveCount(8);
 });
 
-test("keeps the critical reception threshold explicit", async ({ page }) => {
+test("retires the critical tab and attributes Metascore on film pages", async ({
+  page,
+}) => {
   await page.goto("/critica");
+  await expect(page).toHaveURL(/\/temporadas\/2027$/);
+
+  await page.goto("/peliculas/the-odyssey");
   await expect(
     page.getByRole("heading", {
-      level: 1,
-      name: "La crítica profesional, fuente a fuente.",
+      level: 2,
+      name: "Una puntuación atribuida para esta película",
     }),
   ).toBeVisible();
-  await expect(page.getByText("Metacritic")).toHaveCount(0);
+  await expect(page.getByText("Metacritic", { exact: true })).toBeVisible();
+  await expect(page.getByText("88", { exact: true })).toBeVisible();
+  await expect(page.getByText("Based on 62 critics")).toBeVisible();
+  await expect(
+    page.getByRole("link", {
+      name: "See all critic reviews on metacritic.com",
+    }),
+  ).toHaveAttribute(
+    "href",
+    "https://www.metacritic.com/movie/the-odyssey-2026/",
+  );
   await expect(page.getByText("Rotten Tomatoes")).toHaveCount(0);
-  await expect(page.getByText(/tres críticas independientes/)).toBeVisible();
 });
 
 test("publishes equivalent English routes and language metadata", async ({

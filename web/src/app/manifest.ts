@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "Runscars",
     short_name: "Runscars",
     description:
-      "Crítica, predicciones profesionales y quinielas personales para seguir la carrera a los Oscar.",
+      "Predicciones profesionales, datos cinematográficos y quinielas personales para seguir la carrera a los Oscar.",
     start_url: "/",
     display: "standalone",
     background_color: "#f2efe6",

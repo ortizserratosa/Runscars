@@ -1,6 +1,6 @@
 # Matriz de fuentes · fase 1
 
-**Corte de investigación:** 2026-07-24
+**Corte de investigación:** 2026-08-29
 
 **Alcance:** 31 fuentes candidatas; 28 seleccionadas para el catálogo del MVP.
 
@@ -26,7 +26,7 @@ republicación. Mandan el tipo de dato, la observación y la columna
 | `golden-globes` | Golden Globes | official | Nominaciones y ganadores; organización | Anual | Web oficial/manual | No | selected | manual | review-before-publish | Sí | Categorías no equivalen siempre a las Oscar |
 | `critics-choice` | Critics Choice Awards | official | Nominaciones y ganadores; organización | Anual | Web oficial/manual | No | selected | manual | review-before-publish | Sí | Páginas agregan varias ediciones |
 | `rotten-tomatoes` | Rotten Tomatoes | score, review | Agregado y enlaces de crítica; discovery privado | Continua | Pausado hasta obtener permiso o licencia | Parcial | paused | manual | review-before-publish | Sí | No se publica ni extrae para el lanzamiento; porcentaje de aprobación, no nota media individual |
-| `metacritic` | Metacritic | score, review | Agregado ponderado y discovery privado | Continua | Pausado hasta obtener permiso o licencia | Parcial | paused | manual | review-before-publish | Sí | No se publica para el lanzamiento; algoritmo ponderado opaco y riesgo de doble conteo |
+| `metacritic` | Metacritic | score, review | Metascore contextual en fichas; discovery privado | Continua | Captura manual atribuida del valor y denominador | Parcial | selected | manual | review-before-publish | Sí | Solo `score_aggregate`, ficha del título y fecha; sin reseñas, ranking propio, normalización ni participación en consenso |
 | `filmaffinity` | FilmAffinity | review | Discovery privado de críticas profesionales | Continua | Pausado hasta obtener permiso o licencia | Parcial | paused | manual | review-before-publish | Sí | No se publica para el lanzamiento ni se usa su valoración comunitaria |
 | `roger-ebert` | RogerEbert.com | score, review | Reseñas firmadas; redactores | Varias por semana | RSS para descubrir + captura manual | No | selected | prototype | review-before-publish | Sí | La nota debe leerse de la reseña canónica |
 | `variety` | Variety | prediction, review | Premios y crítica; autores identificados | Semanal/por estreno | RSS/HTML para descubrir + manual | Parcial | selected | manual | review-before-publish | Sí | Listas dinámicas y cambios sin versión explícita |
