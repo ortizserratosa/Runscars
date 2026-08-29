@@ -73,8 +73,8 @@ export default async function AccessPage() {
               </p>
               <p className="form-message">
                 {en
-                  ? "This avoids relying on a shared confirmation-email service while Runscars prepares its own domain and transactional mail."
-                  : "Así evitamos depender de un servicio compartido de confirmación mientras Runscars prepara dominio y correo transaccional propios."}
+                  ? "This avoids relying on a shared confirmation-email service while Runscars prepares its own transactional mail."
+                  : "Así evitamos depender de un servicio compartido de confirmación mientras Runscars prepara su correo transaccional propio."}
               </p>
             </div>
           )}

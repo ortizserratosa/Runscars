@@ -2,9 +2,9 @@
 
 ## Servicios
 
-- Web: Vercel, proyecto `runscars`, publicado en
-  `https://runscars.vercel.app`. La antigua URL de staging se conserva como
-  alias de transición.
+- Web: Vercel, proyecto `runscars`, publicado en `https://runscars.app`.
+  `www.runscars.app`, `runscars.vercel.app` y
+  `runscars-staging.vercel.app` redirigen permanentemente al dominio canónico.
 - Base de datos y autenticación: Supabase, proyecto
   `lgiqzrxeifwciykckzrn` en `eu-west-3`.
 - Metadatos: TMDB mediante credencial exclusiva de servidor.

@@ -53,3 +53,8 @@ antigua redirige a la temporada activa. Las fichas con observación disponible
 muestran el Metascore original, denominador, enlace canónico y fecha de captura
 con la presentación descrita por Metacritic. El dato no se normaliza ni participa
 en el consenso; Rotten Tomatoes, FilmAffinity y discovery siguen privados.
+
+Ese mismo día se migró la URL canónica a <https://runscars.app>. Vercel sirve el
+certificado HTTPS y redirige permanentemente `www` y los alias públicos
+anteriores. La URL de sitio de la aplicación y Supabase Auth usan el dominio
+propio; los callbacks antiguos se mantienen permitidos durante la transición.

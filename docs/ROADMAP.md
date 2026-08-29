@@ -362,7 +362,7 @@ Alcance y evidencia en [PHASE_9_5.md](PHASE_9_5.md).
 ## Fase 10 · QA y MVP
 
 **Cerrada:** 2026-08-26. El MVP bilingüe está publicado en
-<https://runscars.vercel.app>, con catálogo completo en ambos idiomas, política
+<https://runscars.app>, con catálogo completo en ambos idiomas, política
 de altas solo por Google, backup restaurado y la verificación local y remota en
 verde.
 

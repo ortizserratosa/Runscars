@@ -63,8 +63,9 @@ pasado para ocultar cambios de criterio.
 | D-043 | Acceso reforzado y proveedor social explícito | Aceptada |
 | D-044 | Agregadores privados hasta obtener permiso compatible | Aceptada |
 | D-045 | Altas nuevas por Google durante la beta pública | Aceptada |
-| D-046 | URL pública inicial y protección de deployments | Aceptada |
+| D-046 | URL pública inicial y protección de deployments | Reemplazada |
 | D-047 | Metascore atribuido en fichas y retirada de la pestaña Crítica | Aceptada |
+| D-048 | Dominio propio como URL pública canónica | Aceptada |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -800,7 +801,7 @@ ejemplos manuales de nominaciones y ganador coincidieron con
 ## D-046 · URL pública inicial y protección de deployments
 
 - **Fecha:** 2026-08-26
-- **Estado:** Aceptada
+- **Estado:** Reemplazada por D-048
 - **Decisión:** publicar el MVP en `https://runscars.vercel.app` y conservar
   `https://runscars-staging.vercel.app` como alias temporal del mismo deployment.
   La protección SSO de Vercel se desactiva porque también bloqueaba el dominio
@@ -838,3 +839,19 @@ ejemplos manuales de nominaciones y ganador coincidieron con
 - **Refina:** D-012 y D-044 para este uso atribuido y acotado de Metacritic.
   Reemplaza D-040 y D-041 únicamente en su presentación pública; se mantiene la
   procedencia histórica y el modelo de datos.
+
+## D-048 · Dominio propio como URL pública canónica
+
+- **Fecha:** 2026-08-29
+- **Estado:** Aceptada
+- **Decisión:** usar `https://runscars.app` como URL pública canónica. `www` y
+  los alias `runscars.vercel.app` y `runscars-staging.vercel.app` redirigen con
+  estado 308 al dominio raíz para conservar los enlaces existentes sin publicar
+  contenido duplicado.
+- **Autenticación:** `NEXT_PUBLIC_SITE_URL` y la URL principal de Supabase Auth
+  usan el dominio propio. Los callbacks antiguos permanecen en la lista
+  permitida durante la transición. El callback del proveedor de Google continúa
+  siendo el endpoint de Supabase, por lo que este cambio no exige rotar el
+  Client ID ni el Client Secret.
+- **Operación:** Name.com conserva la autoridad DNS y Vercel gestiona el
+  certificado TLS. Esta decisión reemplaza D-046.
