@@ -338,7 +338,7 @@ values
     'Awards Daily Oscar predictions',
     'html',
     'https://www.awardsdaily.com/wp-json/wp/v2/search?search=2027%20Oscar%20Predictions&per_page=20&_fields=id,url,title,subtype',
-    'awards-daily-v3',
+    'awards-daily-v5',
     true,
     '17 4 * * *',
     '{

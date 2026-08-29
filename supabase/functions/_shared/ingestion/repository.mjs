@@ -327,7 +327,7 @@ export class SupabaseIngestionRepository {
         .maybeSingle(),
       "No se pudo buscar la publicación por identidad",
     );
-    if (!existing) {
+    if (!existing && publication.isMutable !== true) {
       existing = databaseError(
         await this.client
           .from("source_publications")

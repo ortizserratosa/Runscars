@@ -250,6 +250,15 @@ coincidencias dudosas siguen requiriendo revisión; las identidades verificadas
 de `Rose`, `Ink`, `Elsinore` y `Possible Love` se documentan en un manifiesto y
 se aplican mediante migraciones TMDB trazables.
 
+El mantenimiento del 2026-08-29 elevó Awards Daily a `awards-daily-v5`: el
+extractor busca el bloque editorial `Predictions` y el `Best Picture` posterior,
+en vez de aceptar una mención narrativa anterior. Las demás fuentes conservan
+anclajes propios y verificables: fecha `Updated`, cabecera anual, última sección
+estructurada, numeración consecutiva o patrón de selección estricto. Un cambio
+de estructura falla de forma aislada y no reemplaza el último dato válido. Las
+páginas mutables guardan cada cambio como una publicación completa e inmutable,
+incluso cuando conservan la misma URL canónica.
+
 Kalshi y Polymarket usan sus API públicas en un proceso horario independiente.
 Kalshi consulta las series 2027 de nominación y ganador de cada categoría
 pública; Polymarket selecciona únicamente eventos activos rotulados como Oscar

@@ -145,6 +145,10 @@ const SOURCE_FILM_ALIASES = new Map([
   ["dune iii", "Dune: Part Three"],
   ["la bola begra", "La Bola Negra"],
   ["sense and sensibillity", "Sense and Sensibility"],
+  [
+    "the further mis-adventures of cliff booth",
+    "The Adventures of Cliff Booth",
+  ],
   ["the social recknoing", "The Social Reckoning"],
   ["wewulf", "Werwulf"],
 ]);
@@ -301,6 +305,7 @@ function publicationMetadata(html, endpointUrl, sourceId, capturedAt) {
 function headingCategory(line) {
   const normalized = line
     .replace(/\s+\d+\s*$/, "")
+    .replace(/:\s*$/, "")
     .replace(/^THE\s+/i, "")
     .trim();
   for (const [categoryId, aliases] of CATEGORY_DEFINITIONS) {
@@ -534,10 +539,25 @@ export function parseAwardsDailyFixture(
   const footerStart = articleLines.findIndex((line) => /^Tags:/i.test(line));
   const lines =
     footerStart === -1 ? articleLines : articleLines.slice(0, footerStart);
-  const start = Math.max(
-    lines.findIndex((line) => line === "Best Picture"),
-    0,
+  const predictionsMarker = lastIndexMatching(lines, (line) =>
+    /^Predictions:?$/i.test(line),
   );
+  const start =
+    predictionsMarker >= 0
+      ? lines.findIndex(
+          (line, index) =>
+            index > predictionsMarker &&
+            headingCategory(line) === "best-picture",
+        )
+      : lastIndexMatching(
+          lines,
+          (line) => headingCategory(line) === "best-picture",
+        );
+  if (start < 0) {
+    throw new Error(
+      "awards-daily no contiene un bloque de predicciones Best Picture",
+    );
+  }
   const rowsByCategory = parseHeadingLists(lines, {
     numbered: false,
     contentStart: start,
@@ -546,7 +566,7 @@ export function parseAwardsDailyFixture(
   return buildBatch({
     connectorId,
     sourceId: "awards-daily",
-    extractorVersion: "awards-daily-v3",
+    extractorVersion: "awards-daily-v5",
     seasonId,
     capturedAt,
     sourceUrl: publication.canonicalUrl,
@@ -578,6 +598,9 @@ export function parseAwardsRadarFixture(
     publishedAt: updatedAt ?? metadata.publishedAt,
   };
   const updateMarker = lines.findIndex((line) => /^Updated\s+/i.test(line));
+  if (categoryId && updateMarker < 0) {
+    throw new Error("awards-radar no contiene el marcador de actualización");
+  }
   const categoryHeading = categoryId
     ? CATEGORY_DEFINITIONS.find(([id]) => id === categoryId)?.[1]?.[0]
     : null;
@@ -619,9 +642,17 @@ export function parseMidnightCriticsFixture(
   );
   const lines = htmlLines(html);
   const marker = lines.findIndex((line) => line === "2027 Oscar Predictions");
+  if (marker < 0) {
+    throw new Error("midnight-critics no contiene el marcador de predicciones");
+  }
   const start = lines.findIndex(
     (line, index) => index > marker && line === "BEST PICTURE",
   );
+  if (start < 0) {
+    throw new Error(
+      "midnight-critics no contiene el bloque de predicciones Best Picture",
+    );
+  }
   return buildBatch({
     connectorId,
     sourceId: "midnight-critics",
@@ -632,7 +663,7 @@ export function parseMidnightCriticsFixture(
     publication,
     rowsByCategory: parseHeadingLists(lines, {
       numbered: true,
-      contentStart: Math.max(start, 0),
+      contentStart: start,
       removeConsensus: true,
       maxRows: 25,
     }),
@@ -642,6 +673,13 @@ export function parseMidnightCriticsFixture(
 function lastIndexOf(lines, value) {
   for (let index = lines.length - 1; index >= 0; index -= 1) {
     if (lines[index] === value) return index;
+  }
+  return -1;
+}
+
+function lastIndexMatching(lines, predicate) {
+  for (let index = lines.length - 1; index >= 0; index -= 1) {
+    if (predicate(lines[index], index)) return index;
   }
   return -1;
 }

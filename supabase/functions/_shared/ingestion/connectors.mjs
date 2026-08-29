@@ -283,7 +283,7 @@ export const CONNECTORS = Object.freeze({
     return mergeBatches(latest.selected, {
       mode: "wordpress-search",
       indexUrl: discoveryUrl,
-      extractorVersion: "awards-daily-v3",
+      extractorVersion: "awards-daily-v5",
       candidatesFound: candidates.length,
       ignoredUrls,
       supersededUrls: latest.supersededUrls,

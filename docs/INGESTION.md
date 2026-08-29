@@ -224,8 +224,10 @@ restricción única, la URL de procedencia y la privacidad de runs/logs/cola.
 
 - Un cambio estructural de HTML hace fallar solo AwardsWatch y deja un evento
   `connector.failed`; no publica filas parciales silenciosamente.
-- Awards Daily limita el extractor al cuerpo editorial, corta antes de
-  etiquetas o navegación y descarta filas rotuladas como alternativas.
+- Awards Daily limita el extractor al cuerpo editorial, se ancla al bloque
+  explícito `Predictions`, corta antes de etiquetas o navegación y descarta
+  filas rotuladas como alternativas. Si el bloque estructurado desaparece,
+  falla ese conector y se conserva la última revisión válida.
 - Guardian está activo desde el 2026-07-24. Su clave existe únicamente en
   `web/.env.local` para desarrollo y en los secretos de Edge Functions para
   staging; no forma parte del seed, los logs ni Git.

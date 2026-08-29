@@ -405,6 +405,62 @@ describe("professional ingestion adapters", () => {
     );
   });
 
+  it("anchors Awards Daily to its predictions block after editorial prose", () => {
+    const batch = parseAwardsDailyFixture(
+      `
+        <link rel="canonical" href="https://www.awardsdaily.com/2026/08/28/latest/" />
+        <div class="content-inner">
+          <h2>Best Picture</h2>
+          <p>Wild Horse Nine has the strongest pre-festival buzz.</p>
+          <p>Ink could prove a formidable contender.</p>
+          <h2>Best Actress:</h2>
+          <p>This sentence is analysis, not a prediction.</p>
+          <h2>Predictions</h2>
+          <p>Best Picture<br />The Odyssey<br />Project Hail Mary<br />The Invite<br />Wild Horse Nine<br />Fjord<br />Obsession<br />La Bola Negra<br />The Further Mis-Adventures of Cliff Booth<br />Dune III<br />Digger</p>
+          <p>Director<br />Christopher Nolan, The Odyssey</p>
+        </div>
+      `,
+      {
+        connectorId: "awards-daily-predictions",
+        capturedAt,
+        endpointUrl: "https://www.awardsdaily.com/2026/08/28/latest/",
+        seasonId: "oscars-2027",
+      },
+    );
+    const bestPicture = batch.publications[0].observations.filter(
+      (observation: { categoryId: string }) =>
+        observation.categoryId === "best-picture",
+    );
+
+    expect(batch.extractorVersion).toBe("awards-daily-v5");
+    expect(
+      bestPicture.map(
+        (observation: {
+          originalValue: { rank: number; list_length: number; raw: string };
+        }) => ({
+          rank: observation.originalValue.rank,
+          list_length: observation.originalValue.list_length,
+          raw: observation.originalValue.raw,
+        }),
+      ),
+    ).toEqual([
+      { rank: 1, list_length: 10, raw: "The Odyssey" },
+      { rank: 2, list_length: 10, raw: "Project Hail Mary" },
+      { rank: 3, list_length: 10, raw: "The Invite" },
+      { rank: 4, list_length: 10, raw: "Wild Horse Nine" },
+      { rank: 5, list_length: 10, raw: "Fjord" },
+      { rank: 6, list_length: 10, raw: "Obsession" },
+      { rank: 7, list_length: 10, raw: "La Bola Negra" },
+      {
+        rank: 8,
+        list_length: 10,
+        raw: "The Further Mis-Adventures of Cliff Booth",
+      },
+      { rank: 9, list_length: 10, raw: "Dune III" },
+      { rank: 10, list_length: 10, raw: "Digger" },
+    ]);
+  });
+
   it("limits Awards Daily parsing to the article and skips alternate rows", () => {
     const batch = parseAwardsDailyFixture(
       `
@@ -425,7 +481,7 @@ describe("professional ingestion adapters", () => {
       },
     );
 
-    expect(batch.extractorVersion).toBe("awards-daily-v3");
+    expect(batch.extractorVersion).toBe("awards-daily-v5");
     expect(
       batch.publications[0].observations.map(
         (observation: { originalValue: { raw: string } }) =>
@@ -438,7 +494,7 @@ describe("professional ingestion adapters", () => {
     const batch = parseAwardsDailyFixture(
       `
         <link rel="canonical" href="https://www.awardsdaily.com/2026/07/24/latest/" />
-        <p>Best Picture<br />The Debut<br />Dune III<br />Wewulf</p>
+        <p>Best Picture<br />The Debut<br />Dune III<br />Wewulf<br />The Further Mis-Adventures of Cliff Booth</p>
         <p>Director<br />Christian Mungiu, Fjord<br />Javiers, La Bola Negra<br />Los Jovis, La Bola Begra</p>
         <p>Actor<br />Sebastien Stan, Fjord<br />Cho Yeo-jong, Possible Love</p>
       `,
@@ -467,6 +523,11 @@ describe("professional ingestion adapters", () => {
       { film: "The Debut", people: [], raw: "The Debut" },
       { film: "Dune: Part Three", people: [], raw: "Dune III" },
       { film: "Werwulf", people: [], raw: "Wewulf" },
+      {
+        film: "The Adventures of Cliff Booth",
+        people: [],
+        raw: "The Further Mis-Adventures of Cliff Booth",
+      },
       {
         film: "Fjord",
         people: ["Cristian Mungiu"],
@@ -500,6 +561,7 @@ describe("professional ingestion adapters", () => {
       `
         <link rel="canonical" href="https://awardsradar.com/best-actor/" />
         <h1>BEST ACTOR</h1>
+        <p>1. Editorial example that must not be ranked</p>
         <p>2027 Oscar Predictions</p>
         <p>Updated July 20th, 2026</p>
         <p>1. Tom Cruise – Digger</p>
@@ -697,6 +759,7 @@ describe("professional ingestion adapters", () => {
     const batch = parseMidnightCriticsFixture(
       `
         <link rel="canonical" href="https://example.com/consensus" />
+        <h2>BEST PICTURE</h2><p>1. Editorial example</p>
         <h1>2027 Oscar Predictions</h1>
         <h2>BEST PICTURE</h2><p>1. The Odyssey- ALL</p>
         <h2>BEST ACTRESS</h2>
@@ -726,6 +789,9 @@ describe("professional ingestion adapters", () => {
           <h2>BEST PICTURE</h2>
           <p>1. The Odyssey<br />2. Digger</p>
           <h2>BEST DIRECTOR</h2>
+          <p>1. Editorial example that must not be ranked</p>
+          <p>Commentary between prediction blocks.</p>
+          <h2>BEST DIRECTOR</h2>
           <p>1. Christopher Nolan – The Odyssey<br />
           2. Alejandro G. Iñárritu – Digger</p>
         </article>
@@ -750,15 +816,16 @@ describe("professional ingestion adapters", () => {
   });
 
   it("treats The Ringer as selection-only", async () => {
-    const batch = parseRingerSelectionFixture(
-      await fixture("ringer-best-picture.html"),
-      {
-        connectorId: "ringer-best-picture",
-        capturedAt,
-        endpointUrl: "https://www.theringer.com/fixture/oscars-2027",
-        seasonId: "oscars-2027",
-      },
+    const html = (await fixture("ringer-best-picture.html")).replace(
+      "<article>",
+      "<article><p>La Bola Negra is mentioned in Best Picture analysis.</p>",
     );
+    const batch = parseRingerSelectionFixture(html, {
+      connectorId: "ringer-best-picture",
+      capturedAt,
+      endpointUrl: "https://www.theringer.com/fixture/oscars-2027",
+      seasonId: "oscars-2027",
+    });
     expect(batch.publications[0].observations).toHaveLength(4);
     expect(batch.publications[0].observations[0]).toEqual(
       expect.objectContaining({
@@ -766,6 +833,31 @@ describe("professional ingestion adapters", () => {
         participates: true,
       }),
     );
+  });
+
+  it("uses the last structured Next Best Picture section", () => {
+    const batch = parseNextBestPictureFixture(
+      `
+        <link rel="canonical" href="https://predictions.nextbestpicture.com/oscars" />
+        <h2>Best Picture</h2>
+        <p>1<br />1<br />Editorial example<br />Commentary</p>
+        <h2>Best Picture</h2>
+        <p>Aug 29<br />1<br />1<br />The Odyssey<br />Universal | Christopher Nolan</p>
+      `,
+      {
+        connectorId: "next-best-picture-predictions",
+        capturedAt,
+        endpointUrl: "https://predictions.nextbestpicture.com/oscars",
+        seasonId: "oscars-2027",
+      },
+    );
+
+    expect(batch.publications[0].observations).toEqual([
+      expect.objectContaining({
+        categoryId: "best-picture",
+        filmSubject: "The Odyssey",
+      }),
+    ]);
   });
 
   it("fails loudly when a source changes to unrecognized HTML", () => {
@@ -1105,24 +1197,22 @@ describe("professional ingestion adapters", () => {
       ],
     };
     const first = await prepareBatch(mutable, films);
-    const second = await prepareBatch(
-      {
-        ...mutable,
-        publications: [
-          {
-            ...mutable.publications[0],
-            originalData: { ranking: ["Digger", "The Odyssey"] },
-            observations: [...mutable.publications[0].observations]
-              .reverse()
-              .map((observation, index) => ({
-                ...observation,
-                originalValue: { rank: index + 1, list_length: 2 },
-              })),
-          },
-        ],
-      },
-      films,
-    );
+    const changed = {
+      ...mutable,
+      publications: [
+        {
+          ...mutable.publications[0],
+          originalData: { ranking: ["Digger", "The Odyssey"] },
+          observations: [...mutable.publications[0].observations]
+            .reverse()
+            .map((observation, index) => ({
+              ...observation,
+              originalValue: { rank: index + 1, list_length: 2 },
+            })),
+        },
+      ],
+    };
+    const second = await prepareBatch(changed, films);
     const parserRevision = await prepareBatch(
       {
         ...mutable,
@@ -1162,6 +1252,21 @@ describe("professional ingestion adapters", () => {
         (observation: { dedupeKey: string }) => observation.dedupeKey,
       ),
     );
+
+    const repository = new MemoryRepository();
+    await persistBatch({
+      batch: mutable,
+      repository,
+      runId: await repository.beginRun({ connectorId: mutable.connectorId }),
+    });
+    await persistBatch({
+      batch: changed,
+      repository,
+      runId: await repository.beginRun({ connectorId: changed.connectorId }),
+    });
+    expect(repository.publications).toHaveLength(2);
+    expect(repository.captures).toHaveLength(2);
+    expect(repository.observations).toHaveLength(4);
   });
 
   it("continues with the next connector after an isolated failure", async () => {
