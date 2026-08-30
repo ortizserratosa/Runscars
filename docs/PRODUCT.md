@@ -190,9 +190,15 @@ publican cuando alcanzan la cobertura aprobada.
 
 1. El usuario inicia sesión.
 2. Elige temporada y categoría.
-3. Ordena candidaturas.
-4. Guarda el ranking como público o privado.
-5. Puede modificarlo o eliminarlo.
+3. Añade y ordena como máximo tantas posiciones como plazas oficiales de
+   nominación tenga la categoría más una alternativa.
+4. Puede incluir una única película o persona no rastreada por Runscars, pero la
+   entrada manual exige un enlace de TMDB. Para películas se comprueba un estreno
+   teatral en EE. UU. dentro del año de elegibilidad; para personas se comprueban
+   además el enlace de la película elegible y su crédito en ella. La interfaz la
+   identifica como entrada manual y nunca la mezcla con las fuentes.
+5. Guarda el ranking como público o privado.
+6. Puede modificarlo o eliminarlo.
 
 ### R6. Descubrir y compartir quinielas
 

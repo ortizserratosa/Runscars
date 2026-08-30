@@ -11,13 +11,38 @@ function safeReturnPath(value: string | null) {
   return value;
 }
 
+function requestOrigin(request: Request, requestUrl: URL) {
+  const forwardedProtocol = request.headers
+    .get("x-forwarded-proto")
+    ?.split(",", 1)[0]
+    ?.trim();
+  const protocol =
+    forwardedProtocol === "http" || forwardedProtocol === "https"
+      ? forwardedProtocol
+      : requestUrl.protocol.slice(0, -1);
+  const forwardedHost = request.headers
+    .get("x-forwarded-host")
+    ?.split(",", 1)[0]
+    ?.trim();
+  const host = forwardedHost ?? request.headers.get("host") ?? requestUrl.host;
+
+  try {
+    return new URL(`${protocol}://${host}`).origin;
+  } catch {
+    return requestUrl.origin;
+  }
+}
+
 export function GET(request: Request) {
   const requestUrl = new URL(request.url);
   const requestedLocale = requestUrl.searchParams.get("locale");
   const locale = isLocale(requestedLocale) ? requestedLocale : DEFAULT_LOCALE;
   const returnTo = safeReturnPath(requestUrl.searchParams.get("returnTo"));
   const response = NextResponse.redirect(
-    new URL(localizedPath(returnTo, locale), requestUrl.origin),
+    new URL(
+      localizedPath(returnTo, locale),
+      requestOrigin(request, requestUrl),
+    ),
   );
   response.cookies.set(LOCALE_COOKIE, locale, {
     httpOnly: true,

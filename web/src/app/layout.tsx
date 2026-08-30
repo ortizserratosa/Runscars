@@ -38,6 +38,7 @@ export async function generateMetadata(): Promise<Metadata> {
     ? "Runscars · The road to the Oscars, backed by data."
     : "Runscars · La carrera a los Oscar, datos en mano.";
   const internalPath = stripLocalePrefix(visiblePath);
+  const socialImageUrl = new URL("/og.png?v=20260830", origin).toString();
   const allowIndexing = process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true";
 
   return {
@@ -59,6 +60,9 @@ export async function generateMetadata(): Promise<Metadata> {
       index: allowIndexing,
       follow: allowIndexing,
     },
+    verification: {
+      google: "-DG9WuRmmS-JvJT-S6igJwvwDLONugSKILf30hgmOC0",
+    },
     openGraph: {
       title: socialTitle,
       description,
@@ -67,7 +71,7 @@ export async function generateMetadata(): Promise<Metadata> {
       alternateLocale: locale === "en" ? ["es_ES"] : ["en_GB"],
       images: [
         {
-          url: new URL("/og.png", origin).toString(),
+          url: socialImageUrl,
           width: 1680,
           height: 945,
           alt: socialTitle,
@@ -78,7 +82,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title: socialTitle,
       description,
-      images: [new URL("/og.png", origin).toString()],
+      images: [socialImageUrl],
     },
     manifest: "/manifest.webmanifest",
   };

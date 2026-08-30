@@ -35,8 +35,15 @@ type CandidateRow = {
 };
 
 type EntryRow = {
+  id: string;
   ranking_id: string;
-  category_candidate_id: string;
+  category_candidate_id: string | null;
+  custom_label: string | null;
+  custom_kind: "movie" | "person" | null;
+  tmdb_url: string | null;
+  qualifying_movie_tmdb_url: string | null;
+  us_theatrical_release_date: string | null;
+  tmdb_verified_at: string | null;
   position: number;
 };
 
@@ -49,6 +56,11 @@ export type PublicRankingEntry = {
   filmId: string | null;
   filmTitle: string | null;
   filmState: FilmWatchState;
+  isCustom: boolean;
+  tmdbUrl: string | null;
+  qualifyingMovieTmdbUrl: string | null;
+  usTheatricalReleaseDate: string | null;
+  tmdbVerifiedAt: string | null;
 };
 
 export type PublicRankingSummary = {
@@ -125,12 +137,18 @@ async function rankingEntries(
   }
   const { data: rawEntries } = await supabase
     .from("user_ranking_entries")
-    .select("ranking_id,category_candidate_id,position")
+    .select(
+      "id,ranking_id,category_candidate_id,custom_label,custom_kind,tmdb_url,qualifying_movie_tmdb_url,us_theatrical_release_date,tmdb_verified_at,position",
+    )
     .in("ranking_id", rankingIds)
     .order("position");
   const entries = (rawEntries ?? []) as EntryRow[];
   const candidateIds = [
-    ...new Set(entries.map((entry) => entry.category_candidate_id)),
+    ...new Set(
+      entries
+        .map((entry) => entry.category_candidate_id)
+        .filter((candidateId): candidateId is string => Boolean(candidateId)),
+    ),
   ];
   const { data: rawCandidates } = candidateIds.length
     ? await supabase
@@ -167,18 +185,29 @@ function buildEntries(
   states: Map<string, FilmWatchState>,
 ) {
   return entries.map((entry) => {
-    const candidate = candidates.get(entry.category_candidate_id);
+    const candidate = entry.category_candidate_id
+      ? candidates.get(entry.category_candidate_id)
+      : undefined;
     const film = candidate?.film_id ? films.get(candidate.film_id) : undefined;
     const filmState = candidate?.film_id
       ? (states.get(candidate.film_id) ?? "unmarked")
       : "unmarked";
     return {
-      id: entry.category_candidate_id,
+      id: entry.id,
       position: entry.position,
-      label: candidate?.display_label ?? entry.category_candidate_id,
+      label:
+        entry.custom_label ??
+        candidate?.display_label ??
+        entry.category_candidate_id ??
+        "Entrada manual",
       filmId: candidate?.film_id ?? null,
       filmTitle: film?.title ?? null,
       filmState,
+      isCustom: entry.custom_label !== null,
+      tmdbUrl: entry.tmdb_url,
+      qualifyingMovieTmdbUrl: entry.qualifying_movie_tmdb_url,
+      usTheatricalReleaseDate: entry.us_theatrical_release_date,
+      tmdbVerifiedAt: entry.tmdb_verified_at,
     } satisfies PublicRankingEntry;
   });
 }

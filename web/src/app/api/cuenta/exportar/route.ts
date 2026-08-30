@@ -24,7 +24,7 @@ export async function GET() {
     supabase
       .from("user_ranking_entries")
       .select(
-        "ranking_id,season_id,category_id,category_candidate_id,position,created_at",
+        "id,ranking_id,season_id,category_id,category_candidate_id,custom_label,custom_kind,tmdb_movie_id,tmdb_person_id,qualifying_movie_tmdb_id,tmdb_url,qualifying_movie_tmdb_url,us_theatrical_release_date,tmdb_release_data,tmdb_verified_at,position,created_at",
       )
       .eq("user_id", user.id)
       .order("position"),

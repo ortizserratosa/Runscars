@@ -5,6 +5,7 @@ import {
   LOCALE_COOKIE,
   LOCALE_HEADER,
   PATH_HEADER,
+  SEARCH_HEADER,
   stripLocalePrefix,
 } from "./lib/i18n/config";
 import { updateSupabaseSessionWithResponse } from "./lib/supabase/proxy";
@@ -38,6 +39,7 @@ export async function proxy(request: NextRequest) {
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set(LOCALE_HEADER, locale);
   requestHeaders.set(PATH_HEADER, pathname);
+  requestHeaders.set(SEARCH_HEADER, request.nextUrl.search);
 
   const rewriteUrl = pathLocale === "en" ? request.nextUrl.clone() : undefined;
   if (rewriteUrl) rewriteUrl.pathname = stripLocalePrefix(pathname);

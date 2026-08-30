@@ -13,6 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
     : "localhost:3000";
   const protocol = requestHeaders.get("x-forwarded-proto") === "https" ? "https" : "http";
   const origin = `${protocol}://${safeHost}`;
+  const socialImageUrl = new URL("/og.png?v=20260830", origin).toString();
   const description =
     "Prototipo navegable para seguir crítica, predicciones y rankings de la carrera a los Oscar sin mezclar señales.";
 
@@ -24,23 +25,23 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     description,
     openGraph: {
-      title: "Runscars · La carrera, con los recibos.",
+      title: "Runscars · La carrera a los Oscar, datos en mano.",
       description,
       type: "website",
       images: [
         {
-          url: new URL("/og.png", origin).toString(),
+          url: socialImageUrl,
           width: 1680,
           height: 945,
-          alt: "Runscars · La carrera, con los recibos.",
+          alt: "Runscars · La carrera a los Oscar, datos en mano.",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "Runscars · La carrera, con los recibos.",
+      title: "Runscars · La carrera a los Oscar, datos en mano.",
       description,
-      images: [new URL("/og.png", origin).toString()],
+      images: [socialImageUrl],
     },
   };
 }

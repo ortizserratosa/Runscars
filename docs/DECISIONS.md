@@ -66,6 +66,8 @@ pasado para ocultar cambios de criterio.
 | D-046 | URL pública inicial y protección de deployments | Reemplazada |
 | D-047 | Metascore atribuido en fichas y retirada de la pestaña Crítica | Aceptada |
 | D-048 | Dominio propio como URL pública canónica | Aceptada |
+| D-049 | Quinielas acotadas con una alternativa y una entrada manual | Aceptada |
+| D-050 | Verificación TMDB de entradas manuales | Aceptada |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -854,4 +856,44 @@ ejemplos manuales de nominaciones y ganador coincidieron con
   siendo el endpoint de Supabase, por lo que este cambio no exige rotar el
   Client ID ni el Client Secret.
 - **Operación:** Name.com conserva la autoridad DNS y Vercel gestiona el
-  certificado TLS. Esta decisión reemplaza D-046.
+  certificado TLS. Google Search Console verifica la propiedad del dominio para
+  la marca OAuth. Esta decisión reemplaza D-046.
+
+## D-049 · Quinielas acotadas con una alternativa y una entrada manual
+
+- **Fecha:** 2026-08-29
+- **Estado:** Aceptada
+- **Decisión:** el máximo de posiciones de un ranking personal es el número de
+  plazas oficiales de nominación de su temporada y categoría más una
+  alternativa. En las categorías públicas actuales son 11 posiciones para
+  Mejor película y 6 para las demás.
+- **Entrada manual:** cada ranking puede incluir como máximo una película o
+  persona no rastreada por Runscars. La entrada debe superar la comprobación
+  TMDB definida en D-050.
+- **Separación:** la entrada manual y el ranking personal completo no modifican
+  las fuentes, candidaturas, puntos ni posiciones del consenso profesional.
+  D-014 permanece como `Propuesta`: esta decisión no crea un agregado
+  comunitario.
+- **Persistencia:** el número de plazas se configura por temporada y categoría;
+  el límite y la unicidad de la entrada manual se validan en la operación
+  atómica de guardado y en la base de datos.
+
+## D-050 · Verificación TMDB de entradas manuales
+
+- **Fecha:** 2026-08-30
+- **Estado:** Aceptada
+- **Decisión:** una entrada manual de película exige un enlace público de TMDB y
+  una fecha de estreno teatral en `US` de tipo limitado (`2`) o general (`3`)
+  cuyo año coincida con `seasons.eligibility_year`. En categorías de personas
+  exige un enlace TMDB de persona, un enlace TMDB de película elegible y que la
+  persona figure en los créditos de esa película; la misma regla de estreno se
+  aplica a la película.
+- **Persistencia:** se guardan los IDs, enlaces canónicos, etiqueta devuelta por
+  TMDB, fecha de estreno seleccionada, objeto original de la fecha y momento de
+  comprobación. El token solo se usa en servidor y las pruebas usan fixtures.
+- **Presentación:** la entrada sigue marcada como manual y verificada por TMDB.
+  TMDB demuestra identidad, crédito y estreno registrado, pero no certifica por
+  sí solo la elegibilidad oficial de los Oscar ni participa en el consenso
+  profesional.
+- **Motivo:** reducir trolling y errores de identidad sin convertir la base de
+  metadatos en autoridad de candidaturas o resultados.

@@ -128,6 +128,11 @@ test("exposes dynamic source receipts", async ({ page }) => {
   await expect(
     page.getByRole("heading", { level: 1, name: /Las fuentes/ }),
   ).toBeVisible();
+  const sourceCard = page.locator(".source-index-card").first();
+  await expect(sourceCard.getByRole("link")).toBeVisible();
+  await expect(sourceCard).toContainText("Última actualización");
+  await expect(page.locator(".source-health-chip")).toHaveCount(0);
+  await expect(page.locator(".source-index-card dl")).toHaveCount(0);
   await page
     .getByRole("link", { name: /AwardsWatch/ })
     .first()
@@ -382,6 +387,10 @@ test("publishes equivalent English routes and language metadata", async ({
     "href",
     "http://127.0.0.1:3000",
   );
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
+    "content",
+    /\/og\.png\?v=20260830$/,
+  );
 
   await page.goto("/en/temporadas/2027/mejor-pelicula");
   await expect(
@@ -412,6 +421,18 @@ test("switches language while preserving the current route", async ({
   await page.getByRole("link", { name: "Cambiar a español" }).click();
   await expect(page).toHaveURL(/\/fuentes$/);
   await expect(page.locator("html")).toHaveAttribute("lang", "es-ES");
+
+  await page.goto(
+    "/comunidad?season=oscars-2027&q=ana&category=mejor-pelicula",
+  );
+  await page.getByRole("link", { name: "Switch to English" }).click();
+  await expect(page).toHaveURL(
+    /\/en\/comunidad\?season=oscars-2027&q=ana&category=mejor-pelicula$/,
+  );
+  await page.getByRole("link", { name: "Cambiar a español" }).click();
+  await expect(page).toHaveURL(
+    /\/comunidad\?season=oscars-2027&q=ana&category=mejor-pelicula$/,
+  );
 });
 
 test("serves launch SEO and security controls", async ({ request }) => {

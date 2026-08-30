@@ -1470,18 +1470,21 @@ export type Database = {
           category_id: string;
           is_enabled: boolean;
           created_at: string;
+          nominee_slots: number;
         };
         Insert: {
           season_id: string;
           category_id: string;
           is_enabled?: boolean;
           created_at?: string;
+          nominee_slots?: number;
         };
         Update: {
           season_id?: string;
           category_id?: string;
           is_enabled?: boolean;
           created_at?: string;
+          nominee_slots?: number;
         };
         Relationships: [
           {
@@ -2096,26 +2099,26 @@ export type Database = {
         Row: {
           user_id: string;
           film_id: string;
-          status: "watched" | "not_watched";
           watched_at: string | null;
           created_at: string;
           updated_at: string;
+          status: string;
         };
         Insert: {
           user_id: string;
           film_id: string;
-          status?: "watched" | "not_watched";
           watched_at?: string | null;
           created_at?: string;
           updated_at?: string;
+          status?: string;
         };
         Update: {
           user_id?: string;
           film_id?: string;
-          status?: "watched" | "not_watched";
           watched_at?: string | null;
           created_at?: string;
           updated_at?: string;
+          status?: string;
         };
         Relationships: [
           {
@@ -2178,27 +2181,60 @@ export type Database = {
           user_id: string;
           season_id: string;
           category_id: string;
-          category_candidate_id: string;
+          category_candidate_id: string | null;
           position: number;
           created_at: string;
+          id: string;
+          custom_label: string | null;
+          custom_kind: string | null;
+          tmdb_movie_id: number | null;
+          tmdb_person_id: number | null;
+          qualifying_movie_tmdb_id: number | null;
+          tmdb_url: string | null;
+          qualifying_movie_tmdb_url: string | null;
+          us_theatrical_release_date: string | null;
+          tmdb_release_data: Json | null;
+          tmdb_verified_at: string | null;
         };
         Insert: {
           ranking_id: string;
           user_id: string;
           season_id: string;
           category_id: string;
-          category_candidate_id: string;
+          category_candidate_id?: string | null;
           position: number;
           created_at?: string;
+          id?: string;
+          custom_label?: string | null;
+          custom_kind?: string | null;
+          tmdb_movie_id?: number | null;
+          tmdb_person_id?: number | null;
+          qualifying_movie_tmdb_id?: number | null;
+          tmdb_url?: string | null;
+          qualifying_movie_tmdb_url?: string | null;
+          us_theatrical_release_date?: string | null;
+          tmdb_release_data?: Json | null;
+          tmdb_verified_at?: string | null;
         };
         Update: {
           ranking_id?: string;
           user_id?: string;
           season_id?: string;
           category_id?: string;
-          category_candidate_id?: string;
+          category_candidate_id?: string | null;
           position?: number;
           created_at?: string;
+          id?: string;
+          custom_label?: string | null;
+          custom_kind?: string | null;
+          tmdb_movie_id?: number | null;
+          tmdb_person_id?: number | null;
+          qualifying_movie_tmdb_id?: number | null;
+          tmdb_url?: string | null;
+          qualifying_movie_tmdb_url?: string | null;
+          us_theatrical_release_date?: string | null;
+          tmdb_release_data?: Json | null;
+          tmdb_verified_at?: string | null;
         };
         Relationships: [
           {
@@ -2454,6 +2490,8 @@ export type Database = {
           ranking_season_id: string;
           ranking_category_id: string;
           ranking_candidate_ids: string[];
+          ranking_custom_labels: string[];
+          ranking_custom_metadata: Json[];
           ranking_is_public: boolean;
         };
         Returns: string;

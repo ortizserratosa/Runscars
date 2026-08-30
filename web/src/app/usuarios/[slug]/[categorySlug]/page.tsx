@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { categoryBySlug } from "../../../../lib/categories/config";
 import { localizedCategoryName } from "../../../../lib/i18n/categories";
-import { localizedPath } from "../../../../lib/i18n/config";
+import { localeTag, localizedPath } from "../../../../lib/i18n/config";
 import { getRequestLocale } from "../../../../lib/i18n/server";
 import {
   getPublicRanking,
@@ -16,6 +16,13 @@ type PublicRankingPageProps = {
 };
 
 export const dynamic = "force-dynamic";
+
+function formatReleaseDate(value: string, locale: "es" | "en") {
+  const [year, month, day] = value.split("-").map(Number);
+  return new Intl.DateTimeFormat(localeTag(locale), {
+    dateStyle: "medium",
+  }).format(new Date(year, month - 1, day));
+}
 
 async function loadRanking({ params }: PublicRankingPageProps) {
   const { slug, categorySlug } = await params;
@@ -160,6 +167,44 @@ export default async function PublicRankingPage({
                   <span className={`watch-state ${entry.filmState}`}>
                     {labels[entry.filmState]}
                   </span>
+                ) : null}
+                {entry.isCustom ? (
+                  <>
+                    <span className="ranking-custom-badge">
+                      {en
+                        ? "Not tracked by Runscars · TMDB verified"
+                        : "No rastreado por Runscars · TMDB verificado"}
+                    </span>
+                    <small className="ranking-custom-meta">
+                      {entry.usTheatricalReleaseDate
+                        ? `${en ? "US theatrical release" : "Estreno en salas de EE. UU."}: ${formatReleaseDate(entry.usTheatricalReleaseDate, locale)}`
+                        : null}
+                      {entry.tmdbUrl ? (
+                        <>
+                          {" · "}
+                          <a
+                            href={entry.tmdbUrl}
+                            rel="noreferrer"
+                            target="_blank"
+                          >
+                            TMDB ↗
+                          </a>
+                        </>
+                      ) : null}
+                      {entry.qualifyingMovieTmdbUrl ? (
+                        <>
+                          {" · "}
+                          <a
+                            href={entry.qualifyingMovieTmdbUrl}
+                            rel="noreferrer"
+                            target="_blank"
+                          >
+                            {en ? "Qualifying film ↗" : "Película elegible ↗"}
+                          </a>
+                        </>
+                      ) : null}
+                    </small>
+                  </>
                 ) : null}
               </span>
               <span className="public-ranking-label">{entry.label}</span>

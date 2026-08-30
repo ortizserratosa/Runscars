@@ -30,7 +30,7 @@ test("renders the Runscars home without starter metadata", async () => {
   const html = await response.text();
   assert.match(html, /RUNSCARS/);
   assert.match(html, /La carrera/);
-  assert.match(html, /con los recibos/);
+  assert.match(html, /datos en mano/);
   assert.match(html, /The Odyssey/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|react-loading-skeleton/i);
 });

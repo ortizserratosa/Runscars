@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { requireCurrentUser } from "../../lib/auth/session";
 import {
-  parseCandidateIds,
+  parseRankingEntries,
   parseFilmStateUpdates,
   filmWatchStateSchema,
   profileSchema,
@@ -13,6 +13,11 @@ import {
 } from "../../lib/community/validation";
 import { createSupabaseAdminClient } from "../../lib/supabase/server";
 import { isLocale, localizedPath, type Locale } from "../../lib/i18n/config";
+import {
+  ManualTmdbVerificationError,
+  manualTmdbErrorMessage,
+  verifyManualRankingEntry,
+} from "../../lib/tmdb/manual-verification";
 
 export type CommunityFormState = {
   message: string;
@@ -33,23 +38,87 @@ export async function saveRankingAction(
   const fields = rankingSchema.safeParse({
     seasonId: formData.get("seasonId"),
     categoryId: formData.get("categoryId"),
-    candidateIds: parseCandidateIds(formData.get("candidateIds")),
+    entries: parseRankingEntries(formData.get("rankingEntries")),
     isPublic: formData.get("isPublic") === "on",
   });
   if (!fields.success) {
     return {
       message: en
-        ? "The ranking must contain between 1 and 50 unique candidates."
-        : "El ranking debe contener entre 1 y 50 candidaturas sin repetir.",
+        ? "Check the category limit, duplicate candidates, and the single manual entry."
+        : "Revisa el límite de la categoría, las candidaturas repetidas y la única entrada manual.",
       tone: "error",
     };
   }
 
   const { supabase, user } = await requireCurrentUser();
+  const manualEntries = fields.data.entries.filter(
+    (entry) => entry.kind === "custom",
+  );
+  const manualVerifications = new Map<
+    number,
+    Awaited<ReturnType<typeof verifyManualRankingEntry>>
+  >();
+  if (manualEntries.length) {
+    const { data: season, error: seasonError } = await supabase
+      .from("seasons")
+      .select("eligibility_year")
+      .eq("id", fields.data.seasonId)
+      .maybeSingle();
+    if (seasonError || !season) {
+      return {
+        message: en
+          ? "We could not verify the season eligibility rules."
+          : "No hemos podido comprobar las reglas de elegibilidad de la temporada.",
+        tone: "error",
+      };
+    }
+    try {
+      const verifications = await Promise.all(
+        manualEntries.map((entry) =>
+          verifyManualRankingEntry({
+            categoryId: fields.data.categoryId,
+            tmdbUrl: entry.tmdbUrl,
+            qualifyingMovieTmdbUrl: entry.qualifyingMovieTmdbUrl,
+            eligibilityYear: season.eligibility_year,
+          }),
+        ),
+      );
+      manualEntries.forEach((_, index) => {
+        manualVerifications.set(index, verifications[index]);
+      });
+    } catch (error) {
+      const code =
+        error instanceof ManualTmdbVerificationError
+          ? error.code
+          : "tmdb_unavailable";
+      return {
+        message: manualTmdbErrorMessage(code, locale),
+        tone: "error",
+      };
+    }
+  }
+
+  let manualIndex = 0;
+  const verifiedEntries = fields.data.entries.map((entry) => {
+    if (entry.kind !== "custom") return null;
+    const verification = manualVerifications.get(manualIndex);
+    manualIndex += 1;
+    return verification ?? null;
+  });
   const { error } = await supabase.rpc("save_my_ranking", {
     ranking_season_id: fields.data.seasonId,
     ranking_category_id: fields.data.categoryId,
-    ranking_candidate_ids: fields.data.candidateIds,
+    ranking_candidate_ids: fields.data.entries.map((entry) =>
+      entry.kind === "candidate" ? entry.candidateId : "",
+    ),
+    ranking_custom_labels: fields.data.entries.map((entry, index) =>
+      entry.kind === "custom"
+        ? (verifiedEntries[index]?.label ?? entry.label)
+        : "",
+    ),
+    ranking_custom_metadata: verifiedEntries.map(
+      (verification) => verification ?? {},
+    ),
     ranking_is_public: fields.data.isPublic,
   });
   if (error) {

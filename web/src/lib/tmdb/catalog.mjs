@@ -320,6 +320,10 @@ export class TmdbClient {
     });
   }
 
+  fetchMovieReleaseDates(tmdbId) {
+    return this.request(`/movie/${tmdbId}/release_dates`);
+  }
+
   fetchPerson(tmdbId, locale) {
     return this.request(`/person/${tmdbId}`, {
       append_to_response: "external_ids",

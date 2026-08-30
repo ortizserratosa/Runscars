@@ -227,6 +227,8 @@ ${tableTypes}
           ranking_season_id: string;
           ranking_category_id: string;
           ranking_candidate_ids: string[];
+          ranking_custom_labels: string[];
+          ranking_custom_metadata: Json[];
           ranking_is_public: boolean;
         };
         Returns: string;

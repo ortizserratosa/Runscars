@@ -2,24 +2,27 @@ import { describe, expect, it } from "vitest";
 import {
   communityFiltersSchema,
   filmWatchStateSchema,
-  parseCandidateIds,
+  parseRankingEntries,
   parseCommunityFilters,
   rankingSchema,
 } from "../../src/lib/community/validation";
 
 describe("community input contracts", () => {
   it("accepts an explicit partial ranking without inferring missing positions", () => {
-    const candidateIds = parseCandidateIds(
-      JSON.stringify(["candidate-one", "candidate-three"]),
+    const entries = parseRankingEntries(
+      JSON.stringify([
+        { kind: "candidate", candidateId: "candidate-one" },
+        { kind: "candidate", candidateId: "candidate-three" },
+      ]),
     );
     const ranking = rankingSchema.parse({
       seasonId: "oscars-2027",
       categoryId: "best-picture",
-      candidateIds,
+      entries,
       isPublic: false,
     });
 
-    expect(ranking.candidateIds).toEqual(["candidate-one", "candidate-three"]);
+    expect(ranking.entries).toEqual(entries);
   });
 
   it("rejects repeated candidates and malformed ranking payloads", () => {
@@ -27,11 +30,48 @@ describe("community input contracts", () => {
       rankingSchema.safeParse({
         seasonId: "oscars-2027",
         categoryId: "best-picture",
-        candidateIds: ["candidate-one", "candidate-one"],
+        entries: [
+          { kind: "candidate", candidateId: "candidate-one" },
+          { kind: "candidate", candidateId: "candidate-one" },
+        ],
         isPublic: true,
       }).success,
     ).toBe(false);
-    expect(parseCandidateIds("{not-json")).toEqual([]);
+    expect(parseRankingEntries("{not-json")).toEqual([]);
+  });
+
+  it("enforces nomination slots plus one alternate and one manual entry", () => {
+    const bestPictureEntries = Array.from({ length: 11 }, (_, index) => ({
+      kind: "candidate" as const,
+      candidateId: `candidate-${index + 1}`,
+    }));
+    expect(
+      rankingSchema.safeParse({
+        seasonId: "oscars-2027",
+        categoryId: "best-picture",
+        entries: bestPictureEntries,
+        isPublic: false,
+      }).success,
+    ).toBe(true);
+    expect(
+      rankingSchema.safeParse({
+        seasonId: "oscars-2027",
+        categoryId: "actor",
+        entries: bestPictureEntries.slice(0, 7),
+        isPublic: false,
+      }).success,
+    ).toBe(false);
+    expect(
+      rankingSchema.safeParse({
+        seasonId: "oscars-2027",
+        categoryId: "actor",
+        entries: [
+          { kind: "custom", label: "Actor fuera de seguimiento" },
+          { kind: "custom", label: "Segundo actor manual" },
+        ],
+        isPublic: false,
+      }).success,
+    ).toBe(false);
   });
 
   it("accepts the three explicit film watch states", () => {

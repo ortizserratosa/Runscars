@@ -95,6 +95,8 @@ try {
     ranking_season_id: "oscars-2027",
     ranking_category_id: "best-picture",
     ranking_candidate_ids: [candidate.id],
+    ranking_custom_labels: [""],
+    ranking_custom_metadata: [{}],
     ranking_is_public: false,
   });
   if (rankingSave.error) throw rankingSave.error;

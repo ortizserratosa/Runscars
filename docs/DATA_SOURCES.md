@@ -169,9 +169,11 @@ conectores al final de la fase 5, no en el discovery.
 El primer conector quedó implementado en la fase 4:
 
 1. **TMDB API:** búsqueda y detalle de película/persona con token Bearer solo en
-   el importador; ID externo, snapshots locales de 180 días, imágenes,
-   atribución y correcciones auditables. La web no llama a TMDB durante una
-   visita y nunca importa sus votos como señal Oscar.
+   procesos de servidor; ID externo, snapshots locales de 180 días, imágenes,
+   atribución y correcciones auditables. El flujo de entradas manuales consulta
+   también `movie/{id}/release_dates` y acepta únicamente los tipos teatrales
+   limitados o generales de `US` dentro del año de elegibilidad. La web no
+   expone el token ni importa votos TMDB como señal Oscar.
 
 Prioridad para los primeros conectores profesionales de la fase 5:
 

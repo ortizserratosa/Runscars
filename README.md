@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="web/public/og.png" alt="Runscars · La carrera, con los recibos" width="1200">
+  <img src="web/public/og.png" alt="Runscars · La carrera a los Oscar, datos en mano" width="1200">
 </p>
 
 <h1 align="center">Runscars</h1>
 
 <p align="center">
-  <strong>La carrera a los Oscar, con los recibos.</strong><br>
+  <strong>La carrera a los Oscar, datos en mano.</strong><br>
   Predicciones profesionales, evolución y procedencia en un mismo lugar, sin
   convertirlas en una señal opaca.
 </p>

@@ -18,9 +18,9 @@ export default function Home() {
           <div className="hero-copy">
             <p className="kicker">Oscar 2027 · películas de 2026</p>
             <h1>
-              La carrera,
+              La carrera a los Oscar,
               <br />
-              <em>con los recibos.</em>
+              <em>datos en mano.</em>
             </h1>
             <p className="hero-intro">
               Sigue qué películas suben, quién las respalda y cómo cambia el

@@ -1371,6 +1371,7 @@ describe("versioned database foundation", () => {
         'oscars-2027',
         'best-picture',
         array['phase-8-the-odyssey'],
+        array[''],
         false
       );
       insert into public.user_film_states (user_id, film_id, status, watched_at)
@@ -1533,6 +1534,256 @@ describe("versioned database foundation", () => {
         where user_id = '11111111-1111-4111-8111-111111111111'
       `),
     ).rejects.toThrow();
+  });
+
+  it("limits personal rankings to nomination slots plus one alternate", async () => {
+    await database.exec(await readFile(seedPath, "utf8"));
+    await database.exec(`
+      insert into auth.users (id, email, raw_user_meta_data)
+      values (
+        '33333333-3333-4333-8333-333333333333',
+        'ranking-limits@example.test',
+        '{"display_name":"Ranking Limits"}'::jsonb
+      );
+
+      insert into public.category_candidates (
+        id,
+        season_id,
+        category_id,
+        work_title,
+        display_label,
+        identity_key
+      )
+      select
+        'limit-actor-' || candidate_number,
+        'oscars-2027',
+        'actor',
+        'Actor ' || candidate_number,
+        'Actor ' || candidate_number,
+        lpad(to_hex(100 + candidate_number), 64, '0')
+      from generate_series(1, 7) as candidate_number;
+
+      insert into public.category_candidates (
+        id,
+        season_id,
+        category_id,
+        work_title,
+        display_label,
+        identity_key
+      )
+      select
+        'limit-picture-' || candidate_number,
+        'oscars-2027',
+        'best-picture',
+        'Picture ' || candidate_number,
+        'Picture ' || candidate_number,
+        lpad(to_hex(200 + candidate_number), 64, '0')
+      from generate_series(1, 10) as candidate_number;
+
+      set role authenticated;
+      select set_config(
+        'request.jwt.claim.sub',
+        '33333333-3333-4333-8333-333333333333',
+        false
+      );
+
+      select public.save_my_ranking(
+        'oscars-2027',
+        'actor',
+        array[
+          'limit-actor-1',
+          'limit-actor-2',
+          'limit-actor-3',
+          'limit-actor-4',
+          'limit-actor-5',
+          ''
+        ],
+        array['', '', '', '', '', 'Actor manual'],
+        array[
+          '{}'::jsonb,
+          '{}'::jsonb,
+          '{}'::jsonb,
+          '{}'::jsonb,
+          '{}'::jsonb,
+          '{
+            "tmdbKind": "movie",
+            "label": "Actor manual",
+            "tmdbMovieId": 901,
+            "tmdbPersonId": null,
+            "qualifyingMovieTmdbId": null,
+            "tmdbUrl": "https://www.themoviedb.org/movie/901",
+            "qualifyingMovieTmdbUrl": null,
+            "usTheatricalReleaseDate": "2026-08-01",
+            "tmdbReleaseData": {"iso_3166_1": "US", "type": 3, "release_date": "2026-08-01"},
+            "tmdbVerifiedAt": "2026-08-30T12:00:00Z"
+          }'::jsonb
+        ],
+        false
+      );
+    `);
+
+    const actorRanking = await database.query<{
+      entries: number;
+      custom_entries: number;
+      manual_label: string;
+      manual_tmdb_url: string;
+      us_release_date: string;
+    }>(`
+      select
+        count(*)::int as entries,
+        count(*) filter (where custom_label is not null)::int as custom_entries,
+        max(custom_label) as manual_label,
+        max(tmdb_url) as manual_tmdb_url,
+        max(us_theatrical_release_date)::text as us_release_date
+      from public.user_ranking_entries
+      where user_id = '33333333-3333-4333-8333-333333333333'
+        and category_id = 'actor'
+    `);
+    expect(actorRanking.rows[0]).toEqual({
+      entries: 6,
+      custom_entries: 1,
+      manual_label: "Actor manual",
+      manual_tmdb_url: "https://www.themoviedb.org/movie/901",
+      us_release_date: "2026-08-01",
+    });
+
+    await expect(
+      database.exec(`
+        select public.save_my_ranking(
+          'oscars-2027',
+          'actor',
+          array[''],
+          array['Unverified manual'],
+          array['{}'::jsonb],
+          false
+        )
+      `),
+    ).rejects.toThrow(/verified TMDB metadata/);
+
+    await expect(
+      database.exec(`
+        select public.save_my_ranking(
+          'oscars-2027',
+          'actor',
+          array[
+            'limit-actor-1',
+            'limit-actor-2',
+            'limit-actor-3',
+            'limit-actor-4',
+            'limit-actor-5',
+            'limit-actor-6',
+            'limit-actor-7'
+          ],
+          array['', '', '', '', '', '', ''],
+          false
+        )
+      `),
+    ).rejects.toThrow(/category limit/);
+
+    await expect(
+      database.exec(`
+        select public.save_my_ranking(
+          'oscars-2027',
+          'actor',
+          array['', ''],
+          array['Primer actor manual', 'Segundo actor manual'],
+          array[
+            '{
+              "tmdbKind": "movie",
+              "label": "Primer actor manual",
+              "tmdbMovieId": 902,
+              "tmdbUrl": "https://www.themoviedb.org/movie/902",
+              "usTheatricalReleaseDate": "2026-08-01",
+              "tmdbReleaseData": {"iso_3166_1": "US", "type": 3, "release_date": "2026-08-01"},
+              "tmdbVerifiedAt": "2026-08-30T12:00:00Z"
+            }'::jsonb,
+            '{
+              "tmdbKind": "movie",
+              "label": "Segundo actor manual",
+              "tmdbMovieId": 903,
+              "tmdbUrl": "https://www.themoviedb.org/movie/903",
+              "usTheatricalReleaseDate": "2026-08-01",
+              "tmdbReleaseData": {"iso_3166_1": "US", "type": 3, "release_date": "2026-08-01"},
+              "tmdbVerifiedAt": "2026-08-30T12:00:00Z"
+            }'::jsonb
+          ],
+          false
+        )
+      `),
+    ).rejects.toThrow(/only one custom entry/);
+
+    await expect(
+      database.exec(`
+        insert into public.user_ranking_entries (
+          ranking_id,
+          user_id,
+          season_id,
+          category_id,
+          category_candidate_id,
+          position
+        )
+        select
+          id,
+          user_id,
+          season_id,
+          category_id,
+          'limit-actor-7',
+          7
+        from public.user_rankings
+        where user_id = '33333333-3333-4333-8333-333333333333'
+          and category_id = 'actor'
+      `),
+    ).rejects.toThrow(/category limit/);
+
+    await database.exec(`
+      select public.save_my_ranking(
+        'oscars-2027',
+        'best-picture',
+        array[
+          'limit-picture-1',
+          'limit-picture-2',
+          'limit-picture-3',
+          'limit-picture-4',
+          'limit-picture-5',
+          'limit-picture-6',
+          'limit-picture-7',
+          'limit-picture-8',
+          'limit-picture-9',
+          'limit-picture-10',
+          ''
+        ],
+        array['', '', '', '', '', '', '', '', '', '', 'Picture manual'],
+        array[
+          '{}'::jsonb,
+          '{}'::jsonb,
+          '{}'::jsonb,
+          '{}'::jsonb,
+          '{}'::jsonb,
+          '{}'::jsonb,
+          '{}'::jsonb,
+          '{}'::jsonb,
+          '{}'::jsonb,
+          '{}'::jsonb,
+          '{
+            "tmdbKind": "movie",
+            "label": "Picture manual",
+            "tmdbMovieId": 904,
+            "tmdbUrl": "https://www.themoviedb.org/movie/904",
+            "usTheatricalReleaseDate": "2026-08-01",
+            "tmdbReleaseData": {"iso_3166_1": "US", "type": 3, "release_date": "2026-08-01"},
+            "tmdbVerifiedAt": "2026-08-30T12:00:00Z"
+          }'::jsonb
+        ],
+        true
+      )
+    `);
+    const bestPicture = await database.query<{ entries: number }>(`
+      select count(*)::int as entries
+      from public.user_ranking_entries
+      where user_id = '33333333-3333-4333-8333-333333333333'
+        and category_id = 'best-picture'
+    `);
+    expect(bestPicture.rows[0]?.entries).toBe(11);
   });
 
   it("restricts editorial administration and keeps an immutable idempotent audit", async () => {

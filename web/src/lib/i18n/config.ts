@@ -6,6 +6,7 @@ export const DEFAULT_LOCALE: Locale = "es";
 export const LOCALE_COOKIE = "runscars-locale";
 export const LOCALE_HEADER = "x-runscars-locale";
 export const PATH_HEADER = "x-runscars-path";
+export const SEARCH_HEADER = "x-runscars-search";
 
 export function isLocale(value: string | null | undefined): value is Locale {
   return SUPPORTED_LOCALES.includes(value as Locale);

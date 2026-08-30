@@ -10,8 +10,8 @@ export async function generateMetadata(): Promise<Metadata> {
     title: locale === "en" ? "Sources" : "Fuentes",
     description:
       locale === "en"
-        ? "Active sources, publications and verification status."
-        : "Fuentes activas, publicaciones y estado de comprobación.",
+        ? "Sources, publications and latest updates."
+        : "Fuentes, publicaciones y últimas actualizaciones.",
   };
 }
 
@@ -44,14 +44,11 @@ export default async function SourcesPage() {
               <p className="kicker">
                 {isEnglish ? "Public provenance" : "Procedencia pública"}
               </p>
-              <h1>
-                {isEnglish ? "Sources, " : "Las fuentes, "}
-                <em>{isEnglish ? "with status." : "con estado."}</em>
-              </h1>
+              <h1>{isEnglish ? "Sources" : "Las fuentes"}</h1>
               <p>
                 {isEnglish
-                  ? "Publication, latest effective change and technical verification are different dates. You can review each one here."
-                  : "Publicación, último cambio efectivo y comprobación técnica son fechas distintas. Aquí puedes revisar cada una."}
+                  ? "Follow the latest update from each source."
+                  : "Sigue la última actualización de cada fuente."}
               </p>
             </div>
           </div>
@@ -61,14 +58,9 @@ export default async function SourcesPage() {
       <section className="page-shell sources-index-section">
         <div className="section-heading split-heading">
           <div>
-            <p className="section-index">
-              {isEnglish
-                ? "SOURCES WITH PUBLISHED DATA"
-                : "FUENTES CON DATOS PUBLICADOS"}
-            </p>
+            <p className="section-index">{isEnglish ? "SOURCES" : "FUENTES"}</p>
             <h2>
-              {sources.length}{" "}
-              {isEnglish ? "active sources" : "fuentes activas"}
+              {sources.length} {isEnglish ? "sources" : "fuentes"}
             </h2>
           </div>
           <p>
@@ -78,65 +70,27 @@ export default async function SourcesPage() {
           </p>
         </div>
         <div className="sources-index-grid">
-          {sources.map((source) => (
-            <Link
-              className="source-index-card"
-              href={localizedPath(`/fuentes/${source.id}`, locale)}
-              key={source.id}
-            >
-              <div className="source-index-card-heading">
-                <span className="source-logo-block" aria-hidden="true">
-                  {source.name
-                    .split(/\s+/)
-                    .slice(0, 2)
-                    .map((word) => word[0])
-                    .join("")
-                    .toUpperCase()}
-                </span>
-                <span className={`source-health-chip ${source.health}`}>
-                  {source.health === "ok"
-                    ? isEnglish
-                      ? "Verification successful"
-                      : "Comprobación correcta"
-                    : source.health === "failed"
-                      ? isEnglish
-                        ? "Recent issue"
-                        : "Incidencia reciente"
-                      : isEnglish
-                        ? "No automated verification"
-                        : "Sin comprobación automática"}
-                </span>
-              </div>
-              <h3>{source.name}</h3>
-              <p>
-                {source.activeCategoryCount}{" "}
-                {isEnglish
-                  ? "active professional categories"
-                  : "categorías profesionales activas"}
-              </p>
-              <dl>
-                <div>
-                  <dt>{isEnglish ? "Latest change" : "Último cambio"}</dt>
-                  <dd>{dateLabel(source.lastChangedAt, locale)}</dd>
-                </div>
-                <div>
-                  <dt>
-                    {isEnglish ? "Latest publication" : "Última publicación"}
-                  </dt>
-                  <dd>{dateLabel(source.lastPublishedAt, locale)}</dd>
-                </div>
-                <div>
-                  <dt>
-                    {isEnglish ? "Latest verification" : "Última comprobación"}
-                  </dt>
-                  <dd>{dateLabel(source.lastSuccessfulCheckAt, locale)}</dd>
-                </div>
-              </dl>
-              <strong>
-                {isEnglish ? "View provenance →" : "Ver procedencia →"}
-              </strong>
-            </Link>
-          ))}
+          {sources.map((source) => {
+            const latestUpdateAt =
+              source.lastChangedAt ?? source.lastPublishedAt;
+            return (
+              <article className="source-index-card" key={source.id}>
+                <h3>
+                  <Link href={localizedPath(`/fuentes/${source.id}`, locale)}>
+                    {source.name}
+                  </Link>
+                </h3>
+                <p className="source-index-card-update">
+                  <span>
+                    {isEnglish ? "Latest update" : "Última actualización"}
+                  </span>
+                  <time dateTime={latestUpdateAt ?? undefined}>
+                    {dateLabel(latestUpdateAt, locale)}
+                  </time>
+                </p>
+              </article>
+            );
+          })}
         </div>
       </section>
     </main>

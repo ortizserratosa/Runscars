@@ -46,6 +46,9 @@ extrapola, y los rankings individuales no forman un agregado público.
       dos UUID distintos;
 - [x] sustitución del estado de visionado simulado por persistencia autenticada;
 - [x] editor de rankings parciales en las categorías;
+- [x] límite por plazas de nominación más una alternativa y una entrada manual
+  no rastreada por ranking, con enlaces TMDB y estreno teatral estadounidense
+  comprobados en servidor;
 - [x] perfil propio, perfil público y controles de visibilidad;
 - [x] Comunidad pública, rutas canónicas y tarjeta social Open Graph;
 - [x] control de tres estados en ficha y editor de rankings;

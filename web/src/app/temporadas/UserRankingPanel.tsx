@@ -1,7 +1,14 @@
 import Link from "next/link";
 import { getCurrentUser } from "../../lib/auth/session";
-import type { PublicCategoryId } from "../../lib/categories/config";
-import type { FilmWatchState } from "../../lib/community/validation";
+import {
+  categoryById,
+  rankingEntryLimit,
+  type PublicCategoryId,
+} from "../../lib/categories/config";
+import type {
+  FilmWatchState,
+  RankingEntryInput,
+} from "../../lib/community/validation";
 import { localizedCategoryName } from "../../lib/i18n/categories";
 import { localizedPath } from "../../lib/i18n/config";
 import { getRequestLocale } from "../../lib/i18n/server";
@@ -21,6 +28,9 @@ export async function UserRankingPanel({
     getRequestLocale(),
   ]);
   const en = locale === "en";
+  const category = categoryById(categoryId);
+  const rankingLimit = rankingEntryLimit(categoryId);
+  if (!category || rankingLimit === null) return null;
   const localizedName = localizedCategoryName(locale, categoryId, categoryName);
   if (!current) {
     return (
@@ -77,7 +87,9 @@ export async function UserRankingPanel({
   const entriesResult = ranking
     ? await current.supabase
         .from("user_ranking_entries")
-        .select("category_candidate_id,position")
+        .select(
+          "category_candidate_id,custom_label,custom_kind,tmdb_url,qualifying_movie_tmdb_url,us_theatrical_release_date,tmdb_verified_at,position",
+        )
         .eq("ranking_id", ranking.id)
         .eq("user_id", current.user.id)
         .order("position")
@@ -88,7 +100,10 @@ export async function UserRankingPanel({
   );
   const missingCandidateIds = entries
     .map((entry) => entry.category_candidate_id)
-    .filter((candidateId) => !currentCandidateIds.has(candidateId));
+    .filter(
+      (candidateId): candidateId is string =>
+        Boolean(candidateId) && !currentCandidateIds.has(candidateId!),
+    );
   const missingCandidatesResult = missingCandidateIds.length
     ? await current.supabase
         .from("category_candidates")
@@ -122,6 +137,32 @@ export async function UserRankingPanel({
       state.film_id,
       state.status as FilmWatchState,
     ]),
+  );
+  const initialEntries = entries.reduce<RankingEntryInput[]>(
+    (result, entry) => {
+      if (entry.category_candidate_id) {
+        result.push({
+          kind: "candidate",
+          candidateId: entry.category_candidate_id,
+        });
+      } else if (
+        entry.custom_label &&
+        entry.tmdb_url &&
+        entry.us_theatrical_release_date &&
+        entry.tmdb_verified_at
+      ) {
+        result.push({
+          kind: "custom",
+          label: entry.custom_label,
+          tmdbUrl: entry.tmdb_url,
+          qualifyingMovieTmdbUrl: entry.qualifying_movie_tmdb_url ?? undefined,
+          usTheatricalReleaseDate: entry.us_theatrical_release_date,
+          tmdbVerifiedAt: entry.tmdb_verified_at,
+        });
+      }
+      return result;
+    },
+    [],
   );
 
   return (
@@ -161,28 +202,20 @@ export async function UserRankingPanel({
           </Link>
         </div>
       </div>
-      {editorCandidates.length ? (
-        <RankingEditor
-          candidates={editorCandidates}
-          categoryId={categoryId}
-          initialCandidateIds={entries.map(
-            (entry) => entry.category_candidate_id,
-          )}
-          initialIsPublic={ranking?.is_public ?? false}
-          initialFilmStates={filmIds.map((filmId) => ({
-            filmId,
-            state: statesByFilm.get(filmId) ?? "unmarked",
-          }))}
-          rankingExists={Boolean(ranking)}
-          locale={locale}
-        />
-      ) : (
-        <p>
-          {en
-            ? "There are no candidates available to rank."
-            : "No hay candidaturas disponibles para ordenar."}
-        </p>
-      )}
+      <RankingEditor
+        candidates={editorCandidates}
+        categoryId={categoryId}
+        initialEntries={initialEntries}
+        initialIsPublic={ranking?.is_public ?? false}
+        initialFilmStates={filmIds.map((filmId) => ({
+          filmId,
+          state: statesByFilm.get(filmId) ?? "unmarked",
+        }))}
+        nomineeSlots={category.nomineeSlots}
+        rankingExists={Boolean(ranking)}
+        rankingLimit={rankingLimit}
+        locale={locale}
+      />
     </section>
   );
 }

@@ -1,7 +1,7 @@
 # Metodología
 
 **Estado:** agregación, snapshots y evaluación profesional operativos
-**Última revisión:** 2026-08-25
+**Última revisión:** 2026-08-30
 
 ## 1. Principios
 
@@ -269,6 +269,15 @@ su cadencia y evolución append-only separadas y nunca provocan un corte Borda.
 - Los rankings privados no participan en agregados públicos.
 - No se asigna una puntuación profesional a partir de un ranking de usuario.
 - Los rankings parciales se pueden guardar y mostrar individualmente.
+- Cada ranking admite como máximo las plazas oficiales de nominación configuradas
+  para su temporada y categoría más una alternativa.
+- Puede contener una sola entrada manual no rastreada. La película manual exige
+  un enlace TMDB y una fecha `US` de estreno teatral limitado o general dentro
+  del año de elegibilidad de la temporada. En categorías de personas se exige
+  además un enlace TMDB de la persona, otro de la película y un crédito de esa
+  persona en la película. Se conservan los enlaces, IDs, fecha comprobada,
+  captura original de TMDB y momento de verificación. La entrada se muestra con
+  esa condición y no se empareja ni se añade a las candidaturas profesionales.
 - Su entrada en un consenso público queda fuera de la fase 1 y necesita una
   decisión aceptada antes de implementar la fase 8; no se extrapolarán las
   posiciones ausentes mientras tanto.
