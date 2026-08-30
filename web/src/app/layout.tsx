@@ -38,7 +38,7 @@ export async function generateMetadata(): Promise<Metadata> {
     ? "Runscars · The road to the Oscars, backed by data."
     : "Runscars · La carrera a los Oscar, datos en mano.";
   const internalPath = stripLocalePrefix(visiblePath);
-  const socialImageUrl = new URL("/og.png?v=20260830", origin).toString();
+  const socialImageUrl = new URL("/og-20260830.png", origin).toString();
   const allowIndexing = process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true";
 
   return {

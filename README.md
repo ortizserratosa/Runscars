@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="web/public/og.png" alt="Runscars · La carrera a los Oscar, datos en mano" width="1200">
+  <img src="web/public/og-20260830.png" alt="Runscars · La carrera a los Oscar, datos en mano" width="1200">
 </p>
 
 <h1 align="center">Runscars</h1>

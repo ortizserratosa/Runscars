@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
     : "localhost:3000";
   const protocol = requestHeaders.get("x-forwarded-proto") === "https" ? "https" : "http";
   const origin = `${protocol}://${safeHost}`;
-  const socialImageUrl = new URL("/og.png?v=20260830", origin).toString();
+  const socialImageUrl = new URL("/og-20260830.png", origin).toString();
   const description =
     "Prototipo navegable para seguir crítica, predicciones y rankings de la carrera a los Oscar sin mezclar señales.";
 

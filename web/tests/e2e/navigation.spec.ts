@@ -389,7 +389,7 @@ test("publishes equivalent English routes and language metadata", async ({
   );
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
     "content",
-    /\/og\.png\?v=20260830$/,
+    /\/og-20260830\.png$/,
   );
 
   await page.goto("/en/temporadas/2027/mejor-pelicula");
