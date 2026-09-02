@@ -6,6 +6,7 @@ import { FilmWatchPanel } from "../../components/FilmWatchPanel";
 import { MetacriticScoreCard } from "../../components/MetacriticScoreCard";
 import { Movement } from "../../components/Movement";
 import { PosterBlock } from "../../components/PosterBlock";
+import { JsonLd } from "../../components/JsonLd";
 import {
   getFilmCatalogDetail,
   listFixtureFilmIds,
@@ -21,6 +22,8 @@ import {
   type Locale,
 } from "../../../lib/i18n/config";
 import { getRequestLocale } from "../../../lib/i18n/server";
+import { absoluteUrl, buildLocalizedMetadata } from "../../../lib/seo";
+import { tmdbImageUrl } from "../../../lib/tmdb/images";
 
 type FilmPageProps = {
   params: Promise<{ slug: string }>;
@@ -38,12 +41,16 @@ export async function generateMetadata({
   const en = locale === "en";
   const film = await getFilmCatalogDetail(slug, en ? "en-US" : "es-ES");
   if (!film) return { title: en ? "Film not found" : "Película no encontrada" };
-  return {
-    title: film.title,
+  return buildLocalizedMetadata({
+    locale,
+    path: `/peliculas/${film.id}`,
+    title: en
+      ? `${film.title}: 2027 Oscar Predictions`
+      : `${film.title}: predicciones Oscar 2027`,
     description: en
-      ? `Predictions and verifiable provenance for ${film.title} in the 2027 Oscar season.`
-      : `Predicciones y procedencia verificable de ${film.title} para Oscar 2027.`,
-  };
+      ? `See ${film.title}'s position in the 2027 Oscar predictions, category rankings, expert sources and latest consensus movement.`
+      : `Consulta la posición de ${film.title} en las predicciones Oscar 2027, sus categorías, fuentes expertas y evolución.`,
+  });
 }
 
 function formatNumber(value: number | null, locale: Locale, digits = 1) {
@@ -89,9 +96,123 @@ export default async function FilmPage({ params }: FilmPageProps) {
       : en
         ? "Upcoming"
         : "Próximo estreno";
+  const pagePath = localizedPath(`/peliculas/${film.id}`, locale);
+  const pageUrl = absoluteUrl(pagePath);
+  const description =
+    film.tmdb?.overview ??
+    (en
+      ? `${film.title} in the 2027 Oscar predictions.`
+      : `${film.title} en las predicciones Oscar 2027.`);
+  const movieId = `${pageUrl}#movie`;
+  const breadcrumbId = `${pageUrl}#breadcrumb`;
+  const directors = film.credits.filter(
+    (credit) =>
+      credit.kind === "crew" &&
+      (credit.role.toLocaleLowerCase("en").includes("director") ||
+        credit.department?.toLocaleLowerCase("en") === "directing"),
+  );
+  const actors = film.credits
+    .filter((credit) => credit.kind === "cast")
+    .slice(0, 10);
 
   return (
     <main>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebPage",
+              "@id": `${pageUrl}#webpage`,
+              url: pageUrl,
+              name: en
+                ? `${film.title}: 2027 Oscar Predictions`
+                : `${film.title}: predicciones Oscar 2027`,
+              description,
+              inLanguage: localeTag(locale),
+              mainEntity: { "@id": movieId },
+              breadcrumb: { "@id": breadcrumbId },
+              ...(film.tmdb ? { dateModified: film.tmdb.fetchedAt } : {}),
+            },
+            {
+              "@type": "Movie",
+              "@id": movieId,
+              url: pageUrl,
+              name: film.title,
+              ...(film.alternateTitles.length
+                ? { alternateName: film.alternateTitles }
+                : {}),
+              description,
+              ...(film.tmdb?.posterPath
+                ? { image: tmdbImageUrl(film.tmdb.posterPath, "w780") }
+                : {}),
+              ...(releaseDate ? { dateCreated: releaseDate } : {}),
+              ...(film.tmdb?.runtime
+                ? { duration: `PT${film.tmdb.runtime}M` }
+                : {}),
+              ...(film.tmdb?.genres.length
+                ? { genre: film.tmdb.genres.map((genre) => genre.name) }
+                : {}),
+              ...(directors.length
+                ? {
+                    director: directors.map((person) => ({
+                      "@type": "Person",
+                      name: person.name,
+                      url: absoluteUrl(
+                        localizedPath(`/personas/${person.personId}`, locale),
+                      ),
+                    })),
+                  }
+                : {}),
+              ...(actors.length
+                ? {
+                    actor: actors.map((person) => ({
+                      "@type": "Person",
+                      name: person.name,
+                      url: absoluteUrl(
+                        localizedPath(`/personas/${person.personId}`, locale),
+                      ),
+                    })),
+                  }
+                : {}),
+              ...(film.tmdb
+                ? {
+                    sameAs: [
+                      film.tmdb.url,
+                      ...(film.tmdb.imdbId
+                        ? [`https://www.imdb.com/title/${film.tmdb.imdbId}/`]
+                        : []),
+                    ],
+                  }
+                : {}),
+            },
+            {
+              "@type": "BreadcrumbList",
+              "@id": breadcrumbId,
+              itemListElement: [
+                {
+                  "@type": "ListItem",
+                  position: 1,
+                  name: en ? "Home" : "Inicio",
+                  item: absoluteUrl(localizedPath("/", locale)),
+                },
+                {
+                  "@type": "ListItem",
+                  position: 2,
+                  name: "Oscar 2027",
+                  item: absoluteUrl(localizedPath("/temporadas/2027", locale)),
+                },
+                {
+                  "@type": "ListItem",
+                  position: 3,
+                  name: film.title,
+                  item: pageUrl,
+                },
+              ],
+            },
+          ],
+        }}
+      />
       <section className="film-hero">
         <div className="page-shell">
           <div className="breadcrumb">

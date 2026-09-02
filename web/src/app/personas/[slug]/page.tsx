@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { JsonLd } from "../../components/JsonLd";
 import {
   getPersonCatalogDetail,
   listCatalogPersonIds,
@@ -13,10 +14,17 @@ import {
   type Locale,
 } from "../../../lib/i18n/config";
 import { getRequestLocale } from "../../../lib/i18n/server";
+import {
+  absoluteUrl,
+  buildLocalizedMetadata,
+  conciseDescription,
+} from "../../../lib/seo";
 
 type PersonPageProps = {
   params: Promise<{ slug: string }>;
 };
+
+export const dynamic = "force-dynamic";
 
 export async function generateStaticParams() {
   return (await listCatalogPersonIds()).map((slug) => ({ slug }));
@@ -30,14 +38,20 @@ export async function generateMetadata({
   const en = locale === "en";
   const person = await getPersonCatalogDetail(slug, en ? "en-US" : "es-ES");
   return person
-    ? {
-        title: person.name,
-        description:
+    ? buildLocalizedMetadata({
+        locale,
+        path: `/personas/${person.id}`,
+        title: en
+          ? `${person.name}: Films and Oscar Predictions`
+          : `${person.name}: películas y predicciones Oscar`,
+        description: conciseDescription(
           person.tmdb.biography ??
-          (en
-            ? `Film profile for ${person.name} on Runscars.`
-            : `Ficha cinematográfica de ${person.name} en Runscars.`),
-      }
+            (en
+              ? `Films, roles and 2027 Oscar context for ${person.name} on Runscars.`
+              : `Películas, trabajos y contexto de los Oscar 2027 de ${person.name} en Runscars.`),
+        ),
+        type: "profile",
+      })
     : { title: en ? "Person not found" : "Persona no encontrada" };
 }
 
@@ -63,9 +77,74 @@ export default async function PersonPage({ params }: PersonPageProps) {
 
   const profileUrl = tmdbImageUrl(person.tmdb.profilePath, "w342");
   const birthday = formatDate(person.tmdb.birthday, locale);
+  const pageUrl = absoluteUrl(localizedPath(`/personas/${person.id}`, locale));
+  const personId = `${pageUrl}#person`;
+  const sameAs = [
+    person.tmdb.url,
+    ...(person.tmdb.imdbId
+      ? [`https://www.imdb.com/name/${person.tmdb.imdbId}/`]
+      : []),
+    ...(person.tmdb.homepageUrl ? [person.tmdb.homepageUrl] : []),
+  ];
 
   return (
     <main>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "ProfilePage",
+              "@id": `${pageUrl}#webpage`,
+              url: pageUrl,
+              name: person.name,
+              inLanguage: localeTag(locale),
+              dateModified: person.tmdb.fetchedAt,
+              mainEntity: { "@id": personId },
+            },
+            {
+              "@type": "Person",
+              "@id": personId,
+              url: pageUrl,
+              name: person.name,
+              ...(profileUrl ? { image: profileUrl } : {}),
+              ...(person.tmdb.biography
+                ? { description: person.tmdb.biography }
+                : {}),
+              ...(person.tmdb.birthday
+                ? { birthDate: person.tmdb.birthday }
+                : {}),
+              ...(person.tmdb.deathday
+                ? { deathDate: person.tmdb.deathday }
+                : {}),
+              ...(person.tmdb.placeOfBirth
+                ? { birthPlace: person.tmdb.placeOfBirth }
+                : {}),
+              ...(person.tmdb.knownForDepartment
+                ? { jobTitle: person.tmdb.knownForDepartment }
+                : {}),
+              sameAs,
+            },
+            {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                {
+                  "@type": "ListItem",
+                  position: 1,
+                  name: en ? "Home" : "Inicio",
+                  item: absoluteUrl(localizedPath("/", locale)),
+                },
+                {
+                  "@type": "ListItem",
+                  position: 2,
+                  name: person.name,
+                  item: pageUrl,
+                },
+              ],
+            },
+          ],
+        }}
+      />
       <section className="person-hero">
         <div className="page-shell">
           <div className="breadcrumb">

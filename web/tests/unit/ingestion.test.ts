@@ -13,6 +13,7 @@ import {
   runConnectorSet,
 } from "../../../supabase/functions/_shared/ingestion/repository.mjs";
 import { CONNECTORS } from "../../../supabase/functions/_shared/ingestion/connectors.mjs";
+import { fetchResponse } from "../../../supabase/functions/_shared/network.mjs";
 import {
   discoverLatestRingerBestPictureArticle,
   discoverWordPressPredictionUrls,
@@ -326,6 +327,80 @@ describe("professional ingestion adapters", () => {
     );
   });
 
+  it("normalizes verified source typos and spaced distributor suffixes", async () => {
+    const awardsDaily = parseAwardsDailyFixture(
+      (await fixture("awards-daily-multicategory.html")).replace(
+        "Tom Cruise, Digger",
+        "Seth Rogan, The Invite",
+      ),
+      {
+        connectorId: "awards-daily-predictions",
+        capturedAt,
+        endpointUrl: "https://www.awardsdaily.com/fixture-2027/",
+        seasonId: "oscars-2027",
+      },
+    );
+    const actor = awardsDaily.publications[0].observations.find(
+      (observation: { categoryId: string; subject: string }) =>
+        observation.categoryId === "actor" &&
+        observation.subject.startsWith("Seth Rogan"),
+    );
+    expect(actor).toEqual(
+      expect.objectContaining({
+        subject: "Seth Rogan, The Invite",
+        filmSubject: "The Invite",
+        peopleSubjects: ["Seth Rogen"],
+      }),
+    );
+
+    const awardsWatch = parseAwardsWatchArticleFixture(
+      "<article><h2>BEST PICTURE</h2><p>1. The Invite ( A24)</p></article>",
+      {
+        connectorId: "awardswatch-predictions",
+        capturedAt,
+        endpointUrl: "https://awardswatch.com/fixture/",
+        seasonId: "oscars-2027",
+        categoryId: "best-picture",
+      },
+    );
+    expect(awardsWatch.publications[0].observations[0]).toEqual(
+      expect.objectContaining({
+        subject: "The Invite",
+        filmSubject: "The Invite",
+      }),
+    );
+
+    const awardsRadar = parseAwardsRadarFixture(
+      `
+        <p>Updated August 30th, 2026</p>
+        <p>1. Sandra Hüller – Digger (or Project Hail Mary)<br />2. Sophie Okonado – Clarissa</p>
+      `,
+      {
+        connectorId: "awards-radar-predictions",
+        capturedAt,
+        endpointUrl: "https://awardsradar.com/best-supporting-actress/",
+        seasonId: "oscars-2027",
+        categoryId: "supporting-actress",
+      },
+    );
+    expect(awardsRadar.extractorVersion).toBe("awards-radar-v4");
+    expect(awardsRadar.publications[0].observations).toEqual([
+      expect.objectContaining({
+        subject: "Sandra Hüller – Digger (or Project Hail Mary)",
+        filmSubject: "Digger",
+        peopleSubjects: ["Sandra Hüller"],
+        originalValue: expect.objectContaining({
+          raw: expect.stringContaining("Digger (or Project Hail Mary)"),
+        }),
+      }),
+      expect.objectContaining({
+        subject: "Sophie Okonado – Clarissa",
+        filmSubject: "Clarissa",
+        peopleSubjects: ["Sophie Okonedo"],
+      }),
+    ]);
+  });
+
   it("recognizes common headings for structured additional categories", () => {
     const batch = parseAwardsDailyFixture(
       `
@@ -432,7 +507,7 @@ describe("professional ingestion adapters", () => {
         observation.categoryId === "best-picture",
     );
 
-    expect(batch.extractorVersion).toBe("awards-daily-v5");
+    expect(batch.extractorVersion).toBe("awards-daily-v6");
     expect(
       bestPicture.map(
         (observation: {
@@ -481,7 +556,7 @@ describe("professional ingestion adapters", () => {
       },
     );
 
-    expect(batch.extractorVersion).toBe("awards-daily-v5");
+    expect(batch.extractorVersion).toBe("awards-daily-v6");
     expect(
       batch.publications[0].observations.map(
         (observation: { originalValue: { raw: string } }) =>
@@ -746,7 +821,7 @@ describe("professional ingestion adapters", () => {
       },
     });
 
-    expect(batch.extractorVersion).toBe("awardswatch-multicategory-v4");
+    expect(batch.extractorVersion).toBe("awardswatch-multicategory-v5");
     expect(batch.publications).toEqual([
       expect.objectContaining({
         isMutable: true,
@@ -1157,12 +1232,70 @@ describe("professional ingestion adapters", () => {
     expect(second.capturesDuplicate).toBe(1);
     expect(second.observationsDuplicate).toBe(10);
     expect(repository.observations).toHaveLength(10);
+    expect(repository.semanticResolutions).toHaveLength(10);
     expect(repository.events).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ code: "source.updated" }),
         expect.objectContaining({ code: "source.unchanged" }),
       ]),
     );
+  });
+
+  it("persists observations with bounded concurrency", async () => {
+    const repository = new MemoryRepository();
+    let activeSaves = 0;
+    let maxActiveSaves = 0;
+    const originalSaveObservation = repository.saveObservation.bind(repository);
+    repository.saveObservation = async (values) => {
+      activeSaves += 1;
+      maxActiveSaves = Math.max(maxActiveSaves, activeSaves);
+      try {
+        await new Promise((resolve) => setTimeout(resolve, 5));
+        return await originalSaveObservation(values);
+      } finally {
+        activeSaves -= 1;
+      }
+    };
+
+    const batch = {
+      connectorId: "concurrent-source",
+      sourceId: "awardswatch",
+      extractorVersion: "test-v1",
+      seasonId: "oscars-2027",
+      capturedAt,
+      sourceUrl: "https://example.com/predictions",
+      publications: [
+        {
+          externalId: "predictions",
+          canonicalUrl: "https://example.com/predictions",
+          title: "Predictions",
+          author: null,
+          publishedAt: capturedAt,
+          originalData: { fixture: true },
+          observations: Array.from({ length: 9 }, (_, index) => ({
+            dataType: "prediction_ordered",
+            subject: "The Odyssey",
+            filmSubject: "The Odyssey",
+            peopleSubjects: [],
+            originalValue: { rank: index + 1, list_length: 9 },
+            originalScale: null,
+            categoryId: "best-picture",
+            predictionIntention: "nomination",
+            participates: true,
+          })),
+        },
+      ],
+    };
+
+    const result = await persistBatch({
+      batch,
+      repository,
+      runId: await repository.beginRun({ connectorId: batch.connectorId }),
+      persistenceConcurrency: 3,
+    });
+
+    expect(result.observationsSeen).toBe(9);
+    expect(maxActiveSaves).toBe(3);
   });
 
   it("creates a complete immutable revision when a mutable page changes", async () => {
@@ -1311,6 +1444,150 @@ describe("professional ingestion adapters", () => {
         expect.objectContaining({ level: "info", code: "connector.completed" }),
       ]),
     );
+  });
+
+  it("bounds connector concurrency while preserving result order", async () => {
+    const repository = new MemoryRepository();
+    let activeConnectors = 0;
+    let maxActiveConnectors = 0;
+    const connectors = Array.from({ length: 7 }, (_, index) => ({
+      id: `source-${index}`,
+    }));
+    const registry = Object.fromEntries(
+      connectors.map(({ id }) => [
+        id,
+        async () => {
+          activeConnectors += 1;
+          maxActiveConnectors = Math.max(maxActiveConnectors, activeConnectors);
+          try {
+            await new Promise((resolve) => setTimeout(resolve, 5));
+            return {
+              connectorId: id,
+              sourceId: "awardswatch",
+              extractorVersion: "test-v1",
+              seasonId: "oscars-2027",
+              capturedAt,
+              sourceUrl: `https://example.com/${id}`,
+              publications: [],
+            };
+          } finally {
+            activeConnectors -= 1;
+          }
+        },
+      ]),
+    );
+
+    const results = await runConnectorSet({
+      connectors,
+      registry,
+      repository,
+      trigger: "fixture",
+      connectorConcurrency: 3,
+      now: () => new Date(capturedAt),
+    });
+
+    expect(maxActiveConnectors).toBe(3);
+    expect(results.map((result) => result.connectorId)).toEqual(
+      connectors.map(({ id }) => id),
+    );
+    expect(results.every((result) => result.status === "succeeded")).toBe(true);
+  });
+
+  it("fails a partial source run when a required category is absent", async () => {
+    const repository = new MemoryRepository();
+    const results = await runConnectorSet({
+      connectors: [
+        {
+          id: "partial",
+          configuration: {
+            required_category_ids: ["best-picture", "directing"],
+          },
+        },
+      ],
+      registry: {
+        partial: async () => ({
+          connectorId: "partial",
+          sourceId: "awards-radar",
+          extractorVersion: "test-v1",
+          seasonId: "oscars-2027",
+          capturedAt,
+          sourceUrl: "https://example.com/",
+          publications: [
+            {
+              externalId: "best-picture",
+              canonicalUrl: "https://example.com/best-picture",
+              title: "Best Picture",
+              author: null,
+              publishedAt: capturedAt,
+              originalData: { fixture: true },
+              observations: [
+                {
+                  dataType: "prediction_ordered",
+                  subject: "The Odyssey",
+                  filmSubject: "The Odyssey",
+                  peopleSubjects: [],
+                  originalValue: { rank: 1, list_length: 1 },
+                  originalScale: null,
+                  categoryId: "best-picture",
+                  predictionIntention: "nomination",
+                  participates: true,
+                },
+              ],
+            },
+          ],
+          discovery: {
+            checkedAt: capturedAt,
+            mode: "fixture",
+            publicationUrls: ["https://example.com/best-picture"],
+            latestCategoryUrls: {
+              "best-picture": "https://example.com/best-picture",
+            },
+            skippedUrls: [
+              {
+                categoryId: "directing",
+                url: "https://example.com/directing",
+                reason: "HTTP 503",
+              },
+            ],
+          },
+        }),
+      },
+      repository,
+      trigger: "fixture",
+      now: () => new Date(capturedAt),
+    });
+
+    expect(results[0]).toEqual(
+      expect.objectContaining({
+        status: "failed",
+        error: expect.stringContaining("directing"),
+      }),
+    );
+    expect(repository.events).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          level: "warning",
+          code: "discovery.partial",
+        }),
+        expect.objectContaining({ level: "error", code: "connector.failed" }),
+      ]),
+    );
+    expect(repository.events).not.toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ code: "connector.completed" }),
+      ]),
+    );
+  });
+
+  it("bounds an external request even when a fetcher never settles", async () => {
+    await expect(
+      fetchResponse(
+        "https://example.com/slow",
+        {},
+        () => new Promise(() => {}),
+        { attempts: 1, timeoutMs: 5 },
+      ),
+    ).rejects.toThrow("Tiempo agotado");
   });
 
   it("closes an abandoned connector run before retrying it", async () => {

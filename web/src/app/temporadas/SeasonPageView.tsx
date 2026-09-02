@@ -2,6 +2,8 @@ import Link from "next/link";
 import { localizedCategoryName } from "../../lib/i18n/categories";
 import { localeTag, localizedPath, type Locale } from "../../lib/i18n/config";
 import { getRequestLocale } from "../../lib/i18n/server";
+import { absoluteUrl } from "../../lib/seo";
+import { JsonLd } from "../components/JsonLd";
 
 type CategorySummary = {
   id: string;
@@ -50,8 +52,41 @@ export async function SeasonPageView({
         )
         .slice(0, 4)
     : [];
+  const seasonPath = localizedPath(`/temporadas/${year}`, locale);
+  const lastModified = categories
+    .flatMap((category) => (category.updatedAt ? [category.updatedAt] : []))
+    .sort()
+    .at(-1);
   return (
     <main>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          url: absoluteUrl(seasonPath),
+          name: active
+            ? en
+              ? "Oscar Predictions 2027 by Category"
+              : "Predicciones Oscar 2027 por categoría"
+            : en
+              ? "2026 Oscars Nominees and Winners"
+              : "Oscar 2026: nominados y ganadores",
+          inLanguage: localeTag(locale),
+          ...(lastModified ? { dateModified: lastModified } : {}),
+          mainEntity: {
+            "@type": "ItemList",
+            numberOfItems: categories.length,
+            itemListElement: categories.map((category, index) => ({
+              "@type": "ListItem",
+              position: index + 1,
+              name: localizedCategoryName(locale, category.id, category.name),
+              url: absoluteUrl(
+                localizedPath(`/temporadas/${year}/${category.slug}`, locale),
+              ),
+            })),
+          },
+        }}
+      />
       <section className="season-hero">
         <div className="page-shell">
           <div className="breadcrumb">

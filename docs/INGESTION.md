@@ -1,7 +1,7 @@
 # Sistema de ingesta · fases 5 y 7.1
 
 **Estado:** fase 5 completada; ampliación 7.1 completada
-**Última revisión:** 2026-08-07
+**Última revisión:** 2026-09-01
 
 ## Objetivo
 
@@ -176,10 +176,24 @@ URL histórica sin fecha. Si varias revisiones comparten URL, prevalece la
 captura más reciente. Los números originales con saltos se conservan y la
 longitud de la lista nunca queda por debajo del mayor puesto publicado.
 
-Los conectores profesionales se ejecutan en paralelo dentro de la Edge
-Function. Cada uno conserva su propio run y captura sus propios fallos; el
-resultado general solo es parcial cuando uno de ellos falla. Así, comprobar las
-seis fuentes cabe dentro del límite operativo sin perder aislamiento.
+Los conectores profesionales se ejecutan dentro de la Edge Function con un pool
+global de tres workers. Cada uno conserva su propio run y captura sus propios
+fallos; el resultado general solo es parcial cuando uno de ellos falla. El pool
+mantiene el paralelismo sin multiplicar sin límite las operaciones simultáneas.
+
+Cada request externo tiene timeout de 15 segundos y reintentos acotados. Awards
+Radar consulta sus páginas con concurrencia máxima de cuatro y Awards Daily
+procesa como máximo cuatro artículos simultáneos. Además, cada conector declara
+`required_category_ids`: si falta una categoría requerida, registra el
+discovery pero termina `failed` antes de persistir una revisión parcial.
+
+La persistencia de observaciones usa como máximo seis workers por conector. El
+pool espera los writes ya iniciados antes de propagar un fallo, por lo que evita
+la secuencia de cientos de requests sin dejar trabajo huérfano ni perder los
+contadores parciales. El límite se configura como `persistence_concurrency`.
+Una reimportación idempotente tampoco repite el cierre semántico de revisiones
+para observaciones ya publicadas: esa escritura solo se ejecuta cuando la
+observación se inserta por primera vez.
 
 Antes de abrir un nuevo run, el conector cierra como `failed` cualquier intento
 propio que continúe `running` tras 15 minutos y añade el evento
@@ -202,6 +216,17 @@ Polymarket descubre eventos activos de la ceremonia configurada. Ambos rechazan
 otra ceremonia y contratos cerrados o resueltos antes de guardar tablas
 append-only. Un fallo de un proveedor no bloquea al otro y ninguno escribe
 observaciones profesionales.
+
+Kalshi y Polymarket se ejecutan en paralelo y conservan aislamiento por
+proveedor. Antes de cada intento se cierran como `failed` los runs propios que
+lleven más de 15 minutos en `running`; esto recupera terminaciones de Edge sin
+eliminar su evidencia.
+
+El Cron diario de snapshots conserva además un registro privado en
+`snapshot_refresh_runs`, incluido cuando las ocho categorías resultan
+`unchanged`. Una ejecución abandonada se recupera con el mismo umbral de 15
+minutos. La ausencia de cambios ya no es indistinguible de la ausencia o retraso
+del Cron.
 
 ## Pruebas sin red
 
@@ -236,6 +261,8 @@ restricción única, la URL de procedencia y la privacidad de runs/logs/cola.
   cuerpos.
 - La agregación de fase 6 lee únicamente observaciones `published` y
   `participates = true`; las pendientes no se reinterpretan ni participan.
+- Un `discovery.partial` que omite una categoría requerida nunca actualiza
+  `last_success_at` ni reemplaza la última revisión válida.
 
 ## Evidencia en staging
 

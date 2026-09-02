@@ -1,30 +1,16 @@
 import { parseKalshiMarkets, parsePolymarketEvents } from "./core.mjs";
+import { fetchResponse } from "../network.mjs";
 
-function retryDelay(response, attempt) {
-  const retryAfter = Number(response.headers.get("retry-after"));
-  if (Number.isFinite(retryAfter) && retryAfter > 0) {
-    return retryAfter * 1000;
-  }
-  return 500 * 2 ** attempt;
-}
-
-async function jsonResponse(url, fetcher) {
-  for (let attempt = 0; attempt < 5; attempt += 1) {
-    const response = await fetcher(url, {
+async function jsonResponse(url, fetcher, timeoutMs) {
+  const response = await fetchResponse(
+    url,
+    {
       headers: { Accept: "application/json", "User-Agent": "Runscars/0.1" },
-    });
-    if (response.ok) return response.json();
-    if (response.status === 429 && attempt < 4) {
-      await new Promise((resolve) =>
-        setTimeout(resolve, retryDelay(response, attempt)),
-      );
-      continue;
-    }
-    throw new Error(
-      `HTTP ${response.status} al consultar ${new URL(url).host}`,
-    );
-  }
-  throw new Error(`No se pudo consultar ${new URL(url).host}`);
+    },
+    fetcher,
+    { attempts: 5, baseDelayMs: 500, timeoutMs },
+  );
+  return response.json();
 }
 
 export const MARKET_CONNECTORS = Object.freeze({
@@ -45,7 +31,11 @@ export const MARKET_CONNECTORS = Object.freeze({
         url.searchParams.set("series_ticker", seriesTicker);
         url.searchParams.set("mve_filter", "exclude");
         if (cursor) url.searchParams.set("cursor", cursor);
-        const payload = await jsonResponse(url, fetcher);
+        const payload = await jsonResponse(
+          url,
+          fetcher,
+          connector.configuration.request_timeout_ms ?? 15_000,
+        );
         all.push(...(payload.markets ?? []));
         cursor = payload.cursor ?? null;
       } while (cursor);
@@ -65,7 +55,8 @@ export const MARKET_CONNECTORS = Object.freeze({
     searchUrl.pathname = "/public-search";
     searchUrl.searchParams.set("q", connector.configuration.query ?? "Oscars");
     searchUrl.searchParams.set("limit_per_type", "50");
-    const search = await jsonResponse(searchUrl, fetcher);
+    const timeoutMs = connector.configuration.request_timeout_ms ?? 15_000;
+    const search = await jsonResponse(searchUrl, fetcher, timeoutMs);
     const events = [];
     for (const result of search.events ?? []) {
       const identity = `${result.title ?? ""} ${result.slug ?? ""}`;
@@ -77,7 +68,7 @@ export const MARKET_CONNECTORS = Object.freeze({
         continue;
       }
       const eventUrl = new URL(`/events/${result.id}`, searchUrl);
-      events.push(await jsonResponse(eventUrl, fetcher));
+      events.push(await jsonResponse(eventUrl, fetcher, timeoutMs));
     }
     return parsePolymarketEvents(events, {
       capturedAt,

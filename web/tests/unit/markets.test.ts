@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { MARKET_CONNECTORS } from "../../../supabase/functions/_shared/markets/connectors.mjs";
+import { runMarketConnectors } from "../../../supabase/functions/_shared/markets/repository.mjs";
 import {
   matchMarketCandidate,
   parseKalshiMarkets,
@@ -276,5 +277,67 @@ describe("market ingestion", () => {
     expect(changed[0].contentHash).not.toBe(first[0].contentHash);
     expect(first[0]).not.toHaveProperty("dataType");
     expect(first[0]).not.toHaveProperty("participates");
+  });
+
+  it("runs providers in parallel and recovers their abandoned attempts", async () => {
+    let resolveSecondStarted: () => void = () => {};
+    const secondStarted = new Promise<void>((resolve) => {
+      resolveSecondStarted = resolve;
+    });
+    const recovered: string[] = [];
+    let nextRunId = 1;
+    const repository = {
+      async failStaleRuns({ connectorId }: { connectorId: string }) {
+        recovered.push(connectorId);
+        return 1;
+      },
+      async beginRun() {
+        return { id: nextRunId++, status: "running", repeated: false };
+      },
+      async candidates() {
+        return [];
+      },
+      async finishRun() {},
+      async markConnector() {},
+    };
+    const run = runMarketConnectors({
+      connectors: [
+        {
+          id: "first",
+          extractor_version: "first-v1",
+          configuration: { season_id: "oscars-2027" },
+        },
+        {
+          id: "second",
+          extractor_version: "second-v1",
+          configuration: { season_id: "oscars-2027" },
+        },
+      ],
+      registry: {
+        first: async () => {
+          await secondStarted;
+          return [];
+        },
+        second: async () => {
+          resolveSecondStarted();
+          return [];
+        },
+      },
+      repository,
+      now: () => new Date(capturedAt),
+    });
+
+    await expect(
+      Promise.race([
+        run,
+        new Promise((_, reject) =>
+          setTimeout(() => reject(new Error("sequential timeout")), 100),
+        ),
+      ]),
+    ).resolves.toEqual([
+      expect.objectContaining({ connectorId: "first", status: "succeeded" }),
+      expect.objectContaining({ connectorId: "second", status: "succeeded" }),
+    ]);
+    expect(recovered).toEqual(["first", "second"]);
   });
 });

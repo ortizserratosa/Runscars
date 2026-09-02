@@ -8,6 +8,7 @@ import {
 import { localizedCategoryName } from "../../../lib/i18n/categories";
 import { localeTag, localizedPath } from "../../../lib/i18n/config";
 import { getRequestLocale } from "../../../lib/i18n/server";
+import { buildLocalizedMetadata } from "../../../lib/seo";
 
 type PageProps = { params: Promise<{ year: string }> };
 
@@ -22,14 +23,19 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const year = Number((await params).year);
   const edition = historicalEdition(year);
-  const en = (await getRequestLocale()) === "en";
+  const locale = await getRequestLocale();
+  const en = locale === "en";
   return edition
-    ? {
-        title: `Oscar ${year} · ${en ? "Archive" : "Archivo"}`,
+    ? buildLocalizedMetadata({
+        locale,
+        path: `/archivo/${year}`,
+        title: en
+          ? `${year} Oscars Nominees and Winners`
+          : `Oscar ${year}: nominados y ganadores`,
         description: en
-          ? `Official nominees and winners of the ${year} Oscars.`
-          : `Nominados y ganadores oficiales de los Oscar ${year}.`,
-      }
+          ? `Official nominees and winners of the ${year} Oscars across all eight Runscars categories.`
+          : `Nominados y ganadores oficiales de los Oscar ${year} en las ocho categorías de Runscars.`,
+      })
     : {};
 }
 

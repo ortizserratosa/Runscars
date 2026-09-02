@@ -159,6 +159,8 @@ const SOURCE_PERSON_ALIASES = new Map([
   ["mariana di girolam o", "Mariana di Girolamo"],
   ["parke r posey", "Parker Posey"],
   ["sebastien stan", "Sebastian Stan"],
+  ["seth rogan", "Seth Rogen"],
+  ["sophie okonado", "Sophie Okonedo"],
 ]);
 
 const HTML_ENTITIES = Object.freeze({
@@ -348,7 +350,10 @@ function peopleFromText(value) {
 }
 
 function filmFromText(value) {
-  return SOURCE_FILM_ALIASES.get(value.toLocaleLowerCase()) ?? value;
+  const primaryFilm = value.replace(/\s+\(or\s+[^()]+\)\s*$/i, "").trim();
+  return (
+    SOURCE_FILM_ALIASES.get(primaryFilm.toLocaleLowerCase()) ?? primaryFilm
+  );
 }
 
 function subjectParts(categoryId, raw) {
@@ -356,7 +361,7 @@ function subjectParts(categoryId, raw) {
     .replace(/[⬆⬇↔]+/gu, "")
     .replace(/\s+(?:NEW|RETURNING|DEBUT)\s*$/, "")
     .replace(
-      /\s+\((?:Netflix|NEON|A24|MUBI|TBD|[^()]*(?:Pictures|Studios|Studio|Films|Film|Entertainment|Universal|Amazon|Columbia|Focus|Searchlight|Warner|Lionsgate))[^()]*\)\s*$/i,
+      /\s+\(\s*(?:Netflix|NEON|A24|MUBI|TBD|[^()]*(?:Pictures|Studios|Studio|Films|Film|Entertainment|Universal|Amazon|Columbia|Focus|Searchlight|Warner|Lionsgate))[^()]*\)\s*$/i,
       "",
     )
     .replace(
@@ -566,7 +571,7 @@ export function parseAwardsDailyFixture(
   return buildBatch({
     connectorId,
     sourceId: "awards-daily",
-    extractorVersion: "awards-daily-v5",
+    extractorVersion: "awards-daily-v6",
     seasonId,
     capturedAt,
     sourceUrl: publication.canonicalUrl,
@@ -617,7 +622,7 @@ export function parseAwardsRadarFixture(
   return buildBatch({
     connectorId,
     sourceId: "awards-radar",
-    extractorVersion: "awards-radar-v3",
+    extractorVersion: "awards-radar-v4",
     seasonId,
     capturedAt,
     sourceUrl: publication.canonicalUrl,

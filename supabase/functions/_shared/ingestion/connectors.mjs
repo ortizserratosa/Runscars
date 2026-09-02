@@ -16,25 +16,40 @@ import {
   parseNextBestPictureFixture,
   parseRingerSelectionFixture,
 } from "./professional-predictions.mjs";
+import { fetchResponse } from "../network.mjs";
 
-async function fetchText(url, init, fetcher) {
-  const response = await fetcher(url, init);
-  if (!response.ok) {
-    throw new Error(
-      `HTTP ${response.status} al consultar ${new URL(url).host}`,
-    );
-  }
+function requestTimeout(connector) {
+  const configured = Number(connector.configuration?.request_timeout_ms);
+  return Number.isFinite(configured) && configured > 0 ? configured : 15_000;
+}
+
+async function fetchText(url, init, fetcher, timeoutMs) {
+  const response = await fetchResponse(url, init, fetcher, { timeoutMs });
   return response.text();
 }
 
-async function fetchJson(url, init, fetcher) {
-  const response = await fetcher(url, init);
-  if (!response.ok) {
-    throw new Error(
-      `HTTP ${response.status} al consultar ${new URL(url).host}`,
-    );
-  }
+async function fetchJson(url, init, fetcher, timeoutMs) {
+  const response = await fetchResponse(url, init, fetcher, { timeoutMs });
   return response.json();
+}
+
+async function mapWithConcurrency(values, concurrency, mapper) {
+  const results = new Array(values.length);
+  if (values.length === 0) return results;
+  const workerCount = Math.max(
+    1,
+    Math.min(Math.floor(Number(concurrency)) || 1, values.length),
+  );
+  let nextIndex = 0;
+  async function worker() {
+    while (nextIndex < values.length) {
+      const index = nextIndex;
+      nextIndex += 1;
+      results[index] = await mapper(values[index], index);
+    }
+  }
+  await Promise.all(Array.from({ length: workerCount }, worker));
+  return results;
 }
 
 function categoryPublicationUrls(publications) {
@@ -166,12 +181,12 @@ export const CONNECTORS = Object.freeze({
     url.searchParams.set("show-tags", "contributor");
     url.searchParams.set("order-by", "newest");
     url.searchParams.set("page-size", "50");
-    const response = await fetcher(url, {
-      headers: { Accept: "application/json" },
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status} al consultar Guardian`);
-    }
+    const response = await fetchResponse(
+      url,
+      { headers: { Accept: "application/json" } },
+      fetcher,
+      { timeoutMs: requestTimeout(connector) },
+    );
     const batch = parseGuardianFixture(await response.json(), {
       capturedAt,
       endpointUrl: connector.endpoint_url,
@@ -199,6 +214,7 @@ export const CONNECTORS = Object.freeze({
       connector.endpoint_url,
       { headers: { Accept: "application/rss+xml, application/xml" } },
       fetcher,
+      requestTimeout(connector),
     );
     return parseRogerEbertFixture(xml, {
       capturedAt,
@@ -216,6 +232,7 @@ export const CONNECTORS = Object.freeze({
       connector.endpoint_url,
       { headers: { Accept: "text/html", "User-Agent": "Runscars/0.1" } },
       fetcher,
+      requestTimeout(connector),
     );
     return parseAwardsWatchFixture(html, {
       capturedAt,
@@ -238,52 +255,67 @@ export const CONNECTORS = Object.freeze({
     const discoveryUrl =
       connector.configuration.discovery_url ?? connector.endpoint_url;
     const candidates = discoverWordPressPredictionUrls(
-      await fetchJson(discoveryUrl, { headers }, fetcher),
+      await fetchJson(
+        discoveryUrl,
+        { headers },
+        fetcher,
+        requestTimeout(connector),
+      ),
       connector.configuration.ceremony_year ?? 2027,
     );
     const limit = connector.configuration.discovery_limit ?? 12;
     const batches = [];
     const skippedUrls = [];
     const ignoredUrls = [];
-    for (const articleUrl of candidates.slice(0, limit)) {
-      try {
-        const html = await fetchText(
-          articleUrl,
-          {
-            headers: {
-              Accept: "text/html",
-              "User-Agent": "Runscars/0.1",
+    const results = await mapWithConcurrency(
+      candidates.slice(0, limit),
+      connector.configuration.discovery_concurrency ?? 4,
+      async (articleUrl) => {
+        try {
+          const html = await fetchText(
+            articleUrl,
+            {
+              headers: {
+                Accept: "text/html",
+                "User-Agent": "Runscars/0.1",
+              },
             },
-          },
-          fetcher,
-        );
-        batches.push(
-          mutableBatch(
-            parseAwardsDailyFixture(html, {
-              connectorId: connector.id,
-              capturedAt,
-              endpointUrl: articleUrl,
-              seasonId: connector.configuration.season_id,
-            }),
-          ),
-        );
-      } catch (error) {
-        const item = {
-          url: articleUrl,
-          reason: error instanceof Error ? error.message : "error desconocido",
-        };
-        if (/no contiene categorías reconocibles$/.test(item.reason)) {
-          ignoredUrls.push(item);
-        } else {
-          skippedUrls.push(item);
+            fetcher,
+            requestTimeout(connector),
+          );
+          return {
+            batch: mutableBatch(
+              parseAwardsDailyFixture(html, {
+                connectorId: connector.id,
+                capturedAt,
+                endpointUrl: articleUrl,
+                seasonId: connector.configuration.season_id,
+              }),
+            ),
+          };
+        } catch (error) {
+          const item = {
+            url: articleUrl,
+            reason:
+              error instanceof Error ? error.message : "error desconocido",
+          };
+          if (/no contiene categorías reconocibles$/.test(item.reason)) {
+            return { ignored: item };
+          }
+          return { skipped: item };
         }
-      }
+      },
+    );
+    for (const result of results) {
+      if (result.batch) batches.push(result.batch);
+      if (result.ignored) ignoredUrls.push(result.ignored);
+      if (result.skipped) skippedUrls.push(result.skipped);
     }
     const latest = latestCategoryBatches(batches);
     return mergeBatches(latest.selected, {
       mode: "wordpress-search",
       indexUrl: discoveryUrl,
-      extractorVersion: "awards-daily-v5",
+      extractorVersion: "awards-daily-v6",
       candidatesFound: candidates.length,
       ignoredUrls,
       supersededUrls: latest.supersededUrls,
@@ -302,36 +334,48 @@ export const CONNECTORS = Object.freeze({
     };
     const batches = [];
     const skippedUrls = [];
-    for (const [categoryId, categoryUrl] of Object.entries(categoryUrls)) {
-      try {
-        const html = await fetchText(
-          categoryUrl,
-          { headers: { Accept: "text/html", "User-Agent": "Runscars/0.1" } },
-          fetcher,
-        );
-        batches.push(
-          mutableBatch(
-            parseAwardsRadarFixture(html, {
-              connectorId: connector.id,
-              capturedAt,
-              endpointUrl: categoryUrl,
-              seasonId: connector.configuration.season_id,
+    const results = await mapWithConcurrency(
+      Object.entries(categoryUrls),
+      connector.configuration.category_concurrency ?? 4,
+      async ([categoryId, categoryUrl]) => {
+        try {
+          const html = await fetchText(
+            categoryUrl,
+            { headers: { Accept: "text/html", "User-Agent": "Runscars/0.1" } },
+            fetcher,
+            requestTimeout(connector),
+          );
+          return {
+            batch: mutableBatch(
+              parseAwardsRadarFixture(html, {
+                connectorId: connector.id,
+                capturedAt,
+                endpointUrl: categoryUrl,
+                seasonId: connector.configuration.season_id,
+                categoryId,
+              }),
+            ),
+          };
+        } catch (error) {
+          return {
+            skipped: {
               categoryId,
-            }),
-          ),
-        );
-      } catch (error) {
-        skippedUrls.push({
-          categoryId,
-          url: categoryUrl,
-          reason: error instanceof Error ? error.message : "error desconocido",
-        });
-      }
+              url: categoryUrl,
+              reason:
+                error instanceof Error ? error.message : "error desconocido",
+            },
+          };
+        }
+      },
+    );
+    for (const result of results) {
+      if (result.batch) batches.push(result.batch);
+      if (result.skipped) skippedUrls.push(result.skipped);
     }
     return mergeBatches(batches, {
       mode: "mutable-category-pages",
       indexUrl: connector.endpoint_url,
-      extractorVersion: "awards-radar-v3",
+      extractorVersion: "awards-radar-v4",
       categoriesChecked: Object.keys(categoryUrls).length,
       skippedUrls,
     });
@@ -346,6 +390,7 @@ export const CONNECTORS = Object.freeze({
       connector.endpoint_url,
       { headers: { Accept: "text/html", "User-Agent": "Runscars/0.1" } },
       fetcher,
+      requestTimeout(connector),
     );
     return withDiscovery(
       {
@@ -377,6 +422,7 @@ export const CONNECTORS = Object.freeze({
       connector.endpoint_url,
       { headers: { Accept: "text/html", "User-Agent": "Runscars/0.1" } },
       fetcher,
+      requestTimeout(connector),
     );
     return withDiscovery(
       {
@@ -405,6 +451,7 @@ export const CONNECTORS = Object.freeze({
       connector.endpoint_url,
       { headers },
       fetcher,
+      requestTimeout(connector),
     );
     const fallbackUrl =
       connector.configuration.article_fallback_url ??
@@ -422,7 +469,12 @@ export const CONNECTORS = Object.freeze({
     const article =
       articleUrl === connector.endpoint_url
         ? listing
-        : await fetchText(articleUrl, { headers }, fetcher);
+        : await fetchText(
+            articleUrl,
+            { headers },
+            fetcher,
+            requestTimeout(connector),
+          );
     return withDiscovery(
       {
         ...parseRingerSelectionFixture(article, {
@@ -450,12 +502,20 @@ export const CONNECTORS = Object.freeze({
       Accept: "text/html",
       "User-Agent": "Runscars/0.1",
     };
-    const hq = await fetchText(connector.endpoint_url, { headers }, fetcher);
+    const timeoutMs = requestTimeout(connector);
+    const articleCache = new Map();
+    const loadHtml = (url) => {
+      if (!articleCache.has(url)) {
+        articleCache.set(url, fetchText(url, { headers }, fetcher, timeoutMs));
+      }
+      return articleCache.get(url);
+    };
+    const hq = await loadHtml(connector.endpoint_url);
     const categoryUrls = discoverAwardsWatchCategoryUrls(hq);
     const archiveUrl =
       connector.configuration.archive_url ??
       "https://awardswatch.com/category/predictions/film-predictions/oscars-predictions/2027-oscar-predictions/";
-    const archive = await fetchText(archiveUrl, { headers }, fetcher);
+    const archive = await loadHtml(archiveUrl);
     const categoryIds = connector.configuration.category_ids ?? [
       "best-picture",
       "directing",
@@ -485,7 +545,7 @@ export const CONNECTORS = Object.freeze({
           categoryId,
         );
         if (!articleUrl) {
-          const listing = await fetchText(categoryUrl, { headers }, fetcher);
+          const listing = await loadHtml(categoryUrl);
           articleUrl = discoverLatestAwardsWatchArticle(
             listing,
             connector.configuration.ceremony_year ?? 2027,
@@ -500,7 +560,7 @@ export const CONNECTORS = Object.freeze({
           });
           continue;
         }
-        const article = await fetchText(articleUrl, { headers }, fetcher);
+        const article = await loadHtml(articleUrl);
         const batch = mutableBatch(
           parseAwardsWatchArticleFixture(article, {
             connectorId: connector.id,
@@ -526,7 +586,7 @@ export const CONNECTORS = Object.freeze({
       {
         connectorId: connector.id,
         sourceId: "awardswatch",
-        extractorVersion: "awardswatch-multicategory-v4",
+        extractorVersion: "awardswatch-multicategory-v5",
         seasonId: connector.configuration.season_id,
         capturedAt,
         sourceUrl: connector.endpoint_url,

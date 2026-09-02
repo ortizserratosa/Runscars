@@ -2,15 +2,21 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { localizedPath } from "../../lib/i18n/config";
 import { getRequestLocale } from "../../lib/i18n/server";
+import { buildLocalizedMetadata } from "../../lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const en = (await getRequestLocale()) === "en";
-  return {
-    title: en ? "Methodology" : "Metodología",
+  const locale = await getRequestLocale();
+  const en = locale === "en";
+  return buildLocalizedMetadata({
+    locale,
+    path: "/metodologia",
+    title: en
+      ? "How the Oscar Predictions Consensus Works"
+      : "Cómo funciona el consenso de predicciones Oscar",
     description: en
-      ? "How Runscars separates, normalises, aggregates and locks data."
-      : "Cómo separa, normaliza, agrega y congela datos Runscars.",
-  };
+      ? "See how Runscars combines professional Oscar prediction lists while preserving sources, original values and independent signals."
+      : "Descubre cómo Runscars combina listas profesionales de predicciones Oscar conservando fuentes, valores originales y señales separadas.",
+  });
 }
 
 export default async function MethodologyPage() {

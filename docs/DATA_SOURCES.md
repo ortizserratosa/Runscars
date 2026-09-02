@@ -1,7 +1,7 @@
 # Registro de fuentes
 
 **Estado:** fase 8.5 cerrada; fuentes públicas derivadas de datos reales
-**Última revisión:** 2026-08-29
+**Última revisión:** 2026-09-01
 
 ## 1. Objetivo
 
@@ -231,10 +231,10 @@ como estado actual:
 
 - Awards Daily consulta en cada run su búsqueda WordPress de predicciones 2027
   y conserva la combinación mínima de publicaciones que aporta la lista más
-  reciente de cada categoría; el corte verificado más nuevo es del 31 de julio
+  reciente de cada categoría; el corte verificado más nuevo es del 28 de agosto
   de 2026 y contiene las ocho categorías públicas.
 - Awards Radar consulta sus ocho páginas de categoría, cuyo ranking visible
-  indica actualización del 20 de julio de 2026.
+  indica actualización del 29 de agosto de 2026.
 - AwardsWatch descubre por archivo la publicación más reciente de cada
   categoría.
 - Next Best Picture y Midnight Critics versionan por contenido sus páginas
@@ -245,6 +245,13 @@ como estado actual:
 Una misma URL actualizable puede generar varias revisiones inmutables
 identificadas por contenido. Un run sin cambios no crea observaciones nuevas y
 deja un evento explícito `source.unchanged`.
+
+Desde el mantenimiento del 2026-09-01, la cobertura esperada forma parte de la
+configuración: Awards Daily, Awards Radar, Next Best Picture y Midnight Critics
+requieren las ocho categorías; AwardsWatch requiere las seis que publica para
+2027 y sigue comprobando los dos guiones como opcionales; The Ringer requiere
+Mejor película. Una omisión requerida convierte el run en fallido aunque otras
+páginas se hayan leído correctamente.
 
 El mantenimiento del 2026-08-07 acotó Awards Daily al cuerpo editorial,
 descartó sus filas `Alt.` y separó `Makeup and Hair` de vestuario. Las
@@ -260,6 +267,18 @@ estructurada, numeración consecutiva o patrón de selección estricto. Un cambi
 de estructura falla de forma aislada y no reemplaza el último dato válido. Las
 páginas mutables guardan cada cambio como una publicación completa e inmutable,
 incluso cuando conservan la misma URL canónica.
+
+El 2026-09-01 `awards-daily-v6` incorporó la errata verificable `Seth Rogan` →
+`Seth Rogen` solo para matching, y `awardswatch-multicategory-v5` eliminó del
+sujeto de matching el sufijo editorial espaciado `( A24)`. El valor `raw`
+original permanece intacto. Las revisiones narrativas pendientes de
+`awards-daily-v3` se descartaron con historial, sin publicar sus falsos
+positivos.
+
+Ese mantenimiento elevó Awards Radar a `awards-radar-v4`: corrige
+`Sophie Okonado` → `Sophie Okonedo` solo para matching y, conforme a D-052,
+interpreta `Película principal (or Alternativa)` como una única candidatura a
+la película principal. La alternativa y la errata siguen visibles en `raw`.
 
 Kalshi y Polymarket usan sus API públicas en un proceso horario independiente.
 Kalshi consulta las series 2027 de nominación y ganador de cada categoría

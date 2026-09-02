@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { localizedPath } from "../../lib/i18n/config";
 import { getRequestLocale } from "../../lib/i18n/server";
 import { AccountNav } from "./AccountNav";
+import { BrandLogo } from "./BrandLogo";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 
 export async function SiteHeader() {
@@ -16,8 +17,7 @@ export async function SiteHeader() {
         href={href("/")}
         aria-label={en ? "Runscars, home" : "Runscars, portada"}
       >
-        <span className="wordmark-mark">R</span>
-        <span>RUNSCARS</span>
+        <BrandLogo compact />
       </Link>
 
       <nav

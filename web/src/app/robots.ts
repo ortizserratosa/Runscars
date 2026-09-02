@@ -6,7 +6,11 @@ export default function robots(): MetadataRoute.Robots {
 
   return {
     rules: allowIndexing
-      ? { userAgent: "*", allow: "/", disallow: ["/admin", "/cuenta"] }
+      ? {
+          userAgent: "*",
+          allow: "/",
+          disallow: ["/admin", "/cuenta", "/api/", "/auth/"],
+        }
       : { userAgent: "*", disallow: "/" },
     sitemap: allowIndexing ? `${siteUrl}/sitemap.xml` : undefined,
   };

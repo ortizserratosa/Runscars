@@ -16,7 +16,7 @@ test("focuses the homepage on consensus, evolution and personal rankings", async
 }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    "La carrera",
+    "Predicciones Oscar 2027",
   );
   await expect(page.getByText("Predicciones", { exact: true })).toBeVisible();
   await expect(page.getByText("Evolución", { exact: true })).toBeVisible();
@@ -374,7 +374,7 @@ test("publishes equivalent English routes and language metadata", async ({
   await page.goto("/en");
   await expect(page.locator("html")).toHaveAttribute("lang", "en-GB");
   await expect(
-    page.getByRole("heading", { level: 1, name: /The road to the Oscars/ }),
+    page.getByRole("heading", { level: 1, name: /Oscar predictions 2027/ }),
   ).toBeVisible();
   await expect(
     page.getByRole("link", { name: "Explore the season", exact: true }),
@@ -389,7 +389,7 @@ test("publishes equivalent English routes and language metadata", async ({
   );
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
     "content",
-    /\/og-20260830\.png$/,
+    /\/runscars-social-v1\.png$/,
   );
 
   await page.goto("/en/temporadas/2027/mejor-pelicula");
@@ -448,7 +448,63 @@ test("serves launch SEO and security controls", async ({ request }) => {
 
   const sitemap = await request.get("/sitemap.xml");
   expect(sitemap.ok()).toBe(true);
-  expect(await sitemap.text()).toContain("/en/temporadas/2027");
+  const sitemapText = await sitemap.text();
+  expect(sitemapText).toContain("/en/temporadas/2027");
+  expect(sitemapText).toContain("/peliculas/the-odyssey");
+  expect(sitemapText).toContain("/fuentes/awards-daily");
+  expect(sitemapText).toContain("/archivo/2026");
+  expect(sitemapText).toContain('hreflang="x-default"');
+});
+
+test("targets Oscar prediction searches in Spanish and English", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await expect(page).toHaveTitle(
+    "Predicciones Oscar 2027: ranking y consenso | Runscars",
+  );
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+    "content",
+    /Predicciones de los Oscar 2027 actualizadas/,
+  );
+  await expect(
+    page.getByRole("heading", {
+      level: 1,
+      name: /Predicciones Oscar 2027/,
+    }),
+  ).toBeVisible();
+  const spanishSchema = JSON.parse(
+    (await page.locator('script[type="application/ld+json"]').textContent()) ??
+      "{}",
+  );
+  expect(spanishSchema["@graph"]).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({ "@type": "WebSite", name: "Runscars" }),
+      expect.objectContaining({
+        "@type": "CollectionPage",
+        inLanguage: "es-ES",
+      }),
+    ]),
+  );
+
+  await page.goto("/en");
+  await expect(page).toHaveTitle(
+    "Oscar Predictions 2027: Expert Consensus | Runscars",
+  );
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+    "content",
+    /Updated 2027 Oscar predictions/,
+  );
+  await expect(page.locator('meta[property="og:title"]')).toHaveAttribute(
+    "content",
+    "Oscar Predictions 2027: Expert Consensus | Runscars",
+  );
+
+  await page.goto("/acceso");
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
+    "content",
+    /noindex/,
+  );
 });
 
 test("does not expose editorial administration to anonymous users", async ({

@@ -1,6 +1,6 @@
 # Registro de decisiones
 
-**Última revisión:** 2026-08-29
+**Última revisión:** 2026-09-01
 
 ## Cómo usar este registro
 
@@ -16,58 +16,61 @@ pasado para ocultar cambios de criterio.
 
 ## Resumen
 
-| ID | Decisión | Estado |
-|---|---|---|
-| D-001 | Nombre de trabajo Runscars | Aceptada |
-| D-002 | Proyecto personal durante prototipo | Aceptada |
-| D-003 | TMDB para metadatos | Aceptada |
-| D-004 | Tres señales separadas | Aceptada |
-| D-005 | Año de ceremonia como etiqueta principal | Aceptada |
-| D-006 | Ocho categorías iniciales | Aceptada |
-| D-007 | Cinco ceremonias históricas en el MVP | Aceptada |
-| D-008 | Comentarios fuera del MVP | Aceptada |
-| D-009 | Actualización diaria y snapshot semanal | Reemplazada |
-| D-010 | Stack web gestionado | Aceptada |
-| D-011 | Consenso Borda normalizado | Aceptada |
-| D-012 | Agregadores críticos solo como contexto | Aceptada |
-| D-013 | Umbrales y deduplicación profesionales de fase 1 | Aceptada |
-| D-014 | Consenso de rankings parciales de usuarios | Propuesta |
-| D-015 | Catálogo de fuentes sin máximo rígido | Aceptada |
-| D-016 | Aplicación definitiva separada del prototipo | Aceptada |
-| D-017 | Validación SQL portable además del flujo Supabase | Aceptada |
-| D-018 | Catálogo TMDB desacoplado del runtime web | Aceptada |
-| D-019 | Ingesta append-only con matching conservador | Aceptada |
-| D-020 | Agregados derivados y snapshots diferidos | Aceptada |
-| D-021 | Snapshots como envolventes inmutables con puntero vigente | Aceptada |
-| D-022 | Evaluación versionada sobre cierres explícitos | Aceptada |
-| D-023 | Compatibilidad explícita para `brace-expansion` corregido | Aceptada |
-| D-024 | Candidatura genérica y contratos v2 compatibles | Aceptada |
-| D-025 | Cobertura profesional mínima por medio y categoría | Aceptada |
-| D-026 | Mercados separados y append-only | Aceptada |
-| D-027 | Archivo oficial sin predicciones históricas | Aceptada |
-| D-028 | Discovery diario y revisiones inmutables de páginas vivas | Aceptada |
-| D-029 | Recuperación de runs y revisión editorial vigente | Aceptada |
-| D-030 | Discovery de mercados acotado por ceremonia y serie | Aceptada |
-| D-031 | Identidad gestionada y privacidad comunitaria por capas | Aceptada |
-| D-032 | Cortes públicos solo ante cambios efectivos de proveedor | Aceptada |
-| D-033 | Predicción y evolución como superficie principal | Aceptada |
-| D-034 | Capturas de mercado compactas y efectivas | Aceptada |
-| D-035 | Administración por allowlist y auditoría inmutable | Aceptada |
-| D-036 | Archivo público oficial versionado sin predicción retroactiva | Aceptada |
-| D-037 | Evaluación pública derivada de cierres y resultados vigentes | Aceptada |
-| D-038 | Imágenes directas ante agotamiento de transformaciones | Aceptada |
-| D-039 | Agregadores como descubridores, no como voces duplicadas | Aceptada |
-| D-040 | Crítica pública por agregador y navegación por secciones | Aceptada |
-| D-041 | Cobertura crítica derivada de las predicciones activas | Aceptada |
-| D-042 | Comunidad pública y visionado vinculado a quinielas | Aceptada |
-| D-043 | Acceso reforzado y proveedor social explícito | Aceptada |
-| D-044 | Agregadores privados hasta obtener permiso compatible | Aceptada |
-| D-045 | Altas nuevas por Google durante la beta pública | Aceptada |
-| D-046 | URL pública inicial y protección de deployments | Reemplazada |
-| D-047 | Metascore atribuido en fichas y retirada de la pestaña Crítica | Aceptada |
-| D-048 | Dominio propio como URL pública canónica | Aceptada |
-| D-049 | Quinielas acotadas con una alternativa y una entrada manual | Aceptada |
-| D-050 | Verificación TMDB de entradas manuales | Aceptada |
+| ID    | Decisión                                                       | Estado      |
+| ----- | -------------------------------------------------------------- | ----------- |
+| D-001 | Nombre de trabajo Runscars                                     | Aceptada    |
+| D-002 | Proyecto personal durante prototipo                            | Aceptada    |
+| D-003 | TMDB para metadatos                                            | Aceptada    |
+| D-004 | Tres señales separadas                                         | Aceptada    |
+| D-005 | Año de ceremonia como etiqueta principal                       | Aceptada    |
+| D-006 | Ocho categorías iniciales                                      | Aceptada    |
+| D-007 | Cinco ceremonias históricas en el MVP                          | Aceptada    |
+| D-008 | Comentarios fuera del MVP                                      | Aceptada    |
+| D-009 | Actualización diaria y snapshot semanal                        | Reemplazada |
+| D-010 | Stack web gestionado                                           | Aceptada    |
+| D-011 | Consenso Borda normalizado                                     | Aceptada    |
+| D-012 | Agregadores críticos solo como contexto                        | Aceptada    |
+| D-013 | Umbrales y deduplicación profesionales de fase 1               | Aceptada    |
+| D-014 | Consenso de rankings parciales de usuarios                     | Propuesta   |
+| D-015 | Catálogo de fuentes sin máximo rígido                          | Aceptada    |
+| D-016 | Aplicación definitiva separada del prototipo                   | Aceptada    |
+| D-017 | Validación SQL portable además del flujo Supabase              | Aceptada    |
+| D-018 | Catálogo TMDB desacoplado del runtime web                      | Aceptada    |
+| D-019 | Ingesta append-only con matching conservador                   | Aceptada    |
+| D-020 | Agregados derivados y snapshots diferidos                      | Aceptada    |
+| D-021 | Snapshots como envolventes inmutables con puntero vigente      | Aceptada    |
+| D-022 | Evaluación versionada sobre cierres explícitos                 | Aceptada    |
+| D-023 | Compatibilidad explícita para `brace-expansion` corregido      | Aceptada    |
+| D-024 | Candidatura genérica y contratos v2 compatibles                | Aceptada    |
+| D-025 | Cobertura profesional mínima por medio y categoría             | Aceptada    |
+| D-026 | Mercados separados y append-only                               | Aceptada    |
+| D-027 | Archivo oficial sin predicciones históricas                    | Aceptada    |
+| D-028 | Discovery diario y revisiones inmutables de páginas vivas      | Aceptada    |
+| D-029 | Recuperación de runs y revisión editorial vigente              | Aceptada    |
+| D-030 | Discovery de mercados acotado por ceremonia y serie            | Aceptada    |
+| D-031 | Identidad gestionada y privacidad comunitaria por capas        | Aceptada    |
+| D-032 | Cortes públicos solo ante cambios efectivos de proveedor       | Aceptada    |
+| D-033 | Predicción y evolución como superficie principal               | Aceptada    |
+| D-034 | Capturas de mercado compactas y efectivas                      | Aceptada    |
+| D-035 | Administración por allowlist y auditoría inmutable             | Aceptada    |
+| D-036 | Archivo público oficial versionado sin predicción retroactiva  | Aceptada    |
+| D-037 | Evaluación pública derivada de cierres y resultados vigentes   | Aceptada    |
+| D-038 | Imágenes directas ante agotamiento de transformaciones         | Aceptada    |
+| D-039 | Agregadores como descubridores, no como voces duplicadas       | Aceptada    |
+| D-040 | Crítica pública por agregador y navegación por secciones       | Aceptada    |
+| D-041 | Cobertura crítica derivada de las predicciones activas         | Aceptada    |
+| D-042 | Comunidad pública y visionado vinculado a quinielas            | Aceptada    |
+| D-043 | Acceso reforzado y proveedor social explícito                  | Aceptada    |
+| D-044 | Agregadores privados hasta obtener permiso compatible          | Aceptada    |
+| D-045 | Altas nuevas por Google durante la beta pública                | Aceptada    |
+| D-046 | URL pública inicial y protección de deployments                | Reemplazada |
+| D-047 | Metascore atribuido en fichas y retirada de la pestaña Crítica | Aceptada    |
+| D-048 | Dominio propio como URL pública canónica                       | Aceptada    |
+| D-049 | Quinielas acotadas con una alternativa y una entrada manual    | Aceptada    |
+| D-050 | Verificación TMDB de entradas manuales                         | Aceptada    |
+| D-051 | Cobertura obligatoria y evidencia durable de automatización    | Aceptada    |
+| D-052 | Película principal ante una alternativa editorial explícita    | Aceptada    |
+| D-053 | Tipografía y sistema visual web v1                             | Propuesta   |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -92,7 +95,8 @@ pasado para ocultar cambios de criterio.
 
 - **Fecha:** 2026-07-24
 - **Estado:** Aceptada
-- **Decisión:** usar TMDB para fichas de películas y personas, fechas e imágenes.
+- **Decisión:** usar TMDB para fichas de películas y personas, fechas e
+  imágenes.
 - **Consecuencia:** guardar `tmdb_id`, mantener caché y correcciones locales, no
   exponer el token y añadir atribución antes de publicar.
 - **Límite:** TMDB no es fuente de predicciones ni resultados de premios.
@@ -111,16 +115,16 @@ pasado para ocultar cambios de criterio.
 
 - **Fecha:** 2026-07-24
 - **Estado:** Aceptada
-- **Decisión:** llamar a una temporada por el año de ceremonia y
-  mostrar también el año o periodo de elegibilidad.
+- **Decisión:** llamar a una temporada por el año de ceremonia y mostrar también
+  el año o periodo de elegibilidad.
 - **Ejemplo:** “Oscar 2027 · películas de 2026”.
 
 ## D-006 · Ocho categorías iniciales
 
 - **Fecha:** 2026-07-24
 - **Estado:** Aceptada
-- **Decisión:** película, dirección, cuatro categorías interpretativas
-  y dos categorías de guion.
+- **Decisión:** película, dirección, cuatro categorías interpretativas y dos
+  categorías de guion.
 - **Reabrir si:** el discovery revela que otra categoría es esencial para probar
   el modelo.
 
@@ -128,8 +132,8 @@ pasado para ocultar cambios de criterio.
 
 - **Fecha:** 2026-07-24
 - **Estado:** Aceptada
-- **Decisión:** temporada activa completa y cinco ceremonias previas
-  solo con nominados y ganadores confirmados.
+- **Decisión:** temporada activa completa y cinco ceremonias previas solo con
+  nominados y ganadores confirmados.
 - **Alternativas:** una ceremonia previa; todo el archivo histórico.
 
 ## D-008 · Comentarios fuera del MVP
@@ -145,20 +149,20 @@ pasado para ocultar cambios de criterio.
 
 - **Fecha:** 2026-07-24
 - **Estado:** Aceptada
-- **Decisión:** conectores automáticos una vez al día y snapshot
-  público una vez por semana, además de los dos cierres finales.
+- **Decisión:** conectores automáticos una vez al día y snapshot público una vez
+  por semana, además de los dos cierres finales.
 - **Reabrir si:** la frecuencia real de las fuentes exige otro ritmo.
 
 ## D-010 · Stack web gestionado
 
 - **Fecha:** 2026-07-24
 - **Estado:** Aceptada
-- **Decisión:** Next.js con TypeScript; Supabase para PostgreSQL, autenticación y
-  Row Level Security; Vercel para la web; Supabase Edge Functions y Cron para
+- **Decisión:** Next.js con TypeScript; Supabase para PostgreSQL, autenticación
+  y Row Level Security; Vercel para la web; Supabase Edge Functions y Cron para
   importaciones; Vitest y Playwright para pruebas.
 - **Motivo:** minimizar operación para un proyecto personal.
-- **Consecuencia:** usar migraciones SQL y tipos generados; no añadir inicialmente
-  un ORM adicional.
+- **Consecuencia:** usar migraciones SQL y tipos generados; no añadir
+  inicialmente un ORM adicional.
 
 ## D-011 · Consenso Borda normalizado
 
@@ -171,8 +175,8 @@ pasado para ocultar cambios de criterio.
   posiciones; no presentar el resultado como probabilidad.
 - **Motivo:** producir un orden único, transparente y sin ponderar el prestigio
   de las fuentes.
-- **Reabrir si:** las pruebas con el dataset de fase 1 muestran sesgos claros por
-  diferencias de longitud o cobertura.
+- **Reabrir si:** las pruebas con el dataset de fase 1 muestran sesgos claros
+  por diferencias de longitud o cobertura.
 
 ## Cierre de la fase 0
 
@@ -263,8 +267,8 @@ iniciar la fase 2.
 - **Fecha:** 2026-07-24
 - **Estado:** Aceptada
 - **Decisión:** ejecutar migraciones y seeds en PGlite durante pruebas y
-  generación de tipos, además de mantener Supabase CLI como flujo canónico
-  local y remoto.
+  generación de tipos, además de mantener Supabase CLI como flujo canónico local
+  y remoto.
 - **Motivo:** verificar sintaxis, relaciones, RLS, permisos e idempotencia sin
   depender de red ni de un daemon de contenedores en cada ejecución.
 - **Límite:** PGlite es infraestructura de prueba, no ORM ni base de datos de
@@ -294,17 +298,16 @@ iniciar la fase 2.
 
 - **Fecha:** 2026-07-24
 - **Estado:** Aceptada
-- **Decisión:** persistir publicaciones, capturas y observaciones originales
-  por separado; deduplicarlas con hashes estables y aceptar automáticamente
-  solo matches exactos contra títulos principales o alternativos.
+- **Decisión:** persistir publicaciones, capturas y observaciones originales por
+  separado; deduplicarlas con hashes estables y aceptar automáticamente solo
+  matches exactos contra títulos principales o alternativos.
 - **Revisión:** una identidad ausente o ambigua crea una observación pendiente
   sin participación y una entrada privada e idempotente en la cola editorial.
 - **Ejecución:** cada conector dispone de su propio run y log. Guardian JSON,
   RogerEbert RSS y AwardsWatch HTML forman el primer corte; un error no detiene
   el siguiente conector.
 - **Seguridad:** la función programada usa un secreto propio compartido entre
-  Edge Functions y Vault; la configuración versionada no contiene
-  credenciales.
+  Edge Functions y Vault; la configuración versionada no contiene credenciales.
 - **Motivo:** preservar evidencia, impedir matches plausibles pero falsos y
   permitir correcciones futuras sin destruir el historial.
 
@@ -443,17 +446,17 @@ ejemplos manuales de nominaciones y ganador coincidieron con
 
 - **Fecha:** 2026-07-25
 - **Estado:** Aceptada
-- **Decisión:** cada ejecución profesional consulta primero el índice, archivo
-  o página viva de su fuente. Awards Daily descubre artículos mediante su API
+- **Decisión:** cada ejecución profesional consulta primero el índice, archivo o
+  página viva de su fuente. Awards Daily descubre artículos mediante su API
   pública de WordPress; AwardsWatch y The Ringer recorren sus archivos; Awards
   Radar consulta una página actualizable por categoría; Next Best Picture y
   Midnight Critics comprueban directamente sus páginas vivas.
-- **Selección:** se ingieren las publicaciones elegibles recientes y el
-  agregado conserva, por categoría e intención, la de fecha más reciente. Una
-  publicación que omite una categoría no invalida la lista anterior de esa
-  categoría. Entre URLs distintas tiene prioridad la fecha de publicación; una
-  URL histórica sin fecha no puede desplazar una publicación fechada. Dentro de
-  una misma URL viva tiene prioridad la revisión capturada más recientemente.
+- **Selección:** se ingieren las publicaciones elegibles recientes y el agregado
+  conserva, por categoría e intención, la de fecha más reciente. Una publicación
+  que omite una categoría no invalida la lista anterior de esa categoría. Entre
+  URLs distintas tiene prioridad la fecha de publicación; una URL histórica sin
+  fecha no puede desplazar una publicación fechada. Dentro de una misma URL viva
+  tiene prioridad la revisión capturada más recientemente.
 - **Páginas vivas:** cuando una URL conserva su dirección pero cambia el
   ranking, cada contenido estructurado genera una publicación inmutable
   distinta. Repetir contenido idéntico reutiliza la revisión y no duplica
@@ -514,12 +517,12 @@ ejemplos manuales de nominaciones y ganador coincidieron con
 - **Decisión:** Supabase Auth gestiona el acceso mediante correo y contraseña;
   Next.js conserva la sesión SSR en cookies mediante PKCE. El correo no se
   duplica en el esquema público.
-- **Autorización:** perfil, rankings y visionados derivan siempre la identidad de
-  la sesión verificada. Las acciones vuelven a autorizar en servidor y PostgreSQL
-  aplica RLS como barrera final.
-- **Privacidad:** el perfil y los visionados son privados por defecto. Un ranking
-  público solo puede leerse si el perfil también es público; publicar los
-  visionados requiere una preferencia adicional explícita.
+- **Autorización:** perfil, rankings y visionados derivan siempre la identidad
+  de la sesión verificada. Las acciones vuelven a autorizar en servidor y
+  PostgreSQL aplica RLS como barrera final.
+- **Privacidad:** el perfil y los visionados son privados por defecto. Un
+  ranking público solo puede leerse si el perfil también es público; publicar
+  los visionados requiere una preferencia adicional explícita.
 - **Portabilidad y borrado:** la exportación autenticada incluye cuenta, perfil,
   rankings y visionados. El borrado exige la contraseña actual y usa la clave de
   servicio únicamente en servidor para eliminar `auth.users`; las claves
@@ -538,8 +541,8 @@ ejemplos manuales de nominaciones y ganador coincidieron con
   aparición, posición o longitud de lista.
 - **Navegación:** cada categoría ofrece sus cortes reales mediante una URL
   estable. El ranking seleccionado se compara con el corte real inmediatamente
-  anterior del mismo alcance y método, no con una ejecución manual o
-  programada que conserve exactamente las mismas señales.
+  anterior del mismo alcance y método, no con una ejecución manual o programada
+  que conserve exactamente las mismas señales.
 - **Histórico:** los snapshots redundantes ya bloqueados permanecen inmutables,
   pero la lectura los colapsa por estados consecutivos equivalentes. No se
   borran ni se reescriben.
@@ -550,8 +553,8 @@ ejemplos manuales de nominaciones y ganador coincidieron con
   día.
 - **No cambios:** una nueva captura, URL o versión de extractor con la misma
   lista o selección efectiva no genera un corte. Una vuelta posterior a un
-  estado antiguo sí genera otro corte porque existe un cambio respecto al
-  estado inmediatamente anterior.
+  estado antiguo sí genera otro corte porque existe un cambio respecto al estado
+  inmediatamente anterior.
 - **Mercados:** Kalshi y Polymarket conservan capturas horarias separadas. No
   participan en la identidad de un corte profesional ni en sus movimientos.
 - **Reemplaza:** la periodicidad semanal de D-009. Se mantiene la ingesta diaria
@@ -583,10 +586,10 @@ ejemplos manuales de nominaciones y ganador coincidieron con
 - **Fecha:** 2026-08-10
 - **Estado:** Aceptada
 - **Decisión:** conservar por contrato el payload original necesario para
-  identificarlo y, en cada captura, únicamente los campos originales que
-  forman la señal de precio. El hash de una captura depende de probabilidad,
-  precio, divisa, volumen e interés abierto; la hora de comprobación no crea por
-  sí sola un nuevo estado.
+  identificarlo y, en cada captura, únicamente los campos originales que forman
+  la señal de precio. El hash de una captura depende de probabilidad, precio,
+  divisa, volumen e interés abierto; la hora de comprobación no crea por sí sola
+  un nuevo estado.
 - **Alcance:** solo se persisten contratos que se puedan asignar a una de las
   ocho categorías públicas. Kalshi y Polymarket siguen separados, horarios y
   fuera de Borda.
@@ -606,10 +609,10 @@ ejemplos manuales de nominaciones y ganador coincidieron con
 - **Decisión:** autorizar la consola editorial mediante una allowlist privada
   vinculada a `auth.users`, no mediante un campo editable del perfil ni una
   afirmación del cliente. Cada Server Action vuelve a verificar sesión y rol.
-- **Mutaciones:** matching, exclusión, descarte y gobierno de fuentes se ejecutan
-  mediante funciones transaccionales de PostgreSQL. La clave de servicio solo
-  existe en servidor y ninguna función editorial se concede a `anon` o
-  `authenticated`.
+- **Mutaciones:** matching, exclusión, descarte y gobierno de fuentes se
+  ejecutan mediante funciones transaccionales de PostgreSQL. La clave de
+  servicio solo existe en servidor y ninguna función editorial se concede a
+  `anon` o `authenticated`.
 - **Auditoría:** cada operación registra administrador, motivo, entidad, estado
   anterior y posterior cuando procede y una clave idempotente. La bitácora es
   append-only; corregir una acción exige otra acción.
@@ -625,8 +628,8 @@ ejemplos manuales de nominaciones y ganador coincidieron con
   Las cinco ediciones publican nominados y ganadores de las ocho categorías con
   URL, autor y fecha de captura de Academy.
 - **Separación:** el archivo histórico es verdad oficial, no una reconstrucción
-  de expectativas. No se crean snapshots ni métricas retrospectivas para años
-  en los que Runscars no capturó predicciones.
+  de expectativas. No se crean snapshots ni métricas retrospectivas para años en
+  los que Runscars no capturó predicciones.
 - **Operación vigente:** las nuevas nominaciones y ganadores se registran como
   `official_result_sets` v2 inmutables desde la consola editorial. El manifiesto
   histórico estático no sustituye ese flujo operativo.
@@ -669,9 +672,9 @@ ejemplos manuales de nominaciones y ganador coincidieron con
 - **Decisión:** Metacritic, Rotten Tomatoes y FilmAffinity pueden descubrir
   reseñas profesionales, pero la observación individual conserva como fuente al
   medio y al autor originales. Cada hallazgo guarda una relación de
-  descubrimiento con la URL del agregador. La reseña individual solo entra en
-  la media si su valor es atribuible y la observación queda publicada; el
-  agregador no se convierte en una crítica adicional.
+  descubrimiento con la URL del agregador. La reseña individual solo entra en la
+  media si su valor es atribuible y la observación queda publicada; el agregador
+  no se convierte en una crítica adicional.
 - **Presentación:** el ranking 0–5 deduplica por publicación original. Los
   agregados Tomatometer y Metascore se muestran en un bloque contextual
   separado, con su escala, denominador y fecha originales; nunca participan en
@@ -707,8 +710,8 @@ ejemplos manuales de nominaciones y ganador coincidieron con
 - **Estado:** Aceptada
 - **Decisión:** cada carga de Metacritic y Rotten Tomatoes debe incorporar los
   valores numéricos publicados para las películas presentes en las ocho
-  categorías de predicción activas. La página solo muestra la intersección
-  entre esas predicciones y las observaciones de agregadores disponibles.
+  categorías de predicción activas. La página solo muestra la intersección entre
+  esas predicciones y las observaciones de agregadores disponibles.
 - **Límite:** una página sin puntuación publicada, una puntuación `TBD` o una
   película que todavía no tenga reseñas profesionales no se convierte en un
   valor ficticio. Queda pendiente de la siguiente captura.
@@ -742,9 +745,9 @@ ejemplos manuales de nominaciones y ganador coincidieron con
   nuevas de al menos 12 caracteres. Añadir Google OAuth como alternativa de
   inicio de sesión, con el callback SSR de Runscars y sin guardar credenciales
   del proveedor en el repositorio.
-- **Privacidad:** los perfiles permanecen privados por defecto, el correo no
-  se publica y la visibilidad de visionados sigue limitada a películas incluidas
-  en rankings públicos de perfiles públicos. La interfaz ofrece exportación y
+- **Privacidad:** los perfiles permanecen privados por defecto, el correo no se
+  publica y la visibilidad de visionados sigue limitada a películas incluidas en
+  rankings públicos de perfiles públicos. La interfaz ofrece exportación y
   borrado de la cuenta.
 - **Protección:** se conservan rotación de refresh tokens, límites de frecuencia
   de Supabase y RLS. El login no bloquea cuentas antiguas por la nueva longitud;
@@ -752,9 +755,9 @@ ejemplos manuales de nominaciones y ganador coincidieron con
 - **Activación (2026-08-26):** Google OAuth está publicado para usuarios
   externos con los permisos básicos `openid`, `email` y `profile`. El callback
   permanece en Supabase y la URL pública es `https://runscars.vercel.app`; el
-  alias de staging y desarrollo local siguen admitidos durante la transición.
-  La prueba completa terminó en `/cuenta` con una sesión válida. El Client
-  Secret vive únicamente en Google Cloud y Supabase; no forma parte del código.
+  alias de staging y desarrollo local siguen admitidos durante la transición. La
+  prueba completa terminó en `/cuenta` con una sesión válida. El Client Secret
+  vive únicamente en Google Cloud y Supabase; no forma parte del código.
 
 ## D-044 · Agregadores privados hasta obtener permiso compatible
 
@@ -789,42 +792,43 @@ ejemplos manuales de nominaciones y ganador coincidieron con
 - **Motivo:** el remitente compartido de Supabase tiene límites y entregabilidad
   propios de desarrollo. La beta no debe depender de un correo de confirmación
   que no controlamos, y Google ya está verificado extremo a extremo.
-- **Aplicación:** la interfaz y la acción de servidor rechazan el alta por email.
-  Un hook `before-user-created` de Supabase aplica la misma regla aunque se
-  invoque Auth directamente; permite `google` y no participa en el inicio de
+- **Aplicación:** la interfaz y la acción de servidor rechazan el alta por
+  email. Un hook `before-user-created` de Supabase aplica la misma regla aunque
+  se invoque Auth directamente; permite `google` y no participa en el inicio de
   sesión de cuentas de correo existentes.
 - **Reapertura:** activar `NEXT_PUBLIC_EMAIL_SIGNUP_ENABLED` y
   `auth.email.enable_signup` solo después de configurar remitente, SPF, DKIM y
   DMARC, comprobar entrega y documentar recuperación de contraseña.
-- **Refina:** D-043 en el canal de alta; no cambia la autoridad de Supabase Auth,
-  RLS, la privacidad por defecto ni el mínimo de 12 caracteres cuando vuelva el
-  alta por contraseña.
+- **Refina:** D-043 en el canal de alta; no cambia la autoridad de Supabase
+  Auth, RLS, la privacidad por defecto ni el mínimo de 12 caracteres cuando
+  vuelva el alta por contraseña.
 
 ## D-046 · URL pública inicial y protección de deployments
 
 - **Fecha:** 2026-08-26
 - **Estado:** Reemplazada por D-048
 - **Decisión:** publicar el MVP en `https://runscars.vercel.app` y conservar
-  `https://runscars-staging.vercel.app` como alias temporal del mismo deployment.
-  La protección SSO de Vercel se desactiva porque también bloqueaba el dominio
-  público `vercel.app`; las previews siguen sin indexación mediante `robots`.
-- **Motivo:** el lanzamiento necesita una URL estable y pública sin contratar
-  un dominio ni aceptar un gasto en nombre del propietario. El dominio canónico,
+  `https://runscars-staging.vercel.app` como alias temporal del mismo
+  deployment. La protección SSO de Vercel se desactiva porque también bloqueaba
+  el dominio público `vercel.app`; las previews siguen sin indexación mediante
+  `robots`.
+- **Motivo:** el lanzamiento necesita una URL estable y pública sin contratar un
+  dominio ni aceptar un gasto en nombre del propietario. El dominio canónico,
   Supabase Auth y los callbacks de la aplicación usan la nueva URL.
 - **Reapertura:** cuando exista un dominio propio, añadirlo al proyecto, mover
-  canonical, Auth y la pantalla OAuth, y reactivar la protección de previews
-  con la excepción exclusiva del dominio público.
+  canonical, Auth y la pantalla OAuth, y reactivar la protección de previews con
+  la excepción exclusiva del dominio público.
 
 ## D-047 · Metascore atribuido en fichas y retirada de la pestaña Crítica
 
 - **Fecha:** 2026-08-29
 - **Estado:** Aceptada
-- **Decisión de producto:** retirar `Crítica` de la navegación y del sitemap.
-  La ruta antigua `/critica` redirige permanentemente a la temporada activa. La
+- **Decisión de producto:** retirar `Crítica` de la navegación y del sitemap. La
+  ruta antigua `/critica` redirige permanentemente a la temporada activa. La
   recepción externa deja de ser un ranking o destino independiente y pasa a ser
   información contextual de la película.
-- **Alcance aplicado:** mostrar únicamente la observación numérica publicada
-  más reciente de tipo `score_aggregate` y fuente `metacritic` en la ficha de la
+- **Alcance aplicado:** mostrar únicamente la observación numérica publicada más
+  reciente de tipo `score_aggregate` y fuente `metacritic` en la ficha de la
   película correspondiente. Se conservan valor original sobre 100, número de
   críticas, URL de la ficha del título y fecha de captura. No se copian reseñas,
   extractos ni cuerpo editorial.
@@ -865,8 +869,8 @@ ejemplos manuales de nominaciones y ganador coincidieron con
 - **Estado:** Aceptada
 - **Decisión:** el máximo de posiciones de un ranking personal es el número de
   plazas oficiales de nominación de su temporada y categoría más una
-  alternativa. En las categorías públicas actuales son 11 posiciones para
-  Mejor película y 6 para las demás.
+  alternativa. En las categorías públicas actuales son 11 posiciones para Mejor
+  película y 6 para las demás.
 - **Entrada manual:** cada ranking puede incluir como máximo una película o
   persona no rastreada por Runscars. La entrada debe superar la comprobación
   TMDB definida en D-050.
@@ -897,3 +901,57 @@ ejemplos manuales de nominaciones y ganador coincidieron con
   profesional.
 - **Motivo:** reducir trolling y errores de identidad sin convertir la base de
   metadatos en autoridad de candidaturas o resultados.
+
+## D-051 · Cobertura obligatoria y evidencia durable de automatización
+
+- **Fecha:** 2026-09-01
+- **Estado:** Aceptada
+- **Cobertura:** cada conector automático de predicciones declara las categorías
+  que su fuente debe aportar. Si una revisión omite una de ellas, el run falla
+  de forma aislada y conserva el último dato válido; un `discovery.partial` no
+  puede cerrar el conector como correcto.
+- **Tiempo:** toda petición externa tiene timeout y reintentos acotados. Las
+  páginas independientes de Awards Radar y los proveedores de mercados se
+  consultan en paralelo con concurrencia limitada; los conectores profesionales
+  usan un pool global de tres workers y la persistencia, un pool acotado de seis
+  workers por conector. Una observación duplicada no repite el cierre semántico
+  de revisiones. Ningún proveedor ni una lista grande puede consumir
+  indefinidamente la ejecución de los demás.
+- **Recuperación:** profesionales, mercados y refrescos de snapshots cierran
+  como fallido cualquier intento `running` abandonado antes de empezar otro.
+- **Evidencia:** cada refresco diario de snapshots conserva un run privado con
+  inicio, fin, estado y resultado por categoría, incluso cuando todas quedan
+  `unchanged`. Así se distingue un día sin cambios de un Cron ausente o tardío.
+- **Refina:** D-028, D-029 y D-032 sin modificar la cobertura metodológica de
+  D-025 ni la inmutabilidad de los snapshots ya bloqueados.
+
+## D-052 · Película principal ante una alternativa editorial explícita
+
+- **Fecha:** 2026-09-01
+- **Estado:** Aceptada
+- **Decisión:** cuando una predicción de interpretación escribe
+  `Película principal (or Película alternativa)`, el matching usa únicamente la
+  primera como candidatura actual y conserva íntegra la línea original.
+- **Límite:** la alternativa no recibe un segundo voto ni reemplaza el valor
+  original. Una construcción distinta o sin película principal inequívoca
+  continúa en revisión editorial.
+- **Motivo:** la fuente publica un único puesto y presenta la segunda película
+  como alternativa; duplicar el puesto inflaría la señal y dejarlo sin publicar
+  ocultaría la candidatura principal expresada por el medio.
+
+## D-053 · Tipografía y sistema visual web v1
+
+- **Fecha:** 2026-09-01
+- **Estado:** Propuesta
+- **Propuesta:** traducir el tablero vinculante
+  `docs/brand/runscars-brand-board-v1.png` a tokens y componentes web con Bodoni
+  Moda para titulares, Archivo para interfaz e IBM Plex Mono para datos. Usar el
+  monograma de abertura, `R` editorial y punto Acid como marca principal.
+- **Aplicación provisional:** la petición de rediseño autoriza su uso en la
+  implementación v1, pero no convierte la elección concreta de familias o la
+  arquitectura CSS en una decisión aceptada permanente.
+- **Límites:** preservar por separado predicciones, recepción atribuida y
+  comunidad; no incrustar el tablero en páginas; mantener cobertura y
+  procedencia en móvil; conservar la excepción de atribución de D-047.
+- **Documentación:** `docs/brand/IDENTITY.md` especifica paleta, variantes,
+  patrones, responsive, accesibilidad y usos incorrectos.

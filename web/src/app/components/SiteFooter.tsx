@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { localizedPath } from "../../lib/i18n/config";
 import { getRequestLocale } from "../../lib/i18n/server";
+import { BrandLogo } from "./BrandLogo";
 
 export async function SiteFooter() {
   const locale = await getRequestLocale();
@@ -9,7 +10,10 @@ export async function SiteFooter() {
   return (
     <footer className="site-footer">
       <div>
-        <span className="footer-mark">R</span>
+        <BrandLogo
+          inverse
+          tagline={en ? "The race, with receipts." : "La carrera, con pruebas."}
+        />
         <p>
           {en
             ? "The road to the Oscars, with transparent data and sources."

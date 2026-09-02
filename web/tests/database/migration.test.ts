@@ -104,7 +104,7 @@ describe("versioned database foundation", () => {
       where id = 'awards-daily-predictions'
     `);
     expect(awardsDaily.rows[0]).toEqual({
-      extractor_version: "awards-daily-v5",
+      extractor_version: "awards-daily-v6",
       endpoint_url:
         "https://www.awardsdaily.com/wp-json/wp/v2/search?search=2027%20Oscar%20Predictions&per_page=20&_fields=id,url,title,subtype",
     });
@@ -261,6 +261,17 @@ describe("versioned database foundation", () => {
         ('candidate-actor-one-dune', 'fixture-person-one', 'Actor', 0),
         ('candidate-directing-team', 'fixture-person-one', 'Director', 0),
         ('candidate-directing-team', 'fixture-person-two', 'Director', 1);
+
+      insert into public.category_candidate_people (
+        category_candidate_id,
+        person_id,
+        role,
+        display_order
+      )
+      values
+        ('candidate-directing-team', 'fixture-person-one', 'Director', 1),
+        ('candidate-directing-team', 'fixture-person-two', 'Director', 0)
+      on conflict (category_candidate_id, person_id, role) do nothing;
     `);
 
     const result = await database.query<{
@@ -895,6 +906,9 @@ describe("versioned database foundation", () => {
     ).rejects.toThrow();
     await expect(
       database.query("select * from public.source_publication_captures"),
+    ).rejects.toThrow();
+    await expect(
+      database.query("select * from public.snapshot_refresh_runs"),
     ).rejects.toThrow();
   });
 

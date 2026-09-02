@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { JsonLd } from "../../components/JsonLd";
 import { localizedCategoryNameBySlug } from "../../../lib/i18n/categories";
 import { localeTag, localizedPath } from "../../../lib/i18n/config";
 import { getRequestLocale } from "../../../lib/i18n/server";
 import { getSourceDetail } from "../../../lib/repositories/sources";
+import { absoluteUrl, buildLocalizedMetadata } from "../../../lib/seo";
 
 type SourcePageProps = { params: Promise<{ slug: string }> };
 
@@ -34,13 +36,18 @@ export async function generateMetadata({
   const source = await getSourceDetail(slug);
   const locale = await getRequestLocale();
   return source
-    ? {
-        title: `${source.name} · ${locale === "en" ? "Source" : "Fuente"}`,
+    ? buildLocalizedMetadata({
+        locale,
+        path: `/fuentes/${source.id}`,
+        title:
+          locale === "en"
+            ? `${source.name} Oscar Predictions Source`
+            : `${source.name}: fuente de predicciones Oscar`,
         description:
           locale === "en"
-            ? `Publications and verifiable status for ${source.name} on Runscars.`
-            : `Publicaciones y estado verificable de ${source.name} en Runscars.`,
-      }
+            ? `See which 2027 Oscar predictions come from ${source.name}, with original publications, dates and verifiable provenance.`
+            : `Consulta qué predicciones de los Oscar 2027 aporta ${source.name}, con publicaciones, fechas y procedencia verificables.`,
+      })
     : { title: locale === "en" ? "Source not found" : "Fuente no encontrada" };
 }
 
@@ -51,9 +58,62 @@ export default async function SourcePage({ params }: SourcePageProps) {
   const source = await getSourceDetail(slug);
   if (!source) notFound();
   const activePublication = source.categories[0]?.publication;
+  const pageUrl = absoluteUrl(localizedPath(`/fuentes/${source.id}`, locale));
+  const organizationId = `${pageUrl}#source`;
 
   return (
     <main>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebPage",
+              "@id": `${pageUrl}#webpage`,
+              url: pageUrl,
+              name: source.name,
+              inLanguage: localeTag(locale),
+              about: { "@id": organizationId },
+              ...(source.lastChangedAt || source.lastSuccessfulCheckAt
+                ? {
+                    dateModified:
+                      source.lastChangedAt ?? source.lastSuccessfulCheckAt,
+                  }
+                : {}),
+            },
+            {
+              "@type": "Organization",
+              "@id": organizationId,
+              name: source.name,
+              url: source.homepageUrl,
+              sameAs: [source.homepageUrl],
+            },
+            {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                {
+                  "@type": "ListItem",
+                  position: 1,
+                  name: isEnglish ? "Home" : "Inicio",
+                  item: absoluteUrl(localizedPath("/", locale)),
+                },
+                {
+                  "@type": "ListItem",
+                  position: 2,
+                  name: isEnglish ? "Sources" : "Fuentes",
+                  item: absoluteUrl(localizedPath("/fuentes", locale)),
+                },
+                {
+                  "@type": "ListItem",
+                  position: 3,
+                  name: source.name,
+                  item: pageUrl,
+                },
+              ],
+            },
+          ],
+        }}
+      />
       <section className="source-hero">
         <div className="page-shell">
           <div className="breadcrumb">

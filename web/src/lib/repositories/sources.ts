@@ -1,5 +1,6 @@
 import "server-only";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { cache } from "react";
 import { isSupabaseConfigured } from "../environment";
 import { createSupabaseServerClient } from "../supabase/server";
 import {
@@ -305,7 +306,7 @@ function categoryViews(
   });
 }
 
-export async function getSourceDetail(
+export const getSourceDetail = cache(async function getSourceDetail(
   sourceId: string,
 ): Promise<SourceDetailView | null> {
   const predictions = await getCurrentCategoryPredictions();
@@ -409,4 +410,4 @@ export async function getSourceDetail(
           ),
         };
   }
-}
+});

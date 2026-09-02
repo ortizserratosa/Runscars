@@ -91,6 +91,25 @@ export class SupabaseMarketRepository {
     return { ...data, repeated: false };
   }
 
+  async failStaleRuns({ connectorId, staleBefore, recoveredAt }) {
+    const staleRuns = databaseError(
+      await this.client
+        .from("market_capture_runs")
+        .update({
+          status: "failed",
+          finished_at: recoveredAt,
+          error_summary:
+            "Ejecución abandonada; recuperada antes de iniciar un nuevo intento",
+        })
+        .eq("connector_id", connectorId)
+        .eq("status", "running")
+        .lt("started_at", staleBefore)
+        .select("id"),
+      "No se pudieron recuperar las capturas de mercado abandonadas",
+    );
+    return staleRuns.length;
+  }
+
   async saveContract(contract, runId) {
     const inserted =
       databaseError(
@@ -199,76 +218,83 @@ export async function runMarketConnectors({
   fetcher = fetch,
   now = () => new Date(),
 }) {
-  const results = [];
-  for (const connector of connectors) {
-    const capturedAt = now().toISOString();
-    const run = await repository.beginRun(
-      connector.id,
-      connector.extractor_version,
-      capturedAt,
-    );
-    if (run.repeated && run.status !== "running") {
-      results.push({
+  return Promise.all(
+    connectors.map(async (connector) => {
+      const capturedAt = now().toISOString();
+      const staleBefore = new Date(
+        new Date(capturedAt).valueOf() - 15 * 60 * 1000,
+      ).toISOString();
+      await repository.failStaleRuns?.({
         connectorId: connector.id,
-        status: "unchanged",
-        runId: run.id,
+        staleBefore,
+        recoveredAt: capturedAt,
       });
-      continue;
-    }
-    let contractsSeen = 0;
-    let snapshotsInserted = 0;
-    try {
-      const adapter = registry[connector.id];
-      if (!adapter) {
-        throw new Error(`Conector no implementado: ${connector.id}`);
-      }
-      const contracts = await adapter({ connector, capturedAt, fetcher });
-      contractsSeen = contracts.length;
-      const candidates = await repository.candidates(
-        connector.configuration.season_id,
+      const run = await repository.beginRun(
+        connector.id,
+        connector.extractor_version,
+        capturedAt,
       );
-      const prepared = await prepareMarketContracts(contracts, candidates);
-      for (const contract of prepared) {
-        if (await repository.saveContract(contract, run.id)) {
-          snapshotsInserted += 1;
-        }
+      if (run.repeated) {
+        return {
+          connectorId: connector.id,
+          status: run.status === "running" ? "running" : "unchanged",
+          runId: run.id,
+        };
       }
-      const finishedAt = new Date().toISOString();
-      await repository.finishRun(run.id, {
-        status: "succeeded",
-        finishedAt,
-        contractsSeen,
-        snapshotsInserted,
-        snapshotsDuplicate: contractsSeen - snapshotsInserted,
-      });
-      await repository.markConnector(connector.id, finishedAt);
-      results.push({
-        connectorId: connector.id,
-        status: "succeeded",
-        runId: run.id,
-        contractsSeen,
-        snapshotsInserted,
-      });
-    } catch (error) {
-      const message =
-        error instanceof Error ? error.message : "Error desconocido";
-      const finishedAt = new Date().toISOString();
-      await repository.finishRun(run.id, {
-        status: "failed",
-        finishedAt,
-        contractsSeen,
-        snapshotsInserted,
-        snapshotsDuplicate: contractsSeen - snapshotsInserted,
-        errorSummary: message,
-      });
-      await repository.markConnector(connector.id, finishedAt, message);
-      results.push({
-        connectorId: connector.id,
-        status: "failed",
-        runId: run.id,
-        error: message,
-      });
-    }
-  }
-  return results;
+      let contractsSeen = 0;
+      let snapshotsInserted = 0;
+      try {
+        const adapter = registry[connector.id];
+        if (!adapter) {
+          throw new Error(`Conector no implementado: ${connector.id}`);
+        }
+        const contracts = await adapter({ connector, capturedAt, fetcher });
+        contractsSeen = contracts.length;
+        const candidates = await repository.candidates(
+          connector.configuration.season_id,
+        );
+        const prepared = await prepareMarketContracts(contracts, candidates);
+        for (const contract of prepared) {
+          if (await repository.saveContract(contract, run.id)) {
+            snapshotsInserted += 1;
+          }
+        }
+        const finishedAt = new Date().toISOString();
+        await repository.finishRun(run.id, {
+          status: "succeeded",
+          finishedAt,
+          contractsSeen,
+          snapshotsInserted,
+          snapshotsDuplicate: contractsSeen - snapshotsInserted,
+        });
+        await repository.markConnector(connector.id, finishedAt);
+        return {
+          connectorId: connector.id,
+          status: "succeeded",
+          runId: run.id,
+          contractsSeen,
+          snapshotsInserted,
+        };
+      } catch (error) {
+        const message =
+          error instanceof Error ? error.message : "Error desconocido";
+        const finishedAt = new Date().toISOString();
+        await repository.finishRun(run.id, {
+          status: "failed",
+          finishedAt,
+          contractsSeen,
+          snapshotsInserted,
+          snapshotsDuplicate: contractsSeen - snapshotsInserted,
+          errorSummary: message,
+        });
+        await repository.markConnector(connector.id, finishedAt, message);
+        return {
+          connectorId: connector.id,
+          status: "failed",
+          runId: run.id,
+          error: message,
+        };
+      }
+    }),
+  );
 }

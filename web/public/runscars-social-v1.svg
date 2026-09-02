@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1680" height="945" viewBox="0 0 1680 945" role="img" aria-labelledby="title description">
+  <title id="title">Runscars · La carrera a los Oscar, datos en mano</title>
+  <desc id="description">Composición editorial Paper e Ink con monograma orbital, acentos Acid y Violet y recibos de fuentes.</desc>
+  <defs>
+    <pattern id="grain" width="11" height="11" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="3" r=".55" fill="#171A17" opacity=".08"/>
+      <circle cx="8" cy="7" r=".4" fill="#171A17" opacity=".06"/>
+    </pattern>
+    <filter id="shadow" x="-20%" y="-20%" width="160%" height="160%">
+      <feDropShadow dx="8" dy="8" stdDeviation="0" flood-color="#171A17" flood-opacity=".18"/>
+    </filter>
+  </defs>
+  <rect width="1680" height="945" fill="#F2EFE6"/>
+  <rect width="1680" height="945" fill="url(#grain)"/>
+  <g transform="translate(72 62)">
+    <circle cx="50" cy="50" r="46" fill="#171A17"/>
+    <circle cx="50" cy="50" r="41" fill="none" stroke="#F2EFE6"/>
+    <g transform="translate(2 2)" fill="#F2EFE6" fill-opacity=".15" stroke="#F2EFE6" stroke-width=".7">
+      <path d="M48 9a39 39 0 0 1 33.8 19.5L56.3 41.2a12.5 12.5 0 0 0-12-6.7Z"/>
+      <path d="M81.8 28.5a39 39 0 0 1 0 39L57 53.7a12.5 12.5 0 0 0-.7-12.5Z"/>
+      <path d="M81.8 67.5A39 39 0 0 1 48 87l1.3-28.3A12.5 12.5 0 0 0 57 53.7Z"/>
+      <path d="M48 87a39 39 0 0 1-33.8-19.5l25.5-12.7a12.5 12.5 0 0 0 9.6 3.9Z"/>
+      <path d="M14.2 67.5a39 39 0 0 1 0-39L39 42.3a12.5 12.5 0 0 0 .7 12.5Z"/>
+      <path d="M14.2 28.5A39 39 0 0 1 48 9l-1.3 28.3A12.5 12.5 0 0 0 39 42.3Z"/>
+    </g>
+    <path transform="translate(2 2)" fill="#F2EFE6" d="M27 72v-4.4l5.7-2V31L27 29v-4.5h24.7c13.1 0 21 6.1 21 16.4 0 7.8-4.8 13.2-13.3 15.4l10.9 10.5 4.7.9V72H60.2L46.4 57.7h-2.9V65l6.1 2.5V72Zm16.5-19.8h5.8c7.1 0 11-3.6 11-10.6 0-7.5-3.7-11.8-10.8-11.8h-6Z"/>
+    <circle cx="77.5" cy="27.5" r="6" fill="#171A17" stroke="#F2EFE6" stroke-width="1.5"/>
+    <circle cx="77.5" cy="27.5" r="4.4" fill="#DFFF59"/>
+    <text x="116" y="74" fill="#171A17" font-family="Bodoni 72, Didot, Georgia, serif" font-size="63" font-weight="700" letter-spacing="-3">RUNSCARS</text>
+    <text x="118" y="98" fill="#171A17" font-family="IBM Plex Mono, SFMono-Regular, monospace" font-size="11" font-weight="700" letter-spacing="3">LA CARRERA, CON PRUEBAS.</text>
+  </g>
+  <g transform="translate(78 270)">
+    <text fill="#171A17" font-family="Bodoni 72, Didot, Georgia, serif" font-size="78" font-weight="500" letter-spacing="-3">
+      <tspan x="0" y="0">LA CARRERA A LOS</tspan>
+      <tspan x="0" y="86">OSCAR,</tspan>
+      <tspan x="0" y="184" fill="#7569FF" font-size="90" font-style="italic">DATOS EN MANO.</tspan>
+    </text>
+    <line x1="0" y1="226" x2="780" y2="226" stroke="#F06C49" stroke-width="7"/>
+    <text x="0" y="284" fill="#171A17" font-family="IBM Plex Mono, SFMono-Regular, monospace" font-size="28" font-weight="600" letter-spacing="8">OSCAR 2027 · PELÍCULAS DE 2026</text>
+    <text x="0" y="362" fill="#171A17" opacity=".68" font-family="Arial, Helvetica, sans-serif" font-size="24">Predicciones profesionales, evolución y procedencia.</text>
+  </g>
+  <g transform="translate(972 48)">
+    <path d="M18 0H708v806H0V18Z" fill="#171A17"/>
+    <ellipse cx="272" cy="348" rx="252" ry="130" fill="none" stroke="#F2EFE6" stroke-width="2" transform="rotate(-18 272 348)"/>
+    <ellipse cx="272" cy="348" rx="183" ry="88" fill="none" stroke="#F2EFE6" stroke-width="2" stroke-dasharray="11 11" transform="rotate(-18 272 348)"/>
+    <circle cx="47" cy="420" r="18" fill="#DFFF59" stroke="#171A17" stroke-width="3"/>
+    <g transform="translate(300 96)" filter="url(#shadow)">
+      <path d="M18 0H376v518H0V18Z" fill="#7569FF"/>
+      <text x="182" y="356" text-anchor="middle" fill="#F2EFE6" font-family="Bodoni 72, Didot, Georgia, serif" font-size="230">01</text>
+      <circle cx="326" cy="60" r="10" fill="#DFFF59" stroke="#171A17" stroke-width="3"/>
+    </g>
+    <g transform="translate(90 650) rotate(-3)" filter="url(#shadow)">
+      <rect width="465" height="82" rx="3" fill="#F2EFE6" stroke="#171A17"/>
+      <text x="22" y="25" fill="#171A17" font-family="IBM Plex Mono, SFMono-Regular, monospace" font-size="12" font-weight="700">FUENTE 01 · PUBLICACIÓN VERIFICADA</text>
+      <line x1="22" y1="56" x2="438" y2="56" stroke="#F06C49" stroke-dasharray="8 7"/>
+    </g>
+    <g transform="translate(140 735) rotate(2)" filter="url(#shadow)">
+      <rect width="465" height="82" rx="3" fill="#F2EFE6" stroke="#171A17"/>
+      <text x="22" y="25" fill="#171A17" font-family="IBM Plex Mono, SFMono-Regular, monospace" font-size="12" font-weight="700">FUENTE 02 · VALOR ORIGINAL CONSERVADO</text>
+      <line x1="22" y1="56" x2="438" y2="56" stroke="#F06C49" stroke-dasharray="8 7"/>
+    </g>
+  </g>
+  <g stroke="#171A17" stroke-width="1">
+    <path d="M22 22h26M35 9v26M1632 22h26M1645 9v26M22 923h26M35 910v26M1632 923h26M1645 910v26"/>
+  </g>
+</svg>

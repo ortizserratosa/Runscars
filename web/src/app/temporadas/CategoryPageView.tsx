@@ -7,6 +7,8 @@ import type {
 import type { PublicCategoryId } from "../../lib/categories/config";
 import { localeTag, localizedPath, type Locale } from "../../lib/i18n/config";
 import { getRequestLocale } from "../../lib/i18n/server";
+import { absoluteUrl } from "../../lib/seo";
+import { JsonLd } from "../components/JsonLd";
 import { PublicRankingModule } from "../comunidad/PublicRankingModule";
 import { UserRankingPanel } from "./UserRankingPanel";
 
@@ -100,7 +102,14 @@ function ActiveCategory({
               maximumFractionDigits: 1,
             })}
           </strong>
-          <div className="micro-bar">
+          <div
+            aria-label={`${candidate.scoreOutOf100.toLocaleString(localeTag(locale))} ${en ? "consensus points out of 100" : "puntos de consenso sobre 100"}`}
+            aria-valuemax={100}
+            aria-valuemin={0}
+            aria-valuenow={candidate.scoreOutOf100}
+            className="micro-bar"
+            role="progressbar"
+          >
             <span
               style={{
                 width: `${Math.max(candidate.scoreOutOf100, 1)}%`,
@@ -439,8 +448,8 @@ function ActiveCategory({
               <div className="leaderboard-head" aria-hidden="true">
                 <span>{en ? "Pos." : "Pos."}</span>
                 <span>{en ? "Candidate" : "Candidatura"}</span>
-                <span>{en ? "Backing" : "Respaldo"}</span>
-                <span>{en ? "Points" : "Puntos"}</span>
+                <span>{en ? "Sources" : "Fuentes"}</span>
+                <span>{en ? "Consensus" : "Consenso"}</span>
                 <span>{en ? "Change" : "Cambio"}</span>
               </div>
               {visibleRanking.map(renderCandidate)}
@@ -723,8 +732,68 @@ export async function CategoryPageView({
   view: ActiveCategoryView | ArchiveCategoryView;
 }) {
   const locale = await getRequestLocale();
+  const en = locale === "en";
+  const year = view.mode === "active" ? 2027 : 2026;
+  const categoryName = en ? category.nameEn : category.name;
+  const pagePath = localizedPath(
+    `/temporadas/${year}/${category.slug}`,
+    locale,
+  );
+  const entries =
+    view.mode === "active"
+      ? (view.aggregate?.ranking ?? []).map((candidate, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: candidate.label,
+          ...(candidate.film
+            ? {
+                url: absoluteUrl(
+                  localizedPath(`/peliculas/${candidate.film.id}`, locale),
+                ),
+              }
+            : {}),
+        }))
+      : view.nominees.map((candidate, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: candidate.label,
+          ...(candidate.film
+            ? {
+                url: absoluteUrl(
+                  localizedPath(`/peliculas/${candidate.film.id}`, locale),
+                ),
+              }
+            : {}),
+        }));
   return (
     <main>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          url: absoluteUrl(pagePath),
+          name:
+            view.mode === "active"
+              ? en
+                ? `${categoryName} Oscar Predictions 2027`
+                : `Predicciones Oscar 2027: ${categoryName}`
+              : en
+                ? `${categoryName}: 2026 Oscars Nominees and Winner`
+                : `${categoryName}: nominados y ganador Oscar 2026`,
+          inLanguage: localeTag(locale),
+          ...(view.mode === "active" && view.snapshot
+            ? { dateModified: view.snapshot.lockedAt }
+            : view.mode === "archive" && view.capturedAt
+              ? { dateModified: view.capturedAt }
+              : {}),
+          mainEntity: {
+            "@type": "ItemList",
+            numberOfItems: entries.length,
+            itemListOrder: "https://schema.org/ItemListOrderAscending",
+            itemListElement: entries,
+          },
+        }}
+      />
       {view.mode === "active" ? (
         <ActiveCategory category={category} locale={locale} view={view} />
       ) : (

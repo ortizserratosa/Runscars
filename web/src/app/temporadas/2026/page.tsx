@@ -2,15 +2,21 @@ import type { Metadata } from "next";
 import { getSeasonSummary } from "../../../lib/categories/data";
 import { SeasonPageView } from "../SeasonPageView";
 import { getRequestLocale } from "../../../lib/i18n/server";
+import { buildLocalizedMetadata } from "../../../lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const en = (await getRequestLocale()) === "en";
-  return {
-    title: en ? "Oscar 2026 archive" : "Archivo Oscar 2026",
+  const locale = await getRequestLocale();
+  const en = locale === "en";
+  return buildLocalizedMetadata({
+    locale,
+    path: "/temporadas/2026",
+    title: en
+      ? "2026 Oscars Nominees and Winners"
+      : "Oscar 2026: nominados y ganadores",
     description: en
-      ? "Official nominees and winners of the 2026 Oscars."
-      : "Nominados y ganadores oficiales de los Oscar 2026.",
-  };
+      ? "Official nominees and winners of the 2026 Oscars across eight major categories."
+      : "Nominados y ganadores oficiales de los Oscar 2026 en ocho categorías principales.",
+  });
 }
 
 export default async function Season2026Page() {

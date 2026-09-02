@@ -64,6 +64,67 @@ export class SupabaseSnapshotSchedulerRepository
     );
   }
 
+  async beginRefreshRun(startedAt: string, trigger: "scheduled" | "manual") {
+    const staleBefore = new Date(
+      Date.parse(startedAt) - 15 * 60 * 1000,
+    ).toISOString();
+    databaseError(
+      await this.client
+        .from("snapshot_refresh_runs")
+        .update({
+          status: "failed",
+          finished_at: startedAt,
+          error_summary:
+            "Ejecución abandonada; recuperada antes de iniciar un nuevo refresco",
+        })
+        .eq("status", "running")
+        .lt("started_at", staleBefore),
+      "No se pudieron recuperar refrescos de snapshots abandonados",
+    );
+    const run = databaseError<{ id: number }>(
+      await this.client
+        .from("snapshot_refresh_runs")
+        .insert({ trigger, started_at: startedAt })
+        .select("id")
+        .single(),
+      "No se pudo iniciar el refresco de snapshots",
+    );
+    return run!.id;
+  }
+
+  async finishRefreshRun(
+    runId: number,
+    values: {
+      status: "succeeded" | "partial" | "failed";
+      finishedAt: string;
+      schedulesSeen: number;
+      snapshotsCreated: number;
+      snapshotsUnchanged: number;
+      schedulesSkipped: number;
+      schedulesFailed: number;
+      errorSummary?: string | null;
+      details: unknown[];
+    },
+  ) {
+    databaseError(
+      await this.client
+        .from("snapshot_refresh_runs")
+        .update({
+          status: values.status,
+          finished_at: values.finishedAt,
+          schedules_seen: values.schedulesSeen,
+          snapshots_created: values.snapshotsCreated,
+          snapshots_unchanged: values.snapshotsUnchanged,
+          schedules_skipped: values.schedulesSkipped,
+          schedules_failed: values.schedulesFailed,
+          error_summary: values.errorSummary ?? null,
+          details: values.details,
+        })
+        .eq("id", runId),
+      "No se pudo cerrar el refresco de snapshots",
+    );
+  }
+
   async activeSchedules() {
     const rows =
       databaseError(

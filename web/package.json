@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "brand:assets": "node scripts/generate-brand-assets.mjs",
+    "brand:audit": "node scripts/audit-brand-routes.mjs",
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "next typegen && tsc --noEmit",

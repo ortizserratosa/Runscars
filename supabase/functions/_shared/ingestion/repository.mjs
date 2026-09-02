@@ -9,6 +9,33 @@ function databaseError(result, action) {
   return result.data;
 }
 
+async function mapWithConcurrency(items, concurrency, mapper) {
+  const results = new Array(items.length);
+  const workerCount = Math.max(
+    1,
+    Math.min(items.length || 1, Number(concurrency) || 1),
+  );
+  let nextIndex = 0;
+  let firstError = null;
+
+  const workers = Array.from({ length: workerCount }, async () => {
+    while (firstError === null) {
+      const index = nextIndex;
+      nextIndex += 1;
+      if (index >= items.length) return;
+      try {
+        results[index] = await mapper(items[index], index);
+      } catch (error) {
+        firstError ??= error;
+      }
+    }
+  });
+
+  await Promise.all(workers);
+  if (firstError !== null) throw firstError;
+  return results;
+}
+
 export class SupabaseIngestionRepository {
   constructor({ supabaseUrl, serviceRoleKey }) {
     if (!supabaseUrl || !serviceRoleKey) {
@@ -240,7 +267,8 @@ export class SupabaseIngestionRepository {
             display_order: person.displayOrder,
           })),
           {
-            onConflict: "category_candidate_id,display_order",
+            onConflict: "category_candidate_id,person_id,role",
+            ignoreDuplicates: true,
           },
         ),
         "No se pudieron guardar los colaboradores de la candidatura",
@@ -742,7 +770,12 @@ export class SupabaseIngestionRepository {
   }
 }
 
-export async function persistBatch({ batch, repository, runId }) {
+export async function persistBatch({
+  batch,
+  repository,
+  runId,
+  persistenceConcurrency = 6,
+}) {
   const counters = {
     publicationsSeen: batch.publications.length,
     capturesInserted: 0,
@@ -774,39 +807,47 @@ export async function persistBatch({ batch, repository, runId }) {
         else counters.capturesDuplicate += 1;
       }
 
-      for (const observation of publication.observations) {
-        counters.observationsSeen += 1;
-        await repository.ensureCandidate(observation.candidate);
-        const saved = await repository.saveObservation({
-          batch: prepared,
-          publication,
-          publicationId,
-          captureId,
-          runId,
-          observation,
-        });
-        if (saved.inserted) counters.observationsInserted += 1;
-        else counters.observationsDuplicate += 1;
-
-        if (saved.state === "published" && observation.categoryCandidateId) {
-          await repository.resolveSemanticReviewItems?.({
-            connectorId: prepared.connectorId,
-            observation,
-            seasonId: prepared.seasonId,
-          });
-        }
-
-        if (observation.review && saved.state === "pending_review") {
-          const created = await repository.saveReviewItem({
-            connectorId: prepared.connectorId,
+      await mapWithConcurrency(
+        publication.observations,
+        persistenceConcurrency,
+        async (observation) => {
+          counters.observationsSeen += 1;
+          await repository.ensureCandidate(observation.candidate);
+          const saved = await repository.saveObservation({
+            batch: prepared,
+            publication,
+            publicationId,
+            captureId,
             runId,
-            observationId: saved.id,
             observation,
-            seasonId: prepared.seasonId,
           });
-          if (created) counters.reviewItemsCreated += 1;
-        }
-      }
+          if (saved.inserted) counters.observationsInserted += 1;
+          else counters.observationsDuplicate += 1;
+
+          if (
+            saved.inserted &&
+            saved.state === "published" &&
+            observation.categoryCandidateId
+          ) {
+            await repository.resolveSemanticReviewItems?.({
+              connectorId: prepared.connectorId,
+              observation,
+              seasonId: prepared.seasonId,
+            });
+          }
+
+          if (observation.review && saved.state === "pending_review") {
+            const created = await repository.saveReviewItem({
+              connectorId: prepared.connectorId,
+              runId,
+              observationId: saved.id,
+              observation,
+              seasonId: prepared.seasonId,
+            });
+            if (created) counters.reviewItemsCreated += 1;
+          }
+        },
+      );
     }
 
     const finishedAt = new Date().toISOString();
@@ -857,9 +898,12 @@ export async function runConnectorSet({
   fetcher = fetch,
   secrets = {},
   now = () => new Date(),
+  connectorConcurrency = 3,
 }) {
-  return Promise.all(
-    connectors.map(async (connector) => {
+  return mapWithConcurrency(
+    connectors,
+    connectorConcurrency,
+    async (connector) => {
       const capturedAt = now().toISOString();
       const staleBefore = new Date(
         new Date(capturedAt).valueOf() - 15 * 60 * 1000,
@@ -906,6 +950,28 @@ export async function runConnectorSet({
             batch.discovery,
           );
         }
+        const requiredCategoryIds = Array.isArray(
+          connector.configuration?.required_category_ids,
+        )
+          ? connector.configuration.required_category_ids
+          : [];
+        if (requiredCategoryIds.length) {
+          const observedCategoryIds = new Set(
+            batch.publications.flatMap((publication) =>
+              publication.observations.map(
+                (observation) => observation.categoryId,
+              ),
+            ),
+          );
+          const missingCategoryIds = requiredCategoryIds.filter(
+            (categoryId) => !observedCategoryIds.has(categoryId),
+          );
+          if (missingCategoryIds.length) {
+            throw new Error(
+              `Cobertura incompleta; faltan categorías requeridas: ${missingCategoryIds.join(", ")}`,
+            );
+          }
+        }
         if (secrets.TMDB_READ_ACCESS_TOKEN) {
           const expansion = await expandCatalogFromBatch({
             batch,
@@ -923,7 +989,13 @@ export async function runConnectorSet({
             );
           }
         }
-        return await persistBatch({ batch, repository, runId });
+        return await persistBatch({
+          batch,
+          repository,
+          runId,
+          persistenceConcurrency:
+            connector.configuration?.persistence_concurrency ?? 6,
+        });
       } catch (error) {
         const errorSummary =
           error instanceof Error ? error.message : "Error desconocido";
@@ -963,6 +1035,6 @@ export async function runConnectorSet({
           error: errorSummary,
         };
       }
-    }),
+    },
   );
 }

@@ -15,6 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: en
       ? "Runscars profile, rankings, watch states and privacy."
       : "Perfil, rankings, visionados y privacidad de Runscars.",
+    robots: { index: false, follow: false },
   };
 }
 

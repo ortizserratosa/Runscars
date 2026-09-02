@@ -21,6 +21,66 @@ Comprobaciones mínimas después de cada despliegue:
 5. `robots.txt`, `sitemap.xml` y una imagen Open Graph responden correctamente;
 6. no aparecen errores nuevos en los logs de Vercel ni en Supabase.
 
+## SEO e indexación
+
+- `https://runscars.app/` es la URL canónica en español y `/en` conserva la
+  versión inglesa. Cada página pública enlaza sus variantes `es`, `en` y
+  `x-default` mediante `hreflang`.
+- Las portadas y las páginas de temporada, categoría, película, persona y fuente
+  publican título, descripción, Open Graph, Twitter Card y datos estructurados
+  acordes con su contenido. Acceso, cuenta, administración, API y callback de
+  autenticación no se indexan.
+- `sitemap.xml` incluye las rutas editoriales y de catálogo de ambos idiomas y se
+  regenera como máximo cada 24 horas. `robots.txt` anuncia ese sitemap.
+- Después de cambios de SEO, comprobar en producción títulos, canonicals,
+  `hreflang`, JSON-LD, robots y una muestra de URLs del sitemap. En Google Search
+  Console se vuelve a enviar `https://runscars.app/sitemap.xml` cuando cambia su
+  cobertura. El nuevo rastreo y la indexación dependen de Google y no son
+  inmediatos.
+
+## Automatizaciones de fuentes
+
+La salud se comprueba sobre ejecuciones reales, no solo sobre la existencia del
+Cron:
+
+- profesionales: ocho conectores activos, último run diario terminado y ninguna
+  categoría requerida ausente;
+- mercados: Kalshi y Polymarket con éxito dentro de las dos últimas horas;
+- snapshots: un `snapshot_refresh_runs` terminado dentro de las últimas 36
+  horas, aunque no se haya creado ningún corte nuevo;
+- latencia profesional: cada conector termina en menos de dos minutos en una
+  ejecución ordinaria; superar ese umbral exige revisar el run aunque concluya;
+- retrasos: ningún run de las tres familias permanece `running` más de 15
+  minutos.
+
+Los schedules versionados siguen siendo `17 4 * * *` para profesionales,
+`17 * * * *` para mercados y `47 4 * * *` para el refresco diario de cortes. Un
+estado `partial`, un fallo posterior al último éxito o un run fuera de esas
+ventanas exige tratar la automatización como incidente abierto.
+
+### Evidencia de 2026-09-01
+
+- Una invocación autenticada de profesionales con el payload real
+  `{"trigger":"scheduled"}` y la misma ruta `pg_net`/Vault terminó con HTTP 200:
+  ocho de ocho conectores correctos, cero fallos y 27,2 segundos entre el primer
+  inicio y el último cierre. El conector individual más lento tardó 14,3
+  segundos. Las 478 observaciones ya existían, por lo que el resultado confirmó
+  también la idempotencia.
+- El Cron horario real arrancó a las 20:17 UTC y terminó `succeeded`; la llamada
+  HTTP devolvió 200 con Kalshi y Polymarket correctos. Los runs de la hora habían
+  terminado previamente en 66,8 y 35,5 segundos, con inicios separados por un
+  milisegundo, y el Cron los reconoció como `unchanged` sin duplicarlos.
+- Tres refrescos autenticados de snapshots terminaron correctos. El primero creó
+  las ocho categorías, el segundo dejó las ocho `unchanged` y el tercero creó
+  solo la revisión afectada, sin fallos. La última ejecución duró 6,4 segundos.
+- Las ocho categorías públicas conservan entre cuatro y seis fuentes activas,
+  entre 29 y 58 observaciones incluidas, cero observaciones excluidas y cero
+  revisiones editoriales pendientes. No quedó ningún run profesional, de
+  mercados o de snapshots en estado `running`.
+- Supabase mantiene activos los schedules `17 4 * * *` y `17 * * * *`; Vercel
+  mantiene habilitado `47 4 * * *`. El secreto de cada ruta está sincronizado
+  con Vault y Vercel y no se registra en Git.
+
 ## Copias de seguridad
 
 El plan Free de Supabase no incluye restauraciones automáticas. Antes de cada
@@ -73,6 +133,14 @@ instancia aislada de `public.ecr.aws/supabase/postgres:17.6.1.147` y recuperó:
 
 La instancia temporal se elimina después de la comprobación. La copia no se
 añade a Git.
+
+### Evidencia de 2026-09-01
+
+Antes de aplicar las migraciones se creó otra copia lógica fuera del repositorio
+en `/Users/nacho/Documents/Side/Runscars-backups/2026-09-01-source-automation`.
+El directorio tiene permisos `0700`; `roles.sql`, `full-schema.sql` y `data.sql`
+tienen permisos `0600`. La copia contiene roles, esquema completo y 91.176.596
+bytes de datos y no se añadió a Git.
 
 ## Incidentes
 

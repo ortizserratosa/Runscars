@@ -1,14 +1,36 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Movement } from "./components/Movement";
 import { PosterBlock } from "./components/PosterBlock";
+import { JsonLd } from "./components/JsonLd";
 import { filmHref } from "../data/films";
 import { getCategoryView } from "../lib/categories/data";
 import { localeTag, localizedPath } from "../lib/i18n/config";
 import { getRequestLocale } from "../lib/i18n/server";
+import { absoluteUrl, buildLocalizedMetadata } from "../lib/seo";
 
 export const dynamic = "force-dynamic";
 
 const tones = ["violet", "acid", "rust"] as const;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getRequestLocale();
+  const en = locale === "en";
+  const title = en
+    ? "Oscar Predictions 2027: Expert Consensus"
+    : "Predicciones Oscar 2027: ranking y consenso";
+  return {
+    ...buildLocalizedMetadata({
+      locale,
+      path: "/",
+      title,
+      description: en
+        ? "Updated 2027 Oscar predictions based on specialist outlets. Compare Best Picture and all eight major categories with transparent sources."
+        : "Predicciones de los Oscar 2027 actualizadas con medios especializados. Consulta Mejor película y las ocho categorías con fuentes transparentes.",
+    }),
+    title: { absolute: `${title} | Runscars` },
+  };
+}
 
 function dateLabel(value: string, locale: "es" | "en") {
   return new Intl.DateTimeFormat(localeTag(locale), {
@@ -90,9 +112,62 @@ export default async function Home() {
           href: leader.href,
         },
       ];
+  const pageUrl = absoluteUrl(href("/"));
+  const websiteUrl = absoluteUrl("/");
+  const pageTitle = en
+    ? "Oscar Predictions 2027: Expert Consensus"
+    : "Predicciones Oscar 2027: ranking y consenso";
+  const pageDescription = en
+    ? "Updated professional Oscar predictions with transparent source-by-source consensus."
+    : "Predicciones profesionales de los Oscar actualizadas con consenso transparente fuente por fuente.";
+  const rankingSchema = {
+    "@type": "ItemList",
+    name: en
+      ? "2027 Oscar predictions for Best Picture"
+      : "Predicciones Oscar 2027 para Mejor película",
+    numberOfItems: ranking.length,
+    itemListOrder: "https://schema.org/ItemListOrderAscending",
+    itemListElement: ranking.slice(0, 10).map((candidate, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: candidate.title,
+      url: absoluteUrl(candidate.href),
+    })),
+  };
 
   return (
     <main>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": `${websiteUrl}#website`,
+              url: websiteUrl,
+              name: "Runscars",
+              alternateName: [
+                "Runscars Oscar Predictions",
+                "Runscars Predicciones Oscar",
+              ],
+              inLanguage: ["es-ES", "en-GB"],
+            },
+            {
+              "@type": "CollectionPage",
+              "@id": `${pageUrl}#webpage`,
+              url: pageUrl,
+              name: pageTitle,
+              description: pageDescription,
+              inLanguage: localeTag(locale),
+              isPartOf: { "@id": `${websiteUrl}#website` },
+              ...(categoryView.snapshot
+                ? { dateModified: categoryView.snapshot.lockedAt }
+                : {}),
+              mainEntity: rankingSchema,
+            },
+          ],
+        }}
+      />
       <section className="home-hero page-shell">
         <div className="eyebrow-row">
           <span className="eyebrow">
@@ -112,14 +187,14 @@ export default async function Home() {
                 : "Oscar 2027 · películas de 2026"}
             </p>
             <h1>
-              {en ? "The road to the Oscars," : "La carrera a los Oscar,"}
+              {en ? "Oscar predictions 2027," : "Predicciones Oscar 2027,"}
               <br />
               <em>{en ? "backed by data." : "datos en mano."}</em>
             </h1>
             <p className="hero-intro">
               {en
-                ? "Follow which films lead the season, who backs them and how consensus changes in real time."
-                : "Sigue qué películas lideran la temporada, quién las respalda y cómo cambia el consenso en tiempo real."}
+                ? "Compare professional Oscar predictions from specialist outlets, see which films lead and follow every change in consensus."
+                : "Compara predicciones profesionales de los Oscar, descubre qué películas lideran y sigue cada cambio del consenso."}
             </p>
             <div className="hero-actions">
               <Link
@@ -231,12 +306,16 @@ export default async function Home() {
             <p className="section-index">
               01 / {en ? "CONSENSUS" : "CONSENSO"}
             </p>
-            <h2>{en ? "The race now" : "La carrera ahora"}</h2>
+            <h2>
+              {en
+                ? "Latest Oscar predictions"
+                : "Predicciones Oscar actualizadas"}
+            </h2>
           </div>
           <p>
             {en
-              ? "Weighted consensus based on specialist outlets. It reflects the current direction of professional predictions, not a mathematical probability."
-              : "Consenso ponderado basado en medios especializados. Refleja la tendencia actual de las predicciones, no una probabilidad matemática."}
+              ? "Updated daily from specialist outlets. The consensus reflects the direction of professional predictions, not a mathematical probability."
+              : "Actualizadas cada día desde medios especializados. El consenso refleja la tendencia de las predicciones, no una probabilidad matemática."}
           </p>
         </div>
 

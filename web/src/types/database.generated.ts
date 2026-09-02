@@ -1614,6 +1614,51 @@ export type Database = {
           },
         ];
       };
+      snapshot_refresh_runs: {
+        Row: {
+          id: number;
+          trigger: string;
+          status: string;
+          started_at: string;
+          finished_at: string | null;
+          schedules_seen: number;
+          snapshots_created: number;
+          snapshots_unchanged: number;
+          schedules_skipped: number;
+          schedules_failed: number;
+          error_summary: string | null;
+          details: Json;
+        };
+        Insert: {
+          id: number;
+          trigger: string;
+          status?: string;
+          started_at: string;
+          finished_at?: string | null;
+          schedules_seen?: number;
+          snapshots_created?: number;
+          snapshots_unchanged?: number;
+          schedules_skipped?: number;
+          schedules_failed?: number;
+          error_summary?: string | null;
+          details?: Json;
+        };
+        Update: {
+          id?: number;
+          trigger?: string;
+          status?: string;
+          started_at?: string;
+          finished_at?: string | null;
+          schedules_seen?: number;
+          snapshots_created?: number;
+          snapshots_unchanged?: number;
+          schedules_skipped?: number;
+          schedules_failed?: number;
+          error_summary?: string | null;
+          details?: Json;
+        };
+        Relationships: [];
+      };
       snapshot_schedules: {
         Row: {
           id: string;

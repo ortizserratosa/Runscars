@@ -3,15 +3,21 @@ import Link from "next/link";
 import { HISTORICAL_EDITIONS } from "../../lib/archive/historical";
 import { localizedPath } from "../../lib/i18n/config";
 import { getRequestLocale } from "../../lib/i18n/server";
+import { buildLocalizedMetadata } from "../../lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const en = (await getRequestLocale()) === "en";
-  return {
-    title: en ? "Oscars archive 2022–2026" : "Archivo Oscar 2022–2026",
+  const locale = await getRequestLocale();
+  const en = locale === "en";
+  return buildLocalizedMetadata({
+    locale,
+    path: "/archivo",
+    title: en
+      ? "Oscars Archive 2022–2026: Nominees and Winners"
+      : "Archivo Oscar 2022–2026: nominados y ganadores",
     description: en
-      ? "Five previous ceremonies with official nominees and winners."
-      : "Cinco ceremonias anteriores con nominados y ganadores oficiales.",
-  };
+      ? "Browse official Oscar nominees and winners from the 2022–2026 ceremonies across eight major categories."
+      : "Consulta nominados y ganadores oficiales de los Oscar 2022–2026 en ocho categorías principales.",
+  });
 }
 
 export default async function ArchivePage() {

@@ -6,6 +6,7 @@ import {
 } from "../../../../lib/categories/config";
 import { getCategoryView } from "../../../../lib/categories/data";
 import { getRequestLocale } from "../../../../lib/i18n/server";
+import { buildLocalizedMetadata } from "../../../../lib/seo";
 import { CategoryPageView } from "../../CategoryPageView";
 
 export function generateStaticParams() {
@@ -22,14 +23,19 @@ export async function generateMetadata({
   const { categorySlug } = await params;
   const category = categoryBySlug(categorySlug);
   if (!category) return {};
-  const en = (await getRequestLocale()) === "en";
+  const locale = await getRequestLocale();
+  const en = locale === "en";
   const name = en ? category.nameEn : category.name;
-  return {
-    title: `${name} · ${en ? "Oscar 2026 archive" : "Archivo Oscar 2026"}`,
+  return buildLocalizedMetadata({
+    locale,
+    path: `/temporadas/2026/${category.slug}`,
+    title: en
+      ? `${name}: 2026 Oscars Nominees and Winner`
+      : `${name}: nominados y ganador Oscar 2026`,
     description: en
       ? `Official nominees and winner for ${name} at the 2026 Oscars.`
       : `Nominados y ganador oficiales de ${name} en los Oscar 2026.`,
-  };
+  });
 }
 
 export default async function CategoryArchivePage({

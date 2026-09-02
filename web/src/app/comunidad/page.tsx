@@ -10,15 +10,21 @@ import {
   listPublicRankings,
   publicRankingUrl,
 } from "../../lib/repositories/community";
+import { buildLocalizedMetadata } from "../../lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const en = (await getRequestLocale()) === "en";
-  return {
-    title: en ? "Community" : "Comunidad",
+  const locale = await getRequestLocale();
+  const en = locale === "en";
+  return buildLocalizedMetadata({
+    locale,
+    path: "/comunidad",
+    title: en
+      ? "Oscar 2027 Community Ballots"
+      : "Quinielas Oscar 2027 de la comunidad",
     description: en
-      ? "Discover public ballots for the 2027 Oscar season."
-      : "Descubre quinielas públicas de la temporada Oscar 2027.",
-  };
+      ? "Discover public individual ballots for the 2027 Oscar season, kept separate from the professional predictions consensus."
+      : "Descubre quinielas individuales públicas para los Oscar 2027, siempre separadas del consenso de predicciones profesionales.",
+  });
 }
 
 export const dynamic = "force-dynamic";

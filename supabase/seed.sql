@@ -313,7 +313,7 @@ values
     'AwardsWatch Oscar Predictions HQ',
     'html',
     'https://awardswatch.com/oscar-predictions-hq/',
-    'awardswatch-multicategory-v4',
+    'awardswatch-multicategory-v5',
     true,
     '17 4 * * *',
     '{
@@ -329,7 +329,15 @@ values
         "original-screenplay",
         "adapted-screenplay"
       ],
-      "archive_url": "https://awardswatch.com/category/predictions/film-predictions/oscars-predictions/2027-oscar-predictions/"
+      "archive_url": "https://awardswatch.com/category/predictions/film-predictions/oscars-predictions/2027-oscar-predictions/",
+      "required_category_ids": [
+        "best-picture",
+        "directing",
+        "actor",
+        "actress",
+        "supporting-actor",
+        "supporting-actress"
+      ]
     }'::jsonb
   ),
   (
@@ -338,14 +346,25 @@ values
     'Awards Daily Oscar predictions',
     'html',
     'https://www.awardsdaily.com/wp-json/wp/v2/search?search=2027%20Oscar%20Predictions&per_page=20&_fields=id,url,title,subtype',
-    'awards-daily-v5',
+    'awards-daily-v6',
     true,
     '17 4 * * *',
     '{
       "season_id": "oscars-2027",
       "ceremony_year": 2027,
       "discovery_url": "https://www.awardsdaily.com/wp-json/wp/v2/search?search=2027%20Oscar%20Predictions&per_page=20&_fields=id,url,title,subtype",
-      "discovery_limit": 12
+      "discovery_limit": 12,
+      "discovery_concurrency": 4,
+      "required_category_ids": [
+        "best-picture",
+        "directing",
+        "actor",
+        "actress",
+        "supporting-actor",
+        "supporting-actress",
+        "original-screenplay",
+        "adapted-screenplay"
+      ]
     }'::jsonb
   ),
   (
@@ -354,12 +373,13 @@ values
     'Awards Radar Oscar predictions',
     'html',
     'https://awardsradar.com/predictions/',
-    'awards-radar-v3',
+    'awards-radar-v4',
     true,
     '17 4 * * *',
     '{
       "season_id": "oscars-2027",
       "ceremony_year": 2027,
+      "category_concurrency": 4,
       "category_urls": {
         "best-picture": "https://awardsradar.com/best-picture/",
         "directing": "https://awardsradar.com/best-director/",
@@ -369,7 +389,17 @@ values
         "supporting-actress": "https://awardsradar.com/best-supporting-actress/",
         "original-screenplay": "https://awardsradar.com/best-original-screenplay/",
         "adapted-screenplay": "https://awardsradar.com/best-adapted-screenplay/"
-      }
+      },
+      "required_category_ids": [
+        "best-picture",
+        "directing",
+        "actor",
+        "actress",
+        "supporting-actor",
+        "supporting-actress",
+        "original-screenplay",
+        "adapted-screenplay"
+      ]
     }'::jsonb
   ),
   (
@@ -384,7 +414,17 @@ values
     '{
       "season_id": "oscars-2027",
       "ceremony_year": 2027,
-      "discovery_mode": "mutable-page"
+      "discovery_mode": "mutable-page",
+      "required_category_ids": [
+        "best-picture",
+        "directing",
+        "actor",
+        "actress",
+        "supporting-actor",
+        "supporting-actress",
+        "original-screenplay",
+        "adapted-screenplay"
+      ]
     }'::jsonb
   ),
   (
@@ -399,7 +439,17 @@ values
     '{
       "season_id": "oscars-2027",
       "ceremony_year": 2027,
-      "discovery_mode": "mutable-page"
+      "discovery_mode": "mutable-page",
+      "required_category_ids": [
+        "best-picture",
+        "directing",
+        "actor",
+        "actress",
+        "supporting-actor",
+        "supporting-actress",
+        "original-screenplay",
+        "adapted-screenplay"
+      ]
     }'::jsonb
   ),
   (
@@ -415,7 +465,8 @@ values
       "season_id": "oscars-2027",
       "category_id": "best-picture",
       "ceremony_year": 2027,
-      "article_fallback_url": "https://www.theringer.com/2026/03/20/oscars/oscars-2027-predictions-best-picture-movies-contenders"
+      "article_fallback_url": "https://www.theringer.com/2026/03/20/oscars/oscars-2027-predictions-best-picture-movies-contenders",
+      "required_category_ids": ["best-picture"]
     }'::jsonb
   ),
   (
@@ -442,6 +493,21 @@ on conflict (id) do update set
   is_active = excluded.is_active,
   schedule_cron = excluded.schedule_cron,
   configuration = excluded.configuration;
+
+update public.source_connectors
+set configuration = configuration || jsonb_build_object(
+  'persistence_concurrency', 6
+)
+where id in (
+  'awardswatch-predictions',
+  'guardian-content-api',
+  'awards-daily-predictions',
+  'ringer-best-picture',
+  'next-best-picture-predictions',
+  'awards-radar-predictions',
+  'roger-ebert-rss',
+  'midnight-critics-predictions'
+);
 
 update public.sources
 set technical_status = case id

@@ -1,28 +1,28 @@
 # Hoja de ruta
 
-**Última revisión:** 2026-08-29
+**Última revisión:** 2026-09-01
 
 Cada fase tiene una puerta de salida verificable. Una fase no se considera
 terminada por haber creado archivos o código, sino por cumplir esa puerta.
 
 ## Estado general
 
-| Fase | Entregable principal                        | Estado            |
-| ---- | ------------------------------------------- | ----------------- |
-| 0    | Contrato y registros                        | Completada        |
-| 1    | Discovery y dataset de fuentes              | Completada        |
-| 2    | Prototipo visual navegable                  | Completada        |
-| 3    | Base técnica y staging                      | Completada        |
-| 4    | Catálogo TMDB                               | Completada        |
-| 5    | Sistema de ingesta                          | Completada        |
-| 6    | Agregación                                  | Completada        |
-| 7    | Snapshots y evaluación                      | Completada        |
-| 7.1  | Cobertura multcategoría, archivo y mercados | Completada        |
-| 8    | Usuarios                                    | Completada        |
-| 8.5  | Integridad, frescura y foco de producto      | Completada        |
-| 9    | Administración editorial                    | Completada        |
-| 9.5  | Cierre funcional público                    | Completada        |
-| 10   | QA y MVP desplegado                         | Completada        |
+| Fase | Entregable principal                        | Estado     |
+| ---- | ------------------------------------------- | ---------- |
+| 0    | Contrato y registros                        | Completada |
+| 1    | Discovery y dataset de fuentes              | Completada |
+| 2    | Prototipo visual navegable                  | Completada |
+| 3    | Base técnica y staging                      | Completada |
+| 4    | Catálogo TMDB                               | Completada |
+| 5    | Sistema de ingesta                          | Completada |
+| 6    | Agregación                                  | Completada |
+| 7    | Snapshots y evaluación                      | Completada |
+| 7.1  | Cobertura multcategoría, archivo y mercados | Completada |
+| 8    | Usuarios                                    | Completada |
+| 8.5  | Integridad, frescura y foco de producto     | Completada |
+| 9    | Administración editorial                    | Completada |
+| 9.5  | Cierre funcional público                    | Completada |
+| 10   | QA y MVP desplegado                         | Completada |
 
 ## Fase 0 · Contrato y registros
 
@@ -187,9 +187,9 @@ Cumplimiento detallado en [AGGREGATION.md](AGGREGATION.md).
 ## Fase 7 · Snapshots y evaluación
 
 **Cerrada:** 2026-07-25. Los snapshots y resultados son append-only, las
-correcciones generan versiones enlazadas y `runscars-evaluation-v1` coincide
-con los ejemplos manuales. La programación semanal original fue reemplazada
-por los cortes diarios efectivos de D-032.
+correcciones generan versiones enlazadas y `runscars-evaluation-v1` coincide con
+los ejemplos manuales. La programación semanal original fue reemplazada por los
+cortes diarios efectivos de D-032.
 
 ### Entregables
 
@@ -232,9 +232,9 @@ La fase 8 queda desbloqueada, pero no se ha iniciado.
 
 El mantenimiento 7.1.1 del 2026-08-07 corrige el parser de Awards Daily,
 recupera runs abandonados, compacta la cola editorial activa y amplía el
-catálogo verificado antes de avanzar. No reabre la puerta de salida ni inicia
-la fase siguiente. El segundo snapshot de control restauró y verificó la
-cobertura objetivo; el primero se conserva como versión inmutable.
+catálogo verificado antes de avanzar. No reabre la puerta de salida ni inicia la
+fase siguiente. El segundo snapshot de control restauró y verificó la cobertura
+objetivo; el primero se conserva como versión inmutable.
 
 El mantenimiento 7.1.2 elimina de la portada el corte estático heredado del
 prototipo y presenta, en cada categoría, la variación frente al snapshot
@@ -288,11 +288,11 @@ El diseño, la implementación y la evidencia de la puerta se mantienen en
 muestra rankings individuales, pero no publica un consenso comunitario.
 
 El mantenimiento previo a la fase 9 sustituye el snapshot semanal por cortes
-diarios condicionados a cambios efectivos de los proveedores profesionales.
-Cada categoría permite seleccionar esos cortes y compara el ranking elegido con
-el corte real anterior. Los snapshots históricos redundantes se conservan, pero
-no aparecen como actualizaciones en la navegación. La decisión D-032 gobierna
-esta semántica y no inicia la fase 9.
+diarios condicionados a cambios efectivos de los proveedores profesionales. Cada
+categoría permite seleccionar esos cortes y compara el ranking elegido con el
+corte real anterior. Los snapshots históricos redundantes se conservan, pero no
+aparecen como actualizaciones en la navegación. La decisión D-032 gobierna esta
+semántica y no inicia la fase 9.
 
 ## Fase 8.5 · Integridad, frescura y foco de producto
 
@@ -316,6 +316,11 @@ Portada, categoría, película y fuente muestran el mismo dato profesional; las
 tres fechas de proveedor se distinguen sin ambigüedad; la migración diaria, el
 cron y todos los checks pasan en staging. Evidencia en
 [PHASE_8_5.md](PHASE_8_5.md).
+
+El mantenimiento operativo del 2026-09-01 añade cobertura requerida por
+conector, timeouts y concurrencia acotada, recuperación de mercados abandonados
+y evidencia durable de cada refresco diario de snapshots. No reabre la fase ni
+amplía las ocho categorías públicas; aplica D-051.
 
 ## Fase 9 · Administración editorial
 
@@ -341,8 +346,8 @@ Diseño, operación y evidencia en [PHASE_9.md](PHASE_9.md).
 
 ## Fase 9.5 · Cierre funcional público
 
-**Cerrada:** 2026-08-25. Completa las funciones originales que no tenían aún
-una superficie pública integral antes de entrar en QA de lanzamiento.
+**Cerrada:** 2026-08-25. Completa las funciones originales que no tenían aún una
+superficie pública integral antes de entrar en QA de lanzamiento.
 
 ### Entregables
 
@@ -362,8 +367,8 @@ Alcance y evidencia en [PHASE_9_5.md](PHASE_9_5.md).
 ## Fase 10 · QA y MVP
 
 **Cerrada:** 2026-08-26. El MVP bilingüe está publicado en
-<https://runscars.app>, con catálogo completo en ambos idiomas, política
-de altas solo por Google, backup restaurado y la verificación local y remota en
+<https://runscars.app>, con catálogo completo en ambos idiomas, política de
+altas solo por Google, backup restaurado y la verificación local y remota en
 verde.
 
 ### Entregables
@@ -393,6 +398,15 @@ verde.
 - Metascore atribuido dentro de las fichas con dato disponible, sin
   normalización ni participación en el consenso;
 - Rotten Tomatoes, FilmAffinity y discovery continúan privados.
+
+### Ajuste visual posterior · 2026-09-01
+
+- traducción del tablero vinculante a tokens, tipografías y componentes web;
+- logo vectorial, icono, avatar y tarjetas sociales coherentes;
+- adaptación de todas las superficies públicas, legales, comunitarias y
+  editoriales a escritorio y móvil;
+- auditoría reproducible de rutas y capturas en `docs/brand/implementation/`;
+- tipografías y arquitectura visual registradas como propuesta en D-053.
 
 ### Puerta de salida
 

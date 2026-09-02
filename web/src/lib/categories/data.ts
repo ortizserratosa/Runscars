@@ -89,7 +89,10 @@ function client() {
 }
 
 function allowFixture() {
-  return process.env.NODE_ENV !== "production";
+  return (
+    process.env.NODE_ENV !== "production" ||
+    process.env.RUNSCARS_BRAND_AUDIT_FIXTURES === "1"
+  );
 }
 
 function activeViewFromHistory({

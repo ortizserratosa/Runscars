@@ -4,15 +4,21 @@ import { getPublicEvaluationReport } from "../../lib/evaluation/public-report";
 import { localizedCategoryName } from "../../lib/i18n/categories";
 import { localizedPath } from "../../lib/i18n/config";
 import { getRequestLocale } from "../../lib/i18n/server";
+import { buildLocalizedMetadata } from "../../lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const en = (await getRequestLocale()) === "en";
-  return {
-    title: en ? "Prediction evaluation" : "Evaluación de predicciones",
+  const locale = await getRequestLocale();
+  const en = locale === "en";
+  return buildLocalizedMetadata({
+    locale,
+    path: "/evaluacion",
+    title: en
+      ? "Oscar Prediction Accuracy and Evaluation"
+      : "Acierto y evaluación de predicciones Oscar",
     description: en
-      ? "Accuracy of locked Runscars predictions against official results."
-      : "Acierto de los cierres Runscars frente a resultados oficiales.",
-  };
+      ? "Compare locked Runscars Oscar predictions with official nominations and winners using a transparent, versioned evaluation."
+      : "Compara las predicciones Oscar cerradas de Runscars con nominaciones y ganadores oficiales mediante una evaluación transparente.",
+  });
 }
 
 export const dynamic = "force-dynamic";

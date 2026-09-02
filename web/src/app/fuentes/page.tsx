@@ -3,16 +3,22 @@ import Link from "next/link";
 import { localeTag, localizedPath } from "../../lib/i18n/config";
 import { getRequestLocale } from "../../lib/i18n/server";
 import { getSourceIndex } from "../../lib/repositories/sources";
+import { buildLocalizedMetadata } from "../../lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getRequestLocale();
-  return {
-    title: locale === "en" ? "Sources" : "Fuentes",
+  return buildLocalizedMetadata({
+    locale,
+    path: "/fuentes",
+    title:
+      locale === "en"
+        ? "Oscar Prediction Sources and Experts"
+        : "Fuentes de predicciones Oscar",
     description:
       locale === "en"
-        ? "Sources, publications and latest updates."
-        : "Fuentes, publicaciones y últimas actualizaciones.",
-  };
+        ? "Explore the specialist outlets behind Runscars' 2027 Oscar predictions, with original publications and latest verified updates."
+        : "Consulta los medios especializados detrás de las predicciones Oscar 2027, con publicaciones originales y últimas actualizaciones verificadas.",
+  });
 }
 
 function dateLabel(value: string | null, locale: "es" | "en") {

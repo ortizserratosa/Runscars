@@ -18,6 +18,7 @@ import {
 
 export const metadata: Metadata = {
   title: "Administración editorial",
+  robots: { index: false, follow: false },
 };
 
 export const dynamic = "force-dynamic";
