@@ -75,6 +75,7 @@ function ActiveCategory({
           <strong>
             {candidate.film ? (
               <Link
+                prefetch={false}
                 href={localizedPath(`/peliculas/${candidate.film.id}`, locale)}
               >
                 {candidate.label}
@@ -193,11 +194,14 @@ function ActiveCategory({
       <section className="category-hero">
         <div className="page-shell">
           <div className="breadcrumb">
-            <Link href={localizedPath("/", locale)}>
+            <Link prefetch={false} href={localizedPath("/", locale)}>
               {en ? "Home" : "Inicio"}
             </Link>
             <span>/</span>
-            <Link href={localizedPath("/temporadas/2027", locale)}>
+            <Link
+              prefetch={false}
+              href={localizedPath("/temporadas/2027", locale)}
+            >
               Oscar 2027
             </Link>
             <span>/</span>
@@ -241,6 +245,7 @@ function ActiveCategory({
       >
         {PUBLIC_CATEGORIES.map((item) => (
           <Link
+            prefetch={false}
             key={item.id}
             href={localizedPath(`/temporadas/2027/${item.slug}`, locale)}
             aria-current={item.id === category.id ? "page" : undefined}
@@ -299,6 +304,7 @@ function ActiveCategory({
                 >
                   {view.snapshot.cuts.map((cut, index) => (
                     <Link
+                      prefetch={false}
                       aria-current={cut.isSelected ? "page" : undefined}
                       className={cut.isSelected ? "active" : undefined}
                       href={localizedPath(
@@ -389,6 +395,7 @@ function ActiveCategory({
                       <article key={source.sourceId}>
                         <div>
                           <Link
+                            prefetch={false}
                             href={localizedPath(
                               `/fuentes/${source.sourceId}`,
                               locale,
@@ -666,11 +673,14 @@ function ArchiveCategory({
       <section className="category-hero archive-hero">
         <div className="page-shell">
           <div className="breadcrumb">
-            <Link href={localizedPath("/", locale)}>
+            <Link prefetch={false} href={localizedPath("/", locale)}>
               {en ? "Home" : "Inicio"}
             </Link>
             <span>/</span>
-            <Link href={localizedPath("/temporadas/2026", locale)}>
+            <Link
+              prefetch={false}
+              href={localizedPath("/temporadas/2026", locale)}
+            >
               Oscar 2026
             </Link>
             <span>/</span>
@@ -734,6 +744,7 @@ function ArchiveCategory({
                   <h3>
                     {candidate.film ? (
                       <Link
+                        prefetch={false}
                         href={localizedPath(
                           `/peliculas/${candidate.film.id}`,
                           locale,

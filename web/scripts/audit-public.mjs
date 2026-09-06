@@ -91,9 +91,35 @@ while (queue.length) {
           if (html.includes('name="robots" content="noindex'))
             failures.push({ url, error: "Sitemap page is noindex" });
           if (!title) failures.push({ url, error: "Missing title" });
-          for (const language of ["es", "en", "x-default"])
-            if (!alternates.some(([lang]) => lang === language))
-              failures.push({ url, error: `Missing alternate ${language}` });
+          const pathname = new URL(url).pathname;
+          const spanishPath = pathname.replace(/^\/en(?:\/|$)/, "/");
+          for (const language of ["es", "en", "x-default"]) {
+            const alternate = alternates.find(
+              ([lang]) => lang === language,
+            )?.[1];
+            const alternatePath =
+              language === "en"
+                ? `/en${spanishPath === "/" ? "" : spanishPath}`
+                : spanishPath;
+            const expectedAlternate = new URL(alternatePath, canonicalOrigin)
+              .href;
+            if (!alternate || new URL(alternate).href !== expectedAlternate)
+              failures.push({
+                url,
+                error: `Incorrect alternate ${language}`,
+                alternate,
+                expected: expectedAlternate,
+              });
+          }
+          for (const script of html.matchAll(
+            /<script[^>]+type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g,
+          )) {
+            try {
+              JSON.parse(script[1]);
+            } catch {
+              failures.push({ url, error: "Invalid JSON-LD" });
+            }
+          }
         }
         if (response.ok)
           for (const [, raw] of html.matchAll(/<a\b[^>]*\bhref="([^"]+)"/g)) {

@@ -210,13 +210,18 @@ export default async function Home() {
             </p>
             <div className="hero-actions">
               <Link
+                prefetch={false}
                 className="primary-button"
                 href={href("/temporadas/2027/mejor-pelicula")}
               >
                 {en ? "View Best Picture" : "Ver Mejor película"}{" "}
                 <span aria-hidden="true">↗</span>
               </Link>
-              <Link className="text-link" href={href("/temporadas/2027")}>
+              <Link
+                prefetch={false}
+                className="text-link"
+                href={href("/temporadas/2027")}
+              >
                 {en ? "Explore the season" : "Explorar temporada"}
               </Link>
             </div>
@@ -227,7 +232,7 @@ export default async function Home() {
               <span>{en ? "Leading film" : "Película líder"}</span>
               <span>{en ? "Consensus" : "Consenso"}</span>
             </div>
-            <Link href={leader.href}>
+            <Link prefetch={false} href={leader.href}>
               <PosterBlock
                 title={leader.title}
                 locale={locale}
@@ -279,14 +284,14 @@ export default async function Home() {
           <span className="ticker-label">
             {en ? "Latest update" : "Última actualización"}
           </span>
-          <Link href={leader.href}>
+          <Link prefetch={false} href={leader.href}>
             {leader.title} {en ? "leads consensus" : "lidera el consenso"}
           </Link>
           <span className="ticker-separator" aria-hidden="true">
             ◆
           </span>
           {rising ? (
-            <Link href={rising.href}>
+            <Link prefetch={false} href={rising.href}>
               {rising.title} {en ? "rises" : "sube"} {rising.movement}{" "}
               {en
                 ? rising.movement === 1
@@ -324,11 +329,15 @@ export default async function Home() {
         aria-label={en ? "Oscar categories" : "Categorías Oscar"}
       >
         {PUBLIC_CATEGORIES.map((item) => (
-          <Link key={item.id} href={href(`/temporadas/2027/${item.slug}`)}>
+          <Link
+            prefetch={false}
+            key={item.id}
+            href={href(`/temporadas/2027/${item.slug}`)}
+          >
             {en ? item.shortNameEn : item.shortName}
           </Link>
         ))}
-        <Link href={href("/festivales")}>
+        <Link prefetch={false} href={href("/festivales")}>
           {en ? "Festival circuit ↗" : "Circuito festivalero ↗"}
         </Link>
       </nav>
@@ -354,6 +363,7 @@ export default async function Home() {
         <div className="podium-grid">
           {topThree.map((candidate, index) => (
             <Link
+              prefetch={false}
               className={`podium-card podium-${index + 1}`}
               href={candidate.href}
               key={candidate.id}
@@ -434,10 +444,15 @@ export default async function Home() {
                 <strong>{leader.coverage}</strong>
                 <span>
                   {en ? "sources include" : "fuentes sitúan a"}{" "}
-                  <Link href={leader.href}>{leader.title}</Link>
+                  <Link prefetch={false} href={leader.href}>
+                    {leader.title}
+                  </Link>
                 </span>
               </div>
-              <Link href={href("/temporadas/2027/mejor-pelicula")}>
+              <Link
+                prefetch={false}
+                href={href("/temporadas/2027/mejor-pelicula")}
+              >
                 {en ? "Open consensus →" : "Abrir consenso →"}
               </Link>
             </article>
@@ -450,7 +465,9 @@ export default async function Home() {
                 <strong>{rising ? `+${rising.movement}` : "="}</strong>
                 <span>
                   {rising ? (
-                    <Link href={rising.href}>{rising.title}</Link>
+                    <Link prefetch={false} href={rising.href}>
+                      {rising.title}
+                    </Link>
                   ) : en ? (
                     "no rises among the top positions"
                   ) : (
@@ -458,7 +475,10 @@ export default async function Home() {
                   )}
                 </span>
               </div>
-              <Link href={href("/temporadas/2027/mejor-pelicula")}>
+              <Link
+                prefetch={false}
+                href={href("/temporadas/2027/mejor-pelicula")}
+              >
                 {en ? "View change history →" : "Ver historial de cambios →"}
               </Link>
             </article>
@@ -475,10 +495,10 @@ export default async function Home() {
                     : "un ranking personal independiente del consenso"}
                 </span>
               </div>
-              <Link href={href("/acceso")}>
+              <Link prefetch={false} href={href("/acceso")}>
                 {en ? "Create my ballot →" : "Crear mi quiniela →"}
               </Link>
-              <Link href={href("/comunidad")}>
+              <Link prefetch={false} href={href("/comunidad")}>
                 {en
                   ? "Explore public ballots →"
                   : "Explorar quinielas públicas →"}
@@ -503,7 +523,11 @@ export default async function Home() {
               ? "Every movement records the source, author, date and original value. Full transparency without manipulated data."
               : "Cada movimiento registra fuente, autor, fecha y dato original. Transparencia total sin datos manipulados."}
           </p>
-          <Link className="primary-button dark-button" href={href("/fuentes")}>
+          <Link
+            prefetch={false}
+            className="primary-button dark-button"
+            href={href("/fuentes")}
+          >
             {en ? "Explore sources" : "Explorar fuentes"}
           </Link>
         </div>
@@ -520,7 +544,9 @@ export default async function Home() {
               >
                 <span>{receipt.name}</span>
                 <strong>
-                  <Link href={receipt.href}>{receipt.detail}</Link>
+                  <Link prefetch={false} href={receipt.href}>
+                    {receipt.detail}
+                  </Link>
                 </strong>
                 <small>{receipt.date}</small>
               </div>
@@ -539,7 +565,9 @@ export default async function Home() {
             >
               {receipts.map((receipt) => (
                 <li key={receipt.name}>
-                  <Link href={receipt.href}>{receipt.name}</Link>
+                  <Link prefetch={false} href={receipt.href}>
+                    {receipt.name}
+                  </Link>
                   <span>{receipt.detail}</span>
                 </li>
               ))}

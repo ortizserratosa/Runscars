@@ -13,6 +13,7 @@ export async function SiteHeader() {
   return (
     <header className="site-header">
       <Link
+        prefetch={false}
         className="wordmark"
         href={href("/")}
         aria-label={en ? "Runscars, home" : "Runscars, portada"}
@@ -24,16 +25,24 @@ export async function SiteHeader() {
         className="main-nav"
         aria-label={en ? "Main navigation" : "Navegación principal"}
       >
-        <Link href={href("/temporadas/2027")}>
+        <Link prefetch={false} href={href("/temporadas/2027")}>
           {en ? "Season" : "Temporada"}
         </Link>
-        <Link href={href("/festivales")}>
+        <Link prefetch={false} href={href("/festivales")}>
           {en ? "Festivals" : "Festivales"}
         </Link>
-        <Link href={href("/archivo")}>{en ? "Archive" : "Archivo"}</Link>
-        <Link href={href("/fuentes")}>{en ? "Sources" : "Fuentes"}</Link>
-        <Link href={href("/metodologia")}>{en ? "Method" : "Método"}</Link>
-        <Link href={href("/comunidad")}>{en ? "Community" : "Comunidad"}</Link>
+        <Link prefetch={false} href={href("/archivo")}>
+          {en ? "Archive" : "Archivo"}
+        </Link>
+        <Link prefetch={false} href={href("/fuentes")}>
+          {en ? "Sources" : "Fuentes"}
+        </Link>
+        <Link prefetch={false} href={href("/metodologia")}>
+          {en ? "Method" : "Método"}
+        </Link>
+        <Link prefetch={false} href={href("/comunidad")}>
+          {en ? "Community" : "Comunidad"}
+        </Link>
       </nav>
 
       <details className="mobile-nav">
@@ -41,16 +50,22 @@ export async function SiteHeader() {
           {en ? "Menu" : "Menú"}
         </summary>
         <nav aria-label={en ? "Mobile navigation" : "Navegación móvil"}>
-          <Link href={href("/temporadas/2027")}>
+          <Link prefetch={false} href={href("/temporadas/2027")}>
             {en ? "Season" : "Temporada"}
           </Link>
-          <Link href={href("/festivales")}>
+          <Link prefetch={false} href={href("/festivales")}>
             {en ? "Festivals" : "Festivales"}
           </Link>
-          <Link href={href("/archivo")}>{en ? "Archive" : "Archivo"}</Link>
-          <Link href={href("/fuentes")}>{en ? "Sources" : "Fuentes"}</Link>
-          <Link href={href("/metodologia")}>{en ? "Method" : "Método"}</Link>
-          <Link href={href("/comunidad")}>
+          <Link prefetch={false} href={href("/archivo")}>
+            {en ? "Archive" : "Archivo"}
+          </Link>
+          <Link prefetch={false} href={href("/fuentes")}>
+            {en ? "Sources" : "Fuentes"}
+          </Link>
+          <Link prefetch={false} href={href("/metodologia")}>
+            {en ? "Method" : "Método"}
+          </Link>
+          <Link prefetch={false} href={href("/comunidad")}>
             {en ? "Community" : "Comunidad"}
           </Link>
         </nav>

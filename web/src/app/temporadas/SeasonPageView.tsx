@@ -92,7 +92,7 @@ export async function SeasonPageView({
       <section className="season-hero">
         <div className="page-shell">
           <div className="breadcrumb">
-            <Link href={localizedPath("/", locale)}>
+            <Link prefetch={false} href={localizedPath("/", locale)}>
               {en ? "Home" : "Inicio"}
             </Link>
             <span>/</span>
@@ -156,6 +156,7 @@ export async function SeasonPageView({
               <div className="season-movement-grid">
                 {recentChanges.map((category) => (
                   <Link
+                    prefetch={false}
                     href={localizedPath(
                       `/temporadas/${year}/${category.slug}`,
                       locale,
@@ -209,6 +210,7 @@ export async function SeasonPageView({
           <div className="category-grid">
             {categories.map((category, index) => (
               <Link
+                prefetch={false}
                 className={`category-card ${
                   category.isPublic ? "active-category" : "muted-category"
                 }`}
@@ -267,6 +269,7 @@ export async function SeasonPageView({
               <div className="season-festival-list">
                 {festivalEditions.map((edition) => (
                   <Link
+                    prefetch={false}
                     href={localizedPath(
                       `/festivales/${edition.festivalId}/${edition.year}`,
                       locale,
@@ -292,6 +295,7 @@ export async function SeasonPageView({
                 ))}
               </div>
               <Link
+                prefetch={false}
                 className="text-link"
                 href={localizedPath("/festivales", locale)}
               >
@@ -343,6 +347,7 @@ export async function SeasonPageView({
               </span>
             </div>
             <Link
+              prefetch={false}
               href={localizedPath(
                 active ? "/temporadas/2026" : "/temporadas/2027",
                 locale,

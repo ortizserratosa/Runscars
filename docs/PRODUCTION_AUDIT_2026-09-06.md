@@ -99,3 +99,13 @@ Se integraron todos los cambios relacionados preexistentes en `26b1032` y
 correcciones verificadas posteriores. Pendiente de añadir despliegue final y
 resultados posteriores a la
 promoción. Ver [OPERATIONS.md](OPERATIONS.md) para promoción y rollback.
+
+## Incidencia observada durante la verificación
+
+Las auditorías simultáneas y el prefetch de enlaces generaron consultas repetidas
+a categorías, snapshots y mercados. Se observó un timeout y se pausaron los
+crawlers; la consulta de mercados volvió a 411ms una vez drenadas las peticiones.
+No se cambiaron políticas RLS ni se incrementaron privilegios para resolverlo.
+Se reduce la demanda con revalidación pública de 60s y prefetch desactivado en
+la navegación/categorías. Las mediciones finales deben realizarse por separado
+del crawl exhaustivo. Este episodio no se registra como una verificación pasada.

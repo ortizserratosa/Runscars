@@ -1018,3 +1018,9 @@ ejemplos manuales de nominaciones y ganador coincidieron con
   fuente festivalera se haya verificado. Se registra fallo y se conserva el
   último conjunto válido; los extractores se versionan para permitir el reintento.
 - **Origen:** plan de auditoría y publicación aprobado por el usuario.
+
+- **Rendimiento público:** los datos anónimos de categorías se comparten entre
+  peticiones con revalidación de 60 segundos. Las variantes de idioma reutilizan
+  la misma señal y los cortes conservan claves distintas. Sesiones, rankings,
+  visionado y administración quedan fuera de esa caché. Se evita el prefetch
+  masivo de navegación y categorías; las rutas se cargan cuando se eligen.

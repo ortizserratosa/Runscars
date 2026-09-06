@@ -51,103 +51,109 @@ const cases = ["desktop", "mobile"].flatMap((device) =>
     paths.map((route) => ({ device, locale, route })),
   ),
 );
+const concurrency = Number(process.env.RUNSCARS_UI_CONCURRENCY ?? 1);
+if (!Number.isInteger(concurrency) || concurrency < 1 || concurrency > 3)
+  throw new Error("RUNSCARS_UI_CONCURRENCY must be from 1 to 3");
 const results = [];
 const browser = await chromium.launch();
-for (let offset = 0; offset < cases.length; offset += 3)
+for (let offset = 0; offset < cases.length; offset += concurrency)
   await Promise.all(
-    cases.slice(offset, offset + 3).map(async ({ device, locale, route }) => {
-      const context = await browser.newContext({
-        viewport:
-          device === "mobile"
-            ? { width: 390, height: 844 }
-            : { width: 1440, height: 1000 },
-      });
-      const page = await context.newPage();
-      await page.addInitScript(() => {
-        window.__vitals = { lcp: 0, cls: 0 };
-        new PerformanceObserver((list) => {
-          for (const e of list.getEntries()) window.__vitals.lcp = e.startTime;
-        }).observe({ type: "largest-contentful-paint", buffered: true });
-        new PerformanceObserver((list) => {
-          for (const e of list.getEntries())
-            if (!e.hadRecentInput) window.__vitals.cls += e.value;
-        }).observe({ type: "layout-shift", buffered: true });
-      });
-      const errors = [];
-      page.on("pageerror", (error) => errors.push(error.message));
-      page.on("console", (message) => {
-        if (message.type() === "error") errors.push(message.text());
-      });
-      const url = `${base}${locale === "en" ? "/en" : ""}${route === "/" && locale === "en" ? "" : route}`;
-      try {
-        const response = await page.goto(url, {
-          waitUntil: "networkidle",
-          timeout: 45000,
+    cases
+      .slice(offset, offset + concurrency)
+      .map(async ({ device, locale, route }) => {
+        const context = await browser.newContext({
+          viewport:
+            device === "mobile"
+              ? { width: 390, height: 844 }
+              : { width: 1440, height: 1000 },
         });
-        const state = await page.evaluate(() => ({
-          title: document.title,
-          lang: document.documentElement.lang,
-          overflow: document.documentElement.scrollWidth > innerWidth,
-          brokenImages: [...document.images].filter(
-            (i) => i.complete && !i.naturalWidth,
-          ).length,
-          main: document.querySelectorAll("main").length,
-          h1: document.querySelectorAll("h1").length,
-          vitals: window.__vitals,
-          ttfb: performance.getEntriesByType("navigation")[0]?.responseStart,
-          rankingY: [...document.querySelectorAll("h2")]
-            .find((h) =>
-              ["Consenso profesional", "Professional consensus"].includes(
-                h.textContent,
-              ),
-            )
-            ?.getBoundingClientRect().top,
-        }));
-        const axe = await new AxeBuilder({ page })
-          .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
-          .analyze();
-        const violations = axe.violations
-          .filter((v) => ["serious", "critical"].includes(v.impact))
-          .map((v) => ({
-            id: v.id,
-            impact: v.impact,
-            nodes: v.nodes.map((n) => ({
-              target: n.target,
-              summary: n.failureSummary,
-            })),
+        const page = await context.newPage();
+        await page.addInitScript(() => {
+          window.__vitals = { lcp: 0, cls: 0 };
+          new PerformanceObserver((list) => {
+            for (const e of list.getEntries())
+              window.__vitals.lcp = e.startTime;
+          }).observe({ type: "largest-contentful-paint", buffered: true });
+          new PerformanceObserver((list) => {
+            for (const e of list.getEntries())
+              if (!e.hadRecentInput) window.__vitals.cls += e.value;
+          }).observe({ type: "layout-shift", buffered: true });
+        });
+        const errors = [];
+        page.on("pageerror", (error) => errors.push(error.message));
+        page.on("console", (message) => {
+          if (message.type() === "error") errors.push(message.text());
+        });
+        const url = `${base}${locale === "en" ? "/en" : ""}${route === "/" && locale === "en" ? "" : route}`;
+        try {
+          const response = await page.goto(url, {
+            waitUntil: "networkidle",
+            timeout: 45000,
+          });
+          const state = await page.evaluate(() => ({
+            title: document.title,
+            lang: document.documentElement.lang,
+            overflow: document.documentElement.scrollWidth > innerWidth,
+            brokenImages: [...document.images].filter(
+              (i) => i.complete && !i.naturalWidth,
+            ).length,
+            main: document.querySelectorAll("main").length,
+            h1: document.querySelectorAll("h1").length,
+            vitals: window.__vitals,
+            ttfb: performance.getEntriesByType("navigation")[0]?.responseStart,
+            rankingY: [...document.querySelectorAll("h2")]
+              .find((h) =>
+                ["Consenso profesional", "Professional consensus"].includes(
+                  h.textContent,
+                ),
+              )
+              ?.getBoundingClientRect().top,
           }));
-        let screenshot;
-        if (
-          [
-            "/",
-            "/temporadas/2027/mejor-pelicula",
-            "/peliculas/fjord",
-            "/festivales",
-          ].includes(route) &&
-          locale === "es"
-        ) {
-          screenshot = path.join(
-            output,
-            `${device}-${route === "/" ? "home" : route.split("/").at(-1)}.png`,
-          );
-          await page.screenshot({ path: screenshot, fullPage: false });
+          const axe = await new AxeBuilder({ page })
+            .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+            .analyze();
+          const violations = axe.violations
+            .filter((v) => ["serious", "critical"].includes(v.impact))
+            .map((v) => ({
+              id: v.id,
+              impact: v.impact,
+              nodes: v.nodes.map((n) => ({
+                target: n.target,
+                summary: n.failureSummary,
+              })),
+            }));
+          let screenshot;
+          if (
+            [
+              "/",
+              "/temporadas/2027/mejor-pelicula",
+              "/peliculas/fjord",
+              "/festivales",
+            ].includes(route) &&
+            locale === "es"
+          ) {
+            screenshot = path.join(
+              output,
+              `${device}-${route === "/" ? "home" : route.split("/").at(-1)}.png`,
+            );
+            await page.screenshot({ path: screenshot, fullPage: false });
+          }
+          results.push({
+            url,
+            device,
+            status: response.status(),
+            ...state,
+            errors: [...new Set(errors)],
+            violations,
+            screenshot,
+          });
+        } catch (error) {
+          results.push({ url, device, error: error.message });
         }
-        results.push({
-          url,
-          device,
-          status: response.status(),
-          ...state,
-          errors: [...new Set(errors)],
-          violations,
-          screenshot,
-        });
-      } catch (error) {
-        results.push({ url, device, error: error.message });
-      }
-      await context.close();
-      if (results.length % 15 === 0)
-        console.log(`${results.length}/${cases.length} UI cases completed`);
-    }),
+        await context.close();
+        if (results.length % 15 === 0)
+          console.log(`${results.length}/${cases.length} UI cases completed`);
+      }),
   );
 await browser.close();
 const failed = results.filter(
