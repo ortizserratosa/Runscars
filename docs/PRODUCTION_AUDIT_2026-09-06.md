@@ -109,3 +109,11 @@ No se cambiaron políticas RLS ni se incrementaron privilegios para resolverlo.
 Se reduce la demanda con revalidación pública de 60s y prefetch desactivado en
 la navegación/categorías. Las mediciones finales deben realizarse por separado
 del crawl exhaustivo. Este episodio no se registra como una verificación pasada.
+
+El análisis posterior identificó otra lectura redundante: `festival_sets.select(*)`
+transfería 1.915.968 bytes de recibos para construir el contexto público. Se
+seleccionan ahora solo los campos visibles, se omite `original_data` en entradas
+y se comparte el índice público de festivales durante 60s. El consenso actual
+compartido por fichas y Fuentes utiliza también esa revalidación. Un fallo al
+leer fuentes/consenso en producción se propaga como error; no se convierte en
+un catálogo vacío o una ficha 404.

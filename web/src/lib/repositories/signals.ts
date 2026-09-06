@@ -1,4 +1,5 @@
 import "server-only";
+import { unstable_cache } from "next/cache";
 import type { PredictionAggregateV2 } from "../aggregation/v2";
 import { compareSnapshotMovements } from "../snapshots/movements";
 import {
@@ -145,53 +146,67 @@ function fixtureCurrentPredictions(): CurrentCategoryPredictionView[] {
   });
 }
 
+async function databaseCurrentPredictions(): Promise<
+  CurrentCategoryPredictionView[]
+> {
+  const supabase = createSupabaseServerClient();
+  const pointerResult = await supabase
+    .from("current_aggregate_snapshots")
+    .select("category_id,snapshot_id")
+    .eq("season_id", "oscars-2027")
+    .eq("prediction_intention", "nomination")
+    .eq("kind", "periodic")
+    .in(
+      "category_id",
+      PUBLIC_CATEGORIES.map((category) => category.id),
+    );
+  if (pointerResult.error) throw new Error(pointerResult.error.message);
+  const pointerByCategory = new Map(
+    (pointerResult.data ?? []).map((pointer) => [
+      pointer.category_id,
+      pointer.snapshot_id,
+    ]),
+  );
+  const historyResult = await supabase
+    .from("aggregate_snapshots")
+    .select(
+      "id,category_id,content_hash,locked_at,method_version,schema_version,payload",
+    )
+    .eq("season_id", "oscars-2027")
+    .eq("prediction_intention", "nomination")
+    .eq("kind", "periodic")
+    .eq("schema_version", "runscars-snapshot-v2")
+    .in(
+      "category_id",
+      PUBLIC_CATEGORIES.map((category) => category.id),
+    )
+    .order("locked_at", { ascending: true })
+    .order("id", { ascending: true });
+  if (historyResult.error) throw new Error(historyResult.error.message);
+  return currentViewsFromRows(
+    (historyResult.data ?? []) as SnapshotRow[],
+    pointerByCategory,
+  );
+}
+
+const cachedCurrentPredictions = unstable_cache(
+  databaseCurrentPredictions,
+  [
+    "public-predictions-v1",
+    process.env.NEXT_PUBLIC_SUPABASE_URL ?? "unconfigured",
+  ],
+  { revalidate: 60 },
+);
+
 export async function getCurrentCategoryPredictions(): Promise<
   CurrentCategoryPredictionView[]
 > {
   if (!isSupabaseConfigured()) return fixtureCurrentPredictions();
   try {
-    const supabase = createSupabaseServerClient();
-    const pointerResult = await supabase
-      .from("current_aggregate_snapshots")
-      .select("category_id,snapshot_id")
-      .eq("season_id", "oscars-2027")
-      .eq("prediction_intention", "nomination")
-      .eq("kind", "periodic")
-      .in(
-        "category_id",
-        PUBLIC_CATEGORIES.map((category) => category.id),
-      );
-    if (pointerResult.error) throw new Error(pointerResult.error.message);
-    const pointerByCategory = new Map(
-      (pointerResult.data ?? []).map((pointer) => [
-        pointer.category_id,
-        pointer.snapshot_id,
-      ]),
-    );
-    const historyResult = await supabase
-      .from("aggregate_snapshots")
-      .select(
-        "id,category_id,content_hash,locked_at,method_version,schema_version,payload",
-      )
-      .eq("season_id", "oscars-2027")
-      .eq("prediction_intention", "nomination")
-      .eq("kind", "periodic")
-      .eq("schema_version", "runscars-snapshot-v2")
-      .in(
-        "category_id",
-        PUBLIC_CATEGORIES.map((category) => category.id),
-      )
-      .order("locked_at", { ascending: true })
-      .order("id", { ascending: true });
-    if (historyResult.error) throw new Error(historyResult.error.message);
-    return currentViewsFromRows(
-      (historyResult.data ?? []) as SnapshotRow[],
-      pointerByCategory,
-    );
-  } catch {
-    return process.env.NODE_ENV === "production"
-      ? []
-      : fixtureCurrentPredictions();
+    return await cachedCurrentPredictions();
+  } catch (error) {
+    if (process.env.NODE_ENV === "production") throw error;
+    return fixtureCurrentPredictions();
   }
 }
 

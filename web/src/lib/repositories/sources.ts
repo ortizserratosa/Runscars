@@ -310,10 +310,9 @@ export async function getSourceIndex(): Promise<SourceIndexView[]> {
         ),
       }))
       .sort((left, right) => left.name.localeCompare(right.name, "es"));
-  } catch {
-    return process.env.NODE_ENV === "production"
-      ? []
-      : fixtureIndex(predictions);
+  } catch (error) {
+    if (process.env.NODE_ENV === "production") throw error;
+    return fixtureIndex(predictions);
   }
 }
 
@@ -486,18 +485,12 @@ export const getSourceDetail = cache(async function getSourceDetail(
         originalByObservationId,
       ),
     };
-  } catch {
-    return process.env.NODE_ENV === "production"
-      ? null
-      : {
-          ...summary,
-          notes: null,
-          categories: categoryViews(
-            sourceId,
-            predictions,
-            new Map(),
-            new Map(),
-          ),
-        };
+  } catch (error) {
+    if (process.env.NODE_ENV === "production") throw error;
+    return {
+      ...summary,
+      notes: null,
+      categories: categoryViews(sourceId, predictions, new Map(), new Map()),
+    };
   }
 });

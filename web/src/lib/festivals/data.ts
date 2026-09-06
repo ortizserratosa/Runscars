@@ -1,4 +1,5 @@
 import "server-only";
+import { unstable_cache } from "next/cache";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { cache } from "react";
 import manifest from "../../../data/festivals/2026.json";
@@ -305,12 +306,19 @@ async function databaseIndex(): Promise<FestivalEditionView[]> {
   const setIds = pointersResult.data.map((pointer) => pointer.set_id);
   const [setsResult, entriesResult] = await Promise.all([
     setIds.length
-      ? supabase.from("festival_sets").select("*").in("id", setIds)
+      ? supabase
+          .from("festival_sets")
+          .select(
+            "id,kind,version,source_url,source_title,published_at,captured_at,extractor_version",
+          )
+          .in("id", setIds)
       : Promise.resolve({ data: [], error: null }),
     setIds.length
       ? supabase
           .from("festival_entries")
-          .select("*,films(id,title)")
+          .select(
+            "id,set_id,entry_order,section,original_title,original_recipient,award_type,film_id,match_status,films(id,title)",
+          )
           .in("set_id", setIds)
           .order("entry_order")
       : Promise.resolve({ data: [], error: null }),
@@ -427,11 +435,21 @@ async function databaseIndex(): Promise<FestivalEditionView[]> {
     .sort((left, right) => left.displayOrder - right.displayOrder);
 }
 
+// Receipts stay in the database; public pages need only the small display view.
+const cachedDatabaseIndex = unstable_cache(
+  databaseIndex,
+  [
+    "public-festivals-v1",
+    process.env.NEXT_PUBLIC_SUPABASE_URL ?? "unconfigured",
+  ],
+  { revalidate: 60 },
+);
+
 export const getFestivalIndex = cache(
   async (): Promise<FestivalEditionView[]> => {
     if (!isSupabaseConfigured()) return fixtureIndex();
     const today = new Date().toISOString().slice(0, 10);
-    return (await databaseIndex()).map((edition) => ({
+    return (await cachedDatabaseIndex()).map((edition) => ({
       ...edition,
       status:
         today < edition.startsOn
