@@ -26,6 +26,23 @@ const festivals = [
 ];
 
 describe("festival circuit", () => {
+  it("parses the official San Sebastian feature listing for the requested year", async () => {
+    const html = readFileSync(
+      new URL("../fixtures/festivals/san-sebastian-film.html", import.meta.url),
+      "utf8",
+    );
+    const entries = parseFestivalHtml("san-sebastian", "selection", html, 2026);
+    expect(entries).toHaveLength(1);
+    expect(entries[0]).toMatchObject({
+      originalTitle: "Geister / Ghost Song",
+      originalRecipient: "Fatih Akin",
+      isFeature: true,
+    });
+    expect(parseFestivalHtml("san-sebastian", "selection", html, 2025)).toEqual(
+      [],
+    );
+  });
+
   it("parses the captured Berlinale award markup and excludes other editions", () => {
     const html = readFileSync(
       new URL("../fixtures/festivals/berlinale-award.html", import.meta.url),

@@ -225,6 +225,55 @@ function veniceSelection(html, year) {
   });
 }
 
+function sanSebastianSelection(html, year) {
+  return html
+    .split(/<div class="col-12 col-md-6 col-lg-4 col-xl-4 my-4"[^>]*>/)
+    .slice(1)
+    .flatMap((block) => {
+      const title = block.match(
+        /<div class="my-2 alink"[^>]*><a href="([^"]+)">([\s\S]*?)<\/a>/,
+      );
+      if (
+        !title ||
+        !title[1].startsWith(
+          `/${year}/sections_and_films/official_selection/7/`,
+        )
+      )
+        return [];
+      const duration = block.match(
+        /<!-- Duracion -->[\s\S]*?(\d+)\s*min\./,
+      )?.[1];
+      // Require an explicit feature runtime; episodic and unknown formats stay unimported.
+      if (
+        !duration ||
+        Number(duration) <= 40 ||
+        /\d+\s*(?:episodes|episodios)/i.test(decodeHtml(block))
+      )
+        return [];
+      return [
+        {
+          section: "Official Selection",
+          originalTitle: decodeHtml(title[2]),
+          originalRecipient:
+            decodeHtml(
+              block.match(
+                /<div class="border-bottom text-uppercase mb-2">([\s\S]*?)<\/div>/,
+              )?.[1] ?? "",
+            ) || null,
+          awardType: null,
+          isFeature: true,
+          isOfficial: true,
+          entryType: "feature",
+          originalData: {
+            filmUrl: new URL(title[1], "https://www.sansebastianfestival.com")
+              .href,
+            runtimeMinutes: Number(duration),
+          },
+        },
+      ];
+    });
+}
+
 export function parseFestivalHtml(festivalId, kind, html, year = 2026) {
   if (typeof html !== "string" || !html.trim()) {
     throw new Error(`Respuesta vacía de ${festivalId}`);
@@ -241,6 +290,8 @@ export function parseFestivalHtml(festivalId, kind, html, year = 2026) {
     entries = berlinaleAwards(html, year);
   if (!entries.length && festivalId === "venice" && kind === "selection")
     entries = veniceSelection(html, year);
+  if (!entries.length && festivalId === "san-sebastian" && kind === "selection")
+    entries = sanSebastianSelection(html, year);
   return entries;
 }
 

@@ -104,9 +104,9 @@ export async function getEditorialDashboard(
     client
       .from("market_connectors")
       .select(
-        "id,source_id,name,is_active,last_success_at,last_failure_at,last_error,updated_at",
+        "id,source_id,provider,is_active,last_success_at,last_failure_at,last_error,updated_at",
       )
-      .order("name"),
+      .order("provider"),
     client
       .from("festival_connectors")
       .select(
@@ -186,7 +186,12 @@ export async function getEditorialDashboard(
     seasons: rows(seasonsResult, "Temporadas"),
     categories: rows(categoriesResult, "Categorías"),
     seasonFilms: rows(seasonFilmsResult, "Películas por temporada"),
-    marketConnectors: rows(marketConnectorsResult, "Conectores de mercado"),
+    marketConnectors: rows(marketConnectorsResult, "Conectores de mercado").map(
+      (connector) => ({
+        ...connector,
+        name: connector.provider === "kalshi" ? "Kalshi" : "Polymarket",
+      }),
+    ),
     festivalConnectors: rows(
       festivalConnectorsResult,
       "Conectores de festivales",

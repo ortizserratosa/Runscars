@@ -7,6 +7,9 @@ const canonicalOrigin =
   process.env.RUNSCARS_CANONICAL_ORIGIN ?? "https://runscars.app";
 const reportPath =
   process.env.RUNSCARS_AUDIT_REPORT ?? "/tmp/runscars-public-audit.json";
+const concurrency = Number(process.env.RUNSCARS_AUDIT_CONCURRENCY ?? 6);
+if (!Number.isInteger(concurrency) || concurrency < 1 || concurrency > 24)
+  throw new Error("RUNSCARS_AUDIT_CONCURRENCY must be an integer from 1 to 24");
 const startedAt = new Date().toISOString();
 const failures = [];
 const pages = [];
@@ -43,7 +46,7 @@ const sitemap = new Set(sitemapUrls.map(localize));
 let queue = [...sitemap];
 const auxiliary = /^\/(?:en\/)?(?:api|auth)(?:\/|$)/;
 while (queue.length) {
-  const batch = queue.splice(0, 6).filter((url) => !seen.has(url));
+  const batch = queue.splice(0, concurrency).filter((url) => !seen.has(url));
   batch.forEach((url) => seen.add(url));
   await Promise.all(
     batch.map(async (url) => {
@@ -114,7 +117,7 @@ while (queue.length) {
     }),
   );
   queue = [...new Set(queue)].filter((url) => !seen.has(url));
-  if (seen.size % 150 < 6)
+  if (seen.size % 150 < concurrency)
     console.log(
       `Crawled ${seen.size}; queued ${queue.length}; findings ${failures.length}`,
     );

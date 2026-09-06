@@ -53,6 +53,23 @@ describe("versioned database foundation", () => {
     await database.close();
   });
 
+  it("grants the editorial service read access without snapshot mutations", async () => {
+    const result = await database.query<{
+      table_name: string;
+      readable: boolean;
+      writable: boolean;
+    }>(`
+      select table_name,
+        has_table_privilege('service_role', 'public.' || table_name, 'SELECT') as readable,
+        has_table_privilege('service_role', 'public.' || table_name, 'UPDATE,DELETE') as writable
+      from (values ('aggregate_snapshots'), ('official_result_sets')) as records(table_name)
+    `);
+    expect(result.rows).toEqual([
+      { table_name: "aggregate_snapshots", readable: true, writable: false },
+      { table_name: "official_result_sets", readable: true, writable: false },
+    ]);
+  });
+
   it("applies the migration and loads the reproducible fixture", async () => {
     await database.exec(await readFile(seedPath, "utf8"));
 
