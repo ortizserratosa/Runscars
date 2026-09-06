@@ -75,7 +75,7 @@ describe("versioned database foundation", () => {
       seasons: 2,
       categories: 21,
       films: 39,
-      sources: 24,
+      sources: 33,
       connectors: 11,
     });
 
@@ -118,9 +118,297 @@ describe("versioned database foundation", () => {
       order by id
     `);
     expect(marketVersions.rows).toEqual([
-      { id: "kalshi-oscars", extractor_version: "kalshi-v3" },
-      { id: "polymarket-oscars", extractor_version: "polymarket-v3" },
+      { id: "kalshi-oscars", extractor_version: "kalshi-v4" },
+      { id: "polymarket-oscars", extractor_version: "polymarket-v4" },
     ]);
+  });
+
+  it("models the nine 2026 festival editions and official Oscar nominee slots", async () => {
+    await database.exec(await readFile(seedPath, "utf8"));
+    const result = await database.query<{
+      festivals: number;
+      competitive: number;
+      completed: number;
+      ongoing: number;
+      scheduled: number;
+      published: number;
+      pending: number;
+      not_applicable: number;
+      connectors: number;
+      official_slots: number;
+    }>(`
+      select
+        (select count(*)::int from public.festivals) as festivals,
+        (select count(*)::int from public.festivals where is_competitive) as competitive,
+        (select count(*)::int from public.festival_editions where status = 'completed') as completed,
+        (select count(*)::int from public.festival_editions where status = 'ongoing') as ongoing,
+        (select count(*)::int from public.festival_editions where status = 'scheduled') as scheduled,
+        (select count(*)::int from public.festival_editions where awards_status = 'published') as published,
+        (select count(*)::int from public.festival_editions where awards_status = 'pending') as pending,
+        (select count(*)::int from public.festival_editions where awards_status = 'not_applicable') as not_applicable,
+        (select count(*)::int from public.festival_connectors where schedule_cron = '17 5 * * *') as connectors,
+        (
+          select count(*)::int
+          from public.season_categories
+          where season_id = 'oscars-2027'
+            and category_id in (
+              'best-picture', 'directing', 'actor', 'actress',
+              'supporting-actor', 'supporting-actress',
+              'original-screenplay', 'adapted-screenplay'
+            )
+            and nominee_slots = case when category_id = 'best-picture' then 10 else 5 end
+            and nominee_slots_source_url = 'https://www.oscars.org/sites/oscars/files/2026-05/99th_oscars_complete_rules.pdf'
+            and nominee_slots_verified_on = '2026-09-03'
+        ) as official_slots
+    `);
+    expect(result.rows[0]).toEqual({
+      festivals: 9,
+      competitive: 7,
+      completed: 4,
+      ongoing: 1,
+      scheduled: 4,
+      published: 4,
+      pending: 3,
+      not_applicable: 2,
+      connectors: 9,
+      official_slots: 8,
+    });
+  });
+
+  it("persists festival sets atomically, idempotently and immutably", async () => {
+    await database.exec(await readFile(seedPath, "utf8"));
+    const payload = {
+      editionId: "cannes-2026",
+      kind: "awards",
+      contentHash: "a".repeat(64),
+      source: {
+        url: "https://www.festival-cannes.com/en/example/",
+        title: "Official fixture",
+        publishedAt: "2026-05-23T00:00:00Z",
+      },
+      capturedAt: "2026-09-03T00:00:00Z",
+      extractorVersion: "fixture-v1",
+      rawCapture: { fixture: true },
+      correctsSetId: null,
+      correctionReason: null,
+      entries: [
+        {
+          entryOrder: 1,
+          section: "Competition",
+          originalTitle: "FJORD",
+          originalRecipient: "Cristian Mungiu",
+          awardType: "Palme d’or",
+          isFeature: true,
+          filmId: "fjord",
+          status: "matched",
+          normalizedTitle: "fjord",
+          candidateFilmIds: ["fjord"],
+          reason: "Coincidencia exacta",
+          originalData: { fixture: true },
+        },
+        {
+          entryOrder: 2,
+          section: "Competition",
+          originalTitle: "Unknown fixture film",
+          originalRecipient: null,
+          awardType: "Jury Prize",
+          isFeature: true,
+          filmId: null,
+          status: "unmatched",
+          normalizedTitle: "unknown fixture film",
+          candidateFilmIds: [],
+          reason: "No está en catálogo",
+          originalData: { fixture: true },
+        },
+      ],
+    };
+    const first = await database.query<{ result: { status: string } }>(
+      "select public.persist_festival_set($1::jsonb, 'database-test') as result",
+      [JSON.stringify(payload)],
+    );
+    const repeated = await database.query<{ result: { status: string } }>(
+      "select public.persist_festival_set($1::jsonb, 'database-test') as result",
+      [JSON.stringify(payload)],
+    );
+    expect(first.rows[0]?.result.status).toBe("inserted");
+    expect(repeated.rows[0]?.result.status).toBe("duplicate");
+
+    const counts = await database.query<{
+      sets: number;
+      entries: number;
+      history: number;
+      current_sets: number;
+      pending_review: number;
+    }>(`
+      select
+        (select count(*)::int from public.festival_sets) as sets,
+        (select count(*)::int from public.festival_entries) as entries,
+        (select count(*)::int from public.festival_entry_match_history) as history,
+        (select count(*)::int from public.current_festival_sets) as current_sets,
+        (select count(*)::int from public.festival_entries where match_status <> 'matched') as pending_review
+    `);
+    expect(counts.rows[0]).toEqual({
+      sets: 1,
+      entries: 2,
+      history: 2,
+      current_sets: 1,
+      pending_review: 1,
+    });
+    const correction = await database.query<{ history_id: number }>(`
+      select public.match_festival_entry(
+        (
+          select id from public.festival_entries
+          where original_title = 'Unknown fixture film'
+        ),
+        'the-odyssey',
+        'Título verificado editorialmente',
+        'database-test'
+      ) as history_id
+    `);
+    expect(correction.rows[0]?.history_id).toBeGreaterThan(0);
+    const correctedMatch = await database.query<{
+      original_film_id: string | null;
+      current_film_id: string;
+      history: number;
+    }>(`
+      select
+        entry.film_id as original_film_id,
+        history.film_id as current_film_id,
+        (
+          select count(*)::int
+          from public.festival_entry_match_history
+          where entry_id = entry.id
+        ) as history
+      from public.festival_entries as entry
+      join public.current_festival_entry_matches as current_match
+        on current_match.entry_id = entry.id
+      join public.festival_entry_match_history as history
+        on history.id = current_match.match_history_id
+      where entry.original_title = 'Unknown fixture film'
+    `);
+    expect(correctedMatch.rows[0]).toEqual({
+      original_film_id: null,
+      current_film_id: "the-odyssey",
+      history: 2,
+    });
+    await expect(
+      database.exec("update public.festival_sets set version = 2"),
+    ).rejects.toThrow("immutable");
+    await expect(
+      database.exec("delete from public.festival_entries"),
+    ).rejects.toThrow("immutable");
+  });
+
+  it("consolidates duplicate screenplay candidates and keeps ranking history", async () => {
+    await database.exec(await readFile(seedPath, "utf8"));
+    await database.exec(`
+      drop index public.category_candidates_screenplay_film_unique;
+
+      insert into auth.users (id, email, raw_user_meta_data)
+      values (
+        '11111111-1111-4111-8111-111111111111',
+        'screenplay-fixture@example.com',
+        '{"display_name":"Screenplay Fixture"}'::jsonb
+      );
+
+      insert into public.category_candidates (
+        id, season_id, category_id, film_id, display_label, identity_key
+      ) values
+        (
+          'screenplay-canonical-fixture', 'oscars-2027',
+          'original-screenplay', 'the-odyssey', 'The Odyssey', repeat('6', 64)
+        ),
+        (
+          'screenplay-writers-fixture', 'oscars-2027',
+          'original-screenplay', 'the-odyssey',
+          'Christopher Nolan — The Odyssey', repeat('7', 64)
+        ),
+        (
+          'screenplay-other-film-fixture', 'oscars-2027',
+          'original-screenplay', 'fjord', 'Fjord', repeat('8', 64)
+        );
+
+      insert into public.user_rankings (
+        id, user_id, season_id, category_id, is_public
+      ) values (
+        '22222222-2222-4222-8222-222222222222',
+        '11111111-1111-4111-8111-111111111111',
+        'oscars-2027', 'original-screenplay', true
+      );
+
+      insert into public.user_ranking_entries (
+        ranking_id, user_id, season_id, category_id,
+        category_candidate_id, position
+      ) values
+        (
+          '22222222-2222-4222-8222-222222222222',
+          '11111111-1111-4111-8111-111111111111',
+          'oscars-2027', 'original-screenplay',
+          'screenplay-writers-fixture', 1
+        ),
+        (
+          '22222222-2222-4222-8222-222222222222',
+          '11111111-1111-4111-8111-111111111111',
+          'oscars-2027', 'original-screenplay',
+          'screenplay-other-film-fixture', 2
+        ),
+        (
+          '22222222-2222-4222-8222-222222222222',
+          '11111111-1111-4111-8111-111111111111',
+          'oscars-2027', 'original-screenplay',
+          'screenplay-canonical-fixture', 3
+        );
+
+      select public.canonicalize_screenplay_candidates('database-test');
+    `);
+    const result = await database.query<{
+      active: number;
+      aliases: number;
+      ranking_entries: number;
+      canonical_entries: number;
+      positions: string;
+      corrections: number;
+    }>(`
+      select
+        (
+          select count(*)::int from public.category_candidates
+          where season_id = 'oscars-2027'
+            and category_id = 'original-screenplay'
+            and film_id = 'the-odyssey'
+            and superseded_by_id is null
+        ) as active,
+        (
+          select count(*)::int from public.category_candidate_aliases
+          where old_candidate_id = 'screenplay-writers-fixture'
+            and canonical_candidate_id = 'screenplay-canonical-fixture'
+        ) as aliases,
+        (
+          select count(*)::int from public.user_ranking_entries
+          where ranking_id = '22222222-2222-4222-8222-222222222222'
+        ) as ranking_entries,
+        (
+          select count(*)::int from public.user_ranking_entries
+          where ranking_id = '22222222-2222-4222-8222-222222222222'
+            and category_candidate_id = 'screenplay-canonical-fixture'
+        ) as canonical_entries,
+        (
+          select string_agg(position::text, ',' order by position)
+          from public.user_ranking_entries
+          where ranking_id = '22222222-2222-4222-8222-222222222222'
+        ) as positions,
+        (
+          select count(*)::int from public.user_ranking_correction_history
+          where ranking_id = '22222222-2222-4222-8222-222222222222'
+        ) as corrections
+    `);
+    expect(result.rows[0]).toEqual({
+      active: 1,
+      aliases: 1,
+      ranking_entries: 2,
+      canonical_entries: 1,
+      positions: "1,2",
+      corrections: 1,
+    });
   });
 
   it("can load the seed twice without duplicating records", async () => {

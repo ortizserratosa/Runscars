@@ -1,4 +1,8 @@
-import { parseKalshiMarkets, parsePolymarketEvents } from "./core.mjs";
+import {
+  matchesCeremonyIdentity,
+  parseKalshiMarkets,
+  parsePolymarketEvents,
+} from "./core.mjs";
 import { fetchResponse } from "../network.mjs";
 
 async function jsonResponse(url, fetcher, timeoutMs) {
@@ -61,7 +65,10 @@ export const MARKET_CONNECTORS = Object.freeze({
     for (const result of search.events ?? []) {
       const identity = `${result.title ?? ""} ${result.slug ?? ""}`;
       if (
-        !identity.includes(String(connector.configuration.ceremony_year)) ||
+        !matchesCeremonyIdentity(
+          [result.title, result.slug, result.url],
+          connector.configuration.ceremony_year,
+        ) ||
         result.active === false ||
         result.closed === true
       ) {

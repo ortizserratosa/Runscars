@@ -32,7 +32,13 @@ function FormMessage({
   );
 }
 
-export function SignInForm({ locale }: { locale: Locale }) {
+export function SignInForm({
+  locale,
+  next = "/cuenta",
+}: {
+  locale: Locale;
+  next?: string;
+}) {
   const en = locale === "en";
   const [state, action, pending] = useActionState(
     signInAction,
@@ -41,6 +47,7 @@ export function SignInForm({ locale }: { locale: Locale }) {
   return (
     <form action={action} className="account-form">
       <input name="locale" type="hidden" value={locale} />
+      <input name="next" type="hidden" value={next} />
       <label htmlFor="login-email">{en ? "Email" : "Correo"}</label>
       <input
         autoComplete="email"
@@ -71,7 +78,13 @@ export function SignInForm({ locale }: { locale: Locale }) {
   );
 }
 
-export function SignUpForm({ locale }: { locale: Locale }) {
+export function SignUpForm({
+  locale,
+  next = "/cuenta",
+}: {
+  locale: Locale;
+  next?: string;
+}) {
   const en = locale === "en";
   const [state, action, pending] = useActionState(
     signUpAction,
@@ -80,6 +93,7 @@ export function SignUpForm({ locale }: { locale: Locale }) {
   return (
     <form action={action} className="account-form">
       <input name="locale" type="hidden" value={locale} />
+      <input name="next" type="hidden" value={next} />
       <label htmlFor="signup-name">
         {en ? "Display name" : "Nombre visible"}
       </label>
@@ -122,7 +136,13 @@ export function SignUpForm({ locale }: { locale: Locale }) {
   );
 }
 
-export function GoogleAuthButton({ locale }: { locale: Locale }) {
+export function GoogleAuthButton({
+  locale,
+  next = "/cuenta",
+}: {
+  locale: Locale;
+  next?: string;
+}) {
   const en = locale === "en";
   const [state, action, pending] = useActionState(
     signInWithGoogleAction,
@@ -132,6 +152,7 @@ export function GoogleAuthButton({ locale }: { locale: Locale }) {
   return (
     <form action={action} className="google-auth-form">
       <input name="locale" type="hidden" value={locale} />
+      <input name="next" type="hidden" value={next} />
       <button className="google-button" disabled={pending} type="submit">
         {pending
           ? en

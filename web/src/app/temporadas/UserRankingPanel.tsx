@@ -2,9 +2,10 @@ import Link from "next/link";
 import { getCurrentUser } from "../../lib/auth/session";
 import {
   categoryById,
-  rankingEntryLimit,
+  RANKING_ALTERNATE_SLOTS,
   type PublicCategoryId,
 } from "../../lib/categories/config";
+import { getNomineeSlots } from "../../lib/categories/nominee-slots";
 import type {
   FilmWatchState,
   RankingEntryInput,
@@ -23,14 +24,17 @@ export async function UserRankingPanel({
   categoryId: PublicCategoryId;
   categoryName: string;
 }) {
-  const [current, locale] = await Promise.all([
+  const [current, locale, slotConfig] = await Promise.all([
     getCurrentUser(),
     getRequestLocale(),
+    getNomineeSlots("oscars-2027", categoryId),
   ]);
   const en = locale === "en";
   const category = categoryById(categoryId);
-  const rankingLimit = rankingEntryLimit(categoryId);
-  if (!category || rankingLimit === null) return null;
+  const rankingLimit = slotConfig
+    ? slotConfig.count + RANKING_ALTERNATE_SLOTS
+    : null;
+  if (!category || !slotConfig || rankingLimit === null) return null;
   const localizedName = localizedCategoryName(locale, categoryId, categoryName);
   if (!current) {
     return (
@@ -51,7 +55,7 @@ export async function UserRankingPanel({
           </p>
           <Link
             className="primary-button"
-            href={localizedPath("/acceso", locale)}
+            href={`${localizedPath("/acceso", locale)}?next=${encodeURIComponent(localizedPath(`/temporadas/2027/${category.slug}`, locale))}`}
           >
             {en ? "Sign in to rank" : "Entrar para ordenar"}
           </Link>
@@ -211,7 +215,7 @@ export async function UserRankingPanel({
           filmId,
           state: statesByFilm.get(filmId) ?? "unmarked",
         }))}
-        nomineeSlots={category.nomineeSlots}
+        nomineeSlots={slotConfig.count}
         rankingExists={Boolean(ranking)}
         rankingLimit={rankingLimit}
         locale={locale}

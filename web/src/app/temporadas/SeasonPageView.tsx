@@ -3,6 +3,7 @@ import { localizedCategoryName } from "../../lib/i18n/categories";
 import { localeTag, localizedPath, type Locale } from "../../lib/i18n/config";
 import { getRequestLocale } from "../../lib/i18n/server";
 import { absoluteUrl } from "../../lib/seo";
+import { getFestivalIndex } from "../../lib/festivals/data";
 import { JsonLd } from "../components/JsonLd";
 
 type CategorySummary = {
@@ -42,6 +43,7 @@ export async function SeasonPageView({
   const locale = await getRequestLocale();
   const en = locale === "en";
   const active = year === 2027;
+  const festivalEditions = active ? await getFestivalIndex() : [];
   const recentChanges = active
     ? categories
         .filter((category) => category.updatedAt && category.previousUpdatedAt)
@@ -243,6 +245,60 @@ export async function SeasonPageView({
               </Link>
             ))}
           </div>
+          {festivalEditions.length ? (
+            <section className="season-festival-circuit">
+              <div className="section-heading split-heading">
+                <div>
+                  <p className="section-index">
+                    {en ? "FESTIVAL CIRCUIT" : "CIRCUITO FESTIVALERO"}
+                  </p>
+                  <h2>
+                    {en
+                      ? "Nine editions, official context"
+                      : "Nueve ediciones, contexto oficial"}
+                  </h2>
+                </div>
+                <p>
+                  {en
+                    ? "Selections and awards never alter the professional consensus."
+                    : "Las selecciones y los premios nunca alteran el consenso profesional."}
+                </p>
+              </div>
+              <div className="season-festival-list">
+                {festivalEditions.map((edition) => (
+                  <Link
+                    href={localizedPath(
+                      `/festivales/${edition.festivalId}/${edition.year}`,
+                      locale,
+                    )}
+                    key={edition.id}
+                  >
+                    <span>{String(edition.displayOrder).padStart(2, "0")}</span>
+                    <strong>{edition.shortName}</strong>
+                    <small>
+                      {edition.status === "completed"
+                        ? en
+                          ? "Completed"
+                          : "Finalizada"
+                        : edition.status === "ongoing"
+                          ? en
+                            ? "Ongoing"
+                            : "En curso"
+                          : en
+                            ? "Scheduled"
+                            : "Programada"}
+                    </small>
+                  </Link>
+                ))}
+              </div>
+              <Link
+                className="text-link"
+                href={localizedPath("/festivales", locale)}
+              >
+                {en ? "Open the full circuit" : "Abrir el circuito completo"}
+              </Link>
+            </section>
+          ) : null}
         </div>
         <aside className="season-sidebar">
           <div className="sidebar-card source-status-card">

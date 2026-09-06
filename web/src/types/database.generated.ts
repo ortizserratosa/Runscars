@@ -131,6 +131,45 @@ export type Database = {
         };
         Relationships: [];
       };
+      category_candidate_aliases: {
+        Row: {
+          old_candidate_id: string;
+          canonical_candidate_id: string;
+          reason: string;
+          actor: string;
+          created_at: string;
+        };
+        Insert: {
+          old_candidate_id: string;
+          canonical_candidate_id: string;
+          reason: string;
+          actor: string;
+          created_at?: string;
+        };
+        Update: {
+          old_candidate_id?: string;
+          canonical_candidate_id?: string;
+          reason?: string;
+          actor?: string;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "category_candidate_aliases_canonical_candidate_id_fkey";
+            columns: ["canonical_candidate_id"];
+            isOneToOne: false;
+            referencedRelation: "category_candidates";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "category_candidate_aliases_old_candidate_id_fkey";
+            columns: ["old_candidate_id"];
+            isOneToOne: false;
+            referencedRelation: "category_candidates";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       category_candidate_match_history: {
         Row: {
           id: number;
@@ -249,6 +288,7 @@ export type Database = {
           identity_key: string;
           created_at: string;
           updated_at: string;
+          superseded_by_id: string | null;
         };
         Insert: {
           id: string;
@@ -260,6 +300,7 @@ export type Database = {
           identity_key: string;
           created_at?: string;
           updated_at?: string;
+          superseded_by_id?: string | null;
         };
         Update: {
           id?: string;
@@ -271,6 +312,7 @@ export type Database = {
           identity_key?: string;
           created_at?: string;
           updated_at?: string;
+          superseded_by_id?: string | null;
         };
         Relationships: [
           {
@@ -292,6 +334,13 @@ export type Database = {
             columns: ["season_id"];
             isOneToOne: false;
             referencedRelation: "seasons";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "category_candidates_superseded_by_id_fkey";
+            columns: ["superseded_by_id"];
+            isOneToOne: false;
+            referencedRelation: "category_candidates";
             referencedColumns: ["id"];
           },
         ];
@@ -341,6 +390,75 @@ export type Database = {
             columns: ["snapshot_id"];
             isOneToOne: false;
             referencedRelation: "aggregate_snapshots";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      current_festival_entry_matches: {
+        Row: {
+          entry_id: number;
+          match_history_id: number;
+          updated_at: string;
+        };
+        Insert: {
+          entry_id: number;
+          match_history_id: number;
+          updated_at?: string;
+        };
+        Update: {
+          entry_id?: number;
+          match_history_id?: number;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "current_festival_entry_matches_entry_id_fkey";
+            columns: ["entry_id"];
+            isOneToOne: false;
+            referencedRelation: "festival_entries";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "current_festival_entry_matches_match_history_id_fkey";
+            columns: ["match_history_id"];
+            isOneToOne: false;
+            referencedRelation: "festival_entry_match_history";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      current_festival_sets: {
+        Row: {
+          edition_id: string;
+          kind: Database["public"]["Enums"]["festival_set_kind"];
+          set_id: string;
+          updated_at: string;
+        };
+        Insert: {
+          edition_id: string;
+          kind: Database["public"]["Enums"]["festival_set_kind"];
+          set_id: string;
+          updated_at?: string;
+        };
+        Update: {
+          edition_id?: string;
+          kind?: Database["public"]["Enums"]["festival_set_kind"];
+          set_id?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "current_festival_sets_edition_id_fkey";
+            columns: ["edition_id"];
+            isOneToOne: false;
+            referencedRelation: "festival_editions";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "current_festival_sets_set_id_fkey";
+            columns: ["set_id"];
+            isOneToOne: false;
+            referencedRelation: "festival_sets";
             referencedColumns: ["id"];
           },
         ];
@@ -463,6 +581,416 @@ export type Database = {
             referencedColumns: ["id"];
           },
         ];
+      };
+      festival_capture_runs: {
+        Row: {
+          id: number;
+          connector_id: string;
+          run_key: string;
+          trigger: Database["public"]["Enums"]["ingestion_trigger"];
+          status: Database["public"]["Enums"]["ingestion_run_status"];
+          started_at: string;
+          finished_at: string | null;
+          editions_seen: number;
+          sets_inserted: number;
+          sets_duplicate: number;
+          review_items_created: number;
+          error_summary: string | null;
+          details: Json;
+          created_at: string;
+        };
+        Insert: {
+          id: number;
+          connector_id: string;
+          run_key: string;
+          trigger: Database["public"]["Enums"]["ingestion_trigger"];
+          status?: Database["public"]["Enums"]["ingestion_run_status"];
+          started_at: string;
+          finished_at?: string | null;
+          editions_seen?: number;
+          sets_inserted?: number;
+          sets_duplicate?: number;
+          review_items_created?: number;
+          error_summary?: string | null;
+          details?: Json;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          connector_id?: string;
+          run_key?: string;
+          trigger?: Database["public"]["Enums"]["ingestion_trigger"];
+          status?: Database["public"]["Enums"]["ingestion_run_status"];
+          started_at?: string;
+          finished_at?: string | null;
+          editions_seen?: number;
+          sets_inserted?: number;
+          sets_duplicate?: number;
+          review_items_created?: number;
+          error_summary?: string | null;
+          details?: Json;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "festival_capture_runs_connector_id_fkey";
+            columns: ["connector_id"];
+            isOneToOne: false;
+            referencedRelation: "festival_connectors";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      festival_connectors: {
+        Row: {
+          id: string;
+          festival_id: string;
+          source_id: string;
+          name: string;
+          kind: Database["public"]["Enums"]["connector_kind"];
+          endpoint_url: string;
+          extractor_version: string;
+          schedule_cron: string;
+          is_active: boolean;
+          configuration: Json;
+          last_success_at: string | null;
+          last_failure_at: string | null;
+          last_error: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id: string;
+          festival_id: string;
+          source_id: string;
+          name: string;
+          kind: Database["public"]["Enums"]["connector_kind"];
+          endpoint_url: string;
+          extractor_version: string;
+          schedule_cron?: string;
+          is_active?: boolean;
+          configuration?: Json;
+          last_success_at?: string | null;
+          last_failure_at?: string | null;
+          last_error?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          festival_id?: string;
+          source_id?: string;
+          name?: string;
+          kind?: Database["public"]["Enums"]["connector_kind"];
+          endpoint_url?: string;
+          extractor_version?: string;
+          schedule_cron?: string;
+          is_active?: boolean;
+          configuration?: Json;
+          last_success_at?: string | null;
+          last_failure_at?: string | null;
+          last_error?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "festival_connectors_festival_id_fkey";
+            columns: ["festival_id"];
+            isOneToOne: false;
+            referencedRelation: "festivals";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "festival_connectors_source_id_fkey";
+            columns: ["source_id"];
+            isOneToOne: false;
+            referencedRelation: "sources";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      festival_editions: {
+        Row: {
+          id: string;
+          festival_id: string;
+          season_id: string;
+          edition_year: number;
+          edition_number: number | null;
+          starts_on: string;
+          ends_on: string;
+          status: Database["public"]["Enums"]["festival_edition_status"];
+          awards_status: Database["public"]["Enums"]["festival_awards_status"];
+          official_url: string;
+          selection_url: string;
+          awards_url: string | null;
+          last_verified_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id: string;
+          festival_id: string;
+          season_id: string;
+          edition_year: number;
+          edition_number?: number | null;
+          starts_on: string;
+          ends_on: string;
+          status: Database["public"]["Enums"]["festival_edition_status"];
+          awards_status: Database["public"]["Enums"]["festival_awards_status"];
+          official_url: string;
+          selection_url: string;
+          awards_url?: string | null;
+          last_verified_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          festival_id?: string;
+          season_id?: string;
+          edition_year?: number;
+          edition_number?: number | null;
+          starts_on?: string;
+          ends_on?: string;
+          status?: Database["public"]["Enums"]["festival_edition_status"];
+          awards_status?: Database["public"]["Enums"]["festival_awards_status"];
+          official_url?: string;
+          selection_url?: string;
+          awards_url?: string | null;
+          last_verified_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "festival_editions_festival_id_fkey";
+            columns: ["festival_id"];
+            isOneToOne: false;
+            referencedRelation: "festivals";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "festival_editions_season_id_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "seasons";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      festival_entries: {
+        Row: {
+          id: number;
+          set_id: string;
+          entry_order: number;
+          section: string;
+          original_title: string;
+          original_recipient: string | null;
+          award_type: string | null;
+          is_feature: boolean;
+          film_id: string | null;
+          match_status: Database["public"]["Enums"]["festival_match_status"];
+          original_data: Json;
+          created_at: string;
+        };
+        Insert: {
+          id: number;
+          set_id: string;
+          entry_order: number;
+          section: string;
+          original_title: string;
+          original_recipient?: string | null;
+          award_type?: string | null;
+          is_feature?: boolean;
+          film_id?: string | null;
+          match_status?: Database["public"]["Enums"]["festival_match_status"];
+          original_data: Json;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          set_id?: string;
+          entry_order?: number;
+          section?: string;
+          original_title?: string;
+          original_recipient?: string | null;
+          award_type?: string | null;
+          is_feature?: boolean;
+          film_id?: string | null;
+          match_status?: Database["public"]["Enums"]["festival_match_status"];
+          original_data?: Json;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "festival_entries_film_id_fkey";
+            columns: ["film_id"];
+            isOneToOne: false;
+            referencedRelation: "films";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "festival_entries_set_id_fkey";
+            columns: ["set_id"];
+            isOneToOne: false;
+            referencedRelation: "festival_sets";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      festival_entry_match_history: {
+        Row: {
+          id: number;
+          entry_id: number;
+          normalized_title: string;
+          status: Database["public"]["Enums"]["festival_match_status"];
+          film_id: string | null;
+          candidate_film_ids: string[];
+          reason: string;
+          actor: string;
+          created_at: string;
+        };
+        Insert: {
+          id: number;
+          entry_id: number;
+          normalized_title: string;
+          status: Database["public"]["Enums"]["festival_match_status"];
+          film_id?: string | null;
+          candidate_film_ids?: string[];
+          reason: string;
+          actor: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          entry_id?: number;
+          normalized_title?: string;
+          status?: Database["public"]["Enums"]["festival_match_status"];
+          film_id?: string | null;
+          candidate_film_ids?: string[];
+          reason?: string;
+          actor?: string;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "festival_entry_match_history_entry_id_fkey";
+            columns: ["entry_id"];
+            isOneToOne: false;
+            referencedRelation: "festival_entries";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "festival_entry_match_history_film_id_fkey";
+            columns: ["film_id"];
+            isOneToOne: false;
+            referencedRelation: "films";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      festival_sets: {
+        Row: {
+          id: string;
+          edition_id: string;
+          kind: Database["public"]["Enums"]["festival_set_kind"];
+          version: number;
+          content_hash: string;
+          source_url: string;
+          source_title: string;
+          published_at: string | null;
+          captured_at: string;
+          raw_capture: Json;
+          extractor_version: string;
+          corrects_set_id: string | null;
+          correction_reason: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id: string;
+          edition_id: string;
+          kind: Database["public"]["Enums"]["festival_set_kind"];
+          version: number;
+          content_hash: string;
+          source_url: string;
+          source_title: string;
+          published_at?: string | null;
+          captured_at: string;
+          raw_capture: Json;
+          extractor_version: string;
+          corrects_set_id?: string | null;
+          correction_reason?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          edition_id?: string;
+          kind?: Database["public"]["Enums"]["festival_set_kind"];
+          version?: number;
+          content_hash?: string;
+          source_url?: string;
+          source_title?: string;
+          published_at?: string | null;
+          captured_at?: string;
+          raw_capture?: Json;
+          extractor_version?: string;
+          corrects_set_id?: string | null;
+          correction_reason?: string | null;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "festival_sets_corrects_set_id_fkey";
+            columns: ["corrects_set_id"];
+            isOneToOne: false;
+            referencedRelation: "festival_sets";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "festival_sets_edition_id_fkey";
+            columns: ["edition_id"];
+            isOneToOne: false;
+            referencedRelation: "festival_editions";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      festivals: {
+        Row: {
+          id: string;
+          name: string;
+          name_en: string;
+          short_name: string;
+          homepage_url: string;
+          is_competitive: boolean;
+          display_order: number;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id: string;
+          name: string;
+          name_en: string;
+          short_name: string;
+          homepage_url: string;
+          is_competitive?: boolean;
+          display_order: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          name_en?: string;
+          short_name?: string;
+          homepage_url?: string;
+          is_competitive?: boolean;
+          display_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
       };
       film_credit_match_history: {
         Row: {
@@ -952,6 +1480,50 @@ export type Database = {
             columns: ["source_id"];
             isOneToOne: false;
             referencedRelation: "sources";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      market_contract_exclusions: {
+        Row: {
+          id: number;
+          contract_id: number;
+          reason_code: string;
+          reason: string;
+          expected_ceremony_year: number;
+          detected_ceremony_year: number | null;
+          evidence_url: string;
+          excluded_at: string;
+          actor: string;
+        };
+        Insert: {
+          id: number;
+          contract_id: number;
+          reason_code: string;
+          reason: string;
+          expected_ceremony_year: number;
+          detected_ceremony_year?: number | null;
+          evidence_url: string;
+          excluded_at?: string;
+          actor: string;
+        };
+        Update: {
+          id?: number;
+          contract_id?: number;
+          reason_code?: string;
+          reason?: string;
+          expected_ceremony_year?: number;
+          detected_ceremony_year?: number | null;
+          evidence_url?: string;
+          excluded_at?: string;
+          actor?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "market_contract_exclusions_contract_id_fkey";
+            columns: ["contract_id"];
+            isOneToOne: false;
+            referencedRelation: "market_contracts";
             referencedColumns: ["id"];
           },
         ];
@@ -1471,6 +2043,8 @@ export type Database = {
           is_enabled: boolean;
           created_at: string;
           nominee_slots: number;
+          nominee_slots_source_url: string | null;
+          nominee_slots_verified_on: string | null;
         };
         Insert: {
           season_id: string;
@@ -1478,6 +2052,8 @@ export type Database = {
           is_enabled?: boolean;
           created_at?: string;
           nominee_slots?: number;
+          nominee_slots_source_url?: string | null;
+          nominee_slots_verified_on?: string | null;
         };
         Update: {
           season_id?: string;
@@ -1485,6 +2061,8 @@ export type Database = {
           is_enabled?: boolean;
           created_at?: string;
           nominee_slots?: number;
+          nominee_slots_source_url?: string | null;
+          nominee_slots_verified_on?: string | null;
         };
         Relationships: [
           {
@@ -2220,6 +2798,41 @@ export type Database = {
           },
         ];
       };
+      user_ranking_correction_history: {
+        Row: {
+          id: number;
+          ranking_id: string;
+          reason: string;
+          previous_entries: Json;
+          corrected_at: string;
+          actor: string;
+        };
+        Insert: {
+          id: number;
+          ranking_id: string;
+          reason: string;
+          previous_entries: Json;
+          corrected_at?: string;
+          actor: string;
+        };
+        Update: {
+          id?: number;
+          ranking_id?: string;
+          reason?: string;
+          previous_entries?: Json;
+          corrected_at?: string;
+          actor?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "user_ranking_correction_history_ranking_id_fkey";
+            columns: ["ranking_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       user_ranking_entries: {
         Row: {
           ranking_id: string;
@@ -2287,32 +2900,25 @@ export type Database = {
             columns: ["category_candidate_id"];
             isOneToOne: false;
             referencedRelation: "category_candidates";
-            referencedColumns: ["category_id"];
+            referencedColumns: ["season_id"];
           },
           {
             foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
             columns: ["season_id"];
             isOneToOne: false;
             referencedRelation: "category_candidates";
-            referencedColumns: ["category_id"];
+            referencedColumns: ["season_id"];
           },
           {
             foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
             columns: ["category_id"];
             isOneToOne: false;
             referencedRelation: "category_candidates";
-            referencedColumns: ["category_id"];
+            referencedColumns: ["season_id"];
           },
           {
             foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
             columns: ["category_candidate_id"];
-            isOneToOne: false;
-            referencedRelation: "category_candidates";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
-            columns: ["season_id"];
             isOneToOne: false;
             referencedRelation: "category_candidates";
             referencedColumns: ["id"];
@@ -2329,74 +2935,32 @@ export type Database = {
             columns: ["category_candidate_id"];
             isOneToOne: false;
             referencedRelation: "category_candidates";
-            referencedColumns: ["season_id"];
+            referencedColumns: ["category_id"];
           },
           {
             foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
             columns: ["season_id"];
             isOneToOne: false;
             referencedRelation: "category_candidates";
-            referencedColumns: ["season_id"];
+            referencedColumns: ["category_id"];
           },
           {
             foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
             columns: ["category_id"];
             isOneToOne: false;
             referencedRelation: "category_candidates";
-            referencedColumns: ["season_id"];
+            referencedColumns: ["category_id"];
           },
           {
-            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
-            columns: ["category_id"];
+            foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
+            columns: ["season_id"];
             isOneToOne: false;
-            referencedRelation: "user_rankings";
-            referencedColumns: ["season_id"];
+            referencedRelation: "category_candidates";
+            referencedColumns: ["id"];
           },
           {
             foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
             columns: ["ranking_id"];
-            isOneToOne: false;
-            referencedRelation: "user_rankings";
-            referencedColumns: ["user_id"];
-          },
-          {
-            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
-            columns: ["user_id"];
-            isOneToOne: false;
-            referencedRelation: "user_rankings";
-            referencedColumns: ["user_id"];
-          },
-          {
-            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
-            columns: ["season_id"];
-            isOneToOne: false;
-            referencedRelation: "user_rankings";
-            referencedColumns: ["user_id"];
-          },
-          {
-            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
-            columns: ["category_id"];
-            isOneToOne: false;
-            referencedRelation: "user_rankings";
-            referencedColumns: ["user_id"];
-          },
-          {
-            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
-            columns: ["ranking_id"];
-            isOneToOne: false;
-            referencedRelation: "user_rankings";
-            referencedColumns: ["category_id"];
-          },
-          {
-            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
-            columns: ["user_id"];
-            isOneToOne: false;
-            referencedRelation: "user_rankings";
-            referencedColumns: ["category_id"];
-          },
-          {
-            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
-            columns: ["season_id"];
             isOneToOne: false;
             referencedRelation: "user_rankings";
             referencedColumns: ["category_id"];
@@ -2441,7 +3005,35 @@ export type Database = {
             columns: ["category_id"];
             isOneToOne: false;
             referencedRelation: "user_rankings";
-            referencedColumns: ["category_id"];
+            referencedColumns: ["season_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["ranking_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["user_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["user_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["user_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["user_id"];
           },
           {
             foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
@@ -2449,6 +3041,27 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "user_rankings";
             referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["category_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["category_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["category_id"];
           },
           {
             foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
@@ -2490,17 +3103,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "user_rankings_season_category_fkey";
-            columns: ["category_id"];
-            isOneToOne: false;
-            referencedRelation: "season_categories";
-            referencedColumns: ["season_id"];
-          },
-          {
-            foreignKeyName: "user_rankings_season_category_fkey";
             columns: ["season_id"];
             isOneToOne: false;
             referencedRelation: "season_categories";
-            referencedColumns: ["season_id"];
+            referencedColumns: ["category_id"];
           },
           {
             foreignKeyName: "user_rankings_season_category_fkey";
@@ -2514,7 +3120,14 @@ export type Database = {
             columns: ["season_id"];
             isOneToOne: false;
             referencedRelation: "season_categories";
-            referencedColumns: ["category_id"];
+            referencedColumns: ["season_id"];
+          },
+          {
+            foreignKeyName: "user_rankings_season_category_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "season_categories";
+            referencedColumns: ["season_id"];
           },
           {
             foreignKeyName: "user_rankings_user_id_fkey";
@@ -2550,6 +3163,10 @@ export type Database = {
       aggregate_snapshot_kind: "periodic" | "nomination_final" | "winner_final";
       category_subject: "film" | "person";
       connector_kind: "api_json" | "rss" | "html" | "manual";
+      festival_awards_status: "pending" | "published" | "not_applicable";
+      festival_edition_status: "scheduled" | "ongoing" | "completed";
+      festival_match_status: "matched" | "pending_review" | "unmatched";
+      festival_set_kind: "selection" | "awards";
       film_credit_kind: "cast" | "crew";
       film_release_status: "announced" | "upcoming" | "released";
       ingestion_event_level: "info" | "warning" | "error";

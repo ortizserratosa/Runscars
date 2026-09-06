@@ -7,9 +7,9 @@ export const SOCIAL_IMAGE_PATH = "/runscars-social-v1.png";
 export function siteOrigin() {
   const configured = process.env.NEXT_PUBLIC_SITE_URL;
   try {
-    return new URL(configured ?? "http://localhost:3000").origin;
+    return new URL(configured ?? "https://runscars.app").origin;
   } catch {
-    return "http://localhost:3000";
+    return "https://runscars.app";
   }
 }
 

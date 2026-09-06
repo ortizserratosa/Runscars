@@ -109,6 +109,20 @@ function isOpenAt(value, capturedAt) {
   return !closesAt || Date.parse(closesAt) > Date.parse(capturedAt);
 }
 
+export function ceremonyYearConflict(values, ceremonyYear) {
+  if (!ceremonyYear) return false;
+  const target = Number(ceremonyYear);
+  const explicitYears = values
+    .filter((value) => value !== null && value !== undefined)
+    .flatMap((value) => String(value).match(/\b(?:19|20)\d{2}\b/g) ?? [])
+    .map(Number);
+  const codedYears = values
+    .filter((value) => value !== null && value !== undefined)
+    .flatMap((value) => String(value).match(/-(\d{2})(?=-|\b)/g) ?? [])
+    .map((value) => 2000 + Number(value.slice(1)));
+  return [...explicitYears, ...codedYears].some((year) => year !== target);
+}
+
 function matchesCeremonyYear(value, ceremonyYear) {
   if (!ceremonyYear) return true;
   const year = String(ceremonyYear);
@@ -116,6 +130,14 @@ function matchesCeremonyYear(value, ceremonyYear) {
   return (
     new RegExp(`\\b${year}\\b`).test(value) ||
     new RegExp(`-${shortYear}(?:-|\\b)`).test(value)
+  );
+}
+
+export function matchesCeremonyIdentity(values, ceremonyYear) {
+  const identity = values.filter(Boolean).join(" ");
+  return (
+    matchesCeremonyYear(identity, ceremonyYear) &&
+    !ceremonyYearConflict(values, ceremonyYear)
   );
 }
 
@@ -138,7 +160,10 @@ export function parseKalshiMarkets(
         .join(" ");
       return (
         isOscarMarket(identity) &&
-        matchesCeremonyYear(identity, ceremonyYear) &&
+        matchesCeremonyIdentity(
+          [market.title, market.subtitle, market.event_ticker, market.ticker],
+          ceremonyYear,
+        ) &&
         market.status !== "closed" &&
         market.status !== "settled" &&
         !market.settlement_ts &&
@@ -217,7 +242,10 @@ export function parsePolymarketEvents(
     const eventIdentity = `${event.title ?? ""} ${event.slug ?? ""}`;
     if (
       !isOscarMarket(eventIdentity) ||
-      !matchesCeremonyYear(eventIdentity, ceremonyYear) ||
+      !matchesCeremonyIdentity(
+        [event.title, event.slug, event.url],
+        ceremonyYear,
+      ) ||
       event.active === false ||
       event.closed === true ||
       !isOpenAt(event.endDate, capturedAt)
@@ -226,6 +254,16 @@ export function parsePolymarketEvents(
     }
     for (const market of event.markets ?? []) {
       if (
+        ceremonyYearConflict(
+          [
+            market.question,
+            market.title,
+            market.slug,
+            market.url,
+            market.groupItemTitle,
+          ],
+          ceremonyYear,
+        ) ||
         market.active === false ||
         market.closed === true ||
         !isOpenAt(market.endDate ?? event.endDate, capturedAt)

@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
 import { createSupabaseAuthServerClient } from "../../../lib/supabase/server";
 
+import { safeReturnPath } from "../../../lib/auth/return-path";
+import { localeFromPathname, localizedPath } from "../../../lib/i18n/config";
+
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
-  const requestedNext = url.searchParams.get("next") ?? "/cuenta";
-  const next =
-    requestedNext.startsWith("/") && !requestedNext.startsWith("//")
-      ? requestedNext
-      : "/cuenta";
+  const next = safeReturnPath(url.searchParams.get("next"));
+  const locale = localeFromPathname(next) ?? "es";
 
   if (code) {
     const supabase = await createSupabaseAuthServerClient();
@@ -19,6 +19,9 @@ export async function GET(request: Request) {
   }
 
   return NextResponse.redirect(
-    new URL("/acceso?error=confirmacion", url.origin),
+    new URL(
+      `${localizedPath("/acceso", locale)}?error=confirmacion&next=${encodeURIComponent(next)}`,
+      url.origin,
+    ),
   );
 }

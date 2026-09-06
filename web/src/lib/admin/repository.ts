@@ -26,6 +26,11 @@ export async function getEditorialDashboard(
     seasonsResult,
     categoriesResult,
     seasonFilmsResult,
+    marketConnectorsResult,
+    festivalConnectorsResult,
+    festivalRunsResult,
+    festivalEditionsResult,
+    festivalMatchesResult,
   ] = await Promise.all([
     client
       .from("ingestion_review_items")
@@ -96,7 +101,78 @@ export async function getEditorialDashboard(
       .select("season_id,film_id,films(id,title)")
       .order("season_id", { ascending: false })
       .limit(1000),
+    client
+      .from("market_connectors")
+      .select(
+        "id,source_id,name,is_active,last_success_at,last_failure_at,last_error,updated_at",
+      )
+      .order("name"),
+    client
+      .from("festival_connectors")
+      .select(
+        "id,source_id,name,is_active,schedule_cron,last_success_at,last_failure_at,last_error,updated_at",
+      )
+      .order("name"),
+    client
+      .from("festival_capture_runs")
+      .select(
+        "id,connector_id,status,started_at,finished_at,sets_inserted,sets_duplicate,review_items_created,error_summary",
+      )
+      .order("started_at", { ascending: false })
+      .limit(30),
+    client
+      .from("festival_editions")
+      .select("id,festival_id,status,awards_status,ends_on,last_verified_at")
+      .or("status.neq.completed,awards_status.eq.pending")
+      .order("ends_on"),
+    client
+      .from("festival_entries")
+      .select(
+        "id,original_title,section,match_status,created_at,festival_sets(edition_id,source_url)",
+      )
+      .order("created_at", { ascending: false })
+      .limit(300),
   ]);
+
+  const festivalEntries = rows(festivalMatchesResult, "Matching festivalero");
+  const festivalEntryIds = festivalEntries.map((entry) => entry.id);
+  const festivalCurrentResult = festivalEntryIds.length
+    ? await client
+        .from("current_festival_entry_matches")
+        .select("entry_id,match_history_id")
+        .in("entry_id", festivalEntryIds)
+    : { data: [], error: null };
+  const festivalCurrent = rows(
+    festivalCurrentResult,
+    "Punteros de matching festivalero",
+  );
+  const festivalHistoryIds = festivalCurrent.map(
+    (current) => current.match_history_id,
+  );
+  const festivalHistoryResult = festivalHistoryIds.length
+    ? await client
+        .from("festival_entry_match_history")
+        .select("id,status")
+        .in("id", festivalHistoryIds)
+    : { data: [], error: null };
+  const festivalHistory = rows(
+    festivalHistoryResult,
+    "Historial de matching festivalero",
+  );
+  const festivalStatusByEntry = new Map(
+    festivalCurrent.map((current) => [
+      current.entry_id,
+      festivalHistory.find((history) => history.id === current.match_history_id)
+        ?.status,
+    ]),
+  );
+  const festivalMatches = festivalEntries
+    .map((entry) => ({
+      ...entry,
+      match_status: festivalStatusByEntry.get(entry.id) ?? entry.match_status,
+    }))
+    .filter((entry) => entry.match_status !== "matched")
+    .slice(0, 60);
 
   return {
     reviews: rows(reviewsResult, "Revisiones"),
@@ -110,5 +186,13 @@ export async function getEditorialDashboard(
     seasons: rows(seasonsResult, "Temporadas"),
     categories: rows(categoriesResult, "Categorías"),
     seasonFilms: rows(seasonFilmsResult, "Películas por temporada"),
+    marketConnectors: rows(marketConnectorsResult, "Conectores de mercado"),
+    festivalConnectors: rows(
+      festivalConnectorsResult,
+      "Conectores de festivales",
+    ),
+    festivalRuns: rows(festivalRunsResult, "Ejecuciones de festivales"),
+    festivalEditions: rows(festivalEditionsResult, "Ediciones pendientes"),
+    festivalMatches,
   };
 }

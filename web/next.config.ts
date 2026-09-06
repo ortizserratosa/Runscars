@@ -1,5 +1,12 @@
 import type { NextConfig } from "next";
 
+const scriptSources = [
+  "'self'",
+  "'unsafe-inline'",
+  "https://va.vercel-scripts.com",
+  ...(process.env.NODE_ENV === "development" ? ["'unsafe-eval'"] : []),
+].join(" ");
+
 const contentSecurityPolicy = [
   "default-src 'self'",
   "base-uri 'self'",
@@ -9,9 +16,11 @@ const contentSecurityPolicy = [
   "img-src 'self' data: blob: https://image.tmdb.org",
   "font-src 'self' data:",
   "style-src 'self' 'unsafe-inline'",
-  "script-src 'self' 'unsafe-inline'",
+  `script-src ${scriptSources}`,
   "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.vercel-insights.com",
-  "upgrade-insecure-requests",
+  ...(process.env.NODE_ENV === "production"
+    ? ["upgrade-insecure-requests"]
+    : []),
 ].join("; ");
 
 const nextConfig: NextConfig = {

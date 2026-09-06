@@ -1,3 +1,5 @@
+import { getFilmCatalogDetail } from "../lib/repositories/catalog";
+import { PUBLIC_CATEGORIES } from "../lib/categories/config";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Movement } from "./components/Movement";
@@ -77,6 +79,16 @@ export default async function Home() {
       "La portada necesita un corte publicable de Mejor película",
     );
   }
+  const posterDetails = await Promise.all(
+    topThree.map((film) =>
+      getFilmCatalogDetail(film.id, en ? "en-US" : "es-ES"),
+    ),
+  );
+  const posterPaths = new Map(
+    posterDetails
+      .filter((film) => film !== null)
+      .map((film) => [film.id, film.tmdb?.posterPath ?? null]),
+  );
   const rising = categoryView.snapshot?.previous
     ? ranking.find(
         (candidate) => candidate.movement !== null && candidate.movement > 0,
@@ -218,11 +230,18 @@ export default async function Home() {
             <Link href={leader.href}>
               <PosterBlock
                 title={leader.title}
+                locale={locale}
+                imagePath={posterPaths.get(leader.id)}
                 tone="violet"
                 number="01"
                 size="large"
               />
             </Link>
+            <p className="hero-leader-name">{leader.title}</p>
+            <p className="hero-coverage">
+              {leader.coverage} {en ? "sources" : "fuentes"} · {leader.firsts}{" "}
+              {en ? "first places" : "primeras posiciones"}
+            </p>
             <div className="leader-score">
               <div>
                 <strong>
@@ -300,6 +319,19 @@ export default async function Home() {
         </div>
       </section>
 
+      <nav
+        className="page-shell category-quick-nav home-category-links"
+        aria-label={en ? "Oscar categories" : "Categorías Oscar"}
+      >
+        {PUBLIC_CATEGORIES.map((item) => (
+          <Link key={item.id} href={href(`/temporadas/2027/${item.slug}`)}>
+            {en ? item.shortNameEn : item.shortName}
+          </Link>
+        ))}
+        <Link href={href("/festivales")}>
+          {en ? "Festival circuit ↗" : "Circuito festivalero ↗"}
+        </Link>
+      </nav>
       <section className="page-shell section-block">
         <div className="section-heading split-heading">
           <div>
@@ -328,6 +360,8 @@ export default async function Home() {
             >
               <PosterBlock
                 title={candidate.title}
+                locale={locale}
+                imagePath={posterPaths.get(candidate.id)}
                 tone={candidate.tone}
                 number={`0${index + 1}`}
                 size={index === 0 ? "medium" : "small"}

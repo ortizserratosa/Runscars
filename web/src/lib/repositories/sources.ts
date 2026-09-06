@@ -104,16 +104,6 @@ function connectorSummary(rows: ConnectorRow[]) {
   };
 }
 
-function activeSourceIds(predictions: CurrentCategoryPredictionView[]) {
-  return [
-    ...new Set(
-      predictions.flatMap((category) =>
-        category.aggregate.sourceLists.map((source) => source.sourceId),
-      ),
-    ),
-  ];
-}
-
 function summaryDates(
   sourceId: string,
   predictions: CurrentCategoryPredictionView[],
@@ -154,20 +144,105 @@ function fixtureIndex(
       });
     }
   }
-  return [...sourceById.values()]
-    .map((source) => ({
-      ...source,
-      homepageUrl: source.url,
-      sourceTypes: ["prediction"],
-      editorialStatus: "selected",
-      technicalStatus: "prototype",
-      publicationStatus: "publishable",
-      lastReviewedOn: null,
-      ...summaryDates(source.id, predictions),
-      lastSuccessfulCheckAt: null,
-      lastFailureAt: null,
-      health: "unknown" as const,
-    }))
+  const predicted = [...sourceById.values()].map((source) => ({
+    ...source,
+    homepageUrl: source.url,
+    sourceTypes: ["prediction"],
+    editorialStatus: "selected",
+    technicalStatus: "prototype",
+    publicationStatus: "publishable",
+    lastReviewedOn: null,
+    ...summaryDates(source.id, predictions),
+    lastSuccessfulCheckAt: null,
+    lastFailureAt: null,
+    health: "unknown" as const,
+  }));
+  const supplemental = [
+    ["tmdb", "TMDB", "https://www.themoviedb.org/", "metadata"],
+    ["metacritic", "Metacritic", "https://www.metacritic.com/movie/", "score"],
+    [
+      "academy",
+      "Academy of Motion Picture Arts and Sciences",
+      "https://www.oscars.org/",
+      "official",
+    ],
+    ["kalshi", "Kalshi", "https://kalshi.com/", "market"],
+    ["polymarket", "Polymarket", "https://polymarket.com/", "market"],
+    [
+      "sundance",
+      "Sundance Film Festival",
+      "https://www.sundance.org/festivals/sundance-film-festival/",
+      "festival",
+    ],
+    [
+      "berlinale",
+      "Berlin International Film Festival",
+      "https://www.berlinale.de/en/home.html",
+      "festival",
+    ],
+    [
+      "cannes",
+      "Festival de Cannes",
+      "https://www.festival-cannes.com/en/",
+      "festival",
+    ],
+    [
+      "locarno",
+      "Locarno Film Festival",
+      "https://www.locarnofestival.ch/",
+      "festival",
+    ],
+    [
+      "venice",
+      "La Biennale di Venezia — Cinema",
+      "https://www.labiennale.org/en/cinema",
+      "festival",
+    ],
+    [
+      "tiff",
+      "Toronto International Film Festival",
+      "https://tiff.net/",
+      "festival",
+    ],
+    [
+      "san-sebastian",
+      "Festival de San Sebastián",
+      "https://www.sansebastianfestival.com/",
+      "festival",
+    ],
+    [
+      "telluride",
+      "Telluride Film Festival",
+      "https://www.telluridefilmfestival.org/",
+      "festival",
+    ],
+    [
+      "nyff",
+      "New York Film Festival",
+      "https://www.filmlinc.org/nyff/",
+      "festival",
+    ],
+  ].map(([id, name, homepageUrl, sourceType]) => ({
+    id,
+    name,
+    homepageUrl,
+    sourceTypes: [sourceType],
+    editorialStatus: "selected",
+    technicalStatus: sourceType === "official" ? "manual" : "automated",
+    publicationStatus: "publishable",
+    lastReviewedOn: "2026-09-03",
+    activeCategoryCount: 0,
+    lastPublishedAt: null,
+    lastChangedAt: null,
+    lastSuccessfulCheckAt: null,
+    lastFailureAt: null,
+    health: "unknown" as const,
+  }));
+  return [...predicted, ...supplemental]
+    .filter(
+      (source, index, sources) =>
+        sources.findIndex((candidate) => candidate.id === source.id) === index,
+    )
     .sort((left, right) => left.name.localeCompare(right.name, "es"));
 }
 
@@ -176,32 +251,47 @@ export async function getSourceIndex(): Promise<SourceIndexView[]> {
   if (!isSupabaseConfigured()) return fixtureIndex(predictions);
   try {
     const supabase = client();
-    const criticalResult = await supabase
-      .from("professional_observations")
-      .select("source_id")
-      .eq("state", "published")
-      .in("data_type", ["review", "score_individual", "score_aggregate"]);
-    if (criticalResult.error) throw new Error(criticalResult.error.message);
-    const sourceIds = [
-      ...new Set([
-        ...activeSourceIds(predictions),
-        ...(criticalResult.data ?? []).map((row) => row.source_id),
-      ]),
-    ];
-    if (!sourceIds.length) return [];
-    const [sourcesResult, connectorsResult] = await Promise.all([
+    const [
+      sourcesResult,
+      connectorsResult,
+      marketConnectorsResult,
+      festivalConnectorsResult,
+    ] = await Promise.all([
       supabase
         .from("sources")
         .select(
           "id,name,homepage_url,source_types,editorial_status,technical_status,publication_status,last_reviewed_on",
-        )
-        .in("id", sourceIds),
+        ),
       supabase
         .from("public_source_freshness")
-        .select("source_id,last_successful_check_at,last_failure_at")
-        .in("source_id", sourceIds),
+        .select("source_id,last_successful_check_at,last_failure_at"),
+      supabase
+        .from("market_connectors")
+        .select("source_id,last_success_at,last_failure_at"),
+      supabase
+        .from("festival_connectors")
+        .select("source_id,last_success_at,last_failure_at"),
     ]);
     if (sourcesResult.error) throw new Error(sourcesResult.error.message);
+    const connectorRows: ConnectorRow[] = [
+      ...(connectorsResult.error ? [] : (connectorsResult.data ?? [])),
+      ...(marketConnectorsResult.error
+        ? []
+        : (marketConnectorsResult.data ?? [])
+      ).map((connector) => ({
+        source_id: connector.source_id,
+        last_successful_check_at: connector.last_success_at,
+        last_failure_at: connector.last_failure_at,
+      })),
+      ...(festivalConnectorsResult.error
+        ? []
+        : (festivalConnectorsResult.data ?? [])
+      ).map((connector) => ({
+        source_id: connector.source_id,
+        last_successful_check_at: connector.last_success_at,
+        last_failure_at: connector.last_failure_at,
+      })),
+    ];
     return (sourcesResult.data ?? [])
       .map((source): SourceIndexView => ({
         id: source.id,
@@ -214,7 +304,7 @@ export async function getSourceIndex(): Promise<SourceIndexView[]> {
         lastReviewedOn: source.last_reviewed_on,
         ...summaryDates(source.id, predictions),
         ...connectorSummary(
-          (connectorsResult.error ? [] : (connectorsResult.data ?? [])).filter(
+          connectorRows.filter(
             (connector) => connector.source_id === source.id,
           ),
         ),

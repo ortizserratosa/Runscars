@@ -481,8 +481,8 @@ dd {
 
 .category-card:nth-child(4n + 2) .category-index,
 .source-index-card:nth-child(4n + 2)::before {
-  background: var(--violet);
-  color: var(--paper);
+  background: color-mix(in srgb, var(--violet) 94%, var(--paper));
+  color: var(--ink);
 }
 
 .category-card:nth-child(4n + 3) .category-index,
@@ -1061,5 +1061,155 @@ dd {
 @media (prefers-reduced-motion: reduce) {
   .hero-board {
     rotate: 0deg;
+  }
+}
+
+/* Production refinement: keep the race and its evidence close together. */
+.home-hero {
+  padding-bottom: 3rem;
+}
+.hero-grid {
+  grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
+  gap: 3rem;
+  padding-top: 2.5rem;
+}
+.hero-copy h1 {
+  font-size: clamp(3.6rem, 6.4vw, 6.5rem);
+  line-height: 0.94;
+}
+.hero-intro {
+  margin-top: 1.25rem;
+}
+.hero-actions {
+  margin-top: 1.5rem;
+}
+.hero-board {
+  max-width: 360px;
+  width: 100%;
+  justify-self: end;
+  rotate: 0deg;
+  transform: none;
+}
+.hero-board .poster-large {
+  min-height: 0;
+  height: 260px;
+}
+.hero-board .poster-title {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+}
+.hero-leader-name {
+  margin: 0.7rem 0.3rem 0;
+  font-family: var(--serif);
+  font-size: 1.6rem;
+}
+.hero-coverage {
+  margin: 0.5rem 0.3rem 0;
+  font-size: 0.75rem;
+}
+.season-title-row,
+.category-title-row {
+  padding: 2rem 0;
+  gap: 2rem;
+}
+.season-title-row h1,
+.category-title-row h1 {
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  line-height: 1;
+}
+.category-hero-stat strong {
+  font-size: 3.5rem;
+}
+.category-page-body {
+  padding-top: 1.5rem;
+}
+.category-quick-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding-block: 0.75rem;
+}
+.category-quick-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid var(--line);
+  font-size: 0.78rem;
+  text-decoration: none;
+}
+.category-quick-nav a[aria-current="page"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+.snapshot-panel {
+  margin-bottom: 2rem;
+}
+.snapshot-heading {
+  padding: 1rem 1.25rem;
+}
+.snapshot-heading h2 {
+  font-size: 1.7rem;
+}
+.snapshot-history > summary {
+  min-height: 44px;
+  padding: 0.7rem 1.25rem;
+  border-top: var(--keyline);
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+.snapshot-selector {
+  flex-wrap: wrap;
+  max-height: 320px;
+  overflow-y: auto;
+}
+.snapshot-selector a {
+  flex-basis: 220px;
+}
+.category-card:nth-child(4n + 2) .category-index {
+  background: color-mix(in srgb, var(--violet) 65%, var(--paper));
+  color: var(--ink);
+}
+.catalog-provenance a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.home-category-links {
+  border-block: var(--keyline);
+}
+@media (max-width: 760px) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.75rem;
+    padding-top: 1.75rem;
+  }
+  .hero-copy h1 {
+    font-size: clamp(2.9rem, 12vw, 4.5rem);
+  }
+  .hero-board {
+    max-width: none;
+    justify-self: stretch;
+  }
+  .hero-board .poster-large {
+    height: 200px;
+  }
+  .hero-board .poster-title {
+    font-size: 2.8rem;
+  }
+  .home-hero {
+    padding-bottom: 2rem;
+  }
+  .category-title-row {
+    gap: 1rem;
+  }
+  .category-title-row h1 {
+    font-size: clamp(2.7rem, 10vw, 4rem);
+  }
+  .category-quick-nav a {
+    flex-grow: 1;
+    justify-content: center;
+  }
+  .snapshot-heading {
+    gap: 0.7rem;
   }
 }

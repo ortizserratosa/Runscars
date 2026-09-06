@@ -291,7 +291,7 @@ async function marketViews(
   const contractsResult = await supabase
     .from("market_contracts")
     .select(
-      "id,provider,external_market_id,market_title,outcome_label,source_url,closes_at,resolved_at,market_price_snapshots(probability,volume,open_interest,observed_at)",
+      "id,provider,external_market_id,market_title,outcome_label,source_url,closes_at,resolved_at,market_contract_exclusions(id),market_price_snapshots(probability,volume,open_interest,observed_at)",
     )
     .eq("season_id", "oscars-2027")
     .eq("category_id", categoryId)
@@ -305,6 +305,9 @@ async function marketViews(
   }
   const marketRows: MarketView[] = [];
   for (const contract of contractsResult.data ?? []) {
+    if ((contract.market_contract_exclusions ?? []).length > 0) {
+      continue;
+    }
     const provider = contract.provider as string;
     if (provider !== "kalshi" && provider !== "polymarket") {
       continue;

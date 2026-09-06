@@ -1,7 +1,7 @@
 # Contrato de producto
 
 **Estado:** contrato aceptado para el MVP
-**Última revisión:** 2026-08-29
+**Última revisión:** 2026-09-03
 
 ## 1. Visión
 
@@ -21,6 +21,7 @@ comunidad son contextos complementarios y nunca alteran ese consenso.
 - ¿Cómo ha cambiado el consenso durante la temporada?
 - ¿Qué películas ha visto cada usuario y cuál es su ranking?
 - ¿Cuánto acertó el consenso antes de las nominaciones y de la ceremonia?
+- ¿Qué recorrido oficial tuvo una película por los grandes festivales de 2026?
 
 ## 3. Usuarios
 
@@ -44,6 +45,7 @@ metodología y resultados oficiales sin necesidad de una cuenta.
 - Excluye observaciones erróneas sin borrar su historial.
 - Crea y bloquea snapshots.
 - Registra nominaciones y ganadores oficiales.
+- Supervisa ediciones festivaleras, conectores y matchings dudosos.
 
 ## 4. Modelo temporal
 
@@ -85,6 +87,14 @@ Contratos y precios de mercados de predicción. Se muestran por proveedor y con
 su valor original; no se promedian entre sí ni participan en el consenso
 profesional Borda.
 
+### Festivales
+
+Las selecciones y palmarés oficiales de nueve festivales internacionales de
+2026 aportan contexto a la temporada Oscar 2027. Se muestran como conjuntos
+versionados con fuente, captura y matching editorial. No se promedian ni
+participan en el consenso profesional, la recepción, los mercados o la
+comunidad. Telluride y Nueva York figuran como selecciones no competitivas.
+
 ### Comunidad
 
 Rankings realizados por usuarios y su estado de visionado. La comunidad permite
@@ -125,6 +135,10 @@ Las categorías se modelarán como datos configurables, no como columnas fijas.
 Una candidatura puede representar una película, una obra y un conjunto ordenado
 de personas. Las categorías adicionales detectadas se conservan, pero solo se
 publican cuando alcanzan la cobertura aprobada.
+
+En Guion original y Guion adaptado, una película solo tiene una candidatura por
+temporada y categoría. Los guionistas son créditos secundarios verificables y
+no forman parte de la identidad de la candidatura.
 
 ### Fuentes
 
@@ -182,9 +196,20 @@ publican cuando alcanzan la cobertura aprobada.
 
 1. El visitante abre la ficha.
 2. Ve metadatos y material gráfico obtenido mediante TMDB.
-3. Consulta puntuaciones originales y normalizadas cuando existen observaciones
-   reales; sin el umbral mínimo no se publica una media.
-4. Consulta categorías, predicciones y reseñas relacionadas.
+3. Consulta el Metascore original con atribución y enlace cuando existe, sin
+   normalización ni media propia (D-047).
+4. Consulta categorías y predicciones relacionadas con su procedencia.
+5. Consulta selecciones y premios festivaleros, rotulados como contexto sin
+   puntos de consenso.
+
+### R2b. Explorar el circuito festivalero
+
+1. El visitante abre `/festivales` y ve las nueve ediciones de 2026 con estado y
+   palmarés.
+2. Entra en una edición y consulta selección o premios, título y destinatario
+   originales, fuente oficial y estado de matching.
+3. Sigue un título enlazado a su ficha de película; los no enlazados continúan
+   visibles y pasan a revisión.
 
 ### R3. Crear un ranking
 
@@ -245,6 +270,8 @@ publican cuando alcanzan la cobertura aprobada.
 | RF-18 | Descubrir quinielas públicas por temporada, categoría y usuario |
 | RF-19 | Compartir cada quiniela pública con enlace y tarjeta social adaptada |
 | RF-20 | Mantener estados de visionado de tres valores con visibilidad limitada al ranking público |
+| RF-21 | Publicar nueve ediciones festivaleras de 2026 con recibo oficial, selección o palmarés cuando proceda y matching trazable |
+| RF-22 | Resolver sitemap y enlaces de candidaturas, créditos, fuentes y festivales en español e inglés |
 
 ## 9. Fuera del MVP
 

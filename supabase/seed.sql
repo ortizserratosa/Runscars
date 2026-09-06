@@ -373,7 +373,7 @@ values
     'Awards Radar Oscar predictions',
     'html',
     'https://awardsradar.com/predictions/',
-    'awards-radar-v4',
+    'awards-radar-v5',
     true,
     '17 4 * * *',
     '{
@@ -408,7 +408,7 @@ values
     'Next Best Picture Oscar predictions',
     'html',
     'https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars',
-    'next-best-picture-v2',
+    'next-best-picture-v3',
     true,
     '17 4 * * *',
     '{
@@ -596,7 +596,7 @@ values
     'kalshi',
     'kalshi',
     'https://external-api.kalshi.com/trade-api/v2/markets',
-    'kalshi-v3',
+    'kalshi-v4',
     '17 * * * *',
     true,
     '{
@@ -619,7 +619,7 @@ values
     'polymarket',
     'polymarket',
     'https://gamma-api.polymarket.com/markets',
-    'polymarket-v3',
+    'polymarket-v4',
     '17 * * * *',
     true,
     '{

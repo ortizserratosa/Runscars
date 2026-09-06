@@ -45,7 +45,7 @@ export async function generateMetadata({
           ? `${person.name}: Films and Oscar Predictions`
           : `${person.name}: películas y predicciones Oscar`,
         description: conciseDescription(
-          person.tmdb.biography ??
+          person.tmdb?.biography ??
             (en
               ? `Films, roles and 2027 Oscar context for ${person.name} on Runscars.`
               : `Películas, trabajos y contexto de los Oscar 2027 de ${person.name} en Runscars.`),
@@ -75,17 +75,19 @@ export default async function PersonPage({ params }: PersonPageProps) {
     notFound();
   }
 
-  const profileUrl = tmdbImageUrl(person.tmdb.profilePath, "w342");
-  const birthday = formatDate(person.tmdb.birthday, locale);
+  const profileUrl = tmdbImageUrl(person.tmdb?.profilePath ?? null, "w342");
+  const birthday = formatDate(person.tmdb?.birthday ?? null, locale);
   const pageUrl = absoluteUrl(localizedPath(`/personas/${person.id}`, locale));
   const personId = `${pageUrl}#person`;
-  const sameAs = [
-    person.tmdb.url,
-    ...(person.tmdb.imdbId
-      ? [`https://www.imdb.com/name/${person.tmdb.imdbId}/`]
-      : []),
-    ...(person.tmdb.homepageUrl ? [person.tmdb.homepageUrl] : []),
-  ];
+  const sameAs = person.tmdb
+    ? [
+        person.tmdb.url,
+        ...(person.tmdb.imdbId
+          ? [`https://www.imdb.com/name/${person.tmdb.imdbId}/`]
+          : []),
+        ...(person.tmdb.homepageUrl ? [person.tmdb.homepageUrl] : []),
+      ]
+    : [];
 
   return (
     <main>
@@ -99,7 +101,7 @@ export default async function PersonPage({ params }: PersonPageProps) {
               url: pageUrl,
               name: person.name,
               inLanguage: localeTag(locale),
-              dateModified: person.tmdb.fetchedAt,
+              ...(person.tmdb ? { dateModified: person.tmdb.fetchedAt } : {}),
               mainEntity: { "@id": personId },
             },
             {
@@ -108,22 +110,22 @@ export default async function PersonPage({ params }: PersonPageProps) {
               url: pageUrl,
               name: person.name,
               ...(profileUrl ? { image: profileUrl } : {}),
-              ...(person.tmdb.biography
+              ...(person.tmdb?.biography
                 ? { description: person.tmdb.biography }
                 : {}),
-              ...(person.tmdb.birthday
+              ...(person.tmdb?.birthday
                 ? { birthDate: person.tmdb.birthday }
                 : {}),
-              ...(person.tmdb.deathday
+              ...(person.tmdb?.deathday
                 ? { deathDate: person.tmdb.deathday }
                 : {}),
-              ...(person.tmdb.placeOfBirth
+              ...(person.tmdb?.placeOfBirth
                 ? { birthPlace: person.tmdb.placeOfBirth }
                 : {}),
-              ...(person.tmdb.knownForDepartment
+              ...(person.tmdb?.knownForDepartment
                 ? { jobTitle: person.tmdb.knownForDepartment }
                 : {}),
-              sameAs,
+              ...(sameAs.length ? { sameAs } : {}),
             },
             {
               "@type": "BreadcrumbList",
@@ -170,10 +172,10 @@ export default async function PersonPage({ params }: PersonPageProps) {
             </div>
             <div>
               <p className="kicker">
-                {person.tmdb.knownForDepartment ?? (en ? "Film" : "Cine")}
+                {person.tmdb?.knownForDepartment ?? (en ? "Film" : "Cine")}
               </p>
               <h1>{person.name}</h1>
-              {person.tmdb.biography ? (
+              {person.tmdb?.biography ? (
                 <p className="person-deck">{person.tmdb.biography}</p>
               ) : (
                 <p className="person-deck">
@@ -189,7 +191,7 @@ export default async function PersonPage({ params }: PersonPageProps) {
                     <dd>{birthday}</dd>
                   </div>
                 ) : null}
-                {person.tmdb.placeOfBirth ? (
+                {person.tmdb?.placeOfBirth ? (
                   <div>
                     <dt>{en ? "Place" : "Lugar"}</dt>
                     <dd>{person.tmdb.placeOfBirth}</dd>
@@ -215,16 +217,24 @@ export default async function PersonPage({ params }: PersonPageProps) {
             </Link>
           ))}
         </div>
-        <p className="catalog-provenance">
-          {en ? "Metadata captured on" : "Metadatos capturados el"}{" "}
-          <time dateTime={person.tmdb.fetchedAt}>
-            {formatDate(person.tmdb.fetchedAt.slice(0, 10), locale)}
-          </time>
-          .{" "}
-          <a href={person.tmdb.url} rel="noreferrer" target="_blank">
-            {en ? "View on TMDB ↗" : "Comprobar en TMDB ↗"}
-          </a>
-        </p>
+        {person.tmdb ? (
+          <p className="catalog-provenance">
+            {en ? "Metadata captured on" : "Metadatos capturados el"}{" "}
+            <time dateTime={person.tmdb.fetchedAt}>
+              {formatDate(person.tmdb.fetchedAt.slice(0, 10), locale)}
+            </time>
+            .{" "}
+            <a href={person.tmdb.url} rel="noreferrer" target="_blank">
+              {en ? "View on TMDB ↗" : "Comprobar en TMDB ↗"}
+            </a>
+          </p>
+        ) : (
+          <p className="catalog-provenance">
+            {en
+              ? "Minimal editorial profile; no TMDB snapshot is available yet."
+              : "Ficha editorial mínima; todavía no hay una captura TMDB disponible."}
+          </p>
+        )}
       </section>
     </main>
   );

@@ -27,6 +27,7 @@
     "zod": "4.4.3"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
     "@electric-sql/pglite": "0.5.4",
     "@playwright/test": "1.61.1",
     "@types/node": "22.19.19",

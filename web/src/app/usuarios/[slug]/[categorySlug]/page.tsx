@@ -11,6 +11,8 @@ import {
 } from "../../../../lib/repositories/community";
 import { ShareButton } from "../../../components/ShareButton";
 
+import { absoluteUrl, buildLocalizedMetadata } from "../../../../lib/seo";
+
 type PublicRankingPageProps = {
   params: Promise<{ slug: string; categorySlug: string }>;
 };
@@ -48,18 +50,26 @@ export async function generateMetadata({
     ranking.categoryId,
     ranking.categoryName,
   );
-  return {
+  const path = `/usuarios/${ranking.profile.slug}/${(await params).categorySlug}`;
+  const description = en
+    ? `${ranking.profile.displayName}'s ${ranking.entriesCount}-position ballot for Oscar 2027.`
+    : `${ranking.entriesCount} posiciones de ${ranking.profile.displayName} para Oscar 2027.`;
+  const metadata = buildLocalizedMetadata({
+    locale,
+    path,
     title: `${categoryName} · ${ranking.profile.displayName}`,
-    description: en
-      ? `${ranking.profile.displayName}'s ${ranking.entriesCount}-position ballot for Oscar 2027.`
-      : `${ranking.entriesCount} posiciones de ${ranking.profile.displayName} para Oscar 2027.`,
-    openGraph: {
-      title: `${categoryName} · ${ranking.profile.displayName}`,
-      description: en
-        ? `${ranking.entriesCount} positions with explicit watch states.`
-        : `${ranking.entriesCount} posiciones y estados de visionado explícitos.`,
-      images: ["./opengraph-image"],
-    },
+    description,
+  });
+  const image = {
+    url: absoluteUrl(localizedPath(`${path}/opengraph-image`, locale)),
+    width: 1200,
+    height: 630,
+    alt: `${categoryName} · ${ranking.profile.displayName}`,
+  };
+  return {
+    ...metadata,
+    openGraph: { ...metadata.openGraph, images: [image] },
+    twitter: { ...metadata.twitter, images: [image.url] },
   };
 }
 

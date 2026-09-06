@@ -61,6 +61,7 @@ test("shows movement against the immediately previous real cut", async ({
 
 test("selects a real provider cut through a stable URL", async ({ page }) => {
   await page.goto("/temporadas/2027/mejor-pelicula");
+  await page.locator(".snapshot-history > summary").click();
   const selector = page.getByRole("navigation", {
     name: "Seleccionar actualización",
   });
@@ -264,11 +265,64 @@ test("offers complete navigation at a mobile viewport", async ({ page }) => {
     navigation.getByRole("link", { name: "Categorías" }),
   ).toHaveCount(0);
   await expect(navigation.getByRole("link", { name: "Fuentes" })).toBeVisible();
+  await expect(
+    navigation.getByRole("link", { name: "Festivales" }),
+  ).toBeVisible();
   await expect(navigation.getByRole("link", { name: "Crítica" })).toHaveCount(
     0,
   );
   await expect(navigation.getByRole("link", { name: "Archivo" })).toBeVisible();
   await expect(navigation.getByRole("link", { name: "Método" })).toBeVisible();
+});
+
+test("publishes the nine-edition festival circuit in Spanish and English", async ({
+  page,
+}) => {
+  await page.goto("/festivales");
+  await expect(
+    page.getByRole("heading", { level: 1, name: "El circuito festivalero" }),
+  ).toBeVisible();
+  await expect(page.locator(".festival-card")).toHaveCount(9);
+  await expect(
+    page.locator(".festival-card").filter({ hasText: "Venecia" }),
+  ).toContainText("En curso");
+  await expect(
+    page.locator(".festival-card").filter({ hasText: "Telluride" }),
+  ).toContainText("Palmarés no aplicable");
+  await page.getByRole("link", { name: "Festival de Cannes" }).first().click();
+  await expect(page).toHaveURL(/\/festivales\/cannes\/2026$/);
+  await expect(
+    page.getByRole("heading", { name: "Palmarés oficial" }),
+  ).toBeVisible();
+  await expect(page.getByText("FJORD", { exact: true })).toBeVisible();
+
+  await page.goto("/en/festivales/cannes/2026");
+  await expect(
+    page.getByRole("heading", { name: "Official awards" }),
+  ).toBeVisible();
+  await expect(page.locator("html")).toHaveAttribute("lang", /^en/);
+});
+
+test("opens every film linked from the current rankings", async ({
+  page,
+  request,
+}) => {
+  const links = new Set<string>();
+  for (const [slug] of publicCategories) {
+    await page.goto(`/temporadas/2027/${slug}`);
+    for (const href of await page
+      .locator('.leaderboard a[href*="/peliculas/"]')
+      .evaluateAll((anchors) =>
+        anchors.map((anchor) => anchor.getAttribute("href")),
+      )) {
+      if (href) links.add(href);
+    }
+  }
+  expect(links.size).toBeGreaterThan(0);
+  for (const href of links) {
+    const response = await request.get(href);
+    expect(response.status(), href).toBe(200);
+  }
 });
 
 test("discovers public rankings and keeps community filters in the URL", async ({
@@ -511,7 +565,7 @@ test("does not expose editorial administration to anonymous users", async ({
   page,
 }) => {
   await page.goto("/admin");
-  await expect(page).toHaveURL(/\/acceso$/);
+  await expect(page).toHaveURL(/\/acceso\?next=%2Fadmin$/);
 });
 
 test("keeps mobile homepage copy and receipts from overlapping", async ({
@@ -720,5 +774,38 @@ test("replaces the simulated watched toggle with an authenticated flow", async (
   ).toBeVisible();
   await expect(
     page.getByText("Inicia sesión para guardar este estado de forma privada."),
+  ).toBeVisible();
+});
+
+test("explicit Spanish URLs win over an English preference cookie", async ({
+  page,
+  context,
+}) => {
+  await context.addCookies([
+    { name: "runscars-locale", value: "en", url: "http://127.0.0.1:3000" },
+  ]);
+  await page.goto("/temporadas/2027");
+  await expect(page).toHaveURL(/\/temporadas\/2027$/);
+  await expect(page.locator("html")).toHaveAttribute("lang", "es-ES");
+  await page.goto("/en/cuenta");
+  await expect(page).toHaveURL(/\/en\/acceso\?next=/);
+  await expect(page.locator('form input[name="next"]').first()).toHaveValue(
+    "/en/cuenta",
+  );
+});
+
+test("keeps update history compact without losing accessible cuts", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/temporadas/2027/mejor-pelicula");
+  await expect(page.locator(".snapshot-history")).not.toHaveAttribute("open");
+  const ranking = await page
+    .getByRole("heading", { name: "Consenso profesional", exact: true })
+    .boundingBox();
+  expect(ranking?.y).toBeLessThan(900);
+  await page.locator(".snapshot-history > summary").click();
+  await expect(
+    page.getByRole("navigation", { name: "Seleccionar actualización" }),
   ).toBeVisible();
 });

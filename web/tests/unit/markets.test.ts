@@ -116,6 +116,28 @@ describe("market ingestion", () => {
     ).toHaveLength(0);
   });
 
+  it("rejects a nested market or URL that conflicts with the event ceremony", async () => {
+    const polymarket = await fixture("polymarket.json");
+    const contaminated = {
+      ...polymarket[0],
+      title: "Oscars 2027 Best Picture",
+      slug: "oscars-2027-best-picture",
+      markets: polymarket[0].markets.map((market: Record<string, unknown>) => ({
+        ...market,
+        slug: "oscars-2026-best-picture-nominations",
+        question:
+          "Will The Odyssey be nominated for Best Picture at the Oscars 2026?",
+      })),
+    };
+    expect(
+      parsePolymarketEvents([contaminated], {
+        capturedAt,
+        seasonId: "oscars-2027",
+        ceremonyYear: 2027,
+      }),
+    ).toHaveLength(0);
+  });
+
   it("rejects Oscar contracts outside the eight public categories", async () => {
     const kalshi = await fixture("kalshi.json");
     const unknownCategory = {

@@ -1,6 +1,6 @@
 # Registro de decisiones
 
-**Última revisión:** 2026-09-01
+**Última revisión:** 2026-09-03
 
 ## Cómo usar este registro
 
@@ -71,6 +71,8 @@ pasado para ocultar cambios de criterio.
 | D-051 | Cobertura obligatoria y evidencia durable de automatización    | Aceptada    |
 | D-052 | Película principal ante una alternativa editorial explícita    | Aceptada    |
 | D-053 | Tipografía y sistema visual web v1                             | Propuesta   |
+| D-054 | Candidatura de guion identificada por película                  | Aceptada    |
+| D-055 | Circuito internacional de festivales 2026                       | Aceptada    |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -955,3 +957,64 @@ ejemplos manuales de nominaciones y ganador coincidieron con
   procedencia en móvil; conservar la excepción de atribución de D-047.
 - **Documentación:** `docs/brand/IDENTITY.md` especifica paleta, variantes,
   patrones, responsive, accesibilidad y usos incorrectos.
+
+## D-054 · Candidatura de guion identificada por película
+
+- **Fecha:** 2026-09-03
+- **Estado:** Aceptada
+- **Decisión:** en Guion original y Guion adaptado, la identidad canónica es
+  `temporada + categoría + película`. La candidatura muestra la película como
+  rótulo principal; los guionistas verificados son créditos secundarios y su
+  presencia o ausencia en una fuente no crea otra candidatura.
+- **Migración:** las observaciones y quinielas se reasignan a la candidatura
+  canónica. Si una quiniela contenía dos IDs antiguos de la misma película, se
+  conserva la mejor posición y se vuelve a numerar. Los IDs sustituidos quedan
+  como aliases, la corrección queda registrada y los snapshots previos no se
+  modifican.
+- **Importación:** una fuente puede publicar `Guionistas — Película`; el valor
+  original se conserva, pero el matching y la identidad usan la película. Los
+  créditos comprobados enriquecen la candidatura existente.
+- **Refina:** D-024 para las dos categorías de guion; las categorías de
+  interpretación y dirección conservan su identidad propia.
+
+## D-055 · Circuito internacional de festivales 2026
+
+- **Fecha:** 2026-09-03
+- **Estado:** Aceptada
+- **Decisión:** incorporar Sundance, Berlín, Cannes, Locarno, Venecia, Toronto,
+  San Sebastián, Telluride y Nueva York en sus ediciones de 2026 como contexto
+  de la temporada Oscar 2027.
+- **Separación:** selección y palmarés son conjuntos oficiales versionados e
+  inmutables. Nunca participan en Borda, cobertura profesional, recepción,
+  mercados ni comunidad. Telluride y NYFF son selecciones no competitivas y su
+  palmarés es `not_applicable`.
+- **Alcance:** se incluyen largometrajes de competición y secciones oficiales,
+  premios de público, debut, interpretación y oficios. Se excluyen cortos,
+  episodios, inmersivo, restauraciones, premios honoríficos, mercados de
+  industria y premios paralelos ajenos al palmarés oficial.
+- **Operación:** una función aislada consulta cada festival a las 05:17 UTC. La
+  ausencia de premios antes del cierre es normal; 24 horas después del cierre
+  se convierte en incidencia. Un fallo no detiene los demás festivales y una
+  captura idéntica no crea otra versión.
+- **Presentación:** el circuito aparece en temporada, película, candidatura,
+  Fuentes y rutas propias bilingües. Rust identifica hitos, Moss los estados y
+  Blue la procedencia, sin convertir D-053 en aceptada.
+
+## D-056 · Idioma explícito, origen canónico y verificación pública
+
+- **Fecha:** 2026-09-06
+- **Estado:** Aceptada
+- **Decisión:** la URL determina el idioma; una cookie no redirige una ruta
+  española solicitada explícitamente. El cambio de idioma y la autenticación
+  conservan destino y parámetros mediante destinos internos validados.
+- **SEO:** `https://runscars.app` es el origen canónico público. Las variantes
+  de filtros y cortes apuntan a su landing; cuentas y autenticación no se
+  indexan. El sitemap pagina el catálogo completo y fecha cambios de contenido,
+  no comprobaciones sin cambios. Un error del backend no equivale a catálogo vacío.
+- **Presentación:** se compactan las introducciones y se despliega el historial
+  bajo demanda, conservando las URLs de cortes. Se conserva la marca existente
+  y el carácter provisional de D-053.
+- **Operación:** una respuesta HTTP sin entradas reconocidas no prueba que una
+  fuente festivalera se haya verificado. Se registra fallo y se conserva el
+  último conjunto válido; los extractores se versionan para permitir el reintento.
+- **Origen:** plan de auditoría y publicación aprobado por el usuario.

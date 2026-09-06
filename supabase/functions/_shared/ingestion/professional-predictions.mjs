@@ -140,6 +140,10 @@ const TEAM_CATEGORIES = new Set([
   "original-screenplay",
   "adapted-screenplay",
 ]);
+const SCREENPLAY_CATEGORIES = new Set([
+  "original-screenplay",
+  "adapted-screenplay",
+]);
 const SOURCE_FILM_ALIASES = new Map([
   ["adventures of cliff booth", "The Adventures of Cliff Booth"],
   ["dune iii", "Dune: Part Three"],
@@ -370,6 +374,17 @@ function subjectParts(categoryId, raw) {
     )
     .replace(/\s+\((?:The|A|An)\s+[^()]+\)\s*$/i, "")
     .trim();
+  if (SCREENPLAY_CATEGORIES.has(categoryId)) {
+    const dash = clean.match(/^(.+?)\s+[–—-]\s+(.+)$/);
+    if (dash) {
+      return {
+        subject: clean,
+        filmSubject: filmFromText(dash[2].trim()),
+        peopleSubjects: peopleFromText(dash[1]),
+        workTitle: null,
+      };
+    }
+  }
   if (!PERSON_CATEGORIES.has(categoryId)) {
     return {
       subject: clean,
@@ -437,10 +452,19 @@ function buildBatch({
 }) {
   const observations = [];
   for (const [categoryId, rows] of rowsByCategory) {
-    const listLength = Math.max(
-      rows.length,
-      ...rows.map((row) => row.rank ?? 0),
-    );
+    const explicitRanks = rows.map((row) => row.rank);
+    const isOrdered = explicitRanks.some((rank) => rank !== null);
+    if (
+      isOrdered &&
+      explicitRanks.some(
+        (rank, index) => !Number.isInteger(rank) || rank !== index + 1,
+      )
+    ) {
+      throw new Error(
+        `${sourceId} publicó posiciones no consecutivas en ${categoryId}`,
+      );
+    }
+    const listLength = rows.length;
     observations.push(
       ...rows.map((row, index) =>
         observation(
@@ -478,6 +502,30 @@ function buildBatch({
       },
     ],
   };
+}
+
+function awardsRadarCardRows(html, categoryId, maxRows = 10) {
+  const updateMarker = html.search(
+    /Updated\s+[A-Z][a-z]+\s+\d{1,2}(?:st|nd|rd|th)?,\s+\d{4}/i,
+  );
+  const content = updateMarker >= 0 ? html.slice(updateMarker) : html;
+  const rows = [];
+  for (const match of content.matchAll(
+    /<h([2-4])\b[^>]*class=(?:"[^"]*\belementor-image-box-title\b[^"]*"|'[^']*\belementor-image-box-title\b[^']*')[^>]*>([\s\S]*?)<\/h\1>/gi,
+  )) {
+    const label = stripTags(match[2]);
+    const ranked = label.match(/^(\d+)\s*[.)]\s+(.+)$/);
+    if (!ranked) continue;
+    const rank = Number(ranked[1]);
+    rows.push({
+      rank,
+      raw: label,
+      parts: subjectParts(categoryId, ranked[2].trim()),
+    });
+  }
+  return rows
+    .toSorted((left, right) => left.rank - right.rank)
+    .slice(0, maxRows);
 }
 
 function parseHeadingLists(
@@ -619,19 +667,23 @@ export function parseAwardsRadarFixture(
         parsingLines.findIndex((line) => line === "BEST PICTURE"),
         0,
       );
+  const cardRows = categoryId ? awardsRadarCardRows(html, categoryId) : [];
+  const rowsByCategory = cardRows.length
+    ? new Map([[categoryId, cardRows]])
+    : parseHeadingLists(parsingLines, {
+        numbered: true,
+        contentStart: start,
+        maxRows: 10,
+      });
   return buildBatch({
     connectorId,
     sourceId: "awards-radar",
-    extractorVersion: "awards-radar-v4",
+    extractorVersion: "awards-radar-v5",
     seasonId,
     capturedAt,
     sourceUrl: publication.canonicalUrl,
     publication,
-    rowsByCategory: parseHeadingLists(parsingLines, {
-      numbered: true,
-      contentStart: start,
-      maxRows: 10,
-    }),
+    rowsByCategory,
   });
 }
 
@@ -729,13 +781,17 @@ export function parseNextBestPictureFixture(
       }
       if (line === "See more" || line === "View all") break;
       const detail = section[cursor + 1];
-      if (!detail || /^\d+$/.test(detail) || numericBuffer.length === 0) {
+      if (numericBuffer.length === 0) {
         cursor += 1;
         continue;
       }
       const rank = numericBuffer[0];
       let parts;
       if (PERSON_CATEGORIES.has(current.categoryId)) {
+        if (!detail || /^\d+$/.test(detail)) {
+          cursor += 1;
+          continue;
+        }
         parts = {
           subject: `${line} — ${detail}`,
           filmSubject: detail,
@@ -743,9 +799,10 @@ export function parseNextBestPictureFixture(
           workTitle: null,
         };
       } else {
-        const peopleText = detail.includes("|")
+        const usableDetail = detail && !/^\d+$/.test(detail) ? detail : "";
+        const peopleText = usableDetail.includes("|")
           ? TEAM_CATEGORIES.has(current.categoryId)
-            ? detail.split("|")[0].trim()
+            ? usableDetail.split("|")[0].trim()
             : ""
           : "";
         parts = {
@@ -755,17 +812,24 @@ export function parseNextBestPictureFixture(
           workTitle: null,
         };
       }
-      rows.push({ rank, raw: `${line} | ${detail}`, parts });
+      rows.push({ rank, raw: `${line} | ${detail ?? ""}`, parts });
       numericBuffer = [];
-      cursor += 2;
+      cursor += detail && !/^\d+$/.test(detail) ? 2 : 1;
     }
-    if (rows.length) rowsByCategory.set(current.categoryId, rows);
+    const seenRows = new Set();
+    const uniqueRows = rows.filter((row) => {
+      const key = `${row.rank}:${row.parts.subject.trim().toLocaleLowerCase("en")}`;
+      if (seenRows.has(key)) return false;
+      seenRows.add(key);
+      return true;
+    });
+    if (uniqueRows.length) rowsByCategory.set(current.categoryId, uniqueRows);
   }
 
   return buildBatch({
     connectorId,
     sourceId: "next-best-picture",
-    extractorVersion: "next-best-picture-v1",
+    extractorVersion: "next-best-picture-v3",
     seasonId,
     capturedAt,
     sourceUrl: publication.canonicalUrl,

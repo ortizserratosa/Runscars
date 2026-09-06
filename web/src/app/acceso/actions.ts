@@ -1,6 +1,5 @@
 "use server";
 
-import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import {
   PASSWORD_MIN_LENGTH,
@@ -10,6 +9,9 @@ import {
 import { createSupabaseAuthServerClient } from "../../lib/supabase/server";
 import { isLocale, localizedPath, type Locale } from "../../lib/i18n/config";
 
+import { siteOrigin } from "../../lib/seo";
+import { loginDestination } from "../../lib/auth/return-path";
+
 export type AuthFormState = {
   message: string;
   tone: "error" | "success" | "idle";
@@ -18,29 +20,6 @@ export type AuthFormState = {
 function formLocale(formData: FormData): Locale {
   const value = formData.get("locale");
   return typeof value === "string" && isLocale(value) ? value : "es";
-}
-
-async function siteOrigin() {
-  const configured = process.env.NEXT_PUBLIC_SITE_URL;
-  if (configured) {
-    try {
-      return new URL(configured).origin;
-    } catch {
-      // Continúa con los encabezados validados de la petición.
-    }
-  }
-
-  const requestHeaders = await headers();
-  const host =
-    requestHeaders.get("x-forwarded-host") ??
-    requestHeaders.get("host") ??
-    "localhost:3000";
-  const safeHost = /^[a-z0-9.-]+(?::\d+)?$/i.test(host)
-    ? host
-    : "localhost:3000";
-  const protocol =
-    requestHeaders.get("x-forwarded-proto") === "https" ? "https" : "http";
-  return `${protocol}://${safeHost}`;
 }
 
 export async function signInAction(
@@ -73,7 +52,7 @@ export async function signInAction(
     };
   }
 
-  redirect(localizedPath("/cuenta", locale));
+  redirect(loginDestination(formData.get("next"), locale));
 }
 
 export async function signUpAction(
@@ -111,7 +90,7 @@ export async function signUpAction(
     password: fields.data.password,
     options: {
       data: { display_name: fields.data.displayName },
-      emailRedirectTo: `${origin}/auth/callback?next=${encodeURIComponent(localizedPath("/cuenta", locale))}`,
+      emailRedirectTo: `${origin}/auth/callback?next=${encodeURIComponent(loginDestination(formData.get("next"), locale))}`,
     },
   });
 
@@ -124,7 +103,7 @@ export async function signUpAction(
     };
   }
   if (data.session) {
-    redirect(localizedPath("/cuenta", locale));
+    redirect(loginDestination(formData.get("next"), locale));
   }
 
   return {
@@ -147,7 +126,7 @@ export async function signInWithGoogleAction(
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${origin}/auth/callback?next=${encodeURIComponent(localizedPath("/cuenta", locale))}`,
+      redirectTo: `${origin}/auth/callback?next=${encodeURIComponent(loginDestination(formData.get("next"), locale))}`,
       queryParams: {
         prompt: "select_account",
       },

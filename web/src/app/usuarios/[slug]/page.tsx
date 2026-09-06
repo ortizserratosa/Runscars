@@ -7,6 +7,8 @@ import { localizedCategoryName } from "../../../lib/i18n/categories";
 import { localeTag, localizedPath } from "../../../lib/i18n/config";
 import { getRequestLocale } from "../../../lib/i18n/server";
 
+import { buildLocalizedMetadata } from "../../../lib/seo";
+
 type PublicProfilePageProps = {
   params: Promise<{ slug: string }>;
 };
@@ -17,13 +19,17 @@ export async function generateMetadata({
   params,
 }: PublicProfilePageProps): Promise<Metadata> {
   const { slug } = await params;
-  const en = (await getRequestLocale()) === "en";
-  return {
+  const locale = await getRequestLocale();
+  const en = locale === "en";
+  return buildLocalizedMetadata({
+    locale,
+    path: `/usuarios/${slug}`,
     title: `@${slug}`,
+    type: "profile",
     description: en
-      ? "Public profile and individual ballots on Runscars."
-      : "Perfil público y quinielas individuales en Runscars.",
-  };
+      ? `Public Oscar ballots by @${slug} on Runscars, separate from professional consensus.`
+      : `Quinielas Oscar públicas de @${slug} en Runscars, separadas del consenso profesional.`,
+  });
 }
 
 export default async function PublicProfilePage({

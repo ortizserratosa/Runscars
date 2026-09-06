@@ -24,6 +24,7 @@ import {
 import { getRequestLocale } from "../../../lib/i18n/server";
 import { absoluteUrl, buildLocalizedMetadata } from "../../../lib/seo";
 import { tmdbImageUrl } from "../../../lib/tmdb/images";
+import { getFilmFestivalContext } from "../../../lib/festivals/data";
 
 type FilmPageProps = {
   params: Promise<{ slug: string }>;
@@ -77,9 +78,10 @@ export default async function FilmPage({ params }: FilmPageProps) {
   const film = await getFilmCatalogDetail(slug, en ? "en-US" : "es-ES");
   if (!film) notFound();
 
-  const [predictions, metacriticScore] = await Promise.all([
+  const [predictions, metacriticScore, festivalContext] = await Promise.all([
     getFilmPredictions(slug),
     getFilmMetacriticScore(slug),
+    getFilmFestivalContext(slug),
   ]);
   const primaryPrediction =
     predictions.find(
@@ -320,6 +322,59 @@ export default async function FilmPage({ params }: FilmPageProps) {
       <section className="page-shell film-content">
         <FilmCatalogDetails film={film} locale={locale} />
 
+        {festivalContext.length ? (
+          <div className="film-signal-section festival-module">
+            <div className="module-heading">
+              <span className="signal-letter">F</span>
+              <div>
+                <p className="section-index">
+                  {en ? "FESTIVAL CIRCUIT" : "CIRCUITO FESTIVALERO"}
+                </p>
+                <h2>
+                  {en
+                    ? "Official festival milestones"
+                    : "Hitos oficiales en festivales"}
+                </h2>
+                <p>
+                  {en
+                    ? "Context only. These selections and awards do not contribute points to the Oscar consensus."
+                    : "Solo contexto. Estas selecciones y premios no aportan puntos al consenso Oscar."}
+                </p>
+              </div>
+            </div>
+            <div className="film-festival-list">
+              {festivalContext.map(({ edition, entries }) => (
+                <Link
+                  href={localizedPath(
+                    `/festivales/${edition.festivalId}/${edition.year}`,
+                    locale,
+                  )}
+                  key={edition.id}
+                >
+                  <span>{edition.shortName}</span>
+                  <strong>
+                    {entries.some((entry) => entry.kind === "awards")
+                      ? en
+                        ? "Awarded"
+                        : "Premiada"
+                      : en
+                        ? "Selected"
+                        : "Seleccionada"}
+                  </strong>
+                  <small>
+                    {entries
+                      .flatMap((entry) =>
+                        entry.awardType ? [entry.awardType] : [],
+                      )
+                      .join(" · ") ||
+                      (en ? "Official selection" : "Selección oficial")}
+                  </small>
+                </Link>
+              ))}
+            </div>
+          </div>
+        ) : null}
+
         {metacriticScore ? (
           <MetacriticScoreCard locale={locale} score={metacriticScore} />
         ) : null}
@@ -454,25 +509,33 @@ export default async function FilmPage({ params }: FilmPageProps) {
             </div>
           </div>
           <div className="review-link-list">
-            <a href={film.verificationUrl} rel="noreferrer" target="_blank">
-              <span>{en ? "Source" : "Fuente"}</span>
-              <div>
-                <strong>
-                  {en
-                    ? "Verification publication"
-                    : "Publicación de comprobación"}
-                </strong>
-                <p>
-                  {film.notes ??
-                    (en
-                      ? "Editorial observation preserved."
-                      : "Observación editorial conservada.")}
-                </p>
-              </div>
-              <span className="review-arrow" aria-hidden="true">
-                ↗
-              </span>
-            </a>
+            {film.verificationUrl ? (
+              <a href={film.verificationUrl} rel="noreferrer" target="_blank">
+                <span>{en ? "Source" : "Fuente"}</span>
+                <div>
+                  <strong>
+                    {en
+                      ? "Verification publication"
+                      : "Publicación de comprobación"}
+                  </strong>
+                  <p>
+                    {film.notes ??
+                      (en
+                        ? "Editorial observation preserved."
+                        : "Observación editorial conservada.")}
+                  </p>
+                </div>
+                <span className="review-arrow" aria-hidden="true">
+                  ↗
+                </span>
+              </a>
+            ) : (
+              <p className="metadata-note">
+                {en
+                  ? "This editorial identity has no external verification link yet."
+                  : "Esta identidad editorial aún no tiene un enlace externo de comprobación."}
+              </p>
+            )}
           </div>
         </div>
 

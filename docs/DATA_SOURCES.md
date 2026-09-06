@@ -1,7 +1,7 @@
 # Registro de fuentes
 
-**Estado:** fase 8.5 cerrada; fuentes públicas derivadas de datos reales
-**Última revisión:** 2026-09-01
+**Estado:** fuentes públicas y circuito festivalero 2026 versionados
+**Última revisión:** 2026-09-03
 
 ## 1. Objetivo
 
@@ -275,20 +275,45 @@ original permanece intacto. Las revisiones narrativas pendientes de
 `awards-daily-v3` se descartaron con historial, sin publicar sus falsos
 positivos.
 
-Ese mantenimiento elevó Awards Radar a `awards-radar-v4`: corrige
+Ese mantenimiento elevó Awards Radar a `awards-radar-v5`: corrige
 `Sophie Okonado` → `Sophie Okonedo` solo para matching y, conforme a D-052,
 interpreta `Película principal (or Alternativa)` como una única candidatura a
 la película principal. La alternativa y la errata siguen visibles en `raw`.
 
+La revisión v5 captura el top publicado completo por tarjetas y rechaza una
+categoría si sus puestos no son enteros, únicos y consecutivos desde 1. No
+rellena un hueco del top con una posición 11 o posterior.
+
 Kalshi y Polymarket usan sus API públicas en un proceso horario independiente.
 Kalshi consulta las series 2027 de nominación y ganador de cada categoría
 pública; Polymarket selecciona únicamente eventos activos rotulados como Oscar
-2027. Los extractores v3 descartan contratos sin categoría pública, conservan
-el payload identificativo una vez por contrato y crean una captura solo cuando
-cambia la señal efectiva de precio. Sus estados son append-only y no comparten
-tablas ni agregadores con las predicciones profesionales. El archivo Academy
-2026 usa un manifiesto oficial v2 idempotente con las ocho categorías; no
-reconstruye predicciones históricas.
+2027. Los extractores v4 descartan contratos sin categoría pública, validan
+2027 en evento, mercado, contrato, título, ticker y URL, conservan el payload
+identificativo una vez por contrato y crean una captura solo cuando cambia la
+señal efectiva de precio. Sus estados son append-only y no comparten tablas ni
+agregadores con las predicciones profesionales. El archivo Academy 2026 usa un
+manifiesto oficial v2 idempotente con las ocho categorías; no reconstruye
+predicciones históricas.
+
+### Circuito internacional 2026
+
+| Fuente | Edición | Competición | Estado a 2026-09-03 | Recibo oficial |
+|---|---:|---|---|---|
+| Sundance | 2026 | Sí | Finalizada · palmarés publicado | [Ganadores](https://www.sundance.org/blogs/the-complete-list-of-2026-sundance-film-festival-award-winners/) |
+| Berlinale | 76.ª | Sí | Finalizada · palmarés publicado | [Archivo de premios](https://www.berlinale.de/en/archive/awards-juries/awards.html?year=2026) |
+| Cannes | 79.ª | Sí | Finalizada · palmarés publicado | [Ganadores](https://www.festival-cannes.com/en/press/press-releases/the-79th-festival-de-cannes-winners-list/) |
+| Locarno | 79.ª | Sí | Finalizada · palmarés publicado | [Palmarés](https://www.locarnofestival.ch/en/festival/palmares.html) |
+| Venecia | 83.ª | Sí | En curso · palmarés pendiente | [Edición](https://www.labiennale.org/en/cinema/2026/83rd-festival) |
+| Toronto | 51.ª | Sí | Programada · palmarés pendiente | [TIFF](https://tiff.net/) |
+| San Sebastián | 74.ª | Sí | Programada · palmarés pendiente | [Edición](https://www.sansebastianfestival.com/2026/) |
+| Telluride | 53.ª | No | Programada · no aplicable | [Programa](https://www.telluridefilmfestival.org/show) |
+| Nueva York | 64.ª | No | Programada · no aplicable | [Lineup](https://www.filmlinc.org/nyff/nyff64-lineup/) |
+
+Los nueve conectores usan exclusivamente páginas oficiales y escriben
+`festival_sets` y `festival_entries`, nunca `professional_observations`. El
+manifiesto inicial reproducible es `web/data/festivals/2026.json`; conserva
+recibo, URL, publicación, captura y versión. Un título exacto se enlaza al
+catálogo y cualquier ambigüedad permanece visible y entra en revisión.
 
 ## 8. Dataset de prueba
 

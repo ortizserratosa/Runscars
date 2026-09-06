@@ -19,7 +19,8 @@ Comprobaciones mínimas después de cada despliegue:
 4. el callback de Google vuelve a `/cuenta` y el alta por correo no apunta a
    `localhost`;
 5. `robots.txt`, `sitemap.xml` y una imagen Open Graph responden correctamente;
-6. no aparecen errores nuevos en los logs de Vercel ni en Supabase.
+6. `/festivales` y una edición cargan en español e inglés, sin enlaces rotos;
+7. no aparecen errores nuevos en los logs de Vercel ni en Supabase.
 
 ## SEO e indexación
 
@@ -48,6 +49,8 @@ Cron:
 - mercados: Kalshi y Polymarket con éxito dentro de las dos últimas horas;
 - snapshots: un `snapshot_refresh_runs` terminado dentro de las últimas 36
   horas, aunque no se haya creado ningún corte nuevo;
+- festivales: nueve conectores diarios a las 05:17 UTC; la ausencia de premios
+  solo es incidencia 24 horas después del cierre de la edición;
 - latencia profesional: cada conector termina en menos de dos minutos en una
   ejecución ordinaria; superar ese umbral exige revisar el run aunque concluya;
 - retrasos: ningún run de las tres familias permanece `running` más de 15
@@ -57,6 +60,40 @@ Los schedules versionados siguen siendo `17 4 * * *` para profesionales,
 `17 * * * *` para mercados y `47 4 * * *` para el refresco diario de cortes. Un
 estado `partial`, un fallo posterior al último éxito o un run fuera de esas
 ventanas exige tratar la automatización como incidente abierto.
+
+Festivales añade `17 5 * * *` mediante
+`supabase/schedules/run-festivals-daily.sql`. Se despliega y comprueba con:
+
+```bash
+npx supabase functions deploy run-festivals --no-verify-jwt --use-api \
+  --import-map supabase/functions/deno.json
+npx supabase db query --linked --file supabase/schedules/run-festivals-daily.sql
+npm run festivals:import
+npm run festivals:refresh
+```
+
+La auditoría viva no forma parte de CI porque consulta páginas externas. Tras
+cada importación o despliegue se ejecuta `npm run audit:production`; recorre el
+sitemap con reintentos acotados, abre cada candidatura, comprueba enlaces
+internos, ejecuta los seis parsers profesionales contra sus páginas vigentes,
+revisa Kalshi/Polymarket y comprueba frescura de conectores cuando dispone de
+credenciales de servidor.
+
+## Despliegue del circuito festivalero
+
+1. Crear fuera del repositorio una copia lógica de roles, esquema y datos, con
+   permisos `0700/0600`.
+2. Aplicar primero las migraciones aditivas y regenerar tipos.
+3. Desplegar `run-festivals`, instalar su schedule e importar el manifiesto
+   inicial.
+4. Ejecutar de nuevo profesionales y mercados para publicar los cortes
+   correctivos de guion y excluir contratos incompatibles.
+5. Verificar preview con unitarias, base, build, Playwright, Axe y auditoría
+   viva; promover solo si todas las rutas públicas son resolubles.
+
+La reversión pausa los conectores nuevos y repone los punteros vigentes a sus
+versiones anteriores. No elimina capturas, aliases, exclusiones, historial de
+matching ni snapshots bloqueados.
 
 ### Evidencia de 2026-09-01
 
@@ -155,3 +192,24 @@ bytes de datos y no se añadió a Git.
   desplegar de nuevo; no basta con borrarlo del historial visible.
 - Contenido o cuenta: usar RLS y la auditoría editorial; no editar directamente
   una quiniela privada salvo recuperación solicitada por su propietario.
+
+## Corte de integridad del 6 de septiembre de 2026
+
+La evidencia por requisito y recorrido se registra en
+[PRODUCTION_AUDIT_2026-09-06.md](PRODUCTION_AUDIT_2026-09-06.md). El alias
+`runscars-staging.vercel.app` redirige a producción: las pruebas de cuentas,
+visibilidad y borrado se ejecutan con Supabase local e identidades temporales.
+
+Publicación reproducible: guardar los cambios relacionados en un commit con
+correo GitHub noreply, ejecutar `npm run verify` y `npm run test:e2e`, desplegar
+con `vercel deploy --prod --skip-domain --yes`, verificar ese artefacto, aplicar
+migraciones/funciones necesarias y promover el mismo URL con `vercel promote`.
+Los secretos y archivos de vinculación permanecen locales. La migración
+`20260906160000` solo versiona extractores; no modifica conjuntos bloqueados.
+
+Rollback web: `vercel rollback <deployment-id-anterior> --yes`. El punto anterior
+es `dpl_EY7vDVzy1nYErT2aHZtpPQa739sM`; devuelve también las limitaciones iniciales
+(festivales 404 y destinos de catálogo rotos). No revertir ni borrar conjuntos
+inmutables. Si una función falla, desactivar su conector o restaurar la función
+del commit anterior y registrar la incidencia; una captura fallida conserva
+los últimos datos verificados. Nunca tratar un HTTP 200 vacío como frescura.

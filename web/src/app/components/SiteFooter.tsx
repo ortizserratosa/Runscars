@@ -22,6 +22,9 @@ export async function SiteFooter() {
       </div>
       <div className="footer-links">
         <Link href={href("/temporadas/2027")}>Oscar 2027</Link>
+        <Link href={href("/festivales")}>
+          {en ? "Festivals" : "Festivales"}
+        </Link>
         <Link href={href("/archivo")}>
           {en ? "2022–2026 archive" : "Archivo 2022–2026"}
         </Link>

@@ -9,8 +9,9 @@ import {
   parseFilmStateUpdates,
   filmWatchStateSchema,
   profileSchema,
-  rankingSchema,
+  rankingSchemaForLimit,
 } from "../../lib/community/validation";
+import { getNomineeSlots } from "../../lib/categories/nominee-slots";
 import { createSupabaseAdminClient } from "../../lib/supabase/server";
 import { isLocale, localizedPath, type Locale } from "../../lib/i18n/config";
 import {
@@ -35,12 +36,21 @@ export async function saveRankingAction(
 ): Promise<CommunityFormState> {
   const locale = formLocale(formData);
   const en = locale === "en";
-  const fields = rankingSchema.safeParse({
+  const rawFields = {
     seasonId: formData.get("seasonId"),
     categoryId: formData.get("categoryId"),
     entries: parseRankingEntries(formData.get("rankingEntries")),
     isPublic: formData.get("isPublic") === "on",
-  });
+  };
+  const scope = z
+    .object({ seasonId: z.string().min(1), categoryId: z.string().min(1) })
+    .safeParse(rawFields);
+  const slots = scope.success
+    ? await getNomineeSlots(scope.data.seasonId, scope.data.categoryId)
+    : null;
+  const fields = rankingSchemaForLimit(slots ? slots.count + 1 : 0).safeParse(
+    rawFields,
+  );
   if (!fields.success) {
     return {
       message: en
