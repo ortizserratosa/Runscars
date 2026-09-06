@@ -73,6 +73,7 @@ pasado para ocultar cambios de criterio.
 | D-053 | Tipografía y sistema visual web v1                             | Propuesta   |
 | D-054 | Candidatura de guion identificada por película                  | Aceptada    |
 | D-055 | Circuito internacional de festivales 2026                       | Aceptada    |
+| D-056 | Idioma explícito, origen canónico y verificación pública        | Aceptada    |
 
 ## D-001 · Nombre de trabajo Runscars
 

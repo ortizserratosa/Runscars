@@ -1,0 +1,27 @@
+[
+  {
+    "host": "www.runscars.app",
+    "status": 308,
+    "location": "https://runscars.app/en/temporadas/2027/mejor-pelicula?corte=audit"
+  },
+  {
+    "host": "runscars.vercel.app",
+    "status": 308,
+    "location": "https://runscars.app/en/temporadas/2027/mejor-pelicula?corte=audit"
+  },
+  {
+    "host": "runscars-staging.vercel.app",
+    "status": 308,
+    "location": "https://runscars.app/en/temporadas/2027/mejor-pelicula?corte=audit"
+  },
+  {
+    "path": "/api/health",
+    "status": 200,
+    "body": "{\"status\":\"ok\",\"service\":\"runscars-web\",\"databaseConfigured\":true}"
+  },
+  {
+    "path": "/robots.txt",
+    "status": 200,
+    "body": "User-Agent: *\nAllow: /\nDisallow: /admin\nDisallow: /cuenta\nDisallow: /en/admin\nDisallow: /en/cuenta\nDisallow: /api/\nDisallow: /auth/\n\nSitemap: https://runscars.app/sitemap.xml\n"
+  }
+]

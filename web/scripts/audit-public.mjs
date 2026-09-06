@@ -1,4 +1,4 @@
-import { writeFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 
 const base = new URL(
   process.env.RUNSCARS_AUDIT_BASE_URL ?? "https://runscars.app",
@@ -43,7 +43,28 @@ function localize(url) {
   return new URL(parsed.pathname + parsed.search, base).href;
 }
 const sitemap = new Set(sitemapUrls.map(localize));
-let queue = [...sitemap];
+const resumePath = process.env.RUNSCARS_AUDIT_RESUME;
+let previousReport = null;
+if (resumePath) {
+  previousReport = JSON.parse(await readFile(resumePath, "utf8"));
+  if (previousReport.baseUrl !== base.href)
+    throw new Error("Resume report belongs to another origin");
+  const failedUrls = new Set(
+    previousReport.failures.map((failure) => failure.url),
+  );
+  for (const page of previousReport.pages) {
+    if (page.status === 200 && !failedUrls.has(page.url)) {
+      pages.push(page);
+      seen.add(page.url);
+    }
+  }
+}
+let queue = [
+  ...new Set([
+    ...sitemap,
+    ...(previousReport?.failures.map((failure) => failure.url) ?? []),
+  ]),
+].filter((url) => !seen.has(url));
 const auxiliary = /^\/(?:en\/)?(?:api|auth)(?:\/|$)/;
 while (queue.length) {
   const batch = queue.splice(0, concurrency).filter((url) => !seen.has(url));
@@ -161,7 +182,14 @@ const report = {
   baseUrl: base.href,
   sitemapUrls: sitemap.size,
   visited: seen.size,
-  externalLinks: external.size,
+  ...(previousReport
+    ? {
+        initialStartedAt: previousReport.startedAt,
+        previousReport: resumePath,
+        recheckedFindings: previousReport.failures,
+        externalLinksInRecheckedPages: [...external],
+      }
+    : { externalLinks: external.size }),
   failures,
   pages,
 };

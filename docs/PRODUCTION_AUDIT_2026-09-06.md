@@ -83,8 +83,14 @@ Las comprobaciones son de uso normal autorizado, no pruebas de explotación.
 
 Baseline Chromium sin throttling (1440×1000 / 390×844): LCP home 1252/1240ms,
 categoría 1596/1336ms, ficha 2412/1892ms; CLS 0 en seis muestras. Se conserva
-el sistema tipográfico y se desactiva el preload de la fuente mono no principal.
+el sistema tipográfico. La prueba de desactivar el preload mono produjo CLS
+móvil de 0,173; se restaura su preload crítico y se reducen sus cuatro variantes
+de peso a 400 y 700. No se cuenta esa medición como presupuesto cumplido.
 Los screenshots y métricas de la publicación se registran abajo.
+
+La configuración pública de Auth confirma Google habilitado y email deshabilitado
+para altas, conforme a D-045. No se sustituye la verificación de una sesión real
+por esta comprobación de configuración.
 
 No se dispone de Search Console ni de CrUX de campo. No afirmar LCP ≤2,5s,
 INP ≤200ms y CLS ≤0,1 para visitantes reales a partir de estas muestras.
@@ -111,9 +117,14 @@ la navegación/categorías. Las mediciones finales deben realizarse por separado
 del crawl exhaustivo. Este episodio no se registra como una verificación pasada.
 
 El análisis posterior identificó otra lectura redundante: `festival_sets.select(*)`
-transfería 1.915.968 bytes de recibos para construir el contexto público. Se
+transfería 1.915.968 bytes de recibos para construir el contexto público. La
+proyección de esos mismos conjuntos ocupa 2.808 bytes (99,85% menos). Se
 seleccionan ahora solo los campos visibles, se omite `original_data` en entradas
 y se comparte el índice público de festivales durante 60s. El consenso actual
 compartido por fichas y Fuentes utiliza también esa revalidación. Un fallo al
 leer fuentes/consenso en producción se propaga como error; no se convierte en
 un catálogo vacío o una ficha 404.
+
+El arranque real de OAuth desde `/en/acceso` alcanza `accounts.google.com` y
+la pantalla de acceso de Google. No se introduce una identidad personal: el
+consentimiento, retorno autenticado y alta efectiva siguen sin verificar.

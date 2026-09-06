@@ -1,0 +1,150 @@
+{
+  "capturedAt": "2026-09-06T14:56:52.233Z",
+  "base": "https://runscars.app",
+  "measurement": "Unthrottled lab page-load LCP/CLS, not field Core Web Vitals or INP",
+  "results": [
+    {
+      "url": "https://runscars.app/temporadas/2027/mejor-pelicula",
+      "device": "desktop",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: Mejor película | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 1596,
+        "cls": 0
+      },
+      "ttfb": 79.39999997615814,
+      "rankingY": 1067.0625,
+      "errors": [],
+      "violations": [],
+      "screenshot": "/tmp/runscars-ui-before/desktop-mejor-pelicula.png"
+    },
+    {
+      "url": "https://runscars.app/",
+      "device": "desktop",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: ranking y consenso | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 1252,
+        "cls": 0
+      },
+      "ttfb": 83.19999998807907,
+      "errors": [],
+      "violations": [],
+      "screenshot": "/tmp/runscars-ui-before/desktop-home.png"
+    },
+    {
+      "url": "https://runscars.app/peliculas/fjord",
+      "device": "desktop",
+      "status": 200,
+      "title": "Fiordo: predicciones Oscar 2027 | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 2412,
+        "cls": 0
+      },
+      "ttfb": 80,
+      "errors": [],
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                ".catalog-provenance > a[rel=\"noreferrer\"][target=\"_blank\"]"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.49 (foreground color: #7569ff, background color: #f2efe6, font size: 8.2pt (10.88px), font weight: bold). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ],
+      "screenshot": "/tmp/runscars-ui-before/desktop-fjord.png"
+    },
+    {
+      "url": "https://runscars.app/temporadas/2027/mejor-pelicula",
+      "device": "mobile",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: Mejor película | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 1336,
+        "cls": 0
+      },
+      "ttfb": 28.900000035762787,
+      "rankingY": 1240.828125,
+      "errors": [],
+      "violations": [],
+      "screenshot": "/tmp/runscars-ui-before/mobile-mejor-pelicula.png"
+    },
+    {
+      "url": "https://runscars.app/",
+      "device": "mobile",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: ranking y consenso | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 1240,
+        "cls": 0
+      },
+      "ttfb": 28.599999964237213,
+      "errors": [],
+      "violations": [],
+      "screenshot": "/tmp/runscars-ui-before/mobile-home.png"
+    },
+    {
+      "url": "https://runscars.app/peliculas/fjord",
+      "device": "mobile",
+      "status": 200,
+      "title": "Fiordo: predicciones Oscar 2027 | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 1892,
+        "cls": 0
+      },
+      "ttfb": 40.19999998807907,
+      "errors": [],
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                ".catalog-provenance > a[rel=\"noreferrer\"][target=\"_blank\"]"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.49 (foreground color: #7569ff, background color: #f2efe6, font size: 8.2pt (10.88px), font weight: bold). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ],
+      "screenshot": "/tmp/runscars-ui-before/mobile-fjord.png"
+    }
+  ],
+  "failed": 2
+}

@@ -1,0 +1,150 @@
+{
+  "capturedAt": "2026-09-06T21:27:46.397Z",
+  "source_connectors": [
+    {
+      "id": "awards-daily-predictions",
+      "is_active": true,
+      "last_success_at": "2026-09-06T04:17:18.128+00:00",
+      "last_failure_at": "2026-07-25T17:36:56.632+00:00",
+      "last_error": null
+    },
+    {
+      "id": "guardian-content-api",
+      "is_active": true,
+      "last_success_at": "2026-09-06T04:17:21.769+00:00",
+      "last_failure_at": null,
+      "last_error": null
+    },
+    {
+      "id": "roger-ebert-rss",
+      "is_active": true,
+      "last_success_at": "2026-09-06T04:17:39.203+00:00",
+      "last_failure_at": null,
+      "last_error": null
+    },
+    {
+      "id": "awardswatch-predictions",
+      "is_active": true,
+      "last_success_at": "2026-09-06T04:17:14.855+00:00",
+      "last_failure_at": "2026-07-25T15:50:19.167+00:00",
+      "last_error": null
+    },
+    {
+      "id": "ringer-best-picture",
+      "is_active": true,
+      "last_success_at": "2026-09-06T04:17:36.232+00:00",
+      "last_failure_at": null,
+      "last_error": null
+    },
+    {
+      "id": "midnight-critics-predictions",
+      "is_active": true,
+      "last_success_at": "2026-09-06T04:17:38.578+00:00",
+      "last_failure_at": null,
+      "last_error": null
+    },
+    {
+      "id": "next-best-picture-predictions",
+      "is_active": true,
+      "last_success_at": "2026-09-06T04:17:44.647+00:00",
+      "last_failure_at": "2026-08-08T04:17:02.937+00:00",
+      "last_error": null
+    },
+    {
+      "id": "awards-radar-predictions",
+      "is_active": true,
+      "last_success_at": "2026-09-06T04:17:31.336+00:00",
+      "last_failure_at": "2026-09-04T04:17:02.278+00:00",
+      "last_error": null
+    }
+  ],
+  "market_connectors": [
+    {
+      "id": "polymarket-oscars",
+      "is_active": true,
+      "last_success_at": "2026-09-06T21:17:25.377+00:00",
+      "last_failure_at": "2026-07-29T00:17:35.585+00:00",
+      "last_error": null
+    },
+    {
+      "id": "kalshi-oscars",
+      "is_active": true,
+      "last_success_at": "2026-09-06T21:17:56.019+00:00",
+      "last_failure_at": "2026-08-07T14:02:30.622+00:00",
+      "last_error": null
+    }
+  ],
+  "festival_connectors": [
+    {
+      "id": "festival-venice",
+      "is_active": true,
+      "last_success_at": "2026-09-06T15:12:20.274+00:00",
+      "last_failure_at": "2026-09-03T18:14:19.092+00:00",
+      "last_error": null
+    },
+    {
+      "id": "festival-san-sebastian",
+      "is_active": true,
+      "last_success_at": "2026-09-06T15:28:05.431+00:00",
+      "last_failure_at": "2026-09-06T15:12:16.694+00:00",
+      "last_error": null
+    },
+    {
+      "id": "festival-nyff",
+      "is_active": true,
+      "last_success_at": "2026-09-06T05:17:06.408+00:00",
+      "last_failure_at": "2026-09-06T15:28:05.691+00:00",
+      "last_error": "No se reconocieron selecciones ni premios oficiales; se conserva el último conjunto verificado"
+    },
+    {
+      "id": "festival-berlinale",
+      "is_active": true,
+      "last_success_at": "2026-09-06T15:25:09.786+00:00",
+      "last_failure_at": "2026-09-03T18:14:18.822+00:00",
+      "last_error": null
+    },
+    {
+      "id": "festival-cannes",
+      "is_active": true,
+      "last_success_at": "2026-09-06T15:12:15.487+00:00",
+      "last_failure_at": null,
+      "last_error": null
+    },
+    {
+      "id": "festival-tiff",
+      "is_active": true,
+      "last_success_at": "2026-09-06T05:17:03.023+00:00",
+      "last_failure_at": "2026-09-06T15:28:03.307+00:00",
+      "last_error": "No se reconocieron selecciones ni premios oficiales; se conserva el último conjunto verificado"
+    },
+    {
+      "id": "festival-locarno",
+      "is_active": true,
+      "last_success_at": null,
+      "last_failure_at": "2026-09-06T15:28:03.346+00:00",
+      "last_error": "https://www.locarnofestival.ch/en/festival/program.html respondió 403"
+    },
+    {
+      "id": "festival-telluride",
+      "is_active": true,
+      "last_success_at": "2026-09-06T05:17:03.566+00:00",
+      "last_failure_at": "2026-09-06T15:28:03.995+00:00",
+      "last_error": "No se reconocieron selecciones ni premios oficiales; se conserva el último conjunto verificado"
+    },
+    {
+      "id": "festival-sundance",
+      "is_active": true,
+      "last_success_at": "2026-09-06T15:12:16.546+00:00",
+      "last_failure_at": null,
+      "last_error": null
+    }
+  ],
+  "snapshots": [
+    {
+      "id": 8,
+      "status": "succeeded",
+      "started_at": "2026-09-06T04:47:52.905+00:00",
+      "finished_at": "2026-09-06T04:48:02.642+00:00"
+    }
+  ]
+}

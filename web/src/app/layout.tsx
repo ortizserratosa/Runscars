@@ -31,8 +31,7 @@ const monoFont = IBM_Plex_Mono({
   display: "swap",
   subsets: ["latin"],
   variable: "--font-runscars-mono",
-  weight: ["400", "500", "600", "700"],
-  preload: false,
+  weight: ["400", "700"],
 });
 
 export async function generateMetadata(): Promise<Metadata> {
