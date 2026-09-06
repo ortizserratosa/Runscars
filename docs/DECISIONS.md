@@ -1012,6 +1012,9 @@ ejemplos manuales de nominaciones y ganador coincidieron con
   de filtros y cortes apuntan a su landing; cuentas y autenticación no se
   indexan. El sitemap pagina el catálogo completo y fecha cambios de contenido,
   no comprobaciones sin cambios. Un error del backend no equivale a catálogo vacío.
+  El selector enlaza directamente a la ruta del otro idioma, incluidos sus
+  parámetros. `/api/locale` conserva compatibilidad para enlaces antiguos,
+  pero deja de anunciarse como destino alternativo rastreable.
 - **Presentación:** se compactan las introducciones y se despliega el historial
   bajo demanda, conservando las URLs de cortes. Se conserva la marca existente
   y el carácter provisional de D-053.

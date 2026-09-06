@@ -467,6 +467,9 @@ test("switches language while preserving the current route", async ({
   page,
 }) => {
   await page.goto("/fuentes");
+  await expect(
+    page.getByRole("link", { name: "Switch to English" }),
+  ).toHaveAttribute("href", "/en/fuentes");
   await page.getByRole("link", { name: "Switch to English" }).click();
   await expect(page).toHaveURL(/\/en\/fuentes$/);
   await expect(
@@ -479,9 +482,21 @@ test("switches language while preserving the current route", async ({
   await page.goto(
     "/comunidad?season=oscars-2027&q=ana&category=mejor-pelicula",
   );
+  await expect(
+    page.getByRole("link", { name: "Switch to English" }),
+  ).toHaveAttribute(
+    "href",
+    "/en/comunidad?season=oscars-2027&q=ana&category=mejor-pelicula",
+  );
   await page.getByRole("link", { name: "Switch to English" }).click();
   await expect(page).toHaveURL(
     /\/en\/comunidad\?season=oscars-2027&q=ana&category=mejor-pelicula$/,
+  );
+  await expect(
+    page.getByRole("link", { name: "Cambiar a español" }),
+  ).toHaveAttribute(
+    "href",
+    "/comunidad?season=oscars-2027&q=ana&category=mejor-pelicula",
   );
   await page.getByRole("link", { name: "Cambiar a español" }).click();
   await expect(page).toHaveURL(
