@@ -7,6 +7,8 @@ const routes = [
   "/temporadas/2027/mejor-pelicula",
   "/peliculas/fjord",
   "/fuentes",
+  "/metodologia",
+  "/en/metodologia",
   "/festivales",
   "/festivales/cannes/2026",
   "/en/festivales",

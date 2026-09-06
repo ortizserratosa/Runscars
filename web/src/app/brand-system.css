@@ -1213,3 +1213,10 @@ dd {
     gap: 0.7rem;
   }
 }
+
+.person-hero .kicker {
+  color: var(--paper);
+}
+.methodology-callout {
+  background: color-mix(in srgb, var(--violet) 65%, var(--paper));
+}

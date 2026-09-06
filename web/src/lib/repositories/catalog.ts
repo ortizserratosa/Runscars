@@ -293,17 +293,26 @@ export const getPersonCatalogDetail = cache(
         return null;
       }
 
-      const { data: snapshots, error: snapshotError } = await supabase
-        .from("tmdb_person_snapshots")
-        .select(
-          "tmdb_id, locale, original_name, known_for_department, biography, birthday, deathday, place_of_birth, homepage_url, imdb_id, profile_path, fetched_at, expires_at",
-        )
-        .eq("tmdb_id", person.tmdb_id)
-        .in(
-          "locale",
-          locale === "es-ES" ? ["es-ES", "en-US"] : ["en-US", "es-ES"],
-        )
-        .order("fetched_at", { ascending: false });
+      const [
+        { data: snapshots, error: snapshotError },
+        { data: creditRows, error: creditsError },
+      ] = await Promise.all([
+        supabase
+          .from("tmdb_person_snapshots")
+          .select(
+            "tmdb_id, locale, original_name, known_for_department, biography, birthday, deathday, place_of_birth, homepage_url, imdb_id, profile_path, fetched_at, expires_at",
+          )
+          .eq("tmdb_id", person.tmdb_id)
+          .in(
+            "locale",
+            locale === "es-ES" ? ["es-ES", "en-US"] : ["en-US", "es-ES"],
+          )
+          .order("fetched_at", { ascending: false }),
+        supabase
+          .from("film_credits")
+          .select("film_id, role")
+          .eq("person_id", person.id),
+      ]);
 
       const snapshot =
         snapshots?.find((item) => item.locale === locale) ?? snapshots?.[0];
@@ -314,11 +323,6 @@ export const getPersonCatalogDetail = cache(
         );
       }
 
-      const { data: creditRows, error: creditsError } = await supabase
-        .from("film_credits")
-        .select("film_id, role")
-        .eq("person_id", person.id);
-
       if (creditsError) {
         throw new Error(
           `No se pudieron consultar los créditos de ${personId}: ${creditsError.message}`,
@@ -326,10 +330,14 @@ export const getPersonCatalogDetail = cache(
       }
 
       const filmIds = [...new Set(creditRows.map((credit) => credit.film_id))];
-      const { data: films } =
+      const { data: films, error: filmsError } =
         filmIds.length === 0
-          ? { data: [] }
+          ? { data: [], error: null }
           : await supabase.from("films").select("id, title").in("id", filmIds);
+      if (filmsError)
+        throw new Error(
+          `No se pudieron consultar las películas de ${personId}: ${filmsError.message}`,
+        );
       const rolesByFilmId = new Map<string, string[]>();
       for (const credit of creditRows) {
         const roles = rolesByFilmId.get(credit.film_id) ?? [];

@@ -213,3 +213,9 @@ es `dpl_EY7vDVzy1nYErT2aHZtpPQa739sM`; devuelve también las limitaciones inicia
 inmutables. Si una función falla, desactivar su conector o restaurar la función
 del commit anterior y registrar la incidencia; una captura fallida conserva
 los últimos datos verificados. Nunca tratar un HTTP 200 vacío como frescura.
+
+La migración `20260906170000` añade únicamente lectura de snapshots y resultados
+al servicio editorial; las mutaciones permanecen bajo las funciones y triggers
+inmutables. `20260906180000` versiona el parser de Berlín: las menciones especiales
+a cortos heredan el formato del premio anterior dentro del mismo jurado. Una
+reimportación genera una versión nueva, nunca edita el recibo anterior.

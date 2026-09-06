@@ -144,6 +144,7 @@ function berlinaleAwards(html, year) {
   // The archive also embeds older editions. Only film links for this year count.
   const visible = html.replaceAll(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "");
   const entries = [];
+  const shortAwardBySection = new Map();
   for (const match of visible.matchAll(
     /<div class="award-list__item">([\s\S]*?)(?=<div class="award-list__item">|$)/g,
   )) {
@@ -166,14 +167,23 @@ function berlinaleAwards(html, year) {
             /<h2[^>]*class="award-list__headline[^"]*"[^>]*>([\s\S]*?)<\/h2>/g,
           ),
       ].at(-1)?.[1] ?? "Official awards";
+    const sectionLabel = decodeHtml(section);
+    const awardLabel = decodeHtml(award);
+    if (!/special mention/i.test(awardLabel)) {
+      shortAwardBySection.set(sectionLabel, /short/i.test(awardLabel));
+    }
+    const isShort =
+      /short/i.test(sectionLabel) ||
+      shortAwardBySection.get(sectionLabel) === true;
     const recipient = decodeHtml(
       details.slice(0, details.indexOf(film[0])),
     ).replace(/\s+(?:for|in)\s*$/i, "");
     entries.push({
-      section: decodeHtml(section),
+      section: sectionLabel,
       originalTitle: decodeHtml(film[2]),
       originalRecipient: recipient || null,
-      awardType: decodeHtml(award),
+      awardType: awardLabel,
+      isFeature: !isShort,
       isOfficial: true,
       entryType: "feature",
       originalData: {

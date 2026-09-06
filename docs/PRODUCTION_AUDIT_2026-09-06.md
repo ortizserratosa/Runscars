@@ -28,10 +28,10 @@ insuficiente en tarjetas de temporada y atribución cinematográfica.
 | RF-08 snapshots | Tests de inmutabilidad y navegación de cortes | Refresco 06/09 04:48 UTC: 8 categorías, 0 fallos | Historial compartible y auditoría de runs |
 | RF-09 resultados oficiales | Importador y archivo versionado | Cinco ceremonias archivadas | Archivo 2022–2026 |
 | RF-10 cuenta/ranking/visionado | Dos identidades aisladas; login, guardado privado, exportación y borrado reales | No se prueban mutaciones contra usuarios de producción | OAuth/entrega real de correo pendientes |
-| RF-11 aislamiento entre usuarios | Test real Supabase local y 21 tests DB; lectura privada ajena y escritura ajena denegadas | Políticas desplegadas | No se cuenta como prueba mutante en producción |
-| RF-12 administración | Allowlist, acciones editoriales y tests DB; usuario normal recibe 404 | Consola restringida | Identidad administrativa real de producción no ejercitada |
+| RF-11 aislamiento entre usuarios | Test real Supabase local y 22 tests DB; lectura privada ajena y escritura ajena denegadas | Políticas desplegadas | No se cuenta como prueba mutante en producción |
+| RF-12 administración | Allowlist, acciones editoriales y tests DB; usuario normal recibe 404; administrador dedicado accede a 49 formularios editoriales | Consola restringida | Identidad administrativa real de producción no ejercitada |
 | RF-13 frescura | Fallo explícito si HTTP válido no contiene entradas reconocibles | Festivales tenían falsos éxitos vacíos | Registrar fallos reales sin borrar último conjunto |
-| RF-14 escritorio/móvil | 106 E2E Chromium/Firefox/WebKit; foco y controles; auditoría axe | Ranking desktop empezaba a y=1067px | Screenshots y axe en despliegue |
+| RF-14 escritorio/móvil | 114 E2E Chromium/Firefox/WebKit; foco y controles; auditoría axe | Ranking desktop empezaba a y=1067px | Screenshots y axe en despliegue |
 | RF-15 mercados separados | Proveedores identificados, fuera de Borda | Kalshi y Polymarket actuales | Parsers: 85 y 132 contratos, respectivamente |
 | RF-16 ocho categorías/cinco archivos | E2E y fixtures | Disponibles | UI bilingüe y crawler |
 | RF-17 metodología/evaluación | Versiones bloqueadas, sin inventar predicciones históricas | Disponible | Rutas bilingües |
@@ -74,6 +74,10 @@ La sesión aislada adicional comprobó login con contraseña, retorno `/en/cuent
 usuario normal rechazado en `/en/admin`, ranking privado persistido tras recarga,
 y borrado con contraseña y confirmación `ELIMINAR`; la identidad dejó de existir.
 No se usaron cuentas personales ni se enviaron mensajes a terceros.
+La comprobación de administrador detectó y corrigió grants SELECT ausentes en
+el entorno local para snapshots/resultados y una consulta a `market_connectors.name`
+(inexistente); se usa el proveedor. Tras corregir, la consola cargó 49 formularios.
+Las comprobaciones son de uso normal autorizado, no pruebas de explotación.
 
 ## Rendimiento y limitaciones
 
@@ -91,5 +95,7 @@ Esto impide declarar completada toda la automatización de RF-21.
 
 ## Referencia de publicación
 
-Pendiente de añadir commit, despliegue validado y resultados posteriores a la
+Se integraron todos los cambios relacionados preexistentes en `26b1032` y
+correcciones verificadas posteriores. Pendiente de añadir despliegue final y
+resultados posteriores a la
 promoción. Ver [OPERATIONS.md](OPERATIONS.md) para promoción y rollback.

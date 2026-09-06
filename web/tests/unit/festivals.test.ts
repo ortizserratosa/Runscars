@@ -26,6 +26,22 @@ const festivals = [
 ];
 
 describe("festival circuit", () => {
+  it("keeps short-film special mentions out of feature awards", () => {
+    const item = (award: string, title: string) =>
+      `<div class="award-list__item"><strong class="award-list__type">${award}</strong><div class="award-list__details"><p><a href="/en/2026/programme/fixture.html">${title}</a></p></div></div>`;
+    const html =
+      '<h2 class="award-list__headline">Generation 2026</h2>' +
+      item("Crystal Bear for the Best Short Film", "Short winner") +
+      item("Special Mention", "Short mention") +
+      item("Crystal Bear for the Best Film", "Feature winner") +
+      item("Special Mention", "Feature mention");
+    expect(
+      parseFestivalHtml("berlinale", "awards", html)
+        .filter(isEligibleFestivalEntry)
+        .map((entry: { originalTitle: string }) => entry.originalTitle),
+    ).toEqual(["Feature winner", "Feature mention"]);
+  });
+
   it("parses the official San Sebastian feature listing for the requested year", async () => {
     const html = readFileSync(
       new URL("../fixtures/festivals/san-sebastian-film.html", import.meta.url),
