@@ -207,15 +207,52 @@ migraciones/funciones necesarias y promover el mismo URL con `vercel promote`.
 Los secretos y archivos de vinculación permanecen locales. La migración
 `20260906160000` solo versiona extractores; no modifica conjuntos bloqueados.
 
-Rollback web: `vercel rollback <deployment-id-anterior> --yes`. El punto anterior
-es `dpl_EY7vDVzy1nYErT2aHZtpPQa739sM`; devuelve también las limitaciones iniciales
-(festivales 404 y destinos de catálogo rotos). No revertir ni borrar conjuntos
-inmutables. Si una función falla, desactivar su conector o restaurar la función
-del commit anterior y registrar la incidencia; una captura fallida conserva
-los últimos datos verificados. Nunca tratar un HTTP 200 vacío como frescura.
+Release vigente de este corte: commit
+`d429f5431efb4fcf4887c6e03ddfa36eaf6a6920`, deployment
+`dpl_EFLqrExb7d8megwCadVV5c8VdzoJ`, artefacto
+[runscars-88yto60gk](https://runscars-88yto60gk-nazzozzo-s-projects.vercel.app).
+La evidencia posterior se versiona en un commit documental aparte; no se
+atribuye al artefacto código que no contiene.
+
+Rollback web inmediato:
+
+```sh
+npx vercel rollback dpl_HCSSSVESuW3Wak8Cz2Gwtapwj4yb --yes
+```
+
+Ese deployment corresponde a `d3fd0d1` y conserva festivales, catálogo y SEO,
+pero reintroduce el desplazamiento móvil de fuentes (CLS observado 0,173). El
+baseline anterior a todo el corte, `dpl_EY7vDVzy1nYErT2aHZtpPQa739sM`,
+reintroduce además festivales 404 y 348 destinos rotos; no es el rollback
+preferido. Tras cualquier rollback, comprobar health, home ES/EN, una categoría,
+una película, festivales, canonical/alternates y logs.
+
+Las tres migraciones de este corte son aditivas/versionadas y compatibles con el
+artefacto anterior. No revertir grants ni borrar conjuntos inmutables para hacer
+rollback de frontend. `run-festivals` v5 está desplegada; si un conector falla,
+pausar solo ese conector o restaurar su función desde un commit verificado y
+registrar el motivo. La captura fallida conserva los últimos datos válidos; un
+HTTP 200 vacío nunca constituye frescura.
+
+Se prepararon `runscars-pre-release-schema.sql` y
+`runscars-pre-release-data.sql` fuera de Git, con permisos 0600. Son copia del
+esquema/datos públicos, **no una copia completa de Auth/Storage ni una
+restauración ensayada de este release**. Se trasladan al directorio privado de
+backups del proyecto indicado en la entrega; usar el procedimiento completo de
+restauración documentado arriba para recuperación de base de datos. Nunca
+ejecutar `db reset --linked`.
 
 La migración `20260906170000` añade únicamente lectura de snapshots y resultados
 al servicio editorial; las mutaciones permanecen bajo las funciones y triggers
-inmutables. `20260906180000` versiona el parser de Berlín: las menciones especiales
-a cortos heredan el formato del premio anterior dentro del mismo jurado. Una
-reimportación genera una versión nueva, nunca edita el recibo anterior.
+inmutables. `20260906180000` versiona el parser de Berlín: las menciones
+especiales a cortos heredan el formato del premio anterior dentro del mismo
+jurado. Una reimportación genera una versión nueva, nunca edita el recibo
+anterior.
+
+La operación posterior confirma ocho fuentes profesionales y dos mercados
+saludables, cron activo y el refresco de snapshots del 06/09 con cero fallos.
+Cuatro feeds festivaleros (Locarno, NYFF, TIFF, Telluride) siguen degradados;
+ver la matriz de la auditoría. Un timeout de revalidación pública del consenso
+sirvió el valor anterior y luego respondió normalmente en tres lecturas. No se
+certifica ausencia de fallos bajo carga ni una sesión Google completa de
+producción. Estos límites no se sustituyen por resultados de fixtures locales.

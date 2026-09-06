@@ -315,6 +315,18 @@ manifiesto inicial reproducible es `web/data/festivals/2026.json`; conserva
 recibo, URL, publicación, captura y versión. Un título exacto se enlaza al
 catálogo y cualquier ambigüedad permanece visible y entra en revisión.
 
+### Verificación operativa del 6 de septiembre de 2026
+
+Sundance, Berlinale, Cannes, Venecia y San Sebastián se verificaron mediante sus
+conectores oficiales. Berlinale v3 descarta menciones especiales a cortos;
+Venecia y San Sebastián reconocen el formato capturado en los fixtures. Locarno
+devuelve 403 y aún no tiene conjunto actual verificado. NYFF y TIFF no ofrecen
+entradas reconocibles al conector; Telluride requiere extracción PDF todavía no
+implementada. Una respuesta vacía ya no se considera éxito. Los nueve destinos
+públicos existen, pero estos cuatro feeds no se declaran saludables y se
+conservan los conjuntos anteriores cuando los hay. Evidencia, versiones y
+limitaciones en la [auditoría de producción](PRODUCTION_AUDIT_2026-09-06.md).
+
 ## 8. Dataset de prueba
 
 El [dataset de fase 1](../data/phase-1/README.md) contiene:

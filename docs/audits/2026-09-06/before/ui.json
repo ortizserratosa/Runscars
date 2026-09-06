@@ -21,7 +21,7 @@
       "rankingY": 1067.0625,
       "errors": [],
       "violations": [],
-      "screenshot": "/tmp/runscars-ui-before/desktop-mejor-pelicula.png"
+      "screenshot": "desktop-mejor-pelicula.png"
     },
     {
       "url": "https://runscars.app/",
@@ -40,7 +40,7 @@
       "ttfb": 83.19999998807907,
       "errors": [],
       "violations": [],
-      "screenshot": "/tmp/runscars-ui-before/desktop-home.png"
+      "screenshot": "desktop-home.png"
     },
     {
       "url": "https://runscars.app/peliculas/fjord",
@@ -72,7 +72,7 @@
           ]
         }
       ],
-      "screenshot": "/tmp/runscars-ui-before/desktop-fjord.png"
+      "screenshot": "desktop-fjord.png"
     },
     {
       "url": "https://runscars.app/temporadas/2027/mejor-pelicula",
@@ -92,7 +92,7 @@
       "rankingY": 1240.828125,
       "errors": [],
       "violations": [],
-      "screenshot": "/tmp/runscars-ui-before/mobile-mejor-pelicula.png"
+      "screenshot": "mobile-mejor-pelicula.png"
     },
     {
       "url": "https://runscars.app/",
@@ -111,7 +111,7 @@
       "ttfb": 28.599999964237213,
       "errors": [],
       "violations": [],
-      "screenshot": "/tmp/runscars-ui-before/mobile-home.png"
+      "screenshot": "mobile-home.png"
     },
     {
       "url": "https://runscars.app/peliculas/fjord",
@@ -143,7 +143,7 @@
           ]
         }
       ],
-      "screenshot": "/tmp/runscars-ui-before/mobile-fjord.png"
+      "screenshot": "mobile-fjord.png"
     }
   ],
   "failed": 2

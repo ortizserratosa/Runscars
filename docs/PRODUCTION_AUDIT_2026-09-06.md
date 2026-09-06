@@ -1,130 +1,208 @@
 # Auditoría de Runscars · 6 de septiembre de 2026
 
-Corte vertical: integridad de publicación, descubrimiento festivalero, interfaz y
-SEO bilingüe. No inicia una nueva fase ni publica consenso comunitario. D-053
-continúa propuesta. Los resultados locales no sustituyen evidencia de producción.
+Publicado en [runscars.app](https://runscars.app) desde el commit limpio
+`d429f5431efb4fcf4887c6e03ddfa36eaf6a6920`, deployment
+`dpl_EFLqrExb7d8megwCadVV5c8VdzoJ`. Se han reparado los destinos públicos,
+publicado el circuito festivalero y refinado interfaz y SEO ES/EN. **El plan no
+se declara completamente cerrado:** cuatro feeds festivaleros siguen degradados,
+el acceso Google completo en producción no se ha ejercitado y faltan métricas de
+campo. D-053 permanece `Propuesta`; no se publica consenso comunitario.
+
+## Resultado y alcance de la evidencia
+
+- Crawl completo: **3.538 URLs de sitemap, 3.742 destinos públicos, cero
+  hallazgos finales**. La primera pasada tuvo 12 fallos de transporte; se
+  reintentaron los doce y todos resolvieron. Se conservan ambos informes. No se
+  cuentan los fallos transitorios como 404 ni se ocultan los reintentos.
+- UI de producción final: **132 casos, cero fallos**, 33 rutas × dos idiomas ×
+  escritorio/móvil. Cero violaciones axe serias/críticas, imágenes rotas,
+  overflow o errores de consola en esa muestra.
+- Commit desplegado: `npm run verify` pasó formato, lint, tipos, **151
+  unitarias, 22 pruebas DB**, build y auditoría con **cero vulnerabilidades**.
+  `npm run test:e2e`: **114 pruebas** Chromium escritorio/móvil y smoke
+  Firefox/WebKit. No implica que cada recorrido se haya probado en los tres
+  motores.
+- Las pruebas mutantes de cuentas se ejecutaron con identidades efímeras y
+  Supabase **local aislado**. El alias staging redirige a producción y no se usó
+  para estas mutaciones. No equivalen a autenticación completa en producción.
+
+El crawl exhaustivo verificó el código funcional de `d3fd0d1` publicado antes
+del último ajuste de preload/pesos de fuente. El release final `d429f54` solo
+añadió ese ajuste, soporte de reintento al auditor y evidencias. La UI de 132
+casos, health y comprobaciones focalizadas posteriores corresponden al release
+final.
+
+Evidencia versionada: [crawl final](audits/2026-09-06/public-crawl.json),
+[primera pasada](audits/2026-09-06/public-crawl-first-pass.json),
+[UI final](audits/2026-09-06/after/ui.json),
+[categorías persistidas](audits/2026-09-06/categories.json),
+[operación](audits/2026-09-06/operations.json) y
+[referencia de release](audits/2026-09-06/release.json).
 
 ## Situación inicial
 
 Producción servía `dpl_EY7vDVzy1nYErT2aHZtpPQa739sM` desde un checkout sucio de
-`1aa56667fa29286d27d20ca2ef409c3e9637f508`. El crawler completo encontró 348
-respuestas 404 entre 2.438 destinos visitados: 130 rutas de película y 218 de
-persona. El sitemap tenía 2.242 URLs. Las rutas de festivales no estaban publicadas.
-La base sí tenía las migraciones festivaleras, nueve ediciones y 203 entradas.
-La cookie inglesa anulaba URLs españolas explícitas. Axe detectó contraste
-insuficiente en tarjetas de temporada y atribución cinematográfica.
+`1aa56667fa29286d27d20ca2ef409c3e9637f508`. El crawl inicial encontró **348
+respuestas 404** entre 2.438 destinos: 130 rutas de película y 218 de persona.
+El sitemap tenía 2.242 URLs. Las rutas festivaleras devolvían 404 aunque su base
+ya tenía migraciones, nueve ediciones y 203 entradas. La cookie inglesa anulaba
+URLs españolas explícitas. Había contraste insuficiente y el encabezado del
+ranking empezaba a 1.067px en escritorio.
 
-## Matriz de requisitos
+## Matriz RF-01–RF-22
 
-| Requisito | Implementación y evidencia local | Producción inicial / discrepancia | Verificación de publicación |
-|---|---|---|---|
-| RF-01 navegación pública | Rutas de ocho categorías; E2E bilingüe | Disponible | Crawler + auditoría UI |
-| RF-02 Metascore atribuido | Ficha y tests, sin promedio propio | Disponible; contraste del enlace corregido | UI película + procedencia |
-| RF-03 procedencia y fechas | Observaciones originales, detalle de fuentes | Disponible | Fuentes y categorías públicas |
-| RF-04 fichas canónicas | Catálogo paginado; personas sin captura TMDB siguen resolviendo | 348 destinos 404 | Crawler exhaustivo requerido |
-| RF-05 TMDB y corrección | Repositorio, comandos y pruebas reproducibles | Datos persistidos presentes | No se alteran emparejamientos dudosos automáticamente |
-| RF-06 importación manual/automática | Parsers con fixtures; aislamiento por fuente | Ocho conectores profesionales y dos mercados recientes | Auditoría de parsers y runs reales |
-| RF-07 idempotencia | Tests DB y festival/versiones | Runs exitosos presentes | Repetición festivalera y DB |
-| RF-08 snapshots | Tests de inmutabilidad y navegación de cortes | Refresco 06/09 04:48 UTC: 8 categorías, 0 fallos | Historial compartible y auditoría de runs |
-| RF-09 resultados oficiales | Importador y archivo versionado | Cinco ceremonias archivadas | Archivo 2022–2026 |
-| RF-10 cuenta/ranking/visionado | Dos identidades aisladas; login, guardado privado, exportación y borrado reales | No se prueban mutaciones contra usuarios de producción | OAuth/entrega real de correo pendientes |
-| RF-11 aislamiento entre usuarios | Test real Supabase local y 22 tests DB; lectura privada ajena y escritura ajena denegadas | Políticas desplegadas | No se cuenta como prueba mutante en producción |
-| RF-12 administración | Allowlist, acciones editoriales y tests DB; usuario normal recibe 404; administrador dedicado accede a 49 formularios editoriales | Consola restringida | Identidad administrativa real de producción no ejercitada |
-| RF-13 frescura | Fallo explícito si HTTP válido no contiene entradas reconocibles | Festivales tenían falsos éxitos vacíos | Registrar fallos reales sin borrar último conjunto |
-| RF-14 escritorio/móvil | 114 E2E Chromium/Firefox/WebKit; foco y controles; auditoría axe | Ranking desktop empezaba a y=1067px | Screenshots y axe en despliegue |
-| RF-15 mercados separados | Proveedores identificados, fuera de Borda | Kalshi y Polymarket actuales | Parsers: 85 y 132 contratos, respectivamente |
-| RF-16 ocho categorías/cinco archivos | E2E y fixtures | Disponibles | UI bilingüe y crawler |
-| RF-17 metodología/evaluación | Versiones bloqueadas, sin inventar predicciones históricas | Disponible | Rutas bilingües |
-| RF-18 comunidad | Filtros, perfiles; sin promedio público de usuarios | Disponible | E2E y lectura pública |
-| RF-19 compartir | Metadata bilingüe y OG 1200×630 por quiniela | Rutas compartibles | E2E, imágenes y metadata |
-| RF-20 visionado | Tres estados; visibilidad vinculada al ranking | Implementado | E2E y autorización DB; guardado local real |
-| RF-21 nueve festivales | Migraciones, manifiestos, enlaces, matching, cron aislado | BD presente pero páginas 404; varios extractores vacíos/bloqueados | Publicar nueve páginas; automatización incompleta queda explícita |
-| RF-22 integridad de enlaces | Crawler bounded (6), sitemap paginado, hreflang/canonical | Catálogo truncado a 1000 personas | Cero 404 de sitemap exigido |
+| Requisito                            | Implementación y evidencia local                                                  | Producción inicial / defecto                                             | Resultado desplegado y límites                                                                                                    |
+| ------------------------------------ | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| RF-01 navegación pública             | Ocho categorías, E2E ES/EN                                                        | Disponible                                                               | Ocho categorías y navegación directa verificadas en crawl/UI                                                                      |
+| RF-02 Metascore atribuido            | Tests de presentación; sin promedio propio                                        | Contraste de atribución insuficiente                                     | Enlace corregido, contexto separado y ficha verificada                                                                            |
+| RF-03 procedencia y fechas           | Observaciones originales y detalle de fuentes                                     | Disponible                                                               | Fuentes/categorías con recibo y fechas; las comprobaciones sin cambios no alteran `lastmod`                                       |
+| RF-04 fichas canónicas               | Catálogo paginado; persona sin captura TMDB sigue resolviendo                     | 348 rutas 404, límite implícito de 1.000 personas                        | Cero destinos rotos en crawl; 85 películas y 1.612 personas en catálogo                                                           |
+| RF-05 TMDB y corrección              | Importador y validación manual reproducibles; matching editorial                  | Metadata persistida                                                      | Fichas/posters verificados; no se fuerza matching dudoso ni se prueba una nueva corrección editorial en producción                |
+| RF-06 importación manual/automática  | Parsers con fixtures; aislamiento por fuente                                      | Ocho conectores profesionales y dos mercados recientes                   | Runs reales saludables de esos diez conectores; cuatro feeds festivaleros degradados                                              |
+| RF-07 idempotencia                   | Tests DB/importadores                                                             | Runs anteriores presentes                                                | Repetición festivalera devuelve unchanged; no crea versiones duplicadas                                                           |
+| RF-08 snapshots                      | Inmutabilidad y cortes en tests DB/unitarios                                      | Refresco diario presente                                                 | 06/09 04:47–04:48 UTC: 8 scopes, 5 nuevos, 3 sin cambio, 0 fallos; cortes públicos navegables                                     |
+| RF-09 resultados oficiales           | Importador/archivo versionado                                                     | Cinco ceremonias archivadas                                              | Rutas 2022–2026 verificadas; sin inventar predicciones históricas                                                                 |
+| RF-10 cuenta/ranking/visionado       | Login, ranking privado persistido, exportación y borrado con identidades aisladas | Google habilitado; altas por email pausadas según D-045                  | Arranque OAuth llega a Google; consentimiento, alta y retorno autenticado de producción sin verificar                             |
+| RF-11 aislamiento entre usuarios     | RLS real local y 22 tests DB; lectura privada y escritura ajenas denegadas        | Políticas desplegadas                                                    | Sin mutaciones contra cuentas reales; evidencia aislada, no pase de producción                                                    |
+| RF-12 administración                 | Usuario normal recibe 404; admin dedicado accede a 49 formularios                 | Consulta a `market_connectors.name` inexistente; grants locales ausentes | Consulta/grants corregidos y desplegados; mutaciones editoriales de producción no ejercitadas por identidad administrativa        |
+| RF-13 frescura                       | Respuesta sin entradas reconocidas falla explícitamente                           | Falsos éxitos festivaleros vacíos                                        | Fallos registrados conservan último conjunto válido; una revalidación web agotó tiempo y queda como riesgo operativo              |
+| RF-14 escritorio/móvil               | 114 E2E; foco y objetivos táctiles; labels ES/EN                                  | Contraste y exceso de espacio antes del ranking                          | 132 casos live sin fallos serios/críticos; encabezado de consenso desktop a 779px                                                 |
+| RF-15 mercados separados             | Kalshi/Polymarket fuera de Borda, fixtures y tests                                | Dos proveedores actuales                                                 | Señales separadas y runs recientes; no se reinterpretan como consenso                                                             |
+| RF-16 ocho categorías/cinco archivos | Fixtures y rutas persistidas                                                      | Disponibles                                                              | Las ocho tienen consenso publicable, cuatro o cinco fuentes ordenadas; archivos ES/EN verificables                                |
+| RF-17 metodología/evaluación         | Versiones bloqueadas y tests                                                      | Disponible                                                               | Rutas bilingües verificadas; no se fabrica evaluación sin snapshot anterior                                                       |
+| RF-18 comunidad                      | Filtros y perfiles; tests unitarios/E2E                                           | Disponible                                                               | Lectura pública, enlaces y metadata verificados; no se crea consenso comunitario                                                  |
+| RF-19 compartir                      | Enlace y OG 1200×630, metadata ES/EN                                              | Rutas compartibles                                                       | E2E, crawl y tarjetas existentes; nueva publicación autenticada solo cubierta aisladamente                                        |
+| RF-20 visionado                      | Tres estados, permisos y persistencia local                                       | Implementado                                                             | UI pública y límites de visibilidad verificados; mutación real local, no en cuenta de producción                                  |
+| RF-21 nueve festivales               | Migraciones, manifiestos, enlaces, matching y cron                                | Páginas 404; extractores vacíos/bloqueados                               | Nueve ediciones públicas ES/EN, ocho conjuntos actuales; Locarno sin conjunto verificado, cuatro feeds no saludables. **Parcial** |
+| RF-22 integridad de enlaces          | Crawler con concurrencia 6; canonical/hreflang/JSON-LD                            | Sitemap truncado y destinos válidos 404                                  | 3.538 URLs de sitemap y 3.742 destinos resueltos, cero hallazgos finales                                                          |
 
-## Recorridos esenciales
+## Todos los recorridos esenciales de PRODUCT.md
 
-| Recorrido | Evidencia | Límite |
-|---|---|---|
-| R1 categoría → candidatura → fuentes | E2E y UI ES/EN, ocho categorías | No combina recepción/mercados/usuarios |
-| R2 ficha y contexto | TMDB persistido, atribución y enlaces de festivales | Ausencia de póster usa marca; no fabrica metadata |
-| R2b circuito → edición → película | Fixtures, importación y páginas bilingües | Entrada sin matching sigue sin enlace editorial |
-| R3 login → ranking → visibilidad → editar/borrar | Supabase local con identidades dedicadas; validación de límites/manual TMDB en unitarias/E2E | Google OAuth y correo real no verificados; validación TMDB externa no se falsea con un test en vivo |
-| R4 actualización efectiva anterior | E2E abre disclosure y conserva corte compartible | Snapshots bloqueados no cambian |
-| R5 resultados → evaluación | Pruebas DB/importador y archivo público | No inventa evaluación sin snapshot previo |
-| R6 comunidad → perfil → compartir | E2E, metadata y OG | Sin consenso comunitario |
+| Recorrido                                           | Evidencia                                                                                                                                        | Límite explícito                                                                 |
+| --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------- |
+| R1 categoría → candidatura → fuentes                | E2E, crawl y UI ES/EN de ocho categorías                                                                                                         | Recepción, mercados y usuarios permanecen separados                              |
+| R2 película → metadata/recepción/contexto           | Ficha persistida, atribución y enlaces de festivales                                                                                             | Branded placeholder cuando falta póster; no se fabrica metadata                  |
+| R2b circuito → edición → película                   | Nueve páginas ES/EN, importación oficial, fixtures                                                                                               | Entradas pendientes de matching siguen sin enlace; cuatro feeds degradados       |
+| R3 cuenta → ranking → visibilidad → edición/borrado | Dos identidades Supabase local; login real, ranking privado tras recarga, RLS, exportación y borrado; límites/manual TMDB en tests reproducibles | Alta Google completa, callback y edición autenticada de producción sin verificar |
+| R4 evolución y corte anterior                       | E2E y URL de corte real; disclosure abierto al elegir histórico                                                                                  | Snapshots bloqueados no cambian                                                  |
+| R5 resultados → evaluación                          | Tests DB/importador, archivo y evaluación pública ES/EN                                                                                          | No se inventa un snapshot previo a una ceremonia                                 |
+| R6 comunidad → perfil → quiniela compartida         | E2E, metadata, OG y controles de lectura pública/privada aislados                                                                                | No se prueba una nueva quiniela publicada por una identidad real de producción   |
 
-## Verificación reproducible
+La sesión aislada confirmó retorno de login a `/en/cuenta`, rechazo de usuario
+normal en `/en/admin`, ranking privado persistido y borrado mediante contraseña
+más `ELIMINAR`. La identidad dejó de existir. El test de RLS devolvió cero filas
+privadas ajenas, cuatro públicas y cero escrituras ajenas; exportación
+autenticada HTTP 200. Se limpiaron las identidades y membresías administrativas
+temporales. La consola administrativa cargó 49 formularios tras corregir la
+consulta al proveedor de mercado y los grants SELECT. No se enviaron mensajes a
+terceros.
 
-- `npm run verify`: formato, lint, tipos, unitarias, DB, build y dependencias.
-- `npm run test:e2e`: Chromium escritorio/móvil y smoke Firefox/WebKit.
-- `npm run audit:public`: sitemap completo y enlaces internos alcanzables,
-  canonical, título e idiomas. `RUNSCARS_AUDIT_BASE_URL` selecciona despliegue;
-  `RUNSCARS_AUDIT_REPORT` fija el JSON de evidencia. No modifica datos.
-- `npm run audit:ui`: rutas esenciales ES/EN, escritorio/móvil, axe,
-  overflow, imágenes, errores de consola, screenshots y métricas de laboratorio.
-  `RUNSCARS_UI_OUTPUT` fija el directorio. LCP/CLS se miden sin throttling, no son
-  Core Web Vitals de campo; no se mide INP de campo.
-- `RUNSCARS_AUDIT_SKIP_PUBLIC=true npm run audit:production`: parsers y frescura
-  con credenciales de servidor suministradas fuera de Git.
-- `npm run phase8:staging-check`: dos identidades temporales en Supabase local,
-  RLS, lectura pública/privada, exportación y limpieza. Nunca usar el alias
-  `runscars-staging.vercel.app` para mutaciones: redirige a producción.
+## Frontend, SEO y rendimiento
 
-La sesión aislada adicional comprobó login con contraseña, retorno `/en/cuenta`,
-usuario normal rechazado en `/en/admin`, ranking privado persistido tras recarga,
-y borrado con contraseña y confirmación `ELIMINAR`; la identidad dejó de existir.
-No se usaron cuentas personales ni se enviaron mensajes a terceros.
-La comprobación de administrador detectó y corrigió grants SELECT ausentes en
-el entorno local para snapshots/resultados y una consulta a `market_connectors.name`
-(inexistente); se usa el proveedor. Tras corregir, la consola cargó 49 formularios.
-Las comprobaciones son de uso normal autorizado, no pruebas de explotación.
+Se conserva logo, paleta y tipografía editorial. Inicio y categorías son más
+compactos; hay navegación directa, descubrimiento de festivales, posters
+persistidos y resumen del corte actual con historial accesible bajo demanda. Se
+corrigen contraste, labels de pósters por idioma y objetivos táctiles de 44px.
 
-## Rendimiento y limitaciones
+La URL manda sobre la cookie de idioma; cambio de idioma y retornos de acceso
+conservan ruta/query internos validados. Origen canónico único, alternates
+recíprocos ES/EN/x-default, metadata y tarjetas localizadas. Filtros y cortes
+canonicalizan a su landing. Superficies privadas y autenticación usan noindex;
+el sitemap no las publica. JSON-LD describe contenido visible sin presentar
+consenso como rating o probabilidad. Los errores de catálogo/fuentes en
+producción se propagan y no se convierten en falsos 404 o colecciones vacías.
 
-Baseline Chromium sin throttling (1440×1000 / 390×844): LCP home 1252/1240ms,
-categoría 1596/1336ms, ficha 2412/1892ms; CLS 0 en seis muestras. Se conserva
-el sistema tipográfico. La prueba de desactivar el preload mono produjo CLS
-móvil de 0,173; se restaura su preload crítico y se reducen sus cuatro variantes
-de peso a 400 y 700. No se cuenta esa medición como presupuesto cumplido.
-Los screenshots y métricas de la publicación se registran abajo.
+Referencias aplicadas:
+[localización de Google](https://developers.google.com/search/docs/specialty/international/localized-versions),
+[sitemaps de Google](https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap)
+y [distinción entre laboratorio y campo](https://web.dev/articles/vitals). La
+validación estructurada comprueba sintaxis y correspondencia de templates; no
+equivale a aprobación de resultados enriquecidos por Google.
 
-La configuración pública de Auth confirma Google habilitado y email deshabilitado
-para altas, conforme a D-045. No se sustituye la verificación de una sesión real
-por esta comprobación de configuración.
+Mediciones Chromium sin throttling, escritorio 1440×1000 / móvil 390×844. Cada
+valor siguiente es una muestra de carga, no un percentil de visitantes.
 
-No se dispone de Search Console ni de CrUX de campo. No afirmar LCP ≤2,5s,
-INP ≤200ms y CLS ≤0,1 para visitantes reales a partir de estas muestras.
-La entrega real de correo y Google OAuth requieren acceso dedicado y quedan
-sin verificar. Varias fuentes festivaleras bloquean el acceso automatizado o
-publican un formato aún no soportado; se conserva su última selección verificada.
-Esto impide declarar completada toda la automatización de RF-21.
+| Página / dispositivo      | LCP antes → después (ms) | CLS después |
+| ------------------------- | -----------------------: | ----------: |
+| Inicio escritorio         |              1252 → 1856 |     0,00059 |
+| Inicio móvil              |              1240 → 1112 |           0 |
+| Mejor película escritorio |               1596 → 648 |           0 |
+| Mejor película móvil      |               1336 → 580 |           0 |
+| Fjord escritorio          |              2412 → 1192 |           0 |
+| Fjord móvil               |              1892 → 1020 |           0 |
 
-## Referencia de publicación
+El inicio desktop no mejoró su LCP en esa muestra, aunque quedó dentro del
+objetivo de laboratorio. En los 132 casos finales: máximo LCP **1904ms**, máximo
+CLS **0,00123** (redondeado al alza). INP no medido. El encabezado de consenso
+pasó de 1067 a 779px desktop y de 1241 a 1058px móvil.
 
-Se integraron todos los cambios relacionados preexistentes en `26b1032` y
-correcciones verificadas posteriores. Pendiente de añadir despliegue final y
-resultados posteriores a la
-promoción. Ver [OPERATIONS.md](OPERATIONS.md) para promoción y rollback.
+[Capturas antes](audits/2026-09-06/before/ui.json) y
+[después](audits/2026-09-06/after/ui.json) enlazan sus PNG relativos. La prueba
+intermedia de desactivar preload mono produjo CLS móvil 0,173; se conserva como
+[evidencia intermedia](audits/2026-09-06/intermediate/ui-before-font-fix.json).
+Se restauró preload crítico con solo pesos 400/700. Tres cargas móviles frescas
+adicionales dieron CLS 0 y LCP 2296/968/924ms.
 
-## Incidencia observada durante la verificación
+Se desactiva prefetch masivo y se comparten datos **públicos** de categorías,
+consenso y festivales con revalidación de 60s; no se cachean sesiones, rankings,
+visionado ni administración. La proyección festivalera pasó de 1.915.968 a 2.808
+bytes al omitir recibos que la vista no necesita; se conservan íntegros en BD.
 
-Las auditorías simultáneas y el prefetch de enlaces generaron consultas repetidas
-a categorías, snapshots y mercados. Se observó un timeout y se pausaron los
-crawlers; la consulta de mercados volvió a 411ms una vez drenadas las peticiones.
-No se cambiaron políticas RLS ni se incrementaron privilegios para resolverlo.
-Se reduce la demanda con revalidación pública de 60s y prefetch desactivado en
-la navegación/categorías. Las mediciones finales deben realizarse por separado
-del crawl exhaustivo. Este episodio no se registra como una verificación pasada.
+## Operación y limitaciones pendientes
 
-El análisis posterior identificó otra lectura redundante: `festival_sets.select(*)`
-transfería 1.915.968 bytes de recibos para construir el contexto público. La
-proyección de esos mismos conjuntos ocupa 2.808 bytes (99,85% menos). Se
-seleccionan ahora solo los campos visibles, se omite `original_data` en entradas
-y se comparte el índice público de festivales durante 60s. El consenso actual
-compartido por fichas y Fuentes utiliza también esa revalidación. Un fallo al
-leer fuentes/consenso en producción se propaga como error; no se convierte en
-un catálogo vacío o una ficha 404.
+Migraciones `20260906160000`, `20260906170000` y `20260906180000` aplicadas en
+local/producción; `run-festivals` v5 desplegada. `run-ingestion` v37 y
+`run-markets` v6 corresponden al código actual (una diferencia de formato en
+profesionales, sin cambio semántico). Cron: profesionales 04:17 UTC, festivales
+05:17 UTC, mercados cada hora :17; snapshots Vercel 04:47 UTC.
 
-El arranque real de OAuth desde `/en/acceso` alcanza `accounts.google.com` y
-la pantalla de acceso de Google. No se introduce una identidad personal: el
-consentimiento, retorno autenticado y alta efectiva siguen sin verificar.
+La llamada real a Edge `run-festivals` devolvió HTTP 200 con **status partial,
+cuatro fallos, sin timeout global**. Fue una invocación manual del mismo
+endpoint protegido que usa cron; no se etiqueta como una ejecución programada
+nueva. Berlín v3 conserva 21 entradas de largometraje; Venecia 91 y San
+Sebastián 25. Las versiones anteriores permanecen inmutables. La repetición no
+duplicó conjuntos.
+
+| Feed                                                | Estado observado 06/09                                              | Pendiente                                              |
+| --------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------ |
+| Sundance, Berlinale, Cannes, Venecia, San Sebastián | Verificación oficial satisfactoria                                  | Mantener fixtures/versiones ante cambios externos      |
+| Locarno                                             | HTTP 403; sin conjunto actual verificado                            | Fuente oficial accesible o carga editorial verificable |
+| NYFF                                                | Bloqueo/HTML no reconocido (403 local; respuesta Edge sin entradas) | Captura oficial válida y parser probado                |
+| TIFF                                                | Respuesta vacía/no reconocida                                       | Fuente oficial y formato verificables                  |
+| Telluride                                           | Guía en formato PDF no soportado por el parser HTML                 | Extracción PDF con fixture y revisión editorial        |
+
+Durante la última UI se registró un timeout de revalidación del consenso público
+en `/peliculas/fjord` a 21:43:37 UTC. La página sirvió el último valor válido y
+pasó sus checks. Tres lecturas anónimas posteriores de los 129 snapshots
+respondieron en 418/728/312ms, sin error; el payload completo es 5,73MB, de los
+que 5,63MB son agregado necesario para los cortes. No se atribuye una causa
+concluyente ni se afirma que los logs estén limpios. La frescura bajo carga
+sigue siendo un riesgo: si se repite, perfilar/paginar ese historial conservando
+la semántica de cortes.
+[Lecturas posteriores](audits/2026-09-06/prediction-read-check.json).
+
+Google está habilitado y las altas email deshabilitadas conforme a D-045. El
+[arranque OAuth](audits/2026-09-06/oauth-launch.json) alcanza
+`accounts.google.com`; consentimiento, creación de cuenta y retorno autenticado
+completos quedan **sin verificar**. No hay Search Console, CrUX ni INP de campo:
+no se afirma el cumplimiento de Core Web Vitals de visitantes reales.
+
+## Reproducción y rollback
+
+- `npm run verify` y `npm run test:e2e`: validación canónica reproducible.
+- `npm run audit:public`: sitemap/enlaces, títulos, canonical, alternates,
+  JSON-LD y errores de render enviados con HTTP 200; concurrencia por defecto 6.
+  `RUNSCARS_AUDIT_BASE_URL` selecciona URL, `RUNSCARS_AUDIT_REPORT` el informe;
+  `RUNSCARS_AUDIT_RESUME` reintenta hallazgos conservando evidencia anterior.
+- `npm run audit:ui`: rutas esenciales ES/EN, axe, layout, imágenes, consola y
+  métricas de laboratorio; `RUNSCARS_UI_OUTPUT` fija salida.
+- `RUNSCARS_AUDIT_SKIP_PUBLIC=true npm run audit:production`: parsers/frescura,
+  con secretos suministrados fuera de Git.
+- `npm run phase8:staging-check`: solo en entorno aislado, nunca en el alias
+  staging que redirige al sitio real.
+
+El primer commit integrado fue `26b1032`; las correcciones posteriores quedan
+trazadas en la misma rama `codex/festival-integrity-2027`. Las evidencias de
+cierre se añaden en un commit documental posterior al código publicado, sin
+cambiar el artefacto desplegado. Ver [OPERATIONS.md](OPERATIONS.md) para
+referencias, rollback web, migraciones y límites de la copia de respaldo.
