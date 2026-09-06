@@ -80,6 +80,13 @@ while (queue.length) {
         if (!response.ok)
           failures.push({ url, error: `HTTP ${response.status}` });
         if (sitemap.has(url)) {
+          if (
+            /:E\{\\?"digest\\?":/.test(html) ||
+            /This page could not be loaded\.|No se ha podido cargar esta página\./.test(
+              html,
+            )
+          )
+            failures.push({ url, error: "Server render error in public page" });
           const expected = new URL(new URL(url).pathname, canonicalOrigin).href;
           if (!canonical || new URL(canonical).href !== expected)
             failures.push({

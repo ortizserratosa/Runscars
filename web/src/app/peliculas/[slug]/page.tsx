@@ -231,6 +231,7 @@ export default async function FilmPage({ params }: FilmPageProps) {
 
           <div className="film-hero-grid">
             <PosterBlock
+              locale={locale}
               imagePath={film.tmdb?.posterPath}
               number={
                 primaryPrediction
