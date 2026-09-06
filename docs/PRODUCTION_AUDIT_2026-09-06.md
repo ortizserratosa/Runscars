@@ -1,8 +1,8 @@
 # Auditoría de Runscars · 6 de septiembre de 2026
 
 Publicado en [runscars.app](https://runscars.app) desde el commit limpio
-`d429f5431efb4fcf4887c6e03ddfa36eaf6a6920`, deployment
-`dpl_EFLqrExb7d8megwCadVV5c8VdzoJ`. Se han reparado los destinos públicos,
+`9357e3536932ae86843071a9e59bab0b5aa8143b`, deployment
+`dpl_91mSHvFFpcDXRbdxpXmq4JsD5eht`. Se han reparado los destinos públicos,
 publicado el circuito festivalero y refinado interfaz y SEO ES/EN. **El plan no
 se declara completamente cerrado:** cuatro feeds festivaleros siguen degradados,
 el acceso Google completo en producción no se ha ejercitado y faltan métricas de
@@ -27,10 +27,12 @@ campo. D-053 permanece `Propuesta`; no se publica consenso comunitario.
   para estas mutaciones. No equivalen a autenticación completa en producción.
 
 El crawl exhaustivo verificó el código funcional de `d3fd0d1` publicado antes
-del último ajuste de preload/pesos de fuente. El release final `d429f54` solo
-añadió ese ajuste, soporte de reintento al auditor y evidencias. La UI de 132
-casos, health y comprobaciones focalizadas posteriores corresponden al release
-final.
+del ajuste de preload/pesos de fuente. El release `d429f54` añadió ese ajuste,
+soporte de reintento al auditor y evidencias. La UI de 132 casos y las métricas
+corresponden a `d429f54`. El ajuste posterior `9357e35` cambia únicamente el
+destino del selector de idioma, con suite completa repetida y diez rutas
+verificadas tras promoción; ver la
+[comprobación final](audits/2026-09-06/direct-language-release-check.json).
 
 Evidencia versionada: [crawl final](audits/2026-09-06/public-crawl.json),
 [primera pasada](audits/2026-09-06/public-crawl-first-pass.json),
@@ -184,8 +186,41 @@ la semántica de cortes.
 Google está habilitado y las altas email deshabilitadas conforme a D-045. El
 [arranque OAuth](audits/2026-09-06/oauth-launch.json) alcanza
 `accounts.google.com`; consentimiento, creación de cuenta y retorno autenticado
-completos quedan **sin verificar**. No hay Search Console, CrUX ni INP de campo:
-no se afirma el cumplimiento de Core Web Vitals de visitantes reales.
+completos quedan **sin verificar**. La consulta posterior a Search Console
+confirmó que faltan datos de uso para Core Web Vitals móvil y desktop; no se
+afirma el cumplimiento de métricas de visitantes reales ni INP de campo.
+
+## Aviso de Search Console aportado al cierre
+
+Se pudo acceder al informe real mediante la sesión del usuario. Sus datos de
+indexación estaban actualizados al **4 de septiembre**, antes de esta
+publicación: 222 URLs indexadas, tres con redirección, 2.030 descubiertas sin
+indexar y tres rastreadas sin indexar. Los tres ejemplos del aviso eran enlaces
+antiguos del selector de idioma, rastreados el 30 de agosto:
+
+| Origen                                                   | Destino actual         | Comprobación                                       |
+| -------------------------------------------------------- | ---------------------- | -------------------------------------------------- |
+| `/api/locale?locale=es&returnTo=/en/personas/tmdb-91671` | `/personas/tmdb-91671` | 307 → 200                                          |
+| `/api/locale?locale=es&returnTo=/en/peliculas/michael`   | `/peliculas/michael`   | 307 → 200; Search Console confirma página indexada |
+| `/api/locale?locale=en&returnTo=/privacidad`             | `/en/privacidad`       | 307 → 200                                          |
+
+Son redirecciones funcionales, no fichas que deban responder en la URL del API.
+El selector se cambia a enlaces directos a la ruta traducida con sus parámetros;
+el endpoint conserva compatibilidad para enlaces antiguos. Se evita seguir
+anunciando estos endpoints como alternates HTML. La exclusión de un redirect es
+el comportamiento
+[documentado por Google](https://support.google.com/webmasters/answer/7440203#page_with_redirect),
+y no se usa «Validar corrección» para fingir que esos endpoints deben indexarse.
+
+El sitemap registrado estaba correcto, leído el 04/09 con 2.242 páginas. Google
+confirmó el reenvío del sitemap actual de 3.538 URLs el 06/09; la tabla aún
+mostraba la lectura del 04/09 con 2.242 páginas descubiertas. La aceptación de
+un envío no prueba que Google ya haya rastreado o indexado todas las URLs. Las
+2.030 descubiertas pendientes son un motivo distinto al aviso de redirects. Core
+Web Vitals, actualizado al 05/09, declara datos de uso insuficientes tanto para
+móvil como para escritorio en los últimos 90 días. Evidencia resumida sin
+credenciales ni datos de la cuenta en
+[search-console.json](audits/2026-09-06/search-console.json).
 
 ## Reproducción y rollback
 

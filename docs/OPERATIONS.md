@@ -208,20 +208,21 @@ Los secretos y archivos de vinculación permanecen locales. La migración
 `20260906160000` solo versiona extractores; no modifica conjuntos bloqueados.
 
 Release vigente de este corte: commit
-`d429f5431efb4fcf4887c6e03ddfa36eaf6a6920`, deployment
-`dpl_EFLqrExb7d8megwCadVV5c8VdzoJ`, artefacto
-[runscars-88yto60gk](https://runscars-88yto60gk-nazzozzo-s-projects.vercel.app).
+`9357e3536932ae86843071a9e59bab0b5aa8143b`, deployment
+`dpl_91mSHvFFpcDXRbdxpXmq4JsD5eht`, artefacto
+[runscars-cjg0mrtbr](https://runscars-cjg0mrtbr-nazzozzo-s-projects.vercel.app).
 La evidencia posterior se versiona en un commit documental aparte; no se
 atribuye al artefacto código que no contiene.
 
 Rollback web inmediato:
 
 ```sh
-npx vercel rollback dpl_HCSSSVESuW3Wak8Cz2Gwtapwj4yb --yes
+npx vercel rollback dpl_EFLqrExb7d8megwCadVV5c8VdzoJ --yes
 ```
 
-Ese deployment corresponde a `d3fd0d1` y conserva festivales, catálogo y SEO,
-pero reintroduce el desplazamiento móvil de fuentes (CLS observado 0,173). El
+Ese deployment corresponde a `d429f54` y conserva festivales, catálogo, SEO y
+preload estable de fuentes. Reintroduce los enlaces del selector a `/api/locale`,
+que funcionan pero generan URLs de redirección rastreables. El
 baseline anterior a todo el corte, `dpl_EY7vDVzy1nYErT2aHZtpPQa739sM`,
 reintroduce además festivales 404 y 348 destinos rotos; no es el rollback
 preferido. Tras cualquier rollback, comprobar health, home ES/EN, una categoría,
@@ -237,8 +238,9 @@ HTTP 200 vacío nunca constituye frescura.
 Se prepararon `runscars-pre-release-schema.sql` y
 `runscars-pre-release-data.sql` fuera de Git, con permisos 0600. Son copia del
 esquema/datos públicos, **no una copia completa de Auth/Storage ni una
-restauración ensayada de este release**. Se trasladan al directorio privado de
-backups del proyecto indicado en la entrega; usar el procedimiento completo de
+restauración ensayada de este release**. Se conservan en
+`/Users/nacho/Documents/Side/Runscars-backups/2026-09-06-release` (0700);
+usar el procedimiento completo de
 restauración documentado arriba para recuperación de base de datos. Nunca
 ejecutar `db reset --linked`.
 
@@ -256,3 +258,10 @@ ver la matriz de la auditoría. Un timeout de revalidación pública del consens
 sirvió el valor anterior y luego respondió normalmente en tres lecturas. No se
 certifica ausencia de fallos bajo carga ni una sesión Google completa de
 producción. Estos límites no se sustituyen por resultados de fixtures locales.
+
+Search Console se consultó mediante la sesión existente tras recibir el aviso:
+los tres redirects eran enlaces del selector, no destinos canónicos rotos.
+Se reenvió el sitemap el 06/09 con confirmación de Google; no se modifica una
+redirección válida solo para eliminarla del informe. Sus datos de indexación
+siguen pendientes de un nuevo rastreo. La consulta de Core Web Vitals confirma
+falta de datos de uso móvil/desktop, no un pase de rendimiento de campo.
