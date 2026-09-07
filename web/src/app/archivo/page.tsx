@@ -36,8 +36,8 @@ export default async function ArchivePage() {
         </h1>
         <p>
           {en
-            ? "Nominees and winners confirmed by the Academy for all eight Runscars categories. We do not reconstruct predictions that were not captured at the time."
-            : "Nominados y ganadores confirmados por la Academy para las ocho categorías de Runscars. No reconstruimos predicciones que no se capturaron entonces."}
+            ? "Revisit the nominees and winners in eight major Oscar categories, from 2022 to 2026."
+            : "Redescubre los nominados y ganadores de ocho grandes categorías de los Oscar, de 2022 a 2026."}
         </p>
       </header>
       <section className="archive-edition-grid">

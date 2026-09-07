@@ -27,7 +27,7 @@ export function PosterBlock({
       aria-label={
         imageUrl
           ? `${locale === "en" ? "Poster for" : "Póster de"} ${title}`
-          : `${locale === "en" ? "Visual placeholder for" : "Marcador visual de"} ${title}`
+          : `${locale === "en" ? "Film artwork for" : "Ilustración de"} ${title}`
       }
     >
       {imageUrl ? (

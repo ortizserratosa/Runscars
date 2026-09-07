@@ -15,7 +15,7 @@ describe("canonical URLs and login destinations", () => {
       title: "Festivals",
       description: "Official festival selections.",
     });
-    expect(metadata.alternates).toEqual({
+    expect(metadata.alternates).toMatchObject({
       canonical: "/en/festivales",
       languages: {
         es: "/festivales",

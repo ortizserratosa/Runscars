@@ -1,0 +1,60 @@
+{
+  "checkedAt": "2026-09-07T22:00:48.884Z",
+  "project": "lgiqzrxeifwciykckzrn",
+  "sets": [
+    {
+      "edition_id": "cannes-2026",
+      "kind": "selection",
+      "set_id": "cannes-2026-selection-48a5cd7bb846",
+      "count": 22
+    },
+    {
+      "edition_id": "nyff-2026",
+      "kind": "selection",
+      "set_id": "nyff-2026-selection-a78028ab5b1e",
+      "count": 34
+    },
+    {
+      "edition_id": "locarno-2026",
+      "kind": "awards",
+      "set_id": "locarno-2026-awards-adfa059a3a8c",
+      "count": 31
+    },
+    {
+      "edition_id": "cannes-2026",
+      "kind": "awards",
+      "set_id": "cannes-2026-awards-8e80d7821a0a",
+      "count": 16
+    },
+    {
+      "edition_id": "sundance-2026",
+      "kind": "awards",
+      "set_id": "sundance-2026-awards-762523c8741a",
+      "count": 30
+    },
+    {
+      "edition_id": "venice-2026",
+      "kind": "selection",
+      "set_id": "venice-2026-selection-5089fb5322e3",
+      "count": 91
+    },
+    {
+      "edition_id": "san-sebastian-2026",
+      "kind": "selection",
+      "set_id": "san-sebastian-2026-selection-20ab84139c70",
+      "count": 25
+    },
+    {
+      "edition_id": "berlinale-2026",
+      "kind": "awards",
+      "set_id": "berlinale-2026-awards-97c60e631bbe",
+      "count": 21
+    },
+    {
+      "edition_id": "telluride-2026",
+      "kind": "selection",
+      "set_id": "telluride-2026-selection-16dc7c6b5de3",
+      "count": 43
+    }
+  ]
+}

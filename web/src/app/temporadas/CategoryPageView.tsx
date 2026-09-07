@@ -1,3 +1,4 @@
+import { ShareButton } from "../components/ShareButton";
 import Link from "next/link";
 import { Movement } from "../components/Movement";
 import type {
@@ -215,6 +216,17 @@ function ActiveCategory({
                   : "Predicción profesional de nominaciones"}
               </p>
               <h1>{categoryName}</h1>
+              <ShareButton
+                title={`${categoryName} · Oscar 2027`}
+                text={
+                  en
+                    ? "Explore the latest expert predictions."
+                    : "Consulta las últimas predicciones de expertos."
+                }
+                url={localizedPath(`/temporadas/2027/${category.slug}`, locale)}
+                locale={locale}
+                label={en ? "Share predictions ↗" : "Compartir predicciones ↗"}
+              />
               <p>
                 {aggregate?.ranking.length ?? 0}{" "}
                 {en ? "candidates" : "candidaturas"} ·{" "}
@@ -350,16 +362,14 @@ function ActiveCategory({
                   </strong>
                   <span>
                     {aggregate?.includedObservationIds.length ?? 0}{" "}
-                    {en
-                      ? "verified observations preserved with their provenance"
-                      : "observaciones contrastadas y conservadas con su procedencia"}
+                    {en ? "predictions included" : "predicciones incluidas"}
                   </span>
                 </div>
                 <div className="snapshot-comparison">
                   <span>
                     {en
-                      ? "Only an effective source change creates an update"
-                      : "Solo un cambio efectivo de proveedor crea una actualización"}
+                      ? "Following changes in the experts’ picks"
+                      : "Sigue los cambios en las favoritas de los expertos"}
                   </span>
                   {view.snapshot.previous ? (
                     <strong>
@@ -463,8 +473,8 @@ function ActiveCategory({
           ) : (
             <p className="insufficient-note">
               {en
-                ? "There is no publishable update for this category yet."
-                : "Aún no existe una actualización publicable para esta categoría."}
+                ? "Predictions for this category are not available yet."
+                : "Las predicciones de esta categoría aún no están disponibles."}
             </p>
           )}
           {view.dataState === "fixture" ? (
@@ -527,8 +537,8 @@ function ActiveCategory({
             </div>
             <p>
               {en
-                ? "Kalshi and Polymarket are shown by provider. There is no market consensus and their prices do not participate in professional predictions. They reflect the latest market capture, not the selected professional update."
-                : "Kalshi y Polymarket se muestran por proveedor. No existe consenso de mercados y sus precios no participan en la predicción profesional. Reflejan su última captura y no la actualización profesional seleccionada."}
+                ? "Latest prices from Kalshi and Polymarket, independent of the expert ranking. Market dates may differ from the selected prediction update."
+                : "Últimos precios de Kalshi y Polymarket, independientes del ranking de expertos. Sus fechas pueden diferir de la actualización de predicciones seleccionada."}
             </p>
           </div>
           <div className="market-provider-grid">

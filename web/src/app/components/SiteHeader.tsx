@@ -37,8 +37,8 @@ export async function SiteHeader() {
         <Link prefetch={false} href={href("/fuentes")}>
           {en ? "Sources" : "Fuentes"}
         </Link>
-        <Link prefetch={false} href={href("/metodologia")}>
-          {en ? "Method" : "Método"}
+        <Link prefetch={false} href={href("/semana")}>
+          {en ? "This week" : "La semana"}
         </Link>
         <Link prefetch={false} href={href("/comunidad")}>
           {en ? "Community" : "Comunidad"}
@@ -62,8 +62,8 @@ export async function SiteHeader() {
           <Link prefetch={false} href={href("/fuentes")}>
             {en ? "Sources" : "Fuentes"}
           </Link>
-          <Link prefetch={false} href={href("/metodologia")}>
-            {en ? "Method" : "Método"}
+          <Link prefetch={false} href={href("/semana")}>
+            {en ? "This week" : "La semana"}
           </Link>
           <Link prefetch={false} href={href("/comunidad")}>
             {en ? "Community" : "Comunidad"}

@@ -93,7 +93,7 @@ export default async function AccountPage() {
 
         <section className="account-card">
           <p className="section-index">RANKINGS</p>
-          <h2>{en ? "Active versions" : "Versiones activas"}</h2>
+          <h2>{en ? "Privacy and terms" : "Privacidad y condiciones"}</h2>
           {rankingsResult.data?.length ? (
             <div className="account-list">
               {rankingsResult.data.map((ranking) => {

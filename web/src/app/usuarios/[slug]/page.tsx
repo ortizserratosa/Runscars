@@ -27,8 +27,8 @@ export async function generateMetadata({
     title: `@${slug}`,
     type: "profile",
     description: en
-      ? `Public Oscar ballots by @${slug} on Runscars, separate from professional consensus.`
-      : `Quinielas Oscar públicas de @${slug} en Runscars, separadas del consenso profesional.`,
+      ? `Public Oscar ballots by @${slug} on Runscars, with their favourites for each category.`
+      : `Quinielas Oscar públicas de @${slug} en Runscars, con sus favoritas por categoría.`,
   });
 }
 
@@ -90,8 +90,8 @@ export default async function PublicProfilePage({
           </div>
           <p>
             {en
-              ? "Missing positions are not inferred and these rankings do not form a community consensus."
-              : "Las posiciones ausentes no se infieren y estos rankings no forman un consenso comunitario."}
+              ? "Explore their favourites by category."
+              : "Explora sus favoritas por categoría."}
           </p>
         </div>
         <div className="public-ranking-grid">

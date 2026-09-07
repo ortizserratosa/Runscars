@@ -74,6 +74,7 @@ pasado para ocultar cambios de criterio.
 | D-054 | Candidatura de guion identificada por película                  | Aceptada    |
 | D-055 | Circuito internacional de festivales 2026                       | Aceptada    |
 | D-056 | Idioma explícito, origen canónico y verificación pública        | Aceptada    |
+| D-057 | Guía de festivales y lenguaje público orientado al visitante     | Aceptada    |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -1028,3 +1029,60 @@ ejemplos manuales de nominaciones y ganador coincidieron con
   la misma señal y los cortes conservan claves distintas. Sesiones, rankings,
   visionado y administración quedan fuera de esa caché. Se evita el prefetch
   masivo de navegación y categorías; las rutas se cargan cuando se eligen.
+
+
+## D-057 · Guía de festivales y lenguaje público orientado al visitante
+
+- **Fecha:** 2026-09-07
+- **Estado:** Aceptada
+- **Origen:** petición del usuario de mejorar Festivales y retirar explicaciones
+  de estado interno de toda la web.
+- **Decisión:** presentar Festivales como calendario cronológico con fechas,
+  edición destacada, adelantos de películas y navegación a las predicciones.
+  Las ediciones permiten buscar películas, cineastas y premios y filtrar por
+  sección; el palmarés precede a la selección cuando existe.
+- **Copy:** retirar mensajes de caché, configuración de entorno, versiones de
+  extractores, IDs internos, ausencia de matching y advertencias repetidas sobre
+  separación de señales. Se conservan las etiquetas de cada señal, la metodología,
+  las fuentes, las fechas y la información útil de privacidad y disponibilidad.
+- **Ausencias:** distinguir cobertura ausente en Runscars de anuncios pendientes
+  del festival. Ofrecer el programa y los premios oficiales como siguiente paso.
+  Los datos ausentes no se inventan y los estados de revisión siguen en administración.
+- **Datos:** añadir un suplemento manual trazable de Telluride desde su programa
+  oficial PDF con 43 largometrajes de Shows y Backlot. Su importación usa el flujo
+  idempotente existente; no modifica el manifiesto inicial ni versiones bloqueadas.
+- **Continuidad:** no cambia el cálculo profesional, los permisos, el alcance
+  festivalero D-055 ni el estado Propuesta del sistema visual D-053.
+
+## D-058 · Descubrimiento, edición semanal y quiniela antes del acceso
+
+- **Fecha:** 2026-09-07
+- **Estado:** Aceptada
+- **Origen:** petición expresa de publicar el rediseño e implementar las mejoras
+  de atractivo y visibilidad propuestas en la auditoría del 07/09.
+- **Decisión:** incorporar una edición semanal ES/EN, carteles disponibles del
+  catálogo en descubrimiento y tarjetas sociales específicas para festivales,
+  categorías y semanas. Portada, navegación, pie y sitemap enlazan las nuevas
+  experiencias. La metodología sigue accesible desde el pie y sus enlaces contextuales.
+- **Edición semanal:** semanas de lunes a domingo UTC. Se compara el último corte
+  real anterior al cierre de semana con el último anterior al inicio; se muestran
+  hasta tres movimientos por categoría y las fuentes cuyo estado efectivo cambió.
+  Una semana sin novedades conserva las favoritas con sus fechas y lo indica. No
+  se inventan movimientos sin un corte anterior comparable ni se publica una
+  narración editorial atribuida a una persona.
+- **Seguimiento:** RSS voluntario ES/EN, con enlaces canónicos a semanas y fecha
+  del último cambio registrado. No incorpora correos, envíos automáticos a terceros
+  ni una nueva plataforma de marketing.
+- **Quiniela:** se puede ordenar una selección por categoría antes del acceso.
+  El borrador guarda solo IDs y fecha en el navegador durante 30 días. Al entrar,
+  el usuario carga deliberadamente el borrador y guarda mediante la acción
+  autenticada existente; no se sobrescribe automáticamente su ranking guardado.
+  Se validan candidatos, duplicados, caducidad y límite de categoría. No se comparte
+  ni publica el borrador por defecto.
+- **Medición:** eventos agregados de inicio de quiniela y clic para guardar, con
+  categoría y sin elecciones personales. SEO mantiene origen, canonical y
+  alternates existentes; la indexación y el tráfico se evalúan con Search Console,
+  sin prometer aumentos por la implementación.
+- **Continuidad:** no cambia Borda, metadatos originales, permisos ni la separación
+  de señales. D-053 continúa como Propuesta. La cobertura festivalera pendiente se
+  detalla en [FESTIVAL_PROGRAMME_HANDOFF.md](FESTIVAL_PROGRAMME_HANDOFF.md).

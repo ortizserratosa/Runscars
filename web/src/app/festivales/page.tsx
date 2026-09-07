@@ -1,9 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getFestivalIndex } from "../../lib/festivals/data";
+import {
+  festivalDateRange,
+  festivalName,
+  festivalPreview,
+  festivalStatus,
+} from "../../lib/festivals/presentation";
 import { localeTag, localizedPath } from "../../lib/i18n/config";
 import { getRequestLocale } from "../../lib/i18n/server";
 import { absoluteUrl, buildLocalizedMetadata } from "../../lib/seo";
+import { getFilmArtwork } from "../../lib/repositories/artwork";
+import { PosterBlock } from "../components/PosterBlock";
 import { JsonLd } from "../components/JsonLd";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -17,28 +25,10 @@ export async function generateMetadata(): Promise<Metadata> {
         : "Circuito internacional de festivales de cine 2026",
     description:
       locale === "en"
-        ? "Official selections and awards from nine international film festivals in the 2027 Oscar season, kept outside the prediction consensus."
-        : "Selecciones y palmarés oficiales de nueve festivales internacionales en la temporada Oscar 2027, separados del consenso de predicciones.",
+        ? "Official selections and awards from nine international film festivals in the 2027 Oscar season, with dates, films and winners to explore."
+        : "Selecciones y palmarés oficiales de nueve festivales internacionales en la temporada Oscar 2027, con fechas, películas y ganadores por descubrir.",
   });
 }
-
-const statusLabel = {
-  es: { scheduled: "Programada", ongoing: "En curso", completed: "Finalizada" },
-  en: { scheduled: "Scheduled", ongoing: "Ongoing", completed: "Completed" },
-} as const;
-
-const awardsLabel = {
-  es: {
-    pending: "Palmarés pendiente",
-    published: "Palmarés publicado",
-    not_applicable: "Palmarés no aplicable",
-  },
-  en: {
-    pending: "Awards pending",
-    published: "Awards published",
-    not_applicable: "Awards not applicable",
-  },
-} as const;
 
 export default async function FestivalsPage() {
   const [locale, editions] = await Promise.all([
@@ -46,6 +36,21 @@ export default async function FestivalsPage() {
     getFestivalIndex(),
   ]);
   const en = locale === "en";
+  const artwork = await getFilmArtwork(
+    editions.flatMap((edition) =>
+      festivalPreview(edition).entries.map((entry) => entry.filmId),
+    ),
+    locale,
+  );
+  const chronological = [...editions].sort((a, b) =>
+    a.startsOn.localeCompare(b.startsOn),
+  );
+  const featured =
+    chronological.find((edition) => edition.status === "ongoing") ??
+    chronological.find((edition) => edition.status === "scheduled") ??
+    chronological.at(-1);
+  const editionPath = (edition: (typeof editions)[number]) =>
+    localizedPath(`/festivales/${edition.festivalId}/${edition.year}`, locale);
   const pagePath = localizedPath("/festivales", locale);
   return (
     <main>
@@ -90,59 +95,193 @@ export default async function FestivalsPage() {
             <span>/</span>
             <span>{en ? "Festivals" : "Festivales"}</span>
           </div>
-          <p className="kicker">
-            {en ? "Official context" : "Contexto oficial"}
-          </p>
-          <h1>{en ? "The festival circuit" : "El circuito festivalero"}</h1>
-          <p className="festival-deck">
-            {en
-              ? "Nine 2026 editions on the road to the 2027 Oscars. Their selections and awards provide context only: they never add consensus points."
-              : "Nueve ediciones de 2026 en el camino a los Oscar 2027. Sus selecciones y premios solo aportan contexto: nunca suman puntos al consenso."}
-          </p>
-        </div>
-      </section>
-      <section className="page-shell festival-index-section">
-        <div className="festival-grid">
-          {editions.map((edition) => (
-            <article className="festival-card" key={edition.id}>
-              <div className="festival-card-top">
-                <span className={`festival-state ${edition.status}`}>
-                  {statusLabel[locale][edition.status]}
+          <div className="festival-hero-grid">
+            <div>
+              <p className="kicker">
+                {en
+                  ? "THE 2026 FILM CALENDAR"
+                  : "EL CALENDARIO DE CINE DE 2026"}
+              </p>
+              <h1>
+                {en ? "The festival" : "El circuito"}
+                <br />
+                <em>{en ? "circuit." : "festivalero."}</em>
+              </h1>
+              <p className="festival-deck">
+                {en
+                  ? "Discover the films, follow the premieres and explore the winners. Nine stops on the road to the Oscars."
+                  : "Descubre películas, sigue los estrenos y explora el palmarés. Nueve paradas en el camino a los Oscar."}
+              </p>
+              <a className="primary-button dark-button" href="#calendar">
+                {en ? "Explore the calendar" : "Explorar el calendario"} ↓
+              </a>
+            </div>
+            {featured ? (
+              <aside className="festival-spotlight">
+                <div className="festival-card-top">
+                  <span className={`festival-state ${featured.status}`}>
+                    {festivalStatus[locale][featured.status]}
+                  </span>
+                  <span>{featured.year}</span>
+                </div>
+                <span className="festival-spotlight-mark" aria-hidden="true">
+                  ✳
                 </span>
-                <span>{edition.year}</span>
-              </div>
-              <h2>
-                <Link
-                  href={localizedPath(
-                    `/festivales/${edition.festivalId}/${edition.year}`,
+                <h2>{festivalName(featured, locale)}</h2>
+                <p>
+                  {festivalDateRange(
+                    featured.startsOn,
+                    featured.endsOn,
                     locale,
                   )}
+                </p>
+                <Link
+                  prefetch={false}
+                  className="festival-card-link"
+                  href={editionPath(featured)}
                 >
-                  {en ? edition.nameEn : edition.name}
+                  {en ? "Explore this festival" : "Descubrir este festival"} ↗
                 </Link>
-              </h2>
-              <p>{awardsLabel[locale][edition.awardsStatus]}</p>
-              <dl>
-                <div>
-                  <dt>{en ? "Selection" : "Selección"}</dt>
-                  <dd>{edition.selection?.entries.length ?? "—"}</dd>
-                </div>
-                <div>
-                  <dt>{en ? "Awards" : "Premios"}</dt>
-                  <dd>{edition.awards?.entries.length ?? "—"}</dd>
-                </div>
-              </dl>
-              <Link
-                className="festival-card-link"
-                href={localizedPath(
-                  `/festivales/${edition.festivalId}/${edition.year}`,
-                  locale,
-                )}
-              >
-                {en ? "Open edition" : "Abrir edición"} →
-              </Link>
-            </article>
+              </aside>
+            ) : null}
+          </div>
+        </div>
+      </section>
+      <section className="page-shell festival-index-section" id="calendar">
+        <div className="festival-section-heading">
+          <div>
+            <p className="section-index">
+              2026 · {en ? "JANUARY — OCTOBER" : "ENERO — OCTUBRE"}
+            </p>
+            <h2>{en ? "A year in film." : "Un año de cine."}</h2>
+          </div>
+          <p>
+            {en
+              ? "Selections, awards and your next discovery."
+              : "Selecciones, premios y tu próximo descubrimiento."}
+          </p>
+        </div>
+        <nav
+          className="festival-calendar"
+          aria-label={en ? "Jump to a festival" : "Ir a un festival"}
+        >
+          {chronological.map((edition) => (
+            <a key={edition.id} href={`#${edition.festivalId}`}>
+              <span>
+                {new Intl.DateTimeFormat(locale, {
+                  day: "numeric",
+                  month: "short",
+                  timeZone: "UTC",
+                }).format(new Date(`${edition.startsOn}T12:00:00Z`))}
+              </span>
+              <strong>{festivalName(edition, locale)}</strong>
+            </a>
           ))}
+        </nav>
+        <div className="festival-grid">
+          {chronological.map((edition) => {
+            const preview = festivalPreview(edition);
+            return (
+              <article
+                className={`festival-card festival-card-${edition.status}`}
+                key={edition.id}
+                id={edition.festivalId}
+              >
+                <div className="festival-card-top">
+                  <span className={`festival-state ${edition.status}`}>
+                    {festivalStatus[locale][edition.status]}
+                  </span>
+                  <span>{edition.year}</span>
+                </div>
+                <h2>
+                  <Link prefetch={false} href={editionPath(edition)}>
+                    {festivalName(edition, locale)}
+                  </Link>
+                </h2>
+                <p className="festival-card-dates">
+                  {festivalDateRange(edition.startsOn, edition.endsOn, locale)}
+                </p>
+                <div className="festival-card-preview">
+                  <p className="section-index">
+                    {preview.kind === "awards"
+                      ? en
+                        ? "FROM THE WINNERS"
+                        : "DEL PALMARÉS"
+                      : en
+                        ? "ON THE PROGRAMME"
+                        : "EN EL PROGRAMA"}
+                  </p>
+                  {preview.entries.length ? (
+                    <ul>
+                      {preview.entries.map((entry) => (
+                        <li key={entry.id}>
+                          {entry.filmId && artwork[entry.filmId]?.posterPath ? (
+                            <Link
+                              className="festival-preview-poster"
+                              prefetch={false}
+                              href={localizedPath(
+                                `/peliculas/${entry.filmId}`,
+                                locale,
+                              )}
+                              aria-label={entry.originalTitle}
+                            >
+                              <PosterBlock
+                                title={entry.originalTitle}
+                                locale={locale}
+                                size="small"
+                                imagePath={artwork[entry.filmId].posterPath}
+                              />
+                            </Link>
+                          ) : null}
+                          <strong>{entry.originalTitle}</strong>
+                          <span>
+                            {entry.awardType ??
+                              entry.originalRecipient ??
+                              entry.section}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p>
+                      {en
+                        ? "Explore the festival’s programme on its official website."
+                        : "Consulta el programa del festival en su web oficial."}
+                    </p>
+                  )}
+                </div>
+                <div className="festival-card-bottom">
+                  {!edition.competitive ? (
+                    <small>{en ? "Non-competitive" : "No competitivo"}</small>
+                  ) : null}
+                  <Link
+                    prefetch={false}
+                    className="festival-card-link"
+                    href={editionPath(edition)}
+                  >
+                    {en ? "Explore festival" : "Explorar festival"} ↗
+                  </Link>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+        <div className="festival-next-step">
+          <div>
+            <p className="section-index">OSCAR 2027</p>
+            <h2>
+              {en
+                ? "Who will go all the way?"
+                : "¿Quién llegará hasta el final?"}
+            </h2>
+          </div>
+          <Link
+            prefetch={false}
+            className="primary-button dark-button"
+            href={localizedPath("/temporadas/2027/mejor-pelicula", locale)}
+          >
+            {en ? "See the Oscar predictions" : "Ver las predicciones Oscar"} →
+          </Link>
         </div>
       </section>
     </main>

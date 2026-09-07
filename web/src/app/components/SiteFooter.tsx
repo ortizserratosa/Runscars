@@ -21,6 +21,12 @@ export async function SiteFooter() {
         </p>
       </div>
       <div className="footer-links">
+        <Link prefetch={false} href={href("/semana")}>
+          {en ? "The weekly edition" : "La edición semanal"}
+        </Link>
+        <Link prefetch={false} href={href("/quiniela")}>
+          {en ? "Try your ballot" : "Prueba tu quiniela"}
+        </Link>
         <Link prefetch={false} href={href("/temporadas/2027")}>
           Oscar 2027
         </Link>
@@ -46,15 +52,15 @@ export async function SiteFooter() {
           {en ? "Terms" : "Condiciones"}
         </Link>
         <Link prefetch={false} href={href("/fuentes")}>
-          {en ? "Traceability" : "Trazabilidad"}
+          {en ? "Sources" : "Fuentes"}
         </Link>
         <Link prefetch={false} href={href("/creditos")}>
           {en ? "Credits" : "Créditos"}
         </Link>
         <span>
           {en
-            ? "100% verifiable data · Independent sources"
-            : "Datos 100% verificables · Fuentes independientes"}
+            ? "Independent sources · Made for film fans"
+            : "Fuentes independientes · Para amantes del cine"}
         </span>
       </div>
     </footer>

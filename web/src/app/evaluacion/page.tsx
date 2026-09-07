@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
       ? "Oscar Prediction Accuracy and Evaluation"
       : "Acierto y evaluación de predicciones Oscar",
     description: en
-      ? "Compare locked Runscars Oscar predictions with official nominations and winners using a transparent, versioned evaluation."
+      ? "Compare locked Runscars Oscar predictions with official nominations and winners using a clear accuracy measures."
       : "Compara las predicciones Oscar cerradas de Runscars con nominaciones y ganadores oficiales mediante una evaluación transparente.",
   });
 }
@@ -36,7 +36,7 @@ export default async function EvaluationPage() {
   return (
     <main className="page-shell evaluation-page">
       <header className="evaluation-hero">
-        <p className="section-index">RUNSCARS EVALUATION V2</p>
+        <p className="section-index">OSCAR · RUNSCARS</p>
         <h1>
           {en
             ? "Predictions are locked before the answer is known."
@@ -44,8 +44,8 @@ export default async function EvaluationPage() {
         </h1>
         <p>
           {en
-            ? "This page compares final, immutable snapshots with official publications. If either part is missing, no figure is calculated."
-            : "Esta página compara snapshots finales e inmutables con publicaciones oficiales. Si falta cualquiera de las dos piezas, no calcula una cifra."}
+            ? "See how the final predictions compare with the nominees and winners announced by the Academy."
+            : "Comprueba cuánto acertaron las predicciones finales frente a los nominados y ganadores anunciados por la Academia."}
         </p>
       </header>
 
@@ -124,8 +124,8 @@ export default async function EvaluationPage() {
                   ) : (
                     <p>
                       {en
-                        ? "Nomination lock pending."
-                        : "Cierre de nominaciones pendiente."}
+                        ? "Nomination accuracy is not available yet."
+                        : "El acierto de nominaciones aún no está disponible."}
                     </p>
                   )}
                   {category.winner ? (
@@ -155,17 +155,10 @@ export default async function EvaluationPage() {
                   ) : (
                     <p>
                       {en
-                        ? "Winner lock pending."
-                        : "Cierre de ganador pendiente."}
+                        ? "Winner accuracy is not available yet."
+                        : "El acierto de ganadores aún no está disponible."}
                     </p>
                   )}
-                  <small>
-                    {category.nominations?.snapshotId ??
-                      category.winner?.snapshotId}
-                    <br />
-                    {category.nominations?.resultSetId ??
-                      category.winner?.resultSetId}
-                  </small>
                 </article>
               ))}
             </div>
@@ -176,23 +169,26 @@ export default async function EvaluationPage() {
           <span>{en ? "PENDING" : "EN ESPERA"}</span>
           <h2>
             {en
-              ? "The first public evaluation cannot be completed yet."
-              : "La primera evaluación pública aún no se puede cerrar."}
+              ? "How accurate will this season’s predictions be?"
+              : "¿Cuánto acertarán las predicciones de esta temporada?"}
           </h2>
           <p>
             {report.state === "unavailable"
               ? en
-                ? "The database is not available in this environment."
-                : "La base de datos no está disponible en este entorno."
+                ? "Accuracy results are temporarily unavailable. Please try again later."
+                : "Los resultados de acierto no están disponibles ahora. Vuelve a intentarlo más tarde."
               : en
-                ? `Oscar ${report.activeSeason?.ceremonyYear ?? 2027} is still active: final locks or compatible official results are missing.`
-                : `Oscar ${report.activeSeason?.ceremonyYear ?? 2027} sigue activo: faltan cierres finales o resultados oficiales compatibles.`}
+                ? `Oscar ${report.activeSeason?.ceremonyYear ?? 2027} accuracy will appear here once final predictions and official results are available.`
+                : `Oscar ${report.activeSeason?.ceremonyYear ?? 2027} mostrará aquí su acierto cuando estén disponibles las predicciones finales y los resultados oficiales.`}
           </p>
           <p>
             {en
-              ? "The 2022–2026 archive contains official results, but we do not fabricate historical predictions to produce a retrospective accuracy rate."
-              : "El archivo 2022–2026 contiene verdad oficial, pero no fabricamos predicciones históricas para producir una tasa retroactiva."}
+              ? "Meanwhile, explore the nominees and winners in the 2022–2026 archive."
+              : "Mientras tanto, descubre los nominados y ganadores en el archivo de 2022–2026."}
           </p>
+          <Link className="text-link" href={localizedPath("/archivo", locale)}>
+            {en ? "Explore the archive →" : "Explorar el archivo →"}
+          </Link>
         </section>
       )}
 

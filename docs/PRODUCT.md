@@ -1,7 +1,7 @@
 # Contrato de producto
 
 **Estado:** contrato aceptado para el MVP
-**Última revisión:** 2026-09-03
+**Última revisión:** 2026-09-07
 
 ## 1. Visión
 
@@ -204,12 +204,14 @@ no forman parte de la identidad de la candidatura.
 
 ### R2b. Explorar el circuito festivalero
 
-1. El visitante abre `/festivales` y ve las nueve ediciones de 2026 con estado y
-   palmarés.
-2. Entra en una edición y consulta selección o premios, título y destinatario
-   originales, fuente oficial y estado de matching.
-3. Sigue un título enlazado a su ficha de película; los no enlazados continúan
-   visibles y pasan a revisión.
+1. El visitante abre `/festivales` y recorre un calendario cronológico de las
+   nueve ediciones de 2026, con fechas, estado y adelantos de películas.
+2. Entra en una edición, busca por película, cineasta o premio y filtra por
+   sección. Consulta títulos y destinatarios originales, fuente y fechas.
+3. Sigue un título enlazado a su ficha; los títulos sin correspondencia siguen
+   visibles, con la revisión de matching reservada a administración.
+4. Si falta una selección o un palmarés en Runscars, se ofrece la web oficial
+   sin afirmar que el festival no lo haya anunciado.
 
 ### R3. Crear un ranking
 
@@ -307,3 +309,21 @@ no forman parte de la identidad de la candidatura.
 - **Corte real:** snapshot periódico creado porque cambió la lista o selección
   efectiva de al menos un proveedor profesional de ese alcance.
 - **Temporada activa:** temporada sobre la que todavía se publican predicciones.
+
+### Descubrimiento y participación inicial · D-058
+
+`/semana` muestra la edición semanal actual y `/semana/YYYY-MM-DD` permite
+compartir una semana concreta, identificada por su lunes UTC. Incluye favoritas,
+movimientos registrados, fuentes que cambiaron y festivales coincidentes. Se
+puede seguir mediante RSS en `/semana/feed?lang=es` o `lang=en`.
+
+`/quiniela` permite elegir y ordenar candidaturas sin registro. Sus borradores
+son locales y caducan a los 30 días. El acceso conserva el destino a la categoría;
+el editor ofrece cargar ese borrador antes de guardar con la cuenta. No modifica
+una quiniela existente sin la acción de guardado del usuario. La disponibilidad
+de candidaturas y los límites proceden de los mismos datos que el editor autenticado.
+
+Festivales, la edición semanal y la prueba de quiniela reutilizan carteles del
+catálogo cuando existen. Las tarjetas al compartir muestran el festival y un
+premiado o película seleccionada, la categoría y su líder, o la semana elegida;
+no confunden una predicción profesional con un ganador oficial.

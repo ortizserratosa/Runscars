@@ -39,16 +39,18 @@ export function buildLocalizedMetadata({
   title,
   description,
   type = "website",
+  socialImage,
 }: {
   locale: Locale;
   path: string;
   title: string;
   description: string;
   type?: "website" | "profile";
+  socialImage?: string;
 }): Metadata {
   const canonical = localizedPath(path, locale);
   const socialTitle = `${title} | ${SITE_NAME}`;
-  const image = absoluteUrl(SOCIAL_IMAGE_PATH);
+  const image = absoluteUrl(socialImage ?? SOCIAL_IMAGE_PATH);
 
   return {
     title,
@@ -56,6 +58,15 @@ export function buildLocalizedMetadata({
     alternates: {
       canonical,
       languages: localizedAlternates(path),
+      types: {
+        "application/rss+xml": [
+          {
+            url: absoluteUrl(`/semana/feed?lang=${locale}`),
+            title:
+              locale === "en" ? "Runscars weekly" : "La semana de Runscars",
+          },
+        ],
+      },
     },
     openGraph: {
       title: socialTitle,
@@ -68,8 +79,8 @@ export function buildLocalizedMetadata({
       images: [
         {
           url: image,
-          width: 1680,
-          height: 945,
+          width: socialImage ? 1200 : 1680,
+          height: socialImage ? 630 : 945,
           alt: socialTitle,
         },
       ],

@@ -14,6 +14,8 @@ import {
 import { rankingRequiresPersonEntry } from "../../lib/categories/config";
 import type { Locale } from "../../lib/i18n/config";
 
+import { draftKey, readDraft } from "../../lib/discovery/ballot";
+
 const initialCommunityFormState: CommunityFormState = {
   message: "",
   tone: "idle",
@@ -59,8 +61,8 @@ function manualVerificationErrorMessage(code: string, en: boolean) {
       "TMDB does not credit that person in the selected film.",
     ],
     missing_token: [
-      "La verificación TMDB no está configurada en este entorno.",
-      "TMDB verification is not configured in this environment.",
+      "No se ha podido comprobar TMDB ahora. Vuelve a intentarlo.",
+      "TMDB could not be checked right now. Try again.",
     ],
     verification_unavailable: [
       "No se ha podido comprobar TMDB ahora. Vuelve a intentarlo.",
@@ -97,6 +99,7 @@ export function RankingEditor({
   const en = locale === "en";
   const requiresPerson = rankingRequiresPersonEntry(categoryId);
   const [selectedEntries, setSelectedEntries] = useState(initialEntries);
+  const [draftMessage, setDraftMessage] = useState("");
   const [tmdbUrl, setTmdbUrl] = useState("");
   const [qualifyingMovieTmdbUrl, setQualifyingMovieTmdbUrl] = useState("");
   const [verificationMessage, setVerificationMessage] = useState("");
@@ -228,6 +231,48 @@ export function RankingEditor({
 
   return (
     <div className="ranking-editor">
+      <div className="ballot-restore">
+        <button
+          type="button"
+          className="ghost-button"
+          onClick={() => {
+            try {
+              const ids = readDraft(
+                localStorage.getItem(draftKey(categoryId)),
+                candidates.map((candidate) => candidate.id),
+                rankingLimit,
+              );
+              if (ids.length) {
+                setSelectedEntries(
+                  ids.map((candidateId) => ({
+                    kind: "candidate",
+                    candidateId,
+                  })),
+                );
+                setDraftMessage(
+                  en
+                    ? "Draft loaded. Save to keep these picks in your account."
+                    : "Borrador cargado. Guarda para conservar estas elecciones en tu cuenta.",
+                );
+              } else
+                setDraftMessage(
+                  en
+                    ? "No draft found in this browser."
+                    : "No hay un borrador en este navegador.",
+                );
+            } catch {
+              setDraftMessage(
+                en
+                  ? "This browser cannot read your draft."
+                  : "Este navegador no puede leer tu borrador.",
+              );
+            }
+          }}
+        >
+          {en ? "Use my sample ballot" : "Usar mi quiniela de prueba"}
+        </button>
+        <p role="status">{draftMessage}</p>
+      </div>
       <form action={action}>
         <input name="locale" type="hidden" value={locale} />
         <input name="seasonId" type="hidden" value="oscars-2027" />
@@ -387,9 +432,7 @@ export function RankingEditor({
 
         {available.length ? (
           <div className="ranking-available">
-            <span>
-              {en ? "Add tracked candidate" : "Añadir candidatura rastreada"}
-            </span>
+            <span>{en ? "Add a candidate" : "Añadir una candidatura"}</span>
             <div>
               {available.map((candidate) => (
                 <button
@@ -524,7 +567,7 @@ export function RankingEditor({
             className={state.tone === "error" ? "error-text" : ""}
           >
             {state.message ||
-              `${selectedEntries.length} ${en ? "explicit positions · missing candidates are not extrapolated" : "posiciones explícitas · sin extrapolar ausencias"}`}
+              `${selectedEntries.length} ${en ? "picks" : "elecciones"}`}
           </span>
         </div>
       </form>

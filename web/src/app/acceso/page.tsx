@@ -39,8 +39,8 @@ export default async function AccessPage({
         <h1>{en ? "Your season, in order." : "Tu temporada, en orden."}</h1>
         <p>
           {en
-            ? "Your watch states and rankings never affect professional consensus. You decide what stays private and what you share."
-            : "Tus visionados y rankings nunca alteran el consenso profesional. Tú decides qué se mantiene privado y qué compartes."}
+            ? "Keep track of the films you’ve seen, rank your favourites and share your Oscar predictions."
+            : "Lleva la cuenta de las películas que has visto, ordena tus favoritas y comparte tus predicciones Oscar."}
         </p>
       </header>
       <section className="auth-provider-card">
@@ -74,8 +74,8 @@ export default async function AccessPage({
             <div className="account-form">
               <p>
                 {en
-                  ? "During the public beta, new accounts are created with Google. Email sign-in remains available for existing accounts."
-                  : "Durante la beta pública, las cuentas nuevas se crean con Google. El acceso por correo sigue disponible para cuentas existentes."}
+                  ? "Create your account with Google. If you already have an email account, you can sign in with it."
+                  : "Crea tu cuenta con Google. Si ya tienes una cuenta con correo y contraseña, puedes seguir entrando con ella."}
               </p>
             </div>
           )}

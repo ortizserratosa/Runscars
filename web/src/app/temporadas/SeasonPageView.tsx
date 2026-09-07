@@ -256,14 +256,14 @@ export async function SeasonPageView({
                   </p>
                   <h2>
                     {en
-                      ? "Nine editions, official context"
-                      : "Nueve ediciones, contexto oficial"}
+                      ? "Discover the festival circuit"
+                      : "Descubre el circuito festivalero"}
                   </h2>
                 </div>
                 <p>
                   {en
-                    ? "Selections and awards never alter the professional consensus."
-                    : "Las selecciones y los premios nunca alteran el consenso profesional."}
+                    ? "Explore the films and winners from nine international festivals."
+                    : "Explora las películas y los ganadores de nueve festivales internacionales."}
                 </p>
               </div>
               <div className="season-festival-list">

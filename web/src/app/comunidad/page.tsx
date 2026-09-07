@@ -22,8 +22,8 @@ export async function generateMetadata(): Promise<Metadata> {
       ? "Oscar 2027 Community Ballots"
       : "Quinielas Oscar 2027 de la comunidad",
     description: en
-      ? "Discover public individual ballots for the 2027 Oscar season, kept separate from the professional predictions consensus."
-      : "Descubre quinielas individuales públicas para los Oscar 2027, siempre separadas del consenso de predicciones profesionales.",
+      ? "Discover public Oscar 2027 ballots, compare your favourites and share your predictions."
+      : "Descubre quinielas públicas de los Oscar 2027, compara tus favoritas y comparte tus predicciones.",
   });
 }
 
@@ -100,13 +100,13 @@ export default async function CommunityPage({
           </h1>
           <p>
             {en
-              ? "Discover individual rankings, compare instincts and share a complete ballot. There are no likes, threads or community consensus: only the positions each person chooses to publish."
-              : "Descubre rankings individuales, compara intuiciones y comparte una quiniela completa. No hay likes, hilos ni consenso comunitario: solo posiciones que cada persona decide publicar."}
+              ? "Discover other film fans’ favourites, compare predictions and share your own Oscar ballot."
+              : "Descubre las favoritas de otros cinéfilos, compara predicciones y comparte tu propia quiniela de los Oscar."}
           </p>
         </div>
         <Link
           className="primary-button"
-          href={localizedPath("/acceso", locale)}
+          href={localizedPath("/quiniela", locale)}
         >
           {en ? "Create my ballot →" : "Crear mi quiniela →"}
         </Link>

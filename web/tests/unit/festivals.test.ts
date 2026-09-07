@@ -269,3 +269,36 @@ describe("festival circuit", () => {
     expect(Object.keys(FESTIVAL_CONNECTORS)).toHaveLength(9);
   });
 });
+
+describe("Telluride official programme supplement", () => {
+  it("imports contemporary features idempotently and excludes shorts and repertory screenings", async () => {
+    const document = JSON.parse(
+      readFileSync(
+        new URL("../../data/festivals/2026-telluride.json", import.meta.url),
+        "utf8",
+      ),
+    );
+    const manifest = document.sets[0];
+    const catalogue = [{ id: "fjord", title: "Fjord", alternateTitles: [] }];
+    const first = await prepareFestivalSet(manifest, catalogue);
+    const repeated = await prepareFestivalSet(manifest, catalogue);
+    expect(first).toEqual(repeated);
+    expect(manifest.entries).toHaveLength(43);
+    expect(manifest.entries.every(isEligibleFestivalEntry)).toBe(true);
+    expect(
+      manifest.entries.map(
+        (entry: { originalTitle: string }) => entry.originalTitle,
+      ),
+    ).toContain("Fjord");
+    expect(
+      manifest.entries.map(
+        (entry: { originalTitle: string }) => entry.originalTitle,
+      ),
+    ).not.toContain("Beau Geste");
+    expect(
+      manifest.entries.map(
+        (entry: { originalTitle: string }) => entry.originalTitle,
+      ),
+    ).not.toContain("A Song for the Snow Lion");
+  });
+});

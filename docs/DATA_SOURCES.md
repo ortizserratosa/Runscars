@@ -380,3 +380,21 @@ ninguna fecha, nota o posición se estima.
   la misma puerta de calidad técnica y semántica.
 - D-014 sigue como `Propuesta`: la fase 1 no decide el consenso de rankings
   parciales de usuarios.
+
+
+### Suplemento de Telluride · 7 de septiembre de 2026
+
+Se ha preparado [2026-telluride.json](../web/data/festivals/2026-telluride.json)
+a partir del [programa oficial PDF](https://telluridecms-production.s3.amazonaws.com/assets/pdfs/53rd-TFF-program-guide-final.pdf).
+Contiene 43 largometrajes: 35 de Shows y 8 de Backlot. Conserva títulos y
+cineastas, URL, editor, fecha de consulta, páginas y SHA-256 del PDF. No se
+infiere una fecha de publicación. La atribución ambigua de Into the Breach
+queda sin destinatario. Se excluyen homenajes, reposiciones, cortos y programas
+de cortometrajes; los documentales de larga duración presentados por partes
+se conservan como películas completas, según los describe el programa.
+
+Importación independiente, para no volver a activar versiones iniciales de otros festivales:
+`npm run festivals:import -- web/data/festivals/2026-telluride.json`.
+La preparación del suplemento no convierte el conector PDF en automático ni
+resuelve el bloqueo 403 de TIFF. Estado de entrega y verificación en la
+[auditoría del corte](PUBLIC_UX_AUDIT_2026-09-07.md).

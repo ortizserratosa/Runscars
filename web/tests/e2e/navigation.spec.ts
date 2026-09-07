@@ -272,7 +272,9 @@ test("offers complete navigation at a mobile viewport", async ({ page }) => {
     0,
   );
   await expect(navigation.getByRole("link", { name: "Archivo" })).toBeVisible();
-  await expect(navigation.getByRole("link", { name: "Método" })).toBeVisible();
+  await expect(
+    navigation.getByRole("link", { name: "La semana" }),
+  ).toBeVisible();
 });
 
 test("publishes the nine-edition festival circuit in Spanish and English", async ({
@@ -280,7 +282,7 @@ test("publishes the nine-edition festival circuit in Spanish and English", async
 }) => {
   await page.goto("/festivales");
   await expect(
-    page.getByRole("heading", { level: 1, name: "El circuito festivalero" }),
+    page.getByRole("heading", { level: 1, name: /El circuito festivalero/ }),
   ).toBeVisible();
   await expect(page.locator(".festival-card")).toHaveCount(9);
   await expect(
@@ -288,13 +290,15 @@ test("publishes the nine-edition festival circuit in Spanish and English", async
   ).toContainText("En curso");
   await expect(
     page.locator(".festival-card").filter({ hasText: "Telluride" }),
-  ).toContainText("Palmarés no aplicable");
-  await page.getByRole("link", { name: "Festival de Cannes" }).first().click();
+  ).toContainText("No competitivo");
+  await page.getByRole("link", { name: "Cannes", exact: true }).first().click();
   await expect(page).toHaveURL(/\/festivales\/cannes\/2026$/);
   await expect(
     page.getByRole("heading", { name: "Palmarés oficial" }),
   ).toBeVisible();
-  await expect(page.getByText("FJORD", { exact: true })).toBeVisible();
+  await expect(
+    page.locator("#awards").getByRole("link", { name: "FJORD" }),
+  ).toBeVisible();
 
   await page.goto("/en/festivales/cannes/2026");
   await expect(
@@ -379,7 +383,7 @@ test("publishes methodology, evaluation and the five-edition archive", async ({
     }),
   ).toBeVisible();
   await expect(
-    page.getByText(/no fabricamos predicciones históricas/i),
+    page.getByRole("link", { name: "Explorar el archivo →" }),
   ).toBeVisible();
 
   await page.goto("/archivo");
@@ -405,7 +409,7 @@ test("retires the critical tab and attributes Metascore on film pages", async ({
   await expect(
     page.getByRole("heading", {
       level: 2,
-      name: "Una puntuación atribuida para esta película",
+      name: "Qué dice la crítica",
     }),
   ).toBeVisible();
   await expect(page.getByText("Metacritic", { exact: true })).toBeVisible();
@@ -670,7 +674,7 @@ test("explains that provider signals never form a market consensus", async ({
   await expect(page.getByText("Sin mercado disponible")).toHaveCount(0);
   await expect(
     page.getByText(
-      "Kalshi y Polymarket se muestran por proveedor. No existe consenso de mercados y sus precios no participan en la predicción profesional. Reflejan su última captura y no la actualización profesional seleccionada.",
+      "Últimos precios de Kalshi y Polymarket, independientes del ranking de expertos. Sus fechas pueden diferir de la actualización de predicciones seleccionada.",
     ),
   ).toBeVisible();
 });
@@ -730,7 +734,9 @@ test("keeps film pages available without a TMDB token at runtime", async ({
   await expect(
     page.getByRole("heading", { level: 1, name: "Project Hail Mary" }),
   ).toBeVisible();
-  await expect(page.getByText("La ficha sigue disponible")).toBeVisible();
+  await expect(page.locator("main")).not.toContainText(
+    /captura TMDB|dataset editorial|caché local/,
+  );
 });
 
 test("offers account access while keeping private actions behind authentication", async ({
@@ -748,9 +754,7 @@ test("offers account access while keeping private actions behind authentication"
   await expect(
     page.getByRole("button", { name: "Continuar con Google" }),
   ).toBeVisible();
-  await expect(
-    page.getByText(/las cuentas nuevas se crean con Google/),
-  ).toBeVisible();
+  await expect(page.getByText(/Crea tu cuenta con Google/)).toBeVisible();
 
   const exportResponse = await request.get("/api/cuenta/exportar");
   expect(exportResponse.status()).toBe(401);

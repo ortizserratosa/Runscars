@@ -495,7 +495,7 @@ export default async function Home() {
                     : "un ranking personal independiente del consenso"}
                 </span>
               </div>
-              <Link prefetch={false} href={href("/acceso")}>
+              <Link prefetch={false} href={href("/quiniela")}>
                 {en ? "Create my ballot →" : "Crear mi quiniela →"}
               </Link>
               <Link prefetch={false} href={href("/comunidad")}>
@@ -508,6 +508,31 @@ export default async function Home() {
         </div>
       </section>
 
+      <section className="page-shell discovery-home">
+        <div>
+          <p className="section-index">
+            {en ? "THE WEEKLY EDITION" : "LA EDICIÓN SEMANAL"}
+          </p>
+          <h2>
+            {en
+              ? "Catch up. Pick a side."
+              : "Ponte al día. Elige tus favoritas."}
+          </h2>
+          <p>
+            {en
+              ? "The week’s ranking changes, the films to follow and a ballot that’s all yours."
+              : "Los cambios de la semana, las películas que seguir y una quiniela con tu criterio."}
+          </p>
+        </div>
+        <div className="discovery-actions">
+          <Link className="primary-button dark-button" href={href("/semana")}>
+            {en ? "Read this week" : "Leer esta semana"} →
+          </Link>
+          <Link className="ghost-button" href={href("/quiniela")}>
+            {en ? "Try your ballot" : "Prueba tu quiniela"} →
+          </Link>
+        </div>
+      </section>
       <section className="page-shell section-block evidence-section">
         <div className="evidence-copy">
           <p className="section-index">
@@ -520,8 +545,8 @@ export default async function Home() {
           </h2>
           <p>
             {en
-              ? "Every movement records the source, author, date and original value. Full transparency without manipulated data."
-              : "Cada movimiento registra fuente, autor, fecha y dato original. Transparencia total sin datos manipulados."}
+              ? "Open any source to see its predictions, who published them and when they changed."
+              : "Abre una fuente para ver sus predicciones, quién las publicó y cuándo cambiaron."}
           </p>
           <Link
             prefetch={false}

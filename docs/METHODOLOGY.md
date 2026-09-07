@@ -448,8 +448,8 @@ Cada entrada conserva título, destinatario, sección y premio originales, URL y
 título de la fuente oficial, fechas de publicación y captura, captura íntegra y
 versión del extractor. El matching automático solo acepta una coincidencia
 exacta y única con un título principal o alternativo. Ambigüedades y títulos
-ausentes siguen visibles como revisión o sin catálogo; una corrección crea
-historial y no modifica el recibo original.
+ausentes siguen visibles sin enlace; su estado de matching se consulta en
+administración. Una corrección crea historial y no modifica el recibo original.
 
 Se incluyen largometrajes de competición principal, secciones oficiales
 secundarias, público, debut, interpretación y oficios. Se excluyen cortos,
@@ -478,3 +478,19 @@ El dataset capturado el 2026-07-24 fija estas reglas iniciales:
 
 Estas calibraciones pueden revisarse con una nueva decisión si aumenta la
 cobertura. No se reinterpretan snapshots ya bloqueados.
+
+## 13. Ediciones semanales
+
+La semana comienza el lunes a las 00:00 UTC y termina antes del lunes siguiente.
+Para cada categoría se selecciona el último corte real anterior al final y,
+como referencia, el último anterior al inicio. El movimiento es la posición
+anterior menos la final; una incorporación sin posición anterior se etiqueta
+como nueva. Si no hay referencia comparable en temporada, categoría, intención
+y método, no se calcula movimiento.
+
+El resumen muestra los tres mayores movimientos por valor absoluto, con posición
+final como desempate, y las fuentes que tuvieron cambios efectivos durante la
+semana. Enlaza el corte que respalda la clasificación. Las fechas son las del
+cambio registrado, no una fecha de publicación editorial inventada. RSS incluye
+solo semanas con cambios registrados, con identidad estable por URL de semana.
+No modifica ni crea snapshots de predicción.

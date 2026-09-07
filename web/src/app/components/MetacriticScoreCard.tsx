@@ -57,17 +57,13 @@ export function MetacriticScoreCard({
 
       <div className="metacritic-context-copy">
         <p className="section-index">
-          {en ? "EXTERNAL CRITICAL CONTEXT" : "CONTEXTO CRÍTICO EXTERNO"}
+          {en ? "CRITICAL RECEPTION" : "RECEPCIÓN CRÍTICA"}
         </p>
-        <h2>
-          {en
-            ? "A source-attributed score for this film"
-            : "Una puntuación atribuida para esta película"}
-        </h2>
+        <h2>{en ? "What the critics think" : "Qué dice la crítica"}</h2>
         <p>
           {en
-            ? "The Metascore is calculated and maintained by Metacritic. Runscars displays its original value as context; it does not normalise it or include it in professional consensus."
-            : "El Metascore lo calcula y mantiene Metacritic. Runscars muestra su valor original como contexto; no lo normaliza ni lo incorpora al consenso profesional."}
+            ? "The Metascore is calculated and maintained by Metacritic."
+            : "El Metascore lo calcula y mantiene Metacritic."}
         </p>
         <a
           className="text-link"

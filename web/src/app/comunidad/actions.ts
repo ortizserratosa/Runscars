@@ -359,8 +359,8 @@ export async function deleteAccountAction(
   } catch {
     return {
       message: en
-        ? "Account deletion is not configured in this environment."
-        : "El borrado de cuenta no está configurado en este entorno.",
+        ? "Account deletion is temporarily unavailable. Please try again later."
+        : "No se puede eliminar la cuenta ahora. Vuelve a intentarlo más tarde.",
       tone: "error",
     };
   }

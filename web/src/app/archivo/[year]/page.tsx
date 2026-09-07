@@ -116,7 +116,7 @@ export default async function ArchiveEditionPage({ params }: PageProps) {
       <footer className="archive-source-note">
         <p>
           {en ? "Source" : "Fuente"}: {edition.sourceAuthor}.{" "}
-          {en ? "Versioned capture on" : "Captura versionada el"}{" "}
+          {en ? "Last consulted" : "Última consulta"}{" "}
           {new Intl.DateTimeFormat(localeTag(locale), {
             dateStyle: "long",
           }).format(new Date(edition.capturedAt))}

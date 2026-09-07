@@ -20,6 +20,8 @@ const PUBLIC_ROUTES = [
   "/metodologia",
   "/evaluacion",
   "/comunidad",
+  "/semana",
+  "/quiniela",
 ];
 
 export const revalidate = 86_400;

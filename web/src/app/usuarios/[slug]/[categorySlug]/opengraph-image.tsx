@@ -193,9 +193,7 @@ export default async function OpenGraphImage({ params }: OgImageProps) {
             marginTop: "auto",
           }}
         >
-          {en
-            ? "Explicit positions · no community consensus"
-            : "Posiciones explícitas · sin consenso comunitario"}
+          {en ? "My picks for the Oscars" : "Mis favoritas para los Oscar"}
         </div>
       </div>
       <div
@@ -253,29 +251,30 @@ export default async function OpenGraphImage({ params }: OgImageProps) {
         >
           01
         </div>
-        {["FUENTE VERIFICADA", "VALOR ORIGINAL CONSERVADO"].map(
-          (label, index) => (
-            <div
-              key={label}
-              style={{
-                background: "#f2efe6",
-                border: "1px solid #171a17",
-                color: "#171a17",
-                display: "flex",
-                fontSize: 15,
-                fontWeight: 700,
-                letterSpacing: 1,
-                marginLeft: index === 0 ? 0 : 34,
-                marginTop: index === 0 ? 26 : 9,
-                padding: "18px 20px",
-                rotate: index === 0 ? "-2deg" : "2deg",
-                width: 350,
-              }}
-            >
-              {String(index + 1).padStart(2, "0")} · {label}
-            </div>
-          ),
-        )}
+        {[
+          en ? "YOUR PICKS" : "TUS ELEGIDAS",
+          en ? "YOUR OSCAR BALLOT" : "TU QUINIELA OSCAR",
+        ].map((label, index) => (
+          <div
+            key={label}
+            style={{
+              background: "#f2efe6",
+              border: "1px solid #171a17",
+              color: "#171a17",
+              display: "flex",
+              fontSize: 15,
+              fontWeight: 700,
+              letterSpacing: 1,
+              marginLeft: index === 0 ? 0 : 34,
+              marginTop: index === 0 ? 26 : 9,
+              padding: "18px 20px",
+              rotate: index === 0 ? "-2deg" : "2deg",
+              width: 350,
+            }}
+          >
+            {String(index + 1).padStart(2, "0")} · {label}
+          </div>
+        ))}
       </div>
     </div>,
     { ...size },

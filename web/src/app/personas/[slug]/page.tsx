@@ -219,7 +219,7 @@ export default async function PersonPage({ params }: PersonPageProps) {
         </div>
         {person.tmdb ? (
           <p className="catalog-provenance">
-            {en ? "Metadata captured on" : "Metadatos capturados el"}{" "}
+            {en ? "TMDB · Last consulted" : "TMDB · Última consulta"}{" "}
             <time dateTime={person.tmdb.fetchedAt}>
               {formatDate(person.tmdb.fetchedAt.slice(0, 10), locale)}
             </time>
@@ -228,13 +228,7 @@ export default async function PersonPage({ params }: PersonPageProps) {
               {en ? "View on TMDB ↗" : "Comprobar en TMDB ↗"}
             </a>
           </p>
-        ) : (
-          <p className="catalog-provenance">
-            {en
-              ? "Minimal editorial profile; no TMDB snapshot is available yet."
-              : "Ficha editorial mínima; todavía no hay una captura TMDB disponible."}
-          </p>
-        )}
+        ) : null}
       </section>
     </main>
   );

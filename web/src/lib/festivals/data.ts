@@ -3,6 +3,7 @@ import { unstable_cache } from "next/cache";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { cache } from "react";
 import manifest from "../../../data/festivals/2026.json";
+import tellurideManifest from "../../../data/festivals/2026-telluride.json";
 import { filmFixtures } from "../../data/films";
 import { isSupabaseConfigured } from "../environment";
 import { createSupabaseServerClient } from "../supabase/server";
@@ -178,7 +179,7 @@ const fixtureEditions = [
     53,
     "2026-09-04",
     "2026-09-07",
-    "scheduled",
+    "ongoing",
     "not_applicable",
     "https://www.telluridefilmfestival.org/",
     "https://www.telluridefilmfestival.org/show",
@@ -220,7 +221,7 @@ const fixtureFilmByTitle = new Map(
 );
 
 function fixtureSets(editionId: string): FestivalSetView[] {
-  return manifest.sets
+  return [...manifest.sets, ...tellurideManifest.sets]
     .filter((set) => set.editionId === editionId)
     .map((set, setIndex) => ({
       id: `${set.editionId}-${set.kind}-fixture-${setIndex + 1}`,

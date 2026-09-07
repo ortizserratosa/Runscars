@@ -252,18 +252,14 @@ export default async function FilmPage({ params }: FilmPageProps) {
                 </span>
                 <span>{dateLabel(releaseDate, locale)}</span>
               </div>
-              <p className="kicker">
-                {en
-                  ? "Oscar 2027 · tracked film"
-                  : "Oscar 2027 · película observada"}
-              </p>
+              <p className="kicker">{en ? "Oscar 2027" : "Oscar 2027"}</p>
               <h1>{film.title}</h1>
               <p className="film-deck">
                 {film.tmdb?.tagline ??
                   film.tmdb?.overview ??
                   (en
-                    ? "Editorial film page connected to the season's verifiable signals."
-                    : "Ficha editorial enlazada con las señales verificables de la temporada.")}
+                    ? "Explore this film’s place in the Oscar race."
+                    : "Descubre el recorrido de esta película en la carrera a los Oscar.")}
               </p>
               {primaryPrediction ? (
                 <div className="film-score-strip">
@@ -306,15 +302,6 @@ export default async function FilmPage({ params }: FilmPageProps) {
                   </div>
                 </div>
               ) : null}
-              <p className="metadata-note">
-                {film.tmdb
-                  ? en
-                    ? "Metadata and images are served from the local cache; TMDB does not influence Oscar signals."
-                    : "Metadatos e imágenes servidos desde la caché local; TMDB no interviene en las señales Oscar."
-                  : en
-                    ? "No TMDB capture is available; the verifiable editorial film page is preserved."
-                    : "Sin captura TMDB disponible; se conserva la ficha editorial verificable."}
-              </p>
             </div>
           </div>
         </div>
@@ -333,13 +320,13 @@ export default async function FilmPage({ params }: FilmPageProps) {
                 </p>
                 <h2>
                   {en
-                    ? "Official festival milestones"
-                    : "Hitos oficiales en festivales"}
+                    ? "Festival selections and awards"
+                    : "Selecciones y premios en festivales"}
                 </h2>
                 <p>
                   {en
-                    ? "Context only. These selections and awards do not contribute points to the Oscar consensus."
-                    : "Solo contexto. Estas selecciones y premios no aportan puntos al consenso Oscar."}
+                    ? "Explore the festivals that selected or awarded this film."
+                    : "Explora los festivales que han seleccionado o premiado esta película."}
                 </p>
               </div>
             </div>
@@ -490,55 +477,18 @@ export default async function FilmPage({ params }: FilmPageProps) {
           </div>
         ) : null}
 
-        <div className="film-signal-section reviews-module">
-          <div className="module-heading">
-            <span className="signal-letter">D</span>
-            <div>
-              <p className="section-index">
-                {en ? "PROVENANCE" : "PROCEDENCIA"}
-              </p>
-              <h2>
-                {en
-                  ? "Verified editorial identity"
-                  : "Identidad editorial comprobada"}
-              </h2>
-              <p>
-                {en
-                  ? "The film page preserves the publication used to identify the film within the season."
-                  : "La ficha conserva la publicación que permitió identificar la película dentro de la temporada."}
-              </p>
-            </div>
-          </div>
-          <div className="review-link-list">
-            {film.verificationUrl ? (
+        {film.verificationUrl ? (
+          <details className="film-signal-section reviews-module">
+            <summary>
+              {en ? "More about this film" : "Más sobre esta película"}
+            </summary>
+            <p>
               <a href={film.verificationUrl} rel="noreferrer" target="_blank">
-                <span>{en ? "Source" : "Fuente"}</span>
-                <div>
-                  <strong>
-                    {en
-                      ? "Verification publication"
-                      : "Publicación de comprobación"}
-                  </strong>
-                  <p>
-                    {film.notes ??
-                      (en
-                        ? "Editorial observation preserved."
-                        : "Observación editorial conservada.")}
-                  </p>
-                </div>
-                <span className="review-arrow" aria-hidden="true">
-                  ↗
-                </span>
+                {en ? "Read the original source" : "Leer la fuente original"} ↗
               </a>
-            ) : (
-              <p className="metadata-note">
-                {en
-                  ? "This editorial identity has no external verification link yet."
-                  : "Esta identidad editorial aún no tiene un enlace externo de comprobación."}
-              </p>
-            )}
-          </div>
-        </div>
+            </p>
+          </details>
+        ) : null}
 
         <div className="film-signal-section community-module">
           <div className="module-heading">

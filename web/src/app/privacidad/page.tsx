@@ -32,6 +32,19 @@ export default async function PrivacyPage() {
 
       <div className="privacy-grid">
         <section className="editorial-card">
+          <p className="section-index">
+            {en ? "TRIAL BALLOT" : "QUINIELA DE PRUEBA"}
+          </p>
+          <h2>
+            {en ? "Your draft stays with you" : "Tu borrador se queda contigo"}
+          </h2>
+          <p>
+            {en
+              ? "When you try a ballot without signing in, your choices are kept in this browser for up to 30 days. They are not sent to your account until you sign in, load the draft and save it. Clearing your browser’s site data removes the draft. We measure ballot starts and sign-in clicks by category, without recording your picks in analytics."
+              : "Cuando pruebas una quiniela sin registrarte, tus elecciones se conservan en este navegador hasta 30 días. No se envían a tu cuenta hasta que entres, cargues el borrador y lo guardes. Puedes borrarlo eliminando los datos de este sitio en tu navegador. Medimos los inicios de quiniela y los clics para entrar por categoría, sin registrar tus elecciones en las estadísticas."}
+          </p>
+        </section>
+        <section className="editorial-card">
           <p className="section-index">{en ? "ACCOUNTS" : "CUENTAS"}</p>
           <h2>{en ? "A familiar sign-in" : "Un acceso reconocible"}</h2>
           <p>

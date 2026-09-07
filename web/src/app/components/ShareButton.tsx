@@ -8,11 +8,13 @@ export function ShareButton({
   text,
   url,
   locale = "es",
+  label,
 }: {
   title: string;
   text: string;
   url: string;
   locale?: Locale;
+  label?: string;
 }) {
   const [message, setMessage] = useState("");
   const en = locale === "en";
@@ -64,7 +66,7 @@ export function ShareButton({
   return (
     <span className="share-control">
       <button className="ghost-button" onClick={share} type="button">
-        {en ? "Share ballot ↗" : "Compartir quiniela ↗"}
+        {label ?? (en ? "Share ballot ↗" : "Compartir quiniela ↗")}
       </button>
       <span aria-live="polite" className="share-message">
         {message}

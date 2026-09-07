@@ -40,9 +40,7 @@ export async function UserRankingPanel({
     return (
       <section className="ranking-lab ranking-locked">
         <div className="ranking-intro">
-          <p className="section-index">
-            {en ? "COMMUNITY · SEPARATE SIGNAL" : "COMUNIDAD · SEÑAL SEPARADA"}
-          </p>
+          <p className="section-index">{en ? "YOUR BALLOT" : "TU QUINIELA"}</p>
           <h2>
             {en
               ? `Your ${localizedName} ranking`
@@ -50,22 +48,22 @@ export async function UserRankingPanel({
           </h2>
           <p>
             {en
-              ? "Sign in to order candidates and decide whether the result will be public or private."
-              : "Inicia sesión para ordenar candidaturas y decidir si el resultado será público o privado."}
+              ? "Try your picks before signing in. Save them to your account when you’re ready."
+              : "Prueba tus elecciones sin registrarte. Guárdalas en tu cuenta cuando quieras."}
           </p>
           <Link
             className="primary-button"
-            href={`${localizedPath("/acceso", locale)}?next=${encodeURIComponent(localizedPath(`/temporadas/2027/${category.slug}`, locale))}`}
+            href={`${localizedPath("/quiniela", locale)}?categoria=${category.slug}`}
           >
-            {en ? "Sign in to rank" : "Entrar para ordenar"}
+            {en ? "Try your ballot" : "Prueba tu quiniela"}
           </Link>
         </div>
         <div className="ranking-lock-copy">
           <strong>{en ? "Private by default" : "Privado por defecto"}</strong>
           <p>
             {en
-              ? "Community rankings never change the points or positions in professional consensus."
-              : "Ningún ranking comunitario altera los puntos ni las posiciones del consenso profesional."}
+              ? "Save your picks for yourself or make them public whenever you like."
+              : "Guarda tus favoritas para ti o hazlas públicas cuando quieras."}
           </p>
         </div>
       </section>
@@ -172,9 +170,7 @@ export async function UserRankingPanel({
   return (
     <section className="ranking-lab">
       <div className="ranking-intro">
-        <p className="section-index">
-          {en ? "COMMUNITY · SEPARATE SIGNAL" : "COMUNIDAD · SEÑAL SEPARADA"}
-        </p>
+        <p className="section-index">{en ? "YOUR BALLOT" : "TU QUINIELA"}</p>
         <h2>
           {en
             ? `Your ${localizedName} ranking`
@@ -182,8 +178,8 @@ export async function UserRankingPanel({
         </h2>
         <p>
           {en
-            ? "Rank only the candidates you want. Missing candidates remain unranked and do not become implicit votes."
-            : "Ordena solo las candidaturas que quieras. Las ausencias quedan sin posición y no se transforman en votos implícitos."}
+            ? "Choose your favourites and put them in order. You can leave your ballot incomplete and come back later."
+            : "Elige tus favoritas y ponlas en orden. Puedes dejar la quiniela incompleta y volver más tarde."}
         </p>
         <div className="ranking-key">
           <span>
