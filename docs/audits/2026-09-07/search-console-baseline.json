@@ -1,0 +1,64 @@
+{
+  "checkedOn": "2026-09-07",
+  "property": "https://runscars.app/",
+  "selectedPeriod": "3 months",
+  "displayedDataRange": {
+    "from": "2026-08-28",
+    "to": "2026-09-05"
+  },
+  "lastUpdatedLabel": "6 hours ago",
+  "clicks": 6,
+  "impressions": 283,
+  "ctrPercent": 2.1,
+  "averagePosition": 24,
+  "indexedPages": 222,
+  "nonIndexedPages": 2036,
+  "fieldCoreWebVitals": "No data",
+  "relevantQuerySample": [
+    {
+      "query": "oscar predictions 2027",
+      "clicks": 1,
+      "impressions": 8
+    },
+    {
+      "query": "la bola negra metacritic",
+      "clicks": 0,
+      "impressions": 7
+    }
+  ],
+  "interpretation": "Pre-release baseline; the small sample does not establish a reliable traffic trend or a measured improvement from this release.",
+  "pagesWithClicks": [
+    {
+      "path": "/",
+      "clicks": 3,
+      "impressions": 8
+    },
+    {
+      "path": "/en",
+      "clicks": 1,
+      "impressions": 18
+    },
+    {
+      "path": "/en/temporadas/2027/actor-de-reparto",
+      "clicks": 1,
+      "impressions": 2
+    },
+    {
+      "path": "/comunidad",
+      "clicks": 1,
+      "impressions": 2
+    }
+  ],
+  "sitemapBeforeSubmission": {
+    "status": "Correcto",
+    "submittedOn": "2026-09-06",
+    "lastReadOn": "2026-09-06",
+    "discoveredPages": 3538
+  },
+  "sitemapResubmission": {
+    "submittedOn": "2026-09-07",
+    "url": "https://runscars.app/sitemap.xml",
+    "confirmation": "Se ha enviado el sitemap correctamente",
+    "publicSitemapUrls": 3542
+  }
+}

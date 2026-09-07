@@ -1,0 +1,131 @@
+{
+  "checkedAt": "2026-09-07T22:13:20.460Z",
+  "deployment": "dpl_HYJBi1nuxjyXeGpQaPEpsewrMThD",
+  "codeCommit": "cbcb1d3",
+  "results": [
+    {
+      "path": "/api/health",
+      "status": 200,
+      "type": "application/json",
+      "health": {
+        "status": "ok",
+        "service": "runscars-web",
+        "databaseConfigured": true
+      }
+    },
+    {
+      "path": "/api/health/database",
+      "status": 200,
+      "type": "application/json",
+      "health": {
+        "status": "ok",
+        "database": "reachable"
+      }
+    },
+    {
+      "path": "/festivales",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "title": "Circuito internacional de festivales de cine 2026 | Runscars",
+      "canonical": "https://runscars.app/festivales"
+    },
+    {
+      "path": "/en/festivales",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "title": "2026 International Film Festival Circuit | Runscars",
+      "canonical": "https://runscars.app/en/festivales"
+    },
+    {
+      "path": "/en/festivales/telluride/2026",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "title": "Telluride Film Festival 2026: Official Selection and Awards | Runscars",
+      "canonical": "https://runscars.app/en/festivales/telluride/2026",
+      "films": 43
+    },
+    {
+      "path": "/semana",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "title": "Esta semana en la carrera a los Oscar 2027 | Runscars",
+      "canonical": "https://runscars.app/semana"
+    },
+    {
+      "path": "/en/semana",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "title": "This week in the Oscar 2027 race | Runscars",
+      "canonical": "https://runscars.app/en/semana"
+    },
+    {
+      "path": "/quiniela",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "title": "Crea tu quiniela de los Oscar 2027 | Runscars",
+      "canonical": "https://runscars.app/quiniela"
+    },
+    {
+      "path": "/en/quiniela",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "title": "Make your Oscar 2027 ballot | Runscars",
+      "canonical": "https://runscars.app/en/quiniela",
+      "trialBallot": true
+    },
+    {
+      "path": "/en/acceso",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "title": "Sign in | Runscars",
+      "canonical": "https://runscars.app/en/acceso"
+    },
+    {
+      "path": "/en/comunidad",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "title": "Oscar 2027 Community Ballots | Runscars",
+      "canonical": "https://runscars.app/en/comunidad"
+    },
+    {
+      "path": "/en/temporadas/2027/mejor-pelicula",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "title": "Best Picture Oscar Predictions 2027 | Runscars",
+      "canonical": "https://runscars.app/en/temporadas/2027/mejor-pelicula"
+    },
+    {
+      "path": "/en/peliculas/fjord",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "title": "Fjord: 2027 Oscar Predictions | Runscars",
+      "canonical": "https://runscars.app/en/peliculas/fjord"
+    },
+    {
+      "path": "/robots.txt",
+      "status": 200,
+      "type": "text/plain; charset=utf-8",
+      "indexingAllowed": true
+    },
+    {
+      "path": "/sitemap.xml",
+      "status": 200,
+      "type": "application/xml",
+      "urls": 3542,
+      "hasNewRoutes": true
+    },
+    {
+      "path": "/semana/feed?lang=en",
+      "status": 200,
+      "type": "application/rss+xml; charset=utf-8",
+      "title": "Runscars · The weekly Oscar race"
+    },
+    {
+      "path": "/api/social",
+      "status": 200,
+      "type": "image/png",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

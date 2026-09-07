@@ -2,7 +2,7 @@
 
 ## Resultado del corte
 
-Rediseño local del índice y de las nueve ediciones festivaleras: calendario
+Rediseño del índice y de las nueve ediciones festivaleras: calendario
 cronológico, fechas legibles, edición destacada, adelantos de películas,
 palmarés antes de selección, búsqueda por título/cineasta/premio y filtro de
 sección. Los enlaces conectan festival, película y temporada Oscar.
@@ -15,7 +15,7 @@ Se ha preparado un suplemento de 43 largometrajes de Telluride desde su
 programa oficial: [manifiesto](../web/data/festivals/2026-telluride.json).
 Se muestra en los datos locales reproducibles. Para incorporarlo a Supabase se
 usa la importación específica documentada en [fuentes](DATA_SOURCES.md).
-**No se ha importado en producción ni desplegado este corte.**
+**Publicado el 07/09/2026. Telluride está importado en Supabase con 43 entradas; repetir la importación no crea otra versión.**
 
 ## Auditoría de copy
 
@@ -40,7 +40,7 @@ Decisión: [D-057](DECISIONS.md#d-057--guía-de-festivales-y-lenguaje-público-o
 El cálculo profesional, los permisos, los valores originales y los registros
 inmutables no cambian. D-053 sigue siendo Propuesta.
 
-## Verificación
+## Verificación del primer rediseño local
 
 - Formato, ESLint y TypeScript: correctos.
 - Unitarias: 152 pruebas correctas, incluida preparación idempotente del
@@ -69,7 +69,7 @@ inmutables no cambian. D-053 sigue siendo Propuesta.
 Las capturas y pruebas usan fixtures locales y no consultan fuentes externas.
 La investigación de Telluride y el diagnóstico HTTP de TIFF se hicieron aparte.
 
-## Recomendaciones priorizadas (propuestas)
+## Recomendaciones iniciales y estado de ejecución
 
 | Prioridad | Recomendación | Beneficio y criterio de éxito |
 |---|---|---|
@@ -94,8 +94,7 @@ no promesas de tráfico ni mejoras medidas.
 - La carga manual de Telluride no implementa un extractor PDF automático.
 - Los problemas previos de Locarno, NYFF y TIFF siguen documentados en
   [DATA_SOURCES.md](DATA_SOURCES.md); este corte no declara saludables sus feeds.
-- El suplemento y la interfaz deben publicarse por los flujos existentes para
-  que aparezcan en la web de producción.
+- La cobertura pendiente se detalla en [FESTIVAL_PROGRAMME_HANDOFF.md](FESTIVAL_PROGRAMME_HANDOFF.md); la publicación no declara completos los nueve programas.
 
 ## Ampliación autorizada: publicación y atractivo
 
@@ -110,5 +109,54 @@ formatos admitidos y campos necesarios para completar el circuito posteriormente
 Las comunicaciones a comunidades y el correo por categorías siguen siendo
 propuestas: este release ofrece suscripción RSS y no envía mensajes a terceros.
 
-La evidencia de publicación se añadirá al cerrar la verificación del artefacto
-público; los resultados locales anteriores no certifican el release ampliado.
+### Publicación verificada
+
+- Origen público: [runscars.app](https://runscars.app).
+- Código publicado: `cbcb1d3`, que incluye `aa1faba` y la corrección posterior
+  de citas largas de jurados en las etiquetas públicas.
+- Artefacto promovido: `dpl_HYJBi1nuxjyXeGpQaPEpsewrMThD`,
+  [deployment](https://runscars-4grjm167h-nazzozzo-s-projects.vercel.app).
+- `npm run verify`: formato, lint, tipos, **163 unitarias**, **22 pruebas de
+  PostgreSQL**, build y auditoría de dependencias correctos; cero vulnerabilidades.
+- Playwright: 122 casos en la pasada completa; 120 correctos y dos expectativas
+  antiguas de navegación corregidas y reejecutadas correctamente. Después del
+  ajuste de footer se repitieron 52 casos de descubrimiento/festivales/smoke sin
+  fallos; tras el último cambio de etiquetas se repitieron los ocho recorridos
+  de festivales/quiniela/edición semanal, todos correctos.
+- Primer artefacto con datos reales: **32 combinaciones** de ruta/idioma/viewport,
+  sin errores JavaScript, overflow, imágenes rotas ni infracciones axe detectadas.
+  El análisis visual detectó las citas de Sundance y motivó el ajuste final.
+- Artefacto final: **8 comprobaciones adicionales** ES/EN y escritorio/móvil
+  de índice y Sundance, todas correctas. Ningún error en los logs consultados.
+- Dominio público tras promoción: **17 endpoints** correctos, incluidos health,
+  base de datos, nuevas páginas, festival, película, categoría, acceso, comunidad,
+  robots, sitemap, RSS e imagen social. Telluride devuelve 43 películas.
+- Seis imágenes de compartir ES/EN generan PNG 1200×630; los dos RSS incluyen
+  siete semanas con cambios registrados. El sitemap público contiene **3.542
+  URLs** e incluye las cuatro rutas nuevas ES/EN de semana y quiniela.
+- Se conservó una copia lógica de roles, esquema y datos fuera de Git antes
+  de la importación; se eliminaron las copias temporales de credenciales.
+
+Evidencia: [dominio público](audits/2026-09-07/production-release.json),
+[32 comprobaciones iniciales](audits/2026-09-07/release-ui.json),
+[corrección final](audits/2026-09-07/release-correction-ui.json),
+[tarjetas y RSS](audits/2026-09-07/release-discovery.json) y
+[cobertura festivalera pública](audits/2026-09-07/festival-coverage-public.json).
+Las verificaciones anónimas no certifican un nuevo ciclo completo de Google OAuth
+ni un aumento de tráfico. Las acciones autenticadas y RLS conservan sus controles.
+
+### Visibilidad: estado medido
+
+Se consultaron consultas y páginas en Search Console: la selección de tres meses
+muestra datos del 28/08 al 05/09, con **6 clics, 283 impresiones, CTR 2,1 % y posición
+media 24**. Hay 222 páginas indexadas y 2.036 no indexadas. Es una muestra inicial
+pequeña, no una mejora atribuible a este release. [Baseline](audits/2026-09-07/search-console-baseline.json).
+
+Quedan implementadas las tarjetas propias, edición semanal, carteles, quiniela
+de prueba, enlaces de descubrimiento, eventos agregados y seguimiento RSS.
+La suscripción por correo a categorías favoritas y la difusión en comunidades
+siguen como propuestas; no se enviaron mensajes a terceros.
+
+El sitemap ampliado se volvió a enviar desde Search Console el 07/09, después
+de la promoción. Google confirmó: «Se ha enviado el sitemap correctamente».
+La aceptación no certifica que las nuevas URLs ya estén indexadas.

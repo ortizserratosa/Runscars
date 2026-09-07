@@ -265,3 +265,24 @@ Se reenvió el sitemap el 06/09 con confirmación de Google; no se modifica una
 redirección válida solo para eliminarla del informe. Sus datos de indexación
 siguen pendientes de un nuevo rastreo. La consulta de Core Web Vitals confirma
 falta de datos de uso móvil/desktop, no un pase de rendimiento de campo.
+
+## Publicación de descubrimiento · 7 de septiembre de 2026
+
+El código `cbcb1d3` se publicó en el artefacto
+`dpl_HYJBi1nuxjyXeGpQaPEpsewrMThD` y se promovió a `https://runscars.app`
+tras verificar el deployment con datos reales. El primer artefacto
+`dpl_3gqcHeRps2yLc3ZBPRddJ1bDxxny` permitió detectar y corregir citas largas
+de Sundance en la vista de tarjetas; no es el artefacto final.
+
+Se importó únicamente `web/data/festivals/2026-telluride.json`: 43 largometrajes,
+una nueva versión y cero nuevas versiones al repetir. No se aplicaron migraciones
+ni se cambiaron funciones o schedules en este corte. Copia previa fuera de Git:
+`/Users/nacho/Documents/Side/Runscars-backups/2026-09-07-festivals-discovery`,
+con directorio 0700 y SQL 0600. El dump conserva roles, esquema y datos; no se
+ensayó una nueva restauración durante este release. La restauración conserva el
+procedimiento para las referencias circulares indicado arriba.
+
+Rollback de frontend: promover `dpl_91mSHvFFpcDXRbdxpXmq4JsD5eht`, el artefacto
+previo verificado. No borrar el conjunto inmutable de Telluride para revertir
+la interfaz. La edición semanal usa los cortes existentes; RSS no requiere
+un nuevo cron. [Entrega y evidencias](PUBLIC_UX_AUDIT_2026-09-07.md).

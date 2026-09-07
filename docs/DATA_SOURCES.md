@@ -398,3 +398,9 @@ Importación independiente, para no volver a activar versiones iniciales de otro
 La preparación del suplemento no convierte el conector PDF en automático ni
 resuelve el bloqueo 403 de TIFF. Estado de entrega y verificación en la
 [auditoría del corte](PUBLIC_UX_AUDIT_2026-09-07.md).
+
+El suplemento de Telluride se importó en la base pública el 07/09/2026:
+`telluride-2026-selection-16dc7c6b5de3`, 43 entradas. Una segunda importación
+confirmó cero conjuntos nuevos. Se conservan los demás punteros de festivales.
+Ver [cobertura observada](audits/2026-09-07/festival-coverage-public.json) y
+[material que falta](FESTIVAL_PROGRAMME_HANDOFF.md).
