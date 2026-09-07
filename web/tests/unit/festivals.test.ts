@@ -1,3 +1,4 @@
+import { festivalAwardLabel } from "../../src/lib/festivals/presentation";
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import {
@@ -301,4 +302,14 @@ describe("Telluride official programme supplement", () => {
       ),
     ).not.toContain("A Song for the Snow Lion");
   });
+});
+
+it("keeps lengthy jury citations out of compact public award labels", () => {
+  expect(festivalAwardLabel("Grand Jury Prize", "en")).toBe("Grand Jury Prize");
+  expect(festivalAwardLabel("A long jury citation. ".repeat(12), "en")).toBe(
+    "Official award",
+  );
+  expect(festivalAwardLabel("A long jury citation. ".repeat(12), "es")).toBe(
+    "Premio oficial",
+  );
 });

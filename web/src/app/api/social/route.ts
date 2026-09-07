@@ -5,6 +5,7 @@ import { socialCard } from "../../../lib/discovery/SocialCard";
 import { validWeek, weekStart } from "../../../lib/discovery/weekly";
 import { getFestivalEdition } from "../../../lib/festivals/data";
 import {
+  festivalAwardLabel,
   festivalDateRange,
   festivalName,
   festivalPreview,
@@ -30,7 +31,7 @@ export async function GET(request: Request) {
         : "EL CIRCUITO FESTIVALERO · 2026",
       title: `${festivalName(edition, locale)} 2026`,
       subtitle: entry
-        ? `${entry.awardType ?? (en ? "In the selection" : "En la selección")}: ${entry.originalTitle}`
+        ? `${festivalAwardLabel(entry.awardType, locale) ?? (en ? "In the selection" : "En la selección")}: ${entry.originalTitle}`
         : en
           ? "Discover the films and explore the official programme."
           : "Descubre las películas y explora el programa oficial.",

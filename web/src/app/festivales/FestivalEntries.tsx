@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { festivalAwardLabel } from "../../lib/festivals/presentation";
 import type { FestivalSetView } from "../../lib/festivals/data";
 import { localizedPath, type Locale } from "../../lib/i18n/config";
 
@@ -103,7 +104,9 @@ export function FestivalEntries({
             <div className="festival-entry-copy">
               <small>{entry.section}</small>
               {entry.awardType ? (
-                <p className="festival-award-name">{entry.awardType}</p>
+                <p className="festival-award-name">
+                  {festivalAwardLabel(entry.awardType, locale)}
+                </p>
               ) : null}
               <h3>
                 {entry.filmId ? (

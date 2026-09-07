@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getFestivalIndex } from "../../lib/festivals/data";
 import {
+  festivalAwardLabel,
   festivalDateRange,
   festivalName,
   festivalPreview,
@@ -235,7 +236,7 @@ export default async function FestivalsPage() {
                           ) : null}
                           <strong>{entry.originalTitle}</strong>
                           <span>
-                            {entry.awardType ??
+                            {festivalAwardLabel(entry.awardType, locale) ??
                               entry.originalRecipient ??
                               entry.section}
                           </span>

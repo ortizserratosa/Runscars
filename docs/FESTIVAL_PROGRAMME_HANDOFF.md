@@ -10,7 +10,7 @@ prepare one before sending the original material.
 | Priority | Festival / edition | What would help |
 |---|---|---|
 | 1 | Toronto / TIFF 2026 | The complete official feature-film programme, with section names. A PDF or saved page is particularly useful because the site has returned 403 to our tools. Send the original page URL with the file. |
-| 1 | Sundance 2026 | The official feature-film selection. Runscars currently has the awards, but not the complete programme. |
+| 1 | Sundance 2026 | The official feature-film selection and a clean official awards list. Runscars currently has award entries, but some imported labels contain jury quotations; those are shortened in the public view. |
 | 1 | Berlinale 2026 | The official feature-film selection, preserving its sections. The awards are already listed. |
 | 1 | Locarno 2026 | The official feature-film selection and a current copy of the official awards page to check our existing 31 award entries. The automated page access has been unreliable. |
 | 2 | Cannes 2026 | The official programmes beyond the 22-film Competition selection already listed, including eligible feature films in the other official sections. Keep parallel organisations’ selections separate. |

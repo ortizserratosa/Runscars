@@ -51,3 +51,15 @@ export function festivalPreview(edition: FestivalEditionView) {
       .slice(0, 3),
   };
 }
+
+/** Some official feeds put jury citations in the award field. Keep those in
+ * the source record instead of repeating a paragraph in every film listing. */
+export function festivalAwardLabel(value: string | null, locale: Locale) {
+  if (!value) return null;
+  const normalized = value.replace(/\s+/g, " ").trim();
+  return normalized.length > 160
+    ? locale === "en"
+      ? "Official award"
+      : "Premio oficial"
+    : normalized;
+}
