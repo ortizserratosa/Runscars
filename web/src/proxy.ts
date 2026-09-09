@@ -28,13 +28,6 @@ export async function proxy(request: NextRequest) {
     return response;
   }
 
-  const cookieLocale = request.cookies.get(LOCALE_COOKIE)?.value;
-  if (!pathLocale && cookieLocale === "en") {
-    const redirectUrl = request.nextUrl.clone();
-    redirectUrl.pathname = pathname === "/" ? "/en" : `/en${pathname}`;
-    return NextResponse.redirect(redirectUrl, 307);
-  }
-
   const locale = pathLocale ?? DEFAULT_LOCALE;
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set(LOCALE_HEADER, locale);

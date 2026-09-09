@@ -36,10 +36,16 @@
     "ingest:manual": "node web/scripts/ingestion.mjs manual",
     "results:import": "node web/scripts/official-results.mjs import",
     "results:archive": "node web/scripts/official-results.mjs archive",
+    "festivals:import": "node web/scripts/festivals.mjs import",
+    "festivals:refresh": "node web/scripts/festivals.mjs refresh",
+    "festivals:match": "node web/scripts/festivals.mjs match",
     "admin:grant": "node web/scripts/editorial-admin.mjs grant",
     "admin:revoke": "node web/scripts/editorial-admin.mjs revoke",
     "admin:list": "node web/scripts/editorial-admin.mjs list",
-    "phase8:staging-check": "node web/scripts/phase-8-staging-check.mjs"
+    "phase8:staging-check": "node web/scripts/phase-8-staging-check.mjs",
+    "audit:production": "node web/scripts/audit-production.mjs",
+    "audit:public": "node web/scripts/audit-public.mjs",
+    "audit:ui": "node web/scripts/audit-ui.mjs"
   },
   "devDependencies": {
     "brace-expansion": "5.0.9",

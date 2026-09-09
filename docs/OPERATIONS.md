@@ -19,7 +19,8 @@ Comprobaciones mínimas después de cada despliegue:
 4. el callback de Google vuelve a `/cuenta` y el alta por correo no apunta a
    `localhost`;
 5. `robots.txt`, `sitemap.xml` y una imagen Open Graph responden correctamente;
-6. no aparecen errores nuevos en los logs de Vercel ni en Supabase.
+6. `/festivales` y una edición cargan en español e inglés, sin enlaces rotos;
+7. no aparecen errores nuevos en los logs de Vercel ni en Supabase.
 
 ## SEO e indexación
 
@@ -48,6 +49,8 @@ Cron:
 - mercados: Kalshi y Polymarket con éxito dentro de las dos últimas horas;
 - snapshots: un `snapshot_refresh_runs` terminado dentro de las últimas 36
   horas, aunque no se haya creado ningún corte nuevo;
+- festivales: nueve conectores diarios a las 05:17 UTC; la ausencia de premios
+  solo es incidencia 24 horas después del cierre de la edición;
 - latencia profesional: cada conector termina en menos de dos minutos en una
   ejecución ordinaria; superar ese umbral exige revisar el run aunque concluya;
 - retrasos: ningún run de las tres familias permanece `running` más de 15
@@ -57,6 +60,40 @@ Los schedules versionados siguen siendo `17 4 * * *` para profesionales,
 `17 * * * *` para mercados y `47 4 * * *` para el refresco diario de cortes. Un
 estado `partial`, un fallo posterior al último éxito o un run fuera de esas
 ventanas exige tratar la automatización como incidente abierto.
+
+Festivales añade `17 5 * * *` mediante
+`supabase/schedules/run-festivals-daily.sql`. Se despliega y comprueba con:
+
+```bash
+npx supabase functions deploy run-festivals --no-verify-jwt --use-api \
+  --import-map supabase/functions/deno.json
+npx supabase db query --linked --file supabase/schedules/run-festivals-daily.sql
+npm run festivals:import
+npm run festivals:refresh
+```
+
+La auditoría viva no forma parte de CI porque consulta páginas externas. Tras
+cada importación o despliegue se ejecuta `npm run audit:production`; recorre el
+sitemap con reintentos acotados, abre cada candidatura, comprueba enlaces
+internos, ejecuta los seis parsers profesionales contra sus páginas vigentes,
+revisa Kalshi/Polymarket y comprueba frescura de conectores cuando dispone de
+credenciales de servidor.
+
+## Despliegue del circuito festivalero
+
+1. Crear fuera del repositorio una copia lógica de roles, esquema y datos, con
+   permisos `0700/0600`.
+2. Aplicar primero las migraciones aditivas y regenerar tipos.
+3. Desplegar `run-festivals`, instalar su schedule e importar el manifiesto
+   inicial.
+4. Ejecutar de nuevo profesionales y mercados para publicar los cortes
+   correctivos de guion y excluir contratos incompatibles.
+5. Verificar preview con unitarias, base, build, Playwright, Axe y auditoría
+   viva; promover solo si todas las rutas públicas son resolubles.
+
+La reversión pausa los conectores nuevos y repone los punteros vigentes a sus
+versiones anteriores. No elimina capturas, aliases, exclusiones, historial de
+matching ni snapshots bloqueados.
 
 ### Evidencia de 2026-09-01
 
@@ -155,3 +192,97 @@ bytes de datos y no se añadió a Git.
   desplegar de nuevo; no basta con borrarlo del historial visible.
 - Contenido o cuenta: usar RLS y la auditoría editorial; no editar directamente
   una quiniela privada salvo recuperación solicitada por su propietario.
+
+## Corte de integridad del 6 de septiembre de 2026
+
+La evidencia por requisito y recorrido se registra en
+[PRODUCTION_AUDIT_2026-09-06.md](PRODUCTION_AUDIT_2026-09-06.md). El alias
+`runscars-staging.vercel.app` redirige a producción: las pruebas de cuentas,
+visibilidad y borrado se ejecutan con Supabase local e identidades temporales.
+
+Publicación reproducible: guardar los cambios relacionados en un commit con
+correo GitHub noreply, ejecutar `npm run verify` y `npm run test:e2e`, desplegar
+con `vercel deploy --prod --skip-domain --yes`, verificar ese artefacto, aplicar
+migraciones/funciones necesarias y promover el mismo URL con `vercel promote`.
+Los secretos y archivos de vinculación permanecen locales. La migración
+`20260906160000` solo versiona extractores; no modifica conjuntos bloqueados.
+
+Release vigente de este corte: commit
+`9357e3536932ae86843071a9e59bab0b5aa8143b`, deployment
+`dpl_91mSHvFFpcDXRbdxpXmq4JsD5eht`, artefacto
+[runscars-cjg0mrtbr](https://runscars-cjg0mrtbr-nazzozzo-s-projects.vercel.app).
+La evidencia posterior se versiona en un commit documental aparte; no se
+atribuye al artefacto código que no contiene.
+
+Rollback web inmediato:
+
+```sh
+npx vercel rollback dpl_EFLqrExb7d8megwCadVV5c8VdzoJ --yes
+```
+
+Ese deployment corresponde a `d429f54` y conserva festivales, catálogo, SEO y
+preload estable de fuentes. Reintroduce los enlaces del selector a `/api/locale`,
+que funcionan pero generan URLs de redirección rastreables. El
+baseline anterior a todo el corte, `dpl_EY7vDVzy1nYErT2aHZtpPQa739sM`,
+reintroduce además festivales 404 y 348 destinos rotos; no es el rollback
+preferido. Tras cualquier rollback, comprobar health, home ES/EN, una categoría,
+una película, festivales, canonical/alternates y logs.
+
+Las tres migraciones de este corte son aditivas/versionadas y compatibles con el
+artefacto anterior. No revertir grants ni borrar conjuntos inmutables para hacer
+rollback de frontend. `run-festivals` v5 está desplegada; si un conector falla,
+pausar solo ese conector o restaurar su función desde un commit verificado y
+registrar el motivo. La captura fallida conserva los últimos datos válidos; un
+HTTP 200 vacío nunca constituye frescura.
+
+Se prepararon `runscars-pre-release-schema.sql` y
+`runscars-pre-release-data.sql` fuera de Git, con permisos 0600. Son copia del
+esquema/datos públicos, **no una copia completa de Auth/Storage ni una
+restauración ensayada de este release**. Se conservan en
+`/Users/nacho/Documents/Side/Runscars-backups/2026-09-06-release` (0700);
+usar el procedimiento completo de
+restauración documentado arriba para recuperación de base de datos. Nunca
+ejecutar `db reset --linked`.
+
+La migración `20260906170000` añade únicamente lectura de snapshots y resultados
+al servicio editorial; las mutaciones permanecen bajo las funciones y triggers
+inmutables. `20260906180000` versiona el parser de Berlín: las menciones
+especiales a cortos heredan el formato del premio anterior dentro del mismo
+jurado. Una reimportación genera una versión nueva, nunca edita el recibo
+anterior.
+
+La operación posterior confirma ocho fuentes profesionales y dos mercados
+saludables, cron activo y el refresco de snapshots del 06/09 con cero fallos.
+Cuatro feeds festivaleros (Locarno, NYFF, TIFF, Telluride) siguen degradados;
+ver la matriz de la auditoría. Un timeout de revalidación pública del consenso
+sirvió el valor anterior y luego respondió normalmente en tres lecturas. No se
+certifica ausencia de fallos bajo carga ni una sesión Google completa de
+producción. Estos límites no se sustituyen por resultados de fixtures locales.
+
+Search Console se consultó mediante la sesión existente tras recibir el aviso:
+los tres redirects eran enlaces del selector, no destinos canónicos rotos.
+Se reenvió el sitemap el 06/09 con confirmación de Google; no se modifica una
+redirección válida solo para eliminarla del informe. Sus datos de indexación
+siguen pendientes de un nuevo rastreo. La consulta de Core Web Vitals confirma
+falta de datos de uso móvil/desktop, no un pase de rendimiento de campo.
+
+## Publicación de descubrimiento · 7 de septiembre de 2026
+
+El código `cbcb1d3` se publicó en el artefacto
+`dpl_HYJBi1nuxjyXeGpQaPEpsewrMThD` y se promovió a `https://runscars.app`
+tras verificar el deployment con datos reales. El primer artefacto
+`dpl_3gqcHeRps2yLc3ZBPRddJ1bDxxny` permitió detectar y corregir citas largas
+de Sundance en la vista de tarjetas; no es el artefacto final.
+
+Se importó únicamente `web/data/festivals/2026-telluride.json`: 43 largometrajes,
+una nueva versión y cero nuevas versiones al repetir. No se aplicaron migraciones
+ni se cambiaron funciones o schedules en este corte. Copia previa fuera de Git:
+`/Users/nacho/Documents/Side/Runscars-backups/2026-09-07-festivals-discovery`,
+con directorio 0700 y SQL 0600. El dump conserva roles, esquema y datos; no se
+ensayó una nueva restauración durante este release. La restauración conserva el
+procedimiento para las referencias circulares indicado arriba.
+
+Rollback de frontend: promover `dpl_91mSHvFFpcDXRbdxpXmq4JsD5eht`, el artefacto
+previo verificado. No borrar el conjunto inmutable de Telluride para revertir
+la interfaz. La edición semanal usa los cortes existentes; RSS no requiere
+un nuevo cron. [Entrega y evidencias](PUBLIC_UX_AUDIT_2026-09-07.md).

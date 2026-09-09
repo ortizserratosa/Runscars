@@ -7,6 +7,8 @@ import { localizedCategoryName } from "../../../lib/i18n/categories";
 import { localeTag, localizedPath } from "../../../lib/i18n/config";
 import { getRequestLocale } from "../../../lib/i18n/server";
 
+import { buildLocalizedMetadata } from "../../../lib/seo";
+
 type PublicProfilePageProps = {
   params: Promise<{ slug: string }>;
 };
@@ -17,13 +19,17 @@ export async function generateMetadata({
   params,
 }: PublicProfilePageProps): Promise<Metadata> {
   const { slug } = await params;
-  const en = (await getRequestLocale()) === "en";
-  return {
+  const locale = await getRequestLocale();
+  const en = locale === "en";
+  return buildLocalizedMetadata({
+    locale,
+    path: `/usuarios/${slug}`,
     title: `@${slug}`,
+    type: "profile",
     description: en
-      ? "Public profile and individual ballots on Runscars."
-      : "Perfil público y quinielas individuales en Runscars.",
-  };
+      ? `Public Oscar ballots by @${slug} on Runscars, with their favourites for each category.`
+      : `Quinielas Oscar públicas de @${slug} en Runscars, con sus favoritas por categoría.`,
+  });
 }
 
 export default async function PublicProfilePage({
@@ -84,8 +90,8 @@ export default async function PublicProfilePage({
           </div>
           <p>
             {en
-              ? "Missing positions are not inferred and these rankings do not form a community consensus."
-              : "Las posiciones ausentes no se infieren y estos rankings no forman un consenso comunitario."}
+              ? "Explore their favourites by category."
+              : "Explora sus favoritas por categoría."}
           </p>
         </div>
         <div className="public-ranking-grid">

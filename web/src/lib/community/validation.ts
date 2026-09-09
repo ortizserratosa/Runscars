@@ -60,44 +60,56 @@ export const rankingEntryInputSchema = z.discriminatedUnion("kind", [
 
 export type RankingEntryInput = z.infer<typeof rankingEntryInputSchema>;
 
-export const rankingSchema = z
-  .object({
-    seasonId: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
-    categoryId: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
-    entries: z.array(rankingEntryInputSchema).min(1),
-    isPublic: z.boolean(),
-  })
-  .superRefine((ranking, context) => {
-    const limit = rankingEntryLimit(ranking.categoryId);
-    if (limit === null || ranking.entries.length > limit) {
-      context.addIssue({
-        code: "too_big",
-        maximum: limit ?? 0,
-        origin: "array",
-        path: ["entries"],
-        message: "Ranking exceeds the category limit",
-      });
-    }
+function createRankingSchema(limitForCategory: (categoryId: string) => number) {
+  return z
+    .object({
+      seasonId: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+      categoryId: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+      entries: z.array(rankingEntryInputSchema).min(1),
+      isPublic: z.boolean(),
+    })
+    .superRefine((ranking, context) => {
+      const limit = limitForCategory(ranking.categoryId);
+      if (ranking.entries.length > limit) {
+        context.addIssue({
+          code: "too_big",
+          maximum: limit,
+          origin: "array",
+          path: ["entries"],
+          message: "Ranking exceeds the category limit",
+        });
+      }
 
-    const candidateIds = ranking.entries.flatMap((entry) =>
-      entry.kind === "candidate" ? [entry.candidateId] : [],
-    );
-    if (new Set(candidateIds).size !== candidateIds.length) {
-      context.addIssue({
-        code: "custom",
-        path: ["entries"],
-        message: "Ranking candidates must be unique",
-      });
-    }
+      const candidateIds = ranking.entries.flatMap((entry) =>
+        entry.kind === "candidate" ? [entry.candidateId] : [],
+      );
+      if (new Set(candidateIds).size !== candidateIds.length) {
+        context.addIssue({
+          code: "custom",
+          path: ["entries"],
+          message: "Ranking candidates must be unique",
+        });
+      }
 
-    if (ranking.entries.filter((entry) => entry.kind === "custom").length > 1) {
-      context.addIssue({
-        code: "custom",
-        path: ["entries"],
-        message: "Only one custom entry is allowed",
-      });
-    }
-  });
+      if (
+        ranking.entries.filter((entry) => entry.kind === "custom").length > 1
+      ) {
+        context.addIssue({
+          code: "custom",
+          path: ["entries"],
+          message: "Only one custom entry is allowed",
+        });
+      }
+    });
+}
+
+export function rankingSchemaForLimit(entryLimit: number) {
+  return createRankingSchema(() => entryLimit);
+}
+
+export const rankingSchema = createRankingSchema(
+  (categoryId) => rankingEntryLimit(categoryId) ?? 0,
+);
 
 export function parseRankingEntries(value: FormDataEntryValue | null) {
   if (typeof value !== "string") return [];

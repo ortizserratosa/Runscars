@@ -1,0 +1,366 @@
+{
+  "schemaVersion": 1,
+  "scope": "Telluride 2026 · contemporary feature films in Shows and Backlot",
+  "sets": [
+    {
+      "editionId": "telluride-2026",
+      "kind": "selection",
+      "source": {
+        "url": "https://telluridecms-production.s3.amazonaws.com/assets/pdfs/53rd-TFF-program-guide-final.pdf",
+        "title": "53rd Telluride Film Festival — Official Program Guide: Shows and Backlot",
+        "publishedAt": null
+      },
+      "capturedAt": "2026-09-07T20:32:54.058333Z",
+      "extractorVersion": "telluride-official-manual-v1",
+      "rawCapture": {
+        "receipt": "Feature-film credits transcribed from the official programme; original film headings and named filmmakers retained. No programme essays copied.",
+        "publisher": "National Film Preserve Ltd. / Telluride Film Festival",
+        "sourceUrl": "https://telluridecms-production.s3.amazonaws.com/assets/pdfs/53rd-TFF-program-guide-final.pdf",
+        "pdfSha256": "da3929246041c52a4b50c3f4ae7b01351610dde845d44aa675673a7ca5d43de9",
+        "pdfPages": [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 23, 24],
+        "showsProgramNumbers": [
+          "1a",
+          "4",
+          "5",
+          "6",
+          "7a",
+          "8",
+          "9a",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "23",
+          "24",
+          "25",
+          "26",
+          "27",
+          "28",
+          "29",
+          "31",
+          "32",
+          "35",
+          "37",
+          "38",
+          "39",
+          "40",
+          "41",
+          "42"
+        ],
+        "exclusions": "Tributes 1, 7 and 9; retrospective programmes 2, 22, 30 and 43–48; short-film programmes 3, 33, 34, 36, 49–51; shorts accompanying Backlot A and E; talks, seminars and repertory screenings. Multi-part feature documentaries 26 and 38 retained as complete films.",
+        "recipientNote": "Into the Breach has no unambiguous director credit in the programme description, so its recipient is left null."
+      },
+      "entries": [
+        {
+          "section": "Shows",
+          "originalTitle": "A Long Winter",
+          "originalRecipient": "Andrew Haigh",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "Burgundy",
+          "originalRecipient": "Michael Dweck and Gregory Kershaw",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "The Only Living Pickpocket in New York",
+          "originalRecipient": "Noah Segan",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "Elsinore",
+          "originalRecipient": "Simon Stone",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "Rose",
+          "originalRecipient": "Markus Schleinzer",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "Fatherland",
+          "originalRecipient": "Paweł Pawlikowski",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "Wild Horse Nine",
+          "originalRecipient": "Martin McDonagh",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "Tenzing",
+          "originalRecipient": "Jennifer Peedom",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "Once Upon a Time in Harlem",
+          "originalRecipient": "William Greaves and David Greaves",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "Ink",
+          "originalRecipient": "Danny Boyle",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "Club Kid",
+          "originalRecipient": "Jordan Firstman",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "Carl Sagan: We Are Made of Star Stuff",
+          "originalRecipient": "Nanette Burstein",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "The Row",
+          "originalRecipient": "Bryan Fogel",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "Pete Townshend: Behind Blue Eyes",
+          "originalRecipient": "Frank Marshall, Nigel Sinclair and Cassidy Hartmann",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "Fjord",
+          "originalRecipient": "Cristian Mungiu",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "The Liberation",
+          "originalRecipient": "Guy Nattiv",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "Everest: The Other Side",
+          "originalRecipient": "Elizabeth Chai Vasarhelyi and Jimmy Chin",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "Avedon",
+          "originalRecipient": "Ron Howard",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "The Debut",
+          "originalRecipient": "Jesse Eisenberg",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "Making Marie Antoinette",
+          "originalRecipient": "Eleanor Coppola",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "Rehearsals for a Revolution",
+          "originalRecipient": "Pegah Ahangarani",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "Tender Loving Care",
+          "originalRecipient": "Mike Leigh",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "My Undesirable Friends: Part II – Exile",
+          "originalRecipient": "Julia Loktev",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "Minotaur",
+          "originalRecipient": "Andrey Zvyagintsev",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "Act 3",
+          "originalRecipient": "Christine Molloy and Joe Lawlor",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "The Idiot(s)",
+          "originalRecipient": "Małgorzata Szumowska and Michał Englert",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "The Unknown",
+          "originalRecipient": "Arthur Harari",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "Sumo: Spirit Weighs Nothing",
+          "originalRecipient": "Erik Shirai",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "Bucking Fastard",
+          "originalRecipient": "Werner Herzog",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "La Bola Negra",
+          "originalRecipient": "Javier Calvo and Javier Ambrossi",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "The Story of Documentary Film",
+          "originalRecipient": "Mark Cousins",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "Alpha Gang",
+          "originalRecipient": "David Zellner and Nathan Zellner",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "The Man I Love",
+          "originalRecipient": "Ira Sachs",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "Gentle Monster",
+          "originalRecipient": "Marie Kreutzer",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Shows",
+          "originalTitle": "The Disciple",
+          "originalRecipient": "Joanna Natasegara",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Backlot",
+          "originalTitle": "The Golden Age",
+          "originalRecipient": "Bérenger Thouin",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Backlot",
+          "originalTitle": "House of Criticism",
+          "originalRecipient": "Alison Chernick",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Backlot",
+          "originalTitle": "The Illusion of an Everlasting Summer",
+          "originalRecipient": "Alessandra Sanguinetti",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Backlot",
+          "originalTitle": "Into the Breach",
+          "originalRecipient": null,
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Backlot",
+          "originalTitle": "Maverick: The Epic Adventures of David Lean",
+          "originalRecipient": "Barnaby Thompson",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Backlot",
+          "originalTitle": "The Natural State",
+          "originalRecipient": "Mathew Dougherty",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Backlot",
+          "originalTitle": "One More Time",
+          "originalRecipient": "Cindy Kleine and André Gregory",
+          "isFeature": true,
+          "isOfficial": true
+        },
+        {
+          "section": "Backlot",
+          "originalTitle": "Zero Intention of Living Quietly",
+          "originalRecipient": "Edward Lovelace",
+          "isFeature": true,
+          "isOfficial": true
+        }
+      ]
+    }
+  ]
+}

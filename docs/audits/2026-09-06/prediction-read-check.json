@@ -1,0 +1,22 @@
+{
+  "capturedAt": "2026-09-06T21:54:06.235Z",
+  "role": "anon",
+  "query": "Public active-season prediction snapshot history",
+  "results": [
+    {
+      "durationMs": 418,
+      "rows": 129,
+      "error": null
+    },
+    {
+      "durationMs": 728,
+      "rows": 129,
+      "error": null
+    },
+    {
+      "durationMs": 312,
+      "rows": 129,
+      "error": null
+    }
+  ]
+}

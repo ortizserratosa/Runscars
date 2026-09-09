@@ -2,14 +2,13 @@ import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Archivo, Bodoni_Moda, IBM_Plex_Mono } from "next/font/google";
-import { headers } from "next/headers";
 import {
   localeTag,
   localizedPath,
   stripLocalePrefix,
 } from "../lib/i18n/config";
 import { getRequestLocale, getRequestPath } from "../lib/i18n/server";
-import { SITE_NAME, SOCIAL_IMAGE_PATH } from "../lib/seo";
+import { SITE_NAME, SOCIAL_IMAGE_PATH, siteOrigin } from "../lib/seo";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
 import "./globals.css";
@@ -32,24 +31,15 @@ const monoFont = IBM_Plex_Mono({
   display: "swap",
   subsets: ["latin"],
   variable: "--font-runscars-mono",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "700"],
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  const [requestHeaders, locale, visiblePath] = await Promise.all([
-    headers(),
+  const [locale, visiblePath] = await Promise.all([
     getRequestLocale(),
     getRequestPath(),
   ]);
-  const forwardedHost = requestHeaders.get("x-forwarded-host");
-  const requestHost =
-    forwardedHost ?? requestHeaders.get("host") ?? "localhost:3000";
-  const safeHost = /^[a-z0-9.-]+(?::\d+)?$/i.test(requestHost)
-    ? requestHost
-    : "localhost:3000";
-  const protocol =
-    requestHeaders.get("x-forwarded-proto") === "https" ? "https" : "http";
-  const origin = `${protocol}://${safeHost}`;
+  const origin = siteOrigin();
   const english = locale === "en";
   const description = english
     ? "Follow the 2027 Oscar predictions with an updated, source-by-source expert consensus for Best Picture and every major category."
@@ -144,8 +134,8 @@ export default async function RootLayout({
         <SiteHeader />
         <div id="contenido">{children}</div>
         <SiteFooter />
-        <Analytics />
-        <SpeedInsights />
+        {process.env.VERCEL ? <Analytics /> : null}
+        {process.env.VERCEL ? <SpeedInsights /> : null}
       </body>
     </html>
   );

@@ -1,0 +1,65 @@
+{
+  "capturedAt": "2026-09-06T22:05:50.961931+00:00",
+  "property": "https://runscars.app/",
+  "reportUpdatedAt": "2026-09-04",
+  "indexed": 222,
+  "excluded": {
+    "pageWithRedirect": 3,
+    "discoveredCurrentlyNotIndexed": 2030,
+    "crawledCurrentlyNotIndexed": 3
+  },
+  "redirectExamples": [
+    {
+      "path": "/api/locale?locale=es&returnTo=/en/personas/tmdb-91671",
+      "lastCrawl": "2026-08-30",
+      "liveStatus": 307,
+      "target": "/personas/tmdb-91671",
+      "targetStatus": 200
+    },
+    {
+      "path": "/api/locale?locale=es&returnTo=/en/peliculas/michael",
+      "lastCrawl": "2026-08-30",
+      "liveStatus": 307,
+      "target": "/peliculas/michael",
+      "targetStatus": 200
+    },
+    {
+      "path": "/api/locale?locale=en&returnTo=/privacidad",
+      "lastCrawl": "2026-08-30",
+      "liveStatus": 307,
+      "target": "/en/privacidad",
+      "targetStatus": 200
+    }
+  ],
+  "urlInspection": {
+    "url": "https://runscars.app/peliculas/michael",
+    "googleVerdict": "La URL est\u00e1 en Google",
+    "pageIndexing": "La p\u00e1gina est\u00e1 indexada"
+  },
+  "crawledNotIndexedExamples": [
+    "https://runscars.app/?share=20260830-2",
+    "https://runscars.app/personas/tmdb-1310711",
+    "https://runscars.app/personas/tmdb-1111176"
+  ],
+  "sitemapBeforeResubmission": {
+    "path": "/sitemap.xml",
+    "submittedAt": "2026-09-01",
+    "lastReadAt": "2026-09-04",
+    "status": "Correcto",
+    "discoveredPages": 2242
+  },
+  "fieldCoreWebVitals": {
+    "reportUpdatedAt": "2026-09-05",
+    "mobile": "Insufficient usage data in the last 90 days",
+    "desktop": "Insufficient usage data in the last 90 days"
+  },
+  "action": "Replace published language-switch links with direct localized canonical paths; keep legacy locale redirects functional. No claim that old redirects should be indexed.",
+  "sitemapResubmission": {
+    "submittedAt": "2026-09-06",
+    "confirmation": "Se ha enviado el sitemap correctamente",
+    "tableStatus": "Correcto",
+    "lastReadStillAt": "2026-09-04",
+    "discoveredPagesStill": 2242,
+    "note": "Submission accepted; new crawl and indexing not claimed"
+  }
+}

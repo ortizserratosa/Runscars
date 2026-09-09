@@ -50,8 +50,8 @@ export async function FilmWatchPanel({ filmId }: { filmId: string }) {
         <h3>{labels[state]}</h3>
         <p>
           {en
-            ? "Mark your watch state without affecting criticism or predictions."
-            : "Indica tu visionado sin alterar crítica ni predicciones."}
+            ? "Keep track of the films you’ve seen."
+            : "Lleva la cuenta de las películas que has visto."}
         </p>
       </div>
       <div

@@ -25,7 +25,7 @@ export type FilmCatalogDetail = {
   alternateTitles: string[];
   releaseStatus: "released" | "upcoming";
   editorialReleaseDate: string | null;
-  verificationUrl: string;
+  verificationUrl: string | null;
   notes: string | null;
   tmdb: {
     id: number;
@@ -65,7 +65,7 @@ export type PersonCatalogDetail = {
     fetchedAt: string;
     expiresAt: string;
     url: string;
-  };
+  } | null;
   films: Array<{
     id: string;
     title: string;
@@ -114,9 +114,8 @@ export const getFilmCatalogDetail = cache(async function getFilmCatalogDetail(
   slug: string,
   locale: "es-ES" | "en-US" = "es-ES",
 ): Promise<FilmCatalogDetail | null> {
-  const fallback = fixtureDetail(slug);
-  if (!fallback || !isSupabaseConfigured()) {
-    return fallback;
+  if (!isSupabaseConfigured()) {
+    return fixtureDetail(slug);
   }
 
   try {
@@ -129,8 +128,13 @@ export const getFilmCatalogDetail = cache(async function getFilmCatalogDetail(
       .eq("id", slug)
       .maybeSingle();
 
-    if (filmError || !film) {
-      return fallback;
+    if (filmError) {
+      throw new Error(
+        `No se pudo consultar la película ${slug}: ${filmError.message}`,
+      );
+    }
+    if (!film) {
+      return null;
     }
 
     const detail: FilmCatalogDetail = {
@@ -140,7 +144,7 @@ export const getFilmCatalogDetail = cache(async function getFilmCatalogDetail(
       releaseStatus:
         film.release_status === "released" ? "released" : "upcoming",
       editorialReleaseDate: film.release_date,
-      verificationUrl: film.verification_url ?? fallback.verificationUrl,
+      verificationUrl: film.verification_url,
       notes: film.notes,
       tmdb: null,
       credits: [],
@@ -256,8 +260,10 @@ export const getFilmCatalogDetail = cache(async function getFilmCatalogDetail(
     });
 
     return detail;
-  } catch {
-    return fallback;
+  } catch (error) {
+    throw error instanceof Error
+      ? error
+      : new Error(`No se pudo cargar la película ${slug}`);
   }
 });
 
@@ -278,44 +284,60 @@ export const getPersonCatalogDetail = cache(
         .eq("id", personId)
         .maybeSingle();
 
-      if (personError || !person) {
+      if (personError) {
+        throw new Error(
+          `No se pudo consultar la persona ${personId}: ${personError.message}`,
+        );
+      }
+      if (!person) {
         return null;
       }
 
-      const { data: snapshots, error: snapshotError } = await supabase
-        .from("tmdb_person_snapshots")
-        .select(
-          "tmdb_id, locale, original_name, known_for_department, biography, birthday, deathday, place_of_birth, homepage_url, imdb_id, profile_path, fetched_at, expires_at",
-        )
-        .eq("tmdb_id", person.tmdb_id)
-        .in(
-          "locale",
-          locale === "es-ES" ? ["es-ES", "en-US"] : ["en-US", "es-ES"],
-        )
-        .gt("expires_at", new Date().toISOString())
-        .order("fetched_at", { ascending: false });
+      const [
+        { data: snapshots, error: snapshotError },
+        { data: creditRows, error: creditsError },
+      ] = await Promise.all([
+        supabase
+          .from("tmdb_person_snapshots")
+          .select(
+            "tmdb_id, locale, original_name, known_for_department, biography, birthday, deathday, place_of_birth, homepage_url, imdb_id, profile_path, fetched_at, expires_at",
+          )
+          .eq("tmdb_id", person.tmdb_id)
+          .in(
+            "locale",
+            locale === "es-ES" ? ["es-ES", "en-US"] : ["en-US", "es-ES"],
+          )
+          .order("fetched_at", { ascending: false }),
+        supabase
+          .from("film_credits")
+          .select("film_id, role")
+          .eq("person_id", person.id),
+      ]);
 
       const snapshot =
         snapshots?.find((item) => item.locale === locale) ?? snapshots?.[0];
 
-      if (snapshotError || !snapshot) {
-        return null;
+      if (snapshotError) {
+        throw new Error(
+          `No se pudo consultar TMDB para ${personId}: ${snapshotError.message}`,
+        );
       }
 
-      const { data: creditRows, error: creditsError } = await supabase
-        .from("film_credits")
-        .select("film_id, role")
-        .eq("person_id", person.id);
-
       if (creditsError) {
-        return null;
+        throw new Error(
+          `No se pudieron consultar los créditos de ${personId}: ${creditsError.message}`,
+        );
       }
 
       const filmIds = [...new Set(creditRows.map((credit) => credit.film_id))];
-      const { data: films } =
+      const { data: films, error: filmsError } =
         filmIds.length === 0
-          ? { data: [] }
+          ? { data: [], error: null }
           : await supabase.from("films").select("id, title").in("id", filmIds);
+      if (filmsError)
+        throw new Error(
+          `No se pudieron consultar las películas de ${personId}: ${filmsError.message}`,
+        );
       const rolesByFilmId = new Map<string, string[]>();
       for (const credit of creditRows) {
         const roles = rolesByFilmId.get(credit.film_id) ?? [];
@@ -326,45 +348,56 @@ export const getPersonCatalogDetail = cache(
       return {
         id: person.id,
         name: person.name,
-        tmdb: {
-          id: snapshot.tmdb_id,
-          originalName: snapshot.original_name,
-          knownForDepartment: snapshot.known_for_department,
-          biography: snapshot.biography,
-          birthday: snapshot.birthday,
-          deathday: snapshot.deathday,
-          placeOfBirth: snapshot.place_of_birth,
-          homepageUrl: snapshot.homepage_url,
-          imdbId: snapshot.imdb_id,
-          profilePath: snapshot.profile_path,
-          fetchedAt: snapshot.fetched_at,
-          expiresAt: snapshot.expires_at,
-          url: `https://www.themoviedb.org/person/${snapshot.tmdb_id}`,
-        },
+        tmdb: snapshot
+          ? {
+              id: snapshot.tmdb_id,
+              originalName: snapshot.original_name,
+              knownForDepartment: snapshot.known_for_department,
+              biography: snapshot.biography,
+              birthday: snapshot.birthday,
+              deathday: snapshot.deathday,
+              placeOfBirth: snapshot.place_of_birth,
+              homepageUrl: snapshot.homepage_url,
+              imdbId: snapshot.imdb_id,
+              profilePath: snapshot.profile_path,
+              fetchedAt: snapshot.fetched_at,
+              expiresAt: snapshot.expires_at,
+              url: `https://www.themoviedb.org/person/${snapshot.tmdb_id}`,
+            }
+          : null,
         films: (films ?? []).map((film) => ({
           id: film.id,
           title: film.title,
           roles: rolesByFilmId.get(film.id) ?? [],
         })),
       };
-    } catch {
-      return null;
+    } catch (error) {
+      throw error instanceof Error
+        ? error
+        : new Error(`No se pudo cargar la persona ${personId}`);
     }
   },
 );
 
-export async function listCatalogPersonIds() {
-  if (!isSupabaseConfigured()) {
-    return [];
+async function listCatalogIds(table: "films" | "people") {
+  const supabase = createSupabaseServerClient();
+  const ids: string[] = [];
+  const pageSize = 500;
+  for (let offset = 0; ; offset += pageSize) {
+    const { data, error } = await supabase
+      .from(table)
+      .select("id")
+      .order("id")
+      .range(offset, offset + pageSize - 1);
+    if (error)
+      throw new Error(`Could not enumerate ${table}: ${error.message}`);
+    ids.push(...data.map((row) => row.id));
+    if (data.length < pageSize) return ids;
   }
+}
 
-  try {
-    const supabase = createSupabaseServerClient();
-    const { data, error } = await supabase.from("people").select("id");
-    return error ? [] : data.map((person) => person.id);
-  } catch {
-    return [];
-  }
+export async function listCatalogPersonIds() {
+  return isSupabaseConfigured() ? listCatalogIds("people") : [];
 }
 
 export function listFixtureFilmIds() {
@@ -372,17 +405,9 @@ export function listFixtureFilmIds() {
 }
 
 export async function listCatalogFilmIds() {
-  const fixtureIds = listFixtureFilmIds();
   if (!isSupabaseConfigured()) {
-    return fixtureIds;
+    return listFixtureFilmIds();
   }
 
-  try {
-    const supabase = createSupabaseServerClient();
-    const { data, error } = await supabase.from("films").select("id");
-    if (error) return fixtureIds;
-    return [...new Set([...fixtureIds, ...data.map((film) => film.id)])];
-  } catch {
-    return fixtureIds;
-  }
+  return listCatalogIds("films");
 }

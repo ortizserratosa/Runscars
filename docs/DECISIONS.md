@@ -1,6 +1,6 @@
 # Registro de decisiones
 
-**Última revisión:** 2026-09-01
+**Última revisión:** 2026-09-09
 
 ## Cómo usar este registro
 
@@ -71,7 +71,12 @@ pasado para ocultar cambios de criterio.
 | D-051 | Cobertura obligatoria y evidencia durable de automatización    | Aceptada    |
 | D-052 | Película principal ante una alternativa editorial explícita    | Aceptada    |
 | D-053 | Tipografía y sistema visual web v1                             | Propuesta   |
-| D-054 | Caducidad mensual de predicciones profesionales                | Aceptada    |
+| D-054 | Candidatura de guion identificada por película                  | Aceptada    |
+| D-055 | Circuito internacional de festivales 2026                       | Aceptada    |
+| D-056 | Idioma explícito, origen canónico y verificación pública        | Aceptada    |
+| D-057 | Guía de festivales y lenguaje público orientado al visitante     | Aceptada    |
+| D-058 | Descubrimiento, edición semanal y quiniela antes del acceso     | Aceptada    |
+| D-059 | Caducidad mensual de predicciones profesionales                | Aceptada    |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -213,7 +218,7 @@ las decisiones D-001 a D-011 quedan aceptadas y la fase 0 se considera cerrada.
   o una cadencia editorial distinta.
 - **Revisión posterior:** D-025 reemplaza únicamente el mínimo profesional de
   tres listas por cuatro rankings automáticos y publicables por categoría. La
-  deduplicación y el mínimo crítico siguen vigentes. D-054 reemplaza la ventana
+  deduplicación y el mínimo crítico siguen vigentes. D-059 reemplaza la ventana
   de frescura y convierte su aviso en exclusión efectiva del consenso.
 
 ## D-014 · Consenso de rankings parciales de usuarios
@@ -957,7 +962,134 @@ ejemplos manuales de nominaciones y ganador coincidieron con
 - **Documentación:** `docs/brand/IDENTITY.md` especifica paleta, variantes,
   patrones, responsive, accesibilidad y usos incorrectos.
 
-## D-054 · Caducidad mensual de predicciones profesionales
+## D-054 · Candidatura de guion identificada por película
+
+- **Fecha:** 2026-09-03
+- **Estado:** Aceptada
+- **Decisión:** en Guion original y Guion adaptado, la identidad canónica es
+  `temporada + categoría + película`. La candidatura muestra la película como
+  rótulo principal; los guionistas verificados son créditos secundarios y su
+  presencia o ausencia en una fuente no crea otra candidatura.
+- **Migración:** las observaciones y quinielas se reasignan a la candidatura
+  canónica. Si una quiniela contenía dos IDs antiguos de la misma película, se
+  conserva la mejor posición y se vuelve a numerar. Los IDs sustituidos quedan
+  como aliases, la corrección queda registrada y los snapshots previos no se
+  modifican.
+- **Importación:** una fuente puede publicar `Guionistas — Película`; el valor
+  original se conserva, pero el matching y la identidad usan la película. Los
+  créditos comprobados enriquecen la candidatura existente.
+- **Refina:** D-024 para las dos categorías de guion; las categorías de
+  interpretación y dirección conservan su identidad propia.
+
+## D-055 · Circuito internacional de festivales 2026
+
+- **Fecha:** 2026-09-03
+- **Estado:** Aceptada
+- **Decisión:** incorporar Sundance, Berlín, Cannes, Locarno, Venecia, Toronto,
+  San Sebastián, Telluride y Nueva York en sus ediciones de 2026 como contexto
+  de la temporada Oscar 2027.
+- **Separación:** selección y palmarés son conjuntos oficiales versionados e
+  inmutables. Nunca participan en Borda, cobertura profesional, recepción,
+  mercados ni comunidad. Telluride y NYFF son selecciones no competitivas y su
+  palmarés es `not_applicable`.
+- **Alcance:** se incluyen largometrajes de competición y secciones oficiales,
+  premios de público, debut, interpretación y oficios. Se excluyen cortos,
+  episodios, inmersivo, restauraciones, premios honoríficos, mercados de
+  industria y premios paralelos ajenos al palmarés oficial.
+- **Operación:** una función aislada consulta cada festival a las 05:17 UTC. La
+  ausencia de premios antes del cierre es normal; 24 horas después del cierre
+  se convierte en incidencia. Un fallo no detiene los demás festivales y una
+  captura idéntica no crea otra versión.
+- **Presentación:** el circuito aparece en temporada, película, candidatura,
+  Fuentes y rutas propias bilingües. Rust identifica hitos, Moss los estados y
+  Blue la procedencia, sin convertir D-053 en aceptada.
+
+## D-056 · Idioma explícito, origen canónico y verificación pública
+
+- **Fecha:** 2026-09-06
+- **Estado:** Aceptada
+- **Decisión:** la URL determina el idioma; una cookie no redirige una ruta
+  española solicitada explícitamente. El cambio de idioma y la autenticación
+  conservan destino y parámetros mediante destinos internos validados.
+- **SEO:** `https://runscars.app` es el origen canónico público. Las variantes
+  de filtros y cortes apuntan a su landing; cuentas y autenticación no se
+  indexan. El sitemap pagina el catálogo completo y fecha cambios de contenido,
+  no comprobaciones sin cambios. Un error del backend no equivale a catálogo vacío.
+  El selector enlaza directamente a la ruta del otro idioma, incluidos sus
+  parámetros. `/api/locale` conserva compatibilidad para enlaces antiguos,
+  pero deja de anunciarse como destino alternativo rastreable.
+- **Presentación:** se compactan las introducciones y se despliega el historial
+  bajo demanda, conservando las URLs de cortes. Se conserva la marca existente
+  y el carácter provisional de D-053.
+- **Operación:** una respuesta HTTP sin entradas reconocidas no prueba que una
+  fuente festivalera se haya verificado. Se registra fallo y se conserva el
+  último conjunto válido; los extractores se versionan para permitir el reintento.
+- **Origen:** plan de auditoría y publicación aprobado por el usuario.
+
+- **Rendimiento público:** los datos anónimos de categorías se comparten entre
+  peticiones con revalidación de 60 segundos. Las variantes de idioma reutilizan
+  la misma señal y los cortes conservan claves distintas. Sesiones, rankings,
+  visionado y administración quedan fuera de esa caché. Se evita el prefetch
+  masivo de navegación y categorías; las rutas se cargan cuando se eligen.
+
+
+## D-057 · Guía de festivales y lenguaje público orientado al visitante
+
+- **Fecha:** 2026-09-07
+- **Estado:** Aceptada
+- **Origen:** petición del usuario de mejorar Festivales y retirar explicaciones
+  de estado interno de toda la web.
+- **Decisión:** presentar Festivales como calendario cronológico con fechas,
+  edición destacada, adelantos de películas y navegación a las predicciones.
+  Las ediciones permiten buscar películas, cineastas y premios y filtrar por
+  sección; el palmarés precede a la selección cuando existe.
+- **Copy:** retirar mensajes de caché, configuración de entorno, versiones de
+  extractores, IDs internos, ausencia de matching y advertencias repetidas sobre
+  separación de señales. Se conservan las etiquetas de cada señal, la metodología,
+  las fuentes, las fechas y la información útil de privacidad y disponibilidad.
+- **Ausencias:** distinguir cobertura ausente en Runscars de anuncios pendientes
+  del festival. Ofrecer el programa y los premios oficiales como siguiente paso.
+  Los datos ausentes no se inventan y los estados de revisión siguen en administración.
+- **Datos:** añadir un suplemento manual trazable de Telluride desde su programa
+  oficial PDF con 43 largometrajes de Shows y Backlot. Su importación usa el flujo
+  idempotente existente; no modifica el manifiesto inicial ni versiones bloqueadas.
+- **Continuidad:** no cambia el cálculo profesional, los permisos, el alcance
+  festivalero D-055 ni el estado Propuesta del sistema visual D-053.
+
+## D-058 · Descubrimiento, edición semanal y quiniela antes del acceso
+
+- **Fecha:** 2026-09-07
+- **Estado:** Aceptada
+- **Origen:** petición expresa de publicar el rediseño e implementar las mejoras
+  de atractivo y visibilidad propuestas en la auditoría del 07/09.
+- **Decisión:** incorporar una edición semanal ES/EN, carteles disponibles del
+  catálogo en descubrimiento y tarjetas sociales específicas para festivales,
+  categorías y semanas. Portada, navegación, pie y sitemap enlazan las nuevas
+  experiencias. La metodología sigue accesible desde el pie y sus enlaces contextuales.
+- **Edición semanal:** semanas de lunes a domingo UTC. Se compara el último corte
+  real anterior al cierre de semana con el último anterior al inicio; se muestran
+  hasta tres movimientos por categoría y las fuentes cuyo estado efectivo cambió.
+  Una semana sin novedades conserva las favoritas con sus fechas y lo indica. No
+  se inventan movimientos sin un corte anterior comparable ni se publica una
+  narración editorial atribuida a una persona.
+- **Seguimiento:** RSS voluntario ES/EN, con enlaces canónicos a semanas y fecha
+  del último cambio registrado. No incorpora correos, envíos automáticos a terceros
+  ni una nueva plataforma de marketing.
+- **Quiniela:** se puede ordenar una selección por categoría antes del acceso.
+  El borrador guarda solo IDs y fecha en el navegador durante 30 días. Al entrar,
+  el usuario carga deliberadamente el borrador y guarda mediante la acción
+  autenticada existente; no se sobrescribe automáticamente su ranking guardado.
+  Se validan candidatos, duplicados, caducidad y límite de categoría. No se comparte
+  ni publica el borrador por defecto.
+- **Medición:** eventos agregados de inicio de quiniela y clic para guardar, con
+  categoría y sin elecciones personales. SEO mantiene origen, canonical y
+  alternates existentes; la indexación y el tráfico se evalúan con Search Console,
+  sin prometer aumentos por la implementación.
+- **Continuidad:** no cambia Borda, metadatos originales, permisos ni la separación
+  de señales. D-053 continúa como Propuesta. La cobertura festivalera pendiente se
+  detalla en [FESTIVAL_PROGRAMME_HANDOFF.md](FESTIVAL_PROGRAMME_HANDOFF.md).
+
+## D-059 · Caducidad mensual de predicciones profesionales
 
 - **Fecha:** 2026-09-09
 - **Estado:** Aceptada

@@ -17,6 +17,7 @@ export default defineConfig({
       NEXT_PUBLIC_SUPABASE_ANON_KEY: "",
       NEXT_PUBLIC_SUPABASE_URL: "",
       TMDB_READ_ACCESS_TOKEN: "",
+      NEXT_PUBLIC_SITE_URL: "http://127.0.0.1:3000",
     },
     url: "http://127.0.0.1:3000/api/health",
     reuseExistingServer: !process.env.CI,
@@ -30,6 +31,16 @@ export default defineConfig({
     {
       name: "mobile-chrome",
       use: { ...devices["Pixel 7"] },
+    },
+    {
+      name: "firefox-smoke",
+      testMatch: /smoke\.spec\.ts/,
+      use: { ...devices["Desktop Firefox"] },
+    },
+    {
+      name: "webkit-smoke",
+      testMatch: /smoke\.spec\.ts/,
+      use: { ...devices["Desktop Safari"] },
     },
   ],
 });

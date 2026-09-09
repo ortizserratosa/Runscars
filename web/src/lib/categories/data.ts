@@ -1,4 +1,5 @@
 import "server-only";
+import { unstable_cache } from "next/cache";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import archive2026 from "../../../data/phase-7/oscars-2026.json";
 import {
@@ -291,7 +292,7 @@ async function marketViews(
   const contractsResult = await supabase
     .from("market_contracts")
     .select(
-      "id,provider,external_market_id,market_title,outcome_label,source_url,closes_at,resolved_at,market_price_snapshots(probability,volume,open_interest,observed_at)",
+      "id,provider,external_market_id,market_title,outcome_label,source_url,closes_at,resolved_at,market_contract_exclusions(id),market_price_snapshots(probability,volume,open_interest,observed_at)",
     )
     .eq("season_id", "oscars-2027")
     .eq("category_id", categoryId)
@@ -305,6 +306,9 @@ async function marketViews(
   }
   const marketRows: MarketView[] = [];
   for (const contract of contractsResult.data ?? []) {
+    if ((contract.market_contract_exclusions ?? []).length > 0) {
+      continue;
+    }
     const provider = contract.provider as string;
     if (provider !== "kalshi" && provider !== "polymarket") {
       continue;
@@ -596,6 +600,17 @@ async function archiveCategoryFromDatabase(
   };
 }
 
+// Only anonymous public prediction/context data is shared. Rankings, sessions,
+// watch states and administrative data are fetched outside this cache.
+const cachedActiveCategory = unstable_cache(
+  activeCategoryFromDatabase,
+  [
+    "public-category-v1",
+    process.env.NEXT_PUBLIC_SUPABASE_URL ?? "unconfigured",
+  ],
+  { revalidate: 60 },
+);
+
 export async function getCategoryView(
   seasonYear: 2026 | 2027,
   categoryId: PublicCategoryId,
@@ -631,7 +646,7 @@ export async function getCategoryView(
   }
   try {
     return seasonYear === 2027
-      ? await activeCategoryFromDatabase(categoryId, options.snapshotId)
+      ? await cachedActiveCategory(categoryId, options.snapshotId)
       : await archiveCategoryFromDatabase(categoryId);
   } catch {
     if (allowFixture()) {

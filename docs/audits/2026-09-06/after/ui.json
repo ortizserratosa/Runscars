@@ -1,0 +1,2424 @@
+{
+  "capturedAt": "2026-09-06T21:45:30.938Z",
+  "base": "https://runscars.app",
+  "measurement": "Unthrottled lab page-load LCP/CLS, not field Core Web Vitals or INP",
+  "results": [
+    {
+      "url": "https://runscars.app/temporadas/2027",
+      "device": "desktop",
+      "status": 200,
+      "title": "Predicciones Oscar 2027 por categoría | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 1904,
+        "cls": 0.0012210492621527777
+      },
+      "ttfb": 82.39999997615814,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/",
+      "device": "desktop",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: ranking y consenso | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 1856,
+        "cls": 0.0005865448082817924
+      },
+      "ttfb": 87.80000001192093,
+      "errors": [],
+      "violations": [],
+      "screenshot": "desktop-home.png"
+    },
+    {
+      "url": "https://runscars.app/temporadas/2027/direccion",
+      "device": "desktop",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: Dirección | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 624,
+        "cls": 0
+      },
+      "ttfb": 29.900000035762787,
+      "rankingY": 779.421875,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/temporadas/2027/mejor-pelicula",
+      "device": "desktop",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: Mejor película | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 648,
+        "cls": 0
+      },
+      "ttfb": 30.200000047683716,
+      "rankingY": 779.421875,
+      "errors": [],
+      "violations": [],
+      "screenshot": "desktop-mejor-pelicula.png"
+    },
+    {
+      "url": "https://runscars.app/temporadas/2027/actor-protagonista",
+      "device": "desktop",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: Actor protagonista | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 512,
+        "cls": 0
+      },
+      "ttfb": 33.80000001192093,
+      "rankingY": 779.421875,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/temporadas/2027/actriz-protagonista",
+      "device": "desktop",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: Actriz protagonista | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 624,
+        "cls": 0
+      },
+      "ttfb": 29.900000035762787,
+      "rankingY": 779.421875,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/temporadas/2027/actor-de-reparto",
+      "device": "desktop",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: Actor de reparto | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 428,
+        "cls": 0
+      },
+      "ttfb": 30.30000001192093,
+      "rankingY": 779.421875,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/temporadas/2027/actriz-de-reparto",
+      "device": "desktop",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: Actriz de reparto | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 660,
+        "cls": 0
+      },
+      "ttfb": 24.5,
+      "rankingY": 779.421875,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/temporadas/2027/guion-adaptado",
+      "device": "desktop",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: Guion adaptado | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 448,
+        "cls": 0
+      },
+      "ttfb": 29.100000023841858,
+      "rankingY": 779.421875,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/temporadas/2027/guion-original",
+      "device": "desktop",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: Guion original | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 528,
+        "cls": 0
+      },
+      "ttfb": 30.5,
+      "rankingY": 779.421875,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/personas/tmdb-4823100",
+      "device": "desktop",
+      "status": 200,
+      "title": "Mason Reeves: películas y predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 636,
+        "cls": 0
+      },
+      "ttfb": 51.30000001192093,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/peliculas/fjord",
+      "device": "desktop",
+      "status": 200,
+      "title": "Fiordo: predicciones Oscar 2027 | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 1192,
+        "cls": 0
+      },
+      "ttfb": 51,
+      "errors": [],
+      "violations": [],
+      "screenshot": "desktop-fjord.png"
+    },
+    {
+      "url": "https://runscars.app/fuentes",
+      "device": "desktop",
+      "status": 200,
+      "title": "Fuentes de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 516,
+        "cls": 0
+      },
+      "ttfb": 31,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/fuentes/awardswatch",
+      "device": "desktop",
+      "status": 200,
+      "title": "AwardsWatch: fuente de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 1060,
+        "cls": 0
+      },
+      "ttfb": 33.69999998807907,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/evaluacion",
+      "device": "desktop",
+      "status": 200,
+      "title": "Acierto y evaluación de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 500,
+        "cls": 0
+      },
+      "ttfb": 31.19999998807907,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/comunidad",
+      "device": "desktop",
+      "status": 200,
+      "title": "Quinielas Oscar 2027 de la comunidad | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 508,
+        "cls": 0
+      },
+      "ttfb": 29.30000001192093,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/acceso",
+      "device": "desktop",
+      "status": 200,
+      "title": "Acceso | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 336,
+        "cls": 0
+      },
+      "ttfb": 34.60000002384186,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/metodologia",
+      "device": "desktop",
+      "status": 200,
+      "title": "Cómo funciona el consenso de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 244,
+        "cls": 0
+      },
+      "ttfb": 34.30000001192093,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/festivales",
+      "device": "desktop",
+      "status": 200,
+      "title": "Circuito internacional de festivales de cine 2026 | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 272,
+        "cls": 0
+      },
+      "ttfb": 32.700000047683716,
+      "errors": [],
+      "violations": [],
+      "screenshot": "desktop-festivales.png"
+    },
+    {
+      "url": "https://runscars.app/festivales/sundance/2026",
+      "device": "desktop",
+      "status": 200,
+      "title": "Festival de Sundance 2026: selección y palmarés oficial | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 332,
+        "cls": 0
+      },
+      "ttfb": 26.80000001192093,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/festivales/cannes/2026",
+      "device": "desktop",
+      "status": 200,
+      "title": "Festival de Cannes 2026: selección y palmarés oficial | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 284,
+        "cls": 0
+      },
+      "ttfb": 32.69999998807907,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/festivales/berlinale/2026",
+      "device": "desktop",
+      "status": 200,
+      "title": "Festival Internacional de Cine de Berlín 2026: selección y palmarés oficial | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 340,
+        "cls": 0
+      },
+      "ttfb": 32.60000002384186,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/festivales/venice/2026",
+      "device": "desktop",
+      "status": 200,
+      "title": "Festival de Venecia 2026: selección y palmarés oficial | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 272,
+        "cls": 0
+      },
+      "ttfb": 30.30000001192093,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/festivales/locarno/2026",
+      "device": "desktop",
+      "status": 200,
+      "title": "Festival de Locarno 2026: selección y palmarés oficial | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 440,
+        "cls": 0
+      },
+      "ttfb": 30.700000047683716,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/festivales/tiff/2026",
+      "device": "desktop",
+      "status": 200,
+      "title": "Festival Internacional de Cine de Toronto 2026: selección y palmarés oficial | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 256,
+        "cls": 0
+      },
+      "ttfb": 39.799999952316284,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/festivales/san-sebastian/2026",
+      "device": "desktop",
+      "status": 200,
+      "title": "Festival de San Sebastián 2026: selección y palmarés oficial | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 400,
+        "cls": 0
+      },
+      "ttfb": 40.200000047683716,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/festivales/telluride/2026",
+      "device": "desktop",
+      "status": 200,
+      "title": "Festival de Telluride 2026: selección y palmarés oficial | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 304,
+        "cls": 0
+      },
+      "ttfb": 35.19999998807907,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/festivales/nyff/2026",
+      "device": "desktop",
+      "status": 200,
+      "title": "Festival de Cine de Nueva York 2026: selección y palmarés oficial | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 268,
+        "cls": 0
+      },
+      "ttfb": 34.89999997615814,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/archivo/2023",
+      "device": "desktop",
+      "status": 200,
+      "title": "Oscar 2023: nominados y ganadores | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 272,
+        "cls": 0
+      },
+      "ttfb": 27.899999976158142,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/archivo/2022",
+      "device": "desktop",
+      "status": 200,
+      "title": "Oscar 2022: nominados y ganadores | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 380,
+        "cls": 0
+      },
+      "ttfb": 31.900000035762787,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/archivo/2025",
+      "device": "desktop",
+      "status": 200,
+      "title": "Oscar 2025: nominados y ganadores | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 280,
+        "cls": 0
+      },
+      "ttfb": 31.200000047683716,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/archivo/2024",
+      "device": "desktop",
+      "status": 200,
+      "title": "Oscar 2024: nominados y ganadores | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 256,
+        "cls": 0
+      },
+      "ttfb": 29,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/archivo/2026",
+      "device": "desktop",
+      "status": 200,
+      "title": "Oscar 2026: nominados y ganadores | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 368,
+        "cls": 0
+      },
+      "ttfb": 30.399999976158142,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en",
+      "device": "desktop",
+      "status": 200,
+      "title": "Oscar Predictions 2027: Expert Consensus | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 1024,
+        "cls": 0
+      },
+      "ttfb": 30.30000001192093,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/temporadas/2027",
+      "device": "desktop",
+      "status": 200,
+      "title": "Oscar Predictions 2027 by Category | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 348,
+        "cls": 0
+      },
+      "ttfb": 28.400000035762787,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/temporadas/2027/mejor-pelicula",
+      "device": "desktop",
+      "status": 200,
+      "title": "Best Picture Oscar Predictions 2027 | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 756,
+        "cls": 0
+      },
+      "ttfb": 28.100000023841858,
+      "rankingY": 768.390625,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/temporadas/2027/actor-protagonista",
+      "device": "desktop",
+      "status": 200,
+      "title": "Actor in a Leading Role Oscar Predictions 2027 | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 460,
+        "cls": 0
+      },
+      "ttfb": 27.69999998807907,
+      "rankingY": 768.390625,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/temporadas/2027/direccion",
+      "device": "desktop",
+      "status": 200,
+      "title": "Directing Oscar Predictions 2027 | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 740,
+        "cls": 0
+      },
+      "ttfb": 29.799999952316284,
+      "rankingY": 768.390625,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/temporadas/2027/actriz-protagonista",
+      "device": "desktop",
+      "status": 200,
+      "title": "Actress in a Leading Role Oscar Predictions 2027 | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 476,
+        "cls": 0
+      },
+      "ttfb": 27.200000047683716,
+      "rankingY": 768.390625,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/temporadas/2027/actor-de-reparto",
+      "device": "desktop",
+      "status": 200,
+      "title": "Actor in a Supporting Role Oscar Predictions 2027 | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 488,
+        "cls": 0
+      },
+      "ttfb": 24.5,
+      "rankingY": 768.390625,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/temporadas/2027/guion-original",
+      "device": "desktop",
+      "status": 200,
+      "title": "Original Screenplay Oscar Predictions 2027 | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 472,
+        "cls": 0
+      },
+      "ttfb": 29.099999964237213,
+      "rankingY": 768.390625,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/temporadas/2027/actriz-de-reparto",
+      "device": "desktop",
+      "status": 200,
+      "title": "Actress in a Supporting Role Oscar Predictions 2027 | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 468,
+        "cls": 0
+      },
+      "ttfb": 27.200000047683716,
+      "rankingY": 768.390625,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/temporadas/2027/guion-adaptado",
+      "device": "desktop",
+      "status": 200,
+      "title": "Adapted Screenplay Oscar Predictions 2027 | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 452,
+        "cls": 0
+      },
+      "ttfb": 33.299999952316284,
+      "rankingY": 768.390625,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/peliculas/fjord",
+      "device": "desktop",
+      "status": 200,
+      "title": "Fjord: 2027 Oscar Predictions | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 1216,
+        "cls": 0
+      },
+      "ttfb": 28.80000001192093,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/personas/tmdb-4823100",
+      "device": "desktop",
+      "status": 200,
+      "title": "Mason Reeves: Films and Oscar Predictions | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 588,
+        "cls": 0
+      },
+      "ttfb": 29.899999976158142,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/fuentes",
+      "device": "desktop",
+      "status": 200,
+      "title": "Oscar Prediction Sources and Experts | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 472,
+        "cls": 0
+      },
+      "ttfb": 27.69999998807907,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/comunidad",
+      "device": "desktop",
+      "status": 200,
+      "title": "Oscar 2027 Community Ballots | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 548,
+        "cls": 0
+      },
+      "ttfb": 33.5,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/fuentes/awardswatch",
+      "device": "desktop",
+      "status": 200,
+      "title": "AwardsWatch Oscar Predictions Source | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 840,
+        "cls": 0
+      },
+      "ttfb": 33.80000001192093,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/metodologia",
+      "device": "desktop",
+      "status": 200,
+      "title": "How the Oscar Predictions Consensus Works | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 316,
+        "cls": 0
+      },
+      "ttfb": 27.80000001192093,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/evaluacion",
+      "device": "desktop",
+      "status": 200,
+      "title": "Oscar Prediction Accuracy and Evaluation | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 480,
+        "cls": 0
+      },
+      "ttfb": 27.69999998807907,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/acceso",
+      "device": "desktop",
+      "status": 200,
+      "title": "Sign in | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 276,
+        "cls": 0
+      },
+      "ttfb": 28.399999976158142,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/festivales",
+      "device": "desktop",
+      "status": 200,
+      "title": "2026 International Film Festival Circuit | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 296,
+        "cls": 0
+      },
+      "ttfb": 28.69999998807907,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/festivales/berlinale/2026",
+      "device": "desktop",
+      "status": 200,
+      "title": "Berlin International Film Festival 2026: Official Selection and Awards | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 324,
+        "cls": 0
+      },
+      "ttfb": 54.30000001192093,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/festivales/sundance/2026",
+      "device": "desktop",
+      "status": 200,
+      "title": "Sundance Film Festival 2026: Official Selection and Awards | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 328,
+        "cls": 0
+      },
+      "ttfb": 56.39999997615814,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/festivales/cannes/2026",
+      "device": "desktop",
+      "status": 200,
+      "title": "Festival de Cannes 2026: Official Selection and Awards | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 300,
+        "cls": 0
+      },
+      "ttfb": 28.200000047683716,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/festivales/locarno/2026",
+      "device": "desktop",
+      "status": 200,
+      "title": "Locarno Film Festival 2026: Official Selection and Awards | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 288,
+        "cls": 0
+      },
+      "ttfb": 28.30000001192093,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/festivales/tiff/2026",
+      "device": "desktop",
+      "status": 200,
+      "title": "Toronto International Film Festival 2026: Official Selection and Awards | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 292,
+        "cls": 0
+      },
+      "ttfb": 45,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/festivales/venice/2026",
+      "device": "desktop",
+      "status": 200,
+      "title": "Venice International Film Festival 2026: Official Selection and Awards | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 296,
+        "cls": 0
+      },
+      "ttfb": 44.69999998807907,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/festivales/telluride/2026",
+      "device": "desktop",
+      "status": 200,
+      "title": "Telluride Film Festival 2026: Official Selection and Awards | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 260,
+        "cls": 0
+      },
+      "ttfb": 29.5,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/festivales/san-sebastian/2026",
+      "device": "desktop",
+      "status": 200,
+      "title": "San Sebastián International Film Festival 2026: Official Selection and Awards | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 376,
+        "cls": 0.0012140049611786266
+      },
+      "ttfb": 30,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/archivo/2022",
+      "device": "desktop",
+      "status": 200,
+      "title": "2022 Oscars Nominees and Winners | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 288,
+        "cls": 0
+      },
+      "ttfb": 29.30000001192093,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/festivales/nyff/2026",
+      "device": "desktop",
+      "status": 200,
+      "title": "New York Film Festival 2026: Official Selection and Awards | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 340,
+        "cls": 0
+      },
+      "ttfb": 29.599999964237213,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/archivo/2024",
+      "device": "desktop",
+      "status": 200,
+      "title": "2024 Oscars Nominees and Winners | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 284,
+        "cls": 0
+      },
+      "ttfb": 35.60000002384186,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/archivo/2023",
+      "device": "desktop",
+      "status": 200,
+      "title": "2023 Oscars Nominees and Winners | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 328,
+        "cls": 0
+      },
+      "ttfb": 35.89999997615814,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/archivo/2026",
+      "device": "desktop",
+      "status": 200,
+      "title": "2026 Oscars Nominees and Winners | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 316,
+        "cls": 0
+      },
+      "ttfb": 26.80000001192093,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/archivo/2025",
+      "device": "desktop",
+      "status": 200,
+      "title": "2025 Oscars Nominees and Winners | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 256,
+        "cls": 0
+      },
+      "ttfb": 29.69999998807907,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/temporadas/2027",
+      "device": "mobile",
+      "status": 200,
+      "title": "Predicciones Oscar 2027 por categoría | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 356,
+        "cls": 0
+      },
+      "ttfb": 28,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/",
+      "device": "mobile",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: ranking y consenso | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 1112,
+        "cls": 0
+      },
+      "ttfb": 28.600000023841858,
+      "errors": [],
+      "violations": [],
+      "screenshot": "mobile-home.png"
+    },
+    {
+      "url": "https://runscars.app/temporadas/2027/mejor-pelicula",
+      "device": "mobile",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: Mejor película | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 580,
+        "cls": 0
+      },
+      "ttfb": 34.80000001192093,
+      "rankingY": 1058.46875,
+      "errors": [],
+      "violations": [],
+      "screenshot": "mobile-mejor-pelicula.png"
+    },
+    {
+      "url": "https://runscars.app/temporadas/2027/direccion",
+      "device": "mobile",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: Dirección | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 548,
+        "cls": 0
+      },
+      "ttfb": 26.100000023841858,
+      "rankingY": 1058.46875,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/temporadas/2027/actriz-protagonista",
+      "device": "mobile",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: Actriz protagonista | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 392,
+        "cls": 0
+      },
+      "ttfb": 29.5,
+      "rankingY": 1058.46875,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/temporadas/2027/actor-protagonista",
+      "device": "mobile",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: Actor protagonista | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 392,
+        "cls": 0
+      },
+      "ttfb": 29.900000035762787,
+      "rankingY": 1058.46875,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/temporadas/2027/actriz-de-reparto",
+      "device": "mobile",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: Actriz de reparto | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 420,
+        "cls": 0
+      },
+      "ttfb": 28.30000001192093,
+      "rankingY": 1058.46875,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/temporadas/2027/actor-de-reparto",
+      "device": "mobile",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: Actor de reparto | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 424,
+        "cls": 0
+      },
+      "ttfb": 28,
+      "rankingY": 1058.46875,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/temporadas/2027/guion-original",
+      "device": "mobile",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: Guion original | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 400,
+        "cls": 0
+      },
+      "ttfb": 25.299999952316284,
+      "rankingY": 1058.46875,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/temporadas/2027/guion-adaptado",
+      "device": "mobile",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: Guion adaptado | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 404,
+        "cls": 0
+      },
+      "ttfb": 28.099999964237213,
+      "rankingY": 1058.46875,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/personas/tmdb-4823100",
+      "device": "mobile",
+      "status": 200,
+      "title": "Mason Reeves: películas y predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 560,
+        "cls": 0
+      },
+      "ttfb": 28.100000023841858,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/peliculas/fjord",
+      "device": "mobile",
+      "status": 200,
+      "title": "Fiordo: predicciones Oscar 2027 | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 1020,
+        "cls": 0
+      },
+      "ttfb": 28,
+      "errors": [],
+      "violations": [],
+      "screenshot": "mobile-fjord.png"
+    },
+    {
+      "url": "https://runscars.app/fuentes",
+      "device": "mobile",
+      "status": 200,
+      "title": "Fuentes de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 400,
+        "cls": 0
+      },
+      "ttfb": 29.30000001192093,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/fuentes/awardswatch",
+      "device": "mobile",
+      "status": 200,
+      "title": "AwardsWatch: fuente de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 900,
+        "cls": 0
+      },
+      "ttfb": 29.5,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/comunidad",
+      "device": "mobile",
+      "status": 200,
+      "title": "Quinielas Oscar 2027 de la comunidad | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 488,
+        "cls": 0
+      },
+      "ttfb": 28.30000001192093,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/evaluacion",
+      "device": "mobile",
+      "status": 200,
+      "title": "Acierto y evaluación de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 736,
+        "cls": 0
+      },
+      "ttfb": 30.399999976158142,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/acceso",
+      "device": "mobile",
+      "status": 200,
+      "title": "Acceso | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 332,
+        "cls": 0
+      },
+      "ttfb": 27.80000001192093,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/metodologia",
+      "device": "mobile",
+      "status": 200,
+      "title": "Cómo funciona el consenso de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 268,
+        "cls": 0
+      },
+      "ttfb": 27.399999976158142,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/festivales",
+      "device": "mobile",
+      "status": 200,
+      "title": "Circuito internacional de festivales de cine 2026 | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 268,
+        "cls": 0
+      },
+      "ttfb": 26,
+      "errors": [],
+      "violations": [],
+      "screenshot": "mobile-festivales.png"
+    },
+    {
+      "url": "https://runscars.app/festivales/sundance/2026",
+      "device": "mobile",
+      "status": 200,
+      "title": "Festival de Sundance 2026: selección y palmarés oficial | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 384,
+        "cls": 0
+      },
+      "ttfb": 30.19999998807907,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/festivales/berlinale/2026",
+      "device": "mobile",
+      "status": 200,
+      "title": "Festival Internacional de Cine de Berlín 2026: selección y palmarés oficial | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 284,
+        "cls": 0
+      },
+      "ttfb": 40.80000001192093,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/festivales/cannes/2026",
+      "device": "mobile",
+      "status": 200,
+      "title": "Festival de Cannes 2026: selección y palmarés oficial | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 324,
+        "cls": 0
+      },
+      "ttfb": 43.40000003576279,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/festivales/locarno/2026",
+      "device": "mobile",
+      "status": 200,
+      "title": "Festival de Locarno 2026: selección y palmarés oficial | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 268,
+        "cls": 0
+      },
+      "ttfb": 31.799999952316284,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/festivales/venice/2026",
+      "device": "mobile",
+      "status": 200,
+      "title": "Festival de Venecia 2026: selección y palmarés oficial | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 284,
+        "cls": 0
+      },
+      "ttfb": 27.600000023841858,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/festivales/tiff/2026",
+      "device": "mobile",
+      "status": 200,
+      "title": "Festival Internacional de Cine de Toronto 2026: selección y palmarés oficial | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 340,
+        "cls": 0
+      },
+      "ttfb": 29.899999976158142,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/festivales/san-sebastian/2026",
+      "device": "mobile",
+      "status": 200,
+      "title": "Festival de San Sebastián 2026: selección y palmarés oficial | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 316,
+        "cls": 0
+      },
+      "ttfb": 32.60000002384186,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/festivales/telluride/2026",
+      "device": "mobile",
+      "status": 200,
+      "title": "Festival de Telluride 2026: selección y palmarés oficial | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 384,
+        "cls": 0
+      },
+      "ttfb": 29.799999952316284,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/festivales/nyff/2026",
+      "device": "mobile",
+      "status": 200,
+      "title": "Festival de Cine de Nueva York 2026: selección y palmarés oficial | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 284,
+        "cls": 0
+      },
+      "ttfb": 28.900000035762787,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/archivo/2023",
+      "device": "mobile",
+      "status": 200,
+      "title": "Oscar 2023: nominados y ganadores | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 260,
+        "cls": 0
+      },
+      "ttfb": 33.10000002384186,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/archivo/2022",
+      "device": "mobile",
+      "status": 200,
+      "title": "Oscar 2022: nominados y ganadores | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 332,
+        "cls": 0
+      },
+      "ttfb": 29.19999998807907,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/archivo/2025",
+      "device": "mobile",
+      "status": 200,
+      "title": "Oscar 2025: nominados y ganadores | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 272,
+        "cls": 0
+      },
+      "ttfb": 31,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/archivo/2024",
+      "device": "mobile",
+      "status": 200,
+      "title": "Oscar 2024: nominados y ganadores | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 312,
+        "cls": 0
+      },
+      "ttfb": 28.600000023841858,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/archivo/2026",
+      "device": "mobile",
+      "status": 200,
+      "title": "Oscar 2026: nominados y ganadores | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 276,
+        "cls": 0
+      },
+      "ttfb": 45.39999997615814,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en",
+      "device": "mobile",
+      "status": 200,
+      "title": "Oscar Predictions 2027: Expert Consensus | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 1204,
+        "cls": 0
+      },
+      "ttfb": 46.80000001192093,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/temporadas/2027",
+      "device": "mobile",
+      "status": 200,
+      "title": "Oscar Predictions 2027 by Category | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 384,
+        "cls": 0
+      },
+      "ttfb": 32.39999997615814,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/temporadas/2027/mejor-pelicula",
+      "device": "mobile",
+      "status": 200,
+      "title": "Best Picture Oscar Predictions 2027 | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 580,
+        "cls": 0
+      },
+      "ttfb": 28.19999998807907,
+      "rankingY": 1011.921875,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/temporadas/2027/actor-protagonista",
+      "device": "mobile",
+      "status": 200,
+      "title": "Actor in a Leading Role Oscar Predictions 2027 | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 568,
+        "cls": 0
+      },
+      "ttfb": 29.200000047683716,
+      "rankingY": 1055.125,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/temporadas/2027/direccion",
+      "device": "mobile",
+      "status": 200,
+      "title": "Directing Oscar Predictions 2027 | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 552,
+        "cls": 0
+      },
+      "ttfb": 26.69999998807907,
+      "rankingY": 1011.921875,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/temporadas/2027/actor-de-reparto",
+      "device": "mobile",
+      "status": 200,
+      "title": "Actor in a Supporting Role Oscar Predictions 2027 | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 456,
+        "cls": 0
+      },
+      "ttfb": 28.100000023841858,
+      "rankingY": 1055.125,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/temporadas/2027/actriz-protagonista",
+      "device": "mobile",
+      "status": 200,
+      "title": "Actress in a Leading Role Oscar Predictions 2027 | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 440,
+        "cls": 0
+      },
+      "ttfb": 30.30000001192093,
+      "rankingY": 1055.125,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/temporadas/2027/actriz-de-reparto",
+      "device": "mobile",
+      "status": 200,
+      "title": "Actress in a Supporting Role Oscar Predictions 2027 | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 428,
+        "cls": 0
+      },
+      "ttfb": 35,
+      "rankingY": 1055.125,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/temporadas/2027/guion-original",
+      "device": "mobile",
+      "status": 200,
+      "title": "Original Screenplay Oscar Predictions 2027 | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 556,
+        "cls": 0
+      },
+      "ttfb": 30.400000035762787,
+      "rankingY": 1011.921875,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/temporadas/2027/guion-adaptado",
+      "device": "mobile",
+      "status": 200,
+      "title": "Adapted Screenplay Oscar Predictions 2027 | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 472,
+        "cls": 0
+      },
+      "ttfb": 29.700000047683716,
+      "rankingY": 1011.921875,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/peliculas/fjord",
+      "device": "mobile",
+      "status": 200,
+      "title": "Fjord: 2027 Oscar Predictions | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 1588,
+        "cls": 0
+      },
+      "ttfb": 29.899999976158142,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/fuentes",
+      "device": "mobile",
+      "status": 200,
+      "title": "Oscar Prediction Sources and Experts | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 704,
+        "cls": 0
+      },
+      "ttfb": 89.69999998807907,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/personas/tmdb-4823100",
+      "device": "mobile",
+      "status": 200,
+      "title": "Mason Reeves: Films and Oscar Predictions | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 952,
+        "cls": 0
+      },
+      "ttfb": 89.89999997615814,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/comunidad",
+      "device": "mobile",
+      "status": 200,
+      "title": "Oscar 2027 Community Ballots | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 524,
+        "cls": 0
+      },
+      "ttfb": 161.5,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/fuentes/awardswatch",
+      "device": "mobile",
+      "status": 200,
+      "title": "AwardsWatch Oscar Predictions Source | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 824,
+        "cls": 0
+      },
+      "ttfb": 155.69999998807907,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/metodologia",
+      "device": "mobile",
+      "status": 200,
+      "title": "How the Oscar Predictions Consensus Works | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 432,
+        "cls": 0
+      },
+      "ttfb": 46.89999997615814,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/evaluacion",
+      "device": "mobile",
+      "status": 200,
+      "title": "Oscar Prediction Accuracy and Evaluation | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 760,
+        "cls": 0
+      },
+      "ttfb": 46.59999996423721,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/acceso",
+      "device": "mobile",
+      "status": 200,
+      "title": "Sign in | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 308,
+        "cls": 0
+      },
+      "ttfb": 28.5,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/festivales",
+      "device": "mobile",
+      "status": 200,
+      "title": "2026 International Film Festival Circuit | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 296,
+        "cls": 0
+      },
+      "ttfb": 30.5,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/festivales/sundance/2026",
+      "device": "mobile",
+      "status": 200,
+      "title": "Sundance Film Festival 2026: Official Selection and Awards | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 264,
+        "cls": 0
+      },
+      "ttfb": 104.80000001192093,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/festivales/berlinale/2026",
+      "device": "mobile",
+      "status": 200,
+      "title": "Berlin International Film Festival 2026: Official Selection and Awards | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 284,
+        "cls": 0
+      },
+      "ttfb": 104.60000002384186,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/festivales/locarno/2026",
+      "device": "mobile",
+      "status": 200,
+      "title": "Locarno Film Festival 2026: Official Selection and Awards | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 336,
+        "cls": 0
+      },
+      "ttfb": 27.5,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/festivales/cannes/2026",
+      "device": "mobile",
+      "status": 200,
+      "title": "Festival de Cannes 2026: Official Selection and Awards | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 352,
+        "cls": 0
+      },
+      "ttfb": 31.69999998807907,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/festivales/tiff/2026",
+      "device": "mobile",
+      "status": 200,
+      "title": "Toronto International Film Festival 2026: Official Selection and Awards | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 352,
+        "cls": 0
+      },
+      "ttfb": 28.5,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/festivales/venice/2026",
+      "device": "mobile",
+      "status": 200,
+      "title": "Venice International Film Festival 2026: Official Selection and Awards | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 376,
+        "cls": 0
+      },
+      "ttfb": 28.80000001192093,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/festivales/telluride/2026",
+      "device": "mobile",
+      "status": 200,
+      "title": "Telluride Film Festival 2026: Official Selection and Awards | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 324,
+        "cls": 0
+      },
+      "ttfb": 83,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/festivales/san-sebastian/2026",
+      "device": "mobile",
+      "status": 200,
+      "title": "San Sebastián International Film Festival 2026: Official Selection and Awards | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 424,
+        "cls": 0
+      },
+      "ttfb": 83.19999998807907,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/archivo/2022",
+      "device": "mobile",
+      "status": 200,
+      "title": "2022 Oscars Nominees and Winners | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 352,
+        "cls": 0
+      },
+      "ttfb": 121.39999997615814,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/festivales/nyff/2026",
+      "device": "mobile",
+      "status": 200,
+      "title": "New York Film Festival 2026: Official Selection and Awards | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 376,
+        "cls": 0
+      },
+      "ttfb": 121.19999998807907,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/archivo/2024",
+      "device": "mobile",
+      "status": 200,
+      "title": "2024 Oscars Nominees and Winners | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 284,
+        "cls": 0
+      },
+      "ttfb": 63.69999998807907,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/archivo/2023",
+      "device": "mobile",
+      "status": 200,
+      "title": "2023 Oscars Nominees and Winners | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 360,
+        "cls": 0
+      },
+      "ttfb": 63.90000003576279,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/archivo/2026",
+      "device": "mobile",
+      "status": 200,
+      "title": "2026 Oscars Nominees and Winners | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 248,
+        "cls": 0
+      },
+      "ttfb": 33,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars.app/en/archivo/2025",
+      "device": "mobile",
+      "status": 200,
+      "title": "2025 Oscars Nominees and Winners | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 292,
+        "cls": 0
+      },
+      "ttfb": 32.700000047683716,
+      "errors": [],
+      "violations": []
+    }
+  ],
+  "failed": 0
+}

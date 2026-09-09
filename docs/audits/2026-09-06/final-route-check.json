@@ -1,0 +1,96 @@
+{
+  "capturedAt": "2026-09-06T21:59:16.979Z",
+  "deploymentId": "dpl_EFLqrExb7d8megwCadVV5c8VdzoJ",
+  "cookie": "runscars-locale=en",
+  "results": [
+    {
+      "path": "/api/health",
+      "status": 200,
+      "location": null,
+      "health": {
+        "status": "ok",
+        "service": "runscars-web",
+        "databaseConfigured": true
+      },
+      "streamedError": false
+    },
+    {
+      "path": "/robots.txt",
+      "status": 200,
+      "location": null,
+      "streamedError": false
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "location": null,
+      "lang": "es-ES",
+      "canonical": "https://runscars.app",
+      "robots": "index, follow",
+      "streamedError": false
+    },
+    {
+      "path": "/en",
+      "status": 200,
+      "location": null,
+      "lang": "en-GB",
+      "canonical": "https://runscars.app/en",
+      "robots": "index, follow",
+      "streamedError": false
+    },
+    {
+      "path": "/festivales",
+      "status": 200,
+      "location": null,
+      "lang": "es-ES",
+      "canonical": "https://runscars.app/festivales",
+      "robots": "index, follow",
+      "streamedError": false
+    },
+    {
+      "path": "/en/festivales",
+      "status": 200,
+      "location": null,
+      "lang": "en-GB",
+      "canonical": "https://runscars.app/en/festivales",
+      "robots": "index, follow",
+      "streamedError": false
+    },
+    {
+      "path": "/temporadas/2027/mejor-pelicula?corte=2026-09-05",
+      "status": 200,
+      "location": null,
+      "lang": "es-ES",
+      "canonical": "https://runscars.app/temporadas/2027/mejor-pelicula",
+      "robots": "index, follow",
+      "streamedError": false
+    },
+    {
+      "path": "/en/peliculas/fjord",
+      "status": 200,
+      "location": null,
+      "lang": "en-GB",
+      "canonical": "https://runscars.app/en/peliculas/fjord",
+      "robots": "index, follow",
+      "streamedError": false
+    },
+    {
+      "path": "/acceso",
+      "status": 200,
+      "location": null,
+      "lang": "es-ES",
+      "canonical": "https://runscars.app/acceso",
+      "robots": "noindex, nofollow",
+      "streamedError": false
+    },
+    {
+      "path": "/en/acceso",
+      "status": 200,
+      "location": null,
+      "lang": "en-GB",
+      "canonical": "https://runscars.app/en/acceso",
+      "robots": "noindex, nofollow",
+      "streamedError": false
+    }
+  ]
+}

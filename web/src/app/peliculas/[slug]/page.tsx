@@ -24,6 +24,7 @@ import {
 import { getRequestLocale } from "../../../lib/i18n/server";
 import { absoluteUrl, buildLocalizedMetadata } from "../../../lib/seo";
 import { tmdbImageUrl } from "../../../lib/tmdb/images";
+import { getFilmFestivalContext } from "../../../lib/festivals/data";
 
 type FilmPageProps = {
   params: Promise<{ slug: string }>;
@@ -77,9 +78,10 @@ export default async function FilmPage({ params }: FilmPageProps) {
   const film = await getFilmCatalogDetail(slug, en ? "en-US" : "es-ES");
   if (!film) notFound();
 
-  const [predictions, metacriticScore] = await Promise.all([
+  const [predictions, metacriticScore, festivalContext] = await Promise.all([
     getFilmPredictions(slug),
     getFilmMetacriticScore(slug),
+    getFilmFestivalContext(slug),
   ]);
   const primaryPrediction =
     predictions.find(
@@ -229,6 +231,7 @@ export default async function FilmPage({ params }: FilmPageProps) {
 
           <div className="film-hero-grid">
             <PosterBlock
+              locale={locale}
               imagePath={film.tmdb?.posterPath}
               number={
                 primaryPrediction
@@ -249,18 +252,14 @@ export default async function FilmPage({ params }: FilmPageProps) {
                 </span>
                 <span>{dateLabel(releaseDate, locale)}</span>
               </div>
-              <p className="kicker">
-                {en
-                  ? "Oscar 2027 · tracked film"
-                  : "Oscar 2027 · película observada"}
-              </p>
+              <p className="kicker">{en ? "Oscar 2027" : "Oscar 2027"}</p>
               <h1>{film.title}</h1>
               <p className="film-deck">
                 {film.tmdb?.tagline ??
                   film.tmdb?.overview ??
                   (en
-                    ? "Editorial film page connected to the season's verifiable signals."
-                    : "Ficha editorial enlazada con las señales verificables de la temporada.")}
+                    ? "Explore this film’s place in the Oscar race."
+                    : "Descubre el recorrido de esta película en la carrera a los Oscar.")}
               </p>
               {primaryPrediction ? (
                 <div className="film-score-strip">
@@ -303,15 +302,6 @@ export default async function FilmPage({ params }: FilmPageProps) {
                   </div>
                 </div>
               ) : null}
-              <p className="metadata-note">
-                {film.tmdb
-                  ? en
-                    ? "Metadata and images are served from the local cache; TMDB does not influence Oscar signals."
-                    : "Metadatos e imágenes servidos desde la caché local; TMDB no interviene en las señales Oscar."
-                  : en
-                    ? "No TMDB capture is available; the verifiable editorial film page is preserved."
-                    : "Sin captura TMDB disponible; se conserva la ficha editorial verificable."}
-              </p>
             </div>
           </div>
         </div>
@@ -319,6 +309,59 @@ export default async function FilmPage({ params }: FilmPageProps) {
 
       <section className="page-shell film-content">
         <FilmCatalogDetails film={film} locale={locale} />
+
+        {festivalContext.length ? (
+          <div className="film-signal-section festival-module">
+            <div className="module-heading">
+              <span className="signal-letter">F</span>
+              <div>
+                <p className="section-index">
+                  {en ? "FESTIVAL CIRCUIT" : "CIRCUITO FESTIVALERO"}
+                </p>
+                <h2>
+                  {en
+                    ? "Festival selections and awards"
+                    : "Selecciones y premios en festivales"}
+                </h2>
+                <p>
+                  {en
+                    ? "Explore the festivals that selected or awarded this film."
+                    : "Explora los festivales que han seleccionado o premiado esta película."}
+                </p>
+              </div>
+            </div>
+            <div className="film-festival-list">
+              {festivalContext.map(({ edition, entries }) => (
+                <Link
+                  href={localizedPath(
+                    `/festivales/${edition.festivalId}/${edition.year}`,
+                    locale,
+                  )}
+                  key={edition.id}
+                >
+                  <span>{edition.shortName}</span>
+                  <strong>
+                    {entries.some((entry) => entry.kind === "awards")
+                      ? en
+                        ? "Awarded"
+                        : "Premiada"
+                      : en
+                        ? "Selected"
+                        : "Seleccionada"}
+                  </strong>
+                  <small>
+                    {entries
+                      .flatMap((entry) =>
+                        entry.awardType ? [entry.awardType] : [],
+                      )
+                      .join(" · ") ||
+                      (en ? "Official selection" : "Selección oficial")}
+                  </small>
+                </Link>
+              ))}
+            </div>
+          </div>
+        ) : null}
 
         {metacriticScore ? (
           <MetacriticScoreCard locale={locale} score={metacriticScore} />
@@ -434,47 +477,18 @@ export default async function FilmPage({ params }: FilmPageProps) {
           </div>
         ) : null}
 
-        <div className="film-signal-section reviews-module">
-          <div className="module-heading">
-            <span className="signal-letter">D</span>
-            <div>
-              <p className="section-index">
-                {en ? "PROVENANCE" : "PROCEDENCIA"}
-              </p>
-              <h2>
-                {en
-                  ? "Verified editorial identity"
-                  : "Identidad editorial comprobada"}
-              </h2>
-              <p>
-                {en
-                  ? "The film page preserves the publication used to identify the film within the season."
-                  : "La ficha conserva la publicación que permitió identificar la película dentro de la temporada."}
-              </p>
-            </div>
-          </div>
-          <div className="review-link-list">
-            <a href={film.verificationUrl} rel="noreferrer" target="_blank">
-              <span>{en ? "Source" : "Fuente"}</span>
-              <div>
-                <strong>
-                  {en
-                    ? "Verification publication"
-                    : "Publicación de comprobación"}
-                </strong>
-                <p>
-                  {film.notes ??
-                    (en
-                      ? "Editorial observation preserved."
-                      : "Observación editorial conservada.")}
-                </p>
-              </div>
-              <span className="review-arrow" aria-hidden="true">
-                ↗
-              </span>
-            </a>
-          </div>
-        </div>
+        {film.verificationUrl ? (
+          <details className="film-signal-section reviews-module">
+            <summary>
+              {en ? "More about this film" : "Más sobre esta película"}
+            </summary>
+            <p>
+              <a href={film.verificationUrl} rel="noreferrer" target="_blank">
+                {en ? "Read the original source" : "Leer la fuente original"} ↗
+              </a>
+            </p>
+          </details>
+        ) : null}
 
         <div className="film-signal-section community-module">
           <div className="module-heading">

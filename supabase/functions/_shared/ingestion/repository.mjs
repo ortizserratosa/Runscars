@@ -242,39 +242,83 @@ export class SupabaseIngestionRepository {
 
   async ensureCandidate(candidate) {
     if (!candidate) return null;
-    databaseError(
-      await this.client.from("category_candidates").upsert(
-        {
-          id: candidate.id,
-          season_id: candidate.seasonId,
-          category_id: candidate.categoryId,
-          film_id: candidate.filmId,
-          work_title: candidate.workTitle,
-          display_label: candidate.displayLabel,
-          identity_key: candidate.identityKey,
-        },
-        { onConflict: "season_id,category_id,identity_key" },
-      ),
-      "No se pudo guardar la candidatura",
-    );
-    if (candidate.people.length) {
+    let candidateId = candidate.id;
+    let foundCanonicalScreenplay = false;
+    const screenplayCategory = [
+      "original-screenplay",
+      "adapted-screenplay",
+    ].includes(candidate.categoryId);
+    if (screenplayCategory && candidate.filmId) {
+      const existing = databaseError(
+        await this.client
+          .from("category_candidates")
+          .select("id")
+          .eq("season_id", candidate.seasonId)
+          .eq("category_id", candidate.categoryId)
+          .eq("film_id", candidate.filmId)
+          .is("superseded_by_id", null)
+          .maybeSingle(),
+        "No se pudo resolver la candidatura canónica de guion",
+      );
+      candidateId = existing?.id ?? candidate.id;
+      foundCanonicalScreenplay = Boolean(existing);
+    }
+    if (!foundCanonicalScreenplay) {
       databaseError(
-        await this.client.from("category_candidate_people").upsert(
-          candidate.people.map((person) => ({
-            category_candidate_id: candidate.id,
-            person_id: person.id,
-            role: person.role,
-            display_order: person.displayOrder,
-          })),
+        await this.client.from("category_candidates").upsert(
           {
-            onConflict: "category_candidate_id,person_id,role",
-            ignoreDuplicates: true,
+            id: candidateId,
+            season_id: candidate.seasonId,
+            category_id: candidate.categoryId,
+            film_id: candidate.filmId,
+            work_title: candidate.workTitle,
+            display_label: candidate.displayLabel,
+            identity_key: candidate.identityKey,
           },
+          { onConflict: "season_id,category_id,identity_key" },
         ),
+        "No se pudo guardar la candidatura",
+      );
+    }
+    if (candidate.people.length) {
+      const existingPeople = screenplayCategory
+        ? databaseError(
+            await this.client
+              .from("category_candidate_people")
+              .select("person_id,role,display_order")
+              .eq("category_candidate_id", candidateId)
+              .order("display_order"),
+            "No se pudieron resolver los créditos canónicos de guion",
+          )
+        : [];
+      const existingLinks = new Set(
+        existingPeople.map((person) => `${person.person_id}:${person.role}`),
+      );
+      const nextOrder =
+        existingPeople.reduce(
+          (maximum, person) => Math.max(maximum, person.display_order),
+          -1,
+        ) + 1;
+      const people = candidate.people
+        .filter((person) => !existingLinks.has(`${person.id}:${person.role}`))
+        .map((person, index) => ({
+          category_candidate_id: candidateId,
+          person_id: person.id,
+          role: person.role,
+          display_order: screenplayCategory
+            ? nextOrder + index
+            : person.displayOrder,
+        }));
+      if (people.length === 0) return candidateId;
+      databaseError(
+        await this.client.from("category_candidate_people").upsert(people, {
+          onConflict: "category_candidate_id,person_id,role",
+          ignoreDuplicates: true,
+        }),
         "No se pudieron guardar los colaboradores de la candidatura",
       );
     }
-    return candidate.id;
+    return candidateId;
   }
 
   async beginRun({ connectorId, trigger, startedAt, runKey }) {
@@ -812,7 +856,19 @@ export async function persistBatch({
         persistenceConcurrency,
         async (observation) => {
           counters.observationsSeen += 1;
-          await repository.ensureCandidate(observation.candidate);
+          const canonicalCandidateId = await repository.ensureCandidate(
+            observation.candidate,
+          );
+          if (
+            canonicalCandidateId &&
+            canonicalCandidateId !== observation.categoryCandidateId
+          ) {
+            observation.categoryCandidateId = canonicalCandidateId;
+            observation.candidate = {
+              ...observation.candidate,
+              id: canonicalCandidateId,
+            };
+          }
           const saved = await repository.saveObservation({
             batch: prepared,
             publication,

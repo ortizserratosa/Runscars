@@ -1,0 +1,84 @@
+{
+  "capturedAt": "2026-09-06T22:09:23.416Z",
+  "deploymentId": "dpl_91mSHvFFpcDXRbdxpXmq4JsD5eht",
+  "codeCommit": "9357e3536932ae86843071a9e59bab0b5aa8143b",
+  "results": [
+    {
+      "path": "/",
+      "status": 200,
+      "lang": "es-ES",
+      "canonical": "https://runscars.app",
+      "languageLink": "/en",
+      "hasPublishedLocaleEndpoint": false
+    },
+    {
+      "path": "/en",
+      "status": 200,
+      "lang": "en-GB",
+      "canonical": "https://runscars.app/en",
+      "languageLink": "/",
+      "hasPublishedLocaleEndpoint": false
+    },
+    {
+      "path": "/personas/tmdb-91671",
+      "status": 200,
+      "lang": "es-ES",
+      "canonical": "https://runscars.app/personas/tmdb-91671",
+      "languageLink": "/en/personas/tmdb-91671",
+      "hasPublishedLocaleEndpoint": false
+    },
+    {
+      "path": "/peliculas/michael",
+      "status": 200,
+      "lang": "es-ES",
+      "canonical": "https://runscars.app/peliculas/michael",
+      "languageLink": "/en/peliculas/michael",
+      "hasPublishedLocaleEndpoint": false
+    },
+    {
+      "path": "/en/privacidad",
+      "status": 200,
+      "lang": "en-GB",
+      "canonical": "https://runscars.app/en/privacidad",
+      "languageLink": "/privacidad",
+      "hasPublishedLocaleEndpoint": false
+    },
+    {
+      "path": "/festivales",
+      "status": 200,
+      "lang": "es-ES",
+      "canonical": "https://runscars.app/festivales",
+      "languageLink": "/en/festivales",
+      "hasPublishedLocaleEndpoint": false
+    },
+    {
+      "path": "/en/festivales",
+      "status": 200,
+      "lang": "en-GB",
+      "canonical": "https://runscars.app/en/festivales",
+      "languageLink": "/festivales",
+      "hasPublishedLocaleEndpoint": false
+    },
+    {
+      "path": "/comunidad?season=oscars-2027&q=ana",
+      "status": 200,
+      "lang": "es-ES",
+      "canonical": "https://runscars.app/comunidad",
+      "languageLink": "/en/comunidad?season=oscars-2027&q=ana",
+      "hasPublishedLocaleEndpoint": false
+    },
+    {
+      "path": "/en/comunidad?season=oscars-2027&q=ana",
+      "status": 200,
+      "lang": "en-GB",
+      "canonical": "https://runscars.app/en/comunidad",
+      "languageLink": "/comunidad?season=oscars-2027&q=ana",
+      "hasPublishedLocaleEndpoint": false
+    },
+    {
+      "path": "/api/health",
+      "status": 200,
+      "hasPublishedLocaleEndpoint": false
+    }
+  ]
+}

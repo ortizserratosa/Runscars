@@ -28,6 +28,7 @@ export async function generateMetadata({
   const name = en ? category.nameEn : category.name;
   return buildLocalizedMetadata({
     locale,
+    socialImage: `/api/social?kind=category&id=${category.slug}&lang=${locale}`,
     path: `/temporadas/2027/${category.slug}`,
     title: en
       ? `${name} Oscar Predictions 2027`

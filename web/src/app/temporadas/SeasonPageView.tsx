@@ -3,6 +3,7 @@ import { localizedCategoryName } from "../../lib/i18n/categories";
 import { localeTag, localizedPath, type Locale } from "../../lib/i18n/config";
 import { getRequestLocale } from "../../lib/i18n/server";
 import { absoluteUrl } from "../../lib/seo";
+import { getFestivalIndex } from "../../lib/festivals/data";
 import { JsonLd } from "../components/JsonLd";
 
 type CategorySummary = {
@@ -42,6 +43,7 @@ export async function SeasonPageView({
   const locale = await getRequestLocale();
   const en = locale === "en";
   const active = year === 2027;
+  const festivalEditions = active ? await getFestivalIndex() : [];
   const recentChanges = active
     ? categories
         .filter((category) => category.updatedAt && category.previousUpdatedAt)
@@ -90,7 +92,7 @@ export async function SeasonPageView({
       <section className="season-hero">
         <div className="page-shell">
           <div className="breadcrumb">
-            <Link href={localizedPath("/", locale)}>
+            <Link prefetch={false} href={localizedPath("/", locale)}>
               {en ? "Home" : "Inicio"}
             </Link>
             <span>/</span>
@@ -154,6 +156,7 @@ export async function SeasonPageView({
               <div className="season-movement-grid">
                 {recentChanges.map((category) => (
                   <Link
+                    prefetch={false}
                     href={localizedPath(
                       `/temporadas/${year}/${category.slug}`,
                       locale,
@@ -207,6 +210,7 @@ export async function SeasonPageView({
           <div className="category-grid">
             {categories.map((category, index) => (
               <Link
+                prefetch={false}
                 className={`category-card ${
                   category.isPublic ? "active-category" : "muted-category"
                 }`}
@@ -243,6 +247,62 @@ export async function SeasonPageView({
               </Link>
             ))}
           </div>
+          {festivalEditions.length ? (
+            <section className="season-festival-circuit">
+              <div className="section-heading split-heading">
+                <div>
+                  <p className="section-index">
+                    {en ? "FESTIVAL CIRCUIT" : "CIRCUITO FESTIVALERO"}
+                  </p>
+                  <h2>
+                    {en
+                      ? "Discover the festival circuit"
+                      : "Descubre el circuito festivalero"}
+                  </h2>
+                </div>
+                <p>
+                  {en
+                    ? "Explore the films and winners from nine international festivals."
+                    : "Explora las películas y los ganadores de nueve festivales internacionales."}
+                </p>
+              </div>
+              <div className="season-festival-list">
+                {festivalEditions.map((edition) => (
+                  <Link
+                    prefetch={false}
+                    href={localizedPath(
+                      `/festivales/${edition.festivalId}/${edition.year}`,
+                      locale,
+                    )}
+                    key={edition.id}
+                  >
+                    <span>{String(edition.displayOrder).padStart(2, "0")}</span>
+                    <strong>{edition.shortName}</strong>
+                    <small>
+                      {edition.status === "completed"
+                        ? en
+                          ? "Completed"
+                          : "Finalizada"
+                        : edition.status === "ongoing"
+                          ? en
+                            ? "Ongoing"
+                            : "En curso"
+                          : en
+                            ? "Scheduled"
+                            : "Programada"}
+                    </small>
+                  </Link>
+                ))}
+              </div>
+              <Link
+                prefetch={false}
+                className="text-link"
+                href={localizedPath("/festivales", locale)}
+              >
+                {en ? "Open the full circuit" : "Abrir el circuito completo"}
+              </Link>
+            </section>
+          ) : null}
         </div>
         <aside className="season-sidebar">
           <div className="sidebar-card source-status-card">
@@ -287,6 +347,7 @@ export async function SeasonPageView({
               </span>
             </div>
             <Link
+              prefetch={false}
               href={localizedPath(
                 active ? "/temporadas/2026" : "/temporadas/2027",
                 locale,

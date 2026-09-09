@@ -149,8 +149,8 @@ export default async function SourcePage({ params }: SourcePageProps) {
               <p>
                 {source.notes ??
                   (isEnglish
-                    ? "Publications and observations preserved with their original value, date and capture."
-                    : "Publicaciones y observaciones conservadas con valor original, fecha y captura.")}
+                    ? "Explore this source’s original publications and latest predictions."
+                    : "Consulta las publicaciones originales y las últimas predicciones de esta fuente.")}
               </p>
             </div>
             <a
@@ -329,8 +329,8 @@ export default async function SourcePage({ params }: SourcePageProps) {
           ) : (
             <p className="insufficient-note">
               {isEnglish
-                ? "This source has published critical observations, but it is not part of a current professional update."
-                : "Esta fuente tiene observaciones críticas publicadas, pero no forma parte de una actualización profesional vigente."}
+                ? "This source has no predictions in the current ranking. Visit its website to explore its coverage."
+                : "Esta fuente no tiene predicciones en la clasificación actual. Visita su web para consultar su cobertura."}
             </p>
           )}
         </div>
@@ -341,14 +341,6 @@ export default async function SourcePage({ params }: SourcePageProps) {
               {isEnglish ? "CURRENT STATUS" : "ESTADO ACTUAL"}
             </p>
             <dl>
-              <div>
-                <dt>{isEnglish ? "Technical status" : "Estado técnico"}</dt>
-                <dd>{source.technicalStatus}</dd>
-              </div>
-              <div>
-                <dt>{isEnglish ? "Publication" : "Publicación"}</dt>
-                <dd>{source.publicationStatus}</dd>
-              </div>
               <div>
                 <dt>
                   {isEnglish

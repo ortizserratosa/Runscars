@@ -35,8 +35,8 @@ export async function PublicRankingModule({
         </div>
         <p>
           {en
-            ? `${localizedCategoryName(locale, categoryId, categoryName)} ranked by other people, with explicit positions and kept separate from professional consensus.`
-            : `${categoryName} ordenada por otras personas, con posiciones explícitas y sin mezclarla con el consenso profesional.`}
+            ? `${localizedCategoryName(locale, categoryId, categoryName)} through other film fans’ picks.`
+            : `${categoryName} según las favoritas de otros cinéfilos.`}
         </p>
       </div>
       {rankings.length ? (

@@ -541,7 +541,39 @@ export function matchFilm(subject, filmIdentities) {
   });
 }
 
+export function validateOrderedPredictionLists(batch) {
+  for (const publication of batch.publications) {
+    const lists = new Map();
+    for (const observation of publication.observations) {
+      if (observation.dataType !== "prediction_ordered") continue;
+      const key = `${observation.categoryId}:${observation.predictionIntention}`;
+      const list = lists.get(key) ?? [];
+      list.push(observation.originalValue);
+      lists.set(key, list);
+    }
+    for (const [key, values] of lists) {
+      const ranks = values.map((value) => Number(value?.rank));
+      const lengths = values.map((value) => Number(value?.list_length));
+      const expectedLength = values.length;
+      if (
+        ranks.some(
+          (rank, index) => !Number.isInteger(rank) || rank !== index + 1,
+        ) ||
+        new Set(ranks).size !== ranks.length ||
+        lengths.some(
+          (length) => !Number.isInteger(length) || length !== expectedLength,
+        )
+      ) {
+        throw new Error(
+          `${batch.sourceId} contiene una lista ordenada inválida en ${key}`,
+        );
+      }
+    }
+  }
+}
+
 export async function prepareBatch(batch, filmIdentities) {
+  validateOrderedPredictionLists(batch);
   const preparedPublications = [];
 
   for (const publication of batch.publications) {
@@ -634,6 +666,10 @@ export async function prepareBatch(batch, filmIdentities) {
           : false;
       let candidate = null;
       if (isPrediction && !needsReview) {
+        const screenplayCategory = [
+          "original-screenplay",
+          "adapted-screenplay",
+        ].includes(observation.categoryId);
         const identityKey = await sha256({
           season_id: batch.seasonId,
           category_id: observation.categoryId,
@@ -641,7 +677,9 @@ export async function prepareBatch(batch, filmIdentities) {
           work_title: observation.workTitle
             ? normalizeIdentity(observation.workTitle)
             : null,
-          person_ids: matchedPeople.map((person) => person.id).sort(),
+          person_ids: screenplayCategory
+            ? []
+            : matchedPeople.map((person) => person.id).sort(),
         });
         const peopleLabel = matchedPeople
           .map((person) => person.name)
@@ -655,9 +693,10 @@ export async function prepareBatch(batch, filmIdentities) {
           categoryId: observation.categoryId,
           filmId,
           workTitle: observation.workTitle ?? null,
-          displayLabel: peopleLabel
-            ? `${peopleLabel} — ${workLabel}`
-            : workLabel,
+          displayLabel:
+            peopleLabel && !screenplayCategory
+              ? `${peopleLabel} — ${workLabel}`
+              : workLabel,
           people: matchedPeople,
         };
       }

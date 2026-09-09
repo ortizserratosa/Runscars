@@ -1,0 +1,67 @@
+{
+  "checkedAt": "2026-09-07T22:07:06.012Z",
+  "base": "https://runscars-q4i4s5b44-nazzozzo-s-projects.vercel.app",
+  "results": [
+    {
+      "path": "/api/social?kind=festival&id=cannes&lang=es",
+      "status": 200,
+      "type": "image/png",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "path": "/api/social?kind=category&id=mejor-pelicula&lang=es",
+      "status": 200,
+      "type": "image/png",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "path": "/api/social?kind=weekly&id=2026-09-07&lang=es",
+      "status": 200,
+      "type": "image/png",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "path": "/api/social?kind=festival&id=cannes&lang=en",
+      "status": 200,
+      "type": "image/png",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "path": "/api/social?kind=category&id=mejor-pelicula&lang=en",
+      "status": 200,
+      "type": "image/png",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "path": "/api/social?kind=weekly&id=2026-09-07&lang=en",
+      "status": 200,
+      "type": "image/png",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "path": "/semana/feed?lang=es",
+      "status": 200,
+      "language": "es",
+      "items": 7,
+      "hasCanonical": true
+    },
+    {
+      "path": "/semana/feed?lang=en",
+      "status": 200,
+      "language": "en",
+      "items": 7,
+      "hasCanonical": true
+    },
+    {
+      "path": "/sitemap.xml",
+      "hasWeekly": true,
+      "hasBallot": true
+    }
+  ]
+}

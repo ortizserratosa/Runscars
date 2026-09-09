@@ -91,6 +91,7 @@ export default async function AdminPage({ searchParams }: PageProps) {
         <a href="#revisiones">Revisiones · {data.reviews.length}</a>
         <a href="#fuentes">Fuentes · {data.sources.length}</a>
         <a href="#ingestas">Ingestas</a>
+        <a href="#festivales">Festivales · {data.festivalConnectors.length}</a>
         <a href="#snapshots">Snapshots</a>
         <a href="#resultados">Resultados</a>
         <a href="#historial">Historial</a>
@@ -527,6 +528,126 @@ export default async function AdminPage({ searchParams }: PageProps) {
                   <td>{run.status}</td>
                   <td>{run.observations_inserted}</td>
                   <td>{run.review_items_created}</td>
+                  <td>{run.error_summary ?? "—"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section className="admin-section" id="festivales">
+        <header>
+          <p className="section-index">CIRCUITO INTERNACIONAL</p>
+          <h2>Festivales y mercados</h2>
+          <p>
+            Conectores aislados, ediciones pendientes y coincidencias que
+            requieren revisión editorial.
+          </p>
+        </header>
+        <div className="admin-form-grid">
+          <article className="admin-card">
+            <h3>Conectores de festivales</h3>
+            <div className="admin-compact-list">
+              {data.festivalConnectors.map((connector) => (
+                <p key={connector.id}>
+                  <strong>{connector.name}</strong>
+                  <span>
+                    {connector.is_active ? "activo" : "pausado"} ·{" "}
+                    {connector.schedule_cron} · último éxito{" "}
+                    {dateTime(connector.last_success_at)}
+                  </span>
+                  {connector.last_error ? (
+                    <em>{connector.last_error}</em>
+                  ) : null}
+                </p>
+              ))}
+            </div>
+          </article>
+          <article className="admin-card">
+            <h3>Conectores de mercados</h3>
+            <div className="admin-compact-list">
+              {data.marketConnectors.map((connector) => (
+                <p key={connector.id}>
+                  <strong>{connector.name}</strong>
+                  <span>
+                    {connector.is_active ? "activo" : "pausado"} · último éxito{" "}
+                    {dateTime(connector.last_success_at)}
+                  </span>
+                  {connector.last_error ? (
+                    <em>{connector.last_error}</em>
+                  ) : null}
+                </p>
+              ))}
+            </div>
+          </article>
+        </div>
+        <div className="admin-form-grid">
+          <article className="admin-card">
+            <h3>Ediciones abiertas o pendientes</h3>
+            <div className="admin-compact-list">
+              {data.festivalEditions.map((edition) => (
+                <p key={edition.id}>
+                  <strong>{edition.id}</strong>
+                  <span>
+                    {edition.status} · palmarés {edition.awards_status} · cierre{" "}
+                    {edition.ends_on}
+                  </span>
+                </p>
+              ))}
+            </div>
+          </article>
+          <article className="admin-card">
+            <h3>Matching dudoso o pendiente</h3>
+            <div className="admin-compact-list">
+              {data.festivalMatches.length ? (
+                data.festivalMatches.map((entry) => {
+                  const set = relation(entry.festival_sets);
+                  return (
+                    <p key={entry.id}>
+                      <strong>{entry.original_title}</strong>
+                      <span>
+                        {set?.edition_id ?? "edición"} · {entry.section} ·{" "}
+                        {entry.match_status}
+                      </span>
+                      {set?.source_url ? (
+                        <a
+                          href={set.source_url}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Fuente ↗
+                        </a>
+                      ) : null}
+                    </p>
+                  );
+                })
+              ) : (
+                <p>Sin coincidencias pendientes.</p>
+              )}
+            </div>
+          </article>
+        </div>
+        <div className="admin-table-wrap">
+          <table className="admin-table">
+            <thead>
+              <tr>
+                <th>Inicio</th>
+                <th>Conector</th>
+                <th>Estado</th>
+                <th>Nuevos</th>
+                <th>Repetidos</th>
+                <th>Error</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.festivalRuns.map((run) => (
+                <tr key={run.id}>
+                  <td>{dateTime(run.started_at)}</td>
+                  <td>{run.connector_id}</td>
+                  <td>{run.status}</td>
+                  <td>{run.sets_inserted}</td>
+                  <td>{run.sets_duplicate}</td>
                   <td>{run.error_summary ?? "—"}</td>
                 </tr>
               ))}

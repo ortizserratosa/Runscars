@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "../../lib/auth/session";
-import { localizedPath } from "../../lib/i18n/config";
+import { loginDestination, safeReturnPath } from "../../lib/auth/return-path";
 import { getRequestLocale } from "../../lib/i18n/server";
 import { GoogleAuthButton, SignInForm, SignUpForm } from "./AuthForms";
 
@@ -18,13 +18,18 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export const dynamic = "force-dynamic";
 
-export default async function AccessPage() {
+export default async function AccessPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ next?: string }>;
+}) {
+  const next = safeReturnPath((await searchParams).next);
   const locale = await getRequestLocale();
   const en = locale === "en";
   const emailSignupEnabled =
     process.env.NEXT_PUBLIC_EMAIL_SIGNUP_ENABLED === "true";
   if (await getCurrentUser()) {
-    redirect(localizedPath("/cuenta", locale));
+    redirect(loginDestination(next, locale));
   }
 
   return (
@@ -34,8 +39,8 @@ export default async function AccessPage() {
         <h1>{en ? "Your season, in order." : "Tu temporada, en orden."}</h1>
         <p>
           {en
-            ? "Your watch states and rankings never affect professional consensus. You decide what stays private and what you share."
-            : "Tus visionados y rankings nunca alteran el consenso profesional. Tú decides qué se mantiene privado y qué compartes."}
+            ? "Keep track of the films you’ve seen, rank your favourites and share your Oscar predictions."
+            : "Lleva la cuenta de las películas que has visto, ordena tus favoritas y comparte tus predicciones Oscar."}
         </p>
       </header>
       <section className="auth-provider-card">
@@ -50,7 +55,7 @@ export default async function AccessPage() {
               : "Google gestiona el inicio de sesión y no tienes que crear otra contraseña para Runscars."}
           </p>
         </div>
-        <GoogleAuthButton locale={locale} />
+        <GoogleAuthButton locale={locale} next={next} />
       </section>
       <div className="auth-grid">
         <section>
@@ -58,24 +63,19 @@ export default async function AccessPage() {
             {en ? "I HAVE AN ACCOUNT" : "YA TENGO CUENTA"}
           </p>
           <h2>{en ? "Sign in" : "Entrar"}</h2>
-          <SignInForm locale={locale} />
+          <SignInForm locale={locale} next={next} />
         </section>
         <section>
           <p className="section-index">{en ? "FIRST TIME" : "PRIMERA VEZ"}</p>
           <h2>{en ? "Create an account" : "Crear cuenta"}</h2>
           {emailSignupEnabled ? (
-            <SignUpForm locale={locale} />
+            <SignUpForm locale={locale} next={next} />
           ) : (
             <div className="account-form">
               <p>
                 {en
-                  ? "During the public beta, new accounts are created with Google. Email sign-in remains available for existing accounts."
-                  : "Durante la beta pública, las cuentas nuevas se crean con Google. El acceso por correo sigue disponible para cuentas existentes."}
-              </p>
-              <p className="form-message">
-                {en
-                  ? "This avoids relying on a shared confirmation-email service while Runscars prepares its own transactional mail."
-                  : "Así evitamos depender de un servicio compartido de confirmación mientras Runscars prepara su correo transaccional propio."}
+                  ? "Create your account with Google. If you already have an email account, you can sign in with it."
+                  : "Crea tu cuenta con Google. Si ya tienes una cuenta con correo y contraseña, puedes seguir entrando con ella."}
               </p>
             </div>
           )}

@@ -1,7 +1,7 @@
-# Sistema de ingesta · fases 5 y 7.1
+# Sistema de ingesta · profesionales, mercados y festivales
 
-**Estado:** fase 5 completada; ampliación 7.1 completada
-**Última revisión:** 2026-09-01
+**Estado:** circuito Oscar 2027 versionado
+**Última revisión:** 2026-09-03
 
 ## Objetivo
 
@@ -173,8 +173,10 @@ idempotente.
 
 Al seleccionar el corte vigente, una publicación fechada prevalece sobre una
 URL histórica sin fecha. Si varias revisiones comparten URL, prevalece la
-captura más reciente. Los números originales con saltos se conservan y la
-longitud de la lista nunca queda por debajo del mayor puesto publicado.
+captura más reciente. Los puestos se conservan en `original_value`, pero una
+lista ordenada solo es válida si contiene enteros únicos y consecutivos desde 1
+y si `list_length` coincide con el número de filas. Un salto o duplicado falla
+antes de persistir y mantiene vigente el último corte válido.
 
 Los conectores profesionales se ejecutan dentro de la Edge Function con un pool
 global de tres workers. Cada uno conserva su propio run y captura sus propios
@@ -210,6 +212,11 @@ npm run candidate:match -- <observation-id> <candidate-id> \
   --kind <film|person|team|category> --reason "<motivo>"
 ```
 
+Para Guion original y adaptado, el sujeto canónico es la película. Una línea
+`Guionistas — Película` conserva ambas partes, pero usa la película para el
+matching. La persistencia reutiliza la candidatura activa de esa película y
+solo añade créditos verificados que aún no existan.
+
 Los mercados se ejecutan cada hora mediante `run-markets`. Kalshi pagina las
 series configuradas de nominación y ganador de las ocho categorías públicas;
 Polymarket descubre eventos activos de la ceremonia configurada. Ambos rechazan
@@ -228,6 +235,41 @@ El Cron diario de snapshots conserva además un registro privado en
 minutos. La ausencia de cambios ya no es indistinguible de la ausencia o retraso
 del Cron.
 
+## Ingesta de festivales
+
+`run-festivals` es una Edge Function independiente de profesionales y mercados.
+Consulta diariamente a las **05:17 UTC** los nueve conectores de la temporada
+2027. Cada festival abre y cierra su propio `festival_capture_runs`; un error no
+bloquea los demás.
+
+Selección y palmarés llegan como manifiestos completos. `prepareFestivalSet`
+filtra el alcance admitido, conserva el recibo y resuelve solo títulos exactos.
+La función SQL `persist_festival_set` inserta atómicamente conjunto, entradas,
+historial de matching y puntero vigente. Un mismo hash devuelve `duplicate`; no
+modifica la versión previa. `festival_sets`, `festival_entries` e historial son
+inmutables. Una coincidencia editorial añade una nueva fila de historial y mueve
+solo el puntero vigente.
+
+La ausencia de un palmarés `pending` antes del cierre, incluida una respuesta
+HTTP 404/410 de su URL reservada, es un resultado normal.
+Si continúa ausente 24 horas después de `ends_on`, el conector falla y
+Administración muestra la incidencia. Telluride y NYFF usan `not_applicable`,
+por lo que no se espera un conjunto de premios.
+
+Comandos reproducibles:
+
+```bash
+npm run festivals:import
+npm run festivals:import -- web/data/festivals/2026.json
+npm run festivals:refresh
+npm run festivals:refresh -- cannes venice
+npm run festivals:match -- <entry-id> <film-id> --reason "<motivo>"
+```
+
+El primer comando carga el recibo versionado inicial; el segundo consulta las
+páginas oficiales vigentes. Ambos necesitan URL de Supabase y
+`SUPABASE_SERVICE_ROLE_KEY` solo en servidor.
+
 ## Pruebas sin red
 
 Los fixtures de `web/tests/fixtures/ingestion/` contienen solo la estructura y
@@ -239,6 +281,7 @@ campos mínimos necesarios:
 - `manual.json`.
 - fixtures HTML de las seis fuentes de predicción multcategoría;
 - fixtures JSON de Kalshi y Polymarket.
+- fixtures HTML de los nueve conectores festivaleros y manifiesto inicial 2026.
 
 Vitest no llama a ninguna fuente. Comprueba los tres parsers, el formato manual,
 matching exacto y por título alternativo, cola de revisión, reimportación y

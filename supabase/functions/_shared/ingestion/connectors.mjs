@@ -375,7 +375,7 @@ export const CONNECTORS = Object.freeze({
     return mergeBatches(batches, {
       mode: "mutable-category-pages",
       indexUrl: connector.endpoint_url,
-      extractorVersion: "awards-radar-v4",
+      extractorVersion: "awards-radar-v5",
       categoriesChecked: Object.keys(categoryUrls).length,
       skippedUrls,
     });
@@ -403,7 +403,7 @@ export const CONNECTORS = Object.freeze({
           }),
           { publishedAt: null },
         ),
-        extractorVersion: "next-best-picture-v2",
+        extractorVersion: "next-best-picture-v3",
       },
       {
         mode: "mutable-page",

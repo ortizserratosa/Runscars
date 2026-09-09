@@ -1,0 +1,66 @@
+[
+  {
+    "candidates": 15,
+    "category_id": "actor",
+    "consensus": "true",
+    "coverage": "5",
+    "locked_at": "2026-09-06 04:47:53.991+00",
+    "ordered_sources": "5"
+  },
+  {
+    "candidates": 16,
+    "category_id": "actress",
+    "consensus": "true",
+    "coverage": "5",
+    "locked_at": "2026-09-06 04:47:53.991+00",
+    "ordered_sources": "5"
+  },
+  {
+    "candidates": 12,
+    "category_id": "adapted-screenplay",
+    "consensus": "true",
+    "coverage": "4",
+    "locked_at": "2026-09-05 04:47:53.956+00",
+    "ordered_sources": "4"
+  },
+  {
+    "candidates": 20,
+    "category_id": "best-picture",
+    "consensus": "true",
+    "coverage": "6",
+    "locked_at": "2026-09-06 04:47:53.991+00",
+    "ordered_sources": "5"
+  },
+  {
+    "candidates": 15,
+    "category_id": "directing",
+    "consensus": "true",
+    "coverage": "5",
+    "locked_at": "2026-09-06 04:47:53.991+00",
+    "ordered_sources": "5"
+  },
+  {
+    "candidates": 16,
+    "category_id": "original-screenplay",
+    "consensus": "true",
+    "coverage": "4",
+    "locked_at": "2026-09-05 04:47:53.956+00",
+    "ordered_sources": "4"
+  },
+  {
+    "candidates": 15,
+    "category_id": "supporting-actor",
+    "consensus": "true",
+    "coverage": "5",
+    "locked_at": "2026-09-05 04:47:53.956+00",
+    "ordered_sources": "5"
+  },
+  {
+    "candidates": 18,
+    "category_id": "supporting-actress",
+    "consensus": "true",
+    "coverage": "5",
+    "locked_at": "2026-09-06 04:47:53.991+00",
+    "ordered_sources": "5"
+  }
+]

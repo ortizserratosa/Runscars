@@ -58,28 +58,7 @@ export function FilmCatalogDetails({
   locale: Locale;
 }) {
   const en = locale === "en";
-  if (!film.tmdb) {
-    return (
-      <section className="film-signal-section catalog-module">
-        <div className="module-heading">
-          <span className="signal-letter">M</span>
-          <div>
-            <p className="section-index">{en ? "METADATA" : "METADATOS"}</p>
-            <h2>
-              {en
-                ? "The film page remains available"
-                : "La ficha sigue disponible"}
-            </h2>
-            <p>
-              {en
-                ? "This environment does not have a current TMDB capture. Runscars preserves and displays the editorial dataset without calling the API during your visit."
-                : "Este entorno no tiene una captura TMDB vigente. Runscars conserva y muestra el dataset editorial sin consultar la API durante la visita."}
-            </p>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  if (!film.tmdb) return null;
 
   const cast = film.credits
     .filter((credit) => credit.kind === "cast")
@@ -95,18 +74,9 @@ export function FilmCatalogDetails({
         <span className="signal-letter">M</span>
         <div>
           <p className="section-index">
-            {en ? "FILM METADATA" : "METADATOS CINEMATOGRÁFICOS"}
+            {en ? "ABOUT THE FILM" : "SOBRE LA PELÍCULA"}
           </p>
-          <h2>
-            {en
-              ? "The film beyond the race"
-              : "La película, fuera de la carrera"}
-          </h2>
-          <p>
-            {en
-              ? "Metadata is served from the local Runscars copy. It does not participate in predictions or critical reception."
-              : "Metadatos servidos desde la copia local de Runscars. No participan en las predicciones ni en la recepción crítica."}
-          </p>
+          <h2>{en ? "Cast and film details" : "Reparto y ficha técnica"}</h2>
         </div>
       </div>
 

@@ -34,6 +34,52 @@ export default async function SourcesPage() {
   const locale = await getRequestLocale();
   const isEnglish = locale === "en";
   const sources = await getSourceIndex();
+  const groups = [
+    {
+      id: "prediction",
+      es: "Predicciones",
+      en: "Predictions",
+      sources: sources.filter((source) =>
+        source.sourceTypes.includes("prediction"),
+      ),
+    },
+    {
+      id: "market",
+      es: "Mercados",
+      en: "Markets",
+      sources: sources.filter((source) =>
+        source.sourceTypes.includes("market"),
+      ),
+    },
+    {
+      id: "reception",
+      es: "Metadatos y recepción",
+      en: "Metadata and reception",
+      sources: sources.filter(
+        (source) =>
+          !source.sourceTypes.includes("prediction") &&
+          source.sourceTypes.some((type) =>
+            ["metadata", "review", "score"].includes(type),
+          ),
+      ),
+    },
+    {
+      id: "academy",
+      es: "Academia",
+      en: "Academy",
+      sources: sources.filter((source) =>
+        source.sourceTypes.includes("official"),
+      ),
+    },
+    {
+      id: "festival",
+      es: "Festivales",
+      en: "Festivals",
+      sources: sources.filter((source) =>
+        source.sourceTypes.includes("festival"),
+      ),
+    },
+  ].filter((group) => group.sources.length);
   return (
     <main>
       <section className="source-hero sources-index-hero">
@@ -75,28 +121,42 @@ export default async function SourcesPage() {
               : "Solo aparecen medios presentes en una actualización profesional o con una observación crítica publicada."}
           </p>
         </div>
-        <div className="sources-index-grid">
-          {sources.map((source) => {
-            const latestUpdateAt =
-              source.lastChangedAt ?? source.lastPublishedAt;
-            return (
-              <article className="source-index-card" key={source.id}>
-                <h3>
-                  <Link href={localizedPath(`/fuentes/${source.id}`, locale)}>
-                    {source.name}
-                  </Link>
-                </h3>
-                <p className="source-index-card-update">
-                  <span>
-                    {isEnglish ? "Latest update" : "Última actualización"}
-                  </span>
-                  <time dateTime={latestUpdateAt ?? undefined}>
-                    {dateLabel(latestUpdateAt, locale)}
-                  </time>
-                </p>
-              </article>
-            );
-          })}
+        <div className="source-groups">
+          {groups.map((group) => (
+            <section key={group.id}>
+              <header>
+                <p className="section-index">{group.id.toUpperCase()}</p>
+                <h3>{isEnglish ? group.en : group.es}</h3>
+              </header>
+              <div className="sources-index-grid">
+                {group.sources.map((source) => {
+                  const latestUpdateAt =
+                    source.lastChangedAt ??
+                    source.lastPublishedAt ??
+                    source.lastSuccessfulCheckAt;
+                  return (
+                    <article className="source-index-card" key={source.id}>
+                      <h3>
+                        <Link
+                          href={localizedPath(`/fuentes/${source.id}`, locale)}
+                        >
+                          {source.name}
+                        </Link>
+                      </h3>
+                      <p className="source-index-card-update">
+                        <span>
+                          {isEnglish ? "Latest update" : "Última actualización"}
+                        </span>
+                        <time dateTime={latestUpdateAt ?? undefined}>
+                          {dateLabel(latestUpdateAt, locale)}
+                        </time>
+                      </p>
+                    </article>
+                  );
+                })}
+              </div>
+            </section>
+          ))}
         </div>
       </section>
     </main>

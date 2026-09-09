@@ -21,29 +21,46 @@ export async function SiteFooter() {
         </p>
       </div>
       <div className="footer-links">
-        <Link href={href("/temporadas/2027")}>Oscar 2027</Link>
-        <Link href={href("/archivo")}>
+        <Link prefetch={false} href={href("/semana")}>
+          {en ? "The weekly edition" : "La edición semanal"}
+        </Link>
+        <Link prefetch={false} href={href("/quiniela")}>
+          {en ? "Try your ballot" : "Prueba tu quiniela"}
+        </Link>
+        <Link prefetch={false} href={href("/temporadas/2027")}>
+          Oscar 2027
+        </Link>
+        <Link prefetch={false} href={href("/festivales")}>
+          {en ? "Festivals" : "Festivales"}
+        </Link>
+        <Link prefetch={false} href={href("/archivo")}>
           {en ? "2022–2026 archive" : "Archivo 2022–2026"}
         </Link>
-        <Link href={href("/evaluacion")}>
+        <Link prefetch={false} href={href("/evaluacion")}>
           {en ? "Evaluation" : "Evaluación"}
         </Link>
-        <Link href={href("/metodologia")}>
+        <Link prefetch={false} href={href("/metodologia")}>
           {en ? "Methodology" : "Metodología"}
         </Link>
-        <Link href={href("/comunidad")}>{en ? "Community" : "Comunidad"}</Link>
-        <Link href={href("/privacidad")}>
+        <Link prefetch={false} href={href("/comunidad")}>
+          {en ? "Community" : "Comunidad"}
+        </Link>
+        <Link prefetch={false} href={href("/privacidad")}>
           {en ? "Privacy and security" : "Privacidad y seguridad"}
         </Link>
-        <Link href={href("/terminos")}>{en ? "Terms" : "Condiciones"}</Link>
-        <Link href={href("/fuentes")}>
-          {en ? "Traceability" : "Trazabilidad"}
+        <Link prefetch={false} href={href("/terminos")}>
+          {en ? "Terms" : "Condiciones"}
         </Link>
-        <Link href={href("/creditos")}>{en ? "Credits" : "Créditos"}</Link>
+        <Link prefetch={false} href={href("/fuentes")}>
+          {en ? "Sources" : "Fuentes"}
+        </Link>
+        <Link prefetch={false} href={href("/creditos")}>
+          {en ? "Credits" : "Créditos"}
+        </Link>
         <span>
           {en
-            ? "100% verifiable data · Independent sources"
-            : "Datos 100% verificables · Fuentes independientes"}
+            ? "Independent sources · Made for film fans"
+            : "Fuentes independientes · Para amantes del cine"}
         </span>
       </div>
     </footer>

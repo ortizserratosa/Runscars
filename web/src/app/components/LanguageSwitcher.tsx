@@ -1,4 +1,5 @@
 import { getRequestLocale, getRequestPath } from "../../lib/i18n/server";
+import { localizedPath } from "../../lib/i18n/config";
 
 export async function LanguageSwitcher() {
   const [locale, path] = await Promise.all([
@@ -14,7 +15,7 @@ export async function LanguageSwitcher() {
     <a
       aria-label={description}
       className="language-switcher"
-      href={`/api/locale?locale=${nextLocale}&returnTo=${encodeURIComponent(path)}`}
+      href={localizedPath(path, nextLocale)}
       hrefLang={nextLocale}
       lang={nextLocale}
       rel="alternate"

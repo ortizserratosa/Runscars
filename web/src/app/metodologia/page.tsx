@@ -25,9 +25,7 @@ export default async function MethodologyPage() {
   return (
     <main className="page-shell methodology-page">
       <header className="methodology-hero">
-        <p className="section-index">
-          {en ? "PUBLIC METHOD · V2" : "MÉTODO PÚBLICO · V2"}
-        </p>
+        <p className="section-index">{en ? "HOW IT WORKS" : "CÓMO FUNCIONA"}</p>
         <h1>
           {en
             ? "Three signals. Each with its own data."
@@ -46,8 +44,8 @@ export default async function MethodologyPage() {
           <h2>{en ? "Critics" : "Crítica"}</h2>
           <p>
             {en
-              ? "Individual scores are converted to a 0–5 scale while preserving the original value and scale. A highlighted aggregate requires three independent reviews."
-              : "Las puntuaciones individuales se convierten a una escala de 0 a 5, conservando siempre el valor y la escala originales. Solo hay agregado destacado con tres críticas independientes."}
+              ? "Film pages show the original Metascore out of 100, with a link to Metacritic, when available. Runscars does not average or rescale this score."
+              : "Las fichas muestran el Metascore original sobre 100 y un enlace a Metacritic cuando está disponible. Runscars no promedia ni cambia la escala de esa puntuación."}
           </p>
         </article>
         <article>
@@ -100,8 +98,8 @@ export default async function MethodologyPage() {
           </h2>
           <p>
             {en
-              ? "The site creates an update when a source adds, removes, reorders or changes the identity of a candidate. Every update stores included and excluded observations, the method version and a content hash."
-              : "La web crea una actualización cuando una fuente añade, elimina, reordena o cambia la identidad de una candidatura. Cada actualización guarda las observaciones incluidas, las excluidas, la versión del método y un hash de contenido."}
+              ? "The ranking updates when a source changes its predictions. Use the history to see earlier rankings and compare them with the previous update."
+              : "La clasificación se actualiza cuando una fuente cambia sus predicciones. El historial permite consultar las clasificaciones anteriores y compararlas con la actualización previa."}
           </p>
         </article>
         <article>
@@ -109,7 +107,9 @@ export default async function MethodologyPage() {
             {en ? "LOCKS AND CORRECTIONS" : "CIERRES Y CORRECCIONES"}
           </p>
           <h2>
-            {en ? "Immutable means immutable" : "Inmutable significa inmutable"}
+            {en
+              ? "Predictions stay on the record"
+              : "Las predicciones quedan registradas"}
           </h2>
           <p>
             {en
@@ -145,8 +145,8 @@ export default async function MethodologyPage() {
         </div>
         <p>
           {en
-            ? "We compare the locked forecast with official nominations and winners. Precision, coverage and the winner's position are shown alongside the IDs of the versions used."
-            : "Comparamos el cierre bloqueado con nominaciones y ganadores oficiales. Mostramos precisión, cobertura y posición del ganador con IDs de las versiones utilizadas."}
+            ? "We compare final predictions with official nominees and winners: how many nominees were correctly predicted and where the winner ranked."
+            : "Comparamos las predicciones finales con los nominados y ganadores oficiales: cuántos nominados se acertaron y qué posición ocupaba el ganador."}
         </p>
         <Link
           className="primary-button dark-button"

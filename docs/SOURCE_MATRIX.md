@@ -1,8 +1,9 @@
-# Matriz de fuentes · fase 1
+# Matriz de fuentes y circuito festivalero
 
-**Corte de investigación:** 2026-08-29
+**Corte de investigación:** 2026-09-03
 
-**Alcance:** 31 fuentes candidatas; 28 seleccionadas para el catálogo del MVP.
+**Alcance:** inventario original de 31 fuentes y nueve ediciones festivaleras
+operativas para Oscar 2027.
 
 La selección combina fuentes de datos auxiliares (`metadata`, `official`,
 `festival`) y las tres señales profesionales que se mostrarán por separado
@@ -107,6 +108,25 @@ reescribir el corte de fase 1:
 | `the-ringer` | [Previa de Mejor película 2027](https://www.theringer.com/2026/03/20/oscars/oscars-2027-predictions-best-picture-movies-contenders) | [Archivo Oscar](https://www.theringer.com/topic/oscars) |
 | `kalshi` | [Documentación de mercados](https://docs.kalshi.com/welcome) | [Paginación de mercados](https://docs.kalshi.com/getting_started/pagination) |
 | `polymarket` | [Visión general de datos](https://docs.polymarket.com/market-data/overview) | [Listado de eventos](https://docs.polymarket.com/api-reference/events/list-events) |
+
+## Circuito festivalero 2026 y responsables
+
+Todos los conectores son propiedad operativa del administrador editorial de
+Runscars, se ejecutan en `run-festivals` y conservan un último conjunto válido
+por edición. El responsable revisa el cambio estructural de una fuente y los
+matchings no exactos; no corrige el valor original.
+
+| ID | Edición | Entrada oficial | Conector | Responsable | Señal y límites |
+|---|---|---|---|---|---|
+| `sundance` | Sundance 2026 | [Selección](https://www.sundance.org/blogs/2026-sundance-film-festival-unveils-97-projects-selected-for-the-feature-film-and-episodic-program/) · [premios](https://www.sundance.org/blogs/the-complete-list-of-2026-sundance-film-festival-award-winners/) | `festival-sundance` | Administración editorial | Selección y premios de largometraje; excluye episódico y cortos |
+| `berlinale` | Berlín 76 | [Programa 2026](https://www.berlinale.de/en/programme/berlinale-programme.html/y%3D2026) · [premios](https://www.berlinale.de/en/archive/awards-juries/awards.html?year=2026) | `festival-berlinale` | Administración editorial | Secciones y jurados oficiales de largometraje |
+| `cannes` | Cannes 79 | [Selección](https://www.festival-cannes.com/en/press/press-releases/the-films-of-the-official-selection-2026/) · [premios](https://www.festival-cannes.com/en/press/press-releases/the-79th-festival-de-cannes-winners-list/) | `festival-cannes` | Administración editorial | Competición, Un Certain Regard y Caméra d’or; excluye paralelos y cortos |
+| `locarno` | Locarno 79 | [Programa](https://www.locarnofestival.ch/en/festival/program.html) · [palmarés](https://www.locarnofestival.ch/en/festival/palmares.html) | `festival-locarno` | Administración editorial | Secciones oficiales de largometraje; Cloudflare puede exigir revisión manual |
+| `venice` | Venecia 83 | [Lineup](https://www.labiennale.org/en/cinema/2026/lineup) · [edición](https://www.labiennale.org/en/cinema/2026/83rd-festival) | `festival-venice` | Administración editorial | Selecciones oficiales sin inmersivo, clásicos ni mercado; premios el 12-09 |
+| `tiff` | Toronto 51 | [TIFF](https://tiff.net/films) | `festival-tiff` | Administración editorial | Selección y premios oficiales; palmarés pendiente |
+| `san-sebastian` | San Sebastián 74 | [Selección oficial](https://www.sansebastianfestival.com/2026/sections_and_films/official_selection/8/in) | `festival-san-sebastian` | Administración editorial | Secciones y premios oficiales; palmarés pendiente |
+| `telluride` | Telluride 53 | [Programa](https://www.telluridefilmfestival.org/show) | `festival-telluride` | Administración editorial | Selección no competitiva; palmarés no aplicable |
+| `nyff` | NYFF 64 | [Lineup](https://www.filmlinc.org/nyff/nyff64-lineup/) | `festival-nyff` | Administración editorial | Selección no competitiva; palmarés no aplicable |
 
 ## Puerta de calidad
 

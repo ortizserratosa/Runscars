@@ -1,0 +1,59 @@
+{
+  "codeCommit": "9357e3536932ae86843071a9e59bab0b5aa8143b",
+  "branch": "codex/festival-integrity-2027",
+  "productionOrigin": "https://runscars.app",
+  "deploymentId": "dpl_91mSHvFFpcDXRbdxpXmq4JsD5eht",
+  "deploymentUrl": "https://runscars-cjg0mrtbr-nazzozzo-s-projects.vercel.app",
+  "previousDeploymentId": "dpl_EFLqrExb7d8megwCadVV5c8VdzoJ",
+  "previousCodeCommit": "d429f5431efb4fcf4887c6e03ddfa36eaf6a6920",
+  "newMigrations": ["20260906160000", "20260906170000", "20260906180000"],
+  "edgeFunctions": {
+    "run-festivals": 5,
+    "run-ingestion": 37,
+    "run-markets": 6
+  },
+  "verification": {
+    "format": "passed",
+    "lint": "passed",
+    "typecheck": "passed",
+    "unitTests": 151,
+    "databaseTests": 22,
+    "productionBuild": "passed",
+    "npmAuditVulnerabilities": 0,
+    "endToEndTests": 114,
+    "endToEndProjects": [
+      "chromium-desktop",
+      "chromium-mobile",
+      "firefox-smoke",
+      "webkit-smoke"
+    ],
+    "gitDiffCheck": "passed"
+  },
+  "publicCrawl": {
+    "codeCommit": "d3fd0d1b40b5cedcb72fac12826b7022f66b3ff1",
+    "sitemapUrls": 3538,
+    "visited": 3742,
+    "finalFindings": 0,
+    "firstPassTransportFailuresRetried": 12,
+    "report": "public-crawl.json"
+  },
+  "productionUI": {
+    "capturedAt": "2026-09-06T21:45:30.938Z",
+    "cases": 132,
+    "failed": 0,
+    "maximumLcpMs": 1904,
+    "maximumCls": 0.0012210492621527777,
+    "report": "after/ui.json",
+    "measurement": "Unthrottled laboratory samples; no field CWV or INP",
+    "codeCommit": "d429f5431efb4fcf4887c6e03ddfa36eaf6a6920"
+  },
+  "remainingLimitations": [
+    "Locarno, NYFF, TIFF and Telluride feeds cannot currently refresh reliably; nine public editions but eight current sets",
+    "Production Google consent, new identity and authenticated callback not exercised; authenticated mutations verified only in isolated local Supabase",
+    "Search Console confirms insufficient field Core Web Vitals data for mobile and desktop; field INP unavailable",
+    "One production background prediction-cache revalidation statement timeout; page served valid cached data and three subsequent direct reads passed"
+  ],
+  "evidenceCommit": "Recorded in the documentation commit containing this file; intentionally separate from the deployed code commit",
+  "searchConsoleEvidence": "search-console.json",
+  "directLanguageReleaseCheck": "direct-language-release-check.json"
+}

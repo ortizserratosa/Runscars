@@ -1,0 +1,968 @@
+{
+  "schemaVersion": 1,
+  "scope": "Oscar 2027 · international festival circuit 2026",
+  "sets": [
+    {
+      "editionId": "sundance-2026",
+      "kind": "awards",
+      "source": {
+        "url": "https://www.sundance.org/blogs/the-complete-list-of-2026-sundance-film-festival-award-winners/",
+        "title": "The Complete List of 2026 Sundance Film Festival Award Winners",
+        "publishedAt": "2026-01-30T00:00:00Z"
+      },
+      "capturedAt": "2026-09-03T00:00:00Z",
+      "extractorVersion": "sundance-official-v1",
+      "rawCapture": {
+        "receipt": "Official Sundance winners article captured and transcribed without jury citations",
+        "sourceUrl": "https://www.sundance.org/blogs/the-complete-list-of-2026-sundance-film-festival-award-winners/"
+      },
+      "entries": [
+        {
+          "section": "Festival Favorite",
+          "originalTitle": "American Pachuco: The Legend of Luis Valdez",
+          "awardType": "Festival Favorite Award"
+        },
+        {
+          "section": "U.S. Dramatic Competition",
+          "originalTitle": "Josephine",
+          "awardType": "U.S. Grand Jury Prize: Dramatic"
+        },
+        {
+          "section": "U.S. Dramatic Competition",
+          "originalTitle": "Ha-chan, Shake Your Booty!",
+          "originalRecipient": "Josef Kubota Wladyka",
+          "awardType": "Directing Award: U.S. Dramatic"
+        },
+        {
+          "section": "U.S. Dramatic Competition",
+          "originalTitle": "Take Me Home",
+          "originalRecipient": "Liz Sargent",
+          "awardType": "Waldo Salt Screenwriting Award: U.S. Dramatic"
+        },
+        {
+          "section": "U.S. Dramatic Competition",
+          "originalTitle": "Bedford Park",
+          "originalRecipient": "Stephanie Ahn",
+          "awardType": "Special Jury Award for Debut Feature"
+        },
+        {
+          "section": "U.S. Dramatic Competition",
+          "originalTitle": "The Friend’s House is Here",
+          "awardType": "Special Jury Award for Ensemble Cast"
+        },
+        {
+          "section": "U.S. Documentary Competition",
+          "originalTitle": "Nuisance Bear",
+          "awardType": "U.S. Grand Jury Prize: Documentary"
+        },
+        {
+          "section": "U.S. Documentary Competition",
+          "originalTitle": "Soul Patrol",
+          "originalRecipient": "J.M. Harper",
+          "awardType": "Directing Award: U.S. Documentary"
+        },
+        {
+          "section": "U.S. Documentary Competition",
+          "originalTitle": "Barbara Forever",
+          "originalRecipient": "Matt Hixon",
+          "awardType": "Jonathan Oppenheim Editing Award"
+        },
+        {
+          "section": "U.S. Documentary Competition",
+          "originalTitle": "The Lake",
+          "awardType": "Special Jury Award for Impact for Change"
+        },
+        {
+          "section": "U.S. Documentary Competition",
+          "originalTitle": "Who Killed Alex Odeh?",
+          "awardType": "Special Jury Award for Journalistic Excellence"
+        },
+        {
+          "section": "Audience Awards",
+          "originalTitle": "Josephine",
+          "awardType": "Audience Award: U.S. Dramatic"
+        },
+        {
+          "section": "Audience Awards",
+          "originalTitle": "American Pachuco: The Legend of Luis Valdez",
+          "awardType": "Audience Award: U.S. Documentary"
+        },
+        {
+          "section": "Audience Awards",
+          "originalTitle": "HOLD ONTO ME (Κράτα Με)",
+          "awardType": "Audience Award: World Cinema Dramatic"
+        },
+        {
+          "section": "Audience Awards",
+          "originalTitle": "One In A Million",
+          "awardType": "Audience Award: World Cinema Documentary"
+        },
+        {
+          "section": "Audience Awards",
+          "originalTitle": "Aanikoobijigan [ancestor/great-grandparent/great-grandchild]",
+          "awardType": "Audience Award: NEXT"
+        },
+        {
+          "section": "NEXT",
+          "originalTitle": "The Incomer",
+          "awardType": "NEXT Innovator Award"
+        },
+        {
+          "section": "NEXT",
+          "originalTitle": "TheyDream",
+          "awardType": "NEXT Special Jury Award for Creative Expression"
+        },
+        {
+          "section": "World Cinema Dramatic Competition",
+          "originalTitle": "Shame and Money",
+          "awardType": "World Cinema Grand Jury Prize: Dramatic"
+        },
+        {
+          "section": "World Cinema Dramatic Competition",
+          "originalTitle": "How to Divorce During the War",
+          "originalRecipient": "Andrius Blaževičius",
+          "awardType": "Directing Award: World Cinema Dramatic"
+        },
+        {
+          "section": "World Cinema Dramatic Competition",
+          "originalTitle": "Filipiñana",
+          "awardType": "Special Jury Award for Creative Vision"
+        },
+        {
+          "section": "World Cinema Dramatic Competition",
+          "originalTitle": "LADY",
+          "awardType": "Special Jury Award for Acting Ensemble"
+        },
+        {
+          "section": "World Cinema Documentary Competition",
+          "originalTitle": "To Hold a Mountain",
+          "awardType": "World Cinema Grand Jury Prize: Documentary"
+        },
+        {
+          "section": "World Cinema Documentary Competition",
+          "originalTitle": "One In A Million",
+          "originalRecipient": "Itab Azzam and Jack MacInnes",
+          "awardType": "Directing Award: World Cinema Documentary"
+        },
+        {
+          "section": "World Cinema Documentary Competition",
+          "originalTitle": "Everybody To Kenmure Street",
+          "awardType": "Special Jury Award for Civil Resistance"
+        },
+        {
+          "section": "World Cinema Documentary Competition",
+          "originalTitle": "Birds of War",
+          "awardType": "Special Jury Award for Journalistic Impact"
+        },
+        {
+          "section": "Creative Awards",
+          "originalTitle": "In The Blink of An Eye",
+          "awardType": "Alfred P. Sloan Feature Film Prize"
+        }
+      ]
+    },
+    {
+      "editionId": "berlinale-2026",
+      "kind": "awards",
+      "source": {
+        "url": "https://www.berlinale.de/en/archive/awards-juries/awards.html?year=2026",
+        "title": "Berlinale 2026 Awards and Juries",
+        "publishedAt": "2026-02-21T00:00:00Z"
+      },
+      "capturedAt": "2026-09-03T00:00:00Z",
+      "extractorVersion": "berlinale-official-v1",
+      "rawCapture": {
+        "receipt": "Official Berlinale archive, International Jury feature awards",
+        "sourceUrl": "https://www.berlinale.de/en/archive/awards-juries/awards.html?year=2026"
+      },
+      "entries": [
+        {
+          "section": "International Jury",
+          "originalTitle": "Gelbe Briefe",
+          "originalRecipient": "İlker Çatak",
+          "awardType": "Golden Bear for Best Film"
+        },
+        {
+          "section": "International Jury",
+          "originalTitle": "Kurtuluş",
+          "originalRecipient": "Emin Alper",
+          "awardType": "Silver Bear Grand Jury Prize"
+        },
+        {
+          "section": "International Jury",
+          "originalTitle": "Queen at Sea",
+          "originalRecipient": "Lance Hammer",
+          "awardType": "Silver Bear Jury Prize"
+        },
+        {
+          "section": "International Jury",
+          "originalTitle": "Everybody Digs Bill Evans",
+          "originalRecipient": "Grant Gee",
+          "awardType": "Silver Bear for Best Director"
+        },
+        {
+          "section": "International Jury",
+          "originalTitle": "Rose",
+          "originalRecipient": "Sandra Hüller",
+          "awardType": "Silver Bear for Best Leading Performance"
+        },
+        {
+          "section": "International Jury",
+          "originalTitle": "Queen at Sea",
+          "originalRecipient": "Anna Calder-Marshall and Tom Courtenay",
+          "awardType": "Silver Bear for Best Supporting Performance"
+        },
+        {
+          "section": "International Jury",
+          "originalTitle": "Nina Roza",
+          "originalRecipient": "Geneviève Dulude-de Celles",
+          "awardType": "Silver Bear for Best Screenplay"
+        },
+        {
+          "section": "International Jury",
+          "originalTitle": "Yo (Love is a Rebellious Bird)",
+          "awardType": "Silver Bear for Outstanding Artistic Contribution"
+        }
+      ]
+    },
+    {
+      "editionId": "cannes-2026",
+      "kind": "selection",
+      "source": {
+        "url": "https://www.festival-cannes.com/en/press/press-releases/the-films-of-the-official-selection-2026/",
+        "title": "The films of the Official Selection 2026",
+        "publishedAt": null
+      },
+      "capturedAt": "2026-09-03T00:00:00Z",
+      "extractorVersion": "cannes-official-v1",
+      "rawCapture": {
+        "receipt": "Official Cannes Competition selection",
+        "count": 22
+      },
+      "entries": [
+        {
+          "section": "Competition",
+          "originalTitle": "Amarga Navidad",
+          "originalRecipient": "Pedro Almodóvar"
+        },
+        {
+          "section": "Competition",
+          "originalTitle": "A Woman’s Life",
+          "originalRecipient": "Charline Bourgeois-Tacquet"
+        },
+        {
+          "section": "Competition",
+          "originalTitle": "La Bola Negra",
+          "originalRecipient": "Javier Calvo and Javier Ambrossi"
+        },
+        {
+          "section": "Competition",
+          "originalTitle": "Coward",
+          "originalRecipient": "Lukas Dhont"
+        },
+        {
+          "section": "Competition",
+          "originalTitle": "Parallel Tales",
+          "originalRecipient": "Asghar Farhadi"
+        },
+        {
+          "section": "Competition",
+          "originalTitle": "Paper Tiger",
+          "originalRecipient": "James Gray"
+        },
+        {
+          "section": "Competition",
+          "originalTitle": "Das Geträumte Abenteuer",
+          "originalRecipient": "Valeska Grisebach"
+        },
+        {
+          "section": "Competition",
+          "originalTitle": "All of a Sudden",
+          "originalRecipient": "Hamaguchi Ryusuke"
+        },
+        {
+          "section": "Competition",
+          "originalTitle": "The Unknown",
+          "originalRecipient": "Arthur Harari"
+        },
+        {
+          "section": "Competition",
+          "originalTitle": "Another Day",
+          "originalRecipient": "Jeanne Herry"
+        },
+        {
+          "section": "Competition",
+          "originalTitle": "Sheep In The Box",
+          "originalRecipient": "Koreeda Hirokazu"
+        },
+        {
+          "section": "Competition",
+          "originalTitle": "Hope",
+          "originalRecipient": "Na Hong-jin"
+        },
+        {
+          "section": "Competition",
+          "originalTitle": "Nagi Notes",
+          "originalRecipient": "Fukada Koji"
+        },
+        {
+          "section": "Competition",
+          "originalTitle": "Gentle Monster",
+          "originalRecipient": "Marie Kreutzer"
+        },
+        {
+          "section": "Competition",
+          "originalTitle": "A Man Of His Time",
+          "originalRecipient": "Emmanuel Marre"
+        },
+        {
+          "section": "Competition",
+          "originalTitle": "Fjord",
+          "originalRecipient": "Cristian Mungiu"
+        },
+        {
+          "section": "Competition",
+          "originalTitle": "The Birthday Party",
+          "originalRecipient": "Léa Mysius"
+        },
+        {
+          "section": "Competition",
+          "originalTitle": "Moulin",
+          "originalRecipient": "László Nemes"
+        },
+        {
+          "section": "Competition",
+          "originalTitle": "Fatherland",
+          "originalRecipient": "Paweł Pawlikowski"
+        },
+        {
+          "section": "Competition",
+          "originalTitle": "The Man I Love",
+          "originalRecipient": "Ira Sachs"
+        },
+        {
+          "section": "Competition",
+          "originalTitle": "El Ser Querido (The Beloved)",
+          "originalRecipient": "Rodrigo Sorogoyen"
+        },
+        {
+          "section": "Competition",
+          "originalTitle": "Minotaur",
+          "originalRecipient": "Andreï Zviaguintsev"
+        }
+      ]
+    },
+    {
+      "editionId": "cannes-2026",
+      "kind": "awards",
+      "source": {
+        "url": "https://www.festival-cannes.com/en/press/press-releases/the-79th-festival-de-cannes-winners-list/",
+        "title": "The 79th Festival de Cannes winners’ list",
+        "publishedAt": "2026-05-23T20:44:00Z"
+      },
+      "capturedAt": "2026-09-03T00:00:00Z",
+      "extractorVersion": "cannes-official-v1",
+      "rawCapture": {
+        "receipt": "Official Cannes winners list; short film excluded"
+      },
+      "entries": [
+        {
+          "section": "Feature Films",
+          "originalTitle": "FJORD",
+          "originalRecipient": "Cristian Mungiu",
+          "awardType": "Palme d’or"
+        },
+        {
+          "section": "Feature Films",
+          "originalTitle": "MINOTAURE",
+          "originalRecipient": "Andreï Zviaguintsev",
+          "awardType": "Grand Prix"
+        },
+        {
+          "section": "Feature Films",
+          "originalTitle": "LA BOLA NEGRA",
+          "originalRecipient": "Javier Calvo and Javier Ambrossi",
+          "awardType": "Best Director Prize (ex-æquo)"
+        },
+        {
+          "section": "Feature Films",
+          "originalTitle": "FATHERLAND",
+          "originalRecipient": "Pawel Pawlikowski",
+          "awardType": "Best Director Prize (ex-æquo)"
+        },
+        {
+          "section": "Feature Films",
+          "originalTitle": "NOTRE SALUT",
+          "originalRecipient": "Emmanuel Marre",
+          "awardType": "Best Screenplay"
+        },
+        {
+          "section": "Feature Films",
+          "originalTitle": "DAS GETRÄUMTE ABENTEUER",
+          "originalRecipient": "Valeska Grisebach",
+          "awardType": "Jury Prize"
+        },
+        {
+          "section": "Feature Films",
+          "originalTitle": "SOUDAIN",
+          "originalRecipient": "Virginie Efira and Tao Okamoto",
+          "awardType": "Best Performance for an Actress"
+        },
+        {
+          "section": "Feature Films",
+          "originalTitle": "COWARD",
+          "originalRecipient": "Emmanuel Macchia and Valentin Campagne",
+          "awardType": "Best Performance for an Actor"
+        },
+        {
+          "section": "Un Certain Regard",
+          "originalTitle": "EVERYTIME",
+          "originalRecipient": "Sandra Wollner",
+          "awardType": "Un Certain Regard Prize"
+        },
+        {
+          "section": "Un Certain Regard",
+          "originalTitle": "ELEPHANTS IN THE FOG",
+          "originalRecipient": "Abinash Bikram Shah",
+          "awardType": "Jury Prize"
+        },
+        {
+          "section": "Un Certain Regard",
+          "originalTitle": "IRON BOY",
+          "originalRecipient": "Louis Clichy",
+          "awardType": "Special Jury Prize"
+        },
+        {
+          "section": "Un Certain Regard",
+          "originalTitle": "CONGO BOY",
+          "originalRecipient": "Bradley Fiomona Dembeasset",
+          "awardType": "Best Actor"
+        },
+        {
+          "section": "Un Certain Regard",
+          "originalTitle": "SIEMPRE SOY TU ANIMAL MATERNO",
+          "originalRecipient": "Marina de Tavira, Daniela Marín Navarro and Mariangel Villegas",
+          "awardType": "Best Actresses"
+        },
+        {
+          "section": "Caméra d’or",
+          "originalTitle": "BEN’IMANA",
+          "originalRecipient": "Marie-Clémentine Dusabejambo",
+          "awardType": "Caméra d’or Prize"
+        }
+      ]
+    },
+    {
+      "editionId": "locarno-2026",
+      "kind": "awards",
+      "source": {
+        "url": "https://www.locarnofestival.ch/en/festival/palmares.html",
+        "title": "Locarno79 Official Awards",
+        "publishedAt": "2026-08-15T00:00:00Z"
+      },
+      "capturedAt": "2026-09-03T00:00:00Z",
+      "extractorVersion": "locarno-official-v1",
+      "rawCapture": {
+        "receipt": "Official Locarno79 palmarès transcribed for in-scope feature-film awards; short films and honorary awards excluded",
+        "sourceUrl": "https://www.locarnofestival.ch/en/festival/palmares.html"
+      },
+      "entries": [
+        {
+          "section": "Concorso Internazionale",
+          "originalTitle": "NU E LOCUL TAU AICI (YOU DON’T BELONG HERE)",
+          "originalRecipient": "Florin Șerban",
+          "awardType": "Pardo d’Oro – Grand Prize of the Festival and City of Locarno"
+        },
+        {
+          "section": "Concorso Internazionale",
+          "originalTitle": "A MARGEM DO RIO (THE RIVERBANK)",
+          "originalRecipient": "Matheus Farias and Enock Carvalho",
+          "awardType": "Special Jury Prize – Cities of Ascona and Losone"
+        },
+        {
+          "section": "Concorso Internazionale",
+          "originalTitle": "NUN DUL DEGA EOMNE (NOWHERE TO LAY MY EYES)",
+          "originalRecipient": "Hong Sangsoo",
+          "awardType": "Pardo for Best Direction – City and Region of Locarno"
+        },
+        {
+          "section": "Concorso Internazionale",
+          "originalTitle": "NUN DUL DEGA EOMNE (NOWHERE TO LAY MY EYES)",
+          "originalRecipient": "Kim Minhee",
+          "awardType": "Pardo for Best Performance"
+        },
+        {
+          "section": "Concorso Internazionale",
+          "originalTitle": "KETTICÈ",
+          "originalRecipient": "Monica Bellucci",
+          "awardType": "Pardo for Best Performance"
+        },
+        {
+          "section": "Concorso Internazionale",
+          "originalTitle": "VIOLENCE DU CORPS DE L’AUTRE",
+          "originalRecipient": "Xavier Bergeron",
+          "awardType": "Special Mention"
+        },
+        {
+          "section": "Concorso Internazionale",
+          "originalTitle": "NU E LOCUL TAU AICI (YOU DON’T BELONG HERE)",
+          "originalRecipient": "Teodor Butănescu",
+          "awardType": "Special Mention"
+        },
+        {
+          "section": "Concorso Cineasti del Presente",
+          "originalTitle": "LA ILUSIÓN DE UN VERANO SIN FIN",
+          "originalRecipient": "Alessandra Sanguinetti",
+          "awardType": "Pardo d’Oro – Concorso Cineasti del Presente"
+        },
+        {
+          "section": "Concorso Cineasti del Presente",
+          "originalTitle": "AT NIGHT",
+          "originalRecipient": "Beatrice Gibson",
+          "awardType": "Best Emerging Director Award – City and Region of Locarno"
+        },
+        {
+          "section": "Concorso Cineasti del Presente",
+          "originalTitle": "REVOLUTIONARIES NEVER DIE",
+          "originalRecipient": "Mohanad Yaqubi",
+          "awardType": "Special Jury Prize CINE+OCS"
+        },
+        {
+          "section": "Concorso Cineasti del Presente",
+          "originalTitle": "EGO REACH WE ALL (OUR TIME WILL COME)",
+          "originalRecipient": "Idrissu Tontie Jr.",
+          "awardType": "Pardo for Best Performance"
+        },
+        {
+          "section": "Concorso Cineasti del Presente",
+          "originalTitle": "L’ESTIVE",
+          "originalRecipient": "Manal Issa",
+          "awardType": "Pardo for Best Performance"
+        },
+        {
+          "section": "Concorso Cineasti del Presente",
+          "originalTitle": "LOS DÍAS LIBRES",
+          "originalRecipient": "Lucila Mariani",
+          "awardType": "Special Mention"
+        },
+        {
+          "section": "Concorso Cineasti del Presente",
+          "originalTitle": "HANABI",
+          "originalRecipient": "Ana Vaz",
+          "awardType": "Special Mention"
+        },
+        {
+          "section": "Locarno Kids Screenings",
+          "originalTitle": "PARADEISA",
+          "originalRecipient": "Marleen Valien",
+          "awardType": "Locarno Kids Award la Mobiliare"
+        },
+        {
+          "section": "First Feature",
+          "originalTitle": "LA ILUSIÓN DE UN VERANO SIN FIN",
+          "originalRecipient": "Alessandra Sanguinetti",
+          "awardType": "Swatch First Feature Award"
+        },
+        {
+          "section": "Pardo for Change",
+          "originalTitle": "EGO REACH WE ALL (OUR TIME WILL COME)",
+          "originalRecipient": "Amartei Armar",
+          "awardType": "Pardo for Change"
+        },
+        {
+          "section": "Pardo for Change",
+          "originalTitle": "LOS NUEVOS",
+          "originalRecipient": "Rodrigo Plá",
+          "awardType": "Special Mention – Feature Film"
+        },
+        {
+          "section": "Independent Juries",
+          "originalTitle": "NUN DUL DEGA EOMNE (NOWHERE TO LAY MY EYES)",
+          "originalRecipient": "Hong Sangsoo",
+          "awardType": "Ecumenical Jury Prize"
+        },
+        {
+          "section": "Independent Juries",
+          "originalTitle": "LEJOS DE LOS ÁRBOLES (FAR FROM THE TREES)",
+          "originalRecipient": "Meritxell Colell Aparicio",
+          "awardType": "FIPRESCI Prize"
+        },
+        {
+          "section": "Independent Juries",
+          "originalTitle": "NU E LOCUL TAU AICI (YOU DON’T BELONG HERE)",
+          "originalRecipient": "Florin Șerban",
+          "awardType": "Europa Cinemas Label"
+        },
+        {
+          "section": "Junior Jury – Concorso Internazionale",
+          "originalTitle": "NU E LOCUL TAU AICI (YOU DON’T BELONG HERE)",
+          "originalRecipient": "Florin Șerban",
+          "awardType": "First Prize"
+        },
+        {
+          "section": "Junior Jury – Concorso Internazionale",
+          "originalTitle": "VIOLENCE DU CORPS DE L’AUTRE (NOBODY’S VIOLENCE)",
+          "originalRecipient": "Denis Côté",
+          "awardType": "Second Prize"
+        },
+        {
+          "section": "Junior Jury – Concorso Internazionale",
+          "originalTitle": "MANHUNT",
+          "originalRecipient": "Wayne Wapeemukwa",
+          "awardType": "Third Prize"
+        },
+        {
+          "section": "Junior Jury – Concorso Internazionale",
+          "originalTitle": "I RARELY WAKE UP DREAMING",
+          "originalRecipient": "Isabelle Stever",
+          "awardType": "The Environment is Quality of Life Prize"
+        },
+        {
+          "section": "Junior Jury – Concorso Internazionale",
+          "originalTitle": "D’ICI LÀ",
+          "originalRecipient": "Sarah Leonor",
+          "awardType": "Special Mention"
+        },
+        {
+          "section": "Junior Jury – Concorso Cineasti del Presente",
+          "originalTitle": "TEAR GAS",
+          "originalRecipient": "Uta Beria",
+          "awardType": "Best Film"
+        },
+        {
+          "section": "Junior Jury – Concorso Cineasti del Presente",
+          "originalTitle": "LA ILUSIÓN DE UN VERANO SIN FIN (THE ILLUSION OF AN EVERLASTING SUMMER)",
+          "originalRecipient": "Alessandra Sanguinetti",
+          "awardType": "Special Mention"
+        },
+        {
+          "section": "Semaine de la Critique",
+          "originalTitle": "A TERAZ WIOSNA (BLOSSOMING)",
+          "originalRecipient": "Kamila Serwicka",
+          "awardType": "Grand Prix Semaine de la Critique – Prix SRG SSR"
+        },
+        {
+          "section": "Semaine de la Critique",
+          "originalTitle": "SEUL LE SERPENT SAIT (ONLY THE SERPENT KNOWS)",
+          "originalRecipient": "Olivier Séror and Martin Verdet",
+          "awardType": "Marco Zucchi Award"
+        },
+        {
+          "section": "Piazza Grande",
+          "originalTitle": "FRANK & LOUIS",
+          "originalRecipient": "Petra Volpe",
+          "awardType": "Prix du Public UBS"
+        }
+      ]
+    },
+    {
+      "editionId": "venice-2026",
+      "kind": "selection",
+      "source": {
+        "url": "https://www.labiennale.org/en/cinema/2026/venezia-83-competition",
+        "title": "Venezia 83 Competition",
+        "publishedAt": null
+      },
+      "capturedAt": "2026-09-03T00:00:00Z",
+      "extractorVersion": "venice-official-v1",
+      "rawCapture": {
+        "receipt": "Official Venezia 83 Competition page",
+        "count": 21
+      },
+      "entries": [
+        {
+          "section": "Venezia 83 Competition",
+          "originalTitle": "NAZA",
+          "originalRecipient": "Yuval Abraham and Rachel Szor"
+        },
+        {
+          "section": "Venezia 83 Competition",
+          "originalTitle": "Company",
+          "originalRecipient": "Casey Affleck"
+        },
+        {
+          "section": "Venezia 83 Competition",
+          "originalTitle": "Kami nour (A bit of light)",
+          "originalRecipient": "Ali Asgari"
+        },
+        {
+          "section": "Venezia 83 Competition",
+          "originalTitle": "Ritorno a Buenos Aires",
+          "originalRecipient": "Marco Bechis"
+        },
+        {
+          "section": "Venezia 83 Competition",
+          "originalTitle": "Ink",
+          "originalRecipient": "Danny Boyle"
+        },
+        {
+          "section": "Venezia 83 Competition",
+          "originalTitle": "Un bon petit soldat",
+          "originalRecipient": "Stéphane Brizé"
+        },
+        {
+          "section": "Venezia 83 Competition",
+          "originalTitle": "Il fuoco che ti porti dentro (The Fire Within You)",
+          "originalRecipient": "Edoardo De Angelis"
+        },
+        {
+          "section": "Venezia 83 Competition",
+          "originalTitle": "Kvinde Ukendt (Woman Unknown)",
+          "originalRecipient": "May el-Toukhy"
+        },
+        {
+          "section": "Venezia 83 Competition",
+          "originalTitle": "Bucking Fastard",
+          "originalRecipient": "Werner Herzog"
+        },
+        {
+          "section": "Venezia 83 Competition",
+          "originalTitle": "15/18 (A Place To Heal)",
+          "originalRecipient": "Cédric Kahn"
+        },
+        {
+          "section": "Venezia 83 Competition",
+          "originalTitle": "Dau",
+          "originalRecipient": "Ilya Khrzhanovsky"
+        },
+        {
+          "section": "Venezia 83 Competition",
+          "originalTitle": "Look Back",
+          "originalRecipient": "Hirokazu Koreeda"
+        },
+        {
+          "section": "Venezia 83 Competition",
+          "originalTitle": "Ga-neung-han sa-rang (Possible love)",
+          "originalRecipient": "Lee Chang-dong"
+        },
+        {
+          "section": "Venezia 83 Competition",
+          "originalTitle": "Wild Horse Nine",
+          "originalRecipient": "Martin McDonagh"
+        },
+        {
+          "section": "Venezia 83 Competition",
+          "originalTitle": "Succederà questa notte (It will happen tonight)",
+          "originalRecipient": "Nanni Moretti"
+        },
+        {
+          "section": "Venezia 83 Competition",
+          "originalTitle": "Primetime",
+          "originalRecipient": "Lance Oppenheim"
+        },
+        {
+          "section": "Venezia 83 Competition",
+          "originalTitle": "The Echo Chamber",
+          "originalRecipient": "Andrea Pallaoro"
+        },
+        {
+          "section": "Venezia 83 Competition",
+          "originalTitle": "Un peu avant minuit",
+          "originalRecipient": "Nicolas Pariser"
+        },
+        {
+          "section": "Venezia 83 Competition",
+          "originalTitle": "L’estranea",
+          "originalRecipient": "Paolo Strippoli"
+        },
+        {
+          "section": "Venezia 83 Competition",
+          "originalTitle": "Nelson san, anata wa hito wo koroshimashitaka? (Mr. Nelson, Did You Kill People?)",
+          "originalRecipient": "Shinya Tsukamoto"
+        },
+        {
+          "section": "Venezia 83 Competition",
+          "originalTitle": "Bunker",
+          "originalRecipient": "Florian Zeller"
+        }
+      ]
+    },
+    {
+      "editionId": "nyff-2026",
+      "kind": "selection",
+      "source": {
+        "url": "https://www.filmlinc.org/nyff2026/daily/64th-new-york-film-festival-main-slate-announced/",
+        "title": "64th New York Film Festival Main Slate Announced",
+        "publishedAt": "2026-08-05T00:00:00Z"
+      },
+      "capturedAt": "2026-09-03T00:00:00Z",
+      "extractorVersion": "nyff-official-v1",
+      "rawCapture": {
+        "receipt": "Official Film at Lincoln Center announcement of all 34 Main Slate features",
+        "count": 34
+      },
+      "entries": [
+        {
+          "section": "Opening Night · Main Slate",
+          "originalTitle": "Paper Tiger",
+          "originalRecipient": "James Gray"
+        },
+        {
+          "section": "Centerpiece · Main Slate",
+          "originalTitle": "Behemoth!",
+          "originalRecipient": "Tony Gilroy"
+        },
+        {
+          "section": "Closing Night · Main Slate",
+          "originalTitle": "14th",
+          "originalRecipient": "Ava DuVernay"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "9 Temples to Heaven",
+          "originalRecipient": "Sompot Chidgasornpongse"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "All of a Sudden",
+          "originalRecipient": "Ryûsuke Hamaguchi"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "Artificial",
+          "originalRecipient": "Luca Guadagnino"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "Bitter Christmas",
+          "originalRecipient": "Pedro Almodóvar"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "Clarissa",
+          "originalRecipient": "Arie Esiri and Chuko Esiri"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "Dao",
+          "originalRecipient": "Alain Gomis"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "The Day She Returns",
+          "originalRecipient": "Hong Sangsoo"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "The Diary of a Chambermaid",
+          "originalRecipient": "Radu Jude"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "Double Freedom",
+          "originalRecipient": "Lisandro Alonso"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "The Dreamed Adventure",
+          "originalRecipient": "Valeska Grisebach"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "Everything Else Is Noise",
+          "originalRecipient": "Nicolás Pereda"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "Everytime",
+          "originalRecipient": "Sandra Wollner"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "Fatherland",
+          "originalRecipient": "Paweł Pawlikowski"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "La Gradiva",
+          "originalRecipient": "Marine Atlan"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "I Deserve a Lover Whose Every Rise Sets Fiery Dooms Raging Across the Skies",
+          "originalRecipient": "Mani Haghighi"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "I Rarely Wake Up Dreaming",
+          "originalRecipient": "Isabelle Stever"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "The Loneliest Man in Town",
+          "originalRecipient": "Tizza Covi and Rainer Frimmel"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "A Long Winter",
+          "originalRecipient": "Andrew Haigh"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "The Man I Love",
+          "originalRecipient": "Ira Sachs"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "A Man of His Time",
+          "originalRecipient": "Emmanuel Marre"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "Minotaur",
+          "originalRecipient": "Andrey Zvyagintsev"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "Misty Green",
+          "originalRecipient": "Chris Rock"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "My Undesirable Friends: Part II – Exile",
+          "originalRecipient": "Julia Loktev"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "My Wife Cries",
+          "originalRecipient": "Angela Schanelec"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "NAZA",
+          "originalRecipient": "Yuval Abraham and Rachel Szor"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "Nowhere To Lay My Eyes",
+          "originalRecipient": "Hong Sangsoo"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "Once Upon a Time in Harlem",
+          "originalRecipient": "William Greaves and David Greaves"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "Possible Love",
+          "originalRecipient": "Lee Chang-dong"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "Rose",
+          "originalRecipient": "Markus Schleinzer"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "Tender Loving Care",
+          "originalRecipient": "Mike Leigh"
+        },
+        {
+          "section": "Main Slate",
+          "originalTitle": "The Unknown",
+          "originalRecipient": "Arthur Harari"
+        }
+      ]
+    }
+  ]
+}

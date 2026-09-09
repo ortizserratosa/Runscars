@@ -383,7 +383,7 @@ describe("professional ingestion adapters", () => {
         categoryId: "supporting-actress",
       },
     );
-    expect(awardsRadar.extractorVersion).toBe("awards-radar-v4");
+    expect(awardsRadar.extractorVersion).toBe("awards-radar-v5");
     expect(awardsRadar.publications[0].observations).toEqual([
       expect.objectContaining({
         subject: "Sandra Hüller – Digger (or Project Hail Mary)",
@@ -664,9 +664,10 @@ describe("professional ingestion adapters", () => {
     ]);
   });
 
-  it("preserves gapped source ranks with a fitting list length", () => {
-    const batch = parseAwardsRadarFixture(
-      `
+  it("rejects gapped source ranks instead of filling them", () => {
+    expect(() =>
+      parseAwardsRadarFixture(
+        `
         <link rel="canonical" href="https://awardsradar.com/best-picture/" />
         <h1>BEST PICTURE</h1>
         <p>Updated July 20th, 2026</p>
@@ -674,21 +675,56 @@ describe("professional ingestion adapters", () => {
         <p>2. Project Hail Mary</p>
         <p>11. Tony</p>
       `,
+        {
+          connectorId: "awards-radar-predictions",
+          capturedAt,
+          endpointUrl: "https://awardsradar.com/best-picture/",
+          seasonId: "oscars-2027",
+          categoryId: "best-picture",
+        },
+      ),
+    ).toThrow(/posiciones no consecutivas/);
+  });
+
+  it("uses film-primary identity for screenplay and keeps writers as metadata", async () => {
+    const batch = parseAwardsRadarFixture(
+      `
+        <link rel="canonical" href="https://awardsradar.com/best-original-screenplay/" />
+        <p>Updated July 20th, 2026</p>
+        <p>1. Christopher Nolan — The Odyssey</p>
+      `,
       {
         connectorId: "awards-radar-predictions",
         capturedAt,
-        endpointUrl: "https://awardsradar.com/best-picture/",
+        endpointUrl: "https://awardsradar.com/best-original-screenplay/",
         seasonId: "oscars-2027",
-        categoryId: "best-picture",
+        categoryId: "original-screenplay",
       },
     );
-
-    expect(
-      batch.publications[0].observations.map(
-        (item: { originalValue: { list_length: number } }) =>
-          item.originalValue.list_length,
-      ),
-    ).toEqual([11, 11, 11]);
+    const prepared = await prepareBatch(batch, [
+      {
+        id: "the-odyssey",
+        title: "The Odyssey",
+        alternate_titles: [],
+        credits: [
+          {
+            role: "Writer",
+            department: "Writing",
+            billingOrder: 0,
+            person: {
+              id: "tmdb-525",
+              name: "Christopher Nolan",
+              alternate_names: [],
+            },
+          },
+        ],
+      },
+    ]);
+    const candidate = prepared.publications[0].observations[0].candidate;
+    expect(candidate.displayLabel).toBe("The Odyssey");
+    expect(candidate.people).toEqual([
+      expect.objectContaining({ name: "Christopher Nolan" }),
+    ]);
   });
 
   it("discovers current articles deterministically", () => {
@@ -933,6 +969,30 @@ describe("professional ingestion adapters", () => {
         filmSubject: "The Odyssey",
       }),
     ]);
+  });
+
+  it("keeps title-only NBP rows and collapses identical responsive duplicates", () => {
+    const batch = parseNextBestPictureFixture(
+      `
+        <link rel="canonical" href="https://predictions.nextbestpicture.com/oscars" />
+        <h2>Best Documentary Feature</h2>
+        <p>Aug 7<br />1<br />1<br />American Doctor<br />2<br />2<br />Rehearsals for a Revolution<br />3<br />3<br />Once Upon a Time in Harlem<br />4<br />4<br />Closure<br />5<br />5<br />14th<br />5<br />2<br />14th<br />See more</p>
+      `,
+      {
+        connectorId: "next-best-picture-predictions",
+        capturedAt,
+        endpointUrl: "https://predictions.nextbestpicture.com/oscars",
+        seasonId: "oscars-2027",
+      },
+    );
+
+    expect(
+      batch.publications[0].observations.map(
+        (observation: { originalValue: { rank: number } }) =>
+          observation.originalValue.rank,
+      ),
+    ).toEqual([1, 2, 3, 4, 5]);
+    expect(batch.publications[0].observations[3].filmSubject).toBe("Closure");
   });
 
   it("fails loudly when a source changes to unrecognized HTML", () => {
@@ -1353,15 +1413,7 @@ describe("professional ingestion adapters", () => {
         publications: [
           {
             ...mutable.publications[0],
-            observations: mutable.publications[0].observations.map(
-              (observation) => ({
-                ...observation,
-                originalValue: {
-                  ...observation.originalValue,
-                  list_length: 3,
-                },
-              }),
-            ),
+            observations: mutable.publications[0].observations,
           },
         ],
       },

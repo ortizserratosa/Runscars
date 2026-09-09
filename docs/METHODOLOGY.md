@@ -185,10 +185,26 @@ Una lista solo participa si:
 - distingue nominaciones de ganadores o su intención es inequívoca;
 - tiene un orden explícito o una selección explícita.
 
+Una lista ordenada debe usar posiciones enteras, únicas y consecutivas desde 1.
+La longitud declarada debe coincidir con el número de filas. Un hueco, una
+posición duplicada o una categoría requerida ausente invalida la revisión antes
+de persistirla; el último corte válido permanece vigente.
+
 Una selección sin orden contribuye a cobertura, pero no a la puntuación Borda ni
 a las posiciones media o mediana.
 
+En Guion original y Guion adaptado, la candidatura se identifica por temporada,
+categoría y película. Los nombres de guionistas se conservan en el valor
+original y, cuando están verificados, como créditos secundarios; nunca dividen
+el voto de una misma película en candidaturas diferentes.
+
 ### 4.4 Fuente activa y cobertura
+
+Las plazas previstas de nominación se leen de `season_categories` con URL
+oficial y fecha de verificación. Para Oscar 2027 son diez en Mejor película y
+cinco en las otras siete categorías públicas, conforme a las reglas de los
+99.º Oscar verificadas el 2026-09-03. El 10/5 estático existe únicamente como
+fallback reproducible de fixtures; la web y las quinielas usan la base de datos.
 
 La unidad de peso y de cobertura es la fuente profesional activa para la
 categoría e intención, no cada bloque de una misma publicación. Para un corte se
@@ -409,6 +425,10 @@ por separado mercados de nominación y de ganador. Resume primero el contrato
 con mayor probabilidad de cada intención y proveedor; el detalle muestra como
 máximo cuatro, ordenados por probabilidad, volumen y nombre.
 
+La ceremonia se valida en evento, mercado, contrato, título, slug, ticker y URL.
+Una mención conflictiva —por ejemplo, un contrato 2026 dentro de un evento
+2027— excluye el contrato con historial y sin borrar sus capturas anteriores.
+
 ### 10.1 Fechas públicas de una fuente
 
 La interfaz no usa “actualizado” como fecha ambigua:
@@ -425,7 +445,30 @@ Al navegar por un corte histórico, publicación y cambio pertenecen a ese corte
 La salud del conector se etiqueta como estado técnico actual y no se presenta
 como dato histórico.
 
-## 11. Calibraciones de la fase 1
+## 11. Festivales internacionales
+
+Cada edición conserva por separado estado temporal (`scheduled`, `ongoing` o
+`completed`) y estado del palmarés (`pending`, `published` o
+`not_applicable`). Selección y palmarés se almacenan como conjuntos completos,
+versionados e inmutables; un puntero identifica la versión pública vigente.
+
+Cada entrada conserva título, destinatario, sección y premio originales, URL y
+título de la fuente oficial, fechas de publicación y captura, captura íntegra y
+versión del extractor. El matching automático solo acepta una coincidencia
+exacta y única con un título principal o alternativo. Ambigüedades y títulos
+ausentes siguen visibles sin enlace; su estado de matching se consulta en
+administración. Una corrección crea historial y no modifica el recibo original.
+
+Se incluyen largometrajes de competición principal, secciones oficiales
+secundarias, público, debut, interpretación y oficios. Se excluyen cortos,
+episodios, inmersivo, restauraciones, honoríficos, mercados de industria y
+premios paralelos no publicados en el palmarés oficial.
+
+Los festivales son contexto: su contribución a Borda y a cualquier denominador
+de cobertura es siempre cero. No se mezclan con predicciones, recepción,
+mercados o comunidad.
+
+## 12. Calibraciones de la fase 1
 
 El dataset capturado el 2026-07-24 fija estas reglas iniciales:
 
@@ -443,3 +486,19 @@ El dataset capturado el 2026-07-24 fija estas reglas iniciales:
 
 Estas calibraciones pueden revisarse con una nueva decisión si aumenta la
 cobertura. No se reinterpretan snapshots ya bloqueados.
+
+## 13. Ediciones semanales
+
+La semana comienza el lunes a las 00:00 UTC y termina antes del lunes siguiente.
+Para cada categoría se selecciona el último corte real anterior al final y,
+como referencia, el último anterior al inicio. El movimiento es la posición
+anterior menos la final; una incorporación sin posición anterior se etiqueta
+como nueva. Si no hay referencia comparable en temporada, categoría, intención
+y método, no se calcula movimiento.
+
+El resumen muestra los tres mayores movimientos por valor absoluto, con posición
+final como desempate, y las fuentes que tuvieron cambios efectivos durante la
+semana. Enlaza el corte que respalda la clasificación. Las fechas son las del
+cambio registrado, no una fecha de publicación editorial inventada. RSS incluye
+solo semanas con cambios registrados, con identidad estable por URL de semana.
+No modifica ni crea snapshots de predicción.

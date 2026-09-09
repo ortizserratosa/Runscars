@@ -1,15 +1,20 @@
+import { ShareButton } from "../components/ShareButton";
 import Link from "next/link";
 import { Movement } from "../components/Movement";
 import type {
   ActiveCategoryView,
   ArchiveCategoryView,
 } from "../../lib/categories/data";
-import type { PublicCategoryId } from "../../lib/categories/config";
+import {
+  PUBLIC_CATEGORIES,
+  type PublicCategoryId,
+} from "../../lib/categories/config";
 import { localeTag, localizedPath, type Locale } from "../../lib/i18n/config";
 import { getRequestLocale } from "../../lib/i18n/server";
 import { absoluteUrl } from "../../lib/seo";
 import { JsonLd } from "../components/JsonLd";
 import { PublicRankingModule } from "../comunidad/PublicRankingModule";
+import { getFestivalFilmIds } from "../../lib/festivals/data";
 import { UserRankingPanel } from "./UserRankingPanel";
 
 type CategoryDefinition = {
@@ -48,10 +53,12 @@ function ActiveCategory({
   category,
   view,
   locale,
+  festivalFilmIds,
 }: {
   category: CategoryDefinition;
   view: ActiveCategoryView;
   locale: Locale;
+  festivalFilmIds: Set<string>;
 }) {
   const en = locale === "en";
   const categoryName = en ? category.nameEn : category.name;
@@ -69,6 +76,7 @@ function ActiveCategory({
           <strong>
             {candidate.film ? (
               <Link
+                prefetch={false}
                 href={localizedPath(`/peliculas/${candidate.film.id}`, locale)}
               >
                 {candidate.label}
@@ -78,6 +86,11 @@ function ActiveCategory({
             )}
           </strong>
           <small>{candidateSubtitle(candidate)}</small>
+          {candidate.film && festivalFilmIds.has(candidate.film.id) ? (
+            <span className="festival-candidate-mark">
+              {en ? "Festival circuit" : "Circuito festivalero"}
+            </span>
+          ) : null}
         </div>
         <div className="coverage-cell">
           <span>
@@ -182,11 +195,14 @@ function ActiveCategory({
       <section className="category-hero">
         <div className="page-shell">
           <div className="breadcrumb">
-            <Link href={localizedPath("/", locale)}>
+            <Link prefetch={false} href={localizedPath("/", locale)}>
               {en ? "Home" : "Inicio"}
             </Link>
             <span>/</span>
-            <Link href={localizedPath("/temporadas/2027", locale)}>
+            <Link
+              prefetch={false}
+              href={localizedPath("/temporadas/2027", locale)}
+            >
               Oscar 2027
             </Link>
             <span>/</span>
@@ -200,6 +216,17 @@ function ActiveCategory({
                   : "Predicción profesional de nominaciones"}
               </p>
               <h1>{categoryName}</h1>
+              <ShareButton
+                title={`${categoryName} · Oscar 2027`}
+                text={
+                  en
+                    ? "Explore the latest expert predictions."
+                    : "Consulta las últimas predicciones de expertos."
+                }
+                url={localizedPath(`/temporadas/2027/${category.slug}`, locale)}
+                locale={locale}
+                label={en ? "Share predictions ↗" : "Compartir predicciones ↗"}
+              />
               <p>
                 {aggregate?.ranking.length ?? 0}{" "}
                 {en ? "candidates" : "candidaturas"} ·{" "}
@@ -224,6 +251,21 @@ function ActiveCategory({
         </div>
       </section>
 
+      <nav
+        className="page-shell category-quick-nav"
+        aria-label={en ? "Oscar categories" : "Categorías Oscar"}
+      >
+        {PUBLIC_CATEGORIES.map((item) => (
+          <Link
+            prefetch={false}
+            key={item.id}
+            href={localizedPath(`/temporadas/2027/${item.slug}`, locale)}
+            aria-current={item.id === category.id ? "page" : undefined}
+          >
+            {en ? item.shortNameEn : item.shortName}
+          </Link>
+        ))}
+      </nav>
       <div className="page-shell category-page-body">
         <section className="snapshot-panel">
           <div className="snapshot-heading">
@@ -240,7 +282,7 @@ function ActiveCategory({
                     : "pendiente"}
               </span>
               <strong>
-                {view.dataState === "database"
+                {view.dataState === "database" && view.snapshot
                   ? en
                     ? "PUBLISHED"
                     : "PUBLICADA"
@@ -256,43 +298,57 @@ function ActiveCategory({
           </div>
           {view.snapshot ? (
             <>
-              <nav
-                aria-label={en ? "Select update" : "Seleccionar actualización"}
-                className="snapshot-selector"
+              <details
+                className="snapshot-history"
+                open={!view.snapshot.isLatest}
               >
-                {view.snapshot.cuts.map((cut, index) => (
-                  <Link
-                    aria-current={cut.isSelected ? "page" : undefined}
-                    className={cut.isSelected ? "active" : undefined}
-                    href={localizedPath(
-                      `/temporadas/2027/${category.slug}?corte=${encodeURIComponent(
-                        cut.id,
-                      )}`,
-                      locale,
-                    )}
-                    key={cut.id}
-                    scroll={false}
-                  >
-                    <span>
-                      {index === 0
-                        ? en
-                          ? "Current"
-                          : "Actual"
-                        : en
-                          ? "Effective change"
-                          : "Cambio efectivo"}
-                    </span>
-                    <strong>{dateLabel(cut.lockedAt, locale)}</strong>
-                    <small>
-                      {cut.changedSources.length
-                        ? `${en ? "Changed" : "Cambió"}: ${cut.changedSources.join(", ")}`
-                        : en
-                          ? "First available state"
-                          : "Primer estado disponible"}
-                    </small>
-                  </Link>
-                ))}
-              </nav>
+                <summary>
+                  {en
+                    ? "Explore update history"
+                    : "Explorar historial de actualizaciones"}{" "}
+                  · {view.snapshot.cuts.length}
+                </summary>
+                <nav
+                  aria-label={
+                    en ? "Select update" : "Seleccionar actualización"
+                  }
+                  className="snapshot-selector"
+                >
+                  {view.snapshot.cuts.map((cut, index) => (
+                    <Link
+                      prefetch={false}
+                      aria-current={cut.isSelected ? "page" : undefined}
+                      className={cut.isSelected ? "active" : undefined}
+                      href={localizedPath(
+                        `/temporadas/2027/${category.slug}?corte=${encodeURIComponent(
+                          cut.id,
+                        )}`,
+                        locale,
+                      )}
+                      key={cut.id}
+                      scroll={false}
+                    >
+                      <span>
+                        {index === 0
+                          ? en
+                            ? "Current"
+                            : "Actual"
+                          : en
+                            ? "Effective change"
+                            : "Cambio efectivo"}
+                      </span>
+                      <strong>{dateLabel(cut.lockedAt, locale)}</strong>
+                      <small>
+                        {cut.changedSources.length
+                          ? `${en ? "Changed" : "Cambió"}: ${cut.changedSources.join(", ")}`
+                          : en
+                            ? "First available state"
+                            : "Primer estado disponible"}
+                      </small>
+                    </Link>
+                  ))}
+                </nav>
+              </details>
               <div className="locked-snapshot-note">
                 <div>
                   <strong>
@@ -306,16 +362,14 @@ function ActiveCategory({
                   </strong>
                   <span>
                     {aggregate?.includedObservationIds.length ?? 0}{" "}
-                    {en
-                      ? "verified observations preserved with their provenance"
-                      : "observaciones contrastadas y conservadas con su procedencia"}
+                    {en ? "predictions included" : "predicciones incluidas"}
                   </span>
                 </div>
                 <div className="snapshot-comparison">
                   <span>
                     {en
-                      ? "Only an effective source change creates an update"
-                      : "Solo un cambio efectivo de proveedor crea una actualización"}
+                      ? "Following changes in the experts’ picks"
+                      : "Sigue los cambios en las favoritas de los expertos"}
                   </span>
                   {view.snapshot.previous ? (
                     <strong>
@@ -351,6 +405,7 @@ function ActiveCategory({
                       <article key={source.sourceId}>
                         <div>
                           <Link
+                            prefetch={false}
                             href={localizedPath(
                               `/fuentes/${source.sourceId}`,
                               locale,
@@ -418,8 +473,8 @@ function ActiveCategory({
           ) : (
             <p className="insufficient-note">
               {en
-                ? "There is no publishable update for this category yet."
-                : "Aún no existe una actualización publicable para esta categoría."}
+                ? "Predictions for this category are not available yet."
+                : "Las predicciones de esta categoría aún no están disponibles."}
             </p>
           )}
           {view.dataState === "fixture" ? (
@@ -482,8 +537,8 @@ function ActiveCategory({
             </div>
             <p>
               {en
-                ? "Kalshi and Polymarket are shown by provider. There is no market consensus and their prices do not participate in professional predictions. They reflect the latest market capture, not the selected professional update."
-                : "Kalshi y Polymarket se muestran por proveedor. No existe consenso de mercados y sus precios no participan en la predicción profesional. Reflejan su última captura y no la actualización profesional seleccionada."}
+                ? "Latest prices from Kalshi and Polymarket, independent of the expert ranking. Market dates may differ from the selected prediction update."
+                : "Últimos precios de Kalshi y Polymarket, independientes del ranking de expertos. Sus fechas pueden diferir de la actualización de predicciones seleccionada."}
             </p>
           </div>
           <div className="market-provider-grid">
@@ -628,11 +683,14 @@ function ArchiveCategory({
       <section className="category-hero archive-hero">
         <div className="page-shell">
           <div className="breadcrumb">
-            <Link href={localizedPath("/", locale)}>
+            <Link prefetch={false} href={localizedPath("/", locale)}>
               {en ? "Home" : "Inicio"}
             </Link>
             <span>/</span>
-            <Link href={localizedPath("/temporadas/2026", locale)}>
+            <Link
+              prefetch={false}
+              href={localizedPath("/temporadas/2026", locale)}
+            >
               Oscar 2026
             </Link>
             <span>/</span>
@@ -696,6 +754,7 @@ function ArchiveCategory({
                   <h3>
                     {candidate.film ? (
                       <Link
+                        prefetch={false}
                         href={localizedPath(
                           `/peliculas/${candidate.film.id}`,
                           locale,
@@ -731,7 +790,12 @@ export async function CategoryPageView({
   category: CategoryDefinition;
   view: ActiveCategoryView | ArchiveCategoryView;
 }) {
-  const locale = await getRequestLocale();
+  const [locale, festivalFilmIds] = await Promise.all([
+    getRequestLocale(),
+    view.mode === "active"
+      ? getFestivalFilmIds()
+      : Promise.resolve(new Set<string>()),
+  ]);
   const en = locale === "en";
   const year = view.mode === "active" ? 2027 : 2026;
   const categoryName = en ? category.nameEn : category.name;
@@ -795,7 +859,12 @@ export async function CategoryPageView({
         }}
       />
       {view.mode === "active" ? (
-        <ActiveCategory category={category} locale={locale} view={view} />
+        <ActiveCategory
+          category={category}
+          festivalFilmIds={festivalFilmIds}
+          locale={locale}
+          view={view}
+        />
       ) : (
         <ArchiveCategory category={category} locale={locale} view={view} />
       )}
