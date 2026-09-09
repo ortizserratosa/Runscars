@@ -32,6 +32,10 @@ import {
   phase71FixtureAggregate,
   phase71FixtureObservations,
 } from "../../src/data/phase71-fixture";
+import {
+  AGGREGATION_METHOD_VERSION_V2,
+  type PredictionAggregateV2,
+} from "../../src/lib/aggregation/v2";
 import { PUBLIC_CATEGORIES } from "../../src/lib/categories/config";
 import type { LockedPredictionSnapshotV2 } from "../../src/lib/snapshots/v2";
 
@@ -262,6 +266,51 @@ describe("locked snapshots", () => {
       },
     ]);
     expect(lockCalls).toBe(0);
+  });
+
+  it("starts a v3 cut without reinterpreting the current v2 snapshot", async () => {
+    const schedule: SnapshotSchedule = {
+      id: "daily-best-picture",
+      seasonId: "oscars-2027",
+      categoryId: "best-picture",
+      intention: "nomination",
+      kind: "periodic",
+      timeZone: "UTC",
+    };
+    const current = phase71FixtureAggregate("best-picture");
+    const historicalAggregate: PredictionAggregateV2 = {
+      ...current,
+      methodVersion: AGGREGATION_METHOD_VERSION_V2,
+    };
+    const locked: LockedPredictionSnapshotV2[] = [];
+    const repository: SnapshotSchedulerRepositoryV2 = {
+      async activeSchedules() {
+        return [schedule];
+      },
+      async predictionObservationsV2() {
+        return phase71FixtureObservations("best-picture");
+      },
+      async currentSnapshotV2() {
+        return {
+          snapshotId: "historical-v2-cut",
+          contentHash: "b".repeat(64),
+          aggregate: historicalAggregate,
+        };
+      },
+      async lockV2(snapshot) {
+        locked.push(snapshot);
+        return true;
+      },
+    };
+
+    const results = await runScheduledSnapshotsV2(
+      repository,
+      new Date("2026-07-25T04:47:00Z"),
+    );
+
+    expect(results[0]?.status).toBe("created");
+    expect(locked[0]?.payload.methodVersion).toBe("runscars-aggregation-v3");
+    expect(historicalAggregate.methodVersion).toBe("runscars-aggregation-v2");
   });
 });
 

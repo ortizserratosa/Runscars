@@ -71,6 +71,7 @@ pasado para ocultar cambios de criterio.
 | D-051 | Cobertura obligatoria y evidencia durable de automatización    | Aceptada    |
 | D-052 | Película principal ante una alternativa editorial explícita    | Aceptada    |
 | D-053 | Tipografía y sistema visual web v1                             | Propuesta   |
+| D-054 | Caducidad mensual de predicciones profesionales                | Aceptada    |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -212,8 +213,8 @@ las decisiones D-001 a D-011 quedan aceptadas y la fase 0 se considera cerrada.
   o una cadencia editorial distinta.
 - **Revisión posterior:** D-025 reemplaza únicamente el mínimo profesional de
   tres listas por cuatro rankings automáticos y publicables por categoría. La
-  deduplicación, el mínimo crítico y la ventana de frescura de esta decisión
-  siguen vigentes.
+  deduplicación y el mínimo crítico siguen vigentes. D-054 reemplaza la ventana
+  de frescura y convierte su aviso en exclusión efectiva del consenso.
 
 ## D-014 · Consenso de rankings parciales de usuarios
 
@@ -955,3 +956,21 @@ ejemplos manuales de nominaciones y ganador coincidieron con
   procedencia en móvil; conservar la excepción de atribución de D-047.
 - **Documentación:** `docs/brand/IDENTITY.md` especifica paleta, variantes,
   patrones, responsive, accesibilidad y usos incorrectos.
+
+## D-054 · Caducidad mensual de predicciones profesionales
+
+- **Fecha:** 2026-09-09
+- **Estado:** Aceptada
+- **Decisión:** la publicación elegible más reciente de una fuente participa en
+  el consenso hasta cumplir 30 días. Desde el día 31 queda excluida de cobertura,
+  Borda y posiciones por falta de actualización, sin borrar sus observaciones.
+- **Presentación:** el dato vencido se conserva como información adicional e
+  histórica. Los snapshots ya bloqueados permanecen inmutables.
+- **Operación:** los conectores siguen comprobando fuentes vencidas. Una nueva
+  predicción fechada reactiva automáticamente su participación. The Ringer queda
+  fuera del consenso vigente porque su última predicción conocida es de marzo de
+  2026, pero seguirá comprobándose periódicamente.
+- **Versionado:** la regla entra en `runscars-aggregation-v3`; v2 continúa
+  describiendo los snapshots históricos que incluían fuentes sin caducidad.
+- **Reemplaza:** únicamente la ventana de 45 días y el aviso no excluyente de
+  D-013; mantiene sus reglas de deduplicación y umbral crítico.

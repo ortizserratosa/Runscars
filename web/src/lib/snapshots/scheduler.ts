@@ -503,7 +503,9 @@ export class SupabaseSnapshotSchedulerRepository
     };
     if (
       !payload.aggregate ||
-      payload.aggregate.methodVersion !== "runscars-aggregation-v2"
+      !["runscars-aggregation-v2", "runscars-aggregation-v3"].includes(
+        payload.aggregate.methodVersion,
+      )
     ) {
       return null;
     }

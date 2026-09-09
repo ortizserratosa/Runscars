@@ -50,9 +50,10 @@ El hash cubre el contenido metodológico. El ID, el proceso de bloqueo y la
 cadena de corrección permanecen como metadatos persistidos fuera de ese hash.
 
 `runscars-snapshot-v2` mantiene la misma envolvente, pero usa
-`runscars-aggregation-v2` y candidaturas genéricas con `candidateId`, película,
-obra y personas. La migración no modifica ninguna envolvente v1: su contenido y
-hash siguen siendo reproducibles byte a byte.
+`runscars-aggregation-v2` o `runscars-aggregation-v3` y candidaturas genéricas
+con `candidateId`, película, obra y personas. V3 añade la caducidad de 30 días;
+ninguna envolvente anterior se modifica y su contenido y hash siguen siendo
+reproducibles byte a byte.
 
 Un snapshot periódico conserva todo el ranking, pero no fija una papeleta
 final. El cierre de nominaciones registra explícitamente cuántos candidatos

@@ -1,5 +1,11 @@
+import { isPredictionFresh } from "./freshness";
+
 export const AGGREGATION_METHOD_VERSION_V2 = "runscars-aggregation-v2";
+export const AGGREGATION_METHOD_VERSION_V3 = "runscars-aggregation-v3";
 export const MINIMUM_ORDERED_SOURCES_V2 = 4;
+
+export type PredictionAggregationMethodVersionV2 =
+  typeof AGGREGATION_METHOD_VERSION_V2 | typeof AGGREGATION_METHOD_VERSION_V3;
 
 export type CategoryCandidatePerson = {
   id: string;
@@ -82,7 +88,7 @@ export type PredictionSourceListV2 = {
 };
 
 export type PredictionAggregateV2 = {
-  methodVersion: typeof AGGREGATION_METHOD_VERSION_V2;
+  methodVersion: PredictionAggregationMethodVersionV2;
   seasonId: string;
   categoryId: string;
   intention: "nomination" | "winner";
@@ -116,6 +122,10 @@ export type PredictionAggregateOptionsV2 = {
   intention: "nomination" | "winner";
   cutoffDate: string;
   previous?: PredictionAggregateV2;
+};
+
+export type PredictionAggregateV3 = PredictionAggregateV2 & {
+  methodVersion: typeof AGGREGATION_METHOD_VERSION_V3;
 };
 
 const END_OF_DAY = "T23:59:59.999Z";
@@ -280,7 +290,7 @@ function predictionSort(
 export function aggregatePredictionsV2(
   observations: PredictionObservationV2[],
   options: PredictionAggregateOptionsV2,
-): PredictionAggregateV2 {
+): PredictionAggregateV3 {
   const cutoff = instant(options.cutoffDate);
   const relevant = observations.filter(
     (observation) =>
@@ -292,17 +302,32 @@ export function aggregatePredictionsV2(
       instant(effectiveAt(observation)) <= cutoff,
   );
   const selectedSources = selectActiveSources(relevant);
+  const staleSourceIds = new Set(
+    selectedSources
+      .filter((source) =>
+        source.observations.every(
+          (observation) =>
+            !isPredictionFresh(effectiveAt(observation), options.cutoffDate),
+        ),
+      )
+      .map((source) => source.sourceId),
+  );
   const activeSources = selectedSources.filter(
-    (source) => source.orderedIsValid || source.selection.length > 0,
+    (source) =>
+      !staleSourceIds.has(source.sourceId) &&
+      (source.orderedIsValid || source.selection.length > 0),
   );
   const orderedSources = activeSources.filter(
     (source) => source.orderedIsValid && source.listLength !== null,
   );
-  const excludedObservationIds = selectedSources.flatMap((source) =>
-    source.ordered.length > 0 && !source.orderedIsValid
+  const excludedObservationIds = selectedSources.flatMap((source) => {
+    if (staleSourceIds.has(source.sourceId)) {
+      return source.observations.map((observation) => observation.id);
+    }
+    return source.ordered.length > 0 && !source.orderedIsValid
       ? source.ordered.map((observation) => observation.id)
-      : [],
-  );
+      : [];
+  });
   const candidates = new Map<string, CategoryCandidate>();
   for (const source of activeSources) {
     for (const observation of source.observations) {
@@ -438,7 +463,7 @@ export function aggregatePredictionsV2(
   }));
 
   return {
-    methodVersion: AGGREGATION_METHOD_VERSION_V2,
+    methodVersion: AGGREGATION_METHOD_VERSION_V3,
     seasonId: options.seasonId,
     categoryId: options.categoryId,
     intention: options.intention,

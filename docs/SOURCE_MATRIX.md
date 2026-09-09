@@ -97,7 +97,7 @@ reescribir el corte de fase 1:
 | ID | Fuente | Tipo | Cobertura y autoría | Método | Editorial | Técnico | Publicación | Riesgo principal |
 |---|---|---|---|---|---|---|---|---|
 | `midnight-critics` | Midnight Critics Circle | prediction | Consenso del círculo en ocho categorías y adicionales | HTML + captura | selected | automated | publishable | Errores tipográficos de colaboradores requieren matching conservador |
-| `the-ringer` | The Ringer | prediction | Selección editorial de Mejor película | HTML + captura | selected | automated | publishable | No publica un ranking numérico comparable |
+| `the-ringer` | The Ringer | prediction | Selección editorial de Mejor película | HTML + captura periódica | selected | automated | publishable | Última predicción conocida de marzo de 2026: se conserva como contexto, pero no participa por falta de actualización |
 | `kalshi` | Kalshi | market | Contratos Oscar disponibles | API pública paginada | selected | automated | publishable | Puede no existir un mercado para una categoría |
 | `polymarket` | Polymarket | market | Eventos y contratos Oscar disponibles | Gamma API pública | selected | automated | publishable | Preguntas y eventos requieren matching por proveedor |
 
