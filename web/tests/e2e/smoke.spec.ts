@@ -24,10 +24,11 @@ for (const route of routes) {
       if (message.type() === "error") errors.push(message.text());
     });
     page.on("requestfailed", (request) => {
-      if (request.failure()?.errorText === "cancelled") return;
-      failedRequests.push(
-        `${request.failure()?.errorText ?? "request failed"}: ${request.url()}`,
-      );
+      const errorText = request.failure()?.errorText;
+      if (errorText === "cancelled" || errorText === "Load request cancelled") {
+        return;
+      }
+      failedRequests.push(`${errorText ?? "request failed"}: ${request.url()}`);
     });
     const response = await page.goto(route, { waitUntil: "networkidle" });
     expect(response?.status()).toBe(200);
