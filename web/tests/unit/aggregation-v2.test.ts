@@ -64,18 +64,46 @@ function observation(
 }
 
 describe("generic prediction aggregation v2", () => {
-  it("reaches five ordered media in six applicable Best Picture sources", () => {
+  it("keeps stale media as evidence without counting them as applicable", () => {
     const result = phase71FixtureAggregate("best-picture");
-    expect(result.methodVersion).toBe("runscars-aggregation-v2");
+    expect(result.methodVersion).toBe("runscars-aggregation-v3");
     expect(result.minimumOrderedSources).toBe(4);
     expect(result.orderedSourceCount).toBe(5);
-    expect(result.applicableSourceCount).toBe(6);
+    expect(result.applicableSourceCount).toBe(5);
     expect(result.isConsensus).toBe(true);
-    const ringer = result.ranking[0].sourceContributions.find(
-      (source) => source.sourceId === "the-ringer",
-    );
-    expect(ringer?.points).toBe(0);
-    expect(ringer?.appearanceKind).toBe("selection");
+    expect(
+      result.sourceLists.some((source) => source.sourceId === "the-ringer"),
+    ).toBe(false);
+    expect(result.excludedObservationIds.length).toBeGreaterThan(0);
+    expect(
+      result.excludedObservationIds.every((id) =>
+        id.startsWith("fixture-best-picture-the-ringer-"),
+      ),
+    ).toBe(true);
+  });
+
+  it("includes a prediction through day 30 and excludes it on day 31", () => {
+    const actor = candidate("candidate", "Actor — Film", "film");
+    const item = {
+      ...observation("prediction", "source", actor, 1),
+      publishedAt: "2026-07-01T12:00:00Z",
+      capturedAt: "2026-07-01T12:00:00Z",
+      listLength: 1,
+    };
+    const aggregateAt = (cutoffDate: string) =>
+      aggregatePredictionsV2([item], {
+        seasonId: "oscars-2027",
+        categoryId: "actor",
+        intention: "nomination",
+        cutoffDate,
+      });
+
+    expect(aggregateAt("2026-07-31T12:00:00Z").includedObservationIds).toEqual([
+      "prediction",
+    ]);
+    const day31 = aggregateAt("2026-08-01T12:00:00Z");
+    expect(day31.includedObservationIds).toEqual([]);
+    expect(day31.excludedObservationIds).toEqual(["prediction"]);
   });
 
   it("publishes screenplay at the four-source floor without inventing a fifth", () => {

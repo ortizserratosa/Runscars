@@ -1,7 +1,7 @@
 # Contrato de producto
 
 **Estado:** contrato aceptado para el MVP
-**Última revisión:** 2026-08-29
+**Última revisión:** 2026-09-09
 
 ## 1. Visión
 
@@ -137,6 +137,9 @@ publican cuando alcanzan la cobertura aprobada.
 - Importación manual disponible para el resto.
 - Una fuente seleccionada puede activarse gradualmente; solo sus observaciones
   elegibles participan en el agregado correspondiente.
+- Una predicción con más de 30 días de antigüedad se conserva como información
+  adicional, pero no participa en el consenso hasta que la fuente publique una
+  actualización.
 - En el corte 7.1, cada categoría pública requiere cuatro rankings ordenados
   automáticos independientes; Mejor película incorpora además The Ringer como
   selección y alcanza seis medios automáticos.

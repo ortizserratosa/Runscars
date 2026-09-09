@@ -52,6 +52,12 @@ estabilidad, trazabilidad y coste de mantenimiento.
 aporte un voto profesional. La activación pertenece a cada importación y
 snapshot, y el tipo de observación decide si participa en un agregado.
 
+En predicciones, una publicación de más de 30 días no participa en el consenso,
+aunque sigue disponible como evidencia adicional. El conector continúa sus
+comprobaciones periódicas: una nueva predicción fechada permite que la fuente
+vuelva a participar sin perder el historial. The Ringer queda actualmente en
+esta situación porque su última predicción conocida es de marzo de 2026.
+
 El índice público no enumera candidatas sin datos: muestra fuentes presentes en
 el corte profesional vigente o con observaciones críticas publicadas. La ficha
 de cada fuente deriva publicaciones, capturas, valores originales y categorías

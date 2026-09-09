@@ -1,4 +1,6 @@
-export const AGGREGATION_METHOD_VERSION_V2 = "runscars-aggregation-v2";
+import { isPredictionFresh } from "./freshness";
+
+export const AGGREGATION_METHOD_VERSION_V3 = "runscars-aggregation-v3";
 export const MINIMUM_ORDERED_SOURCES_V2 = 4;
 
 export type CategoryCandidatePerson = {
@@ -82,7 +84,7 @@ export type PredictionSourceListV2 = {
 };
 
 export type PredictionAggregateV2 = {
-  methodVersion: typeof AGGREGATION_METHOD_VERSION_V2;
+  methodVersion: typeof AGGREGATION_METHOD_VERSION_V3;
   seasonId: string;
   categoryId: string;
   intention: "nomination" | "winner";
@@ -292,17 +294,32 @@ export function aggregatePredictionsV2(
       instant(effectiveAt(observation)) <= cutoff,
   );
   const selectedSources = selectActiveSources(relevant);
+  const staleSourceIds = new Set(
+    selectedSources
+      .filter((source) =>
+        source.observations.every(
+          (observation) =>
+            !isPredictionFresh(effectiveAt(observation), options.cutoffDate),
+        ),
+      )
+      .map((source) => source.sourceId),
+  );
   const activeSources = selectedSources.filter(
-    (source) => source.orderedIsValid || source.selection.length > 0,
+    (source) =>
+      !staleSourceIds.has(source.sourceId) &&
+      (source.orderedIsValid || source.selection.length > 0),
   );
   const orderedSources = activeSources.filter(
     (source) => source.orderedIsValid && source.listLength !== null,
   );
-  const excludedObservationIds = selectedSources.flatMap((source) =>
-    source.ordered.length > 0 && !source.orderedIsValid
+  const excludedObservationIds = selectedSources.flatMap((source) => {
+    if (staleSourceIds.has(source.sourceId)) {
+      return source.observations.map((observation) => observation.id);
+    }
+    return source.ordered.length > 0 && !source.orderedIsValid
       ? source.ordered.map((observation) => observation.id)
-      : [],
-  );
+      : [];
+  });
   const candidates = new Map<string, CategoryCandidate>();
   for (const source of activeSources) {
     for (const observation of source.observations) {
@@ -438,7 +455,7 @@ export function aggregatePredictionsV2(
   }));
 
   return {
-    methodVersion: AGGREGATION_METHOD_VERSION_V2,
+    methodVersion: AGGREGATION_METHOD_VERSION_V3,
     seasonId: options.seasonId,
     categoryId: options.categoryId,
     intention: options.intention,

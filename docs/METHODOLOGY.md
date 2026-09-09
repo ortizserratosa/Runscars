@@ -1,7 +1,7 @@
 # Metodología
 
 **Estado:** agregación, snapshots y evaluación profesional operativos
-**Última revisión:** 2026-08-30
+**Última revisión:** 2026-09-09
 
 ## 1. Principios
 
@@ -202,17 +202,25 @@ usa únicamente la publicación elegible más reciente de cada fuente:
 - una fuente con solo selección cuenta para cobertura, pero no entra en el
   denominador Borda.
 
-La implementación `runscars-aggregation-v2` representa los puntos decimales con
+La implementación `runscars-aggregation-v3` representa los puntos decimales con
 doce posiciones estables antes de ordenar. Esto elimina artefactos binarios —por
 ejemplo `0,65` frente a `0,649999…`— sin redondear para presentación ni alterar
-un empate matemático. Su salida usa `candidateId`, película, obra y personas. La
-versión v1 permanece disponible exclusivamente para reproducir snapshots
-históricos.
+un empate matemático. Su salida usa `candidateId`, película, obra y personas. Las
+versiones v1 y v2 permanecen documentadas exclusivamente para reproducir
+snapshots históricos.
 
 La publicación elegible más reciente se elige por fuente, categoría e intención:
 si una publicación nueva omite una categoría, no elimina la última lista
 elegible anterior de esa categoría. Un medio aporta una sola fuente aunque
 publique varios autores, miembros o bloques.
+
+Esa publicación solo participa durante los 30 días siguientes a su fecha de
+publicación o, cuando esta no existe, a su captura fechada. Desde el día 31 la
+fuente deja de aportar cobertura, puntos y posiciones al consenso. La
+publicación y sus observaciones se conservan como información adicional e
+histórica, y el conector puede seguir comprobándola para reactivar la fuente en
+cuanto publique una predicción nueva. La caducidad puede producir por sí misma
+un nuevo corte efectivo y nunca reinterpreta snapshots ya bloqueados.
 
 ### 4.5 Variación durante la fase 6
 
@@ -426,9 +434,9 @@ El dataset capturado el 2026-07-24 fija estas reglas iniciales:
   sindicada no añade voto.
 - **Rankings parciales de usuarios:** se almacenan, pero su consenso público se
   pospone a fase 8 mediante D-014.
-- **Frescura:** una fuente de predicciones activa se marca desactualizada a los
-  45 días sin nueva publicación o fecha de actualización. El aviso no borra ni
-  excluye automáticamente sus observaciones.
+- **Frescura:** una predicción se mantiene vigente durante 30 días. Desde el día
+  31 se conserva como información adicional, pero se excluye automáticamente
+  del consenso por falta de actualización.
 - **Redondeo:** se calcula y desempata con precisión completa. Se muestran dos
   decimales; dos valores que se ven iguales no son un empate si difieren
   internamente. El orden debe poder explicar el valor completo y el desempate.
