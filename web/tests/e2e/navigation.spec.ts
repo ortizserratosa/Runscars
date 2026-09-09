@@ -575,18 +575,16 @@ test("keeps long source names inside the mobile viewport", async ({ page }) => {
   }
 });
 
-test("shows six Best Picture media but never gives The Ringer Borda points", async ({
+test("excludes stale The Ringer predictions from Best Picture", async ({
   page,
 }) => {
   await page.goto("/temporadas/2027/mejor-pelicula");
-  await expect(page.getByText("6 medios")).toBeVisible();
+  await expect(page.getByText("5 medios")).toBeVisible();
   await page.getByText("Ver procedencia y cálculo").first().click();
   const ringer = page
     .locator(".source-calculations")
-    .getByRole("link", { name: /The Ringer/ })
-    .first();
-  await expect(ringer).toContainText("selección");
-  await expect(ringer).toContainText("0");
+    .getByRole("link", { name: /The Ringer/ });
+  await expect(ringer).toHaveCount(0);
 });
 
 test("explains that provider signals never form a market consensus", async ({

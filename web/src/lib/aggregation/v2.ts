@@ -1,7 +1,11 @@
 import { isPredictionFresh } from "./freshness";
 
+export const AGGREGATION_METHOD_VERSION_V2 = "runscars-aggregation-v2";
 export const AGGREGATION_METHOD_VERSION_V3 = "runscars-aggregation-v3";
 export const MINIMUM_ORDERED_SOURCES_V2 = 4;
+
+export type PredictionAggregationMethodVersionV2 =
+  typeof AGGREGATION_METHOD_VERSION_V2 | typeof AGGREGATION_METHOD_VERSION_V3;
 
 export type CategoryCandidatePerson = {
   id: string;
@@ -84,7 +88,7 @@ export type PredictionSourceListV2 = {
 };
 
 export type PredictionAggregateV2 = {
-  methodVersion: typeof AGGREGATION_METHOD_VERSION_V3;
+  methodVersion: PredictionAggregationMethodVersionV2;
   seasonId: string;
   categoryId: string;
   intention: "nomination" | "winner";
@@ -118,6 +122,10 @@ export type PredictionAggregateOptionsV2 = {
   intention: "nomination" | "winner";
   cutoffDate: string;
   previous?: PredictionAggregateV2;
+};
+
+export type PredictionAggregateV3 = PredictionAggregateV2 & {
+  methodVersion: typeof AGGREGATION_METHOD_VERSION_V3;
 };
 
 const END_OF_DAY = "T23:59:59.999Z";
@@ -282,7 +290,7 @@ function predictionSort(
 export function aggregatePredictionsV2(
   observations: PredictionObservationV2[],
   options: PredictionAggregateOptionsV2,
-): PredictionAggregateV2 {
+): PredictionAggregateV3 {
   const cutoff = instant(options.cutoffDate);
   const relevant = observations.filter(
     (observation) =>
