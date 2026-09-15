@@ -1,0 +1,62 @@
+{
+  "deploymentId": "dpl_A5WTz6SoDzCKyN9RaSpAXx9eBUMg",
+  "commit": "eb30eb31793292a8507ada358f44cffcec1e9d77",
+  "publicAudit": {
+    "startedAt": "2026-09-15T09:02:53.236Z",
+    "completedAt": "2026-09-15T09:09:42.737Z",
+    "sitemapUrls": 3568,
+    "visited": 3842,
+    "failures": []
+  },
+  "professionalParsers": {
+    "passed": 6,
+    "failed": 0
+  },
+  "markets": {
+    "kalshiContracts": 91,
+    "polymarketContracts": 132
+  },
+  "ingestionRuns": {
+    "first": 497,
+    "repeat": 498,
+    "insertedOnRepeat": 0
+  },
+  "snapshotRefresh": {
+    "id": 19,
+    "created": 1,
+    "unchanged": 7,
+    "failed": 0
+  },
+  "existingFestivalIncidents": [
+    {
+      "id": "festival-locarno",
+      "last_success_at": null,
+      "last_failure_at": "2026-09-15T05:17:02.76+00:00",
+      "last_error": "https://www.locarnofestival.ch/en/festival/program.html respondió 403"
+    },
+    {
+      "id": "festival-tiff",
+      "last_success_at": "2026-09-06T05:17:03.023+00:00",
+      "last_failure_at": "2026-09-15T05:17:02.956+00:00",
+      "last_error": "No se reconocieron selecciones ni premios oficiales; se conserva el último conjunto verificado"
+    },
+    {
+      "id": "festival-telluride",
+      "last_success_at": "2026-09-06T05:17:03.566+00:00",
+      "last_failure_at": "2026-09-15T05:17:03.358+00:00",
+      "last_error": "No se reconocieron selecciones ni premios oficiales; se conserva el último conjunto verificado"
+    },
+    {
+      "id": "festival-nyff",
+      "last_success_at": "2026-09-06T05:17:06.408+00:00",
+      "last_failure_at": "2026-09-15T05:17:04.666+00:00",
+      "last_error": "No se reconocieron selecciones ni premios oficiales; se conserva el último conjunto verificado"
+    },
+    {
+      "id": "festival-venice",
+      "last_success_at": "2026-09-13T05:17:02.969+00:00",
+      "last_failure_at": "2026-09-15T05:17:08.449+00:00",
+      "last_error": "https://www.labiennale.org/en/cinema/2026/awards respondió 404"
+    }
+  ]
+}
