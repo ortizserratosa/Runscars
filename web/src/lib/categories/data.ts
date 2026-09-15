@@ -22,6 +22,7 @@ import {
   buildRealProviderCuts,
   type SnapshotHistoryEntry,
 } from "../snapshots/provider-cuts";
+import { loadCaptureDatesForHistory } from "../snapshots/capture-dates";
 import { createSupabaseServerClient } from "../supabase/server";
 import { PUBLIC_CATEGORIES, type PublicCategoryId } from "./config";
 
@@ -50,6 +51,9 @@ export type ActiveCategoryView = {
     lockedAt: string;
     isLatest: boolean;
     methodologyChanged: boolean;
+    comparableProjection: boolean;
+    comparisonDateIncomplete: boolean;
+    comparisonLimited: boolean;
     previous: {
       id: string;
       lockedAt: string;
@@ -104,27 +108,49 @@ function activeViewFromHistory({
   snapshots,
   markets,
   connectorFreshness = new Map(),
+  captureDates = new Map(),
   dataState,
   selectedSnapshotId,
 }: {
   snapshots: SnapshotHistoryEntry[];
   markets: Record<"kalshi" | "polymarket", MarketView[]>;
   connectorFreshness?: Map<string, ConnectorFreshnessState>;
+  captureDates?: ReadonlyMap<string, string>;
   dataState: ActiveCategoryView["dataState"];
   selectedSnapshotId?: string;
 }): ActiveCategoryView {
-  const cuts = buildRealProviderCuts(snapshots);
+  const cuts = buildRealProviderCuts(snapshots, captureDates);
   const requestedIndex = selectedSnapshotId
     ? cuts.findIndex((cut) => cut.id === selectedSnapshotId)
     : -1;
+  const requestedSnapshot = selectedSnapshotId
+    ? snapshots.find((snapshot) => snapshot.id === selectedSnapshotId)
+    : null;
+  const priorIndex = requestedSnapshot
+    ? cuts.findLastIndex(
+        (cut) =>
+          Date.parse(cut.lockedAt) <= Date.parse(requestedSnapshot.lockedAt),
+      )
+    : -1;
   const selectedIndex =
-    requestedIndex >= 0 ? requestedIndex : Math.max(0, cuts.length - 1);
+    requestedIndex >= 0
+      ? requestedIndex
+      : requestedSnapshot
+        ? Math.max(0, priorIndex)
+        : Math.max(0, cuts.length - 1);
   const selected = cuts[selectedIndex] ?? null;
   const previous = selectedIndex > 0 ? cuts[selectedIndex - 1] : null;
-  const comparablePrevious =
+  const comparisonLimited = Boolean(
+    previous &&
+    (selected?.comparisonDateIncomplete || previous.comparisonDateIncomplete),
+  );
+  const methodCompatible = Boolean(
     selected &&
     previous &&
-    canCompareSnapshotMovements(selected.aggregate, previous.aggregate)
+    canCompareSnapshotMovements(selected.aggregate, previous.aggregate),
+  );
+  const comparablePrevious =
+    selected && previous && methodCompatible && !comparisonLimited
       ? previous
       : null;
   const latest = cuts.at(-1) ?? null;
@@ -158,7 +184,10 @@ function activeViewFromHistory({
           contentHash: selected.contentHash,
           lockedAt: selected.lockedAt,
           isLatest: selected.id === latest?.id,
-          methodologyChanged: Boolean(previous && !comparablePrevious),
+          methodologyChanged: Boolean(previous && !methodCompatible),
+          comparableProjection: selected.comparableProjection,
+          comparisonDateIncomplete: selected.comparisonDateIncomplete,
+          comparisonLimited,
           previous: comparablePrevious
             ? {
                 id: comparablePrevious.id,
@@ -444,6 +473,7 @@ async function activeCategoryFromDatabase(
       ),
     ),
   ];
+  const captureDatesPromise = loadCaptureDatesForHistory(supabase, snapshots);
   const connectorFreshness = new Map<string, ConnectorFreshnessState>();
   if (sourceIds.length) {
     const connectorResult = await supabase
@@ -476,6 +506,7 @@ async function activeCategoryFromDatabase(
     snapshots,
     markets,
     connectorFreshness,
+    captureDates: await captureDatesPromise,
     dataState: "database",
     selectedSnapshotId,
   });

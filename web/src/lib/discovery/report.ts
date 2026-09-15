@@ -53,26 +53,35 @@ export const getWeeklyReport = cache(async (week: string) => {
           : null,
       ]);
       const sources = [...new Set(inWeek.flatMap((cut) => cut.changedSources))];
+      const comparisonLimited = Boolean(
+        current?.aggregate &&
+        previous?.aggregate &&
+        (current.snapshot?.comparisonDateIncomplete ||
+          previous.snapshot?.comparisonDateIncomplete),
+      );
       return {
         category,
         leader: current?.aggregate?.ranking[0] ?? null,
         cut: final ?? null,
         changes: inWeek.length,
         sources,
-        movements: current?.aggregate
-          ? weeklyMovements(
-              current.aggregate,
-              previous?.aggregate ?? null,
-            ).slice(0, 3)
-          : [],
+        movements:
+          current?.aggregate && !comparisonLimited
+            ? weeklyMovements(
+                current.aggregate,
+                previous?.aggregate ?? null,
+              ).slice(0, 3)
+            : [],
         methodologyChanged: Boolean(
           current?.aggregate &&
           previous?.aggregate &&
           !canCompareSnapshotMovements(current.aggregate, previous.aggregate),
         ),
+        comparisonLimited,
         hasBaseline: Boolean(
           current?.aggregate &&
           previous?.aggregate &&
+          !comparisonLimited &&
           canCompareSnapshotMovements(current.aggregate, previous.aggregate),
         ),
       };

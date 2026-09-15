@@ -98,8 +98,8 @@ export default async function MethodologyPage() {
           </h2>
           <p>
             {en
-              ? "The ranking updates when a source changes its predictions. Use the history to see earlier rankings and compare them with the previous update."
-              : "La clasificación se actualiza cuando una fuente cambia sus predicciones. El historial permite consultar las clasificaciones anteriores y compararlas con la actualización previa."}
+              ? "The ranking updates when a source changes its predictions or its latest publication expires after 30 days. Earlier cuts use the same 30-day limit when shown in the comparison history. If a historical source's date cannot be verified, movement comparison pauses. The original locked captures remain intact."
+              : "La clasificación se actualiza cuando una fuente cambia sus predicciones o su última publicación vence tras 30 días. Los cortes anteriores usan el mismo límite de 30 días al mostrarse en el historial comparable. Si no se puede verificar la fecha de una fuente histórica, se pausa la comparación de movimientos. Las capturas bloqueadas originales siguen intactas."}
           </p>
         </article>
         <article>

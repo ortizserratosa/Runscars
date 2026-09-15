@@ -161,13 +161,17 @@ export async function WeeklyView({
                   )
                 ) : (
                   <p>
-                    {item.methodologyChanged
+                    {item.comparisonLimited
                       ? en
-                        ? "Consensus rules changed this week. Earlier rankings remain available in the history."
-                        : "El método de consenso cambió esta semana. Las clasificaciones anteriores siguen disponibles en el historial."
-                      : en
-                        ? "The first recorded rankings are now available."
-                        : "Ya están disponibles las primeras clasificaciones registradas."}
+                        ? "Movement comparison is paused because a historical source lacks a verifiable date. Its ranking remains available in the history."
+                        : "La comparación de movimientos está en pausa porque falta una fecha verificable de una fuente histórica. Su clasificación sigue disponible en el historial."
+                      : item.methodologyChanged
+                        ? en
+                          ? "Consensus rules changed this week. Earlier rankings remain available in the history."
+                          : "El método de consenso cambió esta semana. Las clasificaciones anteriores siguen disponibles en el historial."
+                        : en
+                          ? "The first recorded rankings are now available."
+                          : "Ya están disponibles las primeras clasificaciones registradas."}
                   </p>
                 )}
                 {item.sources.length ? (

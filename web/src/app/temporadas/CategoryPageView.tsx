@@ -352,13 +352,17 @@ function ActiveCategory({
               <div className="locked-snapshot-note">
                 <div>
                   <strong>
-                    {view.snapshot.isLatest
+                    {view.snapshot.comparableProjection
                       ? en
-                        ? "Current professional consensus"
-                        : "Consenso profesional vigente"
-                      : en
-                        ? "Selected historical update"
-                        : "Actualización histórica seleccionada"}
+                        ? "Historical consensus under current rules"
+                        : "Consenso histórico con reglas vigentes"
+                      : view.snapshot.isLatest
+                        ? en
+                          ? "Current professional consensus"
+                          : "Consenso profesional vigente"
+                        : en
+                          ? "Selected historical update"
+                          : "Actualización histórica seleccionada"}
                   </strong>
                   <span>
                     {aggregate?.includedObservationIds.length ?? 0}{" "}
@@ -378,6 +382,12 @@ function ActiveCategory({
                         : "Cambios frente a la actualización del"}{" "}
                       {dateLabel(view.snapshot.previous.lockedAt, locale)}
                     </strong>
+                  ) : view.snapshot.comparisonLimited ? (
+                    <strong>
+                      {en
+                        ? "Movement comparison paused · a historical source lacks a verifiable date"
+                        : "Comparación de movimientos en pausa · falta una fecha verificable de una fuente histórica"}
+                    </strong>
                   ) : view.snapshot.methodologyChanged ? (
                     <strong>
                       {en
@@ -393,6 +403,17 @@ function ActiveCategory({
                   )}
                 </div>
               </div>
+              {view.snapshot.comparableProjection ? (
+                <p className="calculation-cut-note">
+                  {view.snapshot.comparisonDateIncomplete
+                    ? en
+                      ? "Known publication and capture dates use today’s 30-day limit. An undated historical source remains counted when its capture date cannot be verified, so movement comparison is paused. The original locked capture remains intact."
+                      : "Las fechas conocidas de publicación y captura usan el límite vigente de 30 días. Una fuente histórica sin fecha sigue contando si no se puede verificar su captura; por eso se pausa la comparación de movimientos. La captura bloqueada original sigue intacta."
+                    : en
+                      ? `This earlier ranking uses the same 30-day source limit as today. Expired predictions do not count.${category.id === "best-picture" ? " The Ringer’s old selection is excluded." : ""} The original locked capture and its source records remain intact.`
+                      : `Esta clasificación anterior usa el mismo límite de 30 días para las fuentes que se usa hoy. Las predicciones vencidas no cuentan.${category.id === "best-picture" ? " La antigua selección de The Ringer queda excluida." : ""} La captura bloqueada original y sus fuentes siguen intactas.`}
+                </p>
+              ) : null}
               {view.sourceFreshness.length ? (
                 <details className="source-freshness-panel">
                   <summary>

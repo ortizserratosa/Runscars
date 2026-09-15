@@ -1,7 +1,7 @@
 # Metodología
 
 **Estado:** agregación, snapshots y evaluación profesional operativos
-**Última revisión:** 2026-09-09
+**Última revisión:** 2026-09-15
 
 ## 1. Principios
 
@@ -236,7 +236,9 @@ fuente deja de aportar cobertura, puntos y posiciones al consenso. La
 publicación y sus observaciones se conservan como información adicional e
 histórica, y el conector puede seguir comprobándola para reactivar la fuente en
 cuanto publique una predicción nueva. La caducidad puede producir por sí misma
-un nuevo corte efectivo y nunca reinterpreta snapshots ya bloqueados.
+un nuevo corte efectivo. No altera snapshots ya bloqueados; la proyección pública
+de cortes históricos aplica la regla según la fecha de cada corte con publicación
+o captura fechada.
 
 ### 4.5 Variación durante la fase 6
 
@@ -267,12 +269,13 @@ Como la cadencia pública es diaria, varias envolventes bloqueadas en una misma
 fecha UTC se consolidan en el último estado del día antes de construir la
 navegación. Esto absorbe reintentos y ejecuciones manuales parciales: nunca se
 compara un corte público con otro de la misma fecha. Después se colapsan también
-los días consecutivos cuyo estado efectivo sea equivalente.
+los días consecutivos cuyo estado efectivo comparable sea equivalente.
 
 La página de una categoría compara el corte seleccionado con el corte real
-inmediatamente anterior del mismo alcance y versión metodológica. Los snapshots
-históricos consecutivos con el mismo estado efectivo se conservan inmutables,
-pero se colapsan en la navegación y no se usan como referencia de movimiento.
+inmediatamente anterior del mismo alcance y reglas públicas comparables. Los
+snapshots históricos consecutivos con el mismo estado efectivo proyectado se
+conservan inmutables, pero se colapsan en la navegación y no se usan como
+referencia de movimiento.
 La variación mantiene la fórmula
 `posición_anterior - posición_actual`: un valor positivo es una subida, uno
 negativo una bajada, cero indica estabilidad y una candidatura ausente en el
@@ -280,14 +283,26 @@ corte anterior aparece como nueva.
 
 La interfaz permite seleccionar cada corte real mediante una URL estable y
 muestra su instante y los proveedores que cambiaron. Si no existe un corte real
-anterior, no atribuye movimientos. La comparación se deriva al leer las
-envolventes inmutables; no modifica el payload ni el hash de ninguna de ellas.
+anterior, no atribuye movimientos. El selector y las ediciones semanales
+incluyen también los cortes bloqueados con versiones anteriores. Para comparar,
+se reconstruye al leer cada corte un agregado comparable con las fórmulas de
+`runscars-aggregation-v3` y el plazo de 30 días evaluado en la fecha de ese
+corte. No se usa la fecha de la visita. Así una fuente vencida deja de contar
+también en los cortes anteriores a la introducción de v3: The Ringer,
+publicada por última vez en marzo de 2026, no suma cobertura a los cortes
+posteriores a su vencimiento. Una publicación nueva puede reactivarla sin borrar
+su historial. El agregado v2 bloqueado no conserva la fecha de captura por
+fuente: cuando falta la de publicación, la proyección la consulta en las
+observaciones originales persistidas. Si esa evidencia no puede recuperarse,
+conserva el voto bloqueado y evita atribuir movimientos entre ese corte y
+cualquier otro, incluso dentro de v2 o en una edición semanal.
 
-El selector y las ediciones semanales incluyen también los cortes de versiones
-metodológicas anteriores. Cada uno muestra el agregado que se bloqueó entonces,
-sin aplicarle retroactivamente la caducidad actual. Al cruzar una versión se
-indica el cambio de método y no se calculan movimientos entre reglas distintas;
-las comparaciones dentro de cada versión siguen disponibles.
+La vista identifica este agregado como comparación con reglas actuales y
+conserva la versión, payload y hash originales del snapshot para auditoría. Dos
+cortes bloqueados con métodos iguales o distintos pueden mostrar movimiento si
+ambos agregados de lectura usan las fórmulas v3, comparten temporada, categoría
+e intención y cuentan con fechas suficientes. La proyección no altera ninguna
+envolvente inmutable ni los resultados usados para evaluaciones oficiales.
 
 Los mercados no forman parte de esta identidad: Kalshi y Polymarket mantienen
 su cadencia y evolución append-only separadas y nunca provocan un corte Borda.
@@ -491,7 +506,8 @@ El dataset capturado el 2026-07-24 fija estas reglas iniciales:
   internamente. El orden debe poder explicar el valor completo y el desempate.
 
 Estas calibraciones pueden revisarse con una nueva decisión si aumenta la
-cobertura. No se reinterpretan snapshots ya bloqueados.
+cobertura. No se modifican snapshots ya bloqueados; D-061 aplica la frescura en
+su fecha a la serie pública comparable derivada de ellos.
 
 ## 13. Ediciones semanales
 
@@ -500,7 +516,7 @@ Para cada categoría se selecciona el último corte real anterior al final y,
 como referencia, el último anterior al inicio. El movimiento es la posición
 anterior menos la final; una incorporación sin posición anterior se etiqueta
 como nueva. Si no hay referencia comparable en temporada, categoría, intención
-y método, no se calcula movimiento.
+y reglas públicas de lectura, no se calcula movimiento.
 
 El resumen muestra los tres mayores movimientos por valor absoluto, con posición
 final como desempate, y las fuentes que tuvieron cambios efectivos durante la

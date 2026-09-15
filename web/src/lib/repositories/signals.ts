@@ -9,6 +9,7 @@ import {
   buildRealProviderCuts,
   type SnapshotHistoryEntry,
 } from "../snapshots/provider-cuts";
+import { loadCaptureDatesForHistory } from "../snapshots/capture-dates";
 import { isSupabaseConfigured } from "../environment";
 import { createSupabaseServerClient } from "../supabase/server";
 import {
@@ -83,6 +84,7 @@ function snapshotEntry(row: SnapshotRow): SnapshotHistoryEntry | null {
 function currentViewsFromRows(
   rows: SnapshotRow[],
   pointerByCategory: Map<string, string>,
+  captureDates: ReadonlyMap<string, string>,
 ): CurrentCategoryPredictionView[] {
   return PUBLIC_CATEGORIES.flatMap((category) => {
     const pointerId = pointerByCategory.get(category.id);
@@ -98,7 +100,7 @@ function currentViewsFromRows(
         const entry = snapshotEntry(row);
         return entry ? [entry] : [];
       });
-    const cuts = buildRealProviderCuts(history);
+    const cuts = buildRealProviderCuts(history, captureDates);
     const current = cuts.at(-1);
     if (!current) return [];
     const previous = cuts.at(-2) ?? null;
@@ -121,6 +123,8 @@ function currentViewsFromRows(
         aggregate: compareSnapshotMovements(
           current.aggregate,
           previous &&
+            !current.comparisonDateIncomplete &&
+            !previous.comparisonDateIncomplete &&
             canCompareSnapshotMovements(current.aggregate, previous.aggregate)
             ? previous.aggregate
             : null,
@@ -188,10 +192,15 @@ async function databaseCurrentPredictions(): Promise<
     .order("locked_at", { ascending: true })
     .order("id", { ascending: true });
   if (historyResult.error) throw new Error(historyResult.error.message);
-  return currentViewsFromRows(
-    (historyResult.data ?? []) as SnapshotRow[],
-    pointerByCategory,
+  const rows = (historyResult.data ?? []) as SnapshotRow[];
+  const captureDates = await loadCaptureDatesForHistory(
+    supabase,
+    rows.flatMap((row) => {
+      const entry = snapshotEntry(row);
+      return entry ? [entry] : [];
+    }),
   );
+  return currentViewsFromRows(rows, pointerByCategory, captureDates);
 }
 
 const cachedCurrentPredictions = unstable_cache(

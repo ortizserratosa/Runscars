@@ -1,7 +1,7 @@
 # Registro de fuentes
 
 **Estado:** fuentes públicas y circuito festivalero 2026 versionados
-**Última revisión:** 2026-09-03
+**Última revisión:** 2026-09-15
 
 ## 1. Objetivo
 
@@ -57,6 +57,11 @@ aunque sigue disponible como evidencia adicional. El conector continúa sus
 comprobaciones periódicas: una nueva predicción fechada permite que la fuente
 vuelva a participar sin perder el historial. The Ringer queda actualmente en
 esta situación porque su última predicción conocida es de marzo de 2026.
+La serie pública histórica comprueba el mismo plazo en la fecha de cada corte,
+usando la captura original si falta la fecha de publicación. Por eso la selección
+ya vencida de The Ringer tampoco suma cobertura en los cortes v2 posteriores a
+marzo. La fuente conserva sus observaciones originales y podrá volver a
+participar si publica una predicción nueva.
 
 El índice público no enumera candidatas sin datos: muestra fuentes presentes en
 el corte profesional vigente o con observaciones críticas publicadas. La ficha

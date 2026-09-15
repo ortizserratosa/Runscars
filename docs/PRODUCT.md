@@ -1,7 +1,7 @@
 # Contrato de producto
 
 **Estado:** contrato aceptado para el MVP
-**Última revisión:** 2026-09-09
+**Última revisión:** 2026-09-15
 
 ## 1. Visión
 
@@ -154,9 +154,10 @@ no forman parte de la identidad de la candidatura.
 - Una predicción con más de 30 días de antigüedad se conserva como información
   adicional, pero no participa en el consenso hasta que la fuente publique una
   actualización.
-- En el corte 7.1, cada categoría pública requiere cuatro rankings ordenados
-  automáticos independientes; Mejor película incorpora además The Ringer como
-  selección y alcanza seis medios automáticos.
+- En el corte 7.1 se bloquearon rankings con al menos cuatro fuentes ordenadas
+  automáticas independientes; Mejor película registró además la selección de
+  The Ringer. Su predicción de marzo de 2026 ya había vencido en los cortes
+  públicos posteriores y no cuenta en la serie histórica comparable.
 
 ### Actualización y snapshots
 
@@ -165,11 +166,16 @@ no forman parte de la identidad de la candidatura.
   superficie efectiva de al menos un proveedor profesional.
 - Las ejecuciones de una misma fecha UTC se consolidan en su último estado; no
   producen comparaciones intradía ni dos cortes públicos con la misma fecha.
-- Selector de cortes reales por categoría; cada corte reproduce su ranking y se
-  compara con la actualización efectiva inmediatamente anterior.
+- Selector de cortes reales por categoría; cada corte presenta un ranking
+  comparable que aplica la misma regla de frescura de 30 días en su fecha y se
+  compara con la actualización efectiva anterior.
 - El historial conserva los cortes y semanas de versiones metodológicas
-  anteriores. En una transición se muestra el cambio de método sin atribuir
-  movimientos a la comparación de reglas distintas.
+  anteriores. Los snapshots originales y sus hashes permanecen intactos; la
+  lectura pública puede calcular movimientos entre cortes bloqueados con v2 o
+  v3 cuando ambos rankings comparables usan las fórmulas v3, comparten alcance y
+  se recuperan las fechas necesarias. Si falta una fecha de publicación, se
+  consulta la captura de la observación original; un corte sin esa evidencia no
+  muestra movimientos frente a ningún otro, ni en la edición semanal.
 - La interfaz distingue la fecha de publicación del proveedor, la fecha del
   último cambio efectivo y la última comprobación correcta del conector.
 - Snapshot final de predicción de nominaciones.

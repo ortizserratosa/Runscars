@@ -1,6 +1,6 @@
 # Registro de decisiones
 
-**Última revisión:** 2026-09-09
+**Última revisión:** 2026-09-15
 
 ## Cómo usar este registro
 
@@ -78,6 +78,7 @@ pasado para ocultar cambios de criterio.
 | D-058 | Descubrimiento, edición semanal y quiniela antes del acceso     | Aceptada    |
 | D-059 | Caducidad mensual de predicciones profesionales                | Aceptada    |
 | D-060 | Despliegue por defecto de cambios verificados                   | Aceptada    |
+| D-061 | Cortes históricos comparables con frescura uniforme             | Aceptada    |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -1123,3 +1124,41 @@ ejemplos manuales de nominaciones y ganador coincidieron con
   pública del resultado. No se solicita una confirmación adicional de despliegue.
 - **Operación:** mantiene las copias de seguridad, trazabilidad, privacidad de
   secretos y verificaciones de `AGENTS.md` y `OPERATIONS.md`.
+
+## D-061 · Cortes históricos comparables con frescura uniforme
+
+- **Fecha:** 2026-09-15
+- **Estado:** Aceptada
+- **Origen:** petición explícita del usuario de que una fuente que dejó de
+  participar tampoco cuente en los cortes anteriores que se comparan con el
+  consenso vigente.
+- **Decisión:** la serie pública de cortes y las ediciones semanales aplican la
+  regla de frescura de 30 días de D-059 en cada fecha histórica, también a los
+  snapshots bloqueados con `runscars-aggregation-v2`. Cuando falta la fecha de
+  publicación, consulta la fecha de captura de las observaciones persistidas.
+  El agregado comparable se deriva de las listas y contribuciones bloqueadas
+  con las fórmulas de `runscars-aggregation-v3`;
+  cobertura, Borda, posiciones, fuentes que cambiaron y movimientos se calculan
+  desde esa misma proyección. The Ringer,
+  cuya selección de Mejor película conocida se publicó en marzo de 2026, queda
+  excluido de los cortes posteriores a su vencimiento, incluidos los cortes v2
+  anteriores a D-059. No es una exclusión permanente: una nueva predicción
+  fechada puede volver a participar conforme a D-059.
+- **Comparación:** el movimiento entre dos cortes es válido cuando ambos
+  agregados públicos usan las mismas reglas v3, comparten temporada, categoría e
+  intención y se han recuperado las fechas necesarias. Esto incluye pares v2/v2
+  y v2/v3. Cada fuente se evalúa respecto a la fecha del corte, no respecto a la
+  fecha en que un visitante consulta el historial.
+- **Límite de evidencia:** el agregado v2 bloqueado conserva la fecha de
+  publicación, pero no la de captura de cada fuente. Si falta la primera, la
+  lectura recupera la captura desde las observaciones originales. Si tampoco se
+  obtiene esa evidencia, conserva el voto bloqueado de forma conservadora y no
+  atribuye movimientos entre ese corte y ningún otro, también en la edición
+  semanal, porque podrían usarse denominadores distintos.
+- **Inmutabilidad:** esta proyección de lectura no modifica observaciones,
+  envolventes, método bloqueado ni hashes. Los originales v1/v2/v3 permanecen
+  reproducibles para auditoría y evaluación oficial; la vista pública debe
+  distinguir el agregado comparable del contenido bloqueado original.
+- **Matiza:** la presentación histórica y la prohibición de movimientos entre
+  métodos bloqueados de D-059. Mantiene la caducidad, reactivación y protección
+  de los snapshots originales de esa decisión.

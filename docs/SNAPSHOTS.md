@@ -1,14 +1,15 @@
 # Snapshots y evaluación · fase 7
 
 **Estado:** fase 7 completada; ampliación v2 integrada en staging
-**Última revisión:** 2026-08-10
+**Última revisión:** 2026-09-15
 
 ## Objetivo
 
 Conservar el estado exacto de una predicción en un instante y compararlo después
-con resultados oficiales sin recalcular el pasado. La fase añade persistencia,
-automatización y evaluación, pero no inventa nominaciones ni ganadores para la
-temporada activa.
+con resultados oficiales sin recalcular el snapshot bloqueado. La fase añade
+persistencia, automatización y evaluación, pero no inventa nominaciones ni
+ganadores para la temporada activa. La serie pública comparable puede recalcular
+la lectura histórica sin alterar ese estado original.
 
 ## Contrato persistido
 
@@ -79,8 +80,17 @@ diarios consecutivos distintos. El visitante puede seleccionar un corte real y
 la variación se calcula contra el corte real anterior, aunque entre ambos
 existan ejecuciones históricas redundantes o varios reintentos el mismo día.
 El selector conserva todas las versiones metodológicas compatibles con la
-envolvente v2. Cada corte muestra su agregado original; si el anterior usa otro
-método, se informa de la transición sin calcular movimientos entre ambos.
+envolvente v2. Desde D-061, la clasificación pública de cada corte periódico se
+deriva de las listas bloqueadas con la frescura de 30 días de v3, incluso cuando
+su envolvente se bloqueó con v2. Si una fuente carece de fecha de publicación,
+la lectura consulta la captura de sus observaciones originales persistidas. Los
+cambios efectivos y movimientos se leen de esa serie proyectada y se pueden
+comparar entre cortes del mismo alcance cuando las fechas se recuperan, incluso
+en pares v2/v2 o v2/v3. Si una captura necesaria tampoco está disponible, se
+conserva el voto bloqueado y no se atribuyen movimientos entre ese corte y otro,
+tampoco en la edición semanal.
+El agregado original, su versión y hash permanecen intactos y reproducibles;
+la proyección de lectura no se usa para alterar cierres finales ni resultados.
 
 Las ocho programaciones cubren Oscar 2027 y predicción de nominaciones. Si no
 existen observaciones de fuentes aprobadas para publicación,

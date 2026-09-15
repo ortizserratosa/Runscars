@@ -1,4 +1,8 @@
 import type { PredictionAggregateV2 } from "../aggregation/v2";
+import {
+  hasIncompleteComparisonDates,
+  projectComparableAggregate,
+} from "./comparable-projection";
 
 export type SnapshotHistoryEntry = {
   id: string;
@@ -11,6 +15,8 @@ export type SnapshotHistoryEntry = {
 
 export type RealProviderCut = SnapshotHistoryEntry & {
   changedSourceIds: string[];
+  comparableProjection: boolean;
+  comparisonDateIncomplete: boolean;
 };
 
 type ProviderEntryState = {
@@ -125,13 +131,36 @@ export function hasEffectiveProviderChanges(
 
 export function buildRealProviderCuts(
   snapshots: SnapshotHistoryEntry[],
+  captureDates: ReadonlyMap<string, string> = new Map(),
 ): RealProviderCut[] {
-  const ordered = [...snapshots].sort(
-    (left, right) =>
-      Date.parse(left.lockedAt) - Date.parse(right.lockedAt) ||
-      left.id.localeCompare(right.id, "en"),
-  );
-  const latestByUtcDay = new Map<string, SnapshotHistoryEntry>();
+  const ordered = snapshots
+    .map((snapshot) => {
+      const aggregate = projectComparableAggregate(
+        snapshot.aggregate,
+        captureDates,
+      );
+      return {
+        ...snapshot,
+        aggregate,
+        comparableProjection: aggregate !== snapshot.aggregate,
+        comparisonDateIncomplete: hasIncompleteComparisonDates(
+          snapshot.aggregate,
+          captureDates,
+        ),
+      };
+    })
+    .sort(
+      (left, right) =>
+        Date.parse(left.lockedAt) - Date.parse(right.lockedAt) ||
+        left.id.localeCompare(right.id, "en"),
+    );
+  const latestByUtcDay = new Map<
+    string,
+    SnapshotHistoryEntry & {
+      comparableProjection: boolean;
+      comparisonDateIncomplete: boolean;
+    }
+  >();
   for (const snapshot of ordered) {
     latestByUtcDay.set(
       new Date(snapshot.lockedAt).toISOString().slice(0, 10),
