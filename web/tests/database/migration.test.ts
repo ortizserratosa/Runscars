@@ -121,7 +121,7 @@ describe("versioned database foundation", () => {
       where id = 'awards-daily-predictions'
     `);
     expect(awardsDaily.rows[0]).toEqual({
-      extractor_version: "awards-daily-v6",
+      extractor_version: "awards-daily-v7",
       endpoint_url:
         "https://www.awardsdaily.com/wp-json/wp/v2/search?search=2027%20Oscar%20Predictions&per_page=20&_fields=id,url,title,subtype",
     });

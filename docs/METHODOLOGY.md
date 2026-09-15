@@ -283,6 +283,12 @@ muestra su instante y los proveedores que cambiaron. Si no existe un corte real
 anterior, no atribuye movimientos. La comparación se deriva al leer las
 envolventes inmutables; no modifica el payload ni el hash de ninguna de ellas.
 
+El selector y las ediciones semanales incluyen también los cortes de versiones
+metodológicas anteriores. Cada uno muestra el agregado que se bloqueó entonces,
+sin aplicarle retroactivamente la caducidad actual. Al cruzar una versión se
+indica el cambio de método y no se calculan movimientos entre reglas distintas;
+las comparaciones dentro de cada versión siguen disponibles.
+
 Los mercados no forman parte de esta identidad: Kalshi y Polymarket mantienen
 su cadencia y evolución append-only separadas y nunca provocan un corte Borda.
 

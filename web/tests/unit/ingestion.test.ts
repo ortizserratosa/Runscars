@@ -507,7 +507,7 @@ describe("professional ingestion adapters", () => {
         observation.categoryId === "best-picture",
     );
 
-    expect(batch.extractorVersion).toBe("awards-daily-v6");
+    expect(batch.extractorVersion).toBe("awards-daily-v7");
     expect(
       bestPicture.map(
         (observation: {
@@ -556,7 +556,7 @@ describe("professional ingestion adapters", () => {
       },
     );
 
-    expect(batch.extractorVersion).toBe("awards-daily-v6");
+    expect(batch.extractorVersion).toBe("awards-daily-v7");
     expect(
       batch.publications[0].observations.map(
         (observation: { originalValue: { raw: string } }) =>
@@ -564,6 +564,61 @@ describe("professional ingestion adapters", () => {
       ),
     ).toEqual(["The Odyssey", "Digger", "Matt Damon, The Odyssey"]);
   });
+
+  it.each(["Los Javis", "Javis", "Javiers", "Los Jovis"])(
+    "matches %s to the same joint directing candidacy with original evidence intact",
+    async (alias) => {
+      const parse = (name: string) =>
+        parseAwardsDailyFixture(
+          `<h1>2027 Oscar Predictions</h1><p>Best Picture<br />La Bola Negra</p>
+         <p>Director<br />${name}, La Bola Negra</p>`,
+          {
+            connectorId: "awards-daily-predictions",
+            capturedAt,
+            endpointUrl: "https://www.awardsdaily.com/2026/09/11/predictions/",
+            seasonId: "oscars-2027",
+          },
+        );
+      const identities = [
+        {
+          id: "la-bola-negra",
+          title: "La Bola Negra",
+          alternate_titles: [],
+          credits: ["Javier Ambrossi", "Javier Calvo"].map((name, index) => ({
+            role: "Director",
+            department: "Directing",
+            billingOrder: index,
+            person: { id: `director-${index}`, name, alternate_names: [] },
+          })),
+        },
+      ];
+      const batch = parse(alias);
+      const prepared = await prepareBatch(batch, identities);
+      const explicit = await prepareBatch(
+        parse("Javier Ambrossi and Javier Calvo"),
+        identities,
+      );
+      const directing = prepared.publications[0].observations[1];
+      expect(directing.review).toBeNull();
+      expect(directing.candidate.id).toBe(
+        explicit.publications[0].observations[1].candidate.id,
+      );
+      expect(
+        directing.candidate.people.map(
+          (person: { name: string }) => person.name,
+        ),
+      ).toEqual(["Javier Ambrossi", "Javier Calvo"]);
+      expect(batch.publications[0].observations[1].originalValue.raw).toBe(
+        `${alias}, La Bola Negra`,
+      );
+      expect(await prepareBatch(batch, identities)).toEqual(prepared);
+      const unknown = await prepareBatch(parse("Los Otros"), identities);
+      expect(unknown.publications[0].observations[1].candidate).toBeNull();
+      expect(unknown.publications[0].observations[1].review.kind).toBe(
+        "person_match",
+      );
+    },
+  );
 
   it("normalizes verified source spellings without changing raw values", () => {
     const batch = parseAwardsDailyFixture(

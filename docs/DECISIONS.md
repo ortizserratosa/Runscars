@@ -77,6 +77,7 @@ pasado para ocultar cambios de criterio.
 | D-057 | Guía de festivales y lenguaje público orientado al visitante     | Aceptada    |
 | D-058 | Descubrimiento, edición semanal y quiniela antes del acceso     | Aceptada    |
 | D-059 | Caducidad mensual de predicciones profesionales                | Aceptada    |
+| D-060 | Despliegue por defecto de cambios verificados                   | Aceptada    |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -1104,5 +1105,21 @@ ejemplos manuales de nominaciones y ganador coincidieron con
   2026, pero seguirá comprobándose periódicamente.
 - **Versionado:** la regla entra en `runscars-aggregation-v3`; v2 continúa
   describiendo los snapshots históricos que incluían fuentes sin caducidad.
+- **Corrección de lectura (2026-09-15):** el historial y las ediciones semanales
+  siguen mostrando los cortes v2. El cambio a v3 no inicia una temporada nueva
+  ni oculta semanas ya capturadas. La interfaz identifica la transición y evita
+  comparar posiciones entre métodos distintos.
 - **Reemplaza:** únicamente la ventana de 45 días y el aviso no excluyente de
   D-013; mantiene sus reglas de deduplicación y umbral crítico.
+
+## D-060 · Despliegue por defecto de cambios verificados
+
+- **Fecha:** 2026-09-15
+- **Estado:** Aceptada
+- **Origen:** petición explícita del usuario de desplegar siempre salvo que
+  indique lo contrario.
+- **Decisión:** cada encargo incluye el despliegue de sus cambios terminados y
+  verificados, las migraciones e importaciones necesarias y la comprobación
+  pública del resultado. No se solicita una confirmación adicional de despliegue.
+- **Operación:** mantiene las copias de seguridad, trazabilidad, privacidad de
+  secretos y verificaciones de `AGENTS.md` y `OPERATIONS.md`.

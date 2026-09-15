@@ -378,6 +378,12 @@ function ActiveCategory({
                         : "Cambios frente a la actualización del"}{" "}
                       {dateLabel(view.snapshot.previous.lockedAt, locale)}
                     </strong>
+                  ) : view.snapshot.methodologyChanged ? (
+                    <strong>
+                      {en
+                        ? "Consensus rules changed · earlier updates remain in the history"
+                        : "Cambió el método de consenso · las actualizaciones anteriores siguen en el historial"}
+                    </strong>
                   ) : (
                     <strong>
                       {en

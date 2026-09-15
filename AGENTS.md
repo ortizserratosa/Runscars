@@ -70,6 +70,10 @@ No presentar como cerrada una decisión marcada `Propuesta`.
 - No iniciar la fase siguiente hasta cumplir la puerta de salida de la actual.
 - Usar datos de prueba reproducibles. No hacer que las pruebas dependan de TMDB o
   de webs externas en tiempo real.
+- Desplegar en producción los cambios terminados y verificados como parte de
+  cada encargo, salvo que el usuario indique expresamente que no se despliegue.
+  Incluir las migraciones, funciones e importaciones necesarias y comprobar el
+  resultado público siguiendo `docs/OPERATIONS.md`.
 
 ## Datos externos y secretos
 

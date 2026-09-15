@@ -78,6 +78,9 @@ La web conserva todos los snapshots inmutables. Para navegación toma primero la
 diarios consecutivos distintos. El visitante puede seleccionar un corte real y
 la variación se calcula contra el corte real anterior, aunque entre ambos
 existan ejecuciones históricas redundantes o varios reintentos el mismo día.
+El selector conserva todas las versiones metodológicas compatibles con la
+envolvente v2. Cada corte muestra su agregado original; si el anterior usa otro
+método, se informa de la transición sin calcular movimientos entre ambos.
 
 Las ocho programaciones cubren Oscar 2027 y predicción de nominaciones. Si no
 existen observaciones de fuentes aprobadas para publicación,

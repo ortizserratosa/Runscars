@@ -1,7 +1,10 @@
 import "server-only";
 import { unstable_cache } from "next/cache";
 import type { PredictionAggregateV2 } from "../aggregation/v2";
-import { compareSnapshotMovements } from "../snapshots/movements";
+import {
+  canCompareSnapshotMovements,
+  compareSnapshotMovements,
+} from "../snapshots/movements";
 import {
   buildRealProviderCuts,
   type SnapshotHistoryEntry,
@@ -89,7 +92,6 @@ function currentViewsFromRows(
       .filter(
         (row) =>
           row.category_id === category.id &&
-          row.method_version === pointer.method_version &&
           Date.parse(row.locked_at) <= Date.parse(pointer.locked_at),
       )
       .flatMap((row) => {
@@ -118,7 +120,10 @@ function currentViewsFromRows(
         sourceLastChangedAt,
         aggregate: compareSnapshotMovements(
           current.aggregate,
-          previous?.aggregate ?? null,
+          previous &&
+            canCompareSnapshotMovements(current.aggregate, previous.aggregate)
+            ? previous.aggregate
+            : null,
         ),
       },
     ];

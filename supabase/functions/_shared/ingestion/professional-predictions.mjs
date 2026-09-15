@@ -340,7 +340,9 @@ function updatedPredictionDate(lines) {
 }
 
 function peopleFromText(value) {
-  if (/^(?:(?:The\s+)?Javiers|Los\s+Jovis)$/i.test(value.trim())) {
+  if (
+    /^(?:(?:The\s+)?Javiers|(?:Los\s+)?Javis|Los\s+Jovis)$/i.test(value.trim())
+  ) {
     return ["Javier Ambrossi", "Javier Calvo"];
   }
   return value
@@ -619,7 +621,7 @@ export function parseAwardsDailyFixture(
   return buildBatch({
     connectorId,
     sourceId: "awards-daily",
-    extractorVersion: "awards-daily-v6",
+    extractorVersion: "awards-daily-v7",
     seasonId,
     capturedAt,
     sourceUrl: publication.canonicalUrl,

@@ -59,6 +59,36 @@ test("shows movement against the immediately previous real cut", async ({
   ).toBeVisible();
 });
 
+test("keeps a maximum consensus score clear of its meter", async ({ page }) => {
+  for (const lang of ["es", "en"]) {
+    await page.goto(`/temporadas/2027/mejor-pelicula?lang=${lang}`);
+    const cell = page.locator(".points-cell").first();
+    // Exercise the 100-point boundary independently of the fixture's ranking.
+    await cell.evaluate(
+      (element, value) => {
+        element.querySelector("strong")!.textContent = value;
+        (element.querySelector(".micro-bar span") as HTMLElement).style.width =
+          "100%";
+      },
+      lang === "en" ? "100.0" : "100,0",
+    );
+    const geometry = await cell.evaluate((element) => {
+      const range = document.createRange();
+      range.selectNodeContents(element.querySelector("strong")!);
+      const text = range.getBoundingClientRect();
+      const meter = element
+        .querySelector(".micro-bar")!
+        .getBoundingClientRect();
+      const box = element.getBoundingClientRect();
+      return {
+        fits: text.left >= box.left && text.right <= box.right,
+        separated: text.right <= meter.left || text.bottom <= meter.top,
+      };
+    });
+    expect(geometry).toEqual({ fits: true, separated: true });
+  }
+});
+
 test("selects a real provider cut through a stable URL", async ({ page }) => {
   await page.goto("/temporadas/2027/mejor-pelicula");
   await page.locator(".snapshot-history > summary").click();

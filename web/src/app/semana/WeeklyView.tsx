@@ -70,22 +70,20 @@ export async function WeeklyView({
         className="weekly-archive"
         aria-label={en ? "Weekly editions" : "Ediciones semanales"}
       >
-        {[...new Set([weekStart(new Date()), ...weeks])]
-          .slice(0, 8)
-          .map((date) => (
-            <Link
-              prefetch={false}
-              aria-current={date === week ? "page" : undefined}
-              href={href(`/semana/${date}`)}
-              key={date}
-            >
-              {new Intl.DateTimeFormat(locale, {
-                day: "numeric",
-                month: "short",
-                timeZone: "UTC",
-              }).format(new Date(`${date}T12:00:00Z`))}
-            </Link>
-          ))}
+        {[...new Set([weekStart(new Date()), ...weeks])].map((date) => (
+          <Link
+            prefetch={false}
+            aria-current={date === week ? "page" : undefined}
+            href={href(`/semana/${date}`)}
+            key={date}
+          >
+            {new Intl.DateTimeFormat(locale, {
+              day: "numeric",
+              month: "short",
+              timeZone: "UTC",
+            }).format(new Date(`${date}T12:00:00Z`))}
+          </Link>
+        ))}
       </nav>
       {!report.changes ? (
         <p className="weekly-quiet">
@@ -163,9 +161,13 @@ export async function WeeklyView({
                   )
                 ) : (
                   <p>
-                    {en
-                      ? "The first recorded rankings are now available."
-                      : "Ya están disponibles las primeras clasificaciones registradas."}
+                    {item.methodologyChanged
+                      ? en
+                        ? "Consensus rules changed this week. Earlier rankings remain available in the history."
+                        : "El método de consenso cambió esta semana. Las clasificaciones anteriores siguen disponibles en el historial."
+                      : en
+                        ? "The first recorded rankings are now available."
+                        : "Ya están disponibles las primeras clasificaciones registradas."}
                   </p>
                 )}
                 {item.sources.length ? (

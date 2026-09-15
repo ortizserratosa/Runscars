@@ -9,7 +9,10 @@ import {
 import type { PredictionAggregateV2 } from "../aggregation/v2";
 import { isSupabaseConfigured } from "../environment";
 import { selectMarketSignals } from "../markets/presentation";
-import { compareSnapshotMovements } from "../snapshots/movements";
+import {
+  canCompareSnapshotMovements,
+  compareSnapshotMovements,
+} from "../snapshots/movements";
 import {
   sourceFreshnessForCut,
   type ConnectorFreshnessState,
@@ -46,6 +49,7 @@ export type ActiveCategoryView = {
     contentHash: string;
     lockedAt: string;
     isLatest: boolean;
+    methodologyChanged: boolean;
     previous: {
       id: string;
       lockedAt: string;
@@ -117,6 +121,12 @@ function activeViewFromHistory({
     requestedIndex >= 0 ? requestedIndex : Math.max(0, cuts.length - 1);
   const selected = cuts[selectedIndex] ?? null;
   const previous = selectedIndex > 0 ? cuts[selectedIndex - 1] : null;
+  const comparablePrevious =
+    selected &&
+    previous &&
+    canCompareSnapshotMovements(selected.aggregate, previous.aggregate)
+      ? previous
+      : null;
   const latest = cuts.at(-1) ?? null;
   const sourceNames = new Map(
     cuts.flatMap((cut) =>
@@ -132,7 +142,7 @@ function activeViewFromHistory({
     aggregate: selected
       ? compareSnapshotMovements(
           selected.aggregate,
-          previous?.aggregate ?? null,
+          comparablePrevious?.aggregate ?? null,
         )
       : null,
     markets,
@@ -148,10 +158,11 @@ function activeViewFromHistory({
           contentHash: selected.contentHash,
           lockedAt: selected.lockedAt,
           isLatest: selected.id === latest?.id,
-          previous: previous
+          methodologyChanged: Boolean(previous && !comparablePrevious),
+          previous: comparablePrevious
             ? {
-                id: previous.id,
-                lockedAt: previous.lockedAt,
+                id: comparablePrevious.id,
+                lockedAt: comparablePrevious.lockedAt,
               }
             : null,
           cuts: [...cuts].reverse().map((cut) => ({
@@ -398,7 +409,6 @@ async function activeCategoryFromDatabase(
     .eq("category_id", categoryId)
     .eq("prediction_intention", "nomination")
     .eq("kind", "periodic")
-    .eq("method_version", row.method_version)
     .eq("schema_version", "runscars-snapshot-v2")
     .lte("locked_at", row.locked_at)
     .order("locked_at", { ascending: true })

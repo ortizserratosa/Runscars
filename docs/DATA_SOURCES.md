@@ -286,7 +286,15 @@ Ese mantenimiento elevó Awards Radar a `awards-radar-v5`: corrige
 interpreta `Película principal (or Alternativa)` como una única candidatura a
 la película principal. La alternativa y la errata siguen visibles en `raw`.
 
-La revisión v5 captura el top publicado completo por tarjetas y rechaza una
+El mantenimiento del 2026-09-15 eleva Awards Daily a `awards-daily-v7`: resuelve
+`Los Javis` y `Javis` como Javier Ambrossi y Javier Calvo, conservando las variantes
+anteriores y el texto original. La variante `Los Javis, La Bola Negra` consta en
+[la predicción del 11 de septiembre](https://www.awardsdaily.com/2026/09/11/2027-oscar-predictions-a-muted-festival-season-as-the-odyssey-and-project-hail-mary-light-the-way/).
+El emparejamiento sigue exigiendo créditos inequívocos de ambas personas en la
+película. La nueva versión permite reimportar la publicación sin modificar las
+observaciones ni los snapshots bloqueados anteriores.
+
+La revisión v5 de Awards Radar captura el top publicado completo por tarjetas y rechaza una
 categoría si sus puestos no son enteros, únicos y consecutivos desde 1. No
 rellena un hueco del top con una posición 11 o posterior.
 

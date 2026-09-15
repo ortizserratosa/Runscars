@@ -648,6 +648,7 @@ dd {
 
 .points-cell {
   grid-area: points;
+  grid-template-columns: max-content minmax(0, 1fr);
   min-height: 58px;
   border: var(--keyline);
   border-radius: var(--radius-xs);
@@ -656,6 +657,7 @@ dd {
 }
 
 .points-cell strong {
+  white-space: nowrap;
   font-size: 1.55rem;
   font-style: normal;
   font-variation-settings: "opsz" 72;
@@ -987,7 +989,7 @@ dd {
     grid-template-areas:
       "rank title points"
       "rank coverage movement";
-    grid-template-columns: 52px minmax(0, 1fr) 76px;
+    grid-template-columns: 52px minmax(0, 1fr) 92px;
     min-height: 112px;
     gap: 0.45rem 0.65rem;
     padding: 0.65rem;

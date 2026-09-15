@@ -3,6 +3,7 @@ import { cache } from "react";
 import { PUBLIC_CATEGORIES } from "../categories/config";
 import { getCategoryView, type ActiveCategoryView } from "../categories/data";
 import { weekStart, WEEK_MS, weeklyMovements } from "./weekly";
+import { canCompareSnapshotMovements } from "../snapshots/movements";
 
 const getCurrentViews = cache(async () =>
   Promise.all(
@@ -24,8 +25,7 @@ export const listDigestWeeks = cache(async () => {
     ),
   ]
     .sort()
-    .reverse()
-    .slice(0, 12);
+    .reverse();
 });
 export const getWeeklyReport = cache(async (week: string) => {
   const start = new Date(`${week}T00:00:00Z`).getTime();
@@ -65,7 +65,16 @@ export const getWeeklyReport = cache(async (week: string) => {
               previous?.aggregate ?? null,
             ).slice(0, 3)
           : [],
-        hasBaseline: Boolean(previous?.aggregate),
+        methodologyChanged: Boolean(
+          current?.aggregate &&
+          previous?.aggregate &&
+          !canCompareSnapshotMovements(current.aggregate, previous.aggregate),
+        ),
+        hasBaseline: Boolean(
+          current?.aggregate &&
+          previous?.aggregate &&
+          canCompareSnapshotMovements(current.aggregate, previous.aggregate),
+        ),
       };
     }),
   );

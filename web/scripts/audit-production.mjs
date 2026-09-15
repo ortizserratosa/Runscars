@@ -60,7 +60,7 @@ const predictionConnectors = [
     id: "awards-daily-predictions",
     endpoint_url:
       "https://www.awardsdaily.com/wp-json/wp/v2/search?search=2027%20Oscar%20Predictions&per_page=20&_fields=id,url,title,subtype",
-    extractor_version: "awards-daily-v6",
+    extractor_version: "awards-daily-v7",
     configuration: {
       season_id: "oscars-2027",
       ceremony_year: 2027,

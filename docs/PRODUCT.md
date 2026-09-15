@@ -167,6 +167,9 @@ no forman parte de la identidad de la candidatura.
   producen comparaciones intradía ni dos cortes públicos con la misma fecha.
 - Selector de cortes reales por categoría; cada corte reproduce su ranking y se
   compara con la actualización efectiva inmediatamente anterior.
+- El historial conserva los cortes y semanas de versiones metodológicas
+  anteriores. En una transición se muestra el cambio de método sin atribuir
+  movimientos a la comparación de reglas distintas.
 - La interfaz distingue la fecha de publicación del proveedor, la fecha del
   último cambio efectivo y la última comprobación correcta del conector.
 - Snapshot final de predicción de nominaciones.

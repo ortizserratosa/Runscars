@@ -1,6 +1,6 @@
 import type { PredictionAggregateV2 } from "../aggregation/v2";
 
-function sameScope(
+export function canCompareSnapshotMovements(
   current: PredictionAggregateV2,
   previous: PredictionAggregateV2,
 ) {
@@ -16,8 +16,16 @@ export function compareSnapshotMovements(
   current: PredictionAggregateV2,
   previous: PredictionAggregateV2 | null,
 ): PredictionAggregateV2 {
-  if (!previous) return current;
-  if (!sameScope(current, previous)) {
+  if (!previous) {
+    return {
+      ...current,
+      ranking: current.ranking.map((candidate) => ({
+        ...candidate,
+        movement: null,
+      })),
+    };
+  }
+  if (!canCompareSnapshotMovements(current, previous)) {
     throw new Error(
       "No se pueden comparar snapshots de alcance o metodología distintos",
     );
