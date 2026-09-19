@@ -675,7 +675,9 @@ ejemplos manuales de nominaciones y ganador coincidieron con
 - **Verificación 2026-09-19:** el aviso reiterado de cuota no corresponde a una
   regresión de Runscars. El HTML público no genera rutas `/_next/image` y el
   artefacto de Vercel omite la configuración del optimizador cuando
-  `unoptimized` está activo. Se añade una prueba de regresión y los pósteres
+  `unoptimized` está activo. Además se vacían sus patrones locales y remotos
+  para que las peticiones directas con fuentes de la aplicación tampoco lleguen
+  a transformar imágenes. Se añade una prueba de regresión y los pósteres
   pequeños pasan a solicitar variantes TMDB menores; los recordatorios pueden
   continuar hasta que salga del cómputo la ventana móvil de 30 días.
 

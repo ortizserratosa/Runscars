@@ -58,14 +58,11 @@ const nextConfig: NextConfig = {
   images: {
     // TMDB already serves the requested w185/w342/w500 variants. Bypass
     // Vercel transformations so an exhausted Hobby quota cannot break images.
+    // The app does not use the hosted optimizer, so do not allow app-owned
+    // remote or public-file sources through direct /_next/image requests.
     unoptimized: true,
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "image.tmdb.org",
-        pathname: "/t/p/**",
-      },
-    ],
+    localPatterns: [],
+    remotePatterns: [],
   },
 };
 

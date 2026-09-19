@@ -2,16 +2,11 @@ import { describe, expect, it } from "vitest";
 import nextConfig from "../../next.config";
 
 describe("image optimization configuration", () => {
-  it("serves TMDB images directly instead of using hosted transformations", () => {
+  it("serves images directly without app-owned optimizer sources", () => {
     expect(nextConfig.images).toMatchObject({
       unoptimized: true,
-      remotePatterns: [
-        {
-          protocol: "https",
-          hostname: "image.tmdb.org",
-          pathname: "/t/p/**",
-        },
-      ],
+      localPatterns: [],
+      remotePatterns: [],
     });
   });
 });
