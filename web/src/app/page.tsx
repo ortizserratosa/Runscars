@@ -1,4 +1,3 @@
-import { getFilmCatalogDetail } from "../lib/repositories/catalog";
 import { PUBLIC_CATEGORIES } from "../lib/categories/config";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -9,6 +8,7 @@ import { filmHref } from "../data/films";
 import { getCategoryView } from "../lib/categories/data";
 import { localeTag, localizedPath } from "../lib/i18n/config";
 import { getRequestLocale } from "../lib/i18n/server";
+import { getFilmArtwork } from "../lib/repositories/artwork";
 import { absoluteUrl, buildLocalizedMetadata } from "../lib/seo";
 
 export const dynamic = "force-dynamic";
@@ -79,15 +79,9 @@ export default async function Home() {
       "La portada necesita un corte publicable de Mejor película",
     );
   }
-  const posterDetails = await Promise.all(
-    topThree.map((film) =>
-      getFilmCatalogDetail(film.id, en ? "en-US" : "es-ES"),
-    ),
-  );
-  const posterPaths = new Map(
-    posterDetails
-      .filter((film) => film !== null)
-      .map((film) => [film.id, film.tmdb?.posterPath ?? null]),
+  const artwork = await getFilmArtwork(
+    topThree.map((film) => film.id),
+    locale,
   );
   const rising = categoryView.snapshot?.previous
     ? ranking.find(
@@ -236,7 +230,7 @@ export default async function Home() {
               <PosterBlock
                 title={leader.title}
                 locale={locale}
-                imagePath={posterPaths.get(leader.id)}
+                imagePath={artwork[leader.id]?.posterPath}
                 tone="violet"
                 number="01"
                 size="large"
@@ -371,7 +365,7 @@ export default async function Home() {
               <PosterBlock
                 title={candidate.title}
                 locale={locale}
-                imagePath={posterPaths.get(candidate.id)}
+                imagePath={artwork[candidate.id]?.posterPath}
                 tone={candidate.tone}
                 number={`0${index + 1}`}
                 size={index === 0 ? "medium" : "small"}

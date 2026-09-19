@@ -230,6 +230,7 @@ export default async function FestivalsPage() {
                                 title={entry.originalTitle}
                                 locale={locale}
                                 size="small"
+                                imageSize="w185"
                                 imagePath={artwork[entry.filmId].posterPath}
                               />
                             </Link>

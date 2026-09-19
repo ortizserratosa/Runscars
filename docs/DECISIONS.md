@@ -672,6 +672,12 @@ ejemplos manuales de nominaciones y ganador coincidieron con
   escrituras de la caché de imágenes de Vercel. El tráfico de imagen pasa
   directamente por el CDN de TMDB y se revisará rendimiento real antes de
   reconsiderar la optimización o contratar capacidad adicional.
+- **Verificación 2026-09-19:** el aviso reiterado de cuota no corresponde a una
+  regresión de Runscars. El HTML público no genera rutas `/_next/image` y el
+  artefacto de Vercel omite la configuración del optimizador cuando
+  `unoptimized` está activo. Se añade una prueba de regresión y los pósteres
+  pequeños pasan a solicitar variantes TMDB menores; los recordatorios pueden
+  continuar hasta que salga del cómputo la ventana móvil de 30 días.
 
 ## D-039 · Agregadores como descubridores, no como voces duplicadas
 

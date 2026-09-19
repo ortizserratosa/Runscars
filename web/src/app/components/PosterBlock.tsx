@@ -9,6 +9,7 @@ type PosterBlockProps = {
   number?: string;
   size?: "small" | "medium" | "large";
   imagePath?: string | null;
+  imageSize?: "w185" | "w342" | "w500";
 };
 
 export function PosterBlock({
@@ -18,9 +19,13 @@ export function PosterBlock({
   number,
   size = "medium",
   imagePath = null,
+  imageSize,
 }: PosterBlockProps) {
   const words = title.split(" ");
-  const imageUrl = tmdbImageUrl(imagePath);
+  const imageUrl = tmdbImageUrl(
+    imagePath,
+    imageSize ?? (size === "small" ? "w342" : "w500"),
+  );
   return (
     <div
       className={`poster-block poster-${tone} poster-${size}${imageUrl ? " poster-with-image" : ""}`}
