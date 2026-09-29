@@ -147,3 +147,7 @@ contribuciones válidas, lectura paginada y retirada mediante corte periódico
 vacío cuando todas las fuentes vencen. Una selección sin orden explícito no
 aporta puestos ni puntos. Las coincidencias de guion usan la película aunque
 falten créditos secundarios. Ver [auditoría](PREDICTION_AUDIT_2026-09-29.md).
+
+D-067 separa la captura real de la evidencia de frescura de una categoría sin
+fecha. En NBP y Midnight Critics se comparan listas completas antes del matching;
+una corrección de créditos en otra categoría no renueva sus 30 días.

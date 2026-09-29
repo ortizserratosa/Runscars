@@ -33,6 +33,8 @@ export type PredictionObservationV2 = {
   author: string | null;
   publishedAt: string | null;
   capturedAt: string;
+  /** Start of unchanged category evidence on a supported undated source page. */
+  freshnessAt?: string;
   seasonId: string;
   categoryId: string;
   intention: "nomination" | "winner";
@@ -82,6 +84,7 @@ export type PredictionSourceListV2 = {
   publicationId: string;
   publicationUrl: string;
   publishedAt: string | null;
+  freshnessAt?: string;
   listLength: number | null;
   orderedObservationIds: string[];
   selectionObservationIds: string[];
@@ -109,6 +112,7 @@ type ActiveSource = {
   publicationId: string;
   publicationUrl: string;
   publishedAt: string | null;
+  freshnessAt?: string;
   observations: PredictionObservationV2[];
   ordered: PredictionObservationV2[];
   selection: PredictionObservationV2[];
@@ -138,6 +142,20 @@ function effectiveAt(
   observation: Pick<PredictionObservationV2, "publishedAt" | "capturedAt">,
 ) {
   return observation.publishedAt ?? observation.capturedAt;
+}
+
+function undatedFreshnessAt(observation: PredictionObservationV2) {
+  const date = observation.freshnessAt;
+  return observation.publishedAt === null &&
+    date &&
+    Number.isFinite(instant(date)) &&
+    instant(date) <= instant(observation.capturedAt)
+    ? date
+    : undefined;
+}
+
+function freshnessAt(observation: PredictionObservationV2) {
+  return undatedFreshnessAt(observation) ?? effectiveAt(observation);
 }
 
 function comparePublicationRecency(
@@ -271,6 +289,7 @@ function selectActiveSources(observations: PredictionObservationV2[]) {
       publicationId,
       publicationUrl: first.publicationUrl,
       publishedAt: first.publishedAt,
+      freshnessAt: undatedFreshnessAt(first),
       observations: publicationObservations,
       ordered,
       selection,
@@ -312,6 +331,7 @@ export function aggregatePredictionsV2(
       observation.intention === options.intention &&
       observation.state === "published" &&
       observation.participates &&
+      instant(observation.capturedAt) <= cutoff &&
       instant(effectiveAt(observation)) <= cutoff,
   );
   const selectedSources = selectActiveSources(relevant);
@@ -320,7 +340,7 @@ export function aggregatePredictionsV2(
       .filter((source) =>
         source.observations.every(
           (observation) =>
-            !isPredictionFresh(effectiveAt(observation), options.cutoffDate),
+            !isPredictionFresh(freshnessAt(observation), options.cutoffDate),
         ),
       )
       .map((source) => source.sourceId),
@@ -467,6 +487,7 @@ export function aggregatePredictionsV2(
     publicationId: source.publicationId,
     publicationUrl: source.publicationUrl,
     publishedAt: source.publishedAt,
+    ...(source.freshnessAt ? { freshnessAt: source.freshnessAt } : {}),
     listLength: source.orderedIsValid ? source.listLength : null,
     orderedObservationIds: source.orderedIsValid
       ? source.ordered.map((observation) => observation.id).sort()

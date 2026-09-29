@@ -1281,3 +1281,48 @@ ejemplos manuales de nominaciones y ganador coincidieron con
   intentos por solicitud. Si `Retry-After` supera un segundo, se deja el título
   pendiente sin reintentar antes de lo indicado por el proveedor. Este presupuesto
   no sustituye la medición del tiempo total de extracción y persistencia.
+- **Recuperación:** los créditos vacíos de una importación interrumpida se
+  completan desde su captura corroborada solo si el último matching sigue siendo
+  automático y al mismo TMDB. La temporada se vincula al finalizar; los IDs de
+  personas existentes se reutilizan. Una fecha futura se registra como estreno
+  pendiente, no como estreno realizado.
+
+## D-066 · Una invocación programada por conector profesional
+
+- **Fecha:** 2026-09-29
+- **Estado:** Aceptada
+- **Origen:** la importación real conjunta de siete fuentes acabó con HTTP 546
+  `WORKER_RESOURCE_LIMIT`, después de completar cinco. Awards Radar y NBP
+  quedaron interrumpidos; el reintento individual de Radar completó sus 190
+  observaciones. Compartir el presupuesto del worker vulneraba el aislamiento
+  entre fuentes al crecer las listas.
+- **Decisión:** el Cron diario conserva las 04:17 UTC y despacha una petición
+  autenticada por cada conector activo, con `connectors: [id]`. El catálogo se
+  consulta al ejecutar, de modo que altas y pausas se respetan automáticamente.
+  Se mantienen Vault, endpoint, claves de idempotencia y seguimiento por run.
+- **Consecuencia:** la salud se verifica por conector y respuesta, no por un
+  único resultado HTTP global. Las importaciones manuales amplias usan el mismo
+  aislamiento; una llamada conjunta no acredita capacidad para todas las fuentes.
+  No se cambian los cron de mercados, festivales ni snapshots.
+
+## D-067 · Frescura por categoría en páginas de predicciones sin fecha
+
+- **Fecha:** 2026-09-29
+- **Estado:** Aceptada
+- **Origen:** NBP cambió únicamente créditos secundarios de fotografía; el hash
+  de toda la página generó una revisión que renovaba también las ocho categorías
+  públicas sin cambiar sus predicciones.
+- **Decisión:** en NBP y Midnight Critics se deriva `freshnessAt` de la primera
+  captura de una secuencia consecutiva con la misma lista completa de categoría.
+  Se comparan tipo, sujeto, puesto y longitud, antes del matching; los créditos
+  secundarios y cambios en otras categorías no rejuvenecen la lista. Un cambio
+  de identidad personal sí cuenta en dirección e interpretación. Una fecha de
+  publicación explícita sigue teniendo prioridad.
+- **Evidencia:** se conservan el valor original, el hash, `capturedAt` real y la
+  elección de la revisión más reciente. `freshnessAt` solo determina caducidad
+  y se guarda en los nuevos snapshots. Las capturas completas evitan confundir
+  una persistencia parcial o un matching resuelto con cambios del experto.
+- **Límites:** el cálculo requiere el formato de captura completo conocido. Los
+  formatos legados no reconocibles conservan el criterio anterior; una vuelta
+  exacta a contenido antiguo que no generó captura nueva no se puede reconstruir.
+  No se inventan fechas ni se reescriben snapshots históricos.

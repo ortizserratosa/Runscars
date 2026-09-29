@@ -5,7 +5,10 @@ import {
   prepareBatch,
   validateRequiredPredictionCategories,
 } from "./core.mjs";
-import { expandCatalogFromBatch } from "./tmdb-expansion.mjs";
+import {
+  expandCatalogFromBatch,
+  verifiedAutomaticCredits,
+} from "./tmdb-expansion.mjs";
 
 function databaseError(result, action) {
   if (result.error) {
@@ -112,6 +115,125 @@ export class SupabaseIngestionRepository {
     return { eligibilityYear: season.eligibility_year };
   }
 
+  async resumeAutomaticTmdbFilm(filmId, { requireComplete = false } = {}) {
+    const film = databaseError(
+      await this.client
+        .from("films")
+        .select(
+          "id,title,alternate_titles,tmdb_id,eligibility_year,film_credits(tmdb_credit_id)",
+        )
+        .eq("id", filmId)
+        .maybeSingle(),
+      "No se pudo comprobar la importación TMDB incompleta",
+    );
+    if (!film?.tmdb_id || film.film_credits?.length !== 0) return null;
+    const lastMatch = databaseError(
+      await this.client
+        .from("film_tmdb_match_history")
+        .select("tmdb_id,method,actor")
+        .eq("film_id", filmId)
+        .order("id", { ascending: false })
+        .limit(1)
+        .maybeSingle(),
+      "No se pudo comprobar la procedencia del matching automático",
+    );
+    if (
+      lastMatch?.tmdb_id !== film.tmdb_id ||
+      lastMatch.method !== "search_exact" ||
+      lastMatch.actor !== "automatic-ingestion-v2"
+    ) {
+      return null;
+    }
+    const snapshot = databaseError(
+      await this.client
+        .from("tmdb_movie_snapshots")
+        .select("original_data,fetched_at")
+        .eq("tmdb_id", film.tmdb_id)
+        .eq("locale", "en-US")
+        .contains("original_data", {
+          automatic_match: { match_rule: "unique-title-year-and-credits-v1" },
+        })
+        .order("fetched_at", { ascending: false })
+        .limit(1)
+        .maybeSingle(),
+      "No se pudo recuperar la evidencia TMDB de la importación incompleta",
+    );
+    const credits = verifiedAutomaticCredits(snapshot, film);
+    if (!credits?.length) {
+      if (requireComplete) {
+        throw new Error(
+          "La película automática está incompleta y no tiene evidencia válida para reanudarla",
+        );
+      }
+      return null;
+    }
+    await this.saveAutomaticTmdbCredits(filmId, credits, snapshot.fetched_at);
+    return { tmdbId: film.tmdb_id };
+  }
+
+  async saveAutomaticTmdbCredits(filmId, credits, fetchedAt) {
+    const people = [
+      ...new Map(
+        credits.map((credit) => [credit.tmdbPersonId, credit]),
+      ).values(),
+    ];
+    if (people.length === 0) return;
+    databaseError(
+      await this.client.from("tmdb_people").upsert(
+        people.map((person) => ({
+          tmdb_id: person.tmdbPersonId,
+          last_checked_at: fetchedAt,
+        })),
+        { onConflict: "tmdb_id", ignoreDuplicates: true },
+      ),
+      "No se pudieron guardar las identidades de personas",
+    );
+    // Keep canonical primary keys and names; a TMDB person may predate this
+    // importer and already have credits or candidacies referencing another ID.
+    databaseError(
+      await this.client.from("people").upsert(
+        people.map((person) => ({
+          id: `tmdb-${person.tmdbPersonId}`,
+          name: person.name,
+          tmdb_id: person.tmdbPersonId,
+        })),
+        { onConflict: "tmdb_id", ignoreDuplicates: true },
+      ),
+      "No se pudieron guardar las personas",
+    );
+    const canonicalPeople = databaseError(
+      await this.client
+        .from("people")
+        .select("id,tmdb_id")
+        .in(
+          "tmdb_id",
+          people.map((person) => person.tmdbPersonId),
+        ),
+      "No se pudieron resolver las identidades canónicas de personas",
+    );
+    const personIds = new Map(
+      canonicalPeople.map((person) => [person.tmdb_id, person.id]),
+    );
+    if (people.some((person) => !personIds.has(person.tmdbPersonId))) {
+      throw new Error("Faltan identidades canónicas para los créditos TMDB");
+    }
+    databaseError(
+      await this.client.from("film_credits").upsert(
+        credits.map((credit) => ({
+          film_id: filmId,
+          person_id: personIds.get(credit.tmdbPersonId),
+          tmdb_credit_id: credit.tmdbCreditId,
+          credit_kind: credit.kind,
+          role: credit.role,
+          department: credit.department,
+          billing_order: credit.billingOrder,
+        })),
+        { onConflict: "film_id,tmdb_credit_id", ignoreDuplicates: true },
+      ),
+      "No se pudieron guardar los créditos",
+    );
+  }
+
   async saveAutomaticTmdbFilm({
     filmIdBase,
     seasonId,
@@ -130,6 +252,9 @@ export class SupabaseIngestionRepository {
       "No se pudo buscar la película TMDB",
     );
     if (existingByTmdb) {
+      await this.resumeAutomaticTmdbFilm(existingByTmdb.id, {
+        requireComplete: true,
+      });
       databaseError(
         await this.client
           .from("season_films")
@@ -144,11 +269,19 @@ export class SupabaseIngestionRepository {
     const idCollision = databaseError(
       await this.client
         .from("films")
-        .select("id")
+        .select("id,tmdb_id")
         .eq("id", filmIdBase)
         .maybeSingle(),
       "No se pudo comprobar el ID de película",
     );
+    // Before the matching RPC succeeds there is no durable identity approval.
+    // A null-TMDB slug may be an interrupted stub or an editorial film: never
+    // choose between those possibilities by creating a second slug-TMDB film.
+    if (idCollision && !idCollision.tmdb_id) {
+      throw new Error(
+        "Colisión con una película sin identidad TMDB; requiere revisión antes de reanudar",
+      );
+    }
     const filmId = idCollision ? `${filmIdBase}-${raw.id}` : filmIdBase;
     const fetchedAt = snapshot.fetched_at;
     databaseError(
@@ -176,10 +309,14 @@ export class SupabaseIngestionRepository {
             ? [raw.original_title]
             : [],
         eligibility_year: eligibilityYear,
-        release_status: raw.release_date ? "released" : "upcoming",
+        release_status:
+          raw.release_date && raw.release_date <= fetchedAt.slice(0, 10)
+            ? "released"
+            : "upcoming",
         release_date: raw.release_date || null,
         verification_url: `https://www.themoviedb.org/movie/${raw.id}`,
-        notes: "Coincidencia automática exacta y única; fase 7.1",
+        notes:
+          "Identidad automática única por título, año y créditos personales corroborados; D-065",
       }),
       "No se pudo crear la película",
     );
@@ -190,58 +327,21 @@ export class SupabaseIngestionRepository {
         match_method: "search_exact",
         match_query: query,
         match_reason:
-          "Título o alias, temporada y estreno producen una coincidencia única",
+          "Título o alias y año producen una coincidencia única, corroborada por todos los créditos de dirección e interpretación publicados",
         match_actor: "automatic-ingestion-v2",
       }),
       "No se pudo auditar el matching TMDB",
     );
+    await this.saveAutomaticTmdbCredits(filmId, credits, fetchedAt);
     databaseError(
-      await this.client.from("season_films").insert({
-        season_id: seasonId,
-        film_id: filmId,
-      }),
+      await this.client
+        .from("season_films")
+        .upsert(
+          { season_id: seasonId, film_id: filmId },
+          { onConflict: "season_id,film_id", ignoreDuplicates: true },
+        ),
       "No se pudo vincular la película",
     );
-    for (const credit of credits) {
-      databaseError(
-        await this.client.from("tmdb_people").upsert(
-          {
-            tmdb_id: credit.tmdbPersonId,
-            last_checked_at: fetchedAt,
-          },
-          { onConflict: "tmdb_id" },
-        ),
-        "No se pudo guardar la identidad de persona",
-      );
-      databaseError(
-        await this.client.from("people").upsert(
-          {
-            id: `tmdb-${credit.tmdbPersonId}`,
-            name: credit.name,
-            tmdb_id: credit.tmdbPersonId,
-          },
-          { onConflict: "tmdb_id" },
-        ),
-        "No se pudo guardar la persona",
-      );
-    }
-    if (credits.length) {
-      databaseError(
-        await this.client.from("film_credits").upsert(
-          credits.map((credit) => ({
-            film_id: filmId,
-            person_id: `tmdb-${credit.tmdbPersonId}`,
-            tmdb_credit_id: credit.tmdbCreditId,
-            credit_kind: credit.kind,
-            role: credit.role,
-            department: credit.department,
-            billing_order: credit.billingOrder,
-          })),
-          { onConflict: "film_id,tmdb_credit_id" },
-        ),
-        "No se pudieron guardar los créditos",
-      );
-    }
     return filmId;
   }
 

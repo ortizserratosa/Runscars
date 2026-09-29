@@ -98,8 +98,8 @@ export default async function MethodologyPage() {
           </h2>
           <p>
             {en
-              ? "The ranking updates when a source changes its predictions or its latest publication expires after 30 days. Earlier cuts use the same 30-day limit when shown in the comparison history. If a historical source's date cannot be verified, movement comparison pauses. The original locked captures remain intact."
-              : "La clasificación se actualiza cuando una fuente cambia sus predicciones o su última publicación vence tras 30 días. Los cortes anteriores usan el mismo límite de 30 días al mostrarse en el historial comparable. Si no se puede verificar la fecha de una fuente histórica, se pausa la comparación de movimientos. Las capturas bloqueadas originales siguen intactas."}
+              ? "The ranking updates when predictions change or expire after 30 days. For undated NBP and Midnight Critics lists, that period starts with the first capture of the current category list: changes to other categories or secondary credits do not renew it. Earlier cuts apply the same limit using the available evidence. If a historical source's date cannot be verified, movement comparison pauses. Original locked captures remain intact."
+              : "La clasificación se actualiza cuando las predicciones cambian o vencen tras 30 días. En las listas sin fecha de NBP y Midnight Critics, el plazo parte de la primera captura de la lista vigente de esa categoría: los cambios en otras categorías o en créditos secundarios no lo renuevan. Los cortes anteriores aplican el mismo límite con la evidencia disponible. Si no se puede verificar la fecha de una fuente histórica, se pausa la comparación de movimientos. Las capturas bloqueadas originales siguen intactas."}
           </p>
         </article>
         <article>

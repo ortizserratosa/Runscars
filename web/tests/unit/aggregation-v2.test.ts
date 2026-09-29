@@ -106,6 +106,90 @@ describe("generic prediction aggregation v2", () => {
     expect(day31.excludedObservationIds).toEqual(["prediction"]);
   });
 
+  it("uses category evidence for undated expiry while still selecting the latest actual revision", () => {
+    const actor = candidate("candidate", "Actor — Film", "film");
+    const old = {
+      ...observation("old", "source", actor, 1),
+      publicationUrl: "https://example.com/live",
+      publishedAt: null,
+      capturedAt: "2026-07-24T04:17:00Z",
+      freshnessAt: "2026-07-24T04:17:00Z",
+      listLength: 1,
+    };
+    const latest = {
+      ...old,
+      id: "latest",
+      publicationId: "source-latest",
+      capturedAt: "2026-07-25T04:17:00Z",
+      freshnessAt: "2026-06-01T04:17:00Z",
+    };
+    const result = aggregatePredictionsV2([old, latest], {
+      seasonId: "oscars-2027",
+      categoryId: "actor",
+      intention: "nomination",
+      cutoffDate: "2026-07-25",
+    });
+    expect(result.includedObservationIds).toEqual([]);
+    expect(result.excludedObservationIds).toEqual(["latest"]);
+    expect(result.sourceLists).toEqual([]);
+  });
+
+  it("retains category freshness evidence in locked payloads without changing capture dates", () => {
+    const actor = candidate("candidate", "Actor — Film", "film");
+    const item = {
+      ...observation("prediction", "source", actor, 1),
+      publishedAt: null,
+      freshnessAt: "2026-07-01T04:17:00Z",
+      listLength: 1,
+    };
+    const aggregate = aggregatePredictionsV2([item], {
+      seasonId: "oscars-2027",
+      categoryId: "actor",
+      intention: "nomination",
+      cutoffDate: "2026-07-25T04:47:00Z",
+    });
+    const payload = createPredictionSnapshotPayloadV2(aggregate, {
+      kind: "periodic",
+      cutoffAt: "2026-07-25T04:47:00Z",
+      timeZone: "UTC",
+    });
+    expect(payload.aggregate.sourceLists[0].freshnessAt).toBe(item.freshnessAt);
+    expect(payload.aggregate.sourceLists[0].publishedAt).toBeNull();
+    expect(item.capturedAt).toBe("2026-07-25T04:17:00Z");
+  });
+
+  it("keeps explicit publication dates authoritative and rejects evidence from future captures", () => {
+    const actor = candidate("candidate", "Actor — Film", "film");
+    const item = {
+      ...observation("prediction", "source", actor, 1),
+      freshnessAt: "2026-05-01T04:17:00Z",
+      listLength: 1,
+    };
+    const options = {
+      seasonId: "oscars-2027",
+      categoryId: "actor",
+      intention: "nomination" as const,
+      cutoffDate: "2026-07-25T04:47:00Z",
+    };
+    const explicit = aggregatePredictionsV2([item], options);
+    expect(explicit.includedObservationIds).toEqual(["prediction"]);
+    expect(explicit.sourceLists[0].freshnessAt).toBeUndefined();
+    for (const publishedAt of [item.publishedAt, null]) {
+      expect(
+        aggregatePredictionsV2(
+          [{ ...item, publishedAt, capturedAt: "2026-08-01T04:17:00Z" }],
+          options,
+        ).includedObservationIds,
+      ).toEqual([]);
+    }
+    const invalid = aggregatePredictionsV2(
+      [{ ...item, publishedAt: null, freshnessAt: "2026-09-01T04:17:00Z" }],
+      { ...options, cutoffDate: "2026-09-01T04:47:00Z" },
+    );
+    expect(invalid.includedObservationIds).toEqual([]);
+    expect(invalid.excludedObservationIds).toEqual(["prediction"]);
+  });
+
   it("publishes screenplay at the four-source floor without inventing a fifth", () => {
     const result = phase71FixtureAggregate("original-screenplay");
     expect(result.orderedSourceCount).toBe(4);

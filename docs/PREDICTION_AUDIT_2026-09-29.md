@@ -10,7 +10,7 @@ Este es un corte de mantenimiento del MVP, no una fase nueva.
 
 La investigación de fuentes y sus muestras están en
 [el informe de discovery](audits/2026-09-29/source-research.md).
-Las decisiones duraderas son D-063, D-064 y D-065 en [DECISIONS.md](DECISIONS.md).
+Las decisiones duraderas son D-063 a D-067 en [DECISIONS.md](DECISIONS.md).
 Los cambios locales previos de `OPERATIONS.md` y la auditoría de indexación del
 17/09 se conservan ajenos a esta entrega.
 
@@ -45,6 +45,9 @@ una corrupción retrospectiva que no se ha observado.
 | Consulta de observaciones sin paginación | Riesgo de truncar al superar el límite de API | Páginas estables de 500 y referencias en lotes de 200 |
 | Si vencían todas las fuentes, no se podía guardar un corte vacío | El puntero retenía un ranking vencido | Corte periódico vacío con evidencia excluida; finales vacíos siguen rechazados; portada e histórico soportan retirada |
 | Auditor vivo omitía reglas de categorías requeridas | Podía informar éxito con el conector real roto | Compartir validación con ingesta, cargar configuración real y comprobar frescura del refresco de snapshots |
+| Una corrección de créditos en fotografía de NBP renovaba todas las categorías de la página | Listas sin cambios parecían más recientes | Derivar la frescura de cada lista completa sin alterar la captura real ni el hash original |
+| Siete conectores compartían un worker que agotó recursos en la prueba real | Dos importaciones quedaban interrumpidas | Una invocación autenticada por conector activo, manteniendo el cron diario |
+| Una importación podía vincular una película a la temporada antes de guardar sus créditos | El reintento omitía una ficha incompleta | Completar créditos de identidades automáticas ya corroboradas y vincular la temporada al terminar; conservar los IDs canónicos de personas |
 
 La [extracción de control](audits/2026-09-29/prediction-extraction.json) compara
 los parsers con el catálogo anterior a la importación. Comprueba 55 observaciones
@@ -73,6 +76,15 @@ Cambiar a un horizonte común o calibrar probabilidades exigiría otra versión 
 una evaluación histórica comparable. No se presenta esa alternativa como una
 mejora ya demostrada ni se cambia la fórmula para obtener un favorito concreto.
 La metodología pública explica ahora el promedio, las ausencias y este límite.
+
+Para las páginas sin fecha de NBP y Midnight Critics, una revisión del CMS no
+prueba un cambio de todas las predicciones. El cálculo deriva `freshnessAt` de
+capturas completas por categoría, antes del matching, y mantiene `capturedAt`
+real. Los créditos secundarios no cambian esa edad. También se exige que la
+evidencia ya estuviera capturada en la fecha del corte. Los formatos legados sin
+estructura reconocible conservan el criterio anterior; no se reconstruyen
+transiciones que nunca dejaron una captura. Ver D-067 y el
+[recibo del diagnóstico](audits/2026-09-29/ingestion-resource-diagnosis.json).
 
 Con las muestras verificadas, AwardsWatch aporta ranking en película y dirección,
 y selección en las otras seis categorías. Awards Daily aporta selección. Radar,
@@ -115,6 +127,24 @@ Las correcciones crean revisiones nuevas. Las capturas y snapshots bloqueados
 anteriores permanecen intactos, también los que contienen interpretaciones
 anteriores: no se reescribe evidencia histórica para hacerla pasar por la nueva
 extracción. La lectura del corte actual publica la evidencia corregida.
+
+### Prueba de ejecución real y recuperación
+
+La invocación conjunta `pg_net` 1299 devolvió HTTP 546
+`WORKER_RESOURCE_LIMIT`: cinco fuentes acabaron y dos quedaron interrumpidas.
+Se registraron los fallos confirmados de los runs 613/616 y se retomaron por
+separado sin borrar sus datos. Radar completó 190 observaciones y NBP 110.
+La fase incompleta había creado *The Drama* (TMDB 1325734) sin créditos: se
+completaron por el flujo editorial, conservando la identidad ya corroborada con
+Zendaya y la captura original. La reanudación automática queda protegida para
+este caso y no modifica un matching editorial.
+
+El nuevo cron despacha una petición por conector activo. Su prueba real
+[1302–1310](audits/2026-09-29/prediction-isolated-imports.json) dio nueve respuestas
+HTTP 200 y nueve runs correctos, entre 1,3 y 35,6 segundos por fuente. Las siete
+fuentes de predicciones procesaron 633 observaciones sin nuevas capturas ni
+observaciones: repetición idempotente. Guardian guardó dos observaciones de
+crítica nuevas; se conservan separadas de las predicciones.
 
 
 ## Corrección editorial de Artificial

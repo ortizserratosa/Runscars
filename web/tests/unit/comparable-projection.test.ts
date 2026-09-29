@@ -151,6 +151,30 @@ function oldAggregate(): PredictionAggregateV2 {
 }
 
 describe("comparable historical projection", () => {
+  it("uses recorded category freshness ahead of later observation captures without mutating historical locks", () => {
+    const locked = oldAggregate();
+    const source = locked.sourceLists[0];
+    source.publishedAt = null;
+    source.freshnessAt = "2026-05-01T00:00:00Z";
+    const captureDates = new Map(
+      source.orderedObservationIds.map((id) => [id, "2026-07-25T04:17:00Z"]),
+    );
+    const original = structuredClone(locked);
+    const result = projectComparableAggregate(locked, captureDates);
+    expect(
+      result.sourceLists.some((item) => item.sourceId === source.sourceId),
+    ).toBe(false);
+    expect(hasIncompleteComparisonDates(locked, new Map())).toBe(false);
+    expect(locked).toEqual(original);
+
+    source.publishedAt = "2026-07-24T00:00:00Z";
+    expect(
+      projectComparableAggregate(locked).sourceLists.some(
+        (item) => item.sourceId === source.sourceId,
+      ),
+    ).toBe(true);
+  });
+
   it("removes every stale source from old coverage, Borda, rankings and evidence without mutating the lock", () => {
     const locked = oldAggregate();
     const original = structuredClone(locked);

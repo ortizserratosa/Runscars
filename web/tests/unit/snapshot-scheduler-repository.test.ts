@@ -11,6 +11,7 @@ const state = vi.hoisted(() => ({
     ids: unknown[];
   }[],
   failedOffset: -1,
+  failedTable: "professional_observations",
 }));
 
 vi.mock("server-only", () => ({}));
@@ -45,10 +46,7 @@ vi.mock("@supabase/supabase-js", () => ({
         },
         then(resolve: (value: unknown) => unknown) {
           state.requests.push({ table, range: page, ids });
-          if (
-            table === "professional_observations" &&
-            page?.[0] === state.failedOffset
-          ) {
+          if (table === state.failedTable && page?.[0] === state.failedOffset) {
             return Promise.resolve(
               resolve({ data: null, error: { message: "Page failed" } }),
             );
@@ -84,6 +82,7 @@ function repository() {
 beforeEach(() => {
   state.requests = [];
   state.failedOffset = -1;
+  state.failedTable = "professional_observations";
   state.tables = {
     sources: [
       { id: "source", name: "Source", publication_status: "publishable" },
@@ -128,6 +127,133 @@ beforeEach(() => {
     });
   }
   state.tables.professional_observations.reverse();
+});
+
+function undatedHistoryFixture() {
+  const sourceId = "next-best-picture";
+  const url = "https://nextbestpicture.com/oscar-predictions/";
+  const originalData = {
+    source_id: sourceId,
+    publication_date: null,
+    categories: {
+      "best-picture": ["A", "B"].map((subject, index) => ({
+        rank: index + 1,
+        raw: subject,
+        parts: { subject, filmSubject: subject, peopleSubjects: [] },
+      })),
+    },
+  };
+  state.tables.sources = [
+    {
+      id: sourceId,
+      name: "Next Best Picture",
+      publication_status: "publishable",
+    },
+  ];
+  state.tables.source_publications = [1, 2].map((id) => ({
+    id,
+    source_id: sourceId,
+    external_id: `revision-${id}`,
+    canonical_url: url,
+  }));
+  state.tables.source_publication_captures = [
+    {
+      id: 101,
+      publication_id: 1,
+      captured_at: "2026-08-01T04:17:00Z",
+      original_data: originalData,
+    },
+    {
+      id: 102,
+      publication_id: 2,
+      captured_at: "2026-09-29T04:17:00Z",
+      original_data: originalData,
+    },
+  ];
+  state.tables.professional_observations = ["A", "B"].map((subject, index) => ({
+    id: index + 1,
+    source_id: sourceId,
+    publication_id: 2,
+    capture_id: 102,
+    category_candidate_id: index === 0 ? "candidate-1" : null,
+    data_type: "prediction_ordered",
+    original_subject: subject,
+    original_value: { rank: index + 1, list_length: 2 },
+    author: null,
+    published_at: null,
+    captured_at: "2026-09-29T04:17:00Z",
+    season_id: schedule.seasonId,
+    category_id: schedule.categoryId,
+    prediction_intention: schedule.intention,
+    participates: true,
+    state: index === 0 ? "published" : "pending_review",
+  }));
+}
+
+describe("snapshot repository undated category evidence", () => {
+  it("dates from complete captures even when old observations are absent and current matching is partial", async () => {
+    undatedHistoryFixture();
+    const observations = await repository().predictionObservationsV2(schedule);
+    expect(observations).toHaveLength(1);
+    expect(observations[0]).toMatchObject({
+      capturedAt: "2026-09-29T04:17:00Z",
+      freshnessAt: "2026-08-01T04:17:00Z",
+      listLength: 2,
+    });
+    const aggregate = aggregatePredictionsV2(observations, {
+      ...schedule,
+      cutoffDate: "2026-09-29T12:00:00Z",
+    });
+    expect(aggregate.ranking).toEqual([]);
+    expect(aggregate.excludedObservationIds).toEqual(["1"]);
+  });
+
+  it("includes an intervening missing category from the page history even without category observations", async () => {
+    undatedHistoryFixture();
+    state.tables.source_publications.push({
+      ...state.tables.source_publications[0],
+      id: 3,
+      external_id: "missing-category",
+    });
+    state.tables.source_publication_captures.push({
+      id: 103,
+      publication_id: 3,
+      captured_at: "2026-09-01T04:17:00Z",
+      original_data: {
+        publication_date: null,
+        categories: { cinematography: [] },
+      },
+    });
+    const observations = await repository().predictionObservationsV2(schedule);
+    expect(observations[0].freshnessAt).toBe("2026-09-29T04:17:00Z");
+  });
+
+  it("does not use an unrelated source or URL as category freshness evidence", async () => {
+    undatedHistoryFixture();
+    state.tables.source_publications[0].canonical_url =
+      "https://nextbestpicture.com/another/";
+    const observations = await repository().predictionObservationsV2(schedule);
+    expect(observations[0].freshnessAt).toBe("2026-09-29T04:17:00Z");
+    state.tables.source_publications[0].canonical_url =
+      state.tables.source_publications[1].canonical_url;
+    state.tables.source_publications[0].source_id = "another-source";
+    const otherSource = await repository().predictionObservationsV2(schedule);
+    expect(otherSource[0].freshnessAt).toBe("2026-09-29T04:17:00Z");
+  });
+
+  it("retains legacy capture-date fallback for unrecognized evidence and aborts on a failed history read", async () => {
+    undatedHistoryFixture();
+    state.tables.source_publication_captures[1].original_data = {
+      legacy: true,
+    };
+    const observations = await repository().predictionObservationsV2(schedule);
+    expect(observations[0].freshnessAt).toBeUndefined();
+    state.failedTable = "source_publication_captures";
+    state.failedOffset = 0;
+    await expect(
+      repository().predictionObservationsV2(schedule),
+    ).rejects.toThrow("Page failed");
+  });
 });
 
 describe("snapshot repository history pagination", () => {

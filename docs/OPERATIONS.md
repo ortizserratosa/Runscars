@@ -61,6 +61,13 @@ Los schedules versionados siguen siendo `17 4 * * *` para profesionales,
 estado `partial`, un fallo posterior al último éxito o un run fuera de esas
 ventanas exige tratar la automatización como incidente abierto.
 
+El schedule profesional despacha una invocación por conector activo mediante
+`supabase/schedules/run-ingestion-daily.sql`. Se aplica con
+`npx supabase db query --linked --file supabase/schedules/run-ingestion-daily.sql`.
+Para importaciones manuales amplias, enviar también una petición por conector:
+compartir un worker con todas las fuentes agotó recursos durante la auditoría
+del 29/09. Se verifican por separado sus respuestas y los runs persistidos.
+
 Festivales añade `17 5 * * *` mediante
 `supabase/schedules/run-festivals-daily.sql`. Se despliega y comprueba con:
 

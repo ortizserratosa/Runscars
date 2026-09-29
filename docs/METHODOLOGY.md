@@ -245,14 +245,21 @@ La última revisión de una misma URL se resuelve antes de comparar las fechas
 de publicaciones distintas, evitando una elección dependiente del orden de filas.
 
 Esa publicación solo participa durante los 30 días siguientes a su fecha de
-publicación o, cuando esta no existe, a su captura fechada. Desde el día 31 la
+publicación o, cuando esta no existe, a su evidencia fechada. En las capturas
+completas reconocibles de NBP y Midnight Critics se usa la primera captura de
+la secuencia consecutiva con la misma lista de categoría (`freshnessAt`):
+cambios de créditos secundarios, matching u otras categorías no la rejuvenecen.
+Se preserva `capturedAt` real y se comparan sujetos y puestos antes del matching.
+Los formatos legados sin evidencia comparable conservan la captura original
+como referencia; no se reconstruyen transiciones que no dejaron captura.
+Desde el día 31 la
 fuente deja de aportar cobertura, puntos y posiciones al consenso. La
 publicación y sus observaciones se conservan como información adicional e
 histórica, y el conector puede seguir comprobándola para reactivar la fuente en
 cuanto publique una predicción nueva. La caducidad puede producir por sí misma
 un nuevo corte efectivo. No altera snapshots ya bloqueados; la proyección pública
 de cortes históricos aplica la regla según la fecha de cada corte con publicación
-o captura fechada.
+o evidencia fechada disponible. Ver D-067 para las páginas sin fecha.
 
 ### 4.5 Variación durante la fase 6
 

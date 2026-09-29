@@ -1,0 +1,103 @@
+{
+  "checkedAt": "2026-09-29T18:09:12.698Z",
+  "captureCount": 47,
+  "publicationCount": 44,
+  "categories": {
+    "best-picture": {
+      "next-best-picture": {
+        "captureId": "1643",
+        "capturedAt": "2026-09-29T17:56:31.38+00:00",
+        "freshnessAt": "2026-09-28T04:17:15.61+00:00"
+      },
+      "midnight-critics": {
+        "captureId": "162",
+        "capturedAt": "2026-07-25T17:35:48.279+00:00",
+        "freshnessAt": "2026-07-25T17:09:16.734+00:00"
+      }
+    },
+    "directing": {
+      "next-best-picture": {
+        "captureId": "1643",
+        "capturedAt": "2026-09-29T17:56:31.38+00:00",
+        "freshnessAt": "2026-09-17T04:17:27.438+00:00"
+      },
+      "midnight-critics": {
+        "captureId": "162",
+        "capturedAt": "2026-07-25T17:35:48.279+00:00",
+        "freshnessAt": "2026-07-25T16:00:33.369+00:00"
+      }
+    },
+    "actor": {
+      "next-best-picture": {
+        "captureId": "1643",
+        "capturedAt": "2026-09-29T17:56:31.38+00:00",
+        "freshnessAt": "2026-09-27T04:17:17.163+00:00"
+      },
+      "midnight-critics": {
+        "captureId": "162",
+        "capturedAt": "2026-07-25T17:35:48.279+00:00",
+        "freshnessAt": "2026-07-25T16:00:33.369+00:00"
+      }
+    },
+    "actress": {
+      "next-best-picture": {
+        "captureId": "1643",
+        "capturedAt": "2026-09-29T17:56:31.38+00:00",
+        "freshnessAt": "2026-09-17T04:17:27.438+00:00"
+      },
+      "midnight-critics": {
+        "captureId": "162",
+        "capturedAt": "2026-07-25T17:35:48.279+00:00",
+        "freshnessAt": "2026-07-25T17:09:16.734+00:00"
+      }
+    },
+    "supporting-actor": {
+      "next-best-picture": {
+        "captureId": "1643",
+        "capturedAt": "2026-09-29T17:56:31.38+00:00",
+        "freshnessAt": "2026-09-27T04:17:17.163+00:00"
+      },
+      "midnight-critics": {
+        "captureId": "162",
+        "capturedAt": "2026-07-25T17:35:48.279+00:00",
+        "freshnessAt": "2026-07-25T17:09:16.734+00:00"
+      }
+    },
+    "supporting-actress": {
+      "next-best-picture": {
+        "captureId": "1643",
+        "capturedAt": "2026-09-29T17:56:31.38+00:00",
+        "freshnessAt": "2026-09-03T04:17:20.727+00:00"
+      },
+      "midnight-critics": {
+        "captureId": "162",
+        "capturedAt": "2026-07-25T17:35:48.279+00:00",
+        "freshnessAt": "2026-07-25T16:00:33.369+00:00"
+      }
+    },
+    "original-screenplay": {
+      "next-best-picture": {
+        "captureId": "1643",
+        "capturedAt": "2026-09-29T17:56:31.38+00:00",
+        "freshnessAt": "2026-09-28T04:17:15.61+00:00"
+      },
+      "midnight-critics": {
+        "captureId": "162",
+        "capturedAt": "2026-07-25T17:35:48.279+00:00",
+        "freshnessAt": "2026-07-25T17:09:16.734+00:00"
+      }
+    },
+    "adapted-screenplay": {
+      "next-best-picture": {
+        "captureId": "1643",
+        "capturedAt": "2026-09-29T17:56:31.38+00:00",
+        "freshnessAt": "2026-09-24T04:17:18.503+00:00"
+      },
+      "midnight-critics": {
+        "captureId": "162",
+        "capturedAt": "2026-07-25T17:35:48.279+00:00",
+        "freshnessAt": "2026-07-25T16:00:33.369+00:00"
+      }
+    }
+  }
+}

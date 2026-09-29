@@ -21,8 +21,16 @@ select cron.schedule(
         limit 1
       )
     ),
-    body := '{"trigger":"scheduled"}'::jsonb,
+    -- Separate Edge invocations keep one connector's resource exhaustion from
+    -- terminating the remaining connectors in a shared runConnectorSet worker.
+    body := jsonb_build_object(
+      'trigger', 'scheduled',
+      'connectors', jsonb_build_array(connector.id)
+    ),
     timeout_milliseconds := 120000
-  );
+  )
+  from public.source_connectors as connector
+  where connector.is_active = true
+  order by connector.id;
   $$
 );

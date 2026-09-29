@@ -1,0 +1,103 @@
+{
+  "checkedAt": "2026-09-29",
+  "revision": "68cf749",
+  "mode": "read-only production inspection and offline Node benchmark",
+  "productionObservation": {
+    "reportedBy": "release operator",
+    "combinedRequest": "Seven prediction connectors shared one Edge worker; request returned HTTP 546 WORKER_RESOURCE_LIMIT.",
+    "successfulConnectors": [
+      "awardswatch-predictions",
+      "awards-daily-predictions",
+      "midnight-critics-predictions",
+      "movie-state-predictions",
+      "ringer-best-picture"
+    ],
+    "interrupted": [
+      {
+        "connector": "awards-radar-predictions",
+        "runId": 613,
+        "lastPhase": "discovery.checked; catalog.expansion not yet emitted"
+      },
+      {
+        "connector": "next-best-picture-predictions",
+        "runId": 616,
+        "lastPhase": "catalog.expansion emitted; 52 new observations persisted before termination"
+      }
+    ],
+    "counterCaveat": "observations_seen is persisted when a run finishes. A terminated run showing zero can already have saved observations.",
+    "isolatedRetestReportedByOperator": {
+      "awardsRadar": "HTTP 200; all 190 observations handled",
+      "nextBestPicture": "HTTP 200; all 110 observations handled"
+    }
+  },
+  "benchmark": {
+    "runtime": "Local Node.js, not the Supabase Edge runtime",
+    "iterationsPerOperation": 30,
+    "inputs": "Previously captured public HTML and the current season catalogue read without mutation",
+    "catalogue": {
+      "films": 76,
+      "credits": 1393,
+      "serializedBytes": 418498
+    },
+    "network": "No live network inside timed operations; TMDB search returns an empty result fixture",
+    "operations": [
+      {
+        "name": "Awards Radar parse eight category pages",
+        "observations": 190,
+        "meanCpuMs": 15.79,
+        "p95CpuMs": 16.88,
+        "meanWallMs": 15.41
+      },
+      {
+        "name": "Next Best Picture parse page",
+        "observations": 110,
+        "meanCpuMs": 5.86,
+        "p95CpuMs": 7.41,
+        "meanWallMs": 5.56
+      },
+      {
+        "name": "Awards Radar prepareBatch",
+        "meanCpuMs": 15.92,
+        "p95CpuMs": 23.59,
+        "meanWallMs": 14.38
+      },
+      {
+        "name": "Awards Radar expansion matching with mock TMDB search",
+        "meanCpuMs": 4.91,
+        "p95CpuMs": 9.57,
+        "meanWallMs": 4.45,
+        "mockSearchesPerIteration": 3
+      },
+      {
+        "name": "Next Best Picture prepareBatch",
+        "meanCpuMs": 7.65,
+        "p95CpuMs": 9.76,
+        "meanWallMs": 7.12
+      },
+      {
+        "name": "Next Best Picture expansion matching",
+        "meanCpuMs": 1.55,
+        "p95CpuMs": 1.8,
+        "meanWallMs": 1.52,
+        "mockSearchesPerIteration": 0
+      }
+    ],
+    "limits": "These measurements exclude HTTP persistence and do not establish a production CPU, memory or wall-time bound. They do not identify the exact Edge resource that was exhausted."
+  },
+  "recommendation": "Invoke each connector in its own Edge request. The isolated production retests succeeded. No parser or persistence micro-optimization is justified by this benchmark.",
+  "nextBestPictureRevision": {
+    "previousPublicationId": 311,
+    "previousExternalId": "u/655756da85df4c0efaa10bd2/oscars@fb9546119da6dab5",
+    "previousCapturedAt": "2026-09-28T04:17:15.61+00:00",
+    "newPublicationId": 322,
+    "newExternalId": "u/655756da85df4c0efaa10bd2/oscars@8dedc6cfb323d86a",
+    "newCapturedAt": "2026-09-29T17:56:31.38+00:00",
+    "publicationDate": null,
+    "changedCategory": "cinematography",
+    "changedRank": 4,
+    "previousRaw": "Project Hail Mary | Greig Fraser | Amazon MGM",
+    "newRaw": "Project Hail Mary | Greig Fraser, Julian Morson, Nigel Stone | Amazon MGM",
+    "finding": "This is the only change between the two complete structured captures. Subjects, ranks and list lengths are unchanged. The new global publication hash is caused by secondary credit text, not the extractor version or author correction.",
+    "requiredFreshnessTreatment": "Derive undated prediction evidence age from consecutive complete category signatures, independently of raw capture timestamps and matching state. Never replace the true captured_at value."
+  }
+}

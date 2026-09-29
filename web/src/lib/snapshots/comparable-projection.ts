@@ -53,6 +53,13 @@ function sourceIsFresh(
       isPredictionFresh(source.publishedAt, cutoffDate)
     );
   }
+  if (
+    source.freshnessAt &&
+    Number.isFinite(Date.parse(source.freshnessAt)) &&
+    Date.parse(source.freshnessAt) <= Date.parse(cutoffDate)
+  ) {
+    return isPredictionFresh(source.freshnessAt, cutoffDate);
+  }
   const ids = sourceObservationIds(source);
   const captures = ids.map((id) => captureDates.get(id));
   // A missing capture cannot prove the whole source stale; retain its vote.
@@ -75,6 +82,13 @@ export function hasIncompleteComparisonDates(
   return aggregate.sourceLists.some((source) => {
     if (source.publishedAt !== null) {
       return !Number.isFinite(Date.parse(source.publishedAt));
+    }
+    if (
+      source.freshnessAt &&
+      Number.isFinite(Date.parse(source.freshnessAt)) &&
+      Date.parse(source.freshnessAt) <= Date.parse(aggregate.cutoffDate)
+    ) {
+      return false;
     }
     const ids = sourceObservationIds(source);
     return (

@@ -83,6 +83,61 @@ function credits(raw) {
   );
 }
 
+/** Recover only identity evidence already corroborated and captured by us. */
+export function verifiedAutomaticCredits(snapshot, film) {
+  const raw = snapshot?.original_data;
+  const match = raw?.automatic_match;
+  if (
+    !raw ||
+    raw.id !== film.tmdb_id ||
+    match?.match_rule !== "unique-title-year-and-credits-v1" ||
+    match.unique_exact_match !== true ||
+    match.eligibility_year !== film.eligibility_year ||
+    nullableDate(raw.release_date)?.slice(0, 4) !==
+      String(film.eligibility_year) ||
+    !Array.isArray(match.people_evidence) ||
+    match.people_evidence.length === 0
+  ) {
+    return null;
+  }
+  const filmTitles = [film.title, ...(film.alternate_titles ?? [])];
+  if (
+    ![raw.title, raw.original_title].some(
+      (title) =>
+        typeof title === "string" &&
+        title.trim() &&
+        filmTitles.some(
+          (candidate) =>
+            normalizeIdentity(candidate) === normalizeIdentity(title),
+        ),
+    )
+  ) {
+    return null;
+  }
+  const movieCredits = credits(raw);
+  if (
+    match.people_evidence.some(
+      (evidence) =>
+        typeof evidence?.source_name !== "string" ||
+        !evidence.source_name.trim() ||
+        !movieCredits.some(
+          (credit) =>
+            credit.tmdbPersonId === evidence.tmdb_person_id &&
+            normalizeIdentity(credit.name) ===
+              normalizeIdentity(evidence.source_name) &&
+            (evidence.role === "Acting"
+              ? credit.kind === "cast"
+              : evidence.role === "Director" &&
+                credit.kind === "crew" &&
+                credit.role === "Director"),
+        ),
+    )
+  ) {
+    return null;
+  }
+  return movieCredits;
+}
+
 function identityClaims(batch, title) {
   const normalizedTitle = normalizeIdentity(title);
   const claims = new Map();
@@ -154,6 +209,46 @@ export async function expandCatalogFromBatch({
   if (!token) return { imported: [], ambiguous: [] };
   const season = await repository.seasonIdentity(batch.seasonId);
   const current = await repository.filmIdentities(batch.seasonId);
+  const imported = [];
+  const ambiguous = [];
+  // A terminated worker can leave an approved film linked before its credits.
+  // Resume from durable proof before existing titles are skipped below.
+  const observedTitles = new Set(
+    batch.publications.flatMap((publication) =>
+      publication.observations.flatMap((observation) => {
+        const title = observation.filmSubject ?? observation.subject;
+        return typeof title === "string" && title.trim()
+          ? [normalizeIdentity(title)]
+          : [];
+      }),
+    ),
+  );
+  for (const film of current) {
+    if (
+      film.credits?.length !== 0 ||
+      ![film.title, ...(film.alternate_titles ?? [])].some((title) =>
+        observedTitles.has(normalizeIdentity(title)),
+      )
+    ) {
+      continue;
+    }
+    try {
+      const resumed = await repository.resumeAutomaticTmdbFilm?.(film.id);
+      if (resumed) {
+        imported.push({
+          title: film.title,
+          filmId: film.id,
+          tmdbId: resumed.tmdbId,
+          resumed: true,
+        });
+      }
+    } catch (error) {
+      ambiguous.push({
+        title: film.title,
+        error: error instanceof Error ? error.message : "Error desconocido",
+      });
+    }
+  }
   const seenTitles = new Set();
   const missingTitles = [
     ...new Set(
@@ -182,8 +277,6 @@ export async function expandCatalogFromBatch({
       ),
     ),
   ];
-  const imported = [];
-  const ambiguous = [];
   // Leave enough headroom for a final bounded request and for persistence in Edge.
   const deadline = Date.now() + 60_000;
 

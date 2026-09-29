@@ -10,6 +10,11 @@ import type {
 import type { LockedPredictionSnapshot } from ".";
 import type { LockedPredictionSnapshotV2 } from "./v2";
 import {
+  CATEGORY_FRESHNESS_SOURCE_IDS,
+  categoryEvidenceFreshness,
+  type CategoryEvidenceCapture,
+} from "./category-evidence-freshness";
+import {
   type SnapshotSchedule,
   type SnapshotSchedulerRepository,
   type SnapshotSchedulerRepositoryV2,
@@ -74,6 +79,31 @@ async function databaseRowsByIds<T>(
   for (let offset = 0; offset < ids.length; offset += REFERENCE_BATCH_SIZE) {
     const batch = ids.slice(offset, offset + REFERENCE_BATCH_SIZE);
     rows.push(...(databaseError(await readBatch(batch), action) ?? []));
+  }
+  return rows;
+}
+
+async function pagedDatabaseRowsByIds<T>(
+  ids: (string | number)[],
+  readPage: (
+    ids: (string | number)[],
+    from: number,
+    to: number,
+  ) => PromiseLike<{
+    data: T[] | null;
+    error: { message: string } | null;
+  }>,
+  action: string,
+) {
+  const rows: T[] = [];
+  for (let offset = 0; offset < ids.length; offset += REFERENCE_BATCH_SIZE) {
+    const batch = ids.slice(offset, offset + REFERENCE_BATCH_SIZE);
+    rows.push(
+      ...(await allDatabaseRows(
+        (from, to) => readPage(batch, from, to),
+        action,
+      )),
+    );
   }
   return rows;
 }
@@ -355,7 +385,7 @@ export class SupabaseSnapshotSchedulerRepository
         this.client
           .from("professional_observations")
           .select(
-            "id, source_id, publication_id, category_candidate_id, data_type, original_subject, original_value, author, published_at, captured_at, participates, state",
+            "id, source_id, publication_id, capture_id, category_candidate_id, data_type, original_subject, original_value, author, published_at, captured_at, participates, state",
           )
           .eq("season_id", schedule.seasonId)
           .eq("category_id", schedule.categoryId)
@@ -429,6 +459,18 @@ export class SupabaseSnapshotSchedulerRepository
     const candidateById = new Map(
       candidates.map((candidate) => [candidate.id, candidate]),
     );
+    const undatedPages = observations.flatMap((row) => {
+      const publication = publicationById.get(row.publication_id);
+      return row.published_at === null &&
+        CATEGORY_FRESHNESS_SOURCE_IDS.some((id) => id === row.source_id) &&
+        publication
+        ? [{ sourceId: row.source_id, url: publication.canonical_url }]
+        : [];
+    });
+    const freshnessByCapture = await this.categoryFreshness(
+      undatedPages,
+      schedule.categoryId,
+    );
 
     return observations.flatMap((row): PredictionObservationV2[] => {
       const source = sourceById.get(row.source_id);
@@ -483,6 +525,9 @@ export class SupabaseSnapshotSchedulerRepository
           author: row.author,
           publishedAt: row.published_at,
           capturedAt: row.captured_at,
+          ...(freshnessByCapture.has(String(row.capture_id))
+            ? { freshnessAt: freshnessByCapture.get(String(row.capture_id)) }
+            : {}),
           seasonId: schedule.seasonId,
           categoryId: schedule.categoryId,
           intention: schedule.intention,
@@ -513,6 +558,69 @@ export class SupabaseSnapshotSchedulerRepository
         },
       ];
     });
+  }
+
+  private async categoryFreshness(
+    pages: { sourceId: string; url: string }[],
+    categoryId: string,
+  ) {
+    if (pages.length === 0) return new Map<string, string>();
+    const urls = [...new Set(pages.map((page) => page.url))];
+    const sourceIds = [...new Set(pages.map((page) => page.sourceId))];
+    const pageKeys = new Set(
+      pages.map((page) => JSON.stringify([page.sourceId, page.url])),
+    );
+    // Include revisions with missing categories or no matched candidates. Their
+    // complete captures, saved before observation writes, delimit the sequence.
+    const publications = await pagedDatabaseRowsByIds(
+      urls,
+      (batch, from, to) =>
+        this.client
+          .from("source_publications")
+          .select("id, source_id, canonical_url")
+          .in("source_id", sourceIds)
+          .in("canonical_url", batch)
+          .order("id", { ascending: true })
+          .range(from, to),
+      "No se pudo cargar el historial de páginas sin fecha",
+    );
+    const publicationById = new Map(
+      publications
+        .filter((publication) =>
+          pageKeys.has(
+            JSON.stringify([publication.source_id, publication.canonical_url]),
+          ),
+        )
+        .map((publication) => [publication.id, publication]),
+    );
+    const captures = await pagedDatabaseRowsByIds(
+      [...publicationById.keys()],
+      (batch, from, to) =>
+        this.client
+          .from("source_publication_captures")
+          .select("id, publication_id, original_data, captured_at")
+          .in("publication_id", batch)
+          .order("id", { ascending: true })
+          .range(from, to),
+      "No se pudieron cargar las evidencias completas de categorías sin fecha",
+    );
+    return categoryEvidenceFreshness(
+      captures.flatMap((capture): CategoryEvidenceCapture[] => {
+        const publication = publicationById.get(capture.publication_id);
+        return publication
+          ? [
+              {
+                id: String(capture.id),
+                sourceId: publication.source_id,
+                publicationUrl: publication.canonical_url,
+                capturedAt: capture.captured_at,
+                originalData: capture.original_data,
+              },
+            ]
+          : [];
+      }),
+      categoryId,
+    );
   }
 
   async currentSnapshotV2(schedule: SnapshotSchedule) {
