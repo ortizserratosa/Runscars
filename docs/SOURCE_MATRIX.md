@@ -1,6 +1,6 @@
 # Matriz de fuentes y circuito festivalero
 
-**Corte de investigación:** 2026-09-03
+**Corte de investigación:** 2026-09-29
 
 **Alcance:** inventario original de 31 fuentes y nueve ediciones festivaleras
 operativas para Oscar 2027.
@@ -162,3 +162,37 @@ El resultado es un catálogo de 28 fuentes seleccionadas. La activación puede s
 gradual por coste de mantenimiento, pero no hay un máximo numérico: una nueva
 fuente entra si supera la misma puerta. Festivales y precursores nunca sustituyen
 las predicciones editoriales.
+
+
+## Revisión de predicciones del 29 de septiembre de 2026
+
+Esta revisión actualiza el estado operativo de predicciones sin reescribir las
+muestras del inventario original. Evidencia detallada y candidatas adicionales
+en la [auditoría de fuentes](audits/2026-09-29/source-research.md).
+
+| Fuente | Categorías públicas | Papel del formato actual | Cadencia editorial / captura | Activación |
+|---|---|---|---|---|
+| AwardsWatch / Erik Anderson | Ocho | Ranking en película y dirección; selección en interpretación y guiones | Mensual ahora, semanal anunciada más adelante / diaria | Automática, `publishable`; autor ancla explícito |
+| Awards Daily / Sasha Stone | Ocho | Selección cuando no existe orden declarado | Semanal observada / diaria | Automática, `publishable` |
+| Awards Radar / Joey Magidson | Ocho | Ranking completo 50/20, sin truncar a diez | Varias veces al mes / diaria | Automática, `publishable` |
+| Next Best Picture / Matt Neglia | Ocho | Ranking del perfil capturado, una sola voz del medio | Página viva / diaria | Automática, `publishable` |
+| Midnight Critics Circle | Ocho | Ranking de consenso del medio | Sin fecha propia reciente verificable / diaria | Conector activo; captura de julio vencida |
+| The Ringer | Película | Selección | Irregular / diaria | Conector activo; publicación de marzo vencida |
+| The Movie State / Ben Sears | Ocho | Ranking explícito 10/5 | Irregular, publicación 14/09 / diaria | Nueva: `selected`, `automated`, `publishable` para valores y enlaces |
+
+The Movie State supera autoridad y procedencia mediante artículo firmado,
+[archivo de autor](https://themoviestate.com/author/bensearsonfilm/),
+[ranking 2027](https://themoviestate.com/2026/09/14/2027-oscar-predictions/),
+[segunda temporada](https://themoviestate.com/2025/09/16/2026-oscar-predictions/)
+y [archivo de discovery](https://themoviestate.com/the-movie-state/features/award-predictions/).
+Conserva ambas fechas del artículo, captura, URL, texto original y puestos. La
+frescura utiliza la publicación original del 14/09; la modificación del CMS del
+21/09 queda como metadato y no renueva el voto. Las pruebas se ejecutan sobre un
+fixture reducido sin depender de la web.
+
+Variety mantiene prioridad alta, pero su resumen es alfabético y la tabla
+ordenada embebida devuelve 403. THR identifica el forecast como contenido de
+pago; requiere acceso autorizado y revisión antes de activación. IndieWire,
+Filmotomy y Cinema Sight aportan selecciones o niveles sin orden, por lo que no
+resuelven el mínimo de rankings. No se han convertido en votos activos ni en
+nuevas decisiones aceptadas de publicación por esta investigación.

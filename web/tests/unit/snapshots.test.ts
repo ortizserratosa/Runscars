@@ -37,7 +37,10 @@ import {
   type PredictionAggregateV2,
 } from "../../src/lib/aggregation/v2";
 import { PUBLIC_CATEGORIES } from "../../src/lib/categories/config";
-import type { LockedPredictionSnapshotV2 } from "../../src/lib/snapshots/v2";
+import {
+  createPredictionSnapshotPayloadV2,
+  type LockedPredictionSnapshotV2,
+} from "../../src/lib/snapshots/v2";
 
 const lockedAt = "2026-07-24T12:00:00Z";
 
@@ -311,6 +314,115 @@ describe("locked snapshots", () => {
     expect(results[0]?.status).toBe("created");
     expect(locked[0]?.payload.methodVersion).toBe("runscars-aggregation-v3");
     expect(historicalAggregate.methodVersion).toBe("runscars-aggregation-v2");
+  });
+
+  it("records an empty cut when all sources expire and reactivates on fresh evidence", async () => {
+    const schedule: SnapshotSchedule = {
+      id: "daily-best-picture",
+      seasonId: "oscars-2027",
+      categoryId: "best-picture",
+      intention: "nomination",
+      kind: "periodic",
+      timeZone: "UTC",
+    };
+    let observations = phase71FixtureObservations("best-picture");
+    let current: {
+      snapshotId: string;
+      contentHash: string;
+      aggregate: PredictionAggregateV2;
+    } = {
+      snapshotId: "before-expiry",
+      contentHash: "a".repeat(64),
+      aggregate: phase71FixtureAggregate("best-picture"),
+    };
+    const original = JSON.stringify(current.aggregate);
+    const locked: LockedPredictionSnapshotV2[] = [];
+    const repository: SnapshotSchedulerRepositoryV2 = {
+      async activeSchedules() {
+        return [schedule];
+      },
+      async predictionObservationsV2() {
+        return observations;
+      },
+      async currentSnapshotV2() {
+        return current;
+      },
+      async lockV2(snapshot) {
+        locked.push(snapshot);
+        current = {
+          snapshotId: snapshot.id,
+          contentHash: snapshot.contentHash,
+          aggregate: snapshot.payload.aggregate,
+        };
+        return true;
+      },
+    };
+    expect(
+      (
+        await runScheduledSnapshotsV2(
+          repository,
+          new Date("2026-09-01T00:00:00Z"),
+        )
+      )[0].status,
+    ).toBe("created");
+    expect(locked[0].payload).toMatchObject({
+      activeSourceIds: [],
+      includedObservationIds: [],
+      selectedCandidateIds: [],
+      aggregate: {
+        ranking: [],
+        applicableSourceCount: 0,
+        orderedSourceCount: 0,
+        isConsensus: false,
+      },
+    });
+    expect(locked[0].payload.excludedObservationIds.length).toBeGreaterThan(0);
+    expect(
+      (
+        await runScheduledSnapshotsV2(
+          repository,
+          new Date("2026-09-02T00:00:00Z"),
+        )
+      )[0].status,
+    ).toBe("unchanged");
+    const expired = current.aggregate;
+    expect(() =>
+      createPredictionSnapshotPayloadV2(
+        { ...expired, excludedObservationIds: [] },
+        {
+          kind: "periodic",
+          cutoffAt: expired.cutoffDate,
+          timeZone: "UTC",
+        },
+      ),
+    ).toThrow("sin evidencia");
+    expect(() =>
+      createPredictionSnapshotPayloadV2(expired, {
+        kind: "nomination_final",
+        cutoffAt: expired.cutoffDate,
+        timeZone: "UTC",
+        selectionSize: 10,
+      }),
+    ).toThrow("selección válida");
+    observations = observations.map((item) => ({
+      ...item,
+      publishedAt: "2026-09-03T00:00:00Z",
+      capturedAt: "2026-09-03T00:00:00Z",
+    }));
+    expect(
+      (
+        await runScheduledSnapshotsV2(
+          repository,
+          new Date("2026-09-03T00:00:00Z"),
+        )
+      )[0].status,
+    ).toBe("created");
+    expect(locked).toHaveLength(2);
+    expect(current.aggregate.orderedSourceCount).toBe(5);
+    expect(locked[0].payload.aggregate.ranking).toEqual([]);
+    expect(JSON.stringify(phase71FixtureAggregate("best-picture"))).toBe(
+      original,
+    );
   });
 });
 

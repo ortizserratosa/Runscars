@@ -243,8 +243,8 @@ export default async function SourcePage({ params }: SourcePageProps) {
                         (entry) => entry.appearanceKind === "ordered",
                       )
                         ? isEnglish
-                          ? "Included in consensus"
-                          : "Participa en el consenso"
+                          ? "Contributes Borda points"
+                          : "Aporta puntos Borda"
                         : isEnglish
                           ? "Coverage only"
                           : "Solo cobertura"}
@@ -266,13 +266,13 @@ export default async function SourcePage({ params }: SourcePageProps) {
                           </span>
                         </div>
                         <div
-                          aria-label={`${isEnglish ? "Current consensus for" : "Consenso vigente de"} ${entry.label}`}
+                          aria-label={`${isEnglish ? "Current Borda score for" : "Puntuación Borda vigente de"} ${entry.label}`}
                           className="source-entry-consensus"
                         >
                           <span>
                             {isEnglish
-                              ? "Current consensus"
-                              : "Consenso vigente"}
+                              ? "Current Borda score"
+                              : "Puntuación Borda vigente"}
                           </span>
                           <strong>
                             {entry.aggregateScore.toLocaleString(

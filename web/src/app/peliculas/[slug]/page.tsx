@@ -264,7 +264,7 @@ export default async function FilmPage({ params }: FilmPageProps) {
               {primaryPrediction ? (
                 <div className="film-score-strip">
                   <div>
-                    <span>{en ? "Consensus" : "Consenso"}</span>
+                    <span>{en ? "Borda score" : "Puntuación Borda"}</span>
                     <strong>
                       {formatNumber(
                         primaryPrediction.candidate.scoreOutOf100,
@@ -272,9 +272,7 @@ export default async function FilmPage({ params }: FilmPageProps) {
                       )}
                     </strong>
                     <small>
-                      {en
-                        ? "consensus points / 100"
-                        : "puntos de consenso / 100"}
+                      {en ? "Borda points / 100" : "puntos Borda / 100"}
                     </small>
                   </div>
                   <div>

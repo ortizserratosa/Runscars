@@ -63,6 +63,7 @@ function ActiveCategory({
   const en = locale === "en";
   const categoryName = en ? category.nameEn : category.name;
   const aggregate = view.aggregate;
+  const isConsensus = aggregate?.isConsensus ?? false;
   const ranking = aggregate?.ranking ?? [];
   const visibleRanking = ranking.slice(0, 10);
   const remainingRanking = ranking.slice(10);
@@ -116,7 +117,7 @@ function ActiveCategory({
             })}
           </strong>
           <div
-            aria-label={`${candidate.scoreOutOf100.toLocaleString(localeTag(locale))} ${en ? "consensus points out of 100" : "puntos de consenso sobre 100"}`}
+            aria-label={`${candidate.scoreOutOf100.toLocaleString(localeTag(locale))} ${en ? "Borda points out of 100" : "puntos Borda sobre 100"}`}
             aria-valuemax={100}
             aria-valuemin={0}
             aria-valuenow={candidate.scoreOutOf100}
@@ -352,17 +353,21 @@ function ActiveCategory({
               <div className="locked-snapshot-note">
                 <div>
                   <strong>
-                    {view.snapshot.comparableProjection
+                    {!isConsensus
                       ? en
-                        ? "Historical consensus under current rules"
-                        : "Consenso histórico con reglas vigentes"
-                      : view.snapshot.isLatest
+                        ? "Provisional professional predictions"
+                        : "Predicciones profesionales provisionales"
+                      : view.snapshot.comparableProjection
                         ? en
-                          ? "Current professional consensus"
-                          : "Consenso profesional vigente"
-                        : en
-                          ? "Selected historical update"
-                          : "Actualización histórica seleccionada"}
+                          ? "Historical consensus under current rules"
+                          : "Consenso histórico con reglas vigentes"
+                        : view.snapshot.isLatest
+                          ? en
+                            ? "Current professional consensus"
+                            : "Consenso profesional vigente"
+                          : en
+                            ? "Selected historical update"
+                            : "Actualización histórica seleccionada"}
                   </strong>
                   <span>
                     {aggregate?.includedObservationIds.length ?? 0}{" "}
@@ -516,22 +521,45 @@ function ActiveCategory({
         <section className="leaderboard-section">
           <div className="section-heading split-heading">
             <div>
-              <p className="section-index">{en ? "CONSENSUS" : "CONSENSO"}</p>
-              <h2>{en ? "Professional consensus" : "Consenso profesional"}</h2>
+              <p className="section-index">
+                {isConsensus
+                  ? en
+                    ? "CONSENSUS"
+                    : "CONSENSO"
+                  : en
+                    ? "PREDICTIONS"
+                    : "PREDICCIONES"}
+              </p>
+              <h2>
+                {isConsensus
+                  ? en
+                    ? "Professional consensus"
+                    : "Consenso profesional"
+                  : en
+                    ? "Provisional professional predictions"
+                    : "Predicciones profesionales provisionales"}
+              </h2>
             </div>
             <p>
               {en
-                ? "Each outlet counts once. Unordered selections add coverage, never consensus points."
-                : "Cada medio pesa una vez. Las selecciones sin orden aportan cobertura, nunca puntos de consenso."}
+                ? "Each outlet counts once. Unordered selections add coverage, never Borda points."
+                : "Cada medio pesa una vez. Las selecciones sin orden aportan cobertura, nunca puntos Borda."}
             </p>
           </div>
+          {ranking.length > 0 && !isConsensus ? (
+            <p className="insufficient-note" role="status">
+              {en
+                ? `${aggregate?.orderedSourceCount ?? 0} ranked sources available. At least four are required for professional consensus.`
+                : `${aggregate?.orderedSourceCount ?? 0} fuentes ordenadas disponibles. El consenso profesional requiere al menos cuatro.`}
+            </p>
+          ) : null}
           {ranking.length ? (
             <div className="leaderboard">
               <div className="leaderboard-head" aria-hidden="true">
                 <span>{en ? "Pos." : "Pos."}</span>
                 <span>{en ? "Candidate" : "Candidatura"}</span>
                 <span>{en ? "Sources" : "Fuentes"}</span>
-                <span>{en ? "Consensus" : "Consenso"}</span>
+                <span>{en ? "Borda" : "Borda"}</span>
                 <span>{en ? "Change" : "Cambio"}</span>
               </div>
               {visibleRanking.map(renderCandidate)}
@@ -548,8 +576,8 @@ function ActiveCategory({
           ) : (
             <p className="insufficient-note">
               {en
-                ? "Four comparable sources are still needed to publish this category."
-                : "Aún faltan cuatro fuentes comparables para publicar esta categoría."}
+                ? "No professional predictions are eligible in this update. Earlier updates remain available in the history."
+                : "No hay predicciones profesionales vigentes en este corte. Las actualizaciones anteriores siguen disponibles en el historial."}
             </p>
           )}
         </section>

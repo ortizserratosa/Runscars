@@ -212,6 +212,8 @@ function validateOrderedList(observations: PredictionObservationV2[]) {
     listLength > 0 &&
     ranks.every((rank) => rank !== null && rank <= listLength);
 
+  // Ingestion validates the complete source list. This published subset can
+  // have gaps while other candidates await matching; retain its original L.
   return {
     valid:
       lengths.size === 1 &&
@@ -238,7 +240,18 @@ function selectActiveSources(observations: PredictionObservationV2[]) {
 
   const active: ActiveSource[] = [];
   for (const [sourceId, publications] of bySource) {
-    const latestPublication = [...publications.entries()].sort(
+    // First resolve revisions of each canonical page, then compare pages by
+    // publication date. Combining both rules in one sort is non-transitive:
+    // a newer undated revision can otherwise resurrect its older dated copy.
+    const latestByUrl = new Map<string, [string, PredictionObservationV2[]]>();
+    for (const publication of publications.entries()) {
+      const url = publication[1][0].publicationUrl;
+      const current = latestByUrl.get(url);
+      if (!current || comparePublicationRecency(publication, current) < 0) {
+        latestByUrl.set(url, publication);
+      }
+    }
+    const latestPublication = [...latestByUrl.values()].sort(
       comparePublicationRecency,
     )[0];
     if (!latestPublication) continue;
@@ -330,7 +343,10 @@ export function aggregatePredictionsV2(
   });
   const candidates = new Map<string, CategoryCandidate>();
   for (const source of activeSources) {
-    for (const observation of source.observations) {
+    for (const observation of [
+      ...(source.orderedIsValid ? source.ordered : []),
+      ...source.selection,
+    ]) {
       candidates.set(observation.candidate.id, observation.candidate);
     }
   }
@@ -392,10 +408,8 @@ export function aggregatePredictionsV2(
       const ranks = sourceContributions.flatMap((source) =>
         source.rank === null ? [] : [source.rank],
       );
-      const appearances = activeSources.filter((source) =>
-        source.observations.some(
-          (observation) => observation.candidate.id === candidate.id,
-        ),
+      const appearances = sourceContributions.filter(
+        (source) => source.appeared,
       ).length;
       const score = stableDecimal(
         orderedSources.length === 0

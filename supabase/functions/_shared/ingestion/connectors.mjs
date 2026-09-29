@@ -17,6 +17,7 @@ import {
   parseRingerSelectionFixture,
 } from "./professional-predictions.mjs";
 import { fetchResponse } from "../network.mjs";
+import { runMovieStateConnector } from "./movie-state.mjs";
 
 function requestTimeout(connector) {
   const configured = Number(connector.configuration?.request_timeout_ms);
@@ -159,6 +160,7 @@ const AWARDS_RADAR_CATEGORY_URLS = Object.freeze({
 });
 
 export const CONNECTORS = Object.freeze({
+  "movie-state-predictions": runMovieStateConnector,
   "guardian-content-api": async ({
     connector,
     capturedAt,
@@ -315,7 +317,7 @@ export const CONNECTORS = Object.freeze({
     return mergeBatches(latest.selected, {
       mode: "wordpress-search",
       indexUrl: discoveryUrl,
-      extractorVersion: "awards-daily-v7",
+      extractorVersion: "awards-daily-v8",
       candidatesFound: candidates.length,
       ignoredUrls,
       supersededUrls: latest.supersededUrls,
@@ -375,7 +377,7 @@ export const CONNECTORS = Object.freeze({
     return mergeBatches(batches, {
       mode: "mutable-category-pages",
       indexUrl: connector.endpoint_url,
-      extractorVersion: "awards-radar-v5",
+      extractorVersion: "awards-radar-v6",
       categoriesChecked: Object.keys(categoryUrls).length,
       skippedUrls,
     });
@@ -531,20 +533,13 @@ export const CONNECTORS = Object.freeze({
     const unavailableCategories = [];
     for (const categoryId of categoryIds) {
       const categoryUrl = categoryUrls.get(categoryId);
-      if (!categoryUrl) {
-        unavailableCategories.push({
-          categoryId,
-          reason: "categoría no publicada",
-        });
-        continue;
-      }
       try {
         let articleUrl = discoverLatestAwardsWatchArticle(
           archive,
           connector.configuration.ceremony_year ?? 2027,
           categoryId,
         );
-        if (!articleUrl) {
+        if (!articleUrl && categoryUrl) {
           const listing = await loadHtml(categoryUrl);
           articleUrl = discoverLatestAwardsWatchArticle(
             listing,
@@ -568,6 +563,8 @@ export const CONNECTORS = Object.freeze({
             endpointUrl: articleUrl,
             seasonId: connector.configuration.season_id,
             categoryId,
+            panelAuthor:
+              connector.configuration.panel_author ?? "Erik Anderson",
           }),
         );
         publications.push(...batch.publications);
@@ -586,7 +583,7 @@ export const CONNECTORS = Object.freeze({
       {
         connectorId: connector.id,
         sourceId: "awardswatch",
-        extractorVersion: "awardswatch-multicategory-v5",
+        extractorVersion: "awardswatch-multicategory-v6",
         seasonId: connector.configuration.season_id,
         capturedAt,
         sourceUrl: connector.endpoint_url,

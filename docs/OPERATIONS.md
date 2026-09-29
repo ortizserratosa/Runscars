@@ -44,8 +44,8 @@ Comprobaciones mínimas después de cada despliegue:
 La salud se comprueba sobre ejecuciones reales, no solo sobre la existencia del
 Cron:
 
-- profesionales: ocho conectores activos, último run diario terminado y ninguna
-  categoría requerida ausente;
+- profesionales: nueve conectores activos (siete de predicciones y dos de
+  crítica), último run diario terminado y ninguna categoría requerida ausente;
 - mercados: Kalshi y Polymarket con éxito dentro de las dos últimas horas;
 - snapshots: un `snapshot_refresh_runs` terminado dentro de las últimas 36
   horas, aunque no se haya creado ningún corte nuevo;
@@ -75,9 +75,14 @@ npm run festivals:refresh
 La auditoría viva no forma parte de CI porque consulta páginas externas. Tras
 cada importación o despliegue se ejecuta `npm run audit:production`; recorre el
 sitemap con reintentos acotados, abre cada candidatura, comprueba enlaces
-internos, ejecuta los seis parsers profesionales contra sus páginas vigentes,
+internos, ejecuta los siete parsers de predicciones contra sus páginas vigentes,
 revisa Kalshi/Polymarket y comprueba frescura de conectores cuando dispone de
 credenciales de servidor.
+
+Para un corte limitado a predicciones, `npm run audit:predictions` comprueba
+parsers, categorías requeridas, conectores y frescura del refresco de snapshots
+sin recorrer todo el sitemap. Se completa con una muestra pública ES/EN de las
+rutas afectadas. Ver [la auditoría del 29/09](PREDICTION_AUDIT_2026-09-29.md).
 
 ## Despliegue del circuito festivalero
 

@@ -264,7 +264,7 @@ test("keeps candidate data consistent across public surfaces", async ({
     .filter({ hasText: candidateLabel ?? "The Odyssey" })
     .first();
   const sourceConsensus = sourceCandidate.getByLabel(
-    `Consenso vigente de ${candidateLabel ?? "The Odyssey"}`,
+    `Puntuación Borda vigente de ${candidateLabel ?? "The Odyssey"}`,
   );
   await expect(sourceConsensus.locator(":scope > strong")).toHaveText(
     categoryScore ?? "",

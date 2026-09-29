@@ -157,11 +157,15 @@ export async function runScheduledSnapshotsV2(
         intention: schedule.intention,
         cutoffDate: lockedAt,
       });
-      if (aggregate.includedObservationIds.length === 0) {
+      if (
+        aggregate.includedObservationIds.length === 0 &&
+        (schedule.kind !== "periodic" ||
+          aggregate.excludedObservationIds.length === 0)
+      ) {
         results.push({
           scheduleId: schedule.id,
           status: "skipped",
-          reason: "No hay listas v2 válidas para bloquear",
+          reason: "No hay evidencia v2 para bloquear",
         });
         continue;
       }

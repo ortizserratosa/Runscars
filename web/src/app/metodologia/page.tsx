@@ -53,8 +53,8 @@ export default async function MethodologyPage() {
           <h2>{en ? "Predictions" : "Predicción"}</h2>
           <p>
             {en
-              ? "Each professional source contributes its most recent eligible publication for each category and intention. A source counts once, even when it publishes several experts."
-              : "Cada fuente profesional aporta su publicación elegible más reciente por categoría e intención. Una fuente cuenta una vez, aunque publique varios expertos."}
+              ? "Each professional source contributes its most recent eligible publication for each category and intention. A source counts once, even when it publishes several experts. AwardsWatch follows Erik Anderson’s column and Next Best Picture follows Matt Neglia’s profile, with attribution to each author."
+              : "Cada fuente profesional aporta su publicación elegible más reciente por categoría e intención. Una fuente cuenta una vez, aunque publique varios expertos. De AwardsWatch se sigue la columna de Erik Anderson y de Next Best Picture el perfil de Matt Neglia, con atribución a cada autor."}
           </p>
         </article>
         <article>
@@ -71,7 +71,7 @@ export default async function MethodologyPage() {
       <section className="methodology-steps">
         <article>
           <p className="section-index">
-            {en ? "WEIGHTED CONSENSUS" : "CONSENSO PONDERADO"}
+            {en ? "EQUAL WEIGHT PER SOURCE" : "IGUAL PESO POR FUENTE"}
           </p>
           <h2>
             {en
@@ -85,8 +85,8 @@ export default async function MethodologyPage() {
           </div>
           <p>
             {en
-              ? "First place receives 1 and last place receives 1/length. An unordered selection confirms appearance only; it does not invent a rank. Public consensus requires at least four automated, publishable sources."
-              : "El primer puesto recibe 1 y el último 1/longitud. Una selección sin orden solo confirma aparición; no inventa una posición. El consenso público requiere al menos cuatro fuentes automáticas y publicables."}
+              ? "First place receives 1 and last place receives 1/length. Points are averaged across eligible ordered sources; an absent candidate receives zero. Unordered selections count towards coverage only. Consensus requires four current, automated, publishable ranked sources. Scores are not nomination probabilities; different list lengths can assign different points to the same rank."
+              : "El primer puesto recibe 1 y el último 1/longitud. Se promedian los puntos entre las fuentes ordenadas elegibles; una candidatura ausente recibe cero. Las selecciones sin orden solo aportan cobertura. El consenso exige cuatro fuentes con rankings vigentes, automáticos y publicables. Los puntos no son probabilidades: listas de distinta longitud pueden dar puntos diferentes al mismo puesto."}
           </p>
         </article>
         <article>

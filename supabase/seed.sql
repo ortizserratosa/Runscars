@@ -313,12 +313,13 @@ values
     'AwardsWatch Oscar Predictions HQ',
     'html',
     'https://awardswatch.com/oscar-predictions-hq/',
-    'awardswatch-multicategory-v5',
+    'awardswatch-multicategory-v6',
     true,
     '17 4 * * *',
     '{
       "season_id": "oscars-2027",
       "ceremony_year": 2027,
+      "panel_author": "Erik Anderson",
       "category_ids": [
         "best-picture",
         "directing",
@@ -336,7 +337,9 @@ values
         "actor",
         "actress",
         "supporting-actor",
-        "supporting-actress"
+        "supporting-actress",
+        "original-screenplay",
+        "adapted-screenplay"
       ]
     }'::jsonb
   ),
@@ -346,7 +349,7 @@ values
     'Awards Daily Oscar predictions',
     'html',
     'https://www.awardsdaily.com/wp-json/wp/v2/search?search=2027%20Oscar%20Predictions&per_page=20&_fields=id,url,title,subtype',
-    'awards-daily-v7',
+    'awards-daily-v8',
     true,
     '17 4 * * *',
     '{
@@ -373,7 +376,7 @@ values
     'Awards Radar Oscar predictions',
     'html',
     'https://awardsradar.com/predictions/',
-    'awards-radar-v5',
+    'awards-radar-v6',
     true,
     '17 4 * * *',
     '{

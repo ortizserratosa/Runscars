@@ -75,10 +75,50 @@ export default async function Home() {
   const topThree = ranking.slice(0, 3);
   const leader = topThree[0];
   if (!leader) {
-    throw new Error(
-      "La portada necesita un corte publicable de Mejor película",
+    return (
+      <main className="page-shell">
+        <section className="home-hero">
+          <p className="kicker">Oscar 2027</p>
+          <h1>{en ? "Oscar predictions 2027" : "Predicciones Oscar 2027"}</h1>
+          <p className="insufficient-note" role="status">
+            {categoryView.aggregate
+              ? en
+                ? "No professional predictions are currently eligible for Best Picture. Earlier updates remain available in the history."
+                : "No hay predicciones profesionales vigentes para Mejor película. Las actualizaciones anteriores siguen disponibles en el historial."
+              : en
+                ? "Predictions are temporarily unavailable. Please try again later."
+                : "Las predicciones no están disponibles temporalmente. Vuelve a intentarlo más tarde."}
+          </p>
+          <div className="hero-actions">
+            <Link
+              prefetch={false}
+              className="primary-button"
+              href={href("/temporadas/2027/mejor-pelicula")}
+            >
+              {en
+                ? "View Best Picture history"
+                : "Ver historial de Mejor película"}
+            </Link>
+            <Link
+              prefetch={false}
+              className="text-link"
+              href={href("/temporadas/2027")}
+            >
+              {en ? "Explore the season" : "Explorar temporada"}
+            </Link>
+          </div>
+        </section>
+      </main>
     );
   }
+  const isConsensus = categoryView.aggregate?.isConsensus ?? false;
+  const rankingLabel = isConsensus
+    ? en
+      ? "Consensus"
+      : "Consenso"
+    : en
+      ? "Provisional predictions"
+      : "Predicciones provisionales";
   const artwork = await getFilmArtwork(
     topThree.map((film) => film.id),
     locale,
@@ -112,7 +152,7 @@ export default async function Home() {
     ? liveReceipts
     : [
         {
-          name: en ? "Professional consensus" : "Consenso profesional",
+          name: rankingLabel,
           detail: leader.title,
           date: en ? "Update pending" : "Actualización pendiente",
           href: leader.href,
@@ -202,6 +242,13 @@ export default async function Home() {
                 ? "Compare professional Oscar predictions from specialist outlets, see which films lead and follow every change in consensus."
                 : "Compara predicciones profesionales de los Oscar, descubre qué películas lideran y sigue cada cambio del consenso."}
             </p>
+            {!isConsensus ? (
+              <p className="insufficient-note" role="status">
+                {en
+                  ? `${categoryView.aggregate?.orderedSourceCount ?? 0} ranked sources available. At least four are required for professional consensus.`
+                  : `${categoryView.aggregate?.orderedSourceCount ?? 0} fuentes ordenadas disponibles. El consenso profesional requiere al menos cuatro.`}
+              </p>
+            ) : null}
             <div className="hero-actions">
               <Link
                 prefetch={false}
@@ -224,7 +271,7 @@ export default async function Home() {
           <div className="hero-board">
             <div className="hero-board-label">
               <span>{en ? "Leading film" : "Película líder"}</span>
-              <span>{en ? "Consensus" : "Consenso"}</span>
+              <span>{rankingLabel}</span>
             </div>
             <Link prefetch={false} href={leader.href}>
               <PosterBlock
@@ -249,9 +296,7 @@ export default async function Home() {
                     maximumFractionDigits: 1,
                   })}
                 </strong>
-                <span>
-                  {en ? "consensus points / 100" : "puntos de consenso / 100"}
-                </span>
+                <span>{en ? "Borda points / 100" : "puntos Borda / 100"}</span>
               </div>
               <div
                 className="score-meter"
@@ -279,7 +324,14 @@ export default async function Home() {
             {en ? "Latest update" : "Última actualización"}
           </span>
           <Link prefetch={false} href={leader.href}>
-            {leader.title} {en ? "leads consensus" : "lidera el consenso"}
+            {leader.title}{" "}
+            {isConsensus
+              ? en
+                ? "leads consensus"
+                : "lidera el consenso"
+              : en
+                ? "leads the provisional ranking"
+                : "lidera el ranking provisional"}
           </Link>
           <span className="ticker-separator" aria-hidden="true">
             ◆
@@ -447,7 +499,7 @@ export default async function Home() {
                 prefetch={false}
                 href={href("/temporadas/2027/mejor-pelicula")}
               >
-                {en ? "Open consensus →" : "Abrir consenso →"}
+                {en ? "Open predictions →" : "Abrir predicciones →"}
               </Link>
             </article>
 

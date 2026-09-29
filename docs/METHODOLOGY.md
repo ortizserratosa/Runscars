@@ -1,7 +1,7 @@
 # Metodología
 
 **Estado:** agregación, snapshots y evaluación profesional operativos
-**Última revisión:** 2026-09-15
+**Última revisión:** 2026-09-29
 
 ## 1. Principios
 
@@ -38,9 +38,11 @@ título principal o alternativo de la temporada. Una coincidencia ausente o
 ambigua deja la observación pendiente, sin participación, y genera revisión
 editorial. Desde la fase 7.1, una película solo se resuelve automáticamente
 cuando título o alias y temporada producen una coincidencia única; las personas
-se resuelven únicamente dentro de sus créditos. Si TMDB confirma de forma
-inequívoca una película ausente, el importador incorpora película, personas y
-créditos antes de reintentar. Una observación pendiente nunca participa.
+se resuelven únicamente dentro de sus créditos. Para incorporar automáticamente una película ausente, TMDB debe confirmar
+título y año únicos, más al menos una persona explícita de dirección o reparto
+del lote; todos esos nombres deben coincidir con créditos del rol correspondiente.
+Sin esa corroboración se requiere revisión editorial. Una identidad verificada
+permite incorporar película, personas y créditos antes de reintentar. Una observación pendiente nunca participa.
 
 La identidad `CategoryCandidate` combina temporada, categoría, película u obra y
 el conjunto de personas. El conjunto identifica la candidatura y su orden
@@ -190,12 +192,20 @@ La longitud declarada debe coincidir con el número de filas. Un hueco, una
 posición duplicada o una categoría requerida ausente invalida la revisión antes
 de persistirla; el último corte válido permanece vigente.
 
+El orden debe estar numerado, marcado como lista ordenada o declarado por el
+medio; los saltos de línea o las filas de una tabla no prueban por sí solos
+un ranking. Se conserva la longitud completa del ranking extraído, sin un
+límite técnico silencioso de filas. Las listas de distinta longitud pueden
+otorgar puntos diferentes al mismo puesto: Borda es un índice ordinal, no una
+probabilidad calibrada.
+
 Una selección sin orden contribuye a cobertura, pero no a la puntuación Borda ni
 a las posiciones media o mediana.
 
 En Guion original y Guion adaptado, la candidatura se identifica por temporada,
 categoría y película. Los nombres de guionistas se conservan en el valor
-original y, cuando están verificados, como créditos secundarios; nunca dividen
+original y, cuando están verificados, como créditos secundarios. Un crédito sin resolver no bloquea
+una película inequívoca en guion; nunca dividen
 el voto de una misma película en candidaturas diferentes.
 
 ### 4.4 Fuente activa y cobertura
@@ -228,7 +238,11 @@ snapshots históricos.
 La publicación elegible más reciente se elige por fuente, categoría e intención:
 si una publicación nueva omite una categoría, no elimina la última lista
 elegible anterior de esa categoría. Un medio aporta una sola fuente aunque
-publique varios autores, miembros o bloques.
+publique varios autores, miembros o bloques. En el panel actual de AwardsWatch
+se sigue exclusivamente la columna de Erik Anderson; Next Best Picture sigue
+el perfil de Matt Neglia. No se atribuyen estas listas a un consenso de equipo.
+La última revisión de una misma URL se resuelve antes de comparar las fechas
+de publicaciones distintas, evitando una elección dependiente del orden de filas.
 
 Esa publicación solo participa durante los 30 días siguientes a su fecha de
 publicación o, cuando esta no existe, a su captura fechada. Desde el día 31 la
@@ -360,7 +374,10 @@ son públicos.
 - persona o proceso que lo bloqueó.
 
 Un snapshot periódico programado solo se bloquea cuando su estado efectivo de
-proveedores difiere del puntero periódico vigente. Los cierres finales y las
+proveedores difiere del puntero periódico vigente. Cuando vencen todas las fuentes, se permite un corte periódico v3 sin ranking
+ni fuentes activas y con las observaciones excluidas como evidencia, para retirar
+el consenso vencido. Un corte sin ninguna evidencia sigue siendo inválido.
+Los cierres finales y las
 correcciones explícitas conservan sus reglas propias y no dependen de este
 filtro.
 

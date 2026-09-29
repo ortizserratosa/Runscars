@@ -252,10 +252,11 @@ function httpsUrl(value, field) {
 }
 
 function canonicalUrl(html, fallback) {
-  const match = html.match(
-    /<link\b[^>]*\brel=(?:"canonical"|'canonical')[^>]*\bhref=(?:"([^"]+)"|'([^']+)')[^>]*>/i,
-  );
-  return httpsUrl(match?.[1] ?? match?.[2] ?? fallback, "canonicalUrl");
+  const element = [...html.matchAll(/<link\b[^>]*>/gi)].find((match) =>
+    /\brel\s*=\s*(?:"canonical"|'canonical')/i.test(match[0]),
+  )?.[0];
+  const href = element?.match(/\bhref\s*=\s*(?:"([^"]+)"|'([^']+)')/i);
+  return httpsUrl(href?.[1] ?? href?.[2] ?? fallback, "canonicalUrl");
 }
 
 function metaContent(html, property) {
@@ -276,6 +277,34 @@ function metaContent(html, property) {
     if (value) return stripTags(value);
   }
   return null;
+}
+
+function byline(html) {
+  for (const className of ["posts-author", "jeg_meta_author"]) {
+    const pattern = new RegExp(
+      `<(span|div)\\b[^>]*class=(?:"[^"]*\\b${className}\\b[^"]*"|'[^']*\\b${className}\\b[^']*')[^>]*>([\\s\\S]*?)<\\/\\1>`,
+      "i",
+    );
+    const content = html.match(pattern)?.[2];
+    const author = content?.match(/<a\b[^>]*>([\s\S]*?)<\/a>/i)?.[1];
+    if (author) return stripTags(author);
+    if (content && stripTags(content)) return stripTags(content);
+  }
+  return null;
+}
+
+function expectedCeremonyYear(seasonId) {
+  return Number(seasonId?.match(/(20\d{2})$/)?.[1]) || null;
+}
+
+function assertPredictionSeason(evidence, seasonId, sourceId) {
+  const expected = expectedCeremonyYear(seasonId);
+  const years = [
+    ...evidence.matchAll(/\b(20\d{2})\s+Oscars?\s+Predictions\b/gi),
+  ].map((match) => Number(match[1]));
+  if (expected && years.length && !years.includes(expected)) {
+    throw new Error(`${sourceId} publicó predicciones de otra temporada`);
+  }
 }
 
 function publicationMetadata(html, endpointUrl, sourceId, capturedAt) {
@@ -299,7 +328,7 @@ function publicationMetadata(html, endpointUrl, sourceId, capturedAt) {
     externalId: new URL(url).pathname.replace(/^\/|\/$/g, "") || sourceId,
     canonicalUrl: url,
     title,
-    author: metaContent(html, "author"),
+    author: metaContent(html, "author") ?? byline(html),
     publishedAt:
       published && !Number.isNaN(new Date(published).valueOf())
         ? new Date(published).toISOString()
@@ -367,7 +396,7 @@ function subjectParts(categoryId, raw) {
     .replace(/[⬆⬇↔]+/gu, "")
     .replace(/\s+(?:NEW|RETURNING|DEBUT)\s*$/, "")
     .replace(
-      /\s+\(\s*(?:Netflix|NEON|A24|MUBI|TBD|[^()]*(?:Pictures|Studios|Studio|Films|Film|Entertainment|Universal|Amazon|Columbia|Focus|Searchlight|Warner|Lionsgate))[^()]*\)\s*$/i,
+      /\s+\(\s*(?:Netflix|NEON|A24|MUBI|TBD|Bleecker Street|[^()]*(?:Pictures|Studios|Studio|Films|Film|Entertainment|Universal|Amazon|Columbia|Focus|Searchlight|Warner|Lionsgate))[^()]*\)\s*$/i,
       "",
     )
     .replace(
@@ -423,14 +452,15 @@ function subjectParts(categoryId, raw) {
 
 function observation(categoryId, rank, listLength, parts, raw) {
   return {
-    dataType: "prediction_ordered",
+    dataType: rank === null ? "prediction_selection" : "prediction_ordered",
     subject: parts.subject,
     filmSubject: parts.filmSubject,
     peopleSubjects: parts.peopleSubjects,
     workTitle: parts.workTitle,
     originalValue: {
-      rank,
-      list_length: listLength,
+      ...(rank === null
+        ? { selected: true }
+        : { rank, list_length: listLength }),
       raw,
       film_subject: parts.filmSubject,
       people_subjects: parts.peopleSubjects,
@@ -468,14 +498,8 @@ function buildBatch({
     }
     const listLength = rows.length;
     observations.push(
-      ...rows.map((row, index) =>
-        observation(
-          categoryId,
-          row.rank ?? index + 1,
-          listLength,
-          row.parts,
-          row.raw,
-        ),
+      ...rows.map((row) =>
+        observation(categoryId, row.rank, listLength, row.parts, row.raw),
       ),
     );
   }
@@ -506,7 +530,7 @@ function buildBatch({
   };
 }
 
-function awardsRadarCardRows(html, categoryId, maxRows = 10) {
+function awardsRadarCardRows(html, categoryId) {
   const updateMarker = html.search(
     /Updated\s+[A-Z][a-z]+\s+\d{1,2}(?:st|nd|rd|th)?,\s+\d{4}/i,
   );
@@ -525,9 +549,7 @@ function awardsRadarCardRows(html, categoryId, maxRows = 10) {
       parts: subjectParts(categoryId, ranked[2].trim()),
     });
   }
-  return rows
-    .toSorted((left, right) => left.rank - right.rank)
-    .slice(0, maxRows);
+  return rows.toSorted((left, right) => left.rank - right.rank);
 }
 
 function parseHeadingLists(
@@ -536,20 +558,22 @@ function parseHeadingLists(
 ) {
   const rowsByCategory = new Map();
   let categoryId = null;
+  let inAlternates = false;
   for (const line of lines.slice(contentStart)) {
     const heading = headingCategory(line);
     if (heading) {
       categoryId = heading;
+      inAlternates = false;
       if (!rowsByCategory.has(heading)) rowsByCategory.set(heading, []);
       continue;
     }
     if (
-      !categoryId ||
-      /^\(?alts?(?:[.:\s)]|$)/i.test(line) ||
-      /^-+$/.test(line)
+      !numbered &&
+      /^(?:\(?alts?(?:[.:\s)]|$)|\(?next|also consider)/i.test(line)
     ) {
-      continue;
+      inAlternates = true;
     }
+    if (!categoryId || inAlternates || /^-+$/.test(line)) continue;
     const rankMatch = line.match(/^(\d+)\s*[.)]\s+(.+)$/);
     if (numbered && !rankMatch) continue;
     if (!numbered && /^\(?next|^also consider/i.test(line)) continue;
@@ -562,12 +586,11 @@ function parseHeadingLists(
         .trim();
     }
     const rows = rowsByCategory.get(categoryId);
-    if (
-      !raw ||
-      rows.length >= maxRows ||
-      rows.some((row) => row.rank === rank && rank !== null)
-    ) {
-      continue;
+    if (!raw) continue;
+    if (rows.length >= maxRows) {
+      throw new Error(
+        `La lista ${categoryId} excede el límite esperado de ${maxRows} filas`,
+      );
     }
     rows.push({
       rank,
@@ -588,6 +611,7 @@ export function parseAwardsDailyFixture(
     "awards-daily",
     capturedAt,
   );
+  assertPredictionSeason(publication.title, seasonId, "awards-daily");
   const articleLines = htmlLines(
     divContentByClass(html, "content-inner") ?? html,
   );
@@ -621,7 +645,7 @@ export function parseAwardsDailyFixture(
   return buildBatch({
     connectorId,
     sourceId: "awards-daily",
-    extractorVersion: "awards-daily-v7",
+    extractorVersion: "awards-daily-v8",
     seasonId,
     capturedAt,
     sourceUrl: publication.canonicalUrl,
@@ -647,13 +671,20 @@ export function parseAwardsRadarFixture(
     capturedAt,
   );
   const lines = htmlLines(html);
+  assertPredictionSeason(
+    lines
+      .filter((line) => /^20\d{2} Oscars? Predictions$/i.test(line))
+      .join(" "),
+    seasonId,
+    "awards-radar",
+  );
   const updatedAt = updatedPredictionDate(lines);
   const publication = {
     ...metadata,
     publishedAt: updatedAt ?? metadata.publishedAt,
   };
   const updateMarker = lines.findIndex((line) => /^Updated\s+/i.test(line));
-  if (categoryId && updateMarker < 0) {
+  if (categoryId && (updateMarker < 0 || !updatedAt)) {
     throw new Error("awards-radar no contiene el marcador de actualización");
   }
   const categoryHeading = categoryId
@@ -675,12 +706,23 @@ export function parseAwardsRadarFixture(
     : parseHeadingLists(parsingLines, {
         numbered: true,
         contentStart: start,
-        maxRows: 10,
+        maxRows: Number.POSITIVE_INFINITY,
       });
+  // Source typos verified against the film's official credits; keep raw intact.
+  for (const rows of rowsByCategory.values()) {
+    for (const row of rows) {
+      if (row.parts.filmSubject?.toLocaleLowerCase() === "artifical") {
+        row.parts.filmSubject = "Artificial";
+      }
+      row.parts.peopleSubjects = row.parts.peopleSubjects.map((person) =>
+        person.toLocaleLowerCase() === "guy peace" ? "Guy Pearce" : person,
+      );
+    }
+  }
   return buildBatch({
     connectorId,
     sourceId: "awards-radar",
-    extractorVersion: "awards-radar-v5",
+    extractorVersion: "awards-radar-v6",
     seasonId,
     capturedAt,
     sourceUrl: publication.canonicalUrl,
@@ -700,7 +742,9 @@ export function parseMidnightCriticsFixture(
     capturedAt,
   );
   const lines = htmlLines(html);
-  const marker = lines.findIndex((line) => line === "2027 Oscar Predictions");
+  const marker = lines.findIndex(
+    (line) => line === `${expectedCeremonyYear(seasonId)} Oscar Predictions`,
+  );
   if (marker < 0) {
     throw new Error("midnight-critics no contiene el marcador de predicciones");
   }
@@ -747,11 +791,21 @@ export function parseNextBestPictureFixture(
   html,
   { connectorId, capturedAt, endpointUrl, seasonId },
 ) {
-  const publication = publicationMetadata(
+  const metadata = publicationMetadata(
     html,
     endpointUrl,
     "next-best-picture",
     capturedAt,
+  );
+  const publication = {
+    ...metadata,
+    // The page-level time is the site clock, not a prediction publication date.
+    publishedAt: null,
+  };
+  assertPredictionSeason(
+    metaContent(html, "description") ?? "",
+    seasonId,
+    "next-best-picture",
   );
   const lines = htmlLines(html);
   const headingPositions = CATEGORY_DEFINITIONS.flatMap(
@@ -828,7 +882,7 @@ export function parseNextBestPictureFixture(
     if (uniqueRows.length) rowsByCategory.set(current.categoryId, uniqueRows);
   }
 
-  return buildBatch({
+  const batch = buildBatch({
     connectorId,
     sourceId: "next-best-picture",
     extractorVersion: "next-best-picture-v3",
@@ -838,57 +892,167 @@ export function parseNextBestPictureFixture(
     publication,
     rowsByCategory,
   });
+  // Correct attribution from the explicit page title without changing the raw
+  // capture identity or renewing freshness when the ranking is unchanged.
+  batch.publications[0].author =
+    metadata.author ??
+    metadata.title.match(
+      /^Oscar Predictions\s+[-–—]\s+(.+?)\s+[-–—]\s+Next Best Picture$/i,
+    )?.[1] ??
+    null;
+  return batch;
+}
+
+function awardsWatchCategorySection(article, categoryId) {
+  const headings = [
+    ...article.matchAll(/<h[2-6]\b[^>]*>([\s\S]*?)<\/h[2-6]>/gi),
+  ]
+    .map((match) => ({
+      categoryId: headingCategory(stripTags(match[1])),
+      index: match.index,
+      end: match.index + match[0].length,
+    }))
+    .filter((heading) => heading.categoryId);
+  const start = headings.findLast(
+    (heading) => heading.categoryId === categoryId,
+  );
+  if (!start) {
+    if (headings.length)
+      throw new Error(`AwardsWatch no contiene la sección ${categoryId}`);
+    return article;
+  }
+  const next = headings.find((heading) => heading.index > start.index);
+  return article.slice(start.end, next?.index ?? article.length);
+}
+
+function awardsWatchPanel(section, categoryId, panelAuthor) {
+  const tables = [...section.matchAll(/<table\b[^>]*>([\s\S]*?)<\/table>/gi)];
+  if (
+    !tables.some((table) =>
+      [...table[1].matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)].some(
+        (row) => [...row[1].matchAll(/<t[dh]\b/gi)].length > 1,
+      ),
+    )
+  )
+    return null;
+  let column = -1;
+  let columnCount = 0;
+  let foundAuthor = false;
+  const rows = [];
+  const alternates = [];
+  const authors = [];
+  for (const table of tables) {
+    const tableRows = [
+      ...table[1].matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi),
+    ].map((match) =>
+      [...match[1].matchAll(/<t[dh]\b[^>]*>([\s\S]*?)<\/t[dh]>/gi)].map(
+        (cell) => stripTags(cell[1]),
+      ),
+    );
+    const header = tableRows.find((cells) => cells.some(Boolean));
+    if (!header) continue;
+    if (header.every((cell) => /^\*category placement tbd$/i.test(cell)))
+      continue;
+    const authorIndex = header.findIndex(
+      (cell) => cell.toLocaleLowerCase() === panelAuthor.toLocaleLowerCase(),
+    );
+    const isNext = header.every((cell) => /^NEXT$/i.test(cell));
+    if (authorIndex >= 0) {
+      if (foundAuthor)
+        throw new Error(
+          "AwardsWatch repite la tabla del autor en una categoría",
+        );
+      column = authorIndex;
+      columnCount = header.length;
+      foundAuthor = true;
+      authors.push(...header);
+    } else if (!isNext || !foundAuthor) {
+      throw new Error(
+        `AwardsWatch no contiene la columna configurada ${panelAuthor}`,
+      );
+    }
+    for (const cells of tableRows.slice(tableRows.indexOf(header) + 1)) {
+      if (cells.every((cell) => !cell)) continue;
+      if (cells.length !== columnCount || !cells[column]) {
+        throw new Error("AwardsWatch contiene una fila de panel incompleta");
+      }
+      const raw = cells[column];
+      const match = raw.match(/^(\d+)\s*[.)]\s+(.+)$/);
+      const row = {
+        rank: match ? Number(match[1]) : null,
+        raw,
+        parts: subjectParts(categoryId, match?.[2] ?? raw),
+      };
+      // An unnumbered NEXT block is an alternate tier, not a nomination vote.
+      if (isNext && row.rank === null) alternates.push(row);
+      else rows.push(row);
+    }
+  }
+  if (!foundAuthor || !rows.length) {
+    throw new Error(
+      `AwardsWatch no contiene la columna configurada ${panelAuthor}`,
+    );
+  }
+  return { rows, alternates, authors };
 }
 
 export function parseAwardsWatchArticleFixture(
   html,
-  { connectorId, capturedAt, endpointUrl, seasonId, categoryId },
+  {
+    connectorId,
+    capturedAt,
+    endpointUrl,
+    seasonId,
+    categoryId,
+    panelAuthor = "Erik Anderson",
+  },
 ) {
-  const publication = publicationMetadata(
+  const metadata = publicationMetadata(
     html,
     endpointUrl,
     "awardswatch",
     capturedAt,
   );
+  assertPredictionSeason(metadata.title, seasonId, "awardswatch");
   const article = html.match(/<article\b[\s\S]*?<\/article>/i)?.[0] ?? html;
-  const lines = htmlLines(article);
-  const categoryAliases =
-    CATEGORY_DEFINITIONS.find(([id]) => id === categoryId)?.[1] ?? [];
-  const sectionStart = lines.reduce(
-    (latest, line, index) =>
-      categoryAliases.some(
-        (alias) => line.toLocaleUpperCase() === alias.toLocaleUpperCase(),
-      )
-        ? index + 1
-        : latest,
-    0,
-  );
-  const rows = [];
-  for (const line of lines.slice(sectionStart)) {
-    const match = line.match(/^(\d+)\.\s+(.+)$/);
-    if (!match) continue;
-    const rank = Number(match[1]);
-    if (rank !== rows.length + 1) {
-      if (rows.length > 0) break;
-      continue;
+  const section = awardsWatchCategorySection(article, categoryId);
+  const panel = awardsWatchPanel(section, categoryId, panelAuthor);
+  const rows = panel?.rows ?? [];
+  if (!panel) {
+    for (const line of htmlLines(section)) {
+      if (/^Full list|alphabetical/i.test(line)) break;
+      const match = line.match(/^(\d+)\.\s+(.+)$/);
+      if (!match) continue;
+      rows.push({
+        rank: Number(match[1]),
+        raw: line,
+        parts: subjectParts(categoryId, match[2].trim()),
+      });
     }
-    const raw = match[2].trim();
-    rows.push({
-      rank,
-      raw: line,
-      parts: subjectParts(categoryId, raw),
-    });
   }
-  return buildBatch({
+  const publication = {
+    ...metadata,
+    ...(panel ? { author: panelAuthor } : {}),
+  };
+  const batch = buildBatch({
     connectorId,
     sourceId: "awardswatch",
-    extractorVersion: "awardswatch-multicategory-v2",
+    extractorVersion: "awardswatch-multicategory-v6",
     seasonId,
     capturedAt,
     sourceUrl: publication.canonicalUrl,
     publication,
     rowsByCategory: new Map([[categoryId, rows]]),
   });
+  if (panel) {
+    batch.publications[0].originalData.panel = {
+      selected_author: panelAuthor,
+      available_authors: panel.authors,
+      selection_rule: "configured-author",
+      alternates: panel.alternates,
+    };
+  }
+  return batch;
 }
 
 export function discoverAwardsWatchCategoryUrls(html) {

@@ -1,7 +1,7 @@
 # Registro de fuentes
 
 **Estado:** fuentes públicas y circuito festivalero 2026 versionados
-**Última revisión:** 2026-09-15
+**Última revisión:** 2026-09-29
 
 ## 1. Objetivo
 
@@ -423,3 +423,37 @@ El suplemento de Telluride se importó en la base pública el 07/09/2026:
 confirmó cero conjuntos nuevos. Se conservan los demás punteros de festivales.
 Ver [cobertura observada](audits/2026-09-07/festival-coverage-public.json) y
 [material que falta](FESTIVAL_PROGRAMME_HANDOFF.md).
+
+
+### Auditoría de predicciones · 29 de septiembre de 2026
+
+La [auditoría específica](PREDICTION_AUDIT_2026-09-29.md) sustituye los conteos
+operativos históricos de esta página para describir el estado vigente. Catálogo,
+conector activo y voto fresco son estados distintos: al inicio solo tres medios
+aportaban rankings recientes por categoría, y AwardsWatch fallaba desde el 17/09.
+
+- AwardsWatch: discovery de artículos con varias categorías y paneles; columna
+  configurada de Erik Anderson. Los guiones publicados el 21/09 se incorporan
+  como selecciones sin posición, igual que las cuatro categorías interpretativas;
+  película y dirección conservan su orden explícito. Las ocho pasan a ser requeridas.
+- Awards Daily: los bloques sin números son selecciones, conservando autora
+  Sasha Stone y la fecha del artículo; el parser ya no fabrica posiciones.
+- Awards Radar: lista numerada completa y fecha visible de actualización, sin
+  truncar silenciosamente a diez tarjetas. Los casos ambiguos quedan pendientes.
+- Next Best Picture: perfil de Matt Neglia; su reloj de cabecera no es fecha de
+  predicción. Se mantiene captura original cuando no hay cambio de contenido.
+- Midnight Critics Circle y The Ringer: las comprobaciones continúan, pero no
+  reactivan por sí solas sus publicaciones vencidas.
+- The Movie State: nuevo conector automático `movie-state-predictions`, Ben Sears,
+  ocho categorías, diez posiciones en película y cinco en las demás. Descubre
+  el artículo de temporada desde el archivo y guarda tanto publicación original
+  como modificación del CMS. La frescura usa la publicación original del 14/09;
+  la modificación del 21/09 es metadato secundario y no renueva el voto.
+  Frecuencia editorial irregular comprobada.
+
+La [comparación de candidatas](audits/2026-09-29/source-research.md) conserva
+las URLs, autores, fechas, restricciones y motivos de incorporación o espera.
+No se alcanza el mínimo de consenso inventando posiciones de listas alfabéticas
+ni multiplicando autores de un mismo medio. `npm run audit:predictions` comprueba
+los parsers y la cobertura requerida con la configuración remota cuando dispone
+de credenciales; su modo sin credenciales identifica expresamente esa limitación.

@@ -137,3 +137,13 @@ fuentes externas.
 Con estos ejemplos coincidentes y la trazabilidad visible, la puerta de salida
 de la fase 6 queda cumplida. La inmutabilidad, correcciones de snapshots y
 evaluación contra resultados se implementaron después en la fase 7.
+
+
+## Auditoría del 29 de septiembre de 2026
+
+D-063 conserva la fórmula Borda v3 y corrige la selección de evidencia:
+revisiones por URL antes de comparar publicaciones, cobertura solo desde
+contribuciones válidas, lectura paginada y retirada mediante corte periódico
+vacío cuando todas las fuentes vencen. Una selección sin orden explícito no
+aporta puestos ni puntos. Las coincidencias de guion usan la película aunque
+falten créditos secundarios. Ver [auditoría](PREDICTION_AUDIT_2026-09-29.md).

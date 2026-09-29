@@ -1,5 +1,10 @@
 import { createClient } from "@supabase/supabase-js";
-import { canonicalJson, normalizeIdentity, prepareBatch } from "./core.mjs";
+import {
+  canonicalJson,
+  normalizeIdentity,
+  prepareBatch,
+  validateRequiredPredictionCategories,
+} from "./core.mjs";
 import { expandCatalogFromBatch } from "./tmdb-expansion.mjs";
 
 function databaseError(result, action) {
@@ -1011,23 +1016,7 @@ export async function runConnectorSet({
         )
           ? connector.configuration.required_category_ids
           : [];
-        if (requiredCategoryIds.length) {
-          const observedCategoryIds = new Set(
-            batch.publications.flatMap((publication) =>
-              publication.observations.map(
-                (observation) => observation.categoryId,
-              ),
-            ),
-          );
-          const missingCategoryIds = requiredCategoryIds.filter(
-            (categoryId) => !observedCategoryIds.has(categoryId),
-          );
-          if (missingCategoryIds.length) {
-            throw new Error(
-              `Cobertura incompleta; faltan categorías requeridas: ${missingCategoryIds.join(", ")}`,
-            );
-          }
-        }
+        validateRequiredPredictionCategories(batch, requiredCategoryIds);
         if (secrets.TMDB_READ_ACCESS_TOKEN) {
           const expansion = await expandCatalogFromBatch({
             batch,

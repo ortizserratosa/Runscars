@@ -1199,3 +1199,85 @@ ejemplos manuales de nominaciones y ganador coincidieron con
 - **Operación:** este cambio reduce trabajo repetido; no borra consumo ya
   contabilizado ni contrata capacidad adicional. Evidencia y límites en
   [VERCEL_AUDIT_2026-09-29.md](VERCEL_AUDIT_2026-09-29.md).
+
+
+## D-063 · Evidencia explícita de orden, autor y retirada de predicciones
+
+- **Fecha:** 2026-09-29
+- **Estado:** Aceptada
+- **Origen:** auditoría e implementación solicitadas por el usuario sobre fuentes,
+  extracción y cálculo de las predicciones.
+- **Orden:** una secuencia visual sin numeración, lista HTML ordenada o declaración
+  editorial inequívoca no se convierte en ranking. Las selecciones de Awards
+  Daily y los guiones de AwardsWatch sin posiciones aportan cobertura, no Borda.
+  Las alternativas rotuladas `NEXT` de una selección se conservan como evidencia
+  y no se equiparan a sus nominados previstos.
+- **Paneles:** AwardsWatch conserva a Erik Anderson como autor de referencia,
+  continuando sus capturas anteriores. La columna se identifica por nombre
+  configurado; su ausencia provoca fallo. No se mezclan las cuatro columnas ni
+  se fabrica un consenso del medio. Next Best Picture se atribuye al perfil
+  capturado de Matt Neglia, no al conjunto de su equipo.
+- **Longitud:** se preserva la lista numerada publicada completa de Awards Radar;
+  el límite técnico de diez filas no representa la longitud original. Borda
+  mantiene `(L-p+1)/L`, con igual peso por medio. Las distintas longitudes son
+  una limitación conocida de este índice ordinal, nunca probabilidades.
+- **Identidad:** en guion, una película inequívoca puede participar aunque un
+  crédito de autor no esté verificado; solo los créditos comprobados enriquecen
+  la candidatura. Los valores originales permanecen intactos (D-054).
+- **Vigencia:** la última revisión se resuelve primero dentro de cada URL y
+  después entre publicaciones por fecha, de forma determinista. La lectura
+  pagina observaciones y referencias. La cobertura usa exclusivamente las
+  contribuciones elegibles. Si todas las fuentes vencen, un corte periódico
+  vacío con las observaciones excluidas como evidencia retira el ranking vigente;
+  los cierres finales continúan exigiendo una selección válida.
+- **Continuidad:** versiones nuevas de extractor para cambios semánticos; una
+  corrección solo de validación o autoría no renueva la frescura de una página
+  sin fecha. No se modifican snapshots bloqueados ni se recalculan sus hashes.
+
+## D-064 · Incorporación de The Movie State a las predicciones
+
+- **Fecha:** 2026-09-29
+- **Estado:** Aceptada
+- **Origen:** misma auditoría solicitada de cobertura profesional.
+- **Decisión:** activar una voz adicional, The Movie State / Ben Sears, en las
+  ocho categorías públicas. Su artículo declara predicciones ordenadas de
+  nominaciones; conserva autor, URL canónica, publicación original, modificación
+  del CMS como metadato secundario, captura y posiciones originales. La frescura
+  usa la publicación original; el cambio de fecha del CMS no renueva el voto
+  sin evidencia explícita de una nueva predicción o revisión editorial.
+- **Operación:** discovery diario del archivo de predicciones para la ceremonia
+  configurada, revisión completa e idempotente y ocho categorías obligatorias.
+  Ausencia de autor, fecha, temporada, intención o estructura válida impide
+  publicar la revisión. Su frecuencia editorial es irregular; la comprobación
+  diaria no implica una publicación nueva diaria ni semanal.
+- **Publicación:** únicamente valores fácticos de ranking, metadatos y enlaces
+  atribuidos; sin cuerpo del artículo ni extractos de reseñas. Las otras fuentes
+  candidatas conservan el estado y las restricciones registrados en la auditoría.
+- **Calidad:** incorporar una fuente no rebaja el mínimo de cuatro rankings
+  ordenados para denominar consenso a una categoría. Una selección, un panel
+  duplicado o una publicación vencida no completan ese mínimo.
+
+## D-065 · Corroboración de identidad antes de ampliar el catálogo automáticamente
+
+- **Fecha:** 2026-09-29
+- **Estado:** Aceptada
+- **Origen:** la auditoría encontró `Artificial` enlazada al homónimo de Tyler
+  Woods (TMDB 1586108), aunque las predicciones se referían a Luca Guadagnino
+  (TMDB 1492198), confirmado por el programa oficial del NYFF y los créditos.
+- **Decisión:** título exacto y año no bastan para crear automáticamente una
+  película desde predicciones. Además se exige al menos una persona explícita
+  de dirección o interpretación del lote y coincidencia de todas esas personas
+  con los créditos correspondientes. La respuesta de detalle debe confirmar
+  ID, título y año. Sin evidencia personal o ante discrepancia, queda pendiente
+  de revisión; los autores secundarios de guion no bloquean la identidad.
+- **Procedencia:** el matching automático conserva la regla y los nombres
+  corroborados. La corrección editorial de Artificial usa el flujo `tmdb:match`,
+  conserva el historial anterior y reemplaza sus créditos erróneos; una migración
+  acotada corrige el enlace y la fecha de fallback de la ficha canónica.
+- **Límite:** verificar identidad y créditos no acredita elegibilidad Oscar ni
+  convierte TMDB en autoridad sobre candidaturas o categoría de interpretación.
+- **Operación:** sin evidencia personal no se consulta TMDB. La expansión inicia
+  solicitudes durante un máximo de 60 segundos, con timeout de 15 segundos y dos
+  intentos por solicitud. Si `Retry-After` supera un segundo, se deja el título
+  pendiente sin reintentar antes de lo indicado por el proveedor. Este presupuesto
+  no sustituye la medición del tiempo total de extracción y persistencia.

@@ -1,0 +1,808 @@
+{
+  "capturedAt": "2026-09-29T17:48:37.578Z",
+  "catalogueFilms": 73,
+  "sources": [
+    {
+      "id": "awards-daily-predictions",
+      "extractor": "awards-daily-v8",
+      "publications": [
+        {
+          "url": "https://www.awardsdaily.com/2026/09/25/2027-oscar-predictions-best-actress-is-wide-open/",
+          "author": "Sasha Stone",
+          "date": "2026-09-25T00:00:00.000Z",
+          "categories": {
+            "best-picture": {
+              "total": 10,
+              "ordered": 0,
+              "published": 10,
+              "pending": []
+            },
+            "directing": {
+              "total": 5,
+              "ordered": 0,
+              "published": 5,
+              "pending": []
+            },
+            "actor": {
+              "total": 5,
+              "ordered": 0,
+              "published": 5,
+              "pending": []
+            },
+            "actress": {
+              "total": 5,
+              "ordered": 0,
+              "published": 5,
+              "pending": []
+            },
+            "supporting-actor": {
+              "total": 5,
+              "ordered": 0,
+              "published": 5,
+              "pending": []
+            },
+            "supporting-actress": {
+              "total": 5,
+              "ordered": 0,
+              "published": 5,
+              "pending": []
+            },
+            "original-screenplay": {
+              "total": 5,
+              "ordered": 0,
+              "published": 5,
+              "pending": []
+            },
+            "adapted-screenplay": {
+              "total": 5,
+              "ordered": 0,
+              "published": 5,
+              "pending": []
+            },
+            "film-editing": {
+              "total": 5,
+              "ordered": 0,
+              "published": 5,
+              "pending": []
+            },
+            "casting": {
+              "total": 5,
+              "ordered": 0,
+              "published": 5,
+              "pending": []
+            },
+            "visual-effects": {
+              "total": 5,
+              "ordered": 0,
+              "published": 5,
+              "pending": []
+            },
+            "cinematography": {
+              "total": 5,
+              "ordered": 0,
+              "published": 4,
+              "pending": [
+                {
+                  "subject": "La Bolla Negra",
+                  "reason": "film_match"
+                }
+              ]
+            },
+            "costume-design": {
+              "total": 5,
+              "ordered": 0,
+              "published": 5,
+              "pending": []
+            },
+            "makeup-hairstyling": {
+              "total": 5,
+              "ordered": 0,
+              "published": 5,
+              "pending": []
+            },
+            "production-design": {
+              "total": 5,
+              "ordered": 0,
+              "published": 5,
+              "pending": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "awards-radar-predictions",
+      "extractor": "awards-radar-v6",
+      "publications": [
+        {
+          "url": "https://awardsradar.com/best-picture/",
+          "author": null,
+          "date": "2026-09-23T00:00:00.000Z",
+          "categories": {
+            "best-picture": {
+              "total": 50,
+              "ordered": 50,
+              "published": 41,
+              "pending": [
+                {
+                  "subject": "The Liberation",
+                  "reason": "film_match"
+                },
+                {
+                  "subject": "Tenzing",
+                  "reason": "film_match"
+                },
+                {
+                  "subject": "Cry to Heaven",
+                  "reason": "film_match"
+                },
+                {
+                  "subject": "Bunker",
+                  "reason": "film_match"
+                },
+                {
+                  "subject": "The Mosquito Bowl",
+                  "reason": "film_match"
+                },
+                {
+                  "subject": "A Statement",
+                  "reason": "film_match"
+                },
+                {
+                  "subject": "I Swear",
+                  "reason": "film_match"
+                },
+                {
+                  "subject": "Mr. Irrelevant",
+                  "reason": "film_match"
+                },
+                {
+                  "subject": "Wuthering Heights",
+                  "reason": "film_match"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "url": "https://awardsradar.com/best-director/",
+          "author": null,
+          "date": "2026-09-23T00:00:00.000Z",
+          "categories": {
+            "directing": {
+              "total": 20,
+              "ordered": 20,
+              "published": 20,
+              "pending": []
+            }
+          }
+        },
+        {
+          "url": "https://awardsradar.com/best-actor/",
+          "author": null,
+          "date": "2026-09-23T00:00:00.000Z",
+          "categories": {
+            "actor": {
+              "total": 20,
+              "ordered": 20,
+              "published": 18,
+              "pending": [
+                {
+                  "subject": "Javier Bardem – Bunker",
+                  "reason": "person_match"
+                },
+                {
+                  "subject": "John Magaro – Omaha",
+                  "reason": "person_match"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "url": "https://awardsradar.com/best-actress/",
+          "author": null,
+          "date": "2026-09-23T00:00:00.000Z",
+          "categories": {
+            "actress": {
+              "total": 20,
+              "ordered": 20,
+              "published": 17,
+              "pending": [
+                {
+                  "subject": "Carrie Coon – The Liberation",
+                  "reason": "person_match"
+                },
+                {
+                  "subject": "Anne Hathaway – Verity",
+                  "reason": "person_match"
+                },
+                {
+                  "subject": "Zendaya – The Drama",
+                  "reason": "person_match"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "url": "https://awardsradar.com/best-supporting-actor/",
+          "author": null,
+          "date": "2026-09-23T00:00:00.000Z",
+          "categories": {
+            "supporting-actor": {
+              "total": 20,
+              "ordered": 20,
+              "published": 20,
+              "pending": []
+            }
+          }
+        },
+        {
+          "url": "https://awardsradar.com/best-supporting-actress/",
+          "author": null,
+          "date": "2026-09-23T00:00:00.000Z",
+          "categories": {
+            "supporting-actress": {
+              "total": 20,
+              "ordered": 20,
+              "published": 19,
+              "pending": [
+                {
+                  "subject": "Alison Oliver – Wuthering Heights",
+                  "reason": "person_match"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "url": "https://awardsradar.com/best-original-screenplay/",
+          "author": null,
+          "date": "2026-09-23T00:00:00.000Z",
+          "categories": {
+            "original-screenplay": {
+              "total": 20,
+              "ordered": 20,
+              "published": 18,
+              "pending": [
+                {
+                  "subject": "Mr. Irrelevant",
+                  "reason": "film_match"
+                },
+                {
+                  "subject": "Bunker",
+                  "reason": "film_match"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "url": "https://awardsradar.com/best-adapted-screenplay/",
+          "author": null,
+          "date": "2026-09-23T00:00:00.000Z",
+          "categories": {
+            "adapted-screenplay": {
+              "total": 20,
+              "ordered": 20,
+              "published": 16,
+              "pending": [
+                {
+                  "subject": "Cry to Heaven",
+                  "reason": "film_match"
+                },
+                {
+                  "subject": "The Mosquito Bowl",
+                  "reason": "film_match"
+                },
+                {
+                  "subject": "A Statement",
+                  "reason": "film_match"
+                },
+                {
+                  "subject": "Nirvanna the Band the Show the Movie",
+                  "reason": "film_match"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "awardswatch-predictions",
+      "extractor": "awardswatch-multicategory-v6",
+      "publications": [
+        {
+          "url": "https://awardswatch.com/2027-oscar-predictions-best-picture-and-best-director-september/",
+          "author": "Erik Anderson",
+          "date": "2026-09-17T17:11:32.000Z",
+          "categories": {
+            "best-picture": {
+              "total": 15,
+              "ordered": 15,
+              "published": 15,
+              "pending": []
+            }
+          }
+        },
+        {
+          "url": "https://awardswatch.com/2027-oscar-predictions-best-picture-and-best-director-september/",
+          "author": "Erik Anderson",
+          "date": "2026-09-17T17:11:32.000Z",
+          "categories": {
+            "directing": {
+              "total": 10,
+              "ordered": 10,
+              "published": 10,
+              "pending": []
+            }
+          }
+        },
+        {
+          "url": "https://awardswatch.com/2027-oscar-predictions-best-actor-and-best-actress-september/",
+          "author": "Erik Anderson",
+          "date": "2026-09-17T20:26:16.000Z",
+          "categories": {
+            "actor": {
+              "total": 5,
+              "ordered": 0,
+              "published": 5,
+              "pending": []
+            }
+          }
+        },
+        {
+          "url": "https://awardswatch.com/2027-oscar-predictions-best-actor-and-best-actress-september/",
+          "author": "Erik Anderson",
+          "date": "2026-09-17T20:26:16.000Z",
+          "categories": {
+            "actress": {
+              "total": 5,
+              "ordered": 0,
+              "published": 5,
+              "pending": []
+            }
+          }
+        },
+        {
+          "url": "https://awardswatch.com/2027-oscar-predictions-supporting-actor-and-supporting-actress-september/",
+          "author": "Erik Anderson",
+          "date": "2026-09-18T16:41:45.000Z",
+          "categories": {
+            "supporting-actor": {
+              "total": 5,
+              "ordered": 0,
+              "published": 5,
+              "pending": []
+            }
+          }
+        },
+        {
+          "url": "https://awardswatch.com/2027-oscar-predictions-supporting-actor-and-supporting-actress-september/",
+          "author": "Erik Anderson",
+          "date": "2026-09-18T16:41:45.000Z",
+          "categories": {
+            "supporting-actress": {
+              "total": 5,
+              "ordered": 0,
+              "published": 5,
+              "pending": []
+            }
+          }
+        },
+        {
+          "url": "https://awardswatch.com/2027-oscar-predictions-adapted-screenplay-and-original-screenplay-september/",
+          "author": "Erik Anderson",
+          "date": "2026-09-21T19:01:01.000Z",
+          "categories": {
+            "original-screenplay": {
+              "total": 5,
+              "ordered": 0,
+              "published": 5,
+              "pending": []
+            }
+          }
+        },
+        {
+          "url": "https://awardswatch.com/2027-oscar-predictions-adapted-screenplay-and-original-screenplay-september/",
+          "author": "Erik Anderson",
+          "date": "2026-09-21T19:01:01.000Z",
+          "categories": {
+            "adapted-screenplay": {
+              "total": 5,
+              "ordered": 0,
+              "published": 5,
+              "pending": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "midnight-critics-predictions",
+      "extractor": "midnight-critics-v2",
+      "publications": [
+        {
+          "url": "https://www.midnightcritics.com/predictions/2027-oscar-predictions",
+          "author": null,
+          "date": null,
+          "categories": {
+            "best-picture": {
+              "total": 15,
+              "ordered": 15,
+              "published": 15,
+              "pending": []
+            },
+            "directing": {
+              "total": 10,
+              "ordered": 10,
+              "published": 10,
+              "pending": []
+            },
+            "actress": {
+              "total": 10,
+              "ordered": 10,
+              "published": 10,
+              "pending": []
+            },
+            "actor": {
+              "total": 10,
+              "ordered": 10,
+              "published": 10,
+              "pending": []
+            },
+            "supporting-actress": {
+              "total": 10,
+              "ordered": 10,
+              "published": 10,
+              "pending": []
+            },
+            "supporting-actor": {
+              "total": 10,
+              "ordered": 10,
+              "published": 10,
+              "pending": []
+            },
+            "original-screenplay": {
+              "total": 10,
+              "ordered": 10,
+              "published": 9,
+              "pending": [
+                {
+                  "subject": "Jack of Spades",
+                  "reason": "film_match"
+                }
+              ]
+            },
+            "adapted-screenplay": {
+              "total": 10,
+              "ordered": 10,
+              "published": 10,
+              "pending": []
+            },
+            "casting": {
+              "total": 10,
+              "ordered": 10,
+              "published": 10,
+              "pending": []
+            },
+            "film-editing": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "cinematography": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "original-score": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "visual-effects": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "sound": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "makeup-hairstyling": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "costume-design": {
+              "total": 5,
+              "ordered": 5,
+              "published": 4,
+              "pending": [
+                {
+                  "subject": "Jack of Spades",
+                  "reason": "film_match"
+                }
+              ]
+            },
+            "production-design": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "animated-feature": {
+              "total": 5,
+              "ordered": 5,
+              "published": 4,
+              "pending": [
+                {
+                  "subject": "Tangles",
+                  "reason": "film_match"
+                }
+              ]
+            },
+            "documentary-feature": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "international-feature": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "next-best-picture-predictions",
+      "extractor": "next-best-picture-v3",
+      "publications": [
+        {
+          "url": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars",
+          "author": "Matt Neglia",
+          "date": null,
+          "categories": {
+            "best-picture": {
+              "total": 10,
+              "ordered": 10,
+              "published": 10,
+              "pending": []
+            },
+            "directing": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "actress": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "actor": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "supporting-actress": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "supporting-actor": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "adapted-screenplay": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "original-screenplay": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "casting": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "animated-feature": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "documentary-feature": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "international-feature": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "cinematography": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "costume-design": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "film-editing": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "makeup-hairstyling": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "production-design": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "original-score": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "original-song": {
+              "total": 5,
+              "ordered": 5,
+              "published": 1,
+              "pending": [
+                {
+                  "subject": "This City May Have Chewed Me Up (But It Hasn’t Spit Me Out)",
+                  "reason": "film_match"
+                },
+                {
+                  "subject": "La Nieve",
+                  "reason": "film_match"
+                },
+                {
+                  "subject": "I Knew It, I Knew You",
+                  "reason": "film_match"
+                },
+                {
+                  "subject": "How to Write a Song (Without You)",
+                  "reason": "film_match"
+                }
+              ]
+            },
+            "sound": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "visual-effects": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "ringer-best-picture",
+      "extractor": "the-ringer-v2",
+      "publications": [
+        {
+          "url": "https://www.theringer.com/2026/03/20/oscars/oscars-2027-predictions-best-picture-movies-contenders",
+          "author": null,
+          "date": "2026-03-20T12:18:00.000Z",
+          "categories": {
+            "best-picture": {
+              "total": 3,
+              "ordered": 0,
+              "published": 3,
+              "pending": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "movie-state-predictions",
+      "extractor": "movie-state-v1",
+      "publications": [
+        {
+          "url": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/",
+          "author": "Ben Sears",
+          "date": "2026-09-14T15:00:00.000Z",
+          "categories": {
+            "best-picture": {
+              "total": 10,
+              "ordered": 10,
+              "published": 10,
+              "pending": []
+            },
+            "directing": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "original-screenplay": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "adapted-screenplay": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "actress": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "actor": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "supporting-actress": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            },
+            "supporting-actor": {
+              "total": 5,
+              "ordered": 5,
+              "published": 5,
+              "pending": []
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,221 @@
+{
+  "reviewedOn": "2026-09-29",
+  "basis": "Primary source identity and credits verification. Source-specific typo aliases are implemented and tested in code; deployment is not certified by this receipt. The coordinating audit applied the Artificial TMDB correction and refreshed Ink credits in the live catalog through the canonical editorial CLI.",
+  "cases": [
+    {
+      "id": "awards-radar-artifical",
+      "sourceId": "awards-radar",
+      "sourceUrls": [
+        "https://awardsradar.com/best-picture/",
+        "https://awardsradar.com/best-actor/"
+      ],
+      "originalSubjects": [
+        "Artifical",
+        "Yura Borisov – Artifical"
+      ],
+      "verifiedFilmTitle": "Artificial",
+      "verifiedDirector": "Luca Guadagnino",
+      "sourceContext": "Best Picture card 24 identifies the Sam Altman/OpenAI firing and reinstatement story; the actor list pairs the same misspelling with Yura Borisov",
+      "primaryEvidence": [
+        {
+          "url": "https://www.filmlinc.org/nyff2026/films/artificial/",
+          "publisher": "Film at Lincoln Center / New York Film Festival",
+          "supports": [
+            "Artificial title",
+            "Luca Guadagnino director",
+            "Yura Borisov as Ilya Sutskever",
+            "Andrew Garfield as Sam Altman"
+          ]
+        },
+        {
+          "url": "https://www.filmlinc.org/nyff2026/daily/64th-new-york-film-festival-main-slate-announced/",
+          "publisher": "Film at Lincoln Center",
+          "publishedOn": "2026-08-05",
+          "supports": [
+            "Artificial title and director",
+            "Sam Altman/OpenAI subject and cast identities"
+          ]
+        }
+      ],
+      "recommendation": "Resolve only this verified source spelling to Artificial; preserve original raw text and attach the correction evidence. Do not create a second film or use general fuzzy matching.",
+      "status": "implemented_in_extractor_deployment_not_verified",
+      "oscarEligibilityVerified": false,
+      "application": {
+        "implementedOn": "2026-09-29",
+        "scope": "Awards Radar only; exact source spelling Artifical becomes matching field Artificial while subject and originalValue.raw remain unchanged",
+        "codePath": "supabase/functions/_shared/ingestion/professional-predictions.mjs",
+        "testPath": "web/tests/unit/ingestion.test.ts",
+        "productionImportVerified": false
+      }
+    },
+    {
+      "id": "awards-radar-guy-peace-ink",
+      "sourceId": "awards-radar",
+      "sourceUrls": [
+        "https://awardsradar.com/best-supporting-actor/"
+      ],
+      "originalSubjects": [
+        "Guy Peace – Ink"
+      ],
+      "verifiedFilmTitle": "Ink",
+      "verifiedPersonName": "Guy Pearce",
+      "verifiedCharacter": "Rupert Murdoch",
+      "sourceContext": "Supporting Actor card 17 contains the misspelling, while its own image metadata identifies Guy Pearce; its synopsis concerns The Sun and Larry Lamb",
+      "primaryEvidence": [
+        {
+          "url": "https://www.labiennale.org/en/cinema/2026/venezia-83-competition/ink",
+          "publisher": "La Biennale di Venezia",
+          "supports": [
+            "Danny Boyle director",
+            "Guy Pearce cast in Ink",
+            "Jack O'Connell and Claire Foy cast in Ink"
+          ]
+        },
+        {
+          "url": "https://www.labiennale.org/en/news/danny-boyle%E2%80%99s-ink-opening-film-biennale-cinema-2026",
+          "publisher": "La Biennale di Venezia",
+          "publishedOn": "2026-09-01",
+          "supports": [
+            "Guy Pearce plays Rupert Murdoch",
+            "Jack O'Connell plays Larry Lamb",
+            "Claire Foy plays Jules Davies"
+          ]
+        },
+        {
+          "url": "https://www.netflix.com/tudum/articles/ink-release-date-danny-boyle-movie",
+          "publisher": "Netflix Tudum",
+          "author": "John DiLillo",
+          "publishedOn": "2026-09-02",
+          "supports": [
+            "Guy Pearce cast as Rupert Murdoch in Ink",
+            "Danny Boyle director"
+          ]
+        },
+        {
+          "url": "https://www.themoviedb.org/movie/1532610",
+          "apiUrl": "https://api.themoviedb.org/3/movie/1532610?append_to_response=credits,external_ids&language=en-US",
+          "publisher": "The Movie Database",
+          "retrievedOn": "2026-09-29",
+          "method": "Read-only official API via the existing TmdbClient; no credentials recorded",
+          "supports": [
+            "Danny Boyle director (person 2034)",
+            "Guy Pearce as Rupert Murdoch (person 529)",
+            "Jack O’Connell as Larry Lamb (person 85065)",
+            "Claire Foy as Jules Davies (person 120932)",
+            "IMDb tt37967547"
+          ]
+        }
+      ],
+      "recommendation": "Resolve the verified typo Guy Peace to Guy Pearce for Ink with a traceable editorial correction, keeping the original observation raw text unchanged.",
+      "status": "implemented_in_extractor_live_credits_refreshed_deployment_not_verified",
+      "oscarEligibilityVerified": false,
+      "verifiedTmdbId": 1532610,
+      "application": {
+        "implementedOn": "2026-09-29",
+        "scope": "Awards Radar only; exact person spelling Guy Peace becomes matching field Guy Pearce while originalValue.raw remains unchanged",
+        "codePath": "supabase/functions/_shared/ingestion/professional-predictions.mjs",
+        "testPath": "web/tests/unit/ingestion.test.ts",
+        "liveCatalogCredits": "Coordinating audit reports a successful refresh of Ink TMDB 1532610 credits through the canonical CLI",
+        "productionImportVerified": false
+      }
+    },
+    {
+      "id": "artificial-wrong-tmdb-film",
+      "sourceIds": [
+        "next-best-picture",
+        "awards-radar"
+      ],
+      "sourceUrls": [
+        "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars",
+        "https://awardsradar.com/best-actor/",
+        "https://awardsradar.com/best-supporting-actor/"
+      ],
+      "originalSubjects": [
+        "Luca Guadagnino — Artificial",
+        "Andrew Garfield — Artificial",
+        "Andrew Garfield – Artificial",
+        "Yura Borisov – Artifical"
+      ],
+      "verifiedFilmTitle": "Artificial",
+      "defect": "The internal artificial film was matched to an unrelated same-title 2026 film, TMDB 1586108, directed by Tyler Woods. The missing Guadagnino/Garfield/Borisov matches were a symptom of the wrong film identity, not simply missing credits.",
+      "previousTmdbId": 1586108,
+      "verifiedTmdbId": 1492198,
+      "verifiedCredits": [
+        {
+          "name": "Luca Guadagnino",
+          "department": "Directing",
+          "role": "Director"
+        },
+        {
+          "name": "Andrew Garfield",
+          "department": "Acting",
+          "character": "Sam Altman"
+        },
+        {
+          "name": "Yura Borisov",
+          "department": "Acting",
+          "character": "Ilya Sutskever"
+        }
+      ],
+      "primaryEvidence": [
+        {
+          "url": "https://www.themoviedb.org/movie/1492198",
+          "apiUrl": "https://api.themoviedb.org/3/movie/1492198?append_to_response=credits,external_ids&language=en-US",
+          "publisher": "The Movie Database",
+          "retrievedOn": "2026-09-29",
+          "method": "Read-only official API via the existing TmdbClient; no credentials recorded",
+          "supports": [
+            "Luca Guadagnino director (person 78160)",
+            "Andrew Garfield as Sam Altman (person 37625)",
+            "Yura Borisov as Ilya Sutskever (person 1266686)",
+            "Sam Altman firing and rehiring at OpenAI synopsis",
+            "IMDb tt37171180"
+          ],
+          "releaseDateMetadata": "2026-12-25",
+          "releaseDateEstablishesOscarEligibility": false
+        },
+        {
+          "url": "https://www.themoviedb.org/movie/1586108",
+          "apiUrl": "https://api.themoviedb.org/3/movie/1586108?append_to_response=credits,external_ids&language=en-US",
+          "publisher": "The Movie Database",
+          "retrievedOn": "2026-09-29",
+          "supports": [
+            "Tyler Woods director (person 5834345)",
+            "Mark Chapman as David and George Craik as The Robot",
+            "Undercover police officer and humanoid robot synopsis",
+            "IMDb tt38982654",
+            "Confirms the previous match is a different film"
+          ]
+        },
+        {
+          "url": "https://www.filmlinc.org/nyff2026/films/artificial/",
+          "publisher": "Film at Lincoln Center / New York Film Festival",
+          "supports": [
+            "All three film/person relationships and the two character identities"
+          ]
+        },
+        {
+          "url": "https://www.filmlinc.org/nyff2026/daily/64th-new-york-film-festival-main-slate-announced/",
+          "publisher": "Film at Lincoln Center",
+          "publishedOn": "2026-08-05",
+          "supports": [
+            "All three film/person relationships and the two character identities"
+          ]
+        }
+      ],
+      "recommendation": "Correct the film identity through the canonical tmdb:match command before refreshing credits and rerunning exact matching. Preserve observation raw text and historical receipts. NYFF's description of lead performances does not override the source's predicted Supporting Actor category. Do not infer an Oscar campaign or nomination from the credit.",
+      "status": "applied_to_live_catalog_by_coordinating_audit",
+      "application": {
+        "command": "npm run tmdb:match -- artificial 1492198 --reason <primary-source identity evidence>",
+        "appliedOn": "2026-09-29",
+        "verifiedBy": "Coordinating audit reports successful canonical CLI execution, film_tmdb_match_history entry and replacement of the film credits",
+        "fallbackCorrectionMigration": "20260929164000_artificial_catalog_correction.sql",
+        "environment": "live catalog",
+        "predictionImportVerified": false
+      },
+      "oscarEligibilityVerified": false
+    }
+  ],
+  "eligibilityCaution": "Festival selection, film year and cast identity do not by themselves establish Oscar eligibility or a qualifying United States theatrical release. This review makes no change to eligibility.",
+  "deploymentVerified": false
+}

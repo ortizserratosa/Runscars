@@ -130,7 +130,13 @@ export async function SeasonPageView({
               </strong>
               <small>
                 {categories.filter((category) => category.isPublic).length}/8
-                {en ? "categories available" : "categorías disponibles"}
+                {active
+                  ? en
+                    ? "categories with consensus"
+                    : "categorías con consenso"
+                  : en
+                    ? "categories available"
+                    : "categorías disponibles"}
               </small>
             </div>
           </div>

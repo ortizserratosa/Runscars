@@ -541,6 +541,31 @@ export function matchFilm(subject, filmIdentities) {
   });
 }
 
+export function validateRequiredPredictionCategories(
+  batch,
+  requiredCategoryIds,
+) {
+  const observedCategoryIds = new Set(
+    batch.publications.flatMap((publication) =>
+      publication.observations
+        .filter((observation) =>
+          ["prediction_ordered", "prediction_selection"].includes(
+            observation.dataType,
+          ),
+        )
+        .map((observation) => observation.categoryId),
+    ),
+  );
+  const missingCategoryIds = requiredCategoryIds.filter(
+    (categoryId) => !observedCategoryIds.has(categoryId),
+  );
+  if (missingCategoryIds.length) {
+    throw new Error(
+      `Cobertura incompleta; faltan categorías requeridas: ${missingCategoryIds.join(", ")}`,
+    );
+  }
+}
+
 export function validateOrderedPredictionLists(batch) {
   for (const publication of batch.publications) {
     const lists = new Map();
@@ -655,8 +680,13 @@ export async function prepareBatch(batch, filmIdentities) {
       const filmNeedsReview =
         !observation.workTitle &&
         (matches.length !== 1 || matchedFilm === null);
+      const screenplayCategory = [
+        "original-screenplay",
+        "adapted-screenplay",
+      ].includes(observation.categoryId);
       const personNeedsReview =
         isPrediction &&
+        !screenplayCategory &&
         (ambiguousPeople.length > 0 ||
           (categoryRequiresPerson && matchedPeople.length === 0));
       const needsReview = isPrediction
@@ -666,10 +696,6 @@ export async function prepareBatch(batch, filmIdentities) {
           : false;
       let candidate = null;
       if (isPrediction && !needsReview) {
-        const screenplayCategory = [
-          "original-screenplay",
-          "adapted-screenplay",
-        ].includes(observation.categoryId);
         const identityKey = await sha256({
           season_id: batch.seasonId,
           category_id: observation.categoryId,

@@ -84,6 +84,68 @@ function fixtureCut(
 }
 
 describe("comparable prediction history across a freshness change", () => {
+  it("shows an empty current cut while preserving the earlier public ranking", async () => {
+    const active = fixtureCut(
+      "2026-08-01T00:00:00Z",
+      "2026-08-01T04:47:00Z",
+      false,
+    );
+    const expired = fixtureCut(
+      "2026-08-01T00:00:00Z",
+      "2026-09-01T04:47:00Z",
+      false,
+    );
+    database.tables = {
+      current_aggregate_snapshots: [
+        {
+          season_id: "oscars-2027",
+          category_id: "best-picture",
+          prediction_intention: "nomination",
+          kind: "periodic",
+          snapshot_id: "expired",
+        },
+      ],
+      aggregate_snapshots: [
+        { id: "active", aggregate: active },
+        { id: "expired", aggregate: expired },
+      ].map(({ id, aggregate }) => ({
+        id,
+        season_id: "oscars-2027",
+        category_id: "best-picture",
+        prediction_intention: "nomination",
+        kind: "periodic",
+        content_hash: id,
+        locked_at: aggregate.cutoffDate,
+        schema_version: "runscars-snapshot-v2",
+        method_version: aggregate.methodVersion,
+        payload: { aggregate },
+      })),
+    };
+    const original = structuredClone(database.tables);
+    const current = (await getCategoryView(
+      2027,
+      "best-picture",
+    )) as ActiveCategoryView;
+    expect(current.dataState).toBe("database");
+    expect(current.snapshot?.id).toBe("expired");
+    expect(current.aggregate?.ranking).toEqual([]);
+    expect(current.aggregate?.applicableSourceCount).toBe(0);
+    expect(current.currentCandidates).toEqual([]);
+    expect(current.snapshot?.cuts.map((cut) => cut.id)).toEqual([
+      "expired",
+      "active",
+    ]);
+    const historical = (await getCategoryView(2027, "best-picture", {
+      snapshotId: "active",
+    })) as ActiveCategoryView;
+    expect(historical.aggregate?.ranking.length).toBeGreaterThan(0);
+    expect(historical.aggregate?.applicableSourceCount).toBe(5);
+    expect(
+      (await getCurrentCategoryPredictions())[0].aggregate.ranking,
+    ).toEqual([]);
+    expect(database.tables).toEqual(original);
+  });
+
   it("restores old cuts and weekly editions with the same scoring rule", async () => {
     const first = fixtureCut(
       "2026-07-19T12:00:00Z",

@@ -1,4 +1,5 @@
 import { normalizeIdentity, sha256 } from "./core.mjs";
+import { fetchResponse } from "../network.mjs";
 
 const API = "https://api.themoviedb.org/3";
 const RELEVANT_JOBS = new Set([
@@ -25,22 +26,29 @@ function nullableText(value) {
   return typeof value === "string" && value.trim() ? value.trim() : null;
 }
 
-async function tmdb(pathname, token, fetcher, parameters = {}) {
+async function tmdb(pathname, token, fetcher, parameters = {}, deadline) {
+  if (Date.now() >= deadline) {
+    throw new Error(
+      "Se agotó el presupuesto de expansión TMDB de esta ejecución",
+    );
+  }
   const url = new URL(`${API}${pathname}`);
   for (const [key, value] of Object.entries(parameters)) {
     if (value !== null && value !== undefined && value !== "") {
       url.searchParams.set(key, String(value));
     }
   }
-  const response = await fetcher(url, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/json",
+  const response = await fetchResponse(
+    url,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+      },
     },
-  });
-  if (!response.ok) {
-    throw new Error(`TMDB respondió ${response.status} en ${url.pathname}`);
-  }
+    fetcher,
+    { timeoutMs: 15_000, maxRetryDelayMs: 1_000 },
+  );
   return response.json();
 }
 
@@ -75,6 +83,68 @@ function credits(raw) {
   );
 }
 
+function identityClaims(batch, title) {
+  const normalizedTitle = normalizeIdentity(title);
+  const claims = new Map();
+  for (const publication of batch.publications) {
+    for (const observation of publication.observations) {
+      if (
+        normalizeIdentity(observation.filmSubject ?? observation.subject) !==
+          normalizedTitle ||
+        !["prediction_ordered", "prediction_selection"].includes(
+          observation.dataType,
+        )
+      )
+        continue;
+      const categoryId = observation.categoryId;
+      const role =
+        categoryId === "directing"
+          ? "Director"
+          : [
+                "actor",
+                "actress",
+                "supporting-actor",
+                "supporting-actress",
+              ].includes(categoryId)
+            ? "Acting"
+            : null;
+      if (!role) continue;
+      for (const name of observation.peopleSubjects ?? []) {
+        if (typeof name !== "string" || !name.trim()) continue;
+        claims.set(`${role}:${normalizeIdentity(name)}`, {
+          name: name.trim(),
+          role,
+          categoryId,
+        });
+      }
+    }
+  }
+  return [...claims.values()];
+}
+
+function corroborateIdentity(claims, movieCredits) {
+  if (!claims.length) return null;
+  const evidence = [];
+  for (const claim of claims) {
+    const matches = movieCredits.filter(
+      (credit) =>
+        normalizeIdentity(credit.name) === normalizeIdentity(claim.name) &&
+        (claim.role === "Acting"
+          ? credit.kind === "cast"
+          : credit.kind === "crew" && credit.role === "Director"),
+    );
+    const ids = [...new Set(matches.map((credit) => credit.tmdbPersonId))];
+    if (ids.length !== 1) return null;
+    evidence.push({
+      source_name: claim.name,
+      category_id: claim.categoryId,
+      tmdb_person_id: ids[0],
+      role: claim.role,
+    });
+  }
+  return evidence;
+}
+
 export async function expandCatalogFromBatch({
   batch,
   repository,
@@ -84,6 +154,7 @@ export async function expandCatalogFromBatch({
   if (!token) return { imported: [], ambiguous: [] };
   const season = await repository.seasonIdentity(batch.seasonId);
   const current = await repository.filmIdentities(batch.seasonId);
+  const seenTitles = new Set();
   const missingTitles = [
     ...new Set(
       batch.publications.flatMap((publication) =>
@@ -103,22 +174,43 @@ export async function expandCatalogFromBatch({
                 normalizeIdentity(candidate) === normalizeIdentity(title),
             ),
           );
-          return exists ? [] : [title.trim()];
+          const normalizedTitle = normalizeIdentity(title);
+          if (exists || seenTitles.has(normalizedTitle)) return [];
+          seenTitles.add(normalizedTitle);
+          return [title.trim()];
         }),
       ),
     ),
   ];
   const imported = [];
   const ambiguous = [];
+  // Leave enough headroom for a final bounded request and for persistence in Edge.
+  const deadline = Date.now() + 60_000;
 
   for (const title of missingTitles) {
-    try {
-      const search = await tmdb("/search/movie", token, fetcher, {
-        query: title,
-        primary_release_year: season.eligibilityYear,
-        include_adult: false,
-        language: "en-US",
+    const claims = identityClaims(batch, title);
+    if (!claims.length) {
+      ambiguous.push({
+        title,
+        tmdbIds: [],
+        reason: "missing_person_identity_evidence",
+        expectedPeople: [],
       });
+      continue;
+    }
+    try {
+      const search = await tmdb(
+        "/search/movie",
+        token,
+        fetcher,
+        {
+          query: title,
+          primary_release_year: season.eligibilityYear,
+          include_adult: false,
+          language: "en-US",
+        },
+        deadline,
+      );
       const normalized = normalizeIdentity(title);
       const exact = (search.results ?? []).filter((result) => {
         const resultYear = nullableDate(result.release_date)?.slice(0, 4);
@@ -133,10 +225,40 @@ export async function expandCatalogFromBatch({
         ambiguous.push({ title, tmdbIds: exact.map((result) => result.id) });
         continue;
       }
-      const raw = await tmdb(`/movie/${exact[0].id}`, token, fetcher, {
-        append_to_response: "credits,external_ids",
-        language: "en-US",
-      });
+      const raw = await tmdb(
+        `/movie/${exact[0].id}`,
+        token,
+        fetcher,
+        {
+          append_to_response: "credits,external_ids",
+          language: "en-US",
+        },
+        deadline,
+      );
+      const movieCredits = credits(raw);
+      const evidence = corroborateIdentity(claims, movieCredits);
+      if (
+        raw.id !== exact[0].id ||
+        nullableDate(raw.release_date)?.slice(0, 4) !==
+          String(season.eligibilityYear) ||
+        ![raw.title, raw.original_title]
+          .filter(Boolean)
+          .some((candidate) => normalizeIdentity(candidate) === normalized) ||
+        !evidence
+      ) {
+        ambiguous.push({
+          title,
+          tmdbIds: [exact[0].id],
+          reason: claims.length
+            ? "prediction_credits_not_corroborated"
+            : "missing_person_identity_evidence",
+          expectedPeople: claims.map((claim) => ({
+            name: claim.name,
+            role: claim.role,
+          })),
+        });
+        continue;
+      }
       const fetchedAt = new Date();
       const fetchedAtIso = fetchedAt.toISOString();
       const originalData = {
@@ -145,6 +267,8 @@ export async function expandCatalogFromBatch({
           query: title,
           eligibility_year: season.eligibilityYear,
           unique_exact_match: true,
+          match_rule: "unique-title-year-and-credits-v1",
+          people_evidence: evidence,
         },
       };
       const filmId = await repository.saveAutomaticTmdbFilm({
@@ -152,7 +276,7 @@ export async function expandCatalogFromBatch({
         seasonId: batch.seasonId,
         eligibilityYear: season.eligibilityYear,
         raw,
-        credits: credits(raw),
+        credits: movieCredits,
         snapshot: {
           tmdb_id: raw.id,
           locale: "en-US",

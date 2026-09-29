@@ -7,6 +7,7 @@ import {
   parseManualManifest,
   parseRogerEbertFixture,
   prepareBatch,
+  validateRequiredPredictionCategories,
 } from "../../../supabase/functions/_shared/ingestion/core.mjs";
 import {
   persistBatch,
@@ -383,7 +384,7 @@ describe("professional ingestion adapters", () => {
         categoryId: "supporting-actress",
       },
     );
-    expect(awardsRadar.extractorVersion).toBe("awards-radar-v5");
+    expect(awardsRadar.extractorVersion).toBe("awards-radar-v6");
     expect(awardsRadar.publications[0].observations).toEqual([
       expect.objectContaining({
         subject: "Sandra Hüller – Digger (or Project Hail Mary)",
@@ -507,33 +508,19 @@ describe("professional ingestion adapters", () => {
         observation.categoryId === "best-picture",
     );
 
-    expect(batch.extractorVersion).toBe("awards-daily-v7");
+    expect(batch.extractorVersion).toBe("awards-daily-v8");
+    expect(bestPicture).toHaveLength(10);
     expect(
-      bestPicture.map(
-        (observation: {
-          originalValue: { rank: number; list_length: number; raw: string };
-        }) => ({
-          rank: observation.originalValue.rank,
-          list_length: observation.originalValue.list_length,
-          raw: observation.originalValue.raw,
-        }),
+      bestPicture.every(
+        (observation: { dataType: string; originalValue: object }) =>
+          observation.dataType === "prediction_selection" &&
+          !("rank" in observation.originalValue),
       ),
-    ).toEqual([
-      { rank: 1, list_length: 10, raw: "The Odyssey" },
-      { rank: 2, list_length: 10, raw: "Project Hail Mary" },
-      { rank: 3, list_length: 10, raw: "The Invite" },
-      { rank: 4, list_length: 10, raw: "Wild Horse Nine" },
-      { rank: 5, list_length: 10, raw: "Fjord" },
-      { rank: 6, list_length: 10, raw: "Obsession" },
-      { rank: 7, list_length: 10, raw: "La Bola Negra" },
-      {
-        rank: 8,
-        list_length: 10,
-        raw: "The Further Mis-Adventures of Cliff Booth",
-      },
-      { rank: 9, list_length: 10, raw: "Dune III" },
-      { rank: 10, list_length: 10, raw: "Digger" },
-    ]);
+    ).toBe(true);
+    expect(bestPicture[0].originalValue).toMatchObject({
+      selected: true,
+      raw: "The Odyssey",
+    });
   });
 
   it("limits Awards Daily parsing to the article and skips alternate rows", () => {
@@ -556,7 +543,7 @@ describe("professional ingestion adapters", () => {
       },
     );
 
-    expect(batch.extractorVersion).toBe("awards-daily-v7");
+    expect(batch.extractorVersion).toBe("awards-daily-v8");
     expect(
       batch.publications[0].observations.map(
         (observation: { originalValue: { raw: string } }) =>
@@ -912,7 +899,7 @@ describe("professional ingestion adapters", () => {
       },
     });
 
-    expect(batch.extractorVersion).toBe("awardswatch-multicategory-v5");
+    expect(batch.extractorVersion).toBe("awardswatch-multicategory-v6");
     expect(batch.publications).toEqual([
       expect.objectContaining({
         isMutable: true,
@@ -1059,6 +1046,346 @@ describe("professional ingestion adapters", () => {
         seasonId: "oscars-2027",
       }),
     ).toThrow("no contiene categorías reconocibles");
+  });
+
+  it("extracts only the configured AwardsWatch panel author and the complete numbered list", async () => {
+    const batch = parseAwardsWatchArticleFixture(
+      await fixture("awardswatch-panel-picture.html"),
+      {
+        connectorId: "awardswatch-predictions",
+        capturedAt,
+        endpointUrl: "https://awardswatch.com/panel/",
+        seasonId: "oscars-2027",
+        categoryId: "best-picture",
+        panelAuthor: "Erik Anderson",
+      },
+    );
+    const publication = batch.publications[0];
+    expect(publication.author).toBe("Erik Anderson");
+    expect(publication.publishedAt).toBe("2026-09-17T17:11:32.000Z");
+    expect(publication.observations).toHaveLength(15);
+    expect(publication.observations[0].originalValue).toMatchObject({
+      rank: 1,
+      list_length: 15,
+    });
+    expect(publication.observations.at(-1).originalValue).toMatchObject({
+      rank: 15,
+      list_length: 15,
+    });
+    expect(publication.originalData.panel.selected_author).toBe(
+      "Erik Anderson",
+    );
+    expect(publication.originalData.panel.available_authors).toHaveLength(4);
+    expect(
+      publication.observations.map((row: { subject: string }) => row.subject),
+    ).not.toContain("You Can See Everything");
+  });
+
+  it("does not invent an order for AwardsWatch panels or turn NEXT alternatives into votes", async () => {
+    for (const [name, categoryId] of [
+      ["awardswatch-panel-screenplay.html", "original-screenplay"],
+      ["awardswatch-panel-supporting.html", "supporting-actor"],
+    ]) {
+      const batch = parseAwardsWatchArticleFixture(await fixture(name), {
+        connectorId: "awardswatch-predictions",
+        capturedAt,
+        endpointUrl: "https://awardswatch.com/panel/",
+        seasonId: "oscars-2027",
+        categoryId,
+      });
+      const publication = batch.publications[0];
+      expect(publication.observations).toHaveLength(5);
+      expect(
+        publication.observations.every(
+          (row: { dataType: string; originalValue: object }) =>
+            row.dataType === "prediction_selection" &&
+            !("rank" in row.originalValue),
+        ),
+      ).toBe(true);
+      expect(publication.originalData.panel.alternates).toHaveLength(5);
+      if (categoryId === "original-screenplay")
+        expect(publication.observations.at(-1).filmSubject).toBe(
+          "Tender Loving Care",
+        );
+    }
+  });
+
+  it("fails instead of substituting a different AwardsWatch author", async () => {
+    expect(() =>
+      parseAwardsWatchArticleFixture(
+        `<article><h2>BEST PICTURE</h2><table><tr><td>RYAN MCQUADE</td><td>MARK JOHNSON</td></tr><tr><td>1. The Odyssey</td><td>1. Digger</td></tr></table></article>`,
+        {
+          connectorId: "awardswatch-predictions",
+          capturedAt,
+          endpointUrl: "https://awardswatch.com/panel/",
+          seasonId: "oscars-2027",
+          categoryId: "best-picture",
+          panelAuthor: "Erik Anderson",
+        },
+      ),
+    ).toThrow(/columna configurada Erik Anderson/);
+  });
+
+  it("retains all explicit Awards Radar positions and the actual source length", () => {
+    const cards = Array.from(
+      { length: 50 },
+      (_, index) =>
+        `<h3 class="elementor-image-box-title">${index + 1}. Film ${index + 1}</h3>`,
+    ).join("");
+    const batch = parseAwardsRadarFixture(
+      `<p>2027 Oscar Predictions</p><p>Updated September 23rd, 2026</p>${cards}`,
+      {
+        connectorId: "awards-radar-predictions",
+        capturedAt,
+        endpointUrl: "https://awardsradar.com/best-picture/",
+        seasonId: "oscars-2027",
+        categoryId: "best-picture",
+      },
+    );
+    expect(batch.publications[0].observations).toHaveLength(50);
+    expect(
+      batch.publications[0].observations.at(-1).originalValue,
+    ).toMatchObject({ rank: 50, list_length: 50 });
+  });
+
+  it("normalizes verified Radar typos while retaining the exact original labels", () => {
+    const options = {
+      connectorId: "awards-radar-predictions",
+      capturedAt,
+      endpointUrl: "https://awardsradar.com/predictions/",
+      seasonId: "oscars-2027",
+    };
+    const batch = parseAwardsRadarFixture(
+      `<h2>BEST PICTURE</h2><p>1. Artifical</p><h2>BEST ACTOR</h2><p>1. Guy Peace — Ink</p>`,
+      options,
+    );
+    expect(batch.publications[0].observations[0]).toMatchObject({
+      filmSubject: "Artificial",
+      subject: "Artifical",
+      originalValue: { raw: "1. Artifical" },
+    });
+    expect(batch.publications[0].observations[1]).toMatchObject({
+      filmSubject: "Ink",
+      peopleSubjects: ["Guy Pearce"],
+      originalValue: { raw: "1. Guy Peace — Ink" },
+    });
+    const otherSource = parseAwardsDailyFixture(
+      `<h2>Best Picture</h2><p>Artifical</p><h2>Actor</h2><p>Guy Peace — Ink</p>`,
+      options,
+    );
+    expect(otherSource.publications[0].observations[0].filmSubject).toBe(
+      "Artifical",
+    );
+    expect(otherSource.publications[0].observations[1].peopleSubjects).toEqual([
+      "Guy Peace",
+    ]);
+  });
+
+  it("rejects Daily and Midnight lists exceeding their observed layout instead of silently truncating", () => {
+    const options = {
+      connectorId: "audit",
+      capturedAt,
+      endpointUrl: "https://example.com/predictions",
+      seasonId: "oscars-2027",
+    };
+    expect(() =>
+      parseAwardsDailyFixture(
+        `<h1>2027 Oscar Predictions</h1><h2>Best Picture</h2><p>${Array.from({ length: 11 }, (_, index) => `Film ${index + 1}`).join("<br/>")}</p>`,
+        options,
+      ),
+    ).toThrow(/límite esperado de 10 filas/);
+    expect(() =>
+      parseMidnightCriticsFixture(
+        `<h1>2027 Oscar Predictions</h1><h2>BEST PICTURE</h2><p>${Array.from({ length: 26 }, (_, index) => `${index + 1}. Film ${index + 1} - ALL`).join("<br/>")}</p>`,
+        options,
+      ),
+    ).toThrow(/límite esperado de 25 filas/);
+  });
+
+  it("rejects duplicate ranks instead of silently dropping a source row", () => {
+    expect(() =>
+      parseAwardsRadarFixture(
+        `<p>Updated September 23rd, 2026</p><p>1. The Odyssey<br/>1. Digger<br/>2. Fjord</p>`,
+        {
+          connectorId: "awards-radar-predictions",
+          capturedAt,
+          endpointUrl: "https://awardsradar.com/best-picture/",
+          seasonId: "oscars-2027",
+          categoryId: "best-picture",
+        },
+      ),
+    ).toThrow(/posiciones no consecutivas/);
+  });
+
+  it("preserves canonical URLs in either attribute order and article bylines", () => {
+    const batch = parseAwardsDailyFixture(
+      `<link href="https://www.awardsdaily.com/2026/09/25/article/" rel="canonical"/><div class="jeg_meta_author"><span class="meta_text">by</span><a href="/author/">Sasha Stone</a></div><h1>2027 Oscar Predictions</h1><p>Best Picture<br/>The Odyssey<br/>Alt.<br/>Digger</p><p>Actor<br/>Matt Damon, The Odyssey</p>`,
+      {
+        connectorId: "awards-daily-predictions",
+        capturedAt,
+        endpointUrl: "https://www.awardsdaily.com/fallback/",
+        seasonId: "oscars-2027",
+      },
+    );
+    expect(batch.publications[0].author).toBe("Sasha Stone");
+    expect(batch.publications[0].canonicalUrl).toBe(
+      "https://www.awardsdaily.com/2026/09/25/article/",
+    );
+    expect(
+      batch.publications[0].observations.map(
+        (row: { subject: string }) => row.subject,
+      ),
+    ).toEqual(["The Odyssey", "Matt Damon, The Odyssey"]);
+  });
+
+  it("rejects an explicitly different prediction season", () => {
+    expect(() =>
+      parseAwardsRadarFixture(
+        `<p>2028 Oscar Predictions</p><p>Updated September 23rd, 2026</p><p>1. The Odyssey</p>`,
+        {
+          connectorId: "awards-radar-predictions",
+          capturedAt,
+          endpointUrl: "https://awardsradar.com/best-picture/",
+          seasonId: "oscars-2027",
+          categoryId: "best-picture",
+        },
+      ),
+    ).toThrow(/otra temporada/);
+  });
+
+  it("corrects NBP attribution without treating its site clock as publication evidence or renewing the revision", async () => {
+    const html = `<meta property="og:title" content="Oscar Predictions - Matt Neglia - Next Best Picture"/><div><time datetime="2026-09-29T12:00:00Z">Today</time></div><h2>Best Picture</h2><p>Sep 28<br/>1<br/>1<br/>The Odyssey<br/>Universal | Christopher Nolan</p>`;
+    const batch = parseNextBestPictureFixture(html, {
+      connectorId: "next-best-picture-predictions",
+      capturedAt,
+      endpointUrl: "https://predictions.nextbestpicture.com/oscars",
+      seasonId: "oscars-2027",
+    });
+    expect(batch.publications[0].author).toBe("Matt Neglia");
+    expect(batch.publications[0].publishedAt).toBeNull();
+    expect(batch.extractorVersion).toBe("next-best-picture-v3");
+    const mutable = {
+      ...batch,
+      publications: batch.publications.map((publication: object) => ({
+        ...publication,
+        isMutable: true,
+      })),
+    };
+    const corrected = await prepareBatch(mutable, films);
+    const previous = await prepareBatch(
+      {
+        ...mutable,
+        publications: mutable.publications.map((publication: object) => ({
+          ...publication,
+          author: null,
+        })),
+      },
+      films,
+    );
+    expect(corrected.publications[0].externalId).toBe(
+      previous.publications[0].externalId,
+    );
+    expect(corrected.publications[0].contentHash).toBe(
+      previous.publications[0].contentHash,
+    );
+  });
+
+  it("rechecking the unchanged NBP and Midnight pages preserves their content revision", async () => {
+    for (const [connectorId, name] of [
+      ["next-best-picture-predictions", "next-best-picture-multicategory.html"],
+      ["midnight-critics-predictions", "midnight-critics-multicategory.html"],
+    ] as const) {
+      const html = await fixture(name);
+      const connector = {
+        id: connectorId,
+        endpoint_url: "https://example.com/predictions",
+        configuration: { season_id: "oscars-2027" },
+      };
+      const first = await prepareBatch(
+        await CONNECTORS[connectorId]({
+          connector,
+          capturedAt,
+          fetcher: async () => new Response(html),
+        }),
+        films,
+      );
+      const later = await prepareBatch(
+        await CONNECTORS[connectorId]({
+          connector,
+          capturedAt: "2026-09-29T12:00:00Z",
+          fetcher: async () => new Response(html),
+        }),
+        films,
+      );
+      expect(first.publications[0].externalId).toBe(
+        later.publications[0].externalId,
+      );
+      expect(first.publications[0].contentHash).toBe(
+        later.publications[0].contentHash,
+      );
+      expect(
+        first.publications[0].observations.map(
+          (row: { dedupeKey: string }) => row.dedupeKey,
+        ),
+      ).toEqual(
+        later.publications[0].observations.map(
+          (row: { dedupeKey: string }) => row.dedupeKey,
+        ),
+      );
+    }
+  });
+
+  it("does not block a film-primary screenplay vote on an unresolved secondary writer", async () => {
+    const batch = parseAwardsRadarFixture(
+      `<p>Updated September 23rd, 2026</p><p>1. Unknown Writer — The Odyssey</p>`,
+      {
+        connectorId: "awards-radar-predictions",
+        capturedAt,
+        endpointUrl: "https://awardsradar.com/best-original-screenplay/",
+        seasonId: "oscars-2027",
+        categoryId: "original-screenplay",
+      },
+    );
+    const prepared = await prepareBatch(batch, films);
+    const row = prepared.publications[0].observations[0];
+    expect(row.state).toBe("published");
+    expect(row.participates).toBe(true);
+    expect(row.review).toBeNull();
+    expect(row.candidate.people).toEqual([]);
+    expect(row.originalValue.people_subjects).toEqual(["Unknown Writer"]);
+    const acting = {
+      ...batch,
+      publications: batch.publications.map(
+        (publication: { observations: Array<object> }) => ({
+          ...publication,
+          observations: publication.observations.map((observation: object) => ({
+            ...observation,
+            categoryId: "actor",
+          })),
+        }),
+      ),
+    };
+    expect(
+      (await prepareBatch(acting, films)).publications[0].observations[0].state,
+    ).toBe("pending_review");
+  });
+
+  it("shares production coverage validation and accepts selection-only sources", async () => {
+    const batch = parseAwardsDailyFixture(
+      await fixture("awards-daily-multicategory.html"),
+      {
+        connectorId: "awards-daily-predictions",
+        capturedAt,
+        endpointUrl: "https://www.awardsdaily.com/predictions/",
+        seasonId: "oscars-2027",
+      },
+    );
+    expect(() =>
+      validateRequiredPredictionCategories(batch, ["best-picture", "actor"]),
+    ).not.toThrow();
+    expect(() =>
+      validateRequiredPredictionCategories(batch, ["casting"]),
+    ).toThrow(/faltan categorías requeridas: casting/);
   });
 
   it("accepts a versioned manual manifest and preserves aggregate semantics", async () => {

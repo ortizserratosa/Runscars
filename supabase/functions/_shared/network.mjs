@@ -45,6 +45,7 @@ export async function fetchResponse(
     baseDelayMs = 250,
     retryableStatusCodes = RETRYABLE_STATUS_CODES,
     timeoutMs = 15_000,
+    maxRetryDelayMs = Number.POSITIVE_INFINITY,
   } = {},
 ) {
   let lastError = null;
@@ -60,7 +61,13 @@ export async function fetchResponse(
     }
     if (response.ok) return response;
     if (retryableStatusCodes.has(response.status) && attempt < attempts - 1) {
-      await wait(retryDelay(response, attempt, baseDelayMs));
+      const delayMs = retryDelay(response, attempt, baseDelayMs);
+      if (delayMs > maxRetryDelayMs) {
+        throw new Error(
+          `HTTP ${response.status} al consultar ${new URL(url).host}: la espera de reintento excede el presupuesto`,
+        );
+      }
+      await wait(delayMs);
       continue;
     }
     throw new Error(

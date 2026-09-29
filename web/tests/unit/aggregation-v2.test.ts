@@ -250,6 +250,123 @@ describe("generic prediction aggregation v2", () => {
     expect(result.includedObservationIds).toEqual(["new-1", "new-2"]);
   });
 
+  it("resolves revisions before comparing different URLs regardless of input order", () => {
+    const actor = candidate("candidate", "Actor — Film", "film");
+    const revisions = [
+      {
+        ...observation("old-live", "source", actor, 1),
+        publicationId: "old-live",
+        publicationUrl: "https://example.com/live",
+        publishedAt: "2026-07-24T00:00:00Z",
+        capturedAt: "2026-07-24T00:00:00Z",
+        listLength: 1,
+      },
+      {
+        ...observation("new-live", "source", actor, 1),
+        publicationId: "new-live",
+        publicationUrl: "https://example.com/live",
+        publishedAt: null,
+        capturedAt: "2026-07-25T00:00:00Z",
+        listLength: 1,
+      },
+      {
+        ...observation("dated-article", "source", actor, 1),
+        publicationId: "dated-article",
+        publicationUrl: "https://example.com/dated-article",
+        publishedAt: "2026-07-23T00:00:00Z",
+        listLength: 1,
+      },
+    ];
+    for (const order of [
+      [0, 1, 2],
+      [0, 2, 1],
+      [1, 0, 2],
+      [1, 2, 0],
+      [2, 0, 1],
+      [2, 1, 0],
+    ]) {
+      const result = aggregatePredictionsV2(
+        order.map((index) => revisions[index]),
+        {
+          seasonId: "oscars-2027",
+          categoryId: "actor",
+          intention: "nomination",
+          cutoffDate: "2026-07-25",
+        },
+      );
+      expect(result.includedObservationIds).toEqual(["dated-article"]);
+    }
+  });
+
+  it("does not count excluded ranking rows as appearances when a selection remains valid", () => {
+    const invalidOnly = candidate("invalid-only", "Invalid only", "film-1");
+    const elsewhere = candidate("elsewhere", "Elsewhere", "film-2");
+    const selected = candidate("selected", "Selected", "film-3");
+    const result = aggregatePredictionsV2(
+      [
+        observation("invalid-1", "source", invalidOnly, 1),
+        observation("invalid-duplicate-rank", "source", elsewhere, 1),
+        {
+          ...observation("selection", "source", selected, 1),
+          dataType: "prediction_selection",
+          rank: null,
+          listLength: null,
+        },
+        { ...observation("valid", "other", elsewhere, 1), listLength: 1 },
+      ],
+      {
+        seasonId: "oscars-2027",
+        categoryId: "actor",
+        intention: "nomination",
+        cutoffDate: "2026-07-25",
+      },
+    );
+    expect(result.ranking.map((item) => item.candidateId)).toEqual([
+      "elsewhere",
+      "selected",
+    ]);
+    expect(result.ranking[0]).toMatchObject({ appearances: 1, coverage: 0.5 });
+    expect(result.excludedObservationIds).toEqual([
+      "invalid-1",
+      "invalid-duplicate-rank",
+    ]);
+    for (const item of result.ranking) {
+      expect(item.appearances).toBe(
+        item.sourceContributions.filter((contribution) => contribution.appeared)
+          .length,
+      );
+    }
+  });
+
+  it("retains original list length while another candidate awaits matching", () => {
+    const first = candidate("pending", "Pending actor", "pending-film");
+    const second = candidate("matched", "Matched actor", "matched-film");
+    const result = aggregatePredictionsV2(
+      [
+        {
+          ...observation("pending", "source", first, 1),
+          state: "pending_review",
+          participates: false,
+        },
+        observation("matched", "source", second, 2),
+      ],
+      {
+        seasonId: "oscars-2027",
+        categoryId: "actor",
+        intention: "nomination",
+        cutoffDate: "2026-07-25",
+      },
+    );
+    expect(result.includedObservationIds).toEqual(["matched"]);
+    expect(result.orderedSourceCount).toBe(1);
+    expect(result.ranking[0]).toMatchObject({
+      candidateId: "matched",
+      score: 0.5,
+      meanRank: 2,
+    });
+    expect(result.sourceLists[0].listLength).toBe(2);
+  });
+
   it("locks candidate IDs rather than legacy film IDs", async () => {
     const aggregate = phase71FixtureAggregate("actor");
     const payload = createPredictionSnapshotPayloadV2(aggregate, {

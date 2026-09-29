@@ -37,6 +37,47 @@ function databaseError<T>(
 
 type JsonRecord = Record<string, unknown>;
 
+const OBSERVATION_PAGE_SIZE = 500;
+const REFERENCE_BATCH_SIZE = 200;
+
+async function allDatabaseRows<T>(
+  readPage: (
+    from: number,
+    to: number,
+  ) => PromiseLike<{
+    data: T[] | null;
+    error: { message: string } | null;
+  }>,
+  action: string,
+) {
+  const rows: T[] = [];
+  for (let offset = 0; ; offset += OBSERVATION_PAGE_SIZE) {
+    const page =
+      databaseError(
+        await readPage(offset, offset + OBSERVATION_PAGE_SIZE - 1),
+        action,
+      ) ?? [];
+    rows.push(...page);
+    if (page.length < OBSERVATION_PAGE_SIZE) return rows;
+  }
+}
+
+async function databaseRowsByIds<T>(
+  ids: (string | number)[],
+  readBatch: (ids: (string | number)[]) => PromiseLike<{
+    data: T[] | null;
+    error: { message: string } | null;
+  }>,
+  action: string,
+) {
+  const rows: T[] = [];
+  for (let offset = 0; offset < ids.length; offset += REFERENCE_BATCH_SIZE) {
+    const batch = ids.slice(offset, offset + REFERENCE_BATCH_SIZE);
+    rows.push(...(databaseError(await readBatch(batch), action) ?? []));
+  }
+  return rows;
+}
+
 function numberFromJson(value: unknown) {
   return typeof value === "number" && Number.isFinite(value) ? value : null;
 }
@@ -307,9 +348,11 @@ export class SupabaseSnapshotSchedulerRepository
   }
 
   async predictionObservationsV2(schedule: SnapshotSchedule) {
-    const observations =
-      databaseError(
-        await this.client
+    // The append-only history quickly exceeds the API's 1,000-row cap.
+    // Page in stable ID order so every revision reaches source selection.
+    const observations = await allDatabaseRows(
+      (from, to) =>
+        this.client
           .from("professional_observations")
           .select(
             "id, source_id, publication_id, category_candidate_id, data_type, original_subject, original_value, author, published_at, captured_at, participates, state",
@@ -320,9 +363,11 @@ export class SupabaseSnapshotSchedulerRepository
           .eq("state", "published")
           .eq("participates", true)
           .not("category_candidate_id", "is", null)
-          .in("data_type", ["prediction_ordered", "prediction_selection"]),
-        `No se pudieron cargar observaciones v2 para ${schedule.id}`,
-      ) ?? [];
+          .in("data_type", ["prediction_ordered", "prediction_selection"])
+          .order("id", { ascending: true })
+          .range(from, to),
+      `No se pudieron cargar observaciones v2 para ${schedule.id}`,
+    );
     const sourceIds = [...new Set(observations.map((row) => row.source_id))];
     const publicationIds = [
       ...new Set(observations.map((row) => row.publication_id)),
@@ -342,35 +387,37 @@ export class SupabaseSnapshotSchedulerRepository
       return [];
     }
 
-    const [sourceResult, publicationResult, candidateResult] =
-      await Promise.all([
-        this.client
-          .from("sources")
-          .select("id, name, publication_status")
-          .in("id", sourceIds),
-        this.client
-          .from("source_publications")
-          .select("id, external_id, canonical_url")
-          .in("id", publicationIds),
-        this.client
-          .from("category_candidates")
-          .select(
-            "id, season_id, category_id, display_label, work_title, films(id,title), category_candidate_people(person_id,role,display_order,people(id,name))",
-          )
-          .in("id", candidateIds),
-      ]);
-    const sources =
-      databaseError(sourceResult, "No se pudieron cargar las fuentes") ?? [];
-    const publications =
-      databaseError(
-        publicationResult,
+    const [sources, publications, candidates] = await Promise.all([
+      databaseRowsByIds(
+        sourceIds,
+        (ids) =>
+          this.client
+            .from("sources")
+            .select("id, name, publication_status")
+            .in("id", ids),
+        "No se pudieron cargar las fuentes",
+      ),
+      databaseRowsByIds(
+        publicationIds,
+        (ids) =>
+          this.client
+            .from("source_publications")
+            .select("id, external_id, canonical_url")
+            .in("id", ids),
         "No se pudieron cargar las publicaciones",
-      ) ?? [];
-    const candidates =
-      databaseError(
-        candidateResult,
+      ),
+      databaseRowsByIds(
+        candidateIds,
+        (ids) =>
+          this.client
+            .from("category_candidates")
+            .select(
+              "id, season_id, category_id, display_label, work_title, films(id,title), category_candidate_people(person_id,role,display_order,people(id,name))",
+            )
+            .in("id", ids),
         "No se pudieron cargar las candidaturas",
-      ) ?? [];
+      ),
+    ]);
     const sourceById = new Map(
       sources
         .filter((source) => source.publication_status === "publishable")

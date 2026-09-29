@@ -115,10 +115,20 @@ export function createPredictionSnapshotPayloadV2(
   const activeSourceIds = uniqueSorted(
     aggregate.sourceLists.map((source) => source.sourceId),
   );
+  const isEmptyPeriodicCut =
+    options.kind === "periodic" &&
+    aggregate.methodVersion === "runscars-aggregation-v3" &&
+    aggregate.ranking.length === 0 &&
+    activeSourceIds.length === 0 &&
+    aggregate.orderedSourceCount === 0 &&
+    aggregate.applicableSourceCount === 0 &&
+    aggregate.includedObservationIds.length === 0 &&
+    aggregate.excludedObservationIds.length > 0;
   if (
-    aggregate.ranking.length === 0 ||
-    aggregate.includedObservationIds.length === 0 ||
-    activeSourceIds.length === 0
+    !isEmptyPeriodicCut &&
+    (aggregate.ranking.length === 0 ||
+      aggregate.includedObservationIds.length === 0 ||
+      activeSourceIds.length === 0)
   ) {
     throw new Error("No se puede bloquear un snapshot sin evidencia");
   }

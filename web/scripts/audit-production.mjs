@@ -5,7 +5,10 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { createClient } from "@supabase/supabase-js";
 import { CONNECTORS } from "../../supabase/functions/_shared/ingestion/connectors.mjs";
-import { validateOrderedPredictionLists } from "../../supabase/functions/_shared/ingestion/core.mjs";
+import {
+  validateOrderedPredictionLists,
+  validateRequiredPredictionCategories,
+} from "../../supabase/functions/_shared/ingestion/core.mjs";
 import { MARKET_CONNECTORS } from "../../supabase/functions/_shared/markets/connectors.mjs";
 import { ceremonyYearConflict } from "../../supabase/functions/_shared/markets/core.mjs";
 
@@ -17,6 +20,7 @@ if (existsSync(localEnvironmentPath)) process.loadEnvFile(localEnvironmentPath);
 const baseUrl = new URL(
   process.env.RUNSCARS_AUDIT_BASE_URL ?? "https://runscars.app",
 );
+const predictionsOnly = process.argv.includes("--predictions");
 const failures = [];
 const warnings = [];
 
@@ -36,56 +40,85 @@ async function auditPublicGraph() {
   }
 }
 
+const publicPredictionCategories = [
+  "best-picture",
+  "directing",
+  "actor",
+  "actress",
+  "supporting-actor",
+  "supporting-actress",
+  "original-screenplay",
+  "adapted-screenplay",
+];
+
 const predictionConnectors = [
   {
     id: "awardswatch-predictions",
     endpoint_url: "https://awardswatch.com/oscar-predictions-hq/",
-    extractor_version: "awardswatch-multicategory-v5",
+    extractor_version: "awardswatch-multicategory-v6",
     configuration: {
       season_id: "oscars-2027",
       ceremony_year: 2027,
       archive_url:
         "https://awardswatch.com/category/predictions/film-predictions/oscars-predictions/2027-oscar-predictions/",
-      required_category_ids: [
-        "best-picture",
-        "directing",
-        "actor",
-        "actress",
-        "supporting-actor",
-        "supporting-actress",
-      ],
+      panel_author: "Erik Anderson",
+      required_category_ids: publicPredictionCategories,
     },
   },
   {
     id: "awards-daily-predictions",
     endpoint_url:
       "https://www.awardsdaily.com/wp-json/wp/v2/search?search=2027%20Oscar%20Predictions&per_page=20&_fields=id,url,title,subtype",
-    extractor_version: "awards-daily-v7",
+    extractor_version: "awards-daily-v8",
     configuration: {
       season_id: "oscars-2027",
       ceremony_year: 2027,
       discovery_limit: 12,
+      required_category_ids: publicPredictionCategories,
     },
   },
   {
     id: "awards-radar-predictions",
     endpoint_url: "https://awardsradar.com/predictions/",
-    extractor_version: "awards-radar-v5",
-    configuration: { season_id: "oscars-2027", ceremony_year: 2027 },
+    extractor_version: "awards-radar-v6",
+    configuration: {
+      season_id: "oscars-2027",
+      ceremony_year: 2027,
+      required_category_ids: publicPredictionCategories,
+    },
   },
   {
     id: "next-best-picture-predictions",
     endpoint_url:
       "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars",
     extractor_version: "next-best-picture-v3",
-    configuration: { season_id: "oscars-2027", ceremony_year: 2027 },
+    configuration: {
+      season_id: "oscars-2027",
+      ceremony_year: 2027,
+      required_category_ids: publicPredictionCategories,
+    },
   },
   {
     id: "midnight-critics-predictions",
     endpoint_url:
       "https://www.midnightcritics.com/predictions/2027-oscar-predictions",
     extractor_version: "midnight-critics-v2",
-    configuration: { season_id: "oscars-2027", ceremony_year: 2027 },
+    configuration: {
+      season_id: "oscars-2027",
+      ceremony_year: 2027,
+      required_category_ids: publicPredictionCategories,
+    },
+  },
+  {
+    id: "movie-state-predictions",
+    endpoint_url:
+      "https://themoviestate.com/the-movie-state/features/award-predictions/",
+    extractor_version: "movie-state-v1",
+    configuration: {
+      season_id: "oscars-2027",
+      ceremony_year: 2027,
+      required_category_ids: publicPredictionCategories,
+    },
   },
   {
     id: "ringer-best-picture",
@@ -94,6 +127,7 @@ const predictionConnectors = [
     configuration: {
       season_id: "oscars-2027",
       ceremony_year: 2027,
+      required_category_ids: ["best-picture"],
       article_fallback_url:
         "https://www.theringer.com/2026/03/20/oscars/oscars-2027-predictions-best-picture-movies-contenders",
     },
@@ -101,15 +135,60 @@ const predictionConnectors = [
 ];
 
 async function auditPredictionParsers() {
+  let connectors = predictionConnectors;
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (url && key) {
+    const client = createClient(url, key, { auth: { persistSession: false } });
+    const result = await client
+      .from("source_connectors")
+      .select("id,endpoint_url,extractor_version,configuration")
+      .eq("is_active", true);
+    if (result.error) {
+      failures.push(`Configuración profesional: ${result.error.message}`);
+      return;
+    }
+    const knownPredictions = new Set(
+      predictionConnectors.map((connector) => connector.id),
+    );
+    for (const connector of result.data) {
+      if (
+        knownPredictions.has(connector.id) &&
+        (!Array.isArray(connector.configuration?.required_category_ids) ||
+          connector.configuration.required_category_ids.length === 0)
+      ) {
+        failures.push(
+          `${connector.id}: falta configuración de categorías requeridas`,
+        );
+      }
+    }
+    connectors = result.data.filter(
+      (connector) =>
+        Array.isArray(connector.configuration?.required_category_ids) &&
+        connector.configuration.required_category_ids.length > 0,
+    );
+    if (!connectors.length) {
+      failures.push("Sin conectores profesionales con cobertura requerida");
+      return;
+    }
+  } else {
+    warnings.push(
+      "Parsers comprobados con configuración versionada; sin verificar configuración remota",
+    );
+  }
   const capturedAt = new Date().toISOString();
-  for (const connector of predictionConnectors) {
+  for (const connector of connectors) {
     try {
       const batch = await CONNECTORS[connector.id]({ connector, capturedAt });
       validateOrderedPredictionLists(batch);
+      validateRequiredPredictionCategories(
+        batch,
+        connector.configuration.required_category_ids,
+      );
       if (!batch.publications.length)
         throw new Error("sin publicaciones reconocibles");
       console.log(
-        `${connector.id}: ${batch.publications.length} publicaciones; ${batch.publications.reduce((sum, item) => sum + item.observations.length, 0)} observaciones.`,
+        `${connector.id}: ${batch.publications.length} publicaciones; ${batch.publications.reduce((sum, item) => sum + item.observations.length, 0)} observaciones; cobertura requerida completa.`,
       );
     } catch (error) {
       failures.push(
@@ -181,20 +260,25 @@ async function auditCronFreshness() {
     return;
   }
   const client = createClient(url, key, { auth: { persistSession: false } });
-  for (const table of [
-    "source_connectors",
-    "market_connectors",
-    "festival_connectors",
-  ]) {
+  for (const table of predictionsOnly
+    ? ["source_connectors"]
+    : ["source_connectors", "market_connectors", "festival_connectors"]) {
     const result = await client
       .from(table)
-      .select("id,is_active,last_success_at,last_failure_at,last_error")
+      .select(
+        "id,is_active,last_success_at,last_failure_at,last_error,configuration",
+      )
       .eq("is_active", true);
     if (result.error) {
       failures.push(`${table}: ${result.error.message}`);
       continue;
     }
     for (const connector of result.data ?? []) {
+      if (
+        predictionsOnly &&
+        !Array.isArray(connector.configuration?.required_category_ids)
+      )
+        continue;
       if (!connector.last_success_at) {
         failures.push(`${connector.id}: aún sin ejecución correcta`);
       } else if (
@@ -217,11 +301,31 @@ async function auditCronFreshness() {
       }
     }
   }
+  const refresh = await client
+    .from("snapshot_refresh_runs")
+    .select("status,started_at,finished_at,schedules_failed")
+    .order("started_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (refresh.error) {
+    failures.push(`Refresco de predicciones: ${refresh.error.message}`);
+  } else if (
+    !refresh.data ||
+    refresh.data.status !== "succeeded" ||
+    Date.now() -
+      Date.parse(refresh.data.finished_at ?? refresh.data.started_at) >
+      36 * 60 * 60 * 1000
+  ) {
+    failures.push(
+      "Refresco de predicciones sin éxito completo en las últimas 36 horas",
+    );
+  }
 }
 
-if (process.env.RUNSCARS_AUDIT_SKIP_PUBLIC !== "true") await auditPublicGraph();
+if (!predictionsOnly && process.env.RUNSCARS_AUDIT_SKIP_PUBLIC !== "true")
+  await auditPublicGraph();
 await auditPredictionParsers();
-await auditMarkets();
+if (!predictionsOnly) await auditMarkets();
 await auditCronFreshness();
 
 for (const warning of warnings) console.warn(`AVISO: ${warning}`);

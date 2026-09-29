@@ -92,8 +92,8 @@ describe("versioned database foundation", () => {
       seasons: 2,
       categories: 21,
       films: 39,
-      sources: 33,
-      connectors: 11,
+      sources: 34,
+      connectors: 12,
     });
 
     const schedules = await database.query<{
@@ -121,9 +121,52 @@ describe("versioned database foundation", () => {
       where id = 'awards-daily-predictions'
     `);
     expect(awardsDaily.rows[0]).toEqual({
-      extractor_version: "awards-daily-v7",
+      extractor_version: "awards-daily-v8",
       endpoint_url:
         "https://www.awardsdaily.com/wp-json/wp/v2/search?search=2027%20Oscar%20Predictions&per_page=20&_fields=id,url,title,subtype",
+    });
+
+    const movieState = await database.query<{
+      source_id: string;
+      is_active: boolean;
+      extractor_version: string;
+      editorial_status: string;
+      technical_status: string;
+      publication_status: string;
+      configuration: {
+        season_id: string;
+        ceremony_year: number;
+        required_category_ids: string[];
+      };
+    }>(`
+      select connector.source_id, connector.is_active, connector.extractor_version,
+        source.editorial_status, source.technical_status, source.publication_status,
+        connector.configuration
+      from public.source_connectors as connector
+      join public.sources as source on source.id = connector.source_id
+      where connector.id = 'movie-state-predictions'
+    `);
+    expect(movieState.rows[0]).toEqual({
+      source_id: "the-movie-state",
+      is_active: true,
+      extractor_version: "movie-state-v1",
+      editorial_status: "selected",
+      technical_status: "automated",
+      publication_status: "publishable",
+      configuration: {
+        season_id: "oscars-2027",
+        ceremony_year: 2027,
+        required_category_ids: [
+          "best-picture",
+          "directing",
+          "actor",
+          "actress",
+          "supporting-actor",
+          "supporting-actress",
+          "original-screenplay",
+          "adapted-screenplay",
+        ],
+      },
     });
 
     const marketVersions = await database.query<{
@@ -1566,6 +1609,114 @@ describe("versioned database foundation", () => {
       current_snapshot: "periodic-database-correction",
       corrected_snapshot: "periodic-database-reference",
     });
+
+    const evidence = await database.query<{ id: number }>(`
+      select id from public.professional_observations
+      where dedupe_key = repeat('b', 64)
+    `);
+    const observationId = evidence.rows[0].id;
+    const lockEmptyCut = (
+      id: string,
+      kind = "periodic",
+      excluded = [observationId],
+      category = "best-picture",
+      payloadExcluded = excluded,
+    ) =>
+      database.query<{ inserted: boolean }>(
+        `
+      select public.lock_aggregate_snapshot(
+        snapshot_id => $1,
+        snapshot_season_id => 'oscars-2027',
+        snapshot_category_id => $2,
+        snapshot_intention => 'nomination',
+        snapshot_kind => $3::public.aggregate_snapshot_kind,
+        snapshot_cutoff_at => '2026-09-01T00:00:00Z',
+        snapshot_time_zone => 'UTC',
+        snapshot_method_version => 'runscars-aggregation-v3',
+        snapshot_schema_version => 'runscars-snapshot-v2',
+        snapshot_content_hash => repeat('f', 64),
+        snapshot_payload => $4::jsonb,
+        snapshot_active_source_ids => '{}'::text[],
+        included_observation_ids => '{}'::bigint[],
+        excluded_observation_ids => $5::bigint[],
+        snapshot_locked_at => '2026-09-01T00:00:00Z',
+        snapshot_locked_by => 'database-test'
+      ) as inserted
+    `,
+        [
+          id,
+          category,
+          kind,
+          JSON.stringify({
+            schemaVersion: "runscars-snapshot-v2",
+            kind,
+            seasonId: "oscars-2027",
+            categoryId: category,
+            intention: "nomination",
+            methodVersion: "runscars-aggregation-v3",
+            activeSourceIds: [],
+            includedObservationIds: [],
+            excludedObservationIds: payloadExcluded.map(String),
+            selectedCandidateIds: [],
+            aggregate: {
+              ranking: [],
+              sourceLists: [],
+              orderedSourceCount: 0,
+              applicableSourceCount: 0,
+            },
+          }),
+          excluded,
+        ],
+      );
+
+    await expect(
+      lockEmptyCut("empty-without-evidence", "periodic", []),
+    ).rejects.toThrow("needs included observations");
+    await expect(
+      lockEmptyCut("empty-final", "nomination_final"),
+    ).rejects.toThrow("needs included observations");
+    await expect(
+      lockEmptyCut("empty-unknown-evidence", "periodic", [999999]),
+    ).rejects.toThrow("unknown excluded observation");
+    await expect(
+      lockEmptyCut("empty-wrong-scope", "periodic", [observationId], "actor"),
+    ).rejects.toThrow("same scope");
+    await expect(
+      lockEmptyCut(
+        "empty-mismatched-evidence",
+        "periodic",
+        [observationId],
+        "best-picture",
+        [999999],
+      ),
+    ).rejects.toThrow("needs included observations");
+    expect((await lockEmptyCut("empty-expiry-cut")).rows[0].inserted).toBe(
+      true,
+    );
+    expect((await lockEmptyCut("empty-expiry-cut")).rows[0].inserted).toBe(
+      false,
+    );
+    const emptyEvidence = await database.query<{
+      role: string;
+      observation_id: number;
+    }>(`
+      select role, observation_id from public.snapshot_observations
+      where snapshot_id = 'empty-expiry-cut'
+    `);
+    expect(emptyEvidence.rows).toEqual([
+      { role: "excluded", observation_id: observationId },
+    ]);
+    const pointer = await database.query<{ snapshot_id: string }>(`
+      select snapshot_id from public.current_aggregate_snapshots
+      where season_id = 'oscars-2027' and category_id = 'best-picture'
+        and prediction_intention = 'nomination' and kind = 'periodic'
+    `);
+    expect(pointer.rows[0].snapshot_id).toBe("empty-expiry-cut");
+    const retained = await database.query<{ payload: unknown }>(`
+      select payload from public.aggregate_snapshots
+      where id = 'periodic-database-reference'
+    `);
+    expect(retained.rows[0].payload).toEqual(beforeImport.rows[0].payload);
   });
 
   it("stores official results with provenance and blocks public writes", async () => {
