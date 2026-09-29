@@ -14,7 +14,7 @@ import {
   compareSnapshotMovements,
 } from "../snapshots/movements";
 import {
-  sourceFreshnessForCut,
+  sourceFreshnessForSelection,
   type ConnectorFreshnessState,
   type SourceFreshnessView,
 } from "../snapshots/freshness";
@@ -22,7 +22,12 @@ import {
   buildRealProviderCuts,
   type SnapshotHistoryEntry,
 } from "../snapshots/provider-cuts";
-import { loadCaptureDatesForHistory } from "../snapshots/capture-dates";
+import {
+  getCurrentPublicSnapshotPointers,
+  getPublicHistorySelection,
+  selectedPublicCutIndex,
+  type PublicHistorySelection,
+} from "../snapshots/public-history";
 import { createSupabaseServerClient } from "../supabase/server";
 import { PUBLIC_CATEGORIES, type PublicCategoryId } from "./config";
 
@@ -120,26 +125,51 @@ function activeViewFromHistory({
   selectedSnapshotId?: string;
 }): ActiveCategoryView {
   const cuts = buildRealProviderCuts(snapshots, captureDates);
-  const requestedIndex = selectedSnapshotId
-    ? cuts.findIndex((cut) => cut.id === selectedSnapshotId)
-    : -1;
-  const requestedSnapshot = selectedSnapshotId
-    ? snapshots.find((snapshot) => snapshot.id === selectedSnapshotId)
-    : null;
-  const priorIndex = requestedSnapshot
-    ? cuts.findLastIndex(
-        (cut) =>
-          Date.parse(cut.lockedAt) <= Date.parse(requestedSnapshot.lockedAt),
-      )
-    : -1;
-  const selectedIndex =
-    requestedIndex >= 0
-      ? requestedIndex
-      : requestedSnapshot
-        ? Math.max(0, priorIndex)
-        : Math.max(0, cuts.length - 1);
-  const selected = cuts[selectedIndex] ?? null;
-  const previous = selectedIndex > 0 ? cuts[selectedIndex - 1] : null;
+  const selectedIndex = selectedPublicCutIndex(
+    snapshots,
+    cuts,
+    selectedSnapshotId,
+  );
+  return activeViewFromSelection({
+    selection: {
+      cuts,
+      selectedIndex,
+      selected: cuts[selectedIndex] ?? null,
+      previous: selectedIndex > 0 ? cuts[selectedIndex - 1] : null,
+      sourceNames: Object.fromEntries(
+        cuts.flatMap((cut) =>
+          cut.aggregate.sourceLists.map((source) => [
+            source.sourceId,
+            source.sourceName,
+          ]),
+        ),
+      ),
+      currentCandidates: (cuts.at(-1)?.aggregate.ranking ?? []).map(
+        (candidate) => ({
+          id: candidate.candidateId,
+          label: candidate.label,
+          filmId: candidate.film?.id ?? null,
+        }),
+      ),
+    },
+    markets,
+    connectorFreshness,
+    dataState,
+  });
+}
+
+function activeViewFromSelection({
+  selection,
+  markets,
+  connectorFreshness = new Map(),
+  dataState,
+}: {
+  selection: PublicHistorySelection;
+  markets: Record<"kalshi" | "polymarket", MarketView[]>;
+  connectorFreshness?: Map<string, ConnectorFreshnessState>;
+  dataState: ActiveCategoryView["dataState"];
+}): ActiveCategoryView {
+  const { cuts, selectedIndex, selected, previous, sourceNames } = selection;
   const comparisonLimited = Boolean(
     previous &&
     (selected?.comparisonDateIncomplete || previous.comparisonDateIncomplete),
@@ -154,13 +184,6 @@ function activeViewFromHistory({
       ? previous
       : null;
   const latest = cuts.at(-1) ?? null;
-  const sourceNames = new Map(
-    cuts.flatMap((cut) =>
-      cut.aggregate.sourceLists.map(
-        (source) => [source.sourceId, source.sourceName] as const,
-      ),
-    ),
-  );
 
   return {
     mode: "active",
@@ -173,11 +196,14 @@ function activeViewFromHistory({
       : null,
     markets,
     dataState,
-    sourceFreshness: sourceFreshnessForCut(
-      cuts,
-      selectedIndex,
-      connectorFreshness,
-    ),
+    sourceFreshness: selected
+      ? sourceFreshnessForSelection(
+          cuts,
+          selectedIndex,
+          selected.aggregate,
+          connectorFreshness,
+        )
+      : [],
     snapshot: selected
       ? {
           id: selected.id,
@@ -198,17 +224,13 @@ function activeViewFromHistory({
             id: cut.id,
             lockedAt: cut.lockedAt,
             changedSources: cut.changedSourceIds.map(
-              (sourceId) => sourceNames.get(sourceId) ?? sourceId,
+              (sourceId) => sourceNames[sourceId] ?? sourceId,
             ),
             isSelected: cut.id === selected.id,
           })),
         }
       : null,
-    currentCandidates: (latest?.aggregate.ranking ?? []).map((candidate) => ({
-      id: candidate.candidateId,
-      label: candidate.label,
-      filmId: candidate.film?.id ?? null,
-    })),
+    currentCandidates: selection.currentCandidates,
   };
 }
 
@@ -389,18 +411,12 @@ async function activeCategoryFromDatabase(
   categoryId: PublicCategoryId,
   selectedSnapshotId?: string,
 ): Promise<ActiveCategoryView> {
-  const supabase = client();
-  const currentResult = await supabase
-    .from("current_aggregate_snapshots")
-    .select("snapshot_id")
-    .eq("season_id", "oscars-2027")
-    .eq("category_id", categoryId)
-    .eq("prediction_intention", "nomination")
-    .eq("kind", "periodic")
-    .maybeSingle();
-  if (currentResult.error) throw new Error(currentResult.error.message);
-  const markets = await marketViews(supabase, categoryId);
-  if (!currentResult.data) {
+  const [pointers, markets] = await Promise.all([
+    getCurrentPublicSnapshotPointers(),
+    cachedMarketViews(categoryId),
+  ]);
+  const pointer = pointers.find((item) => item.category_id === categoryId);
+  if (!pointer) {
     return {
       mode: "active",
       seasonYear: 2027,
@@ -412,77 +428,19 @@ async function activeCategoryFromDatabase(
       currentCandidates: [],
     };
   }
-  const snapshotResult = await supabase
-    .from("aggregate_snapshots")
-    .select("id,content_hash,locked_at,method_version,schema_version,payload")
-    .eq("id", currentResult.data.snapshot_id)
-    .single();
-  if (snapshotResult.error) throw new Error(snapshotResult.error.message);
-  const row = snapshotResult.data;
-  if (row.schema_version !== "runscars-snapshot-v2") {
-    return {
-      mode: "active",
-      seasonYear: 2027,
-      aggregate: null,
-      markets,
-      dataState: "database",
-      sourceFreshness: [],
-      snapshot: null,
-      currentCandidates: [],
-    };
-  }
-  const historyResult = await supabase
-    .from("aggregate_snapshots")
-    .select("id,content_hash,locked_at,method_version,schema_version,payload")
-    .eq("season_id", "oscars-2027")
-    .eq("category_id", categoryId)
-    .eq("prediction_intention", "nomination")
-    .eq("kind", "periodic")
-    .eq("schema_version", "runscars-snapshot-v2")
-    .lte("locked_at", row.locked_at)
-    .order("locked_at", { ascending: true })
-    .order("id", { ascending: true });
-  if (historyResult.error) throw new Error(historyResult.error.message);
-  const snapshots = (historyResult.data ?? []).flatMap(
-    (snapshot): SnapshotHistoryEntry[] => {
-      const historyPayload = snapshot.payload as unknown as {
-        aggregate?: PredictionAggregateV2;
-      };
-      if (
-        !historyPayload.aggregate ||
-        historyPayload.aggregate.methodVersion !== snapshot.method_version
-      ) {
-        return [];
-      }
-      return [
-        {
-          id: snapshot.id,
-          contentHash: snapshot.content_hash,
-          lockedAt: snapshot.locked_at,
-          methodVersion: snapshot.method_version,
-          schemaVersion: snapshot.schema_version,
-          aggregate: historyPayload.aggregate,
-        },
-      ];
-    },
+  const selection = await getPublicHistorySelection(
+    categoryId,
+    pointer.snapshot_id,
+    selectedSnapshotId,
   );
-  const sourceIds = [
-    ...new Set(
-      snapshots.flatMap((snapshot) =>
-        snapshot.aggregate.sourceLists.map((source) => source.sourceId),
-      ),
-    ),
-  ];
-  const captureDatesPromise = loadCaptureDatesForHistory(supabase, snapshots);
+  const sourceIds =
+    selection.selected?.aggregate.sourceLists.map(
+      (source) => source.sourceId,
+    ) ?? [];
   const connectorFreshness = new Map<string, ConnectorFreshnessState>();
   if (sourceIds.length) {
-    const connectorResult = await supabase
-      .from("public_source_freshness")
-      .select("source_id,last_successful_check_at,last_failure_at")
-      .in("source_id", sourceIds);
-    for (const connector of connectorResult.error
-      ? []
-      : (connectorResult.data ?? [])) {
+    const connectors = await cachedConnectorFreshness([...sourceIds].sort());
+    for (const connector of connectors) {
       if (!connector.source_id) continue;
       const previous = connectorFreshness.get(connector.source_id);
       const latest = (left: string | null, right: string | null) => {
@@ -502,13 +460,11 @@ async function activeCategoryFromDatabase(
       });
     }
   }
-  return activeViewFromHistory({
-    snapshots,
+  return activeViewFromSelection({
+    selection,
     markets,
     connectorFreshness,
-    captureDates: await captureDatesPromise,
     dataState: "database",
-    selectedSnapshotId,
   });
 }
 
@@ -641,12 +597,26 @@ async function archiveCategoryFromDatabase(
   };
 }
 
-// Only anonymous public prediction/context data is shared. Rankings, sessions,
-// watch states and administrative data are fetched outside this cache.
-const cachedActiveCategory = unstable_cache(
-  activeCategoryFromDatabase,
+// Only anonymous public context is shared; these leaves never contain session,
+// rankings, watch state or administration data, and remain fresh every minute.
+const cachedMarketViews = unstable_cache(
+  (categoryId: PublicCategoryId) => marketViews(client(), categoryId),
   [
-    "public-category-v1",
+    "public-category-markets-v1",
+    process.env.NEXT_PUBLIC_SUPABASE_URL ?? "unconfigured",
+  ],
+  { revalidate: 60 },
+);
+const cachedConnectorFreshness = unstable_cache(
+  async (sourceIds: string[]) => {
+    const result = await client()
+      .from("public_source_freshness")
+      .select("source_id,last_successful_check_at,last_failure_at")
+      .in("source_id", sourceIds);
+    return result.error ? [] : (result.data ?? []);
+  },
+  [
+    "public-category-freshness-v1",
     process.env.NEXT_PUBLIC_SUPABASE_URL ?? "unconfigured",
   ],
   { revalidate: 60 },
@@ -687,7 +657,7 @@ export async function getCategoryView(
   }
   try {
     return seasonYear === 2027
-      ? await cachedActiveCategory(categoryId, options.snapshotId)
+      ? await activeCategoryFromDatabase(categoryId, options.snapshotId)
       : await archiveCategoryFromDatabase(categoryId);
   } catch {
     if (allowFixture()) {

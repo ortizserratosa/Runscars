@@ -39,6 +39,10 @@ vi.mock("../../src/lib/supabase/server", () => ({
         },
         order: () => query,
         limit: () => query,
+        range(start: number, end: number) {
+          rows = rows.slice(start, end + 1);
+          return query;
+        },
         single: async () => ({ data: rows[0], error: null }),
         maybeSingle: async () => ({ data: rows[0] ?? null, error: null }),
         then: (resolve: (result: unknown) => unknown) =>

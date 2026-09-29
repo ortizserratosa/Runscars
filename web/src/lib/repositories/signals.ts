@@ -1,15 +1,14 @@
 import "server-only";
-import { unstable_cache } from "next/cache";
+import { cache } from "react";
 import type { PredictionAggregateV2 } from "../aggregation/v2";
 import {
   canCompareSnapshotMovements,
   compareSnapshotMovements,
 } from "../snapshots/movements";
 import {
-  buildRealProviderCuts,
-  type SnapshotHistoryEntry,
-} from "../snapshots/provider-cuts";
-import { loadCaptureDatesForHistory } from "../snapshots/capture-dates";
+  getCurrentPublicSnapshotPointers,
+  getPublicHistorySelection,
+} from "../snapshots/public-history";
 import { isSupabaseConfigured } from "../environment";
 import { createSupabaseServerClient } from "../supabase/server";
 import {
@@ -52,88 +51,6 @@ export type MetacriticScoreView = {
   capturedAt: string;
 };
 
-type SnapshotRow = {
-  id: string;
-  category_id: string;
-  content_hash: string;
-  locked_at: string;
-  method_version: string;
-  schema_version: string;
-  payload: unknown;
-};
-
-function snapshotEntry(row: SnapshotRow): SnapshotHistoryEntry | null {
-  const payload = row.payload as { aggregate?: PredictionAggregateV2 };
-  if (
-    row.schema_version !== "runscars-snapshot-v2" ||
-    !payload.aggregate ||
-    payload.aggregate.methodVersion !== row.method_version
-  ) {
-    return null;
-  }
-  return {
-    id: row.id,
-    contentHash: row.content_hash,
-    lockedAt: row.locked_at,
-    methodVersion: row.method_version,
-    schemaVersion: row.schema_version,
-    aggregate: payload.aggregate,
-  };
-}
-
-function currentViewsFromRows(
-  rows: SnapshotRow[],
-  pointerByCategory: Map<string, string>,
-  captureDates: ReadonlyMap<string, string>,
-): CurrentCategoryPredictionView[] {
-  return PUBLIC_CATEGORIES.flatMap((category) => {
-    const pointerId = pointerByCategory.get(category.id);
-    const pointer = rows.find((row) => row.id === pointerId);
-    if (!pointer) return [];
-    const history = rows
-      .filter(
-        (row) =>
-          row.category_id === category.id &&
-          Date.parse(row.locked_at) <= Date.parse(pointer.locked_at),
-      )
-      .flatMap((row) => {
-        const entry = snapshotEntry(row);
-        return entry ? [entry] : [];
-      });
-    const cuts = buildRealProviderCuts(history, captureDates);
-    const current = cuts.at(-1);
-    if (!current) return [];
-    const previous = cuts.at(-2) ?? null;
-    const sourceLastChangedAt = Object.fromEntries(
-      current.aggregate.sourceLists.map((source) => {
-        const changed = [...cuts]
-          .reverse()
-          .find((cut) => cut.changedSourceIds.includes(source.sourceId));
-        return [source.sourceId, changed?.lockedAt ?? current.lockedAt];
-      }),
-    );
-    return [
-      {
-        categoryId: category.id,
-        categorySlug: category.slug,
-        categoryName: category.name,
-        lockedAt: current.lockedAt,
-        changedSourceIds: current.changedSourceIds,
-        sourceLastChangedAt,
-        aggregate: compareSnapshotMovements(
-          current.aggregate,
-          previous &&
-            !current.comparisonDateIncomplete &&
-            !previous.comparisonDateIncomplete &&
-            canCompareSnapshotMovements(current.aggregate, previous.aggregate)
-            ? previous.aggregate
-            : null,
-        ),
-      },
-    ];
-  });
-}
-
 function fixtureCurrentPredictions(): CurrentCategoryPredictionView[] {
   return PUBLIC_CATEGORIES.map((category) => {
     const aggregate = phase71FixtureAggregate(category.id);
@@ -158,71 +75,62 @@ function fixtureCurrentPredictions(): CurrentCategoryPredictionView[] {
 async function databaseCurrentPredictions(): Promise<
   CurrentCategoryPredictionView[]
 > {
-  const supabase = createSupabaseServerClient();
-  const pointerResult = await supabase
-    .from("current_aggregate_snapshots")
-    .select("category_id,snapshot_id")
-    .eq("season_id", "oscars-2027")
-    .eq("prediction_intention", "nomination")
-    .eq("kind", "periodic")
-    .in(
-      "category_id",
-      PUBLIC_CATEGORIES.map((category) => category.id),
-    );
-  if (pointerResult.error) throw new Error(pointerResult.error.message);
+  const pointers = await getCurrentPublicSnapshotPointers();
   const pointerByCategory = new Map(
-    (pointerResult.data ?? []).map((pointer) => [
-      pointer.category_id,
-      pointer.snapshot_id,
-    ]),
+    pointers.map((pointer) => [pointer.category_id, pointer.snapshot_id]),
   );
-  const historyResult = await supabase
-    .from("aggregate_snapshots")
-    .select(
-      "id,category_id,content_hash,locked_at,method_version,schema_version,payload",
-    )
-    .eq("season_id", "oscars-2027")
-    .eq("prediction_intention", "nomination")
-    .eq("kind", "periodic")
-    .eq("schema_version", "runscars-snapshot-v2")
-    .in(
-      "category_id",
-      PUBLIC_CATEGORIES.map((category) => category.id),
-    )
-    .order("locked_at", { ascending: true })
-    .order("id", { ascending: true });
-  if (historyResult.error) throw new Error(historyResult.error.message);
-  const rows = (historyResult.data ?? []) as SnapshotRow[];
-  const captureDates = await loadCaptureDatesForHistory(
-    supabase,
-    rows.flatMap((row) => {
-      const entry = snapshotEntry(row);
-      return entry ? [entry] : [];
+  // Each category caches its own compact projection by immutable pointer.
+  // A failed category read throws; it never replaces cached data with fixtures.
+  const views = await Promise.all(
+    PUBLIC_CATEGORIES.map(async (category) => {
+      const pointerId = pointerByCategory.get(category.id);
+      if (!pointerId) return null;
+      const {
+        cuts,
+        selected: current,
+        previous,
+      } = await getPublicHistorySelection(category.id, pointerId);
+      if (!current) return null;
+      return {
+        categoryId: category.id,
+        categorySlug: category.slug,
+        categoryName: category.name,
+        lockedAt: current.lockedAt,
+        changedSourceIds: current.changedSourceIds,
+        sourceLastChangedAt: Object.fromEntries(
+          current.aggregate.sourceLists.map((source) => {
+            const changed = cuts.findLast((cut) =>
+              cut.changedSourceIds.includes(source.sourceId),
+            );
+            return [source.sourceId, changed?.lockedAt ?? current.lockedAt];
+          }),
+        ),
+        aggregate: compareSnapshotMovements(
+          current.aggregate,
+          previous &&
+            !current.comparisonDateIncomplete &&
+            !previous.comparisonDateIncomplete &&
+            canCompareSnapshotMovements(current.aggregate, previous.aggregate)
+            ? previous.aggregate
+            : null,
+        ),
+      };
     }),
   );
-  return currentViewsFromRows(rows, pointerByCategory, captureDates);
+  return views.filter((view) => view !== null);
 }
 
-const cachedCurrentPredictions = unstable_cache(
-  databaseCurrentPredictions,
-  [
-    "public-predictions-v1",
-    process.env.NEXT_PUBLIC_SUPABASE_URL ?? "unconfigured",
-  ],
-  { revalidate: 60 },
+export const getCurrentCategoryPredictions = cache(
+  async (): Promise<CurrentCategoryPredictionView[]> => {
+    if (!isSupabaseConfigured()) return fixtureCurrentPredictions();
+    try {
+      return await databaseCurrentPredictions();
+    } catch (error) {
+      if (process.env.NODE_ENV === "production") throw error;
+      return fixtureCurrentPredictions();
+    }
+  },
 );
-
-export async function getCurrentCategoryPredictions(): Promise<
-  CurrentCategoryPredictionView[]
-> {
-  if (!isSupabaseConfigured()) return fixtureCurrentPredictions();
-  try {
-    return await cachedCurrentPredictions();
-  } catch (error) {
-    if (process.env.NODE_ENV === "production") throw error;
-    return fixtureCurrentPredictions();
-  }
-}
 
 export async function getFilmPredictions(
   filmId: string,

@@ -1,4 +1,5 @@
 import type { RealProviderCut } from "./provider-cuts";
+import type { PredictionAggregateV2 } from "../aggregation/v2";
 
 export type ConnectorFreshnessState = {
   lastSuccessfulCheckAt: string | null;
@@ -38,7 +39,24 @@ export function sourceFreshnessForCut(
   const selected = cuts[selectedIndex];
   if (!selected) return [];
 
-  return selected.aggregate.sourceLists
+  return sourceFreshnessForSelection(
+    cuts,
+    selectedIndex,
+    selected.aggregate,
+    connectorStates,
+  );
+}
+
+export function sourceFreshnessForSelection(
+  cuts: Pick<RealProviderCut, "lockedAt" | "changedSourceIds">[],
+  selectedIndex: number,
+  aggregate: PredictionAggregateV2,
+  connectorStates: Map<string, ConnectorFreshnessState>,
+): SourceFreshnessView[] {
+  const selected = cuts[selectedIndex];
+  if (!selected) return [];
+
+  return aggregate.sourceLists
     .map((source): SourceFreshnessView => {
       const lastChanged = cuts
         .slice(0, selectedIndex + 1)

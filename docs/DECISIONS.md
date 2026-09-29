@@ -1170,3 +1170,31 @@ ejemplos manuales de nominaciones y ganador coincidieron con
 - **Matiza:** la presentación histórica y la prohibición de movimientos entre
   métodos bloqueados de D-059. Mantiene la caducidad, reactivación y protección
   de los snapshots originales de esa decisión.
+
+## D-062 · Lectura pública de predicciones reutilizable por corte
+
+- **Fecha:** 2026-09-29
+- **Estado:** Aceptada
+- **Origen:** corrección de los avisos de consumo de Vercel y de los timeouts
+  observados al releer el historial de predicciones.
+- **Decisión:** separar la consulta del puntero vigente de la reconstrucción
+  del historial. La proyección pública se reutiliza por categoría y snapshot
+  vigente, con revalidación de una hora; un puntero nuevo genera una clave
+  distinta. Los punteros, mercados y estado de los conectores mantienen la
+  revalidación de 60 segundos.
+- **Lectura:** recuperar el historial completo del alcance hasta el puntero
+  mediante páginas pequeñas y orden estable. No limitarlo a las dos últimas
+  filas: los cortes equivalentes y la fecha del último cambio de cada fuente
+  pueden depender de versiones anteriores. La caché conserva una representación
+  compacta y las selecciones históricas recuperan únicamente los agregados que
+  necesitan.
+- **Continuidad:** conserva D-032, D-059 y D-061, los enlaces históricos, los
+  rankings, las fechas de evidencia y la protección de snapshots bloqueados.
+  Una fecha de captura ausente sigue limitando las comparaciones; la
+  revalidación permite recuperar posteriormente esa evidencia.
+- **Privacidad:** solo se comparte información profesional pública obtenida
+  mediante el cliente anónimo y RLS. Sesiones, rankings privados y datos de
+  administración permanecen fuera de esta caché.
+- **Operación:** este cambio reduce trabajo repetido; no borra consumo ya
+  contabilizado ni contrata capacidad adicional. Evidencia y límites en
+  [VERCEL_AUDIT_2026-09-29.md](VERCEL_AUDIT_2026-09-29.md).

@@ -1,0 +1,5 @@
+# Deployment builds use web/, shared Supabase modules and root npm scripts.
+# Keep local agent settings, documentation evidence and the retired prototype local.
+.codex/
+docs/
+prototype/
