@@ -1,0 +1,87 @@
+{
+  "checkedAt": "2026-09-29T18:39:17.100Z",
+  "web": {
+    "commit": "fd677cf",
+    "deploymentId": "dpl_DnKhnFADoPR9QfvEgZFdPncAPfrq",
+    "deploymentUrl": "https://runscars-7zih77qo0-nazzozzo-s-projects.vercel.app",
+    "productionUrl": "https://runscars.app",
+    "promoted": true,
+    "publicRoutesPassed": 34,
+    "runtimeErrorLogEntriesInLastHour": 0
+  },
+  "edge": {
+    "name": "run-ingestion",
+    "version": 40,
+    "status": "ACTIVE",
+    "isolatedImportsReceipt": "prediction-isolated-final-imports.json"
+  },
+  "migrations": {
+    "count": 43,
+    "allLocalRemoteEqual": true,
+    "newVersions": [
+      "20260929160000",
+      "20260929163000",
+      "20260929164000",
+      "20260929170000",
+      "20260929180000"
+    ]
+  },
+  "operations": {
+    "ingestionRunning": 0,
+    "jobs": [
+      {
+        "active": true,
+        "isolatedDispatch": true,
+        "name": "runscars-ingestion-daily",
+        "schedule": "17 4 * * *"
+      }
+    ],
+    "snapshotRunning": 0
+  },
+  "verification": {
+    "npmCi": true,
+    "format": true,
+    "lint": true,
+    "typecheck": true,
+    "unitTests": 263,
+    "databaseTests": 25,
+    "productionBuild": true,
+    "e2eTests": 124,
+    "dependencyVulnerabilities": 0,
+    "livePredictionAudit": "passed",
+    "relativeDocumentLinks": "passed",
+    "gitDiffCheck": "passed"
+  },
+  "browser": {
+    "desktop": {
+      "viewport": "1280x900",
+      "path": "/temporadas/2027/mejor-pelicula",
+      "candidates": 50,
+      "coverageSources": 5,
+      "rankedSources": 4,
+      "consensus": true,
+      "horizontalOverflow": false
+    },
+    "mobile": {
+      "viewport": "390x844",
+      "path": "/temporadas/2027/actriz-protagonista",
+      "candidates": 20,
+      "coverageSources": 5,
+      "rankedSources": 3,
+      "provisional": true,
+      "horizontalOverflow": false
+    },
+    "javascriptErrors": 0,
+    "visuallyReviewed": true,
+    "normalPointerRevalidationSeconds": 60,
+    "cachePurgeNeeded": false
+  },
+  "previousLockedSnapshotsUnchanged": true,
+  "publicIdentityPendingFromAuditRuns": 0,
+  "nonpublicPendingFromAuditRuns": 5,
+  "eligibilityNotCertified": [
+    "the-liberation",
+    "cry-to-heaven"
+  ],
+  "backup": "/Users/nacho/Documents/Side/Runscars-backups/2026-09-29-prediction-audit"
+}

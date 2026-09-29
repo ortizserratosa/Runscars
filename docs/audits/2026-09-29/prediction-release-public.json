@@ -1,0 +1,290 @@
+{
+  "base": "https://runscars.app",
+  "stage": "public",
+  "access": "direct-http",
+  "at": "2026-09-29T18:33:53.058Z",
+  "results": [
+    {
+      "path": "/api/health",
+      "status": 200,
+      "contentType": "application/json",
+      "broken": false,
+      "health": {
+        "status": "ok",
+        "service": "runscars-web",
+        "databaseConfigured": true
+      },
+      "ms": 1156
+    },
+    {
+      "path": "/api/health/database",
+      "status": 200,
+      "contentType": "application/json",
+      "broken": false,
+      "health": {
+        "status": "ok",
+        "database": "reachable"
+      },
+      "ms": 678
+    },
+    {
+      "path": "/temporadas/2027/mejor-pelicula",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "Predicciones Oscar 2027: Mejor película | Runscars",
+      "broken": false,
+      "ms": 1198
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "Predicciones Oscar 2027: ranking y consenso | Runscars",
+      "broken": false,
+      "ms": 205
+    },
+    {
+      "path": "/en",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "Oscar Predictions 2027: Expert Consensus | Runscars",
+      "broken": false,
+      "ms": 237
+    },
+    {
+      "path": "/en/temporadas/2027/mejor-pelicula",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "Best Picture Oscar Predictions 2027 | Runscars",
+      "broken": false,
+      "ms": 395
+    },
+    {
+      "path": "/peliculas/the-odyssey",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "La Odisea: predicciones Oscar 2027 | Runscars",
+      "broken": false,
+      "ms": 1148
+    },
+    {
+      "path": "/en/peliculas/the-odyssey",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "The Odyssey: 2027 Oscar Predictions | Runscars",
+      "broken": false,
+      "ms": 1578
+    },
+    {
+      "path": "/fuentes/awards-daily",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "Awards Daily: fuente de predicciones Oscar | Runscars",
+      "broken": false,
+      "ms": 785
+    },
+    {
+      "path": "/en/fuentes/awards-daily",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "Awards Daily Oscar Predictions Source | Runscars",
+      "broken": false,
+      "ms": 936
+    },
+    {
+      "path": "/acceso",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "Acceso | Runscars",
+      "broken": false,
+      "ms": 175
+    },
+    {
+      "path": "/en/acceso",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "Sign in | Runscars",
+      "broken": false,
+      "ms": 142
+    },
+    {
+      "path": "/comunidad",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "Quinielas Oscar 2027 de la comunidad | Runscars",
+      "broken": false,
+      "ms": 779
+    },
+    {
+      "path": "/en/comunidad",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "Oscar 2027 Community Ballots | Runscars",
+      "broken": false,
+      "ms": 1699
+    },
+    {
+      "path": "/festivales",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "Circuito internacional de festivales de cine 2026 | Runscars",
+      "broken": false,
+      "ms": 183
+    },
+    {
+      "path": "/en/festivales",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "2026 International Film Festival Circuit | Runscars",
+      "broken": false,
+      "ms": 234
+    },
+    {
+      "path": "/festivales/cannes/2026",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "Festival de Cannes 2026: selección y palmarés oficial | Runscars",
+      "broken": false,
+      "ms": 251
+    },
+    {
+      "path": "/en/festivales/cannes/2026",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "Festival de Cannes 2026: Official Selection and Awards | Runscars",
+      "broken": false,
+      "ms": 284
+    },
+    {
+      "path": "/semana",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "Esta semana en la carrera a los Oscar 2027 | Runscars",
+      "broken": false,
+      "ms": 369
+    },
+    {
+      "path": "/en/semana",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "This week in the Oscar 2027 race | Runscars",
+      "broken": false,
+      "ms": 223
+    },
+    {
+      "path": "/robots.txt",
+      "status": 200,
+      "contentType": "text/plain; charset=utf-8",
+      "broken": false,
+      "ms": 14
+    },
+    {
+      "path": "/sitemap.xml",
+      "status": 200,
+      "contentType": "application/xml",
+      "broken": false,
+      "ms": 24
+    },
+    {
+      "path": "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-07-25-317e07b691cc",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "Predicciones Oscar 2027: Mejor película | Runscars",
+      "broken": false,
+      "ms": 634
+    },
+    {
+      "path": "/og-20260830.png",
+      "status": 200,
+      "contentType": "image/png",
+      "broken": false,
+      "ms": 225
+    },
+    {
+      "path": "/temporadas/2027/actriz-protagonista",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "Predicciones Oscar 2027: Actriz protagonista | Runscars",
+      "broken": false,
+      "provisional": true,
+      "ms": 294
+    },
+    {
+      "path": "/en/temporadas/2027/actriz-protagonista",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "Actress in a Leading Role Oscar Predictions 2027 | Runscars",
+      "broken": false,
+      "provisional": true,
+      "ms": 293
+    },
+    {
+      "path": "/fuentes/the-movie-state",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "The Movie State: fuente de predicciones Oscar | Runscars",
+      "broken": false,
+      "movieState": true,
+      "ms": 660
+    },
+    {
+      "path": "/en/fuentes/the-movie-state",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "The Movie State Oscar Predictions Source | Runscars",
+      "broken": false,
+      "movieState": true,
+      "ms": 750
+    },
+    {
+      "path": "/peliculas/artificial",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "Artificial: predicciones Oscar 2027 | Runscars",
+      "broken": false,
+      "correctCredits": true,
+      "ms": 1300
+    },
+    {
+      "path": "/en/peliculas/artificial",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "Artificial: 2027 Oscar Predictions | Runscars",
+      "broken": false,
+      "correctCredits": true,
+      "ms": 1887
+    },
+    {
+      "path": "/metodologia",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "Cómo funciona el consenso de predicciones Oscar | Runscars",
+      "broken": false,
+      "ms": 138
+    },
+    {
+      "path": "/en/metodologia",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "How the Oscar Predictions Consensus Works | Runscars",
+      "broken": false,
+      "ms": 136
+    },
+    {
+      "path": "/quiniela",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "Crea tu quiniela de los Oscar 2027 | Runscars",
+      "broken": false,
+      "ms": 715
+    },
+    {
+      "path": "/en/quiniela",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "title": "Make your Oscar 2027 ballot | Runscars",
+      "broken": false,
+      "ms": 739
+    }
+  ]
+}

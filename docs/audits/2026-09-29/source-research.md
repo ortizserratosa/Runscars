@@ -181,10 +181,11 @@ sustituyen las reglas y recibos específicos de estreno.
   aunque cambie la fecha CMS.
 - Formato de los archivos JavaScript/TypeScript nuevos, TypeScript (`npx tsc
   --noEmit --project web/tsconfig.json`) y `git diff --check`.
-- La verificación conjunta comunicada por el agente coordinador incluye
-  **234 pruebas unitarias y 22 pruebas de base de datos correctas**. Este dato
-  corresponde a verificación local, no a despliegue ni importación pública.
+- La verificación final conjunta incluye **263 pruebas unitarias, 25 pruebas
+  de base de datos y 124 pruebas E2E correctas**.
 
-La validación general, migración, importación en producción y comprobación
-pública pertenecen a la entrega conjunta de este encargo; el smoke local no las
-sustituye ni demuestra que la fuente ya esté activa públicamente.
+La validación general, migraciones, importación en producción y comprobación
+pública están documentadas en la
+[entrega conjunta](../../PREDICTION_AUDIT_2026-09-29.md). The Movie State está
+activa y participa en los ocho cortes publicados del 29/09; el smoke local
+descrito arriba es una prueba distinta de esa comprobación operativa.

@@ -1,0 +1,471 @@
+{
+  "checkedAt": "2026-09-29T18:33:57.505Z",
+  "sourceId": "awards-radar",
+  "observations": [
+    {
+      "id": 8347,
+      "source_id": "awards-radar",
+      "original_subject": "Artifical",
+      "film_id": "artificial",
+      "person_id": null,
+      "category_id": "best-picture",
+      "state": "published",
+      "participates": true,
+      "original_value": {
+        "raw": "24. Artifical",
+        "rank": 24,
+        "list_length": 50,
+        "film_subject": "Artificial",
+        "people_subjects": []
+      },
+      "captured_at": "2026-09-29T17:58:41.737+00:00",
+      "run_id": 618
+    },
+    {
+      "id": 8360,
+      "source_id": "awards-radar",
+      "original_subject": "Cry to Heaven",
+      "film_id": "cry-to-heaven",
+      "person_id": null,
+      "category_id": "best-picture",
+      "state": "published",
+      "participates": true,
+      "original_value": {
+        "raw": "37. Cry to Heaven",
+        "rank": 37,
+        "list_length": 50,
+        "film_subject": "Cry to Heaven",
+        "people_subjects": []
+      },
+      "captured_at": "2026-09-29T17:58:41.737+00:00",
+      "run_id": 618
+    },
+    {
+      "id": 8411,
+      "source_id": "awards-radar",
+      "original_subject": "Yura Borisov – Artifical",
+      "film_id": "artificial",
+      "person_id": null,
+      "category_id": "actor",
+      "state": "published",
+      "participates": true,
+      "original_value": {
+        "raw": "18. Yura Borisov – Artifical",
+        "rank": 18,
+        "list_length": 20,
+        "film_subject": "Artificial",
+        "people_subjects": [
+          "Yura Borisov"
+        ]
+      },
+      "captured_at": "2026-09-29T17:58:41.737+00:00",
+      "run_id": 618
+    },
+    {
+      "id": 8450,
+      "source_id": "awards-radar",
+      "original_subject": "Andrew Garfield – Artificial",
+      "film_id": "artificial",
+      "person_id": null,
+      "category_id": "supporting-actor",
+      "state": "published",
+      "participates": true,
+      "original_value": {
+        "raw": "16. Andrew Garfield – Artificial",
+        "rank": 16,
+        "list_length": 20,
+        "film_subject": "Artificial",
+        "people_subjects": [
+          "Andrew Garfield"
+        ]
+      },
+      "captured_at": "2026-09-29T17:58:41.737+00:00",
+      "run_id": 618
+    },
+    {
+      "id": 8449,
+      "source_id": "awards-radar",
+      "original_subject": "Guy Peace – Ink",
+      "film_id": "ink",
+      "person_id": null,
+      "category_id": "supporting-actor",
+      "state": "published",
+      "participates": true,
+      "original_value": {
+        "raw": "17. Guy Peace – Ink",
+        "rank": 17,
+        "list_length": 20,
+        "film_subject": "Ink",
+        "people_subjects": [
+          "Guy Pearce"
+        ]
+      },
+      "captured_at": "2026-09-29T17:58:41.737+00:00",
+      "run_id": 618
+    },
+    {
+      "id": 8487,
+      "source_id": "awards-radar",
+      "original_subject": "Mr. Irrelevant",
+      "film_id": "mr-irrelevant",
+      "person_id": null,
+      "category_id": "original-screenplay",
+      "state": "published",
+      "participates": true,
+      "original_value": {
+        "raw": "17. Mr. Irrelevant",
+        "rank": 17,
+        "list_length": 20,
+        "film_subject": "Mr. Irrelevant",
+        "people_subjects": []
+      },
+      "captured_at": "2026-09-29T17:58:41.737+00:00",
+      "run_id": 618
+    },
+    {
+      "id": 8488,
+      "source_id": "awards-radar",
+      "original_subject": "Artificial",
+      "film_id": "artificial",
+      "person_id": null,
+      "category_id": "original-screenplay",
+      "state": "published",
+      "participates": true,
+      "original_value": {
+        "raw": "15. Artificial",
+        "rank": 15,
+        "list_length": 20,
+        "film_subject": "Artificial",
+        "people_subjects": []
+      },
+      "captured_at": "2026-09-29T17:58:41.737+00:00",
+      "run_id": 618
+    },
+    {
+      "id": 8508,
+      "source_id": "awards-radar",
+      "original_subject": "The Mosquito Bowl",
+      "film_id": "the-mosquito-bowl",
+      "person_id": null,
+      "category_id": "adapted-screenplay",
+      "state": "published",
+      "participates": true,
+      "original_value": {
+        "raw": "16. The Mosquito Bowl",
+        "rank": 16,
+        "list_length": 20,
+        "film_subject": "The Mosquito Bowl",
+        "people_subjects": []
+      },
+      "captured_at": "2026-09-29T17:58:41.737+00:00",
+      "run_id": 618
+    },
+    {
+      "id": 8512,
+      "source_id": "awards-radar",
+      "original_subject": "Nirvanna the Band the Show the Movie",
+      "film_id": "nirvanna-the-band-the-show-the-movie",
+      "person_id": null,
+      "category_id": "adapted-screenplay",
+      "state": "published",
+      "participates": true,
+      "original_value": {
+        "raw": "20. Nirvanna the Band the Show the Movie",
+        "rank": 20,
+        "list_length": 20,
+        "film_subject": "Nirvanna the Band the Show the Movie",
+        "people_subjects": []
+      },
+      "captured_at": "2026-09-29T17:58:41.737+00:00",
+      "run_id": 618
+    },
+    {
+      "id": 8506,
+      "source_id": "awards-radar",
+      "original_subject": "Cry to Heaven",
+      "film_id": "cry-to-heaven",
+      "person_id": null,
+      "category_id": "adapted-screenplay",
+      "state": "published",
+      "participates": true,
+      "original_value": {
+        "raw": "14. Cry to Heaven",
+        "rank": 14,
+        "list_length": 20,
+        "film_subject": "Cry to Heaven",
+        "people_subjects": []
+      },
+      "captured_at": "2026-09-29T17:58:41.737+00:00",
+      "run_id": 618
+    },
+    {
+      "id": 8507,
+      "source_id": "awards-radar",
+      "original_subject": "A Statement",
+      "film_id": "a-statement",
+      "person_id": null,
+      "category_id": "adapted-screenplay",
+      "state": "published",
+      "participates": true,
+      "original_value": {
+        "raw": "17. A Statement",
+        "rank": 17,
+        "list_length": 20,
+        "film_subject": "A Statement",
+        "people_subjects": []
+      },
+      "captured_at": "2026-09-29T17:58:41.737+00:00",
+      "run_id": 618
+    },
+    {
+      "id": 8412,
+      "source_id": "awards-radar",
+      "original_subject": "Javier Bardem – Bunker",
+      "film_id": "bunker",
+      "person_id": null,
+      "category_id": "actor",
+      "state": "published",
+      "participates": true,
+      "original_value": {
+        "raw": "19. Javier Bardem – Bunker",
+        "rank": 19,
+        "list_length": 20,
+        "film_subject": "Bunker",
+        "people_subjects": [
+          "Javier Bardem"
+        ]
+      },
+      "captured_at": "2026-09-29T17:58:41.737+00:00",
+      "run_id": 618
+    },
+    {
+      "id": 8359,
+      "source_id": "awards-radar",
+      "original_subject": "Tenzing",
+      "film_id": "tenzing",
+      "person_id": null,
+      "category_id": "best-picture",
+      "state": "published",
+      "participates": true,
+      "original_value": {
+        "raw": "36. Tenzing",
+        "rank": 36,
+        "list_length": 50,
+        "film_subject": "Tenzing",
+        "people_subjects": []
+      },
+      "captured_at": "2026-09-29T17:58:41.737+00:00",
+      "run_id": 618
+    },
+    {
+      "id": 8361,
+      "source_id": "awards-radar",
+      "original_subject": "Bunker",
+      "film_id": "bunker",
+      "person_id": null,
+      "category_id": "best-picture",
+      "state": "published",
+      "participates": true,
+      "original_value": {
+        "raw": "39. Bunker",
+        "rank": 39,
+        "list_length": 50,
+        "film_subject": "Bunker",
+        "people_subjects": []
+      },
+      "captured_at": "2026-09-29T17:58:41.737+00:00",
+      "run_id": 618
+    },
+    {
+      "id": 8355,
+      "source_id": "awards-radar",
+      "original_subject": "The Liberation",
+      "film_id": "the-liberation",
+      "person_id": null,
+      "category_id": "best-picture",
+      "state": "published",
+      "participates": true,
+      "original_value": {
+        "raw": "33. The Liberation",
+        "rank": 33,
+        "list_length": 50,
+        "film_subject": "The Liberation",
+        "people_subjects": []
+      },
+      "captured_at": "2026-09-29T17:58:41.737+00:00",
+      "run_id": 618
+    },
+    {
+      "id": 8365,
+      "source_id": "awards-radar",
+      "original_subject": "I Swear",
+      "film_id": "i-swear",
+      "person_id": null,
+      "category_id": "best-picture",
+      "state": "published",
+      "participates": true,
+      "original_value": {
+        "raw": "43. I Swear",
+        "rank": 43,
+        "list_length": 50,
+        "film_subject": "I Swear",
+        "people_subjects": []
+      },
+      "captured_at": "2026-09-29T17:58:41.737+00:00",
+      "run_id": 618
+    },
+    {
+      "id": 8490,
+      "source_id": "awards-radar",
+      "original_subject": "Bunker",
+      "film_id": "bunker",
+      "person_id": null,
+      "category_id": "original-screenplay",
+      "state": "published",
+      "participates": true,
+      "original_value": {
+        "raw": "18. Bunker",
+        "rank": 18,
+        "list_length": 20,
+        "film_subject": "Bunker",
+        "people_subjects": []
+      },
+      "captured_at": "2026-09-29T17:58:41.737+00:00",
+      "run_id": 618
+    },
+    {
+      "id": 8362,
+      "source_id": "awards-radar",
+      "original_subject": "The Mosquito Bowl",
+      "film_id": "the-mosquito-bowl",
+      "person_id": null,
+      "category_id": "best-picture",
+      "state": "published",
+      "participates": true,
+      "original_value": {
+        "raw": "40. The Mosquito Bowl",
+        "rank": 40,
+        "list_length": 50,
+        "film_subject": "The Mosquito Bowl",
+        "people_subjects": []
+      },
+      "captured_at": "2026-09-29T17:58:41.737+00:00",
+      "run_id": 618
+    },
+    {
+      "id": 8363,
+      "source_id": "awards-radar",
+      "original_subject": "A Statement",
+      "film_id": "a-statement",
+      "person_id": null,
+      "category_id": "best-picture",
+      "state": "published",
+      "participates": true,
+      "original_value": {
+        "raw": "41. A Statement",
+        "rank": 41,
+        "list_length": 50,
+        "film_subject": "A Statement",
+        "people_subjects": []
+      },
+      "captured_at": "2026-09-29T17:58:41.737+00:00",
+      "run_id": 618
+    },
+    {
+      "id": 8368,
+      "source_id": "awards-radar",
+      "original_subject": "Mr. Irrelevant",
+      "film_id": "mr-irrelevant",
+      "person_id": null,
+      "category_id": "best-picture",
+      "state": "published",
+      "participates": true,
+      "original_value": {
+        "raw": "46. Mr. Irrelevant",
+        "rank": 46,
+        "list_length": 50,
+        "film_subject": "Mr. Irrelevant",
+        "people_subjects": []
+      },
+      "captured_at": "2026-09-29T17:58:41.737+00:00",
+      "run_id": 618
+    },
+    {
+      "id": 8413,
+      "source_id": "awards-radar",
+      "original_subject": "John Magaro – Omaha",
+      "film_id": "omaha",
+      "person_id": null,
+      "category_id": "actor",
+      "state": "published",
+      "participates": true,
+      "original_value": {
+        "raw": "20. John Magaro – Omaha",
+        "rank": 20,
+        "list_length": 20,
+        "film_subject": "Omaha",
+        "people_subjects": [
+          "John Magaro"
+        ]
+      },
+      "captured_at": "2026-09-29T17:58:41.737+00:00",
+      "run_id": 618
+    },
+    {
+      "id": 8414,
+      "source_id": "awards-radar",
+      "original_subject": "Carrie Coon – The Liberation",
+      "film_id": "the-liberation",
+      "person_id": null,
+      "category_id": "actress",
+      "state": "published",
+      "participates": true,
+      "original_value": {
+        "raw": "2. Carrie Coon – The Liberation",
+        "rank": 2,
+        "list_length": 20,
+        "film_subject": "The Liberation",
+        "people_subjects": [
+          "Carrie Coon"
+        ]
+      },
+      "captured_at": "2026-09-29T17:58:41.737+00:00",
+      "run_id": 618
+    },
+    {
+      "id": 8432,
+      "source_id": "awards-radar",
+      "original_subject": "Zendaya – The Drama",
+      "film_id": "the-drama",
+      "person_id": null,
+      "category_id": "actress",
+      "state": "published",
+      "participates": true,
+      "original_value": {
+        "raw": "20. Zendaya – The Drama",
+        "rank": 20,
+        "list_length": 20,
+        "film_subject": "The Drama",
+        "people_subjects": [
+          "Zendaya"
+        ]
+      },
+      "captured_at": "2026-09-29T17:58:41.737+00:00",
+      "run_id": 618
+    }
+  ],
+  "publicPending": [],
+  "rawSpellingPreserved": true,
+  "manualFilms": [
+    "the-liberation",
+    "bunker",
+    "omaha",
+    "tenzing",
+    "cry-to-heaven",
+    "the-mosquito-bowl",
+    "a-statement",
+    "i-swear",
+    "mr-irrelevant",
+    "nirvanna-the-band-the-show-the-movie"
+  ]
+}

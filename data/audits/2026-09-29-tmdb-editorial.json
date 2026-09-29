@@ -1,0 +1,243 @@
+{
+  "version": 1,
+  "reviewedAt": "2026-09-29",
+  "locale": "es-ES",
+  "reviewScope": "Identidades editoriales de predicciones Awards Radar; sin certificación de elegibilidad Oscar y sin datos remotos modificados al preparar este manifiesto.",
+  "provenanceReceipt": "docs/audits/2026-09-29/pending-editorial-review.json",
+  "globalDuplicateCheck": {
+    "checkedAt": "2026-09-29T18:22:29.537Z",
+    "scope": "Tabla films global, sin filtro de temporada; diez slugs propuestos y diez IDs TMDB",
+    "existingSlugOrTmdbMatches": [],
+    "result": "no collisions observed"
+  },
+  "matches": [
+    {
+      "filmId": "the-liberation",
+      "tmdbId": 1287365,
+      "query": "The Liberation",
+      "method": "manual",
+      "reason": "Bleecker Street acredita a Carrie Coon como Rita y el mismo reparto y trama de una comuna que TMDB 1287365, dirigido por Guy Nattiv. Identidad verificable aunque TMDB indique 2027-01-06 y el distribuidor anuncie January 8 sin año visible; no certifica estreno calificante 2026.",
+      "evidenceUrl": "https://bleeckerstreetmedia.com/the-liberation"
+    },
+    {
+      "filmId": "bunker",
+      "tmdbId": 1473784,
+      "query": "Bunker",
+      "method": "manual",
+      "reason": "La Biennale acredita dirección y guion de Florian Zeller y reparto Javier Bardem/Penélope Cruz, coincidentes con TMDB 1473784. Se descarta 1725917, documental de Santino Scotti/Rocio Granillo Posse sobre Damián Arabia.",
+      "evidenceUrl": "https://www.labiennale.org/en/node/20717"
+    },
+    {
+      "filmId": "omaha",
+      "tmdbId": 1233655,
+      "query": "Omaha",
+      "method": "manual",
+      "reason": "Greenwich acredita a Cole Webley y John Magaro en la misma historia familiar de carretera que TMDB 1233655. El metadato 2025-11-22 no es una prueba del periodo de estreno estadounidense ni de inelegibilidad para una predicción Oscar 2027. IFC Center verifica exhibición de Nueva York del 24 de abril al 14 de mayo de 2026: https://www.ifccenter.com/films/omaha/",
+      "evidenceUrl": "https://greenwichentertainment.com/film/omaha/"
+    },
+    {
+      "filmId": "tenzing",
+      "tmdbId": 1288069,
+      "query": "Tenzing",
+      "method": "manual",
+      "reason": "See-Saw acredita a Jennifer Peedom, guionista Luke Davies y Genden Phuntsok/Tom Hiddleston/Willem Dafoe; director, reparto y expedición al Everest coinciden con TMDB 1288069.",
+      "evidenceUrl": "https://see-saw-films.com/film/tenzing/"
+    },
+    {
+      "filmId": "cry-to-heaven",
+      "tmdbId": 1413113,
+      "query": "Cry to Heaven",
+      "method": "manual",
+      "reason": "El portal oficial Italy for Movies/Cinecittà identifica el largometraje de Tom Ford y su producción italiana de 2026, coincidente con TMDB 1413113. TMDB no tiene fecha de estreno; los datos de rodaje no certifican elegibilidad ni fecha de estreno.",
+      "evidenceUrl": "https://www.italyformovies.com/filmset/detail/601/cry-to-heaven"
+    },
+    {
+      "filmId": "the-mosquito-bowl",
+      "tmdbId": 1458300,
+      "query": "The Mosquito Bowl",
+      "method": "manual",
+      "reason": "Netflix acredita a Peter Berg y el reparto Nicholas Galitzine/Bill Skarsgård/Ray Nicholson/Tom Francis en la historia de jugadores de fútbol y marines de la Segunda Guerra Mundial, coincidente con TMDB 1458300; su Media Center anuncia salas estadounidenses para 2026-10-30.",
+      "evidenceUrl": "https://www.netflix.com/tudum/articles/the-mosquito-bowl"
+    },
+    {
+      "filmId": "a-statement",
+      "tmdbId": 1618090,
+      "query": "A Statement",
+      "method": "manual",
+      "reason": "NYFF acredita a Tom McCarthy y el reparto Paul Rudd/Paul Giamatti/Amy Ryan/John Turturro en la conferencia climática de 1980, coincidente con TMDB 1618090. El estreno festivalero anunciado para 2026-10-03 no certifica un pase calificante Oscar.",
+      "evidenceUrl": "https://www.filmlinc.org/nyff2026/films/a-statement/"
+    },
+    {
+      "filmId": "i-swear",
+      "tmdbId": 1317149,
+      "query": "I Swear",
+      "method": "manual",
+      "reason": "Sony identifica a Robert Aramayo interpretando a John Davidson y la misma biografía sobre Tourette que TMDB 1317149, dirigida por Kirk Jones. El metadato 2025-09-22 no determina el periodo de estreno estadounidense ni la elegibilidad Oscar 2027. Sony confirma la fecha estadounidense anunciada del 24 de abril de 2026: https://www.sonypictures.com/corp/press_releases/2026/0302/sonypicturesclassicstoreleasekirkjonesiswearnationwideonapril242026",
+      "evidenceUrl": "https://www.sonypictures.com/movies/iswear"
+    },
+    {
+      "filmId": "mr-irrelevant",
+      "tmdbId": 1372443,
+      "query": "Mr. Irrelevant",
+      "method": "manual",
+      "reason": "Paramount identifica la película de John Tuggle protagonizada por David Corenswet, Michael Shannon e Isabel May, coincidente con TMDB 1372443 y su director Jonathan Levine. Se descarta el homónimo 1599336 de Jeff Fisher. Paramount anuncia 2026-12-25.",
+      "evidenceUrl": "https://www.paramountpictures.com/movies/mr-irrelevant"
+    },
+    {
+      "filmId": "nirvanna-the-band-the-show-the-movie",
+      "tmdbId": 1154538,
+      "query": "Nirvanna the Band the Show the Movie",
+      "method": "manual",
+      "reason": "NEON acredita a Matt Johnson como director y a Matt Johnson/Jay McCarrol como protagonistas del viaje temporal tras intentar actuar en el Rivoli; coincide con TMDB 1154538.",
+      "evidenceUrl": "https://www.neonrated.com/film/nirvanna-the-band-the-show-the-movie"
+    }
+  ],
+  "films": [
+    {
+      "id": "the-liberation",
+      "title": "The Liberation",
+      "alternateTitles": [],
+      "releaseDate": "2027-01-06",
+      "releaseStatus": "upcoming",
+      "eligibilityYear": 2026,
+      "notes": "Alta editorial por predicción de Awards Radar para la ceremonia Oscar 2027. eligibilityYear=2026 representa exclusivamente el periodo del pronóstico, no una certificación de elegibilidad, candidatura oficial o estreno calificante. Autoridad para la inclusión: predicción del experto; TMDB aporta identidad/metadatos y la fuente primaria corrobora la obra. TMDB: fecha 2027-01-06, estado declarado Released; releaseStatus normalizado upcoming. Existe discrepancia: TMDB marca Released pero fecha 2027-01-06; se conserva upcoming por fecha futura. Bleecker anuncia January 8 sin año visible y no se verificó pase estadounidense calificante 2026. Evidencia: https://bleeckerstreetmedia.com/the-liberation",
+      "activateInSeason": true,
+      "activateInSeasonReason": "Activación editorial como obra pronosticada explícitamente por Awards Radar para Oscar 2027, con identidad corroborada por fuentes primarias. PRODUCT separa predicciones y resultados; D-003 limita TMDB a metadatos y D-065 exige corroborar identidad. No se convierte el filtro automático de año en una prohibición editorial ni se certifica elegibilidad Oscar. Predicción expresamente especulativa: Bleecker anuncia January 8 y TMDB registra enero de 2027, pero no se verificó que esos datos excluyan una corrida calificante anterior. La fecha del estreno amplio no demuestra por sí sola inelegibilidad. Mantener incertidumbre explícita y revisar si aparece una contradicción oficial.",
+      "eligibilityReviewRequired": true,
+      "officialEligibilityStatus": "not_certified"
+    },
+    {
+      "id": "bunker",
+      "title": "Bunker",
+      "alternateTitles": [],
+      "releaseDate": "2026-12-03",
+      "releaseStatus": "upcoming",
+      "eligibilityYear": 2026,
+      "notes": "Alta editorial por predicción de Awards Radar para la ceremonia Oscar 2027. eligibilityYear=2026 representa exclusivamente el periodo del pronóstico, no una certificación de elegibilidad, candidatura oficial o estreno calificante. Autoridad para la inclusión: predicción del experto; TMDB aporta identidad/metadatos y la fuente primaria corrobora la obra. TMDB: fecha 2026-12-03, estado declarado Released; releaseStatus normalizado upcoming. Evidencia: https://www.labiennale.org/en/node/20717",
+      "activateInSeason": true,
+      "activateInSeasonReason": "Activación editorial como obra pronosticada explícitamente por Awards Radar para Oscar 2027, con identidad corroborada por fuentes primarias. PRODUCT separa predicciones y resultados; D-003 limita TMDB a metadatos y D-065 exige corroborar identidad. No se convierte el filtro automático de año en una prohibición editorial ni se certifica elegibilidad Oscar.",
+      "eligibilityReviewRequired": false,
+      "officialEligibilityStatus": "not_certified"
+    },
+    {
+      "id": "omaha",
+      "title": "Omaha",
+      "alternateTitles": [],
+      "releaseDate": "2025-11-22",
+      "releaseStatus": "released",
+      "eligibilityYear": 2026,
+      "notes": "Alta editorial por predicción de Awards Radar para la ceremonia Oscar 2027. eligibilityYear=2026 representa exclusivamente el periodo del pronóstico, no una certificación de elegibilidad, candidatura oficial o estreno calificante. Autoridad para la inclusión: predicción del experto; TMDB aporta identidad/metadatos y la fuente primaria corrobora la obra. TMDB: fecha 2025-11-22, estado declarado Released; releaseStatus normalizado released. La fecha inicial de 2025 no demuestra por sí sola inelegibilidad Oscar 2027; IFC Center documenta exhibición en Nueva York del 24 de abril al 14 de mayo de 2026; no se certifica con ello la totalidad de requisitos Oscar. Evidencia de exhibición: https://www.ifccenter.com/films/omaha/ Evidencia: https://greenwichentertainment.com/film/omaha/",
+      "activateInSeason": true,
+      "activateInSeasonReason": "Activación editorial como obra pronosticada explícitamente por Awards Radar para Oscar 2027, con identidad corroborada por fuentes primarias. PRODUCT separa predicciones y resultados; D-003 limita TMDB a metadatos y D-065 exige corroborar identidad. No se convierte el filtro automático de año en una prohibición editorial ni se certifica elegibilidad Oscar. IFC Center acredita pases en Nueva York del 24 de abril al 14 de mayo de 2026. La fecha inicial TMDB de 2025 no contradice esa exhibición estadounidense; no se encontró el título en el reminder list general de Oscar 2026.",
+      "eligibilityReviewRequired": false,
+      "officialEligibilityStatus": "not_certified"
+    },
+    {
+      "id": "tenzing",
+      "title": "Tenzing",
+      "alternateTitles": [],
+      "releaseDate": "2026-10-09",
+      "releaseStatus": "upcoming",
+      "eligibilityYear": 2026,
+      "notes": "Alta editorial por predicción de Awards Radar para la ceremonia Oscar 2027. eligibilityYear=2026 representa exclusivamente el periodo del pronóstico, no una certificación de elegibilidad, candidatura oficial o estreno calificante. Autoridad para la inclusión: predicción del experto; TMDB aporta identidad/metadatos y la fuente primaria corrobora la obra. TMDB: fecha 2026-10-09, estado declarado Released; releaseStatus normalizado upcoming. Evidencia: https://see-saw-films.com/film/tenzing/",
+      "activateInSeason": true,
+      "activateInSeasonReason": "Activación editorial como obra pronosticada explícitamente por Awards Radar para Oscar 2027, con identidad corroborada por fuentes primarias. PRODUCT separa predicciones y resultados; D-003 limita TMDB a metadatos y D-065 exige corroborar identidad. No se convierte el filtro automático de año en una prohibición editorial ni se certifica elegibilidad Oscar.",
+      "eligibilityReviewRequired": false,
+      "officialEligibilityStatus": "not_certified"
+    },
+    {
+      "id": "cry-to-heaven",
+      "title": "Cry to Heaven",
+      "alternateTitles": [],
+      "releaseDate": null,
+      "releaseStatus": "announced",
+      "eligibilityYear": 2026,
+      "notes": "Alta editorial por predicción de Awards Radar para la ceremonia Oscar 2027. eligibilityYear=2026 representa exclusivamente el periodo del pronóstico, no una certificación de elegibilidad, candidatura oficial o estreno calificante. Autoridad para la inclusión: predicción del experto; TMDB aporta identidad/metadatos y la fuente primaria corrobora la obra. TMDB: fecha desconocida, estado declarado Post Production; releaseStatus normalizado announced. Solo se confirmó producción; sin fecha de estreno ni pase calificante verificados. Evidencia: https://www.italyformovies.com/filmset/detail/601/cry-to-heaven",
+      "activateInSeason": true,
+      "activateInSeasonReason": "Activación editorial como obra pronosticada explícitamente por Awards Radar para Oscar 2027, con identidad corroborada por fuentes primarias. PRODUCT separa predicciones y resultados; D-003 limita TMDB a metadatos y D-065 exige corroborar identidad. No se convierte el filtro automático de año en una prohibición editorial ni se certifica elegibilidad Oscar. El rodaje de 2026 está documentado, pero no la fecha de estreno. La predicción se conserva como especulación atribuida al experto; la ausencia de fecha en TMDB no es una exclusión oficial.",
+      "eligibilityReviewRequired": true,
+      "officialEligibilityStatus": "not_certified"
+    },
+    {
+      "id": "the-mosquito-bowl",
+      "title": "The Mosquito Bowl",
+      "alternateTitles": [],
+      "releaseDate": "2026-10-30",
+      "releaseStatus": "upcoming",
+      "eligibilityYear": 2026,
+      "notes": "Alta editorial por predicción de Awards Radar para la ceremonia Oscar 2027. eligibilityYear=2026 representa exclusivamente el periodo del pronóstico, no una certificación de elegibilidad, candidatura oficial o estreno calificante. Autoridad para la inclusión: predicción del experto; TMDB aporta identidad/metadatos y la fuente primaria corrobora la obra. TMDB: fecha 2026-10-30, estado declarado Post Production; releaseStatus normalizado upcoming. Evidencia: https://www.netflix.com/tudum/articles/the-mosquito-bowl",
+      "activateInSeason": true,
+      "activateInSeasonReason": "Activación editorial como obra pronosticada explícitamente por Awards Radar para Oscar 2027, con identidad corroborada por fuentes primarias. PRODUCT separa predicciones y resultados; D-003 limita TMDB a metadatos y D-065 exige corroborar identidad. No se convierte el filtro automático de año en una prohibición editorial ni se certifica elegibilidad Oscar.",
+      "eligibilityReviewRequired": false,
+      "officialEligibilityStatus": "not_certified"
+    },
+    {
+      "id": "a-statement",
+      "title": "A Statement",
+      "alternateTitles": [],
+      "releaseDate": "2026-10-03",
+      "releaseStatus": "upcoming",
+      "eligibilityYear": 2026,
+      "notes": "Alta editorial por predicción de Awards Radar para la ceremonia Oscar 2027. eligibilityYear=2026 representa exclusivamente el periodo del pronóstico, no una certificación de elegibilidad, candidatura oficial o estreno calificante. Autoridad para la inclusión: predicción del experto; TMDB aporta identidad/metadatos y la fuente primaria corrobora la obra. TMDB: fecha 2026-10-03, estado declarado Post Production; releaseStatus normalizado upcoming. Evidencia: https://www.filmlinc.org/nyff2026/films/a-statement/",
+      "activateInSeason": true,
+      "activateInSeasonReason": "Activación editorial como obra pronosticada explícitamente por Awards Radar para Oscar 2027, con identidad corroborada por fuentes primarias. PRODUCT separa predicciones y resultados; D-003 limita TMDB a metadatos y D-065 exige corroborar identidad. No se convierte el filtro automático de año en una prohibición editorial ni se certifica elegibilidad Oscar.",
+      "eligibilityReviewRequired": false,
+      "officialEligibilityStatus": "not_certified"
+    },
+    {
+      "id": "i-swear",
+      "title": "I Swear",
+      "alternateTitles": [
+        "Incontrolable (I Swear)"
+      ],
+      "releaseDate": "2025-09-22",
+      "releaseStatus": "released",
+      "eligibilityYear": 2026,
+      "notes": "Alta editorial por predicción de Awards Radar para la ceremonia Oscar 2027. eligibilityYear=2026 representa exclusivamente el periodo del pronóstico, no una certificación de elegibilidad, candidatura oficial o estreno calificante. Autoridad para la inclusión: predicción del experto; TMDB aporta identidad/metadatos y la fuente primaria corrobora la obra. TMDB: fecha 2025-09-22, estado declarado Released; releaseStatus normalizado released. La fecha inicial de 2025 no demuestra por sí sola inelegibilidad Oscar 2027; Sony Pictures Classics anunció estreno estadounidense el 24 de abril de 2026; no se certifica con ello la totalidad de requisitos Oscar. Evidencia de distribución: https://www.sonypictures.com/corp/press_releases/2026/0302/sonypicturesclassicstoreleasekirkjonesiswearnationwideonapril242026 Evidencia: https://www.sonypictures.com/movies/iswear",
+      "activateInSeason": true,
+      "activateInSeasonReason": "Activación editorial como obra pronosticada explícitamente por Awards Radar para Oscar 2027, con identidad corroborada por fuentes primarias. PRODUCT separa predicciones y resultados; D-003 limita TMDB a metadatos y D-065 exige corroborar identidad. No se convierte el filtro automático de año en una prohibición editorial ni se certifica elegibilidad Oscar. Sony Pictures Classics anunció estreno estadounidense el 24 de abril de 2026. La fecha inicial TMDB de 2025 corresponde a otro hito y no contradice esa distribución; no se encontró el título en el reminder list general de Oscar 2026.",
+      "eligibilityReviewRequired": false,
+      "officialEligibilityStatus": "not_certified"
+    },
+    {
+      "id": "mr-irrelevant",
+      "title": "Mr. Irrelevant",
+      "alternateTitles": [
+        "Mr. Irrelevant: La historia de John Tuggle"
+      ],
+      "releaseDate": "2026-12-25",
+      "releaseStatus": "upcoming",
+      "eligibilityYear": 2026,
+      "notes": "Alta editorial por predicción de Awards Radar para la ceremonia Oscar 2027. eligibilityYear=2026 representa exclusivamente el periodo del pronóstico, no una certificación de elegibilidad, candidatura oficial o estreno calificante. Autoridad para la inclusión: predicción del experto; TMDB aporta identidad/metadatos y la fuente primaria corrobora la obra. TMDB: fecha 2026-12-25, estado declarado Post Production; releaseStatus normalizado upcoming. Evidencia: https://www.paramountpictures.com/movies/mr-irrelevant",
+      "activateInSeason": true,
+      "activateInSeasonReason": "Activación editorial como obra pronosticada explícitamente por Awards Radar para Oscar 2027, con identidad corroborada por fuentes primarias. PRODUCT separa predicciones y resultados; D-003 limita TMDB a metadatos y D-065 exige corroborar identidad. No se convierte el filtro automático de año en una prohibición editorial ni se certifica elegibilidad Oscar.",
+      "eligibilityReviewRequired": false,
+      "officialEligibilityStatus": "not_certified"
+    },
+    {
+      "id": "nirvanna-the-band-the-show-the-movie",
+      "title": "Nirvanna the Band the Show the Movie",
+      "alternateTitles": [],
+      "releaseDate": "2026-02-02",
+      "releaseStatus": "released",
+      "eligibilityYear": 2026,
+      "notes": "Alta editorial por predicción de Awards Radar para la ceremonia Oscar 2027. eligibilityYear=2026 representa exclusivamente el periodo del pronóstico, no una certificación de elegibilidad, candidatura oficial o estreno calificante. Autoridad para la inclusión: predicción del experto; TMDB aporta identidad/metadatos y la fuente primaria corrobora la obra. TMDB: fecha 2026-02-02, estado declarado Released; releaseStatus normalizado released. Evidencia: https://www.neonrated.com/film/nirvanna-the-band-the-show-the-movie",
+      "activateInSeason": true,
+      "activateInSeasonReason": "Activación editorial como obra pronosticada explícitamente por Awards Radar para Oscar 2027, con identidad corroborada por fuentes primarias. PRODUCT separa predicciones y resultados; D-003 limita TMDB a metadatos y D-065 exige corroborar identidad. No se convierte el filtro automático de año en una prohibición editorial ni se certifica elegibilidad Oscar.",
+      "eligibilityReviewRequired": false,
+      "officialEligibilityStatus": "not_certified"
+    }
+  ],
+  "seasonActivationPolicy": {
+    "seasonId": "oscars-2027",
+    "eligibilityYearMeaning": "Periodo de pronóstico 2026 para ceremonia 2027; no certificación de estreno calificante ni admisión oficial de la Academia",
+    "authority": "Observaciones profesionales explícitas de Awards Radar, corroboración editorial de identidad y ausencia de contradicción oficial hallada",
+    "contractReferences": [
+      "docs/PRODUCT.md",
+      "docs/DECISIONS.md#d-003--tmdb-para-metadatos",
+      "docs/DECISIONS.md#d-065--corroboración-de-identidad-antes-de-ampliar-el-catálogo-automáticamente"
+    ],
+    "exclusionRule": "Si evidencia oficial contradice la temporada, mantener identidad global y observación original, activateInSeason=false y estado eligibility_review sin voto. No se ha hallado esa contradicción para estos diez casos.",
+    "eligibleForOscarsCertified": false
+  }
+}

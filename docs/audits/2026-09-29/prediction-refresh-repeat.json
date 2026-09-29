@@ -1,0 +1,69 @@
+{
+  "checkedAt": "2026-09-29T18:35:23.059Z",
+  "path": "https://runscars.app/api/cron/snapshots",
+  "authentication": "Vault snapshot secret via pg_net",
+  "responses": [
+    {
+      "content": {
+        "status": "succeeded",
+        "schedules": 8,
+        "failed": 0,
+        "results": [
+          {
+            "scheduleId": "oscars-2027-actor-nomination-weekly",
+            "status": "unchanged",
+            "snapshotId": "periodic-oscars-2027-actor-nomination-2026-09-29-8c0eba0c506d",
+            "contentHash": "8c0eba0c506d09acea2323dfe147f2c412b3f2cc604f8f62a07dbeb9a76f5220"
+          },
+          {
+            "scheduleId": "oscars-2027-actress-nomination-weekly",
+            "status": "unchanged",
+            "snapshotId": "periodic-oscars-2027-actress-nomination-2026-09-29-61b770834156",
+            "contentHash": "61b770834156962f53a70a79956c0020702ea64976adff729f2d3f3dae1bb09b"
+          },
+          {
+            "scheduleId": "oscars-2027-adapted-screenplay-nomination-weekly",
+            "status": "unchanged",
+            "snapshotId": "periodic-oscars-2027-adapted-screenplay-nomination-2026-09-29-63f93d804e38",
+            "contentHash": "63f93d804e38f642a4060b31cb8f369ff2ee9fa95e5b6b31cd1fabb0bb4ac75f"
+          },
+          {
+            "scheduleId": "oscars-2027-best-picture-nomination-weekly",
+            "status": "unchanged",
+            "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-09-29-6d08df0e2aac",
+            "contentHash": "6d08df0e2aace04b18bac12d570723ae8c5b528b0041b3434442376e9fbb039e"
+          },
+          {
+            "scheduleId": "oscars-2027-directing-nomination-weekly",
+            "status": "unchanged",
+            "snapshotId": "periodic-oscars-2027-directing-nomination-2026-09-29-f786afcba546",
+            "contentHash": "f786afcba5461a824df09fd748719a0c7dcc742a9f48b9736967fab2d1333c97"
+          },
+          {
+            "scheduleId": "oscars-2027-original-screenplay-nomination-weekly",
+            "status": "unchanged",
+            "snapshotId": "periodic-oscars-2027-original-screenplay-nomination-2026-09-29-ba2ce9014438",
+            "contentHash": "ba2ce901443880a7124d2da0a9150deb7f7c2c74ae35fc70d80bddb9e2abc1be"
+          },
+          {
+            "scheduleId": "oscars-2027-supporting-actor-nomination-weekly",
+            "status": "unchanged",
+            "snapshotId": "periodic-oscars-2027-supporting-actor-nomination-2026-09-29-540b3aaa9667",
+            "contentHash": "540b3aaa96672b3b0ab85e280420d610f0781a22292ec2757dbe163a7df82477"
+          },
+          {
+            "scheduleId": "oscars-2027-supporting-actress-nomination-weekly",
+            "status": "unchanged",
+            "snapshotId": "periodic-oscars-2027-supporting-actress-nomination-2026-09-29-fb25f185b142",
+            "contentHash": "fb25f185b1421c37d65c877810edb3182fbd46ffae2d77d1676a8e51eb71ab8d"
+          }
+        ]
+      },
+      "created": "2026-09-29 18:34:29.60924+00",
+      "error_msg": null,
+      "id": 1322,
+      "status_code": 200,
+      "timed_out": false
+    }
+  ]
+}

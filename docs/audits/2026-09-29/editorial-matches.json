@@ -1,6 +1,6 @@
 {
   "reviewedOn": "2026-09-29",
-  "basis": "Primary source identity and credits verification. Source-specific typo aliases are implemented and tested in code; deployment is not certified by this receipt. The coordinating audit applied the Artificial TMDB correction and refreshed Ink credits in the live catalog through the canonical editorial CLI.",
+  "basis": "Primary-source identity and credits verification; source-specific aliases deployed in run-ingestion v40 and verified in live published observations, preserving original raw spelling. The canonical editorial CLI corrected Artificial and refreshed Ink credits.",
   "cases": [
     {
       "id": "awards-radar-artifical",
@@ -38,14 +38,14 @@
         }
       ],
       "recommendation": "Resolve only this verified source spelling to Artificial; preserve original raw text and attach the correction evidence. Do not create a second film or use general fuzzy matching.",
-      "status": "implemented_in_extractor_deployment_not_verified",
+      "status": "applied_and_verified_in_live_predictions",
       "oscarEligibilityVerified": false,
       "application": {
         "implementedOn": "2026-09-29",
         "scope": "Awards Radar only; exact source spelling Artifical becomes matching field Artificial while subject and originalValue.raw remain unchanged",
         "codePath": "supabase/functions/_shared/ingestion/professional-predictions.mjs",
         "testPath": "web/tests/unit/ingestion.test.ts",
-        "productionImportVerified": false
+        "productionImportVerified": true
       }
     },
     {
@@ -107,7 +107,7 @@
         }
       ],
       "recommendation": "Resolve the verified typo Guy Peace to Guy Pearce for Ink with a traceable editorial correction, keeping the original observation raw text unchanged.",
-      "status": "implemented_in_extractor_live_credits_refreshed_deployment_not_verified",
+      "status": "applied_and_verified_in_live_predictions",
       "oscarEligibilityVerified": false,
       "verifiedTmdbId": 1532610,
       "application": {
@@ -116,7 +116,7 @@
         "codePath": "supabase/functions/_shared/ingestion/professional-predictions.mjs",
         "testPath": "web/tests/unit/ingestion.test.ts",
         "liveCatalogCredits": "Coordinating audit reports a successful refresh of Ink TMDB 1532610 credits through the canonical CLI",
-        "productionImportVerified": false
+        "productionImportVerified": true
       }
     },
     {
@@ -204,18 +204,20 @@
         }
       ],
       "recommendation": "Correct the film identity through the canonical tmdb:match command before refreshing credits and rerunning exact matching. Preserve observation raw text and historical receipts. NYFF's description of lead performances does not override the source's predicted Supporting Actor category. Do not infer an Oscar campaign or nomination from the credit.",
-      "status": "applied_to_live_catalog_by_coordinating_audit",
+      "status": "applied_and_verified_in_live_predictions",
       "application": {
         "command": "npm run tmdb:match -- artificial 1492198 --reason <primary-source identity evidence>",
         "appliedOn": "2026-09-29",
         "verifiedBy": "Coordinating audit reports successful canonical CLI execution, film_tmdb_match_history entry and replacement of the film credits",
         "fallbackCorrectionMigration": "20260929164000_artificial_catalog_correction.sql",
         "environment": "live catalog",
-        "predictionImportVerified": false
+        "predictionImportVerified": true,
+        "productionImportVerified": true
       },
       "oscarEligibilityVerified": false
     }
   ],
   "eligibilityCaution": "Festival selection, film year and cast identity do not by themselves establish Oscar eligibility or a qualifying United States theatrical release. This review makes no change to eligibility.",
-  "deploymentVerified": false
+  "deploymentVerified": true,
+  "productionReceipt": "docs/audits/2026-09-29/editorial-observations.json"
 }

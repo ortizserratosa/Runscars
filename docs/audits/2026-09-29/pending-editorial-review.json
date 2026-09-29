@@ -1,0 +1,950 @@
+{
+  "reviewedOn": "2026-09-29",
+  "reviewedAt": "2026-09-29T18:21:34.568Z",
+  "scope": "Final editorial review of 17 Awards Radar public observations across 10 works; read-only research, no code or catalog mutations",
+  "method": "Primary producer, distributor, festival and official production pages plus direct read-only TMDB API detail/credits queries. Source observations reread using the existing Awards Radar parser. Secrets were loaded only within the process and are not recorded.",
+  "sourceId": "awards-radar",
+  "observationsReviewed": 17,
+  "filmsReviewed": 10,
+  "conclusion": "All ten work identities have corroborating evidence suitable for explicit editorial review. Automatic title/year matching correctly remains insufficient for homonyms, absent personal source claims, missing release dates or different initial-release years. Matching identity does not certify Oscar eligibility; release/season doubts are retained explicitly.",
+  "noMutationsApplied": true,
+  "cases": [
+    {
+      "title": "The Liberation",
+      "priority": "high",
+      "observations": [
+        {
+          "categoryId": "best-picture",
+          "subject": "The Liberation",
+          "rank": 33,
+          "listLength": 50,
+          "sourceUrl": "https://awardsradar.com/best-picture/"
+        },
+        {
+          "categoryId": "actress",
+          "subject": "Carrie Coon – The Liberation",
+          "rank": 2,
+          "listLength": 20,
+          "sourceUrl": "https://awardsradar.com/best-actress/"
+        }
+      ],
+      "identityStatus": "verified_primary_sources_and_tmdb_credits",
+      "mutationStatus": "recommendation_only_no_mutations_applied",
+      "tmdb": {
+        "id": 1287365,
+        "url": "https://www.themoviedb.org/movie/1287365",
+        "apiUrl": "https://api.themoviedb.org/3/movie/1287365?append_to_response=credits,external_ids&language=en-US",
+        "title": "The Liberation",
+        "originalTitle": "The Liberation",
+        "releaseDateMetadata": "2027-01-06",
+        "imdbId": "tt8613988",
+        "directors": [
+          {
+            "id": 1119247,
+            "name": "Guy Nattiv"
+          }
+        ],
+        "cast": [
+          {
+            "id": 1308445,
+            "name": "Carrie Coon",
+            "character": "Rita Cooper"
+          },
+          {
+            "id": 1016168,
+            "name": "Lily James",
+            "character": "Leader"
+          },
+          {
+            "id": 1668004,
+            "name": "Bella Ramsey",
+            "character": "Ella Cooper"
+          },
+          {
+            "id": 1345495,
+            "name": "Odessa Young",
+            "character": "Jo Cooper"
+          },
+          {
+            "id": 72638,
+            "name": "Tracy Letts",
+            "character": "Reuben"
+          }
+        ],
+        "statusMetadata": "Released"
+      },
+      "primaryEvidence": [
+        {
+          "url": "https://bleeckerstreetmedia.com/the-liberation",
+          "publisher": "Bleecker Street",
+          "supports": [
+            "Carrie Coon as Rita, Lily James, Bella Ramsey, Odessa Young and Tracy Letts",
+            "Family and commune synopsis",
+            "Page announces January 8 without a visible year"
+          ]
+        }
+      ],
+      "seasonReleaseStatus": "requires_separate_editorial_review",
+      "seasonReleaseNote": "TMDB declares 2027-01-06; the distributor advertises January 8 without a visible year in the retrieved page. This confirms identity but does not establish a 2026 qualifying US run. Keep season/release review separate from identifying Carrie Coon; do not choose a different same-title 2026 film.",
+      "recommendation": "The matching identity is clear. Record an editorial film/person match to 1287365 and Carrie Coon only with the unresolved season/release issue explicitly recorded; do not declare Oscar eligibility.",
+      "oscarEligibilityVerified": false,
+      "proposedFilmId": "the-liberation",
+      "manifestStatus": "prepared_for_coordinating_editorial_import_not_applied_by_this_review",
+      "activateInSeason": true,
+      "activateInSeasonReason": "Activación editorial como obra pronosticada explícitamente por Awards Radar para Oscar 2027, con identidad corroborada por fuentes primarias. PRODUCT separa predicciones y resultados; D-003 limita TMDB a metadatos y D-065 exige corroborar identidad. No se convierte el filtro automático de año en una prohibición editorial ni se certifica elegibilidad Oscar. Predicción expresamente especulativa: Bleecker anuncia January 8 y TMDB registra enero de 2027, pero no se verificó que esos datos excluyan una corrida calificante anterior. La fecha del estreno amplio no demuestra por sí sola inelegibilidad. Mantener incertidumbre explícita y revisar si aparece una contradicción oficial.",
+      "eligibilityReviewRequired": true,
+      "officialEligibilityStatus": "not_certified"
+    },
+    {
+      "title": "Bunker",
+      "priority": "high",
+      "observations": [
+        {
+          "categoryId": "best-picture",
+          "subject": "Bunker",
+          "rank": 39,
+          "listLength": 50,
+          "sourceUrl": "https://awardsradar.com/best-picture/"
+        },
+        {
+          "categoryId": "actor",
+          "subject": "Javier Bardem – Bunker",
+          "rank": 19,
+          "listLength": 20,
+          "sourceUrl": "https://awardsradar.com/best-actor/"
+        },
+        {
+          "categoryId": "original-screenplay",
+          "subject": "Bunker",
+          "rank": 18,
+          "listLength": 20,
+          "sourceUrl": "https://awardsradar.com/best-original-screenplay/"
+        }
+      ],
+      "identityStatus": "verified_primary_sources_and_tmdb_credits",
+      "mutationStatus": "recommendation_only_no_mutations_applied",
+      "tmdb": {
+        "id": 1473784,
+        "url": "https://www.themoviedb.org/movie/1473784",
+        "apiUrl": "https://api.themoviedb.org/3/movie/1473784?append_to_response=credits,external_ids&language=en-US",
+        "title": "Bunker",
+        "originalTitle": "Bunker",
+        "releaseDateMetadata": "2026-12-03",
+        "imdbId": "tt36770512",
+        "directors": [
+          {
+            "id": 1150548,
+            "name": "Florian Zeller"
+          }
+        ],
+        "cast": [
+          {
+            "id": 3810,
+            "name": "Javier Bardem",
+            "character": "Miguel"
+          },
+          {
+            "id": 955,
+            "name": "Penélope Cruz",
+            "character": "Sofia"
+          },
+          {
+            "id": 1115,
+            "name": "Stephen Graham",
+            "character": "Toby"
+          },
+          {
+            "id": 17142,
+            "name": "Paul Dano",
+            "character": "Andrew"
+          },
+          {
+            "id": 1053422,
+            "name": "Patrick Schwarzenegger",
+            "character": "Jeremy"
+          }
+        ],
+        "statusMetadata": "Released"
+      },
+      "primaryEvidence": [
+        {
+          "url": "https://www.labiennale.org/en/node/20717",
+          "publisher": "La Biennale di Venezia",
+          "supports": [
+            "Florian Zeller director and screenwriter",
+            "Javier Bardem, Penélope Cruz, Stephen Graham, Paul Dano and Patrick Schwarzenegger cast",
+            "Venice screening September 8, 2026"
+          ]
+        }
+      ],
+      "seasonReleaseStatus": "requires_separate_editorial_review",
+      "seasonReleaseNote": "A Venice screening and TMDB release date identify the work, not a qualifying US theatrical run.",
+      "recommendation": "Resolve editorially to 1473784 and Javier Bardem. Reject homonym 1725917: its documentary subject, directors and cast differ.",
+      "oscarEligibilityVerified": false,
+      "rejectedHomonym": {
+        "tmdbId": 1725917,
+        "url": "https://www.themoviedb.org/movie/1725917",
+        "imdbId": null,
+        "directors": [
+          "Santino Scotti",
+          "Rocio Granillo Posse"
+        ],
+        "cast": [
+          "Damián Arabia",
+          "Santino Scotti",
+          "Rocio Granillo Posse"
+        ],
+        "reason": "Documentary about Damián Arabia; does not have Florian Zeller or Javier Bardem."
+      },
+      "proposedFilmId": "bunker",
+      "manifestStatus": "prepared_for_coordinating_editorial_import_not_applied_by_this_review",
+      "activateInSeason": true,
+      "activateInSeasonReason": "Activación editorial como obra pronosticada explícitamente por Awards Radar para Oscar 2027, con identidad corroborada por fuentes primarias. PRODUCT separa predicciones y resultados; D-003 limita TMDB a metadatos y D-065 exige corroborar identidad. No se convierte el filtro automático de año en una prohibición editorial ni se certifica elegibilidad Oscar.",
+      "eligibilityReviewRequired": false,
+      "officialEligibilityStatus": "not_certified"
+    },
+    {
+      "title": "Omaha",
+      "priority": "high",
+      "observations": [
+        {
+          "categoryId": "actor",
+          "subject": "John Magaro – Omaha",
+          "rank": 20,
+          "listLength": 20,
+          "sourceUrl": "https://awardsradar.com/best-actor/"
+        }
+      ],
+      "identityStatus": "verified_primary_sources_and_tmdb_credits",
+      "mutationStatus": "recommendation_only_no_mutations_applied",
+      "tmdb": {
+        "id": 1233655,
+        "url": "https://www.themoviedb.org/movie/1233655",
+        "apiUrl": "https://api.themoviedb.org/3/movie/1233655?append_to_response=credits,external_ids&language=en-US",
+        "title": "Omaha",
+        "originalTitle": "Omaha",
+        "releaseDateMetadata": "2025-11-22",
+        "imdbId": "tt29253299",
+        "directors": [
+          {
+            "id": 1786862,
+            "name": "Cole Webley"
+          }
+        ],
+        "cast": [
+          {
+            "id": 37154,
+            "name": "John Magaro",
+            "character": "Dad"
+          },
+          {
+            "id": 3663805,
+            "name": "Molly Belle Wright",
+            "character": "Ella"
+          },
+          {
+            "id": 4324798,
+            "name": "Wyatt Solis",
+            "character": "Charlie"
+          },
+          {
+            "id": 140253,
+            "name": "Talia Balsam",
+            "character": "Edie"
+          },
+          {
+            "id": 1059001,
+            "name": "Rachel Alig",
+            "character": "Sheriff"
+          }
+        ],
+        "statusMetadata": "Released"
+      },
+      "primaryEvidence": [
+        {
+          "url": "https://greenwichentertainment.com/film/omaha/",
+          "publisher": "Greenwich Entertainment",
+          "supports": [
+            "Cole Webley director",
+            "John Magaro, Molly Belle Wright and Wyatt Solis cast",
+            "A father and two children road-trip across the American West"
+          ]
+        },
+        {
+          "url": "https://www.ifccenter.com/films/omaha/",
+          "publisher": "IFC Center",
+          "supports": [
+            "Documented New York exhibition April 24 to May 14, 2026",
+            "John Magaro, Cole Webley and Robert Machoian credited and appearing in Q&A"
+          ]
+        }
+      ],
+      "seasonReleaseStatus": "us_2026_exhibition_documented_oscar_eligibility_not_certified",
+      "seasonReleaseNote": "TMDB initial-release metadata is 2025-11-22; IFC Center independently documents New York exhibition April 24 to May 14, 2026. Do not replace the original TMDB date or infer complete Academy eligibility.",
+      "recommendation": "Identity can be matched editorially to 1233655 and John Magaro. Retain a separate release/season review; do not infer ineligibility from TMDB 2025.",
+      "oscarEligibilityVerified": false,
+      "proposedFilmId": "omaha",
+      "manifestStatus": "prepared_for_coordinating_editorial_import_not_applied_by_this_review",
+      "activateInSeason": true,
+      "activateInSeasonReason": "Activación editorial como obra pronosticada explícitamente por Awards Radar para Oscar 2027, con identidad corroborada por fuentes primarias. PRODUCT separa predicciones y resultados; D-003 limita TMDB a metadatos y D-065 exige corroborar identidad. No se convierte el filtro automático de año en una prohibición editorial ni se certifica elegibilidad Oscar. IFC Center acredita pases en Nueva York del 24 de abril al 14 de mayo de 2026. La fecha inicial TMDB de 2025 no contradice esa exhibición estadounidense; no se encontró el título en el reminder list general de Oscar 2026.",
+      "eligibilityReviewRequired": false,
+      "officialEligibilityStatus": "not_certified"
+    },
+    {
+      "title": "Tenzing",
+      "priority": "tail",
+      "observations": [
+        {
+          "categoryId": "best-picture",
+          "subject": "Tenzing",
+          "rank": 36,
+          "listLength": 50,
+          "sourceUrl": "https://awardsradar.com/best-picture/"
+        }
+      ],
+      "identityStatus": "verified_primary_sources_and_tmdb_credits",
+      "mutationStatus": "recommendation_only_no_mutations_applied",
+      "tmdb": {
+        "id": 1288069,
+        "url": "https://www.themoviedb.org/movie/1288069",
+        "apiUrl": "https://api.themoviedb.org/3/movie/1288069?append_to_response=credits,external_ids&language=en-US",
+        "title": "Tenzing",
+        "originalTitle": "Tenzing",
+        "releaseDateMetadata": "2026-10-09",
+        "imdbId": "tt6262770",
+        "directors": [
+          {
+            "id": 114335,
+            "name": "Jennifer Peedom"
+          }
+        ],
+        "cast": [
+          {
+            "id": 2091969,
+            "name": "Genden Phuntsok",
+            "character": "Tenzing Norgay"
+          },
+          {
+            "id": 91606,
+            "name": "Tom Hiddleston",
+            "character": "Sir Edmund Hillary"
+          },
+          {
+            "id": 5293,
+            "name": "Willem Dafoe",
+            "character": "Colonel John Hunt"
+          },
+          {
+            "id": 147056,
+            "name": "Caitríona Balfe",
+            "character": "Jill Henderson"
+          },
+          {
+            "id": 1945900,
+            "name": "Thinley Lhamo",
+            "character": "Dawa Norgay"
+          }
+        ],
+        "statusMetadata": "Released"
+      },
+      "primaryEvidence": [
+        {
+          "url": "https://see-saw-films.com/film/tenzing/",
+          "publisher": "See-Saw Films",
+          "supports": [
+            "Jennifer Peedom director and Luke Davies writer",
+            "Genden Phuntsok, Tom Hiddleston, Willem Dafoe, Thinley Lhamo and Caitríona Balfe cast",
+            "Tenzing Norgay and Edmund Hillary Everest expedition"
+          ]
+        }
+      ],
+      "seasonReleaseStatus": "not_certified_by_identity_review",
+      "seasonReleaseNote": "Identity and announced/festival dates do not alone establish Oscar eligibility or the completion of a qualifying US run.",
+      "recommendation": "Identity ready for an editorial match to 1288069. The current film-only observation has no corroborating person claim for automatic D-065 matching.",
+      "oscarEligibilityVerified": false,
+      "proposedFilmId": "tenzing",
+      "manifestStatus": "prepared_for_coordinating_editorial_import_not_applied_by_this_review",
+      "activateInSeason": true,
+      "activateInSeasonReason": "Activación editorial como obra pronosticada explícitamente por Awards Radar para Oscar 2027, con identidad corroborada por fuentes primarias. PRODUCT separa predicciones y resultados; D-003 limita TMDB a metadatos y D-065 exige corroborar identidad. No se convierte el filtro automático de año en una prohibición editorial ni se certifica elegibilidad Oscar.",
+      "eligibilityReviewRequired": false,
+      "officialEligibilityStatus": "not_certified"
+    },
+    {
+      "title": "Cry to Heaven",
+      "priority": "tail",
+      "observations": [
+        {
+          "categoryId": "best-picture",
+          "subject": "Cry to Heaven",
+          "rank": 37,
+          "listLength": 50,
+          "sourceUrl": "https://awardsradar.com/best-picture/"
+        },
+        {
+          "categoryId": "adapted-screenplay",
+          "subject": "Cry to Heaven",
+          "rank": 14,
+          "listLength": 20,
+          "sourceUrl": "https://awardsradar.com/best-adapted-screenplay/"
+        }
+      ],
+      "identityStatus": "verified_primary_sources_and_tmdb_credits",
+      "mutationStatus": "recommendation_only_no_mutations_applied",
+      "tmdb": {
+        "id": 1413113,
+        "url": "https://www.themoviedb.org/movie/1413113",
+        "apiUrl": "https://api.themoviedb.org/3/movie/1413113?append_to_response=credits,external_ids&language=en-US",
+        "title": "Cry to Heaven",
+        "originalTitle": "Cry to Heaven",
+        "releaseDateMetadata": null,
+        "imdbId": "tt35624383",
+        "directors": [
+          {
+            "id": 120615,
+            "name": "Tom Ford"
+          }
+        ],
+        "cast": [
+          {
+            "id": 3292,
+            "name": "Nicholas Hoult",
+            "character": "Tonio Treschi"
+          },
+          {
+            "id": 27428,
+            "name": "Aaron Taylor-Johnson",
+            "character": "Guido Maffeo"
+          },
+          {
+            "id": 2340180,
+            "name": "Hunter Schafer",
+            "character": "Christina"
+          },
+          {
+            "id": 449538,
+            "name": "Adele",
+            "character": ""
+          },
+          {
+            "id": 8785,
+            "name": "Ciarán Hinds",
+            "character": "Andrea"
+          }
+        ],
+        "statusMetadata": "Post Production"
+      },
+      "primaryEvidence": [
+        {
+          "url": "https://www.italyformovies.com/filmset/detail/601/cry-to-heaven",
+          "publisher": "Italy for Movies / Cinecittà and Italian film commissions",
+          "supports": [
+            "Tom Ford director",
+            "CHT Films production",
+            "Listed Italian production dates January 19 through March 23, 2026; page updated January 16, 2026"
+          ]
+        }
+      ],
+      "seasonReleaseStatus": "requires_separate_editorial_review",
+      "seasonReleaseNote": "TMDB has no release date. Official production dates establish the project, not a release or Oscar eligibility. No current primary theatrical-release evidence was established in this review.",
+      "recommendation": "Identity ready for editorial catalog matching to 1413113; retain release/season verification as unresolved. Do not manufacture a release date to pass the automatic year filter.",
+      "oscarEligibilityVerified": false,
+      "proposedFilmId": "cry-to-heaven",
+      "manifestStatus": "prepared_for_coordinating_editorial_import_not_applied_by_this_review",
+      "activateInSeason": true,
+      "activateInSeasonReason": "Activación editorial como obra pronosticada explícitamente por Awards Radar para Oscar 2027, con identidad corroborada por fuentes primarias. PRODUCT separa predicciones y resultados; D-003 limita TMDB a metadatos y D-065 exige corroborar identidad. No se convierte el filtro automático de año en una prohibición editorial ni se certifica elegibilidad Oscar. El rodaje de 2026 está documentado, pero no la fecha de estreno. La predicción se conserva como especulación atribuida al experto; la ausencia de fecha en TMDB no es una exclusión oficial.",
+      "eligibilityReviewRequired": true,
+      "officialEligibilityStatus": "not_certified"
+    },
+    {
+      "title": "The Mosquito Bowl",
+      "priority": "tail",
+      "observations": [
+        {
+          "categoryId": "best-picture",
+          "subject": "The Mosquito Bowl",
+          "rank": 40,
+          "listLength": 50,
+          "sourceUrl": "https://awardsradar.com/best-picture/"
+        },
+        {
+          "categoryId": "adapted-screenplay",
+          "subject": "The Mosquito Bowl",
+          "rank": 16,
+          "listLength": 20,
+          "sourceUrl": "https://awardsradar.com/best-adapted-screenplay/"
+        }
+      ],
+      "identityStatus": "verified_primary_sources_and_tmdb_credits",
+      "mutationStatus": "recommendation_only_no_mutations_applied",
+      "tmdb": {
+        "id": 1458300,
+        "url": "https://www.themoviedb.org/movie/1458300",
+        "apiUrl": "https://api.themoviedb.org/3/movie/1458300?append_to_response=credits,external_ids&language=en-US",
+        "title": "The Mosquito Bowl",
+        "originalTitle": "The Mosquito Bowl",
+        "releaseDateMetadata": "2026-10-30",
+        "imdbId": "tt36413910",
+        "directors": [
+          {
+            "id": 36602,
+            "name": "Peter Berg"
+          }
+        ],
+        "cast": [
+          {
+            "id": 1425934,
+            "name": "Nicholas Galitzine",
+            "character": "John McLaughry"
+          },
+          {
+            "id": 137905,
+            "name": "Bill Skarsgård",
+            "character": ""
+          },
+          {
+            "id": 60960,
+            "name": "Ray Nicholson",
+            "character": ""
+          },
+          {
+            "id": 2882960,
+            "name": "Tom Francis",
+            "character": ""
+          },
+          {
+            "id": 5552596,
+            "name": "Brent Comer",
+            "character": "George Murphy"
+          }
+        ],
+        "statusMetadata": "Post Production"
+      },
+      "primaryEvidence": [
+        {
+          "url": "https://www.netflix.com/tudum/articles/the-mosquito-bowl",
+          "publisher": "Netflix Tudum",
+          "supports": [
+            "Peter Berg director",
+            "Nicholas Galitzine, Bill Skarsgård, Ray Nicholson and Tom Francis cast",
+            "Adaptation of Buzz Bissinger nonfiction book; football players enlist after Pearl Harbor"
+          ]
+        },
+        {
+          "url": "https://media.netflix.com/en/only-on-netflix/81661161",
+          "publisher": "Netflix Media Center",
+          "supports": [
+            "Announced US select-theater release October 30, 2026 and Netflix November 25, 2026"
+          ]
+        }
+      ],
+      "seasonReleaseStatus": "not_certified_by_identity_review",
+      "seasonReleaseNote": "Identity and announced/festival dates do not alone establish Oscar eligibility or the completion of a qualifying US run.",
+      "recommendation": "Identity ready for editorial matching to 1458300. Preserve the announced dates as distributor evidence, not confirmation that a qualifying run has occurred.",
+      "oscarEligibilityVerified": false,
+      "proposedFilmId": "the-mosquito-bowl",
+      "manifestStatus": "prepared_for_coordinating_editorial_import_not_applied_by_this_review",
+      "activateInSeason": true,
+      "activateInSeasonReason": "Activación editorial como obra pronosticada explícitamente por Awards Radar para Oscar 2027, con identidad corroborada por fuentes primarias. PRODUCT separa predicciones y resultados; D-003 limita TMDB a metadatos y D-065 exige corroborar identidad. No se convierte el filtro automático de año en una prohibición editorial ni se certifica elegibilidad Oscar.",
+      "eligibilityReviewRequired": false,
+      "officialEligibilityStatus": "not_certified"
+    },
+    {
+      "title": "A Statement",
+      "priority": "tail",
+      "observations": [
+        {
+          "categoryId": "best-picture",
+          "subject": "A Statement",
+          "rank": 41,
+          "listLength": 50,
+          "sourceUrl": "https://awardsradar.com/best-picture/"
+        },
+        {
+          "categoryId": "adapted-screenplay",
+          "subject": "A Statement",
+          "rank": 17,
+          "listLength": 20,
+          "sourceUrl": "https://awardsradar.com/best-adapted-screenplay/"
+        }
+      ],
+      "identityStatus": "verified_primary_sources_and_tmdb_credits",
+      "mutationStatus": "recommendation_only_no_mutations_applied",
+      "tmdb": {
+        "id": 1618090,
+        "url": "https://www.themoviedb.org/movie/1618090",
+        "apiUrl": "https://api.themoviedb.org/3/movie/1618090?append_to_response=credits,external_ids&language=en-US",
+        "title": "A Statement",
+        "originalTitle": "A Statement",
+        "releaseDateMetadata": "2026-10-03",
+        "imdbId": "tt39373342",
+        "directors": [
+          {
+            "id": 17867,
+            "name": "Tom McCarthy"
+          }
+        ],
+        "cast": [
+          {
+            "id": 22226,
+            "name": "Paul Rudd",
+            "character": ""
+          },
+          {
+            "id": 13242,
+            "name": "Paul Giamatti",
+            "character": "David Slade"
+          },
+          {
+            "id": 55089,
+            "name": "Evan Peters",
+            "character": ""
+          },
+          {
+            "id": 39388,
+            "name": "Amy Ryan",
+            "character": ""
+          },
+          {
+            "id": 1241,
+            "name": "John Turturro",
+            "character": ""
+          }
+        ],
+        "statusMetadata": "Post Production"
+      },
+      "primaryEvidence": [
+        {
+          "url": "https://www.filmlinc.org/nyff2026/films/a-statement/",
+          "publisher": "Film at Lincoln Center / New York Film Festival",
+          "supports": [
+            "Tom McCarthy director",
+            "Paul Rudd, Amy Ryan, Paul Giamatti, John Turturro and ensemble",
+            "1980 climate conference story; Sony Pictures Classics release",
+            "NYFF world premiere scheduled October 3, 2026"
+          ]
+        },
+        {
+          "url": "https://www.filmlinc.org/nyff2026/daily/64th-new-york-film-festival-spotlight-announced/",
+          "publisher": "Film at Lincoln Center",
+          "supports": [
+            "August 11, 2026 Spotlight announcement names A Statement and Tom McCarthy"
+          ]
+        }
+      ],
+      "seasonReleaseStatus": "not_certified_by_identity_review",
+      "seasonReleaseNote": "Identity and announced/festival dates do not alone establish Oscar eligibility or the completion of a qualifying US run.",
+      "recommendation": "Identity ready for editorial matching to 1618090. The festival premiere date alone does not prove Oscar qualifying release.",
+      "oscarEligibilityVerified": false,
+      "proposedFilmId": "a-statement",
+      "manifestStatus": "prepared_for_coordinating_editorial_import_not_applied_by_this_review",
+      "activateInSeason": true,
+      "activateInSeasonReason": "Activación editorial como obra pronosticada explícitamente por Awards Radar para Oscar 2027, con identidad corroborada por fuentes primarias. PRODUCT separa predicciones y resultados; D-003 limita TMDB a metadatos y D-065 exige corroborar identidad. No se convierte el filtro automático de año en una prohibición editorial ni se certifica elegibilidad Oscar.",
+      "eligibilityReviewRequired": false,
+      "officialEligibilityStatus": "not_certified"
+    },
+    {
+      "title": "I Swear",
+      "priority": "tail",
+      "observations": [
+        {
+          "categoryId": "best-picture",
+          "subject": "I Swear",
+          "rank": 43,
+          "listLength": 50,
+          "sourceUrl": "https://awardsradar.com/best-picture/"
+        }
+      ],
+      "identityStatus": "verified_primary_sources_and_tmdb_credits",
+      "mutationStatus": "recommendation_only_no_mutations_applied",
+      "tmdb": {
+        "id": 1317149,
+        "url": "https://www.themoviedb.org/movie/1317149",
+        "apiUrl": "https://api.themoviedb.org/3/movie/1317149?append_to_response=credits,external_ids&language=en-US",
+        "title": "I Swear",
+        "originalTitle": "I Swear",
+        "releaseDateMetadata": "2025-09-22",
+        "imdbId": "tt31514146",
+        "directors": [
+          {
+            "id": 64045,
+            "name": "Kirk Jones"
+          }
+        ],
+        "cast": [
+          {
+            "id": 1648346,
+            "name": "Robert Aramayo",
+            "character": "John"
+          },
+          {
+            "id": 76944,
+            "name": "Maxine Peake",
+            "character": "Dottie"
+          },
+          {
+            "id": 3064,
+            "name": "Peter Mullan",
+            "character": "Tommy"
+          },
+          {
+            "id": 1834,
+            "name": "Shirley Henderson",
+            "character": "Heather"
+          },
+          {
+            "id": 5555425,
+            "name": "Scott Ellis Watson",
+            "character": "Young John"
+          }
+        ],
+        "statusMetadata": "Released"
+      },
+      "primaryEvidence": [
+        {
+          "url": "https://www.sonypictures.com/movies/iswear",
+          "publisher": "Sony Pictures Entertainment",
+          "supports": [
+            "Robert Aramayo plays Tourette syndrome activist John Davidson",
+            "1980s Britain setting and matching life-story synopsis",
+            "Sony Pictures Classics attribution"
+          ]
+        },
+        {
+          "url": "https://www.sonypictures.com/corp/press_releases/2026/0302/sonypicturesclassicstoreleasekirkjonesiswearnationwideonapril242026",
+          "publisher": "Sony Pictures Entertainment / Sony Pictures Classics",
+          "declaredReleaseOn": "2026-04-24",
+          "supports": [
+            "Official announced nationwide US theatrical release April 24, 2026",
+            "Kirk Jones writer/director, Robert Aramayo and supporting cast identity",
+            "Distributor explicitly separates Toronto 2025 festival premiere from US 2026 theatrical release"
+          ]
+        }
+      ],
+      "seasonReleaseStatus": "us_2026_release_announced_oscar_eligibility_not_certified",
+      "seasonReleaseNote": "TMDB initial-release metadata is 2025-09-22; Sony explicitly separates the 2025 Toronto festival premiere from the announced April 24, 2026 US theatrical release. No complete Academy eligibility certification is made.",
+      "recommendation": "Identity ready for editorial matching to 1317149, with release/season review independent of the TMDB 2025 date.",
+      "oscarEligibilityVerified": false,
+      "proposedFilmId": "i-swear",
+      "manifestStatus": "prepared_for_coordinating_editorial_import_not_applied_by_this_review",
+      "activateInSeason": true,
+      "activateInSeasonReason": "Activación editorial como obra pronosticada explícitamente por Awards Radar para Oscar 2027, con identidad corroborada por fuentes primarias. PRODUCT separa predicciones y resultados; D-003 limita TMDB a metadatos y D-065 exige corroborar identidad. No se convierte el filtro automático de año en una prohibición editorial ni se certifica elegibilidad Oscar. Sony Pictures Classics anunció estreno estadounidense el 24 de abril de 2026. La fecha inicial TMDB de 2025 corresponde a otro hito y no contradice esa distribución; no se encontró el título en el reminder list general de Oscar 2026.",
+      "eligibilityReviewRequired": false,
+      "officialEligibilityStatus": "not_certified"
+    },
+    {
+      "title": "Mr. Irrelevant",
+      "priority": "tail",
+      "observations": [
+        {
+          "categoryId": "best-picture",
+          "subject": "Mr. Irrelevant",
+          "rank": 46,
+          "listLength": 50,
+          "sourceUrl": "https://awardsradar.com/best-picture/"
+        },
+        {
+          "categoryId": "original-screenplay",
+          "subject": "Mr. Irrelevant",
+          "rank": 17,
+          "listLength": 20,
+          "sourceUrl": "https://awardsradar.com/best-original-screenplay/"
+        }
+      ],
+      "identityStatus": "verified_primary_sources_and_tmdb_credits",
+      "mutationStatus": "recommendation_only_no_mutations_applied",
+      "tmdb": {
+        "id": 1372443,
+        "url": "https://www.themoviedb.org/movie/1372443",
+        "apiUrl": "https://api.themoviedb.org/3/movie/1372443?append_to_response=credits,external_ids&language=en-US",
+        "title": "Mr. Irrelevant",
+        "originalTitle": "Mr. Irrelevant",
+        "releaseDateMetadata": "2026-12-25",
+        "imdbId": "tt30093348",
+        "directors": [
+          {
+            "id": 56661,
+            "name": "Jonathan Levine"
+          }
+        ],
+        "cast": [
+          {
+            "id": 1785590,
+            "name": "David Corenswet",
+            "character": "John Tuggle"
+          },
+          {
+            "id": 1972974,
+            "name": "Isabel May",
+            "character": "Katie"
+          },
+          {
+            "id": 335,
+            "name": "Michael Shannon",
+            "character": "Bill Parcells"
+          },
+          {
+            "id": 38582,
+            "name": "David Krumholtz",
+            "character": "Whitey Horai"
+          },
+          {
+            "id": 2096500,
+            "name": "Greg Hatton",
+            "character": "Ron Faye"
+          }
+        ],
+        "statusMetadata": "Post Production"
+      },
+      "primaryEvidence": [
+        {
+          "url": "https://www.paramountpictures.com/movies/mr-irrelevant",
+          "publisher": "Paramount Pictures",
+          "supports": [
+            "David Corenswet as John Tuggle, Michael Shannon as Bill Parcells and Isabel May",
+            "John Tuggle drafted by the New York Giants in the final round of the 1983 NFL draft",
+            "Announced theatrical date December 25, 2026"
+          ]
+        }
+      ],
+      "seasonReleaseStatus": "not_certified_by_identity_review",
+      "seasonReleaseNote": "Identity and announced/festival dates do not alone establish Oscar eligibility or the completion of a qualifying US run.",
+      "recommendation": "Resolve editorially to 1372443. Reject same-title 1599336, a separate Jeff Fisher project with a different IMDb identity and no matching cast in TMDB.",
+      "oscarEligibilityVerified": false,
+      "rejectedHomonym": {
+        "tmdbId": 1599336,
+        "url": "https://www.themoviedb.org/movie/1599336",
+        "imdbId": "tt15010024",
+        "directors": [
+          "Jeff Fisher"
+        ],
+        "cast": [],
+        "reason": "Jeff Fisher project rather than the Jonathan Levine / David Corenswet / John Tuggle film."
+      },
+      "proposedFilmId": "mr-irrelevant",
+      "manifestStatus": "prepared_for_coordinating_editorial_import_not_applied_by_this_review",
+      "activateInSeason": true,
+      "activateInSeasonReason": "Activación editorial como obra pronosticada explícitamente por Awards Radar para Oscar 2027, con identidad corroborada por fuentes primarias. PRODUCT separa predicciones y resultados; D-003 limita TMDB a metadatos y D-065 exige corroborar identidad. No se convierte el filtro automático de año en una prohibición editorial ni se certifica elegibilidad Oscar.",
+      "eligibilityReviewRequired": false,
+      "officialEligibilityStatus": "not_certified"
+    },
+    {
+      "title": "Nirvanna the Band the Show the Movie",
+      "priority": "tail",
+      "observations": [
+        {
+          "categoryId": "adapted-screenplay",
+          "subject": "Nirvanna the Band the Show the Movie",
+          "rank": 20,
+          "listLength": 20,
+          "sourceUrl": "https://awardsradar.com/best-adapted-screenplay/"
+        }
+      ],
+      "identityStatus": "verified_primary_sources_and_tmdb_credits",
+      "mutationStatus": "recommendation_only_no_mutations_applied",
+      "tmdb": {
+        "id": 1154538,
+        "url": "https://www.themoviedb.org/movie/1154538",
+        "apiUrl": "https://api.themoviedb.org/3/movie/1154538?append_to_response=credits,external_ids&language=en-US",
+        "title": "Nirvanna the Band the Show the Movie",
+        "originalTitle": "Nirvanna the Band the Show the Movie",
+        "releaseDateMetadata": "2026-02-02",
+        "imdbId": "tt35522483",
+        "directors": [
+          {
+            "id": 1144092,
+            "name": "Matt Johnson"
+          }
+        ],
+        "cast": [
+          {
+            "id": 1144092,
+            "name": "Matt Johnson",
+            "character": "Matt"
+          },
+          {
+            "id": 216057,
+            "name": "Jay McCarrol",
+            "character": "Jay"
+          },
+          {
+            "id": 1570400,
+            "name": "Ben Petrie",
+            "character": "Ben"
+          },
+          {
+            "id": 3341232,
+            "name": "Ethan Eng",
+            "character": "Ethan"
+          },
+          {
+            "id": 2887536,
+            "name": "Michael Scott",
+            "character": "Michael"
+          }
+        ],
+        "statusMetadata": "Released"
+      },
+      "primaryEvidence": [
+        {
+          "url": "https://www.neonrated.com/film/nirvanna-the-band-the-show-the-movie",
+          "publisher": "NEON",
+          "supports": [
+            "Matt Johnson director",
+            "Matt Johnson and Jay McCarrol cast",
+            "Rivoli booking attempt and time travel to 2008 story",
+            "Distributor labels the film 2026"
+          ]
+        }
+      ],
+      "seasonReleaseStatus": "not_certified_by_identity_review",
+      "seasonReleaseNote": "Identity and announced/festival dates do not alone establish Oscar eligibility or the completion of a qualifying US run.",
+      "recommendation": "Identity ready for editorial matching to 1154538. Preserve the expert adapted-screenplay category; source category choice is not inferred from TMDB.",
+      "oscarEligibilityVerified": false,
+      "proposedFilmId": "nirvanna-the-band-the-show-the-movie",
+      "manifestStatus": "prepared_for_coordinating_editorial_import_not_applied_by_this_review",
+      "activateInSeason": true,
+      "activateInSeasonReason": "Activación editorial como obra pronosticada explícitamente por Awards Radar para Oscar 2027, con identidad corroborada por fuentes primarias. PRODUCT separa predicciones y resultados; D-003 limita TMDB a metadatos y D-065 exige corroborar identidad. No se convierte el filtro automático de año en una prohibición editorial ni se certifica elegibilidad Oscar.",
+      "eligibilityReviewRequired": false,
+      "officialEligibilityStatus": "not_certified"
+    }
+  ],
+  "preparedManifest": "data/audits/2026-09-29-tmdb-editorial.json",
+  "globalDuplicateCheck": {
+    "checkedAt": "2026-09-29T18:22:29.537Z",
+    "scope": "Tabla films global, sin filtro de temporada; diez slugs propuestos y diez IDs TMDB",
+    "existingSlugOrTmdbMatches": [],
+    "result": "no collisions observed"
+  },
+  "priorSeasonContradictionCheck": {
+    "url": "https://www.oscars.org/sites/oscars/files/2026-01/98th_general_entry_reminder_list.pdf",
+    "publisher": "Academy of Motion Picture Arts and Sciences",
+    "edition": "98th Academy Awards / ceremony 2026",
+    "checkedTerms": [
+      "OMAHA",
+      "I SWEAR"
+    ],
+    "result": "No matching text found in the official 43-page general-entry reminder list. This is an absence check, not proof of eligibility for the following year.",
+    "noOfficialContradictionFound": true
+  },
+  "seasonActivationPolicy": {
+    "seasonId": "oscars-2027",
+    "eligibilityYearMeaning": "Periodo de pronóstico 2026 para ceremonia 2027; no certificación de estreno calificante ni admisión oficial de la Academia",
+    "authority": "Observaciones profesionales explícitas de Awards Radar, corroboración editorial de identidad y ausencia de contradicción oficial hallada",
+    "contractReferences": [
+      "docs/PRODUCT.md",
+      "docs/DECISIONS.md#d-003--tmdb-para-metadatos",
+      "docs/DECISIONS.md#d-065--corroboración-de-identidad-antes-de-ampliar-el-catálogo-automáticamente"
+    ],
+    "exclusionRule": "Si evidencia oficial contradice la temporada, mantener identidad global y observación original, activateInSeason=false y estado eligibility_review sin voto. No se ha hallado esa contradicción para estos diez casos.",
+    "eligibleForOscarsCertified": false
+  },
+  "application": {
+    "appliedAt": "2026-09-29T18:30:40.208Z",
+    "identityImports": 10,
+    "seasonLinks": 10,
+    "manifest": "data/audits/2026-09-29-tmdb-editorial.json",
+    "receipt": "docs/audits/2026-09-29/editorial-activation.json",
+    "scope": "Coordinating audit applied canonical manual TMDB imports and season links after this read-only research; historical noMutationsApplied fields describe the research phase only.",
+    "eligibilityCertified": false
+  }
+}

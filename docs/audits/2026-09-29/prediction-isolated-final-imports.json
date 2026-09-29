@@ -1,0 +1,278 @@
+{
+  "checkedAt": "2026-09-29T18:32:05.973Z",
+  "edgeVersion": 40,
+  "requests": [
+    {
+      "connector_id": "awards-daily-predictions",
+      "request_id": 1312
+    },
+    {
+      "connector_id": "awards-radar-predictions",
+      "request_id": 1313
+    },
+    {
+      "connector_id": "awardswatch-predictions",
+      "request_id": 1314
+    },
+    {
+      "connector_id": "guardian-content-api",
+      "request_id": 1315
+    },
+    {
+      "connector_id": "midnight-critics-predictions",
+      "request_id": 1316
+    },
+    {
+      "connector_id": "movie-state-predictions",
+      "request_id": 1317
+    },
+    {
+      "connector_id": "next-best-picture-predictions",
+      "request_id": 1318
+    },
+    {
+      "connector_id": "ringer-best-picture",
+      "request_id": 1319
+    },
+    {
+      "connector_id": "roger-ebert-rss",
+      "request_id": 1320
+    }
+  ],
+  "responses": [
+    {
+      "content": {
+        "status": "succeeded",
+        "connectors": 1,
+        "failed": 0,
+        "results": [
+          {
+            "connectorId": "awards-daily-predictions",
+            "runId": 633,
+            "status": "succeeded",
+            "publicationsSeen": 1,
+            "capturesInserted": 0,
+            "capturesDuplicate": 1,
+            "observationsSeen": 80,
+            "observationsInserted": 0,
+            "observationsDuplicate": 80,
+            "reviewItemsCreated": 0
+          }
+        ]
+      },
+      "created": "2026-09-29 18:30:51.032891+00",
+      "error_msg": null,
+      "id": 1312,
+      "status_code": 200,
+      "timed_out": false
+    },
+    {
+      "content": {
+        "status": "succeeded",
+        "connectors": 1,
+        "failed": 0,
+        "results": [
+          {
+            "connectorId": "awards-radar-predictions",
+            "runId": 637,
+            "status": "succeeded",
+            "publicationsSeen": 8,
+            "capturesInserted": 0,
+            "capturesDuplicate": 8,
+            "observationsSeen": 190,
+            "observationsInserted": 0,
+            "observationsDuplicate": 190,
+            "reviewItemsCreated": 0
+          }
+        ]
+      },
+      "created": "2026-09-29 18:30:51.032891+00",
+      "error_msg": null,
+      "id": 1313,
+      "status_code": 200,
+      "timed_out": false
+    },
+    {
+      "content": {
+        "status": "succeeded",
+        "connectors": 1,
+        "failed": 0,
+        "results": [
+          {
+            "connectorId": "awardswatch-predictions",
+            "runId": 636,
+            "status": "succeeded",
+            "publicationsSeen": 8,
+            "capturesInserted": 0,
+            "capturesDuplicate": 8,
+            "observationsSeen": 55,
+            "observationsInserted": 0,
+            "observationsDuplicate": 55,
+            "reviewItemsCreated": 0
+          }
+        ]
+      },
+      "created": "2026-09-29 18:30:51.032891+00",
+      "error_msg": null,
+      "id": 1314,
+      "status_code": 200,
+      "timed_out": false
+    },
+    {
+      "content": {
+        "status": "succeeded",
+        "connectors": 1,
+        "failed": 0,
+        "results": [
+          {
+            "connectorId": "guardian-content-api",
+            "runId": 632,
+            "status": "succeeded",
+            "publicationsSeen": 9,
+            "capturesInserted": 1,
+            "capturesDuplicate": 8,
+            "observationsSeen": 18,
+            "observationsInserted": 2,
+            "observationsDuplicate": 16,
+            "reviewItemsCreated": 0
+          }
+        ]
+      },
+      "created": "2026-09-29 18:30:51.032891+00",
+      "error_msg": null,
+      "id": 1315,
+      "status_code": 200,
+      "timed_out": false
+    },
+    {
+      "content": {
+        "status": "succeeded",
+        "connectors": 1,
+        "failed": 0,
+        "results": [
+          {
+            "connectorId": "midnight-critics-predictions",
+            "runId": 631,
+            "status": "succeeded",
+            "publicationsSeen": 1,
+            "capturesInserted": 0,
+            "capturesDuplicate": 1,
+            "observationsSeen": 150,
+            "observationsInserted": 0,
+            "observationsDuplicate": 150,
+            "reviewItemsCreated": 0
+          }
+        ]
+      },
+      "created": "2026-09-29 18:30:51.032891+00",
+      "error_msg": null,
+      "id": 1316,
+      "status_code": 200,
+      "timed_out": false
+    },
+    {
+      "content": {
+        "status": "succeeded",
+        "connectors": 1,
+        "failed": 0,
+        "results": [
+          {
+            "connectorId": "movie-state-predictions",
+            "runId": 630,
+            "status": "succeeded",
+            "publicationsSeen": 1,
+            "capturesInserted": 0,
+            "capturesDuplicate": 1,
+            "observationsSeen": 45,
+            "observationsInserted": 0,
+            "observationsDuplicate": 45,
+            "reviewItemsCreated": 0
+          }
+        ]
+      },
+      "created": "2026-09-29 18:30:51.032891+00",
+      "error_msg": null,
+      "id": 1317,
+      "status_code": 200,
+      "timed_out": false
+    },
+    {
+      "content": {
+        "status": "succeeded",
+        "connectors": 1,
+        "failed": 0,
+        "results": [
+          {
+            "connectorId": "next-best-picture-predictions",
+            "runId": 635,
+            "status": "succeeded",
+            "publicationsSeen": 1,
+            "capturesInserted": 0,
+            "capturesDuplicate": 1,
+            "observationsSeen": 110,
+            "observationsInserted": 0,
+            "observationsDuplicate": 110,
+            "reviewItemsCreated": 0
+          }
+        ]
+      },
+      "created": "2026-09-29 18:30:51.032891+00",
+      "error_msg": null,
+      "id": 1318,
+      "status_code": 200,
+      "timed_out": false
+    },
+    {
+      "content": {
+        "status": "succeeded",
+        "connectors": 1,
+        "failed": 0,
+        "results": [
+          {
+            "connectorId": "ringer-best-picture",
+            "runId": 634,
+            "status": "succeeded",
+            "publicationsSeen": 1,
+            "capturesInserted": 0,
+            "capturesDuplicate": 1,
+            "observationsSeen": 3,
+            "observationsInserted": 0,
+            "observationsDuplicate": 3,
+            "reviewItemsCreated": 0
+          }
+        ]
+      },
+      "created": "2026-09-29 18:30:51.032891+00",
+      "error_msg": null,
+      "id": 1319,
+      "status_code": 200,
+      "timed_out": false
+    },
+    {
+      "content": {
+        "status": "succeeded",
+        "connectors": 1,
+        "failed": 0,
+        "results": [
+          {
+            "connectorId": "roger-ebert-rss",
+            "runId": 629,
+            "status": "succeeded",
+            "publicationsSeen": 0,
+            "capturesInserted": 0,
+            "capturesDuplicate": 0,
+            "observationsSeen": 0,
+            "observationsInserted": 0,
+            "observationsDuplicate": 0,
+            "reviewItemsCreated": 0
+          }
+        ]
+      },
+      "created": "2026-09-29 18:30:51.032891+00",
+      "error_msg": null,
+      "id": 1320,
+      "status_code": 200,
+      "timed_out": false
+    }
+  ]
+}

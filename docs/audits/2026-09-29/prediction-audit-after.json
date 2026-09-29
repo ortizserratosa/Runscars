@@ -1,0 +1,3642 @@
+{
+  "checkedAt": "2026-09-29T18:35:55.125Z",
+  "connectors": [
+    {
+      "id": "awards-daily-predictions",
+      "source_id": "awards-daily",
+      "extractor_version": "awards-daily-v8",
+      "is_active": true,
+      "last_success_at": "2026-09-29T18:31:18.752+00:00",
+      "last_failure_at": "2026-07-25T17:36:56.632+00:00",
+      "last_error": null,
+      "configuration": {
+        "season_id": "oscars-2027",
+        "ceremony_year": 2027,
+        "discovery_url": "https://www.awardsdaily.com/wp-json/wp/v2/search?search=2027%20Oscar%20Predictions&per_page=20&_fields=id,url,title,subtype",
+        "discovery_limit": 12,
+        "discovery_concurrency": 4,
+        "required_category_ids": [
+          "best-picture",
+          "directing",
+          "actor",
+          "actress",
+          "supporting-actor",
+          "supporting-actress",
+          "original-screenplay",
+          "adapted-screenplay"
+        ],
+        "persistence_concurrency": 6
+      }
+    },
+    {
+      "id": "awards-radar-predictions",
+      "source_id": "awards-radar",
+      "extractor_version": "awards-radar-v6",
+      "is_active": true,
+      "last_success_at": "2026-09-29T18:31:30.538+00:00",
+      "last_failure_at": "2026-09-29T17:59:03.118+00:00",
+      "last_error": null,
+      "configuration": {
+        "season_id": "oscars-2027",
+        "category_urls": {
+          "actor": "https://awardsradar.com/best-actor/",
+          "actress": "https://awardsradar.com/best-actress/",
+          "directing": "https://awardsradar.com/best-director/",
+          "best-picture": "https://awardsradar.com/best-picture/",
+          "supporting-actor": "https://awardsradar.com/best-supporting-actor/",
+          "adapted-screenplay": "https://awardsradar.com/best-adapted-screenplay/",
+          "supporting-actress": "https://awardsradar.com/best-supporting-actress/",
+          "original-screenplay": "https://awardsradar.com/best-original-screenplay/"
+        },
+        "ceremony_year": 2027,
+        "category_concurrency": 4,
+        "required_category_ids": [
+          "best-picture",
+          "directing",
+          "actor",
+          "actress",
+          "supporting-actor",
+          "supporting-actress",
+          "original-screenplay",
+          "adapted-screenplay"
+        ],
+        "persistence_concurrency": 6
+      }
+    },
+    {
+      "id": "awardswatch-predictions",
+      "source_id": "awardswatch",
+      "extractor_version": "awardswatch-multicategory-v6",
+      "is_active": true,
+      "last_success_at": "2026-09-29T18:31:22.886+00:00",
+      "last_failure_at": "2026-09-29T04:17:02.997+00:00",
+      "last_error": null,
+      "configuration": {
+        "season_id": "oscars-2027",
+        "archive_url": "https://awardswatch.com/category/predictions/film-predictions/oscars-predictions/2027-oscar-predictions/",
+        "category_ids": [
+          "best-picture",
+          "directing",
+          "actor",
+          "actress",
+          "supporting-actor",
+          "supporting-actress",
+          "original-screenplay",
+          "adapted-screenplay"
+        ],
+        "panel_author": "Erik Anderson",
+        "ceremony_year": 2027,
+        "required_category_ids": [
+          "best-picture",
+          "directing",
+          "actor",
+          "actress",
+          "supporting-actor",
+          "supporting-actress",
+          "original-screenplay",
+          "adapted-screenplay"
+        ],
+        "persistence_concurrency": 6
+      }
+    },
+    {
+      "id": "guardian-content-api",
+      "source_id": "guardian",
+      "extractor_version": "guardian-v1",
+      "is_active": true,
+      "last_success_at": "2026-09-29T18:31:15.794+00:00",
+      "last_failure_at": null,
+      "last_error": null,
+      "configuration": {
+        "query": "film review",
+        "season_id": "oscars-2027",
+        "catalog_only": true,
+        "requires_secret": "GUARDIAN_CONTENT_API_KEY",
+        "persistence_concurrency": 6
+      }
+    },
+    {
+      "id": "midnight-critics-predictions",
+      "source_id": "midnight-critics",
+      "extractor_version": "midnight-critics-v2",
+      "is_active": true,
+      "last_success_at": "2026-09-29T18:31:21.452+00:00",
+      "last_failure_at": null,
+      "last_error": null,
+      "configuration": {
+        "season_id": "oscars-2027",
+        "ceremony_year": 2027,
+        "discovery_mode": "mutable-page",
+        "required_category_ids": [
+          "best-picture",
+          "directing",
+          "actor",
+          "actress",
+          "supporting-actor",
+          "supporting-actress",
+          "original-screenplay",
+          "adapted-screenplay"
+        ],
+        "persistence_concurrency": 6
+      }
+    },
+    {
+      "id": "movie-state-predictions",
+      "source_id": "the-movie-state",
+      "extractor_version": "movie-state-v1",
+      "is_active": true,
+      "last_success_at": "2026-09-29T18:31:04.367+00:00",
+      "last_failure_at": null,
+      "last_error": null,
+      "configuration": {
+        "season_id": "oscars-2027",
+        "ceremony_year": 2027,
+        "required_category_ids": [
+          "best-picture",
+          "directing",
+          "actor",
+          "actress",
+          "supporting-actor",
+          "supporting-actress",
+          "original-screenplay",
+          "adapted-screenplay"
+        ]
+      }
+    },
+    {
+      "id": "next-best-picture-predictions",
+      "source_id": "next-best-picture",
+      "extractor_version": "next-best-picture-v3",
+      "is_active": true,
+      "last_success_at": "2026-09-29T18:31:17.072+00:00",
+      "last_failure_at": "2026-09-29T17:59:03.118+00:00",
+      "last_error": null,
+      "configuration": {
+        "season_id": "oscars-2027",
+        "ceremony_year": 2027,
+        "discovery_mode": "mutable-page",
+        "required_category_ids": [
+          "best-picture",
+          "directing",
+          "actor",
+          "actress",
+          "supporting-actor",
+          "supporting-actress",
+          "original-screenplay",
+          "adapted-screenplay"
+        ],
+        "persistence_concurrency": 6
+      }
+    },
+    {
+      "id": "ringer-best-picture",
+      "source_id": "the-ringer",
+      "extractor_version": "the-ringer-v2",
+      "is_active": true,
+      "last_success_at": "2026-09-29T18:30:55.249+00:00",
+      "last_failure_at": null,
+      "last_error": null,
+      "configuration": {
+        "season_id": "oscars-2027",
+        "category_id": "best-picture",
+        "ceremony_year": 2027,
+        "article_fallback_url": "https://www.theringer.com/2026/03/20/oscars/oscars-2027-predictions-best-picture-movies-contenders",
+        "required_category_ids": [
+          "best-picture"
+        ],
+        "persistence_concurrency": 6
+      }
+    },
+    {
+      "id": "roger-ebert-rss",
+      "source_id": "roger-ebert",
+      "extractor_version": "roger-ebert-v1",
+      "is_active": true,
+      "last_success_at": "2026-09-29T18:30:53.737+00:00",
+      "last_failure_at": null,
+      "last_error": null,
+      "configuration": {
+        "season_id": "oscars-2027",
+        "allowed_path_prefix": "/reviews/",
+        "persistence_concurrency": 6
+      }
+    }
+  ],
+  "runs": [
+    {
+      "id": 611,
+      "connector_id": "awardswatch-predictions",
+      "status": "succeeded",
+      "started_at": "2026-09-29T17:56:03.611+00:00",
+      "finished_at": "2026-09-29T17:56:19.594+00:00",
+      "observations_seen": 55,
+      "observations_inserted": 55,
+      "observations_duplicate": 0,
+      "review_items_created": 0,
+      "error_summary": null
+    },
+    {
+      "id": 612,
+      "connector_id": "awards-daily-predictions",
+      "status": "succeeded",
+      "started_at": "2026-09-29T17:56:03.61+00:00",
+      "finished_at": "2026-09-29T17:56:19.584+00:00",
+      "observations_seen": 80,
+      "observations_inserted": 80,
+      "observations_duplicate": 0,
+      "review_items_created": 1,
+      "error_summary": null
+    },
+    {
+      "id": 613,
+      "connector_id": "awards-radar-predictions",
+      "status": "failed",
+      "started_at": "2026-09-29T17:56:03.611+00:00",
+      "finished_at": "2026-09-29T17:59:03.118+00:00",
+      "observations_seen": 0,
+      "observations_inserted": 0,
+      "observations_duplicate": 0,
+      "review_items_created": 0,
+      "error_summary": "Auditoría: invocación conjunta pg_net1299 terminó HTTP546 WORKER_RESOURCE_LIMIT; contador parcial mínimo observado, reintento aislado idempotente."
+    },
+    {
+      "id": 614,
+      "connector_id": "midnight-critics-predictions",
+      "status": "succeeded",
+      "started_at": "2026-09-29T17:56:19.815+00:00",
+      "finished_at": "2026-09-29T17:56:33.156+00:00",
+      "observations_seen": 150,
+      "observations_inserted": 0,
+      "observations_duplicate": 150,
+      "review_items_created": 0,
+      "error_summary": null
+    },
+    {
+      "id": 615,
+      "connector_id": "movie-state-predictions",
+      "status": "succeeded",
+      "started_at": "2026-09-29T17:56:19.864+00:00",
+      "finished_at": "2026-09-29T17:56:30.74+00:00",
+      "observations_seen": 45,
+      "observations_inserted": 45,
+      "observations_duplicate": 0,
+      "review_items_created": 0,
+      "error_summary": null
+    },
+    {
+      "id": 616,
+      "connector_id": "next-best-picture-predictions",
+      "status": "failed",
+      "started_at": "2026-09-29T17:56:31.38+00:00",
+      "finished_at": "2026-09-29T17:59:03.118+00:00",
+      "observations_seen": 52,
+      "observations_inserted": 52,
+      "observations_duplicate": 0,
+      "review_items_created": 0,
+      "error_summary": "Auditoría: invocación conjunta pg_net1299 terminó HTTP546 WORKER_RESOURCE_LIMIT; contador parcial mínimo observado, reintento aislado idempotente."
+    },
+    {
+      "id": 617,
+      "connector_id": "ringer-best-picture",
+      "status": "succeeded",
+      "started_at": "2026-09-29T17:56:33.399+00:00",
+      "finished_at": "2026-09-29T17:56:35.53+00:00",
+      "observations_seen": 3,
+      "observations_inserted": 0,
+      "observations_duplicate": 3,
+      "review_items_created": 0,
+      "error_summary": null
+    },
+    {
+      "id": 618,
+      "connector_id": "awards-radar-predictions",
+      "status": "succeeded",
+      "started_at": "2026-09-29T17:58:41.737+00:00",
+      "finished_at": "2026-09-29T17:59:01.091+00:00",
+      "observations_seen": 190,
+      "observations_inserted": 190,
+      "observations_duplicate": 0,
+      "review_items_created": 18,
+      "error_summary": null
+    },
+    {
+      "id": 619,
+      "connector_id": "next-best-picture-predictions",
+      "status": "succeeded",
+      "started_at": "2026-09-29T17:59:44.162+00:00",
+      "finished_at": "2026-09-29T17:59:52.403+00:00",
+      "observations_seen": 110,
+      "observations_inserted": 58,
+      "observations_duplicate": 52,
+      "review_items_created": 4,
+      "error_summary": null
+    },
+    {
+      "id": 620,
+      "connector_id": "midnight-critics-predictions",
+      "status": "succeeded",
+      "started_at": "2026-09-29T18:03:13.545+00:00",
+      "finished_at": "2026-09-29T18:03:43.324+00:00",
+      "observations_seen": 150,
+      "observations_inserted": 0,
+      "observations_duplicate": 150,
+      "review_items_created": 0,
+      "error_summary": null
+    },
+    {
+      "id": 621,
+      "connector_id": "awards-daily-predictions",
+      "status": "succeeded",
+      "started_at": "2026-09-29T18:03:13.453+00:00",
+      "finished_at": "2026-09-29T18:03:39.693+00:00",
+      "observations_seen": 80,
+      "observations_inserted": 0,
+      "observations_duplicate": 80,
+      "review_items_created": 0,
+      "error_summary": null
+    },
+    {
+      "id": 622,
+      "connector_id": "ringer-best-picture",
+      "status": "succeeded",
+      "started_at": "2026-09-29T18:03:13.587+00:00",
+      "finished_at": "2026-09-29T18:03:16.192+00:00",
+      "observations_seen": 3,
+      "observations_inserted": 0,
+      "observations_duplicate": 3,
+      "review_items_created": 0,
+      "error_summary": null
+    },
+    {
+      "id": 623,
+      "connector_id": "guardian-content-api",
+      "status": "succeeded",
+      "started_at": "2026-09-29T18:03:13.441+00:00",
+      "finished_at": "2026-09-29T18:03:37.847+00:00",
+      "observations_seen": 16,
+      "observations_inserted": 2,
+      "observations_duplicate": 14,
+      "review_items_created": 0,
+      "error_summary": null
+    },
+    {
+      "id": 624,
+      "connector_id": "next-best-picture-predictions",
+      "status": "succeeded",
+      "started_at": "2026-09-29T18:03:13.631+00:00",
+      "finished_at": "2026-09-29T18:03:41.182+00:00",
+      "observations_seen": 110,
+      "observations_inserted": 0,
+      "observations_duplicate": 110,
+      "review_items_created": 0,
+      "error_summary": null
+    },
+    {
+      "id": 625,
+      "connector_id": "awards-radar-predictions",
+      "status": "succeeded",
+      "started_at": "2026-09-29T18:03:13.637+00:00",
+      "finished_at": "2026-09-29T18:03:49.218+00:00",
+      "observations_seen": 190,
+      "observations_inserted": 0,
+      "observations_duplicate": 190,
+      "review_items_created": 0,
+      "error_summary": null
+    },
+    {
+      "id": 626,
+      "connector_id": "roger-ebert-rss",
+      "status": "succeeded",
+      "started_at": "2026-09-29T18:03:13.605+00:00",
+      "finished_at": "2026-09-29T18:03:14.884+00:00",
+      "observations_seen": 0,
+      "observations_inserted": 0,
+      "observations_duplicate": 0,
+      "review_items_created": 0,
+      "error_summary": null
+    },
+    {
+      "id": 627,
+      "connector_id": "movie-state-predictions",
+      "status": "succeeded",
+      "started_at": "2026-09-29T18:03:13.682+00:00",
+      "finished_at": "2026-09-29T18:03:28.044+00:00",
+      "observations_seen": 45,
+      "observations_inserted": 0,
+      "observations_duplicate": 45,
+      "review_items_created": 0,
+      "error_summary": null
+    },
+    {
+      "id": 628,
+      "connector_id": "awardswatch-predictions",
+      "status": "succeeded",
+      "started_at": "2026-09-29T18:03:13.647+00:00",
+      "finished_at": "2026-09-29T18:03:44.369+00:00",
+      "observations_seen": 55,
+      "observations_inserted": 0,
+      "observations_duplicate": 55,
+      "review_items_created": 0,
+      "error_summary": null
+    },
+    {
+      "id": 629,
+      "connector_id": "roger-ebert-rss",
+      "status": "succeeded",
+      "started_at": "2026-09-29T18:30:52.742+00:00",
+      "finished_at": "2026-09-29T18:30:53.737+00:00",
+      "observations_seen": 0,
+      "observations_inserted": 0,
+      "observations_duplicate": 0,
+      "review_items_created": 0,
+      "error_summary": null
+    },
+    {
+      "id": 630,
+      "connector_id": "movie-state-predictions",
+      "status": "succeeded",
+      "started_at": "2026-09-29T18:30:52.748+00:00",
+      "finished_at": "2026-09-29T18:31:04.367+00:00",
+      "observations_seen": 45,
+      "observations_inserted": 0,
+      "observations_duplicate": 45,
+      "review_items_created": 0,
+      "error_summary": null
+    },
+    {
+      "id": 631,
+      "connector_id": "midnight-critics-predictions",
+      "status": "succeeded",
+      "started_at": "2026-09-29T18:30:52.741+00:00",
+      "finished_at": "2026-09-29T18:31:21.452+00:00",
+      "observations_seen": 150,
+      "observations_inserted": 0,
+      "observations_duplicate": 150,
+      "review_items_created": 0,
+      "error_summary": null
+    },
+    {
+      "id": 632,
+      "connector_id": "guardian-content-api",
+      "status": "succeeded",
+      "started_at": "2026-09-29T18:30:52.829+00:00",
+      "finished_at": "2026-09-29T18:31:15.794+00:00",
+      "observations_seen": 18,
+      "observations_inserted": 2,
+      "observations_duplicate": 16,
+      "review_items_created": 0,
+      "error_summary": null
+    },
+    {
+      "id": 633,
+      "connector_id": "awards-daily-predictions",
+      "status": "succeeded",
+      "started_at": "2026-09-29T18:30:52.741+00:00",
+      "finished_at": "2026-09-29T18:31:18.752+00:00",
+      "observations_seen": 80,
+      "observations_inserted": 0,
+      "observations_duplicate": 80,
+      "review_items_created": 0,
+      "error_summary": null
+    },
+    {
+      "id": 634,
+      "connector_id": "ringer-best-picture",
+      "status": "succeeded",
+      "started_at": "2026-09-29T18:30:52.829+00:00",
+      "finished_at": "2026-09-29T18:30:55.249+00:00",
+      "observations_seen": 3,
+      "observations_inserted": 0,
+      "observations_duplicate": 3,
+      "review_items_created": 0,
+      "error_summary": null
+    },
+    {
+      "id": 635,
+      "connector_id": "next-best-picture-predictions",
+      "status": "succeeded",
+      "started_at": "2026-09-29T18:30:52.815+00:00",
+      "finished_at": "2026-09-29T18:31:17.072+00:00",
+      "observations_seen": 110,
+      "observations_inserted": 0,
+      "observations_duplicate": 110,
+      "review_items_created": 0,
+      "error_summary": null
+    },
+    {
+      "id": 636,
+      "connector_id": "awardswatch-predictions",
+      "status": "succeeded",
+      "started_at": "2026-09-29T18:30:52.819+00:00",
+      "finished_at": "2026-09-29T18:31:22.886+00:00",
+      "observations_seen": 55,
+      "observations_inserted": 0,
+      "observations_duplicate": 55,
+      "review_items_created": 0,
+      "error_summary": null
+    },
+    {
+      "id": 637,
+      "connector_id": "awards-radar-predictions",
+      "status": "succeeded",
+      "started_at": "2026-09-29T18:30:59.049+00:00",
+      "finished_at": "2026-09-29T18:31:30.538+00:00",
+      "observations_seen": 190,
+      "observations_inserted": 0,
+      "observations_duplicate": 190,
+      "review_items_created": 0,
+      "error_summary": null
+    }
+  ],
+  "refreshRuns": [
+    {
+      "id": 35,
+      "trigger": "manual",
+      "status": "succeeded",
+      "started_at": "2026-09-29T18:34:29.862+00:00",
+      "finished_at": "2026-09-29T18:34:44.973+00:00",
+      "schedules_seen": 8,
+      "snapshots_created": 0,
+      "snapshots_unchanged": 8,
+      "schedules_skipped": 0,
+      "schedules_failed": 0,
+      "error_summary": null,
+      "details": [
+        {
+          "status": "unchanged",
+          "scheduleId": "oscars-2027-actor-nomination-weekly",
+          "snapshotId": "periodic-oscars-2027-actor-nomination-2026-09-29-8c0eba0c506d",
+          "contentHash": "8c0eba0c506d09acea2323dfe147f2c412b3f2cc604f8f62a07dbeb9a76f5220"
+        },
+        {
+          "status": "unchanged",
+          "scheduleId": "oscars-2027-actress-nomination-weekly",
+          "snapshotId": "periodic-oscars-2027-actress-nomination-2026-09-29-61b770834156",
+          "contentHash": "61b770834156962f53a70a79956c0020702ea64976adff729f2d3f3dae1bb09b"
+        },
+        {
+          "status": "unchanged",
+          "scheduleId": "oscars-2027-adapted-screenplay-nomination-weekly",
+          "snapshotId": "periodic-oscars-2027-adapted-screenplay-nomination-2026-09-29-63f93d804e38",
+          "contentHash": "63f93d804e38f642a4060b31cb8f369ff2ee9fa95e5b6b31cd1fabb0bb4ac75f"
+        },
+        {
+          "status": "unchanged",
+          "scheduleId": "oscars-2027-best-picture-nomination-weekly",
+          "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-09-29-6d08df0e2aac",
+          "contentHash": "6d08df0e2aace04b18bac12d570723ae8c5b528b0041b3434442376e9fbb039e"
+        },
+        {
+          "status": "unchanged",
+          "scheduleId": "oscars-2027-directing-nomination-weekly",
+          "snapshotId": "periodic-oscars-2027-directing-nomination-2026-09-29-f786afcba546",
+          "contentHash": "f786afcba5461a824df09fd748719a0c7dcc742a9f48b9736967fab2d1333c97"
+        },
+        {
+          "status": "unchanged",
+          "scheduleId": "oscars-2027-original-screenplay-nomination-weekly",
+          "snapshotId": "periodic-oscars-2027-original-screenplay-nomination-2026-09-29-ba2ce9014438",
+          "contentHash": "ba2ce901443880a7124d2da0a9150deb7f7c2c74ae35fc70d80bddb9e2abc1be"
+        },
+        {
+          "status": "unchanged",
+          "scheduleId": "oscars-2027-supporting-actor-nomination-weekly",
+          "snapshotId": "periodic-oscars-2027-supporting-actor-nomination-2026-09-29-540b3aaa9667",
+          "contentHash": "540b3aaa96672b3b0ab85e280420d610f0781a22292ec2757dbe163a7df82477"
+        },
+        {
+          "status": "unchanged",
+          "scheduleId": "oscars-2027-supporting-actress-nomination-weekly",
+          "snapshotId": "periodic-oscars-2027-supporting-actress-nomination-2026-09-29-fb25f185b142",
+          "contentHash": "fb25f185b1421c37d65c877810edb3182fbd46ffae2d77d1676a8e51eb71ab8d"
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "trigger": "manual",
+      "status": "succeeded",
+      "started_at": "2026-09-29T18:33:33.471+00:00",
+      "finished_at": "2026-09-29T18:33:56.397+00:00",
+      "schedules_seen": 8,
+      "snapshots_created": 8,
+      "snapshots_unchanged": 0,
+      "schedules_skipped": 0,
+      "schedules_failed": 0,
+      "error_summary": null,
+      "details": [
+        {
+          "status": "created",
+          "scheduleId": "oscars-2027-actor-nomination-weekly",
+          "snapshotId": "periodic-oscars-2027-actor-nomination-2026-09-29-8c0eba0c506d",
+          "contentHash": "8c0eba0c506d09acea2323dfe147f2c412b3f2cc604f8f62a07dbeb9a76f5220"
+        },
+        {
+          "status": "created",
+          "scheduleId": "oscars-2027-actress-nomination-weekly",
+          "snapshotId": "periodic-oscars-2027-actress-nomination-2026-09-29-61b770834156",
+          "contentHash": "61b770834156962f53a70a79956c0020702ea64976adff729f2d3f3dae1bb09b"
+        },
+        {
+          "status": "created",
+          "scheduleId": "oscars-2027-adapted-screenplay-nomination-weekly",
+          "snapshotId": "periodic-oscars-2027-adapted-screenplay-nomination-2026-09-29-63f93d804e38",
+          "contentHash": "63f93d804e38f642a4060b31cb8f369ff2ee9fa95e5b6b31cd1fabb0bb4ac75f"
+        },
+        {
+          "status": "created",
+          "scheduleId": "oscars-2027-best-picture-nomination-weekly",
+          "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-09-29-6d08df0e2aac",
+          "contentHash": "6d08df0e2aace04b18bac12d570723ae8c5b528b0041b3434442376e9fbb039e"
+        },
+        {
+          "status": "created",
+          "scheduleId": "oscars-2027-directing-nomination-weekly",
+          "snapshotId": "periodic-oscars-2027-directing-nomination-2026-09-29-f786afcba546",
+          "contentHash": "f786afcba5461a824df09fd748719a0c7dcc742a9f48b9736967fab2d1333c97"
+        },
+        {
+          "status": "created",
+          "scheduleId": "oscars-2027-original-screenplay-nomination-weekly",
+          "snapshotId": "periodic-oscars-2027-original-screenplay-nomination-2026-09-29-ba2ce9014438",
+          "contentHash": "ba2ce901443880a7124d2da0a9150deb7f7c2c74ae35fc70d80bddb9e2abc1be"
+        },
+        {
+          "status": "created",
+          "scheduleId": "oscars-2027-supporting-actor-nomination-weekly",
+          "snapshotId": "periodic-oscars-2027-supporting-actor-nomination-2026-09-29-540b3aaa9667",
+          "contentHash": "540b3aaa96672b3b0ab85e280420d610f0781a22292ec2757dbe163a7df82477"
+        },
+        {
+          "status": "created",
+          "scheduleId": "oscars-2027-supporting-actress-nomination-weekly",
+          "snapshotId": "periodic-oscars-2027-supporting-actress-nomination-2026-09-29-fb25f185b142",
+          "contentHash": "fb25f185b1421c37d65c877810edb3182fbd46ffae2d77d1676a8e51eb71ab8d"
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "trigger": "scheduled",
+      "status": "succeeded",
+      "started_at": "2026-09-29T04:47:52.948+00:00",
+      "finished_at": "2026-09-29T04:48:02.754+00:00",
+      "schedules_seen": 8,
+      "snapshots_created": 0,
+      "snapshots_unchanged": 8,
+      "schedules_skipped": 0,
+      "schedules_failed": 0,
+      "error_summary": null,
+      "details": [
+        {
+          "status": "unchanged",
+          "scheduleId": "oscars-2027-actor-nomination-weekly",
+          "snapshotId": "periodic-oscars-2027-actor-nomination-2026-09-27-637b266521fd",
+          "contentHash": "637b266521fd5056b584e666441232246838dd83c299c47e40114655603918ba"
+        },
+        {
+          "status": "unchanged",
+          "scheduleId": "oscars-2027-actress-nomination-weekly",
+          "snapshotId": "periodic-oscars-2027-actress-nomination-2026-09-26-8166e0d87be9",
+          "contentHash": "8166e0d87be946963be724d6468b81472246e2b0ef8f2e677b56b2e56dd865c2"
+        },
+        {
+          "status": "unchanged",
+          "scheduleId": "oscars-2027-adapted-screenplay-nomination-weekly",
+          "snapshotId": "periodic-oscars-2027-adapted-screenplay-nomination-2026-09-26-d6db7459026a",
+          "contentHash": "d6db7459026a4add69aa8bb4b8a92343cb8a3dc4a835e1b89cb4b47017fe33e3"
+        },
+        {
+          "status": "unchanged",
+          "scheduleId": "oscars-2027-best-picture-nomination-weekly",
+          "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-09-28-3f9c63725de6",
+          "contentHash": "3f9c63725de6515ccdb00bb834fb384d66245aa3ca9e36054d6436c4785b0aad"
+        },
+        {
+          "status": "unchanged",
+          "scheduleId": "oscars-2027-directing-nomination-weekly",
+          "snapshotId": "periodic-oscars-2027-directing-nomination-2026-09-26-87bebbd09f31",
+          "contentHash": "87bebbd09f318edbe62663f4398a7b3c2586f886756c47985e123174007bef2f"
+        },
+        {
+          "status": "unchanged",
+          "scheduleId": "oscars-2027-original-screenplay-nomination-weekly",
+          "snapshotId": "periodic-oscars-2027-original-screenplay-nomination-2026-09-28-4e88184e120f",
+          "contentHash": "4e88184e120fd20880b67a26eadde35237bdc4f907f45fb739cf2b725f67e00e"
+        },
+        {
+          "status": "unchanged",
+          "scheduleId": "oscars-2027-supporting-actor-nomination-weekly",
+          "snapshotId": "periodic-oscars-2027-supporting-actor-nomination-2026-09-27-010d5a1f9786",
+          "contentHash": "010d5a1f97868fb5e62012645513c3dbe9fb135ff570662f15a6ca94be3576ac"
+        },
+        {
+          "status": "unchanged",
+          "scheduleId": "oscars-2027-supporting-actress-nomination-weekly",
+          "snapshotId": "periodic-oscars-2027-supporting-actress-nomination-2026-09-26-21230bd422ea",
+          "contentHash": "21230bd422ea2a52b90527a1cf0b2c1fff2dfd086d8f5f3df3e8002cfd406d95"
+        }
+      ]
+    }
+  ],
+  "pointers": [
+    {
+      "season_id": "oscars-2027",
+      "category_id": "actor",
+      "prediction_intention": "nomination",
+      "kind": "periodic",
+      "snapshot_id": "periodic-oscars-2027-actor-nomination-2026-09-29-8c0eba0c506d",
+      "published_at": "2026-09-29T18:33:34.258+00:00"
+    },
+    {
+      "season_id": "oscars-2027",
+      "category_id": "actress",
+      "prediction_intention": "nomination",
+      "kind": "periodic",
+      "snapshot_id": "periodic-oscars-2027-actress-nomination-2026-09-29-61b770834156",
+      "published_at": "2026-09-29T18:33:34.258+00:00"
+    },
+    {
+      "season_id": "oscars-2027",
+      "category_id": "adapted-screenplay",
+      "prediction_intention": "nomination",
+      "kind": "periodic",
+      "snapshot_id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-09-29-63f93d804e38",
+      "published_at": "2026-09-29T18:33:34.258+00:00"
+    },
+    {
+      "season_id": "oscars-2027",
+      "category_id": "best-picture",
+      "prediction_intention": "nomination",
+      "kind": "periodic",
+      "snapshot_id": "periodic-oscars-2027-best-picture-nomination-2026-09-29-6d08df0e2aac",
+      "published_at": "2026-09-29T18:33:34.258+00:00"
+    },
+    {
+      "season_id": "oscars-2027",
+      "category_id": "directing",
+      "prediction_intention": "nomination",
+      "kind": "periodic",
+      "snapshot_id": "periodic-oscars-2027-directing-nomination-2026-09-29-f786afcba546",
+      "published_at": "2026-09-29T18:33:34.258+00:00"
+    },
+    {
+      "season_id": "oscars-2027",
+      "category_id": "original-screenplay",
+      "prediction_intention": "nomination",
+      "kind": "periodic",
+      "snapshot_id": "periodic-oscars-2027-original-screenplay-nomination-2026-09-29-ba2ce9014438",
+      "published_at": "2026-09-29T18:33:34.258+00:00"
+    },
+    {
+      "season_id": "oscars-2027",
+      "category_id": "supporting-actor",
+      "prediction_intention": "nomination",
+      "kind": "periodic",
+      "snapshot_id": "periodic-oscars-2027-supporting-actor-nomination-2026-09-29-540b3aaa9667",
+      "published_at": "2026-09-29T18:33:34.258+00:00"
+    },
+    {
+      "season_id": "oscars-2027",
+      "category_id": "supporting-actress",
+      "prediction_intention": "nomination",
+      "kind": "periodic",
+      "snapshot_id": "periodic-oscars-2027-supporting-actress-nomination-2026-09-29-fb25f185b142",
+      "published_at": "2026-09-29T18:33:34.258+00:00"
+    }
+  ],
+  "snapshots": [
+    {
+      "id": "periodic-oscars-2027-actor-nomination-2026-09-29-8c0eba0c506d",
+      "categoryId": "actor",
+      "cutoffAt": "2026-09-29T18:33:34.258+00:00",
+      "contentHash": "8c0eba0c506d09acea2323dfe147f2c412b3f2cc604f8f62a07dbeb9a76f5220",
+      "orderedSources": 3,
+      "coverageSources": 5,
+      "candidates": 21,
+      "included": 40,
+      "excluded": 10,
+      "sources": [
+        {
+          "id": "awards-daily",
+          "publishedAt": "2026-09-25T00:00:00+00:00",
+          "listLength": null,
+          "ordered": 0,
+          "selected": 5
+        },
+        {
+          "id": "awards-radar",
+          "publishedAt": "2026-09-23T00:00:00+00:00",
+          "listLength": 20,
+          "ordered": 20,
+          "selected": 0
+        },
+        {
+          "id": "awardswatch",
+          "publishedAt": "2026-09-17T20:26:16+00:00",
+          "listLength": null,
+          "ordered": 0,
+          "selected": 5
+        },
+        {
+          "id": "next-best-picture",
+          "publishedAt": null,
+          "freshnessAt": "2026-09-27T04:17:17.163+00:00",
+          "listLength": 5,
+          "ordered": 5,
+          "selected": 0
+        },
+        {
+          "id": "the-movie-state",
+          "publishedAt": "2026-09-14T15:00:00+00:00",
+          "listLength": 5,
+          "ordered": 5,
+          "selected": 0
+        }
+      ],
+      "top": [
+        {
+          "id": "candidate-0f8cd05c431a1c2383a423a9",
+          "film": {
+            "id": "wild-horse-nine",
+            "title": "Wild Horse Nine"
+          },
+          "label": "John Malkovich — Wild Horse Nine",
+          "score": 0.933333333333,
+          "people": [
+            {
+              "id": "tmdb-6949",
+              "name": "John Malkovich",
+              "role": "Chris",
+              "displayOrder": 0
+            }
+          ],
+          "coverage": 1,
+          "meanRank": 1.3333333333333333,
+          "movement": null,
+          "position": 1,
+          "seasonId": "oscars-2027",
+          "workTitle": null,
+          "categoryId": "actor",
+          "medianRank": 1,
+          "appearances": 5,
+          "candidateId": "candidate-0f8cd05c431a1c2383a423a9",
+          "topFiveCount": 3,
+          "scoreOutOf100": 93.33333333329999,
+          "firstPlaceCount": 2,
+          "orderedSourceCount": 3,
+          "sourceContributions": [
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awards-daily",
+              "listLength": 0,
+              "sourceName": "Awards Daily",
+              "publishedAt": "2026-09-25T00:00:00+00:00",
+              "observationId": "8135",
+              "publicationId": "2026/09/25/2027-oscar-predictions-best-actress-is-wide-open@dda884933eb6560e",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://www.awardsdaily.com/2026/09/25/2027-oscar-predictions-best-actress-is-wide-open/"
+            },
+            {
+              "rank": 1,
+              "points": 1,
+              "appeared": true,
+              "sourceId": "awards-radar",
+              "listLength": 20,
+              "sourceName": "Awards Radar",
+              "publishedAt": "2026-09-23T00:00:00+00:00",
+              "observationId": "8399",
+              "publicationId": "best-actor@0711dd9c9ac2c7f2",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardsradar.com/best-actor/"
+            },
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awardswatch",
+              "listLength": 0,
+              "sourceName": "AwardsWatch",
+              "publishedAt": "2026-09-17T20:26:16+00:00",
+              "observationId": "8138",
+              "publicationId": "2027-oscar-predictions-best-actor-and-best-actress-september@6f3704bf8537863b",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-best-actor-and-best-actress-september/"
+            },
+            {
+              "rank": 1,
+              "points": 1,
+              "appeared": true,
+              "sourceId": "next-best-picture",
+              "listLength": 5,
+              "sourceName": "Next Best Picture",
+              "publishedAt": null,
+              "observationId": "8291",
+              "publicationId": "u/655756da85df4c0efaa10bd2/oscars@8dedc6cfb323d86a",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+            },
+            {
+              "rank": 2,
+              "points": 0.8,
+              "appeared": true,
+              "sourceId": "the-movie-state",
+              "listLength": 5,
+              "sourceName": "The Movie State",
+              "publishedAt": "2026-09-14T15:00:00+00:00",
+              "observationId": "8259",
+              "publicationId": "2026/09/14/2027-oscar-predictions@d734100d26e9d20b",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+            }
+          ],
+          "applicableSourceCount": 5
+        },
+        {
+          "id": "candidate-45a9ad3f6ef2c6880dcf54df",
+          "film": {
+            "id": "elsinore",
+            "title": "Elsinore"
+          },
+          "label": "Andrew Scott — Elsinore",
+          "score": 0.716666666667,
+          "people": [
+            {
+              "id": "tmdb-125660",
+              "name": "Andrew Scott",
+              "role": "Ian Charleson",
+              "displayOrder": 0
+            }
+          ],
+          "coverage": 1,
+          "meanRank": 2.6666666666666665,
+          "movement": null,
+          "position": 2,
+          "seasonId": "oscars-2027",
+          "workTitle": null,
+          "categoryId": "actor",
+          "medianRank": 2,
+          "appearances": 5,
+          "candidateId": "candidate-45a9ad3f6ef2c6880dcf54df",
+          "topFiveCount": 3,
+          "scoreOutOf100": 71.6666666667,
+          "firstPlaceCount": 0,
+          "orderedSourceCount": 3,
+          "sourceContributions": [
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awards-daily",
+              "listLength": 0,
+              "sourceName": "Awards Daily",
+              "publishedAt": "2026-09-25T00:00:00+00:00",
+              "observationId": "8130",
+              "publicationId": "2026/09/25/2027-oscar-predictions-best-actress-is-wide-open@dda884933eb6560e",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://www.awardsdaily.com/2026/09/25/2027-oscar-predictions-best-actress-is-wide-open/"
+            },
+            {
+              "rank": 2,
+              "points": 0.95,
+              "appeared": true,
+              "sourceId": "awards-radar",
+              "listLength": 20,
+              "sourceName": "Awards Radar",
+              "publishedAt": "2026-09-23T00:00:00+00:00",
+              "observationId": "8397",
+              "publicationId": "best-actor@0711dd9c9ac2c7f2",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardsradar.com/best-actor/"
+            },
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awardswatch",
+              "listLength": 0,
+              "sourceName": "AwardsWatch",
+              "publishedAt": "2026-09-17T20:26:16+00:00",
+              "observationId": "8137",
+              "publicationId": "2027-oscar-predictions-best-actor-and-best-actress-september@6f3704bf8537863b",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-best-actor-and-best-actress-september/"
+            },
+            {
+              "rank": 2,
+              "points": 0.8,
+              "appeared": true,
+              "sourceId": "next-best-picture",
+              "listLength": 5,
+              "sourceName": "Next Best Picture",
+              "publishedAt": null,
+              "observationId": "8294",
+              "publicationId": "u/655756da85df4c0efaa10bd2/oscars@8dedc6cfb323d86a",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+            },
+            {
+              "rank": 4,
+              "points": 0.4,
+              "appeared": true,
+              "sourceId": "the-movie-state",
+              "listLength": 5,
+              "sourceName": "The Movie State",
+              "publishedAt": "2026-09-14T15:00:00+00:00",
+              "observationId": "8260",
+              "publicationId": "2026/09/14/2027-oscar-predictions@d734100d26e9d20b",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+            }
+          ],
+          "applicableSourceCount": 5
+        },
+        {
+          "id": "candidate-fba3af02c496f0531c1a8299",
+          "film": {
+            "id": "the-odyssey",
+            "title": "The Odyssey"
+          },
+          "label": "Matt Damon — The Odyssey",
+          "score": 0.7,
+          "people": [
+            {
+              "id": "tmdb-1892",
+              "name": "Matt Damon",
+              "role": "Odysseus",
+              "displayOrder": 0
+            }
+          ],
+          "coverage": 1,
+          "meanRank": 3,
+          "movement": null,
+          "position": 3,
+          "seasonId": "oscars-2027",
+          "workTitle": null,
+          "categoryId": "actor",
+          "medianRank": 3,
+          "appearances": 5,
+          "candidateId": "candidate-fba3af02c496f0531c1a8299",
+          "topFiveCount": 3,
+          "scoreOutOf100": 70,
+          "firstPlaceCount": 0,
+          "orderedSourceCount": 3,
+          "sourceContributions": [
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awards-daily",
+              "listLength": 0,
+              "sourceName": "Awards Daily",
+              "publishedAt": "2026-09-25T00:00:00+00:00",
+              "observationId": "8139",
+              "publicationId": "2026/09/25/2027-oscar-predictions-best-actress-is-wide-open@dda884933eb6560e",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://www.awardsdaily.com/2026/09/25/2027-oscar-predictions-best-actress-is-wide-open/"
+            },
+            {
+              "rank": 3,
+              "points": 0.9,
+              "appeared": true,
+              "sourceId": "awards-radar",
+              "listLength": 20,
+              "sourceName": "Awards Radar",
+              "publishedAt": "2026-09-23T00:00:00+00:00",
+              "observationId": "8395",
+              "publicationId": "best-actor@0711dd9c9ac2c7f2",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardsradar.com/best-actor/"
+            },
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awardswatch",
+              "listLength": 0,
+              "sourceName": "AwardsWatch",
+              "publishedAt": "2026-09-17T20:26:16+00:00",
+              "observationId": "8133",
+              "publicationId": "2027-oscar-predictions-best-actor-and-best-actress-september@6f3704bf8537863b",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-best-actor-and-best-actress-september/"
+            },
+            {
+              "rank": 3,
+              "points": 0.6,
+              "appeared": true,
+              "sourceId": "next-best-picture",
+              "listLength": 5,
+              "sourceName": "Next Best Picture",
+              "publishedAt": null,
+              "observationId": "8292",
+              "publicationId": "u/655756da85df4c0efaa10bd2/oscars@8dedc6cfb323d86a",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+            },
+            {
+              "rank": 3,
+              "points": 0.6,
+              "appeared": true,
+              "sourceId": "the-movie-state",
+              "listLength": 5,
+              "sourceName": "The Movie State",
+              "publishedAt": "2026-09-14T15:00:00+00:00",
+              "observationId": "8258",
+              "publicationId": "2026/09/14/2027-oscar-predictions@d734100d26e9d20b",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+            }
+          ],
+          "applicableSourceCount": 5
+        }
+      ]
+    },
+    {
+      "id": "periodic-oscars-2027-actress-nomination-2026-09-29-61b770834156",
+      "categoryId": "actress",
+      "cutoffAt": "2026-09-29T18:33:34.258+00:00",
+      "contentHash": "61b770834156962f53a70a79956c0020702ea64976adff729f2d3f3dae1bb09b",
+      "orderedSources": 3,
+      "coverageSources": 5,
+      "candidates": 20,
+      "included": 40,
+      "excluded": 9,
+      "sources": [
+        {
+          "id": "awards-daily",
+          "publishedAt": "2026-09-25T00:00:00+00:00",
+          "listLength": null,
+          "ordered": 0,
+          "selected": 5
+        },
+        {
+          "id": "awards-radar",
+          "publishedAt": "2026-09-23T00:00:00+00:00",
+          "listLength": 20,
+          "ordered": 20,
+          "selected": 0
+        },
+        {
+          "id": "awardswatch",
+          "publishedAt": "2026-09-17T20:26:16+00:00",
+          "listLength": null,
+          "ordered": 0,
+          "selected": 5
+        },
+        {
+          "id": "next-best-picture",
+          "publishedAt": null,
+          "freshnessAt": "2026-09-17T04:17:27.438+00:00",
+          "listLength": 5,
+          "ordered": 5,
+          "selected": 0
+        },
+        {
+          "id": "the-movie-state",
+          "publishedAt": "2026-09-14T15:00:00+00:00",
+          "listLength": 5,
+          "ordered": 5,
+          "selected": 0
+        }
+      ],
+      "top": [
+        {
+          "id": "candidate-fa63ef28c6bf8f7b638095b7",
+          "film": {
+            "id": "the-debut",
+            "title": "The Debut"
+          },
+          "label": "Julianne Moore — The Debut",
+          "score": 1,
+          "people": [
+            {
+              "id": "tmdb-1231",
+              "name": "Julianne Moore",
+              "role": "Mona Friedman",
+              "displayOrder": 0
+            }
+          ],
+          "coverage": 1,
+          "meanRank": 1,
+          "movement": null,
+          "position": 1,
+          "seasonId": "oscars-2027",
+          "workTitle": null,
+          "categoryId": "actress",
+          "medianRank": 1,
+          "appearances": 5,
+          "candidateId": "candidate-fa63ef28c6bf8f7b638095b7",
+          "topFiveCount": 3,
+          "scoreOutOf100": 100,
+          "firstPlaceCount": 3,
+          "orderedSourceCount": 3,
+          "sourceContributions": [
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awards-daily",
+              "listLength": 0,
+              "sourceName": "Awards Daily",
+              "publishedAt": "2026-09-25T00:00:00+00:00",
+              "observationId": "8144",
+              "publicationId": "2026/09/25/2027-oscar-predictions-best-actress-is-wide-open@dda884933eb6560e",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://www.awardsdaily.com/2026/09/25/2027-oscar-predictions-best-actress-is-wide-open/"
+            },
+            {
+              "rank": 1,
+              "points": 1,
+              "appeared": true,
+              "sourceId": "awards-radar",
+              "listLength": 20,
+              "sourceName": "Awards Radar",
+              "publishedAt": "2026-09-23T00:00:00+00:00",
+              "observationId": "8417",
+              "publicationId": "best-actress@41c92df9266aa05a",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardsradar.com/best-actress/"
+            },
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awardswatch",
+              "listLength": 0,
+              "sourceName": "AwardsWatch",
+              "publishedAt": "2026-09-17T20:26:16+00:00",
+              "observationId": "8154",
+              "publicationId": "2027-oscar-predictions-best-actor-and-best-actress-september@cc078d201f13e171",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-best-actor-and-best-actress-september/"
+            },
+            {
+              "rank": 1,
+              "points": 1,
+              "appeared": true,
+              "sourceId": "next-best-picture",
+              "listLength": 5,
+              "sourceName": "Next Best Picture",
+              "publishedAt": null,
+              "observationId": "8286",
+              "publicationId": "u/655756da85df4c0efaa10bd2/oscars@8dedc6cfb323d86a",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+            },
+            {
+              "rank": 1,
+              "points": 1,
+              "appeared": true,
+              "sourceId": "the-movie-state",
+              "listLength": 5,
+              "sourceName": "The Movie State",
+              "publishedAt": "2026-09-14T15:00:00+00:00",
+              "observationId": "8252",
+              "publicationId": "2026/09/14/2027-oscar-predictions@d734100d26e9d20b",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+            }
+          ],
+          "applicableSourceCount": 5
+        },
+        {
+          "id": "candidate-a2c94414e8066719e516abf5",
+          "film": {
+            "id": "obsession",
+            "title": "Obsession"
+          },
+          "label": "Inde Navarrette — Obsession",
+          "score": 0.8,
+          "people": [
+            {
+              "id": "tmdb-2638587",
+              "name": "Inde Navarrette",
+              "role": "Nikki",
+              "displayOrder": 0
+            }
+          ],
+          "coverage": 0.8,
+          "meanRank": 3,
+          "movement": null,
+          "position": 2,
+          "seasonId": "oscars-2027",
+          "workTitle": null,
+          "categoryId": "actress",
+          "medianRank": 2,
+          "appearances": 4,
+          "candidateId": "candidate-a2c94414e8066719e516abf5",
+          "topFiveCount": 3,
+          "scoreOutOf100": 80,
+          "firstPlaceCount": 0,
+          "orderedSourceCount": 3,
+          "sourceContributions": [
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awards-daily",
+              "listLength": 0,
+              "sourceName": "Awards Daily",
+              "publishedAt": "2026-09-25T00:00:00+00:00",
+              "observationId": "8143",
+              "publicationId": "2026/09/25/2027-oscar-predictions-best-actress-is-wide-open@dda884933eb6560e",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://www.awardsdaily.com/2026/09/25/2027-oscar-predictions-best-actress-is-wide-open/"
+            },
+            {
+              "rank": 5,
+              "points": 0.8,
+              "appeared": true,
+              "sourceId": "awards-radar",
+              "listLength": 20,
+              "sourceName": "Awards Radar",
+              "publishedAt": "2026-09-23T00:00:00+00:00",
+              "observationId": "8419",
+              "publicationId": "best-actress@41c92df9266aa05a",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardsradar.com/best-actress/"
+            },
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": false,
+              "sourceId": "awardswatch",
+              "listLength": 0,
+              "sourceName": "AwardsWatch",
+              "publishedAt": "2026-09-17T20:26:16+00:00",
+              "observationId": null,
+              "publicationId": "2027-oscar-predictions-best-actor-and-best-actress-september@cc078d201f13e171",
+              "appearanceKind": "absent",
+              "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-best-actor-and-best-actress-september/"
+            },
+            {
+              "rank": 2,
+              "points": 0.8,
+              "appeared": true,
+              "sourceId": "next-best-picture",
+              "listLength": 5,
+              "sourceName": "Next Best Picture",
+              "publishedAt": null,
+              "observationId": "8288",
+              "publicationId": "u/655756da85df4c0efaa10bd2/oscars@8dedc6cfb323d86a",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+            },
+            {
+              "rank": 2,
+              "points": 0.8,
+              "appeared": true,
+              "sourceId": "the-movie-state",
+              "listLength": 5,
+              "sourceName": "The Movie State",
+              "publishedAt": "2026-09-14T15:00:00+00:00",
+              "observationId": "8254",
+              "publicationId": "2026/09/14/2027-oscar-predictions@d734100d26e9d20b",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+            }
+          ],
+          "applicableSourceCount": 5
+        },
+        {
+          "id": "candidate-156dc2c2f5ad3985219909d4",
+          "film": {
+            "id": "rose-2026",
+            "title": "Rose"
+          },
+          "label": "Sandra Hüller — Rose",
+          "score": 0.616666666667,
+          "people": [
+            {
+              "id": "tmdb-7152",
+              "name": "Sandra Hüller",
+              "role": "Rose",
+              "displayOrder": 0
+            }
+          ],
+          "coverage": 0.8,
+          "meanRank": 3.6666666666666665,
+          "movement": null,
+          "position": 3,
+          "seasonId": "oscars-2027",
+          "workTitle": null,
+          "categoryId": "actress",
+          "medianRank": 4,
+          "appearances": 4,
+          "candidateId": "candidate-156dc2c2f5ad3985219909d4",
+          "topFiveCount": 3,
+          "scoreOutOf100": 61.666666666699996,
+          "firstPlaceCount": 0,
+          "orderedSourceCount": 3,
+          "sourceContributions": [
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": false,
+              "sourceId": "awards-daily",
+              "listLength": 0,
+              "sourceName": "Awards Daily",
+              "publishedAt": "2026-09-25T00:00:00+00:00",
+              "observationId": null,
+              "publicationId": "2026/09/25/2027-oscar-predictions-best-actress-is-wide-open@dda884933eb6560e",
+              "appearanceKind": "absent",
+              "publicationUrl": "https://www.awardsdaily.com/2026/09/25/2027-oscar-predictions-best-actress-is-wide-open/"
+            },
+            {
+              "rank": 4,
+              "points": 0.85,
+              "appeared": true,
+              "sourceId": "awards-radar",
+              "listLength": 20,
+              "sourceName": "Awards Radar",
+              "publishedAt": "2026-09-23T00:00:00+00:00",
+              "observationId": "8416",
+              "publicationId": "best-actress@41c92df9266aa05a",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardsradar.com/best-actress/"
+            },
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awardswatch",
+              "listLength": 0,
+              "sourceName": "AwardsWatch",
+              "publishedAt": "2026-09-17T20:26:16+00:00",
+              "observationId": "8150",
+              "publicationId": "2027-oscar-predictions-best-actor-and-best-actress-september@cc078d201f13e171",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-best-actor-and-best-actress-september/"
+            },
+            {
+              "rank": 3,
+              "points": 0.6,
+              "appeared": true,
+              "sourceId": "next-best-picture",
+              "listLength": 5,
+              "sourceName": "Next Best Picture",
+              "publishedAt": null,
+              "observationId": "8289",
+              "publicationId": "u/655756da85df4c0efaa10bd2/oscars@8dedc6cfb323d86a",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+            },
+            {
+              "rank": 4,
+              "points": 0.4,
+              "appeared": true,
+              "sourceId": "the-movie-state",
+              "listLength": 5,
+              "sourceName": "The Movie State",
+              "publishedAt": "2026-09-14T15:00:00+00:00",
+              "observationId": "8256",
+              "publicationId": "2026/09/14/2027-oscar-predictions@d734100d26e9d20b",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+            }
+          ],
+          "applicableSourceCount": 5
+        }
+      ]
+    },
+    {
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-09-29-63f93d804e38",
+      "categoryId": "adapted-screenplay",
+      "cutoffAt": "2026-09-29T18:33:34.258+00:00",
+      "contentHash": "63f93d804e38f642a4060b31cb8f369ff2ee9fa95e5b6b31cd1fabb0bb4ac75f",
+      "orderedSources": 3,
+      "coverageSources": 5,
+      "candidates": 20,
+      "included": 40,
+      "excluded": 10,
+      "sources": [
+        {
+          "id": "awards-daily",
+          "publishedAt": "2026-09-25T00:00:00+00:00",
+          "listLength": null,
+          "ordered": 0,
+          "selected": 5
+        },
+        {
+          "id": "awards-radar",
+          "publishedAt": "2026-09-23T00:00:00+00:00",
+          "listLength": 20,
+          "ordered": 20,
+          "selected": 0
+        },
+        {
+          "id": "awardswatch",
+          "publishedAt": "2026-09-21T19:01:01+00:00",
+          "listLength": null,
+          "ordered": 0,
+          "selected": 5
+        },
+        {
+          "id": "next-best-picture",
+          "publishedAt": null,
+          "freshnessAt": "2026-09-24T04:17:18.503+00:00",
+          "listLength": 5,
+          "ordered": 5,
+          "selected": 0
+        },
+        {
+          "id": "the-movie-state",
+          "publishedAt": "2026-09-14T15:00:00+00:00",
+          "listLength": 5,
+          "ordered": 5,
+          "selected": 0
+        }
+      ],
+      "top": [
+        {
+          "id": "candidate-f1f163b87d4f6f4f5a01f34a",
+          "film": {
+            "id": "la-bola-negra",
+            "title": "La Bola Negra"
+          },
+          "label": "La Bola Negra",
+          "score": 0.966666666667,
+          "people": [
+            {
+              "id": "tmdb-1443615",
+              "name": "Javier Calvo",
+              "role": "Writer",
+              "displayOrder": 0
+            },
+            {
+              "id": "tmdb-95606",
+              "name": "Javier Ambrossi",
+              "role": "Writer",
+              "displayOrder": 1
+            }
+          ],
+          "coverage": 1,
+          "meanRank": 1.6666666666666667,
+          "movement": null,
+          "position": 1,
+          "seasonId": "oscars-2027",
+          "workTitle": null,
+          "categoryId": "adapted-screenplay",
+          "medianRank": 1,
+          "appearances": 5,
+          "candidateId": "candidate-f1f163b87d4f6f4f5a01f34a",
+          "topFiveCount": 3,
+          "scoreOutOf100": 96.6666666667,
+          "firstPlaceCount": 2,
+          "orderedSourceCount": 3,
+          "sourceContributions": [
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awards-daily",
+              "listLength": 0,
+              "sourceName": "Awards Daily",
+              "publishedAt": "2026-09-25T00:00:00+00:00",
+              "observationId": "8167",
+              "publicationId": "2026/09/25/2027-oscar-predictions-best-actress-is-wide-open@dda884933eb6560e",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://www.awardsdaily.com/2026/09/25/2027-oscar-predictions-best-actress-is-wide-open/"
+            },
+            {
+              "rank": 3,
+              "points": 0.9,
+              "appeared": true,
+              "sourceId": "awards-radar",
+              "listLength": 20,
+              "sourceName": "Awards Radar",
+              "publishedAt": "2026-09-23T00:00:00+00:00",
+              "observationId": "8494",
+              "publicationId": "best-adapted-screenplay@0fce3a37e1764e8b",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardsradar.com/best-adapted-screenplay/"
+            },
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awardswatch",
+              "listLength": 0,
+              "sourceName": "AwardsWatch",
+              "publishedAt": "2026-09-21T19:01:01+00:00",
+              "observationId": "8223",
+              "publicationId": "2027-oscar-predictions-adapted-screenplay-and-original-screenplay-september@a2f146df74f823dc",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-adapted-screenplay-and-original-screenplay-september/"
+            },
+            {
+              "rank": 1,
+              "points": 1,
+              "appeared": true,
+              "sourceId": "next-best-picture",
+              "listLength": 5,
+              "sourceName": "Next Best Picture",
+              "publishedAt": null,
+              "observationId": "8306",
+              "publicationId": "u/655756da85df4c0efaa10bd2/oscars@8dedc6cfb323d86a",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+            },
+            {
+              "rank": 1,
+              "points": 1,
+              "appeared": true,
+              "sourceId": "the-movie-state",
+              "listLength": 5,
+              "sourceName": "The Movie State",
+              "publishedAt": "2026-09-14T15:00:00+00:00",
+              "observationId": "8247",
+              "publicationId": "2026/09/14/2027-oscar-predictions@d734100d26e9d20b",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+            }
+          ],
+          "applicableSourceCount": 5
+        },
+        {
+          "id": "candidate-5e3690bf1da26f787cd2e8dc",
+          "film": {
+            "id": "the-odyssey",
+            "title": "The Odyssey"
+          },
+          "label": "The Odyssey",
+          "score": 0.716666666667,
+          "people": [
+            {
+              "id": "tmdb-525",
+              "name": "Christopher Nolan",
+              "role": "Writer",
+              "displayOrder": 0
+            }
+          ],
+          "coverage": 1,
+          "meanRank": 2.6666666666666665,
+          "movement": null,
+          "position": 2,
+          "seasonId": "oscars-2027",
+          "workTitle": null,
+          "categoryId": "adapted-screenplay",
+          "medianRank": 2,
+          "appearances": 5,
+          "candidateId": "candidate-5e3690bf1da26f787cd2e8dc",
+          "topFiveCount": 3,
+          "scoreOutOf100": 71.6666666667,
+          "firstPlaceCount": 0,
+          "orderedSourceCount": 3,
+          "sourceContributions": [
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awards-daily",
+              "listLength": 0,
+              "sourceName": "Awards Daily",
+              "publishedAt": "2026-09-25T00:00:00+00:00",
+              "observationId": "8175",
+              "publicationId": "2026/09/25/2027-oscar-predictions-best-actress-is-wide-open@dda884933eb6560e",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://www.awardsdaily.com/2026/09/25/2027-oscar-predictions-best-actress-is-wide-open/"
+            },
+            {
+              "rank": 2,
+              "points": 0.95,
+              "appeared": true,
+              "sourceId": "awards-radar",
+              "listLength": 20,
+              "sourceName": "Awards Radar",
+              "publishedAt": "2026-09-23T00:00:00+00:00",
+              "observationId": "8496",
+              "publicationId": "best-adapted-screenplay@0fce3a37e1764e8b",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardsradar.com/best-adapted-screenplay/"
+            },
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awardswatch",
+              "listLength": 0,
+              "sourceName": "AwardsWatch",
+              "publishedAt": "2026-09-21T19:01:01+00:00",
+              "observationId": "8224",
+              "publicationId": "2027-oscar-predictions-adapted-screenplay-and-original-screenplay-september@a2f146df74f823dc",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-adapted-screenplay-and-original-screenplay-september/"
+            },
+            {
+              "rank": 2,
+              "points": 0.8,
+              "appeared": true,
+              "sourceId": "next-best-picture",
+              "listLength": 5,
+              "sourceName": "Next Best Picture",
+              "publishedAt": null,
+              "observationId": "8308",
+              "publicationId": "u/655756da85df4c0efaa10bd2/oscars@8dedc6cfb323d86a",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+            },
+            {
+              "rank": 4,
+              "points": 0.4,
+              "appeared": true,
+              "sourceId": "the-movie-state",
+              "listLength": 5,
+              "sourceName": "The Movie State",
+              "publishedAt": "2026-09-14T15:00:00+00:00",
+              "observationId": "8250",
+              "publicationId": "2026/09/14/2027-oscar-predictions@d734100d26e9d20b",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+            }
+          ],
+          "applicableSourceCount": 5
+        },
+        {
+          "id": "candidate-abb57b448339dd33f8a93ea6",
+          "film": {
+            "id": "all-of-a-sudden",
+            "title": "All of a Sudden"
+          },
+          "label": "All of a Sudden",
+          "score": 0.633333333333,
+          "people": [
+            {
+              "id": "tmdb-1487492",
+              "name": "Ryusuke Hamaguchi",
+              "role": "Screenplay",
+              "displayOrder": 0
+            },
+            {
+              "id": "tmdb-2081858",
+              "name": "Léa Le Dimna",
+              "role": "Screenplay",
+              "displayOrder": 1
+            }
+          ],
+          "coverage": 0.8,
+          "meanRank": 5.333333333333333,
+          "movement": null,
+          "position": 3,
+          "seasonId": "oscars-2027",
+          "workTitle": null,
+          "categoryId": "adapted-screenplay",
+          "medianRank": 3,
+          "appearances": 4,
+          "candidateId": "candidate-abb57b448339dd33f8a93ea6",
+          "topFiveCount": 2,
+          "scoreOutOf100": 63.333333333300004,
+          "firstPlaceCount": 0,
+          "orderedSourceCount": 3,
+          "sourceContributions": [
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": false,
+              "sourceId": "awards-daily",
+              "listLength": 0,
+              "sourceName": "Awards Daily",
+              "publishedAt": "2026-09-25T00:00:00+00:00",
+              "observationId": null,
+              "publicationId": "2026/09/25/2027-oscar-predictions-best-actress-is-wide-open@dda884933eb6560e",
+              "appearanceKind": "absent",
+              "publicationUrl": "https://www.awardsdaily.com/2026/09/25/2027-oscar-predictions-best-actress-is-wide-open/"
+            },
+            {
+              "rank": 11,
+              "points": 0.5,
+              "appeared": true,
+              "sourceId": "awards-radar",
+              "listLength": 20,
+              "sourceName": "Awards Radar",
+              "publishedAt": "2026-09-23T00:00:00+00:00",
+              "observationId": "8505",
+              "publicationId": "best-adapted-screenplay@0fce3a37e1764e8b",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardsradar.com/best-adapted-screenplay/"
+            },
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awardswatch",
+              "listLength": 0,
+              "sourceName": "AwardsWatch",
+              "publishedAt": "2026-09-21T19:01:01+00:00",
+              "observationId": "8226",
+              "publicationId": "2027-oscar-predictions-adapted-screenplay-and-original-screenplay-september@a2f146df74f823dc",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-adapted-screenplay-and-original-screenplay-september/"
+            },
+            {
+              "rank": 3,
+              "points": 0.6,
+              "appeared": true,
+              "sourceId": "next-best-picture",
+              "listLength": 5,
+              "sourceName": "Next Best Picture",
+              "publishedAt": null,
+              "observationId": "8309",
+              "publicationId": "u/655756da85df4c0efaa10bd2/oscars@8dedc6cfb323d86a",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+            },
+            {
+              "rank": 2,
+              "points": 0.8,
+              "appeared": true,
+              "sourceId": "the-movie-state",
+              "listLength": 5,
+              "sourceName": "The Movie State",
+              "publishedAt": "2026-09-14T15:00:00+00:00",
+              "observationId": "8248",
+              "publicationId": "2026/09/14/2027-oscar-predictions@d734100d26e9d20b",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+            }
+          ],
+          "applicableSourceCount": 5
+        }
+      ]
+    },
+    {
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-09-29-6d08df0e2aac",
+      "categoryId": "best-picture",
+      "cutoffAt": "2026-09-29T18:33:34.258+00:00",
+      "contentHash": "6d08df0e2aace04b18bac12d570723ae8c5b528b0041b3434442376e9fbb039e",
+      "orderedSources": 4,
+      "coverageSources": 5,
+      "candidates": 50,
+      "included": 95,
+      "excluded": 18,
+      "sources": [
+        {
+          "id": "awards-daily",
+          "publishedAt": "2026-09-25T00:00:00+00:00",
+          "listLength": null,
+          "ordered": 0,
+          "selected": 10
+        },
+        {
+          "id": "awards-radar",
+          "publishedAt": "2026-09-23T00:00:00+00:00",
+          "listLength": 50,
+          "ordered": 50,
+          "selected": 0
+        },
+        {
+          "id": "awardswatch",
+          "publishedAt": "2026-09-17T17:11:32+00:00",
+          "listLength": 15,
+          "ordered": 15,
+          "selected": 0
+        },
+        {
+          "id": "next-best-picture",
+          "publishedAt": null,
+          "freshnessAt": "2026-09-28T04:17:15.61+00:00",
+          "listLength": 10,
+          "ordered": 10,
+          "selected": 0
+        },
+        {
+          "id": "the-movie-state",
+          "publishedAt": "2026-09-14T15:00:00+00:00",
+          "listLength": 10,
+          "ordered": 10,
+          "selected": 0
+        }
+      ],
+      "top": [
+        {
+          "id": "candidate-a595d8220baf9d4cf7c0f838",
+          "film": {
+            "id": "the-odyssey",
+            "title": "The Odyssey"
+          },
+          "label": "The Odyssey",
+          "score": 0.975,
+          "people": [],
+          "coverage": 1,
+          "meanRank": 1.25,
+          "movement": null,
+          "position": 1,
+          "seasonId": "oscars-2027",
+          "workTitle": null,
+          "categoryId": "best-picture",
+          "medianRank": 1,
+          "appearances": 5,
+          "candidateId": "candidate-a595d8220baf9d4cf7c0f838",
+          "topFiveCount": 4,
+          "scoreOutOf100": 97.5,
+          "firstPlaceCount": 3,
+          "orderedSourceCount": 4,
+          "sourceContributions": [
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awards-daily",
+              "listLength": 0,
+              "sourceName": "Awards Daily",
+              "publishedAt": "2026-09-25T00:00:00+00:00",
+              "observationId": "8113",
+              "publicationId": "2026/09/25/2027-oscar-predictions-best-actress-is-wide-open@dda884933eb6560e",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://www.awardsdaily.com/2026/09/25/2027-oscar-predictions-best-actress-is-wide-open/"
+            },
+            {
+              "rank": 1,
+              "points": 1,
+              "appeared": true,
+              "sourceId": "awards-radar",
+              "listLength": 50,
+              "sourceName": "Awards Radar",
+              "publishedAt": "2026-09-23T00:00:00+00:00",
+              "observationId": "8327",
+              "publicationId": "best-picture@13c5d6d2914ff1f6",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardsradar.com/best-picture/"
+            },
+            {
+              "rank": 1,
+              "points": 1,
+              "appeared": true,
+              "sourceId": "awardswatch",
+              "listLength": 15,
+              "sourceName": "AwardsWatch",
+              "publishedAt": "2026-09-17T17:11:32+00:00",
+              "observationId": "8095",
+              "publicationId": "2027-oscar-predictions-best-picture-and-best-director-september@6045bbb8240685b5",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-best-picture-and-best-director-september/"
+            },
+            {
+              "rank": 2,
+              "points": 0.9,
+              "appeared": true,
+              "sourceId": "next-best-picture",
+              "listLength": 10,
+              "sourceName": "Next Best Picture",
+              "publishedAt": null,
+              "observationId": "8275",
+              "publicationId": "u/655756da85df4c0efaa10bd2/oscars@8dedc6cfb323d86a",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+            },
+            {
+              "rank": 1,
+              "points": 1,
+              "appeared": true,
+              "sourceId": "the-movie-state",
+              "listLength": 10,
+              "sourceName": "The Movie State",
+              "publishedAt": "2026-09-14T15:00:00+00:00",
+              "observationId": "8230",
+              "publicationId": "2026/09/14/2027-oscar-predictions@d734100d26e9d20b",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+            }
+          ],
+          "applicableSourceCount": 5
+        },
+        {
+          "id": "candidate-e0b8b3ff52f397536b50d1a4",
+          "film": {
+            "id": "la-bola-negra",
+            "title": "La Bola Negra"
+          },
+          "label": "La Bola Negra",
+          "score": 0.953333333333,
+          "people": [],
+          "coverage": 1,
+          "meanRank": 1.75,
+          "movement": null,
+          "position": 2,
+          "seasonId": "oscars-2027",
+          "workTitle": null,
+          "categoryId": "best-picture",
+          "medianRank": 2,
+          "appearances": 5,
+          "candidateId": "candidate-e0b8b3ff52f397536b50d1a4",
+          "topFiveCount": 4,
+          "scoreOutOf100": 95.33333333329999,
+          "firstPlaceCount": 1,
+          "orderedSourceCount": 4,
+          "sourceContributions": [
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awards-daily",
+              "listLength": 0,
+              "sourceName": "Awards Daily",
+              "publishedAt": "2026-09-25T00:00:00+00:00",
+              "observationId": "8115",
+              "publicationId": "2026/09/25/2027-oscar-predictions-best-actress-is-wide-open@dda884933eb6560e",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://www.awardsdaily.com/2026/09/25/2027-oscar-predictions-best-actress-is-wide-open/"
+            },
+            {
+              "rank": 2,
+              "points": 0.98,
+              "appeared": true,
+              "sourceId": "awards-radar",
+              "listLength": 50,
+              "sourceName": "Awards Radar",
+              "publishedAt": "2026-09-23T00:00:00+00:00",
+              "observationId": "8324",
+              "publicationId": "best-picture@13c5d6d2914ff1f6",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardsradar.com/best-picture/"
+            },
+            {
+              "rank": 2,
+              "points": 0.933333333333,
+              "appeared": true,
+              "sourceId": "awardswatch",
+              "listLength": 15,
+              "sourceName": "AwardsWatch",
+              "publishedAt": "2026-09-17T17:11:32+00:00",
+              "observationId": "8093",
+              "publicationId": "2027-oscar-predictions-best-picture-and-best-director-september@6045bbb8240685b5",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-best-picture-and-best-director-september/"
+            },
+            {
+              "rank": 1,
+              "points": 1,
+              "appeared": true,
+              "sourceId": "next-best-picture",
+              "listLength": 10,
+              "sourceName": "Next Best Picture",
+              "publishedAt": null,
+              "observationId": "8272",
+              "publicationId": "u/655756da85df4c0efaa10bd2/oscars@8dedc6cfb323d86a",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+            },
+            {
+              "rank": 2,
+              "points": 0.9,
+              "appeared": true,
+              "sourceId": "the-movie-state",
+              "listLength": 10,
+              "sourceName": "The Movie State",
+              "publishedAt": "2026-09-14T15:00:00+00:00",
+              "observationId": "8229",
+              "publicationId": "2026/09/14/2027-oscar-predictions@d734100d26e9d20b",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+            }
+          ],
+          "applicableSourceCount": 5
+        },
+        {
+          "id": "candidate-32ce1079a8199dfba98305b8",
+          "film": {
+            "id": "wild-horse-nine",
+            "title": "Wild Horse Nine"
+          },
+          "label": "Wild Horse Nine",
+          "score": 0.856666666667,
+          "people": [],
+          "coverage": 1,
+          "meanRank": 3,
+          "movement": null,
+          "position": 3,
+          "seasonId": "oscars-2027",
+          "workTitle": null,
+          "categoryId": "best-picture",
+          "medianRank": 3,
+          "appearances": 5,
+          "candidateId": "candidate-32ce1079a8199dfba98305b8",
+          "topFiveCount": 4,
+          "scoreOutOf100": 85.6666666667,
+          "firstPlaceCount": 0,
+          "orderedSourceCount": 4,
+          "sourceContributions": [
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awards-daily",
+              "listLength": 0,
+              "sourceName": "Awards Daily",
+              "publishedAt": "2026-09-25T00:00:00+00:00",
+              "observationId": "8118",
+              "publicationId": "2026/09/25/2027-oscar-predictions-best-actress-is-wide-open@dda884933eb6560e",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://www.awardsdaily.com/2026/09/25/2027-oscar-predictions-best-actress-is-wide-open/"
+            },
+            {
+              "rank": 3,
+              "points": 0.96,
+              "appeared": true,
+              "sourceId": "awards-radar",
+              "listLength": 50,
+              "sourceName": "Awards Radar",
+              "publishedAt": "2026-09-23T00:00:00+00:00",
+              "observationId": "8325",
+              "publicationId": "best-picture@13c5d6d2914ff1f6",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardsradar.com/best-picture/"
+            },
+            {
+              "rank": 3,
+              "points": 0.866666666667,
+              "appeared": true,
+              "sourceId": "awardswatch",
+              "listLength": 15,
+              "sourceName": "AwardsWatch",
+              "publishedAt": "2026-09-17T17:11:32+00:00",
+              "observationId": "8097",
+              "publicationId": "2027-oscar-predictions-best-picture-and-best-director-september@6045bbb8240685b5",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-best-picture-and-best-director-september/"
+            },
+            {
+              "rank": 3,
+              "points": 0.8,
+              "appeared": true,
+              "sourceId": "next-best-picture",
+              "listLength": 10,
+              "sourceName": "Next Best Picture",
+              "publishedAt": null,
+              "observationId": "8273",
+              "publicationId": "u/655756da85df4c0efaa10bd2/oscars@8dedc6cfb323d86a",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+            },
+            {
+              "rank": 3,
+              "points": 0.8,
+              "appeared": true,
+              "sourceId": "the-movie-state",
+              "listLength": 10,
+              "sourceName": "The Movie State",
+              "publishedAt": "2026-09-14T15:00:00+00:00",
+              "observationId": "8231",
+              "publicationId": "2026/09/14/2027-oscar-predictions@d734100d26e9d20b",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+            }
+          ],
+          "applicableSourceCount": 5
+        }
+      ]
+    },
+    {
+      "id": "periodic-oscars-2027-directing-nomination-2026-09-29-f786afcba546",
+      "categoryId": "directing",
+      "cutoffAt": "2026-09-29T18:33:34.258+00:00",
+      "contentHash": "f786afcba5461a824df09fd748719a0c7dcc742a9f48b9736967fab2d1333c97",
+      "orderedSources": 4,
+      "coverageSources": 5,
+      "candidates": 23,
+      "included": 45,
+      "excluded": 10,
+      "sources": [
+        {
+          "id": "awards-daily",
+          "publishedAt": "2026-09-25T00:00:00+00:00",
+          "listLength": null,
+          "ordered": 0,
+          "selected": 5
+        },
+        {
+          "id": "awards-radar",
+          "publishedAt": "2026-09-23T00:00:00+00:00",
+          "listLength": 20,
+          "ordered": 20,
+          "selected": 0
+        },
+        {
+          "id": "awardswatch",
+          "publishedAt": "2026-09-17T17:11:32+00:00",
+          "listLength": 10,
+          "ordered": 10,
+          "selected": 0
+        },
+        {
+          "id": "next-best-picture",
+          "publishedAt": null,
+          "freshnessAt": "2026-09-17T04:17:27.438+00:00",
+          "listLength": 5,
+          "ordered": 5,
+          "selected": 0
+        },
+        {
+          "id": "the-movie-state",
+          "publishedAt": "2026-09-14T15:00:00+00:00",
+          "listLength": 5,
+          "ordered": 5,
+          "selected": 0
+        }
+      ],
+      "top": [
+        {
+          "id": "candidate-0de0f421107f9186e4986bc0",
+          "film": {
+            "id": "the-odyssey",
+            "title": "The Odyssey"
+          },
+          "label": "Christopher Nolan — The Odyssey",
+          "score": 0.95,
+          "people": [
+            {
+              "id": "tmdb-525",
+              "name": "Christopher Nolan",
+              "role": "Director",
+              "displayOrder": 0
+            }
+          ],
+          "coverage": 1,
+          "meanRank": 1.25,
+          "movement": null,
+          "position": 1,
+          "seasonId": "oscars-2027",
+          "workTitle": null,
+          "categoryId": "directing",
+          "medianRank": 1,
+          "appearances": 5,
+          "candidateId": "candidate-0de0f421107f9186e4986bc0",
+          "topFiveCount": 4,
+          "scoreOutOf100": 95,
+          "firstPlaceCount": 3,
+          "orderedSourceCount": 4,
+          "sourceContributions": [
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awards-daily",
+              "listLength": 0,
+              "sourceName": "Awards Daily",
+              "publishedAt": "2026-09-25T00:00:00+00:00",
+              "observationId": "8127",
+              "publicationId": "2026/09/25/2027-oscar-predictions-best-actress-is-wide-open@dda884933eb6560e",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://www.awardsdaily.com/2026/09/25/2027-oscar-predictions-best-actress-is-wide-open/"
+            },
+            {
+              "rank": 1,
+              "points": 1,
+              "appeared": true,
+              "sourceId": "awards-radar",
+              "listLength": 20,
+              "sourceName": "Awards Radar",
+              "publishedAt": "2026-09-23T00:00:00+00:00",
+              "observationId": "8374",
+              "publicationId": "best-director@f41d8acd4b992586",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardsradar.com/best-director/"
+            },
+            {
+              "rank": 1,
+              "points": 1,
+              "appeared": true,
+              "sourceId": "awardswatch",
+              "listLength": 10,
+              "sourceName": "AwardsWatch",
+              "publishedAt": "2026-09-17T17:11:32+00:00",
+              "observationId": "8109",
+              "publicationId": "2027-oscar-predictions-best-picture-and-best-director-september@207be6100ab793cd",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-best-picture-and-best-director-september/"
+            },
+            {
+              "rank": 2,
+              "points": 0.8,
+              "appeared": true,
+              "sourceId": "next-best-picture",
+              "listLength": 5,
+              "sourceName": "Next Best Picture",
+              "publishedAt": null,
+              "observationId": "8283",
+              "publicationId": "u/655756da85df4c0efaa10bd2/oscars@8dedc6cfb323d86a",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+            },
+            {
+              "rank": 1,
+              "points": 1,
+              "appeared": true,
+              "sourceId": "the-movie-state",
+              "listLength": 5,
+              "sourceName": "The Movie State",
+              "publishedAt": "2026-09-14T15:00:00+00:00",
+              "observationId": "8237",
+              "publicationId": "2026/09/14/2027-oscar-predictions@d734100d26e9d20b",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+            }
+          ],
+          "applicableSourceCount": 5
+        },
+        {
+          "id": "candidate-c5df046000e71a85fc6c3d50",
+          "film": {
+            "id": "la-bola-negra",
+            "title": "La Bola Negra"
+          },
+          "label": "Javier Calvo, Javier Ambrossi — La Bola Negra",
+          "score": 0.9125,
+          "people": [
+            {
+              "id": "tmdb-95606",
+              "name": "Javier Ambrossi",
+              "role": "Director",
+              "displayOrder": 0
+            },
+            {
+              "id": "tmdb-1443615",
+              "name": "Javier Calvo",
+              "role": "Director",
+              "displayOrder": 1
+            }
+          ],
+          "coverage": 1,
+          "meanRank": 1.75,
+          "movement": null,
+          "position": 2,
+          "seasonId": "oscars-2027",
+          "workTitle": null,
+          "categoryId": "directing",
+          "medianRank": 2,
+          "appearances": 5,
+          "candidateId": "candidate-c5df046000e71a85fc6c3d50",
+          "topFiveCount": 4,
+          "scoreOutOf100": 91.25,
+          "firstPlaceCount": 1,
+          "orderedSourceCount": 4,
+          "sourceContributions": [
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awards-daily",
+              "listLength": 0,
+              "sourceName": "Awards Daily",
+              "publishedAt": "2026-09-25T00:00:00+00:00",
+              "observationId": "8129",
+              "publicationId": "2026/09/25/2027-oscar-predictions-best-actress-is-wide-open@dda884933eb6560e",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://www.awardsdaily.com/2026/09/25/2027-oscar-predictions-best-actress-is-wide-open/"
+            },
+            {
+              "rank": 2,
+              "points": 0.95,
+              "appeared": true,
+              "sourceId": "awards-radar",
+              "listLength": 20,
+              "sourceName": "Awards Radar",
+              "publishedAt": "2026-09-23T00:00:00+00:00",
+              "observationId": "8375",
+              "publicationId": "best-director@f41d8acd4b992586",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardsradar.com/best-director/"
+            },
+            {
+              "rank": 2,
+              "points": 0.9,
+              "appeared": true,
+              "sourceId": "awardswatch",
+              "listLength": 10,
+              "sourceName": "AwardsWatch",
+              "publishedAt": "2026-09-17T17:11:32+00:00",
+              "observationId": "8110",
+              "publicationId": "2027-oscar-predictions-best-picture-and-best-director-september@207be6100ab793cd",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-best-picture-and-best-director-september/"
+            },
+            {
+              "rank": 1,
+              "points": 1,
+              "appeared": true,
+              "sourceId": "next-best-picture",
+              "listLength": 5,
+              "sourceName": "Next Best Picture",
+              "publishedAt": null,
+              "observationId": "8282",
+              "publicationId": "u/655756da85df4c0efaa10bd2/oscars@8dedc6cfb323d86a",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+            },
+            {
+              "rank": 2,
+              "points": 0.8,
+              "appeared": true,
+              "sourceId": "the-movie-state",
+              "listLength": 5,
+              "sourceName": "The Movie State",
+              "publishedAt": "2026-09-14T15:00:00+00:00",
+              "observationId": "8238",
+              "publicationId": "2026/09/14/2027-oscar-predictions@d734100d26e9d20b",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+            }
+          ],
+          "applicableSourceCount": 5
+        },
+        {
+          "id": "candidate-a50d77500d5920b431906612",
+          "film": {
+            "id": "wild-horse-nine",
+            "title": "Wild Horse Nine"
+          },
+          "label": "Martin McDonagh — Wild Horse Nine",
+          "score": 0.575,
+          "people": [
+            {
+              "id": "tmdb-54472",
+              "name": "Martin McDonagh",
+              "role": "Director",
+              "displayOrder": 0
+            }
+          ],
+          "coverage": 0.8,
+          "meanRank": 3,
+          "movement": null,
+          "position": 3,
+          "seasonId": "oscars-2027",
+          "workTitle": null,
+          "categoryId": "directing",
+          "medianRank": 3,
+          "appearances": 4,
+          "candidateId": "candidate-a50d77500d5920b431906612",
+          "topFiveCount": 3,
+          "scoreOutOf100": 57.49999999999999,
+          "firstPlaceCount": 0,
+          "orderedSourceCount": 4,
+          "sourceContributions": [
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awards-daily",
+              "listLength": 0,
+              "sourceName": "Awards Daily",
+              "publishedAt": "2026-09-25T00:00:00+00:00",
+              "observationId": "8128",
+              "publicationId": "2026/09/25/2027-oscar-predictions-best-actress-is-wide-open@dda884933eb6560e",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://www.awardsdaily.com/2026/09/25/2027-oscar-predictions-best-actress-is-wide-open/"
+            },
+            {
+              "rank": 3,
+              "points": 0.9,
+              "appeared": true,
+              "sourceId": "awards-radar",
+              "listLength": 20,
+              "sourceName": "Awards Radar",
+              "publishedAt": "2026-09-23T00:00:00+00:00",
+              "observationId": "8376",
+              "publicationId": "best-director@f41d8acd4b992586",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardsradar.com/best-director/"
+            },
+            {
+              "rank": 3,
+              "points": 0.8,
+              "appeared": true,
+              "sourceId": "awardswatch",
+              "listLength": 10,
+              "sourceName": "AwardsWatch",
+              "publishedAt": "2026-09-17T17:11:32+00:00",
+              "observationId": "8108",
+              "publicationId": "2027-oscar-predictions-best-picture-and-best-director-september@207be6100ab793cd",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-best-picture-and-best-director-september/"
+            },
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": false,
+              "sourceId": "next-best-picture",
+              "listLength": 5,
+              "sourceName": "Next Best Picture",
+              "publishedAt": null,
+              "observationId": null,
+              "publicationId": "u/655756da85df4c0efaa10bd2/oscars@8dedc6cfb323d86a",
+              "appearanceKind": "absent",
+              "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+            },
+            {
+              "rank": 3,
+              "points": 0.6,
+              "appeared": true,
+              "sourceId": "the-movie-state",
+              "listLength": 5,
+              "sourceName": "The Movie State",
+              "publishedAt": "2026-09-14T15:00:00+00:00",
+              "observationId": "8239",
+              "publicationId": "2026/09/14/2027-oscar-predictions@d734100d26e9d20b",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+            }
+          ],
+          "applicableSourceCount": 5
+        }
+      ]
+    },
+    {
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-09-29-ba2ce9014438",
+      "categoryId": "original-screenplay",
+      "cutoffAt": "2026-09-29T18:33:34.258+00:00",
+      "contentHash": "ba2ce901443880a7124d2da0a9150deb7f7c2c74ae35fc70d80bddb9e2abc1be",
+      "orderedSources": 3,
+      "coverageSources": 5,
+      "candidates": 20,
+      "included": 40,
+      "excluded": 9,
+      "sources": [
+        {
+          "id": "awards-daily",
+          "publishedAt": "2026-09-25T00:00:00+00:00",
+          "listLength": null,
+          "ordered": 0,
+          "selected": 5
+        },
+        {
+          "id": "awards-radar",
+          "publishedAt": "2026-09-23T00:00:00+00:00",
+          "listLength": 20,
+          "ordered": 20,
+          "selected": 0
+        },
+        {
+          "id": "awardswatch",
+          "publishedAt": "2026-09-21T19:01:01+00:00",
+          "listLength": null,
+          "ordered": 0,
+          "selected": 5
+        },
+        {
+          "id": "next-best-picture",
+          "publishedAt": null,
+          "freshnessAt": "2026-09-28T04:17:15.61+00:00",
+          "listLength": 5,
+          "ordered": 5,
+          "selected": 0
+        },
+        {
+          "id": "the-movie-state",
+          "publishedAt": "2026-09-14T15:00:00+00:00",
+          "listLength": 5,
+          "ordered": 5,
+          "selected": 0
+        }
+      ],
+      "top": [
+        {
+          "id": "candidate-021afbd48c45b2395eea60a9",
+          "film": {
+            "id": "wild-horse-nine",
+            "title": "Wild Horse Nine"
+          },
+          "label": "Wild Horse Nine",
+          "score": 1,
+          "people": [
+            {
+              "id": "tmdb-54472",
+              "name": "Martin McDonagh",
+              "role": "Writer",
+              "displayOrder": 0
+            }
+          ],
+          "coverage": 1,
+          "meanRank": 1,
+          "movement": null,
+          "position": 1,
+          "seasonId": "oscars-2027",
+          "workTitle": null,
+          "categoryId": "original-screenplay",
+          "medianRank": 1,
+          "appearances": 5,
+          "candidateId": "candidate-021afbd48c45b2395eea60a9",
+          "topFiveCount": 3,
+          "scoreOutOf100": 100,
+          "firstPlaceCount": 3,
+          "orderedSourceCount": 3,
+          "sourceContributions": [
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awards-daily",
+              "listLength": 0,
+              "sourceName": "Awards Daily",
+              "publishedAt": "2026-09-25T00:00:00+00:00",
+              "observationId": "8160",
+              "publicationId": "2026/09/25/2027-oscar-predictions-best-actress-is-wide-open@dda884933eb6560e",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://www.awardsdaily.com/2026/09/25/2027-oscar-predictions-best-actress-is-wide-open/"
+            },
+            {
+              "rank": 1,
+              "points": 1,
+              "appeared": true,
+              "sourceId": "awards-radar",
+              "listLength": 20,
+              "sourceName": "Awards Radar",
+              "publishedAt": "2026-09-23T00:00:00+00:00",
+              "observationId": "8474",
+              "publicationId": "best-original-screenplay@76f3b6c8325e2823",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardsradar.com/best-original-screenplay/"
+            },
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awardswatch",
+              "listLength": 0,
+              "sourceName": "AwardsWatch",
+              "publishedAt": "2026-09-21T19:01:01+00:00",
+              "observationId": "8211",
+              "publicationId": "2027-oscar-predictions-adapted-screenplay-and-original-screenplay-september@9ebf498c8beac38f",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-adapted-screenplay-and-original-screenplay-september/"
+            },
+            {
+              "rank": 1,
+              "points": 1,
+              "appeared": true,
+              "sourceId": "next-best-picture",
+              "listLength": 5,
+              "sourceName": "Next Best Picture",
+              "publishedAt": null,
+              "observationId": "8312",
+              "publicationId": "u/655756da85df4c0efaa10bd2/oscars@8dedc6cfb323d86a",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+            },
+            {
+              "rank": 1,
+              "points": 1,
+              "appeared": true,
+              "sourceId": "the-movie-state",
+              "listLength": 5,
+              "sourceName": "The Movie State",
+              "publishedAt": "2026-09-14T15:00:00+00:00",
+              "observationId": "8240",
+              "publicationId": "2026/09/14/2027-oscar-predictions@d734100d26e9d20b",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+            }
+          ],
+          "applicableSourceCount": 5
+        },
+        {
+          "id": "candidate-fdabe6f5895506d7cf8e7a9e",
+          "film": {
+            "id": "the-debut",
+            "title": "The Debut"
+          },
+          "label": "The Debut",
+          "score": 0.716666666667,
+          "people": [
+            {
+              "id": "tmdb-44735",
+              "name": "Jesse Eisenberg",
+              "role": "Screenplay",
+              "displayOrder": 0
+            }
+          ],
+          "coverage": 0.8,
+          "meanRank": 2.6666666666666665,
+          "movement": null,
+          "position": 2,
+          "seasonId": "oscars-2027",
+          "workTitle": null,
+          "categoryId": "original-screenplay",
+          "medianRank": 2,
+          "appearances": 4,
+          "candidateId": "candidate-fdabe6f5895506d7cf8e7a9e",
+          "topFiveCount": 3,
+          "scoreOutOf100": 71.6666666667,
+          "firstPlaceCount": 0,
+          "orderedSourceCount": 3,
+          "sourceContributions": [
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": false,
+              "sourceId": "awards-daily",
+              "listLength": 0,
+              "sourceName": "Awards Daily",
+              "publishedAt": "2026-09-25T00:00:00+00:00",
+              "observationId": null,
+              "publicationId": "2026/09/25/2027-oscar-predictions-best-actress-is-wide-open@dda884933eb6560e",
+              "appearanceKind": "absent",
+              "publicationUrl": "https://www.awardsdaily.com/2026/09/25/2027-oscar-predictions-best-actress-is-wide-open/"
+            },
+            {
+              "rank": 2,
+              "points": 0.95,
+              "appeared": true,
+              "sourceId": "awards-radar",
+              "listLength": 20,
+              "sourceName": "Awards Radar",
+              "publishedAt": "2026-09-23T00:00:00+00:00",
+              "observationId": "8477",
+              "publicationId": "best-original-screenplay@76f3b6c8325e2823",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardsradar.com/best-original-screenplay/"
+            },
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awardswatch",
+              "listLength": 0,
+              "sourceName": "AwardsWatch",
+              "publishedAt": "2026-09-21T19:01:01+00:00",
+              "observationId": "8202",
+              "publicationId": "2027-oscar-predictions-adapted-screenplay-and-original-screenplay-september@9ebf498c8beac38f",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-adapted-screenplay-and-original-screenplay-september/"
+            },
+            {
+              "rank": 2,
+              "points": 0.8,
+              "appeared": true,
+              "sourceId": "next-best-picture",
+              "listLength": 5,
+              "sourceName": "Next Best Picture",
+              "publishedAt": null,
+              "observationId": "8311",
+              "publicationId": "u/655756da85df4c0efaa10bd2/oscars@8dedc6cfb323d86a",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+            },
+            {
+              "rank": 4,
+              "points": 0.4,
+              "appeared": true,
+              "sourceId": "the-movie-state",
+              "listLength": 5,
+              "sourceName": "The Movie State",
+              "publishedAt": "2026-09-14T15:00:00+00:00",
+              "observationId": "8246",
+              "publicationId": "2026/09/14/2027-oscar-predictions@d734100d26e9d20b",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+            }
+          ],
+          "applicableSourceCount": 5
+        },
+        {
+          "id": "candidate-66ef20096f2e50078e147d93",
+          "film": {
+            "id": "fjord",
+            "title": "Fjord"
+          },
+          "label": "Fjord",
+          "score": 0.45,
+          "people": [
+            {
+              "id": "tmdb-20657",
+              "name": "Cristian Mungiu",
+              "role": "Writer",
+              "displayOrder": 0
+            }
+          ],
+          "coverage": 0.8,
+          "meanRank": 4.5,
+          "movement": null,
+          "position": 3,
+          "seasonId": "oscars-2027",
+          "workTitle": null,
+          "categoryId": "original-screenplay",
+          "medianRank": 4.5,
+          "appearances": 4,
+          "candidateId": "candidate-66ef20096f2e50078e147d93",
+          "topFiveCount": 1,
+          "scoreOutOf100": 45,
+          "firstPlaceCount": 0,
+          "orderedSourceCount": 3,
+          "sourceContributions": [
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awards-daily",
+              "listLength": 0,
+              "sourceName": "Awards Daily",
+              "publishedAt": "2026-09-25T00:00:00+00:00",
+              "observationId": "8165",
+              "publicationId": "2026/09/25/2027-oscar-predictions-best-actress-is-wide-open@dda884933eb6560e",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://www.awardsdaily.com/2026/09/25/2027-oscar-predictions-best-actress-is-wide-open/"
+            },
+            {
+              "rank": 6,
+              "points": 0.75,
+              "appeared": true,
+              "sourceId": "awards-radar",
+              "listLength": 20,
+              "sourceName": "Awards Radar",
+              "publishedAt": "2026-09-23T00:00:00+00:00",
+              "observationId": "8475",
+              "publicationId": "best-original-screenplay@76f3b6c8325e2823",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardsradar.com/best-original-screenplay/"
+            },
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awardswatch",
+              "listLength": 0,
+              "sourceName": "AwardsWatch",
+              "publishedAt": "2026-09-21T19:01:01+00:00",
+              "observationId": "8212",
+              "publicationId": "2027-oscar-predictions-adapted-screenplay-and-original-screenplay-september@9ebf498c8beac38f",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-adapted-screenplay-and-original-screenplay-september/"
+            },
+            {
+              "rank": 3,
+              "points": 0.6,
+              "appeared": true,
+              "sourceId": "next-best-picture",
+              "listLength": 5,
+              "sourceName": "Next Best Picture",
+              "publishedAt": null,
+              "observationId": "8314",
+              "publicationId": "u/655756da85df4c0efaa10bd2/oscars@8dedc6cfb323d86a",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+            },
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": false,
+              "sourceId": "the-movie-state",
+              "listLength": 5,
+              "sourceName": "The Movie State",
+              "publishedAt": "2026-09-14T15:00:00+00:00",
+              "observationId": null,
+              "publicationId": "2026/09/14/2027-oscar-predictions@d734100d26e9d20b",
+              "appearanceKind": "absent",
+              "publicationUrl": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+            }
+          ],
+          "applicableSourceCount": 5
+        }
+      ]
+    },
+    {
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-09-29-540b3aaa9667",
+      "categoryId": "supporting-actor",
+      "cutoffAt": "2026-09-29T18:33:34.258+00:00",
+      "contentHash": "540b3aaa96672b3b0ab85e280420d610f0781a22292ec2757dbe163a7df82477",
+      "orderedSources": 3,
+      "coverageSources": 5,
+      "candidates": 20,
+      "included": 40,
+      "excluded": 10,
+      "sources": [
+        {
+          "id": "awards-daily",
+          "publishedAt": "2026-09-25T00:00:00+00:00",
+          "listLength": null,
+          "ordered": 0,
+          "selected": 5
+        },
+        {
+          "id": "awards-radar",
+          "publishedAt": "2026-09-23T00:00:00+00:00",
+          "listLength": 20,
+          "ordered": 20,
+          "selected": 0
+        },
+        {
+          "id": "awardswatch",
+          "publishedAt": "2026-09-18T16:41:45+00:00",
+          "listLength": null,
+          "ordered": 0,
+          "selected": 5
+        },
+        {
+          "id": "next-best-picture",
+          "publishedAt": null,
+          "freshnessAt": "2026-09-27T04:17:17.163+00:00",
+          "listLength": 5,
+          "ordered": 5,
+          "selected": 0
+        },
+        {
+          "id": "the-movie-state",
+          "publishedAt": "2026-09-14T15:00:00+00:00",
+          "listLength": 5,
+          "ordered": 5,
+          "selected": 0
+        }
+      ],
+      "top": [
+        {
+          "id": "candidate-99ae1c33ad4d930ec7bae3af",
+          "film": {
+            "id": "the-debut",
+            "title": "The Debut"
+          },
+          "label": "Paul Giamatti — The Debut",
+          "score": 1,
+          "people": [
+            {
+              "id": "tmdb-13242",
+              "name": "Paul Giamatti",
+              "role": "Jerry",
+              "displayOrder": 0
+            }
+          ],
+          "coverage": 1,
+          "meanRank": 1,
+          "movement": null,
+          "position": 1,
+          "seasonId": "oscars-2027",
+          "workTitle": null,
+          "categoryId": "supporting-actor",
+          "medianRank": 1,
+          "appearances": 5,
+          "candidateId": "candidate-99ae1c33ad4d930ec7bae3af",
+          "topFiveCount": 3,
+          "scoreOutOf100": 100,
+          "firstPlaceCount": 3,
+          "orderedSourceCount": 3,
+          "sourceContributions": [
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awards-daily",
+              "listLength": 0,
+              "sourceName": "Awards Daily",
+              "publishedAt": "2026-09-25T00:00:00+00:00",
+              "observationId": "8146",
+              "publicationId": "2026/09/25/2027-oscar-predictions-best-actress-is-wide-open@dda884933eb6560e",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://www.awardsdaily.com/2026/09/25/2027-oscar-predictions-best-actress-is-wide-open/"
+            },
+            {
+              "rank": 1,
+              "points": 1,
+              "appeared": true,
+              "sourceId": "awards-radar",
+              "listLength": 20,
+              "sourceName": "Awards Radar",
+              "publishedAt": "2026-09-23T00:00:00+00:00",
+              "observationId": "8436",
+              "publicationId": "best-supporting-actor@cfa513dd9becd036",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardsradar.com/best-supporting-actor/"
+            },
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awardswatch",
+              "listLength": 0,
+              "sourceName": "AwardsWatch",
+              "publishedAt": "2026-09-18T16:41:45+00:00",
+              "observationId": "8169",
+              "publicationId": "2027-oscar-predictions-supporting-actor-and-supporting-actress-september@507fa7ad47a0f7e5",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-supporting-actor-and-supporting-actress-september/"
+            },
+            {
+              "rank": 1,
+              "points": 1,
+              "appeared": true,
+              "sourceId": "next-best-picture",
+              "listLength": 5,
+              "sourceName": "Next Best Picture",
+              "publishedAt": null,
+              "observationId": "8302",
+              "publicationId": "u/655756da85df4c0efaa10bd2/oscars@8dedc6cfb323d86a",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+            },
+            {
+              "rank": 1,
+              "points": 1,
+              "appeared": true,
+              "sourceId": "the-movie-state",
+              "listLength": 5,
+              "sourceName": "The Movie State",
+              "publishedAt": "2026-09-14T15:00:00+00:00",
+              "observationId": "8266",
+              "publicationId": "2026/09/14/2027-oscar-predictions@d734100d26e9d20b",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+            }
+          ],
+          "applicableSourceCount": 5
+        },
+        {
+          "id": "candidate-11c8401d55cfb43aac02e691",
+          "film": {
+            "id": "wild-horse-nine",
+            "title": "Wild Horse Nine"
+          },
+          "label": "Sam Rockwell — Wild Horse Nine",
+          "score": 0.716666666667,
+          "people": [
+            {
+              "id": "tmdb-6807",
+              "name": "Sam Rockwell",
+              "role": "Lee",
+              "displayOrder": 0
+            }
+          ],
+          "coverage": 1,
+          "meanRank": 2.6666666666666665,
+          "movement": null,
+          "position": 2,
+          "seasonId": "oscars-2027",
+          "workTitle": null,
+          "categoryId": "supporting-actor",
+          "medianRank": 3,
+          "appearances": 5,
+          "candidateId": "candidate-11c8401d55cfb43aac02e691",
+          "topFiveCount": 3,
+          "scoreOutOf100": 71.6666666667,
+          "firstPlaceCount": 0,
+          "orderedSourceCount": 3,
+          "sourceContributions": [
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awards-daily",
+              "listLength": 0,
+              "sourceName": "Awards Daily",
+              "publishedAt": "2026-09-25T00:00:00+00:00",
+              "observationId": "8148",
+              "publicationId": "2026/09/25/2027-oscar-predictions-best-actress-is-wide-open@dda884933eb6560e",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://www.awardsdaily.com/2026/09/25/2027-oscar-predictions-best-actress-is-wide-open/"
+            },
+            {
+              "rank": 2,
+              "points": 0.95,
+              "appeared": true,
+              "sourceId": "awards-radar",
+              "listLength": 20,
+              "sourceName": "Awards Radar",
+              "publishedAt": "2026-09-23T00:00:00+00:00",
+              "observationId": "8435",
+              "publicationId": "best-supporting-actor@cfa513dd9becd036",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardsradar.com/best-supporting-actor/"
+            },
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awardswatch",
+              "listLength": 0,
+              "sourceName": "AwardsWatch",
+              "publishedAt": "2026-09-18T16:41:45+00:00",
+              "observationId": "8174",
+              "publicationId": "2027-oscar-predictions-supporting-actor-and-supporting-actress-september@507fa7ad47a0f7e5",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-supporting-actor-and-supporting-actress-september/"
+            },
+            {
+              "rank": 3,
+              "points": 0.6,
+              "appeared": true,
+              "sourceId": "next-best-picture",
+              "listLength": 5,
+              "sourceName": "Next Best Picture",
+              "publishedAt": null,
+              "observationId": "8305",
+              "publicationId": "u/655756da85df4c0efaa10bd2/oscars@8dedc6cfb323d86a",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+            },
+            {
+              "rank": 3,
+              "points": 0.6,
+              "appeared": true,
+              "sourceId": "the-movie-state",
+              "listLength": 5,
+              "sourceName": "The Movie State",
+              "publishedAt": "2026-09-14T15:00:00+00:00",
+              "observationId": "8269",
+              "publicationId": "2026/09/14/2027-oscar-predictions@d734100d26e9d20b",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+            }
+          ],
+          "applicableSourceCount": 5
+        },
+        {
+          "id": "candidate-0d8ecb655fff10310d9b3200",
+          "film": {
+            "id": "the-odyssey",
+            "title": "The Odyssey"
+          },
+          "label": "John Leguizamo — The Odyssey",
+          "score": 0.633333333333,
+          "people": [
+            {
+              "id": "tmdb-5723",
+              "name": "John Leguizamo",
+              "role": "Eumaeus",
+              "displayOrder": 0
+            }
+          ],
+          "coverage": 0.8,
+          "meanRank": 3.3333333333333335,
+          "movement": null,
+          "position": 3,
+          "seasonId": "oscars-2027",
+          "workTitle": null,
+          "categoryId": "supporting-actor",
+          "medianRank": 3,
+          "appearances": 4,
+          "candidateId": "candidate-0d8ecb655fff10310d9b3200",
+          "topFiveCount": 3,
+          "scoreOutOf100": 63.333333333300004,
+          "firstPlaceCount": 0,
+          "orderedSourceCount": 3,
+          "sourceContributions": [
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": false,
+              "sourceId": "awards-daily",
+              "listLength": 0,
+              "sourceName": "Awards Daily",
+              "publishedAt": "2026-09-25T00:00:00+00:00",
+              "observationId": null,
+              "publicationId": "2026/09/25/2027-oscar-predictions-best-actress-is-wide-open@dda884933eb6560e",
+              "appearanceKind": "absent",
+              "publicationUrl": "https://www.awardsdaily.com/2026/09/25/2027-oscar-predictions-best-actress-is-wide-open/"
+            },
+            {
+              "rank": 3,
+              "points": 0.9,
+              "appeared": true,
+              "sourceId": "awards-radar",
+              "listLength": 20,
+              "sourceName": "Awards Radar",
+              "publishedAt": "2026-09-23T00:00:00+00:00",
+              "observationId": "8434",
+              "publicationId": "best-supporting-actor@cfa513dd9becd036",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardsradar.com/best-supporting-actor/"
+            },
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awardswatch",
+              "listLength": 0,
+              "sourceName": "AwardsWatch",
+              "publishedAt": "2026-09-18T16:41:45+00:00",
+              "observationId": "8177",
+              "publicationId": "2027-oscar-predictions-supporting-actor-and-supporting-actress-september@507fa7ad47a0f7e5",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-supporting-actor-and-supporting-actress-september/"
+            },
+            {
+              "rank": 2,
+              "points": 0.8,
+              "appeared": true,
+              "sourceId": "next-best-picture",
+              "listLength": 5,
+              "sourceName": "Next Best Picture",
+              "publishedAt": null,
+              "observationId": "8304",
+              "publicationId": "u/655756da85df4c0efaa10bd2/oscars@8dedc6cfb323d86a",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+            },
+            {
+              "rank": 5,
+              "points": 0.2,
+              "appeared": true,
+              "sourceId": "the-movie-state",
+              "listLength": 5,
+              "sourceName": "The Movie State",
+              "publishedAt": "2026-09-14T15:00:00+00:00",
+              "observationId": "8271",
+              "publicationId": "2026/09/14/2027-oscar-predictions@d734100d26e9d20b",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+            }
+          ],
+          "applicableSourceCount": 5
+        }
+      ]
+    },
+    {
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-09-29-fb25f185b142",
+      "categoryId": "supporting-actress",
+      "cutoffAt": "2026-09-29T18:33:34.258+00:00",
+      "contentHash": "fb25f185b1421c37d65c877810edb3182fbd46ffae2d77d1676a8e51eb71ab8d",
+      "orderedSources": 3,
+      "coverageSources": 5,
+      "candidates": 24,
+      "included": 40,
+      "excluded": 10,
+      "sources": [
+        {
+          "id": "awards-daily",
+          "publishedAt": "2026-09-25T00:00:00+00:00",
+          "listLength": null,
+          "ordered": 0,
+          "selected": 5
+        },
+        {
+          "id": "awards-radar",
+          "publishedAt": "2026-09-23T00:00:00+00:00",
+          "listLength": 20,
+          "ordered": 20,
+          "selected": 0
+        },
+        {
+          "id": "awardswatch",
+          "publishedAt": "2026-09-18T16:41:45+00:00",
+          "listLength": null,
+          "ordered": 0,
+          "selected": 5
+        },
+        {
+          "id": "next-best-picture",
+          "publishedAt": null,
+          "freshnessAt": "2026-09-03T04:17:20.727+00:00",
+          "listLength": 5,
+          "ordered": 5,
+          "selected": 0
+        },
+        {
+          "id": "the-movie-state",
+          "publishedAt": "2026-09-14T15:00:00+00:00",
+          "listLength": 5,
+          "ordered": 5,
+          "selected": 0
+        }
+      ],
+      "top": [
+        {
+          "id": "candidate-ecf64e3b7795f1a378e5ef28",
+          "film": {
+            "id": "the-odyssey",
+            "title": "The Odyssey"
+          },
+          "label": "Anne Hathaway — The Odyssey",
+          "score": 0.966666666667,
+          "people": [
+            {
+              "id": "tmdb-1813",
+              "name": "Anne Hathaway",
+              "role": "Penelope",
+              "displayOrder": 0
+            }
+          ],
+          "coverage": 1,
+          "meanRank": 1.6666666666666667,
+          "movement": null,
+          "position": 1,
+          "seasonId": "oscars-2027",
+          "workTitle": null,
+          "categoryId": "supporting-actress",
+          "medianRank": 1,
+          "appearances": 5,
+          "candidateId": "candidate-ecf64e3b7795f1a378e5ef28",
+          "topFiveCount": 3,
+          "scoreOutOf100": 96.6666666667,
+          "firstPlaceCount": 2,
+          "orderedSourceCount": 3,
+          "sourceContributions": [
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awards-daily",
+              "listLength": 0,
+              "sourceName": "Awards Daily",
+              "publishedAt": "2026-09-25T00:00:00+00:00",
+              "observationId": "8156",
+              "publicationId": "2026/09/25/2027-oscar-predictions-best-actress-is-wide-open@dda884933eb6560e",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://www.awardsdaily.com/2026/09/25/2027-oscar-predictions-best-actress-is-wide-open/"
+            },
+            {
+              "rank": 3,
+              "points": 0.9,
+              "appeared": true,
+              "sourceId": "awards-radar",
+              "listLength": 20,
+              "sourceName": "Awards Radar",
+              "publishedAt": "2026-09-23T00:00:00+00:00",
+              "observationId": "8458",
+              "publicationId": "best-supporting-actress@dd69a33331b59521",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardsradar.com/best-supporting-actress/"
+            },
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awardswatch",
+              "listLength": 0,
+              "sourceName": "AwardsWatch",
+              "publishedAt": "2026-09-18T16:41:45+00:00",
+              "observationId": "8187",
+              "publicationId": "2027-oscar-predictions-supporting-actor-and-supporting-actress-september@a883b8e1f3c89d3e",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-supporting-actor-and-supporting-actress-september/"
+            },
+            {
+              "rank": 1,
+              "points": 1,
+              "appeared": true,
+              "sourceId": "next-best-picture",
+              "listLength": 5,
+              "sourceName": "Next Best Picture",
+              "publishedAt": null,
+              "observationId": "8299",
+              "publicationId": "u/655756da85df4c0efaa10bd2/oscars@8dedc6cfb323d86a",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+            },
+            {
+              "rank": 1,
+              "points": 1,
+              "appeared": true,
+              "sourceId": "the-movie-state",
+              "listLength": 5,
+              "sourceName": "The Movie State",
+              "publishedAt": "2026-09-14T15:00:00+00:00",
+              "observationId": "8263",
+              "publicationId": "2026/09/14/2027-oscar-predictions@d734100d26e9d20b",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+            }
+          ],
+          "applicableSourceCount": 5
+        },
+        {
+          "id": "candidate-612d10ed4c751daadcd4992e",
+          "film": {
+            "id": "the-odyssey",
+            "title": "The Odyssey"
+          },
+          "label": "Samantha Morton — The Odyssey",
+          "score": 0.666666666667,
+          "people": [
+            {
+              "id": "tmdb-2206",
+              "name": "Samantha Morton",
+              "role": "Circe",
+              "displayOrder": 0
+            }
+          ],
+          "coverage": 0.8,
+          "meanRank": 2.6666666666666665,
+          "movement": null,
+          "position": 2,
+          "seasonId": "oscars-2027",
+          "workTitle": null,
+          "categoryId": "supporting-actress",
+          "medianRank": 2,
+          "appearances": 4,
+          "candidateId": "candidate-612d10ed4c751daadcd4992e",
+          "topFiveCount": 3,
+          "scoreOutOf100": 66.6666666667,
+          "firstPlaceCount": 1,
+          "orderedSourceCount": 3,
+          "sourceContributions": [
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": false,
+              "sourceId": "awards-daily",
+              "listLength": 0,
+              "sourceName": "Awards Daily",
+              "publishedAt": "2026-09-25T00:00:00+00:00",
+              "observationId": null,
+              "publicationId": "2026/09/25/2027-oscar-predictions-best-actress-is-wide-open@dda884933eb6560e",
+              "appearanceKind": "absent",
+              "publicationUrl": "https://www.awardsdaily.com/2026/09/25/2027-oscar-predictions-best-actress-is-wide-open/"
+            },
+            {
+              "rank": 1,
+              "points": 1,
+              "appeared": true,
+              "sourceId": "awards-radar",
+              "listLength": 20,
+              "sourceName": "Awards Radar",
+              "publishedAt": "2026-09-23T00:00:00+00:00",
+              "observationId": "8454",
+              "publicationId": "best-supporting-actress@dd69a33331b59521",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardsradar.com/best-supporting-actress/"
+            },
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": true,
+              "sourceId": "awardswatch",
+              "listLength": 0,
+              "sourceName": "AwardsWatch",
+              "publishedAt": "2026-09-18T16:41:45+00:00",
+              "observationId": "8192",
+              "publicationId": "2027-oscar-predictions-supporting-actor-and-supporting-actress-september@a883b8e1f3c89d3e",
+              "appearanceKind": "selection",
+              "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-supporting-actor-and-supporting-actress-september/"
+            },
+            {
+              "rank": 5,
+              "points": 0.2,
+              "appeared": true,
+              "sourceId": "next-best-picture",
+              "listLength": 5,
+              "sourceName": "Next Best Picture",
+              "publishedAt": null,
+              "observationId": "8301",
+              "publicationId": "u/655756da85df4c0efaa10bd2/oscars@8dedc6cfb323d86a",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+            },
+            {
+              "rank": 2,
+              "points": 0.8,
+              "appeared": true,
+              "sourceId": "the-movie-state",
+              "listLength": 5,
+              "sourceName": "The Movie State",
+              "publishedAt": "2026-09-14T15:00:00+00:00",
+              "observationId": "8262",
+              "publicationId": "2026/09/14/2027-oscar-predictions@d734100d26e9d20b",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+            }
+          ],
+          "applicableSourceCount": 5
+        },
+        {
+          "id": "candidate-a72510ccf76230e35c5ae408",
+          "film": {
+            "id": "project-hail-mary",
+            "title": "Project Hail Mary"
+          },
+          "label": "Sandra Hüller — Project Hail Mary",
+          "score": 0.483333333333,
+          "people": [
+            {
+              "id": "tmdb-7152",
+              "name": "Sandra Hüller",
+              "role": "Eva Stratt",
+              "displayOrder": 0
+            }
+          ],
+          "coverage": 0.4,
+          "meanRank": 3.5,
+          "movement": null,
+          "position": 3,
+          "seasonId": "oscars-2027",
+          "workTitle": null,
+          "categoryId": "supporting-actress",
+          "medianRank": 3.5,
+          "appearances": 2,
+          "candidateId": "candidate-a72510ccf76230e35c5ae408",
+          "topFiveCount": 2,
+          "scoreOutOf100": 48.3333333333,
+          "firstPlaceCount": 0,
+          "orderedSourceCount": 3,
+          "sourceContributions": [
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": false,
+              "sourceId": "awards-daily",
+              "listLength": 0,
+              "sourceName": "Awards Daily",
+              "publishedAt": "2026-09-25T00:00:00+00:00",
+              "observationId": null,
+              "publicationId": "2026/09/25/2027-oscar-predictions-best-actress-is-wide-open@dda884933eb6560e",
+              "appearanceKind": "absent",
+              "publicationUrl": "https://www.awardsdaily.com/2026/09/25/2027-oscar-predictions-best-actress-is-wide-open/"
+            },
+            {
+              "rank": 4,
+              "points": 0.85,
+              "appeared": true,
+              "sourceId": "awards-radar",
+              "listLength": 20,
+              "sourceName": "Awards Radar",
+              "publishedAt": "2026-09-23T00:00:00+00:00",
+              "observationId": "8455",
+              "publicationId": "best-supporting-actress@dd69a33331b59521",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://awardsradar.com/best-supporting-actress/"
+            },
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": false,
+              "sourceId": "awardswatch",
+              "listLength": 0,
+              "sourceName": "AwardsWatch",
+              "publishedAt": "2026-09-18T16:41:45+00:00",
+              "observationId": null,
+              "publicationId": "2027-oscar-predictions-supporting-actor-and-supporting-actress-september@a883b8e1f3c89d3e",
+              "appearanceKind": "absent",
+              "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-supporting-actor-and-supporting-actress-september/"
+            },
+            {
+              "rank": 3,
+              "points": 0.6,
+              "appeared": true,
+              "sourceId": "next-best-picture",
+              "listLength": 5,
+              "sourceName": "Next Best Picture",
+              "publishedAt": null,
+              "observationId": "8298",
+              "publicationId": "u/655756da85df4c0efaa10bd2/oscars@8dedc6cfb323d86a",
+              "appearanceKind": "ordered",
+              "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+            },
+            {
+              "rank": null,
+              "points": 0,
+              "appeared": false,
+              "sourceId": "the-movie-state",
+              "listLength": 5,
+              "sourceName": "The Movie State",
+              "publishedAt": "2026-09-14T15:00:00+00:00",
+              "observationId": null,
+              "publicationId": "2026/09/14/2027-oscar-predictions@d734100d26e9d20b",
+              "appearanceKind": "absent",
+              "publicationUrl": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+            }
+          ],
+          "applicableSourceCount": 5
+        }
+      ]
+    }
+  ],
+  "previousLockedSnapshotsUnchanged": true,
+  "artificial": {
+    "id": "artificial",
+    "title": "Artificial",
+    "tmdb_id": 1492198,
+    "release_date": "2026-12-25",
+    "release_status": "upcoming",
+    "verification_url": "https://www.themoviedb.org/movie/1492198"
+  },
+  "pendingFromAuditRuns": [
+    {
+      "id": 8197,
+      "source_id": "awards-daily",
+      "original_subject": "La Bolla Negra",
+      "category_id": "cinematography",
+      "state": "pending_review",
+      "run_id": 612
+    },
+    {
+      "id": 8557,
+      "source_id": "next-best-picture",
+      "original_subject": "La Nieve",
+      "category_id": "original-song",
+      "state": "pending_review",
+      "run_id": 619
+    },
+    {
+      "id": 8556,
+      "source_id": "next-best-picture",
+      "original_subject": "This City May Have Chewed Me Up (But It Hasn’t Spit Me Out)",
+      "category_id": "original-song",
+      "state": "pending_review",
+      "run_id": 619
+    },
+    {
+      "id": 8561,
+      "source_id": "next-best-picture",
+      "original_subject": "How to Write a Song (Without You)",
+      "category_id": "original-song",
+      "state": "pending_review",
+      "run_id": 619
+    },
+    {
+      "id": 8559,
+      "source_id": "next-best-picture",
+      "original_subject": "I Knew It, I Knew You",
+      "category_id": "original-song",
+      "state": "pending_review",
+      "run_id": 619
+    }
+  ]
+}

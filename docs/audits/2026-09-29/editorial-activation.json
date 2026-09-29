@@ -1,0 +1,199 @@
+{
+  "checkedAt": "2026-09-29T18:30:40.208Z",
+  "manifest": "data/audits/2026-09-29-tmdb-editorial.json",
+  "applied": true,
+  "eligibilityCertified": false,
+  "seasonId": "oscars-2027",
+  "entries": [
+    {
+      "filmId": "the-liberation",
+      "tmdbId": 1287365,
+      "creditCount": 20,
+      "match": {
+        "id": 93,
+        "film_id": "the-liberation",
+        "tmdb_id": 1287365,
+        "method": "manual",
+        "actor": "manifest-v1",
+        "created_at": "2026-09-29T18:25:17.437727+00:00"
+      },
+      "seasonLink": {
+        "season_id": "oscars-2027",
+        "film_id": "the-liberation",
+        "created_at": "2026-09-29T18:30:40.13932+00:00"
+      },
+      "eligibilityReviewRequired": true
+    },
+    {
+      "filmId": "bunker",
+      "tmdbId": 1473784,
+      "creditCount": 34,
+      "match": {
+        "id": 94,
+        "film_id": "bunker",
+        "tmdb_id": 1473784,
+        "method": "manual",
+        "actor": "manifest-v1",
+        "created_at": "2026-09-29T18:25:25.191148+00:00"
+      },
+      "seasonLink": {
+        "season_id": "oscars-2027",
+        "film_id": "bunker",
+        "created_at": "2026-09-29T18:30:40.13932+00:00"
+      },
+      "eligibilityReviewRequired": false
+    },
+    {
+      "filmId": "omaha",
+      "tmdbId": 1233655,
+      "creditCount": 18,
+      "match": {
+        "id": 95,
+        "film_id": "omaha",
+        "tmdb_id": 1233655,
+        "method": "manual",
+        "actor": "manifest-v1",
+        "created_at": "2026-09-29T18:25:29.630841+00:00"
+      },
+      "seasonLink": {
+        "season_id": "oscars-2027",
+        "film_id": "omaha",
+        "created_at": "2026-09-29T18:30:40.13932+00:00"
+      },
+      "eligibilityReviewRequired": false
+    },
+    {
+      "filmId": "tenzing",
+      "tmdbId": 1288069,
+      "creditCount": 14,
+      "match": {
+        "id": 96,
+        "film_id": "tenzing",
+        "tmdb_id": 1288069,
+        "method": "manual",
+        "actor": "manifest-v1",
+        "created_at": "2026-09-29T18:25:32.429084+00:00"
+      },
+      "seasonLink": {
+        "season_id": "oscars-2027",
+        "film_id": "tenzing",
+        "created_at": "2026-09-29T18:30:40.13932+00:00"
+      },
+      "eligibilityReviewRequired": false
+    },
+    {
+      "filmId": "cry-to-heaven",
+      "tmdbId": 1413113,
+      "creditCount": 28,
+      "match": {
+        "id": 97,
+        "film_id": "cry-to-heaven",
+        "tmdb_id": 1413113,
+        "method": "manual",
+        "actor": "manifest-v1",
+        "created_at": "2026-09-29T18:25:38.689604+00:00"
+      },
+      "seasonLink": {
+        "season_id": "oscars-2027",
+        "film_id": "cry-to-heaven",
+        "created_at": "2026-09-29T18:30:40.13932+00:00"
+      },
+      "eligibilityReviewRequired": true
+    },
+    {
+      "filmId": "the-mosquito-bowl",
+      "tmdbId": 1458300,
+      "creditCount": 34,
+      "match": {
+        "id": 98,
+        "film_id": "the-mosquito-bowl",
+        "tmdb_id": 1458300,
+        "method": "manual",
+        "actor": "manifest-v1",
+        "created_at": "2026-09-29T18:25:46.176389+00:00"
+      },
+      "seasonLink": {
+        "season_id": "oscars-2027",
+        "film_id": "the-mosquito-bowl",
+        "created_at": "2026-09-29T18:30:40.13932+00:00"
+      },
+      "eligibilityReviewRequired": false
+    },
+    {
+      "filmId": "a-statement",
+      "tmdbId": 1618090,
+      "creditCount": 29,
+      "match": {
+        "id": 99,
+        "film_id": "a-statement",
+        "tmdb_id": 1618090,
+        "method": "manual",
+        "actor": "manifest-v1",
+        "created_at": "2026-09-29T18:25:52.557268+00:00"
+      },
+      "seasonLink": {
+        "season_id": "oscars-2027",
+        "film_id": "a-statement",
+        "created_at": "2026-09-29T18:30:40.13932+00:00"
+      },
+      "eligibilityReviewRequired": false
+    },
+    {
+      "filmId": "i-swear",
+      "tmdbId": 1317149,
+      "creditCount": 34,
+      "match": {
+        "id": 100,
+        "film_id": "i-swear",
+        "tmdb_id": 1317149,
+        "method": "manual",
+        "actor": "manifest-v1",
+        "created_at": "2026-09-29T18:26:00.57278+00:00"
+      },
+      "seasonLink": {
+        "season_id": "oscars-2027",
+        "film_id": "i-swear",
+        "created_at": "2026-09-29T18:30:40.13932+00:00"
+      },
+      "eligibilityReviewRequired": false
+    },
+    {
+      "filmId": "mr-irrelevant",
+      "tmdbId": 1372443,
+      "creditCount": 13,
+      "match": {
+        "id": 101,
+        "film_id": "mr-irrelevant",
+        "tmdb_id": 1372443,
+        "method": "manual",
+        "actor": "manifest-v1",
+        "created_at": "2026-09-29T18:26:03.89579+00:00"
+      },
+      "seasonLink": {
+        "season_id": "oscars-2027",
+        "film_id": "mr-irrelevant",
+        "created_at": "2026-09-29T18:30:40.13932+00:00"
+      },
+      "eligibilityReviewRequired": false
+    },
+    {
+      "filmId": "nirvanna-the-band-the-show-the-movie",
+      "tmdbId": 1154538,
+      "creditCount": 43,
+      "match": {
+        "id": 102,
+        "film_id": "nirvanna-the-band-the-show-the-movie",
+        "tmdb_id": 1154538,
+        "method": "manual",
+        "actor": "manifest-v1",
+        "created_at": "2026-09-29T18:26:12.24335+00:00"
+      },
+      "seasonLink": {
+        "season_id": "oscars-2027",
+        "film_id": "nirvanna-the-band-the-show-the-movie",
+        "created_at": "2026-09-29T18:30:40.13932+00:00"
+      },
+      "eligibilityReviewRequired": false
+    }
+  ]
+}

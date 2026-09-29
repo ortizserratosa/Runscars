@@ -84,13 +84,14 @@ real. Los créditos secundarios no cambian esa edad. También se exige que la
 evidencia ya estuviera capturada en la fecha del corte. Los formatos legados sin
 estructura reconocible conservan el criterio anterior; no se reconstruyen
 transiciones que nunca dejaron una captura. Ver D-067 y el
-[recibo del diagnóstico](audits/2026-09-29/ingestion-resource-diagnosis.json).
+[recibo de frescura por categoría](audits/2026-09-29/prediction-freshness.json).
 
 Con las muestras verificadas, AwardsWatch aporta ranking en película y dirección,
 y selección en las otras seis categorías. Awards Daily aporta selección. Radar,
-NBP y The Movie State aportan rankings. Por tanto se prevén cuatro rankings en
-película/dirección y tres en las otras seis, con cinco medios que aportan
-cobertura. La comprobación posterior registra la cobertura realmente publicada.
+NBP y The Movie State aportan rankings. Los ocho cortes publicados y la
+[comprobación posterior](audits/2026-09-29/prediction-audit-after.json) confirman
+cuatro rankings en película/dirección y tres en las otras seis, con cinco medios
+que aportan cobertura. Midnight Critics y The Ringer quedan fuera por caducidad.
 Las categorías por debajo de cuatro muestran predicciones provisionales; no se
 rebaja el umbral ni se contabilizan selecciones como rankings para cumplirlo.
 
@@ -144,8 +145,10 @@ El nuevo cron despacha una petición por conector activo. Su prueba real
 HTTP 200 y nueve runs correctos, entre 1,3 y 35,6 segundos por fuente. Las siete
 fuentes de predicciones procesaron 633 observaciones sin nuevas capturas ni
 observaciones: repetición idempotente. Guardian guardó dos observaciones de
-crítica nuevas; se conservan separadas de las predicciones.
-
+crítica nuevas; se conservan separadas de las predicciones. La
+[repetición con la función definitiva, versión 40](audits/2026-09-29/prediction-isolated-final-imports.json),
+peticiones 1312–1320, vuelve a confirmar nueve respuestas HTTP 200 y las 633
+observaciones de predicciones sin duplicados.
 
 ## Corrección editorial de Artificial
 
@@ -172,16 +175,74 @@ iniciar solicitudes; un `Retry-After` largo deja el título pendiente sin
 reintentar anticipadamente. Las pruebas simulan tanto conexiones colgadas como
 limitación de frecuencia, sin depender de TMDB en vivo.
 
+## Identidades pendientes revisadas
+
+Se revisaron 17 observaciones públicas de Radar correspondientes a diez obras.
+El [recibo de investigación](audits/2026-09-29/pending-editorial-review.json)
+contrasta distribuidoras, productores y festivales, descarta los homónimos de
+*Bunker* y *Mr. Irrelevant* y conserva la incertidumbre sobre fechas.
+El [manifiesto editorial](../data/audits/2026-09-29-tmdb-editorial.json) se importó
+con el CLI canónico: diez emparejamientos manuales, créditos completos e historial
+auditable. La [activación en temporada](audits/2026-09-29/editorial-activation.json)
+se hizo después de comprobar esas diez identidades y sus créditos.
+
+La inclusión representa el pronóstico explícito del experto para Oscar 2027,
+sin certificar elegibilidad oficial. IFC Center documenta exhibición de *Omaha*
+en Nueva York en abril/mayo de 2026 y Sony anuncia estreno estadounidense de
+*I Swear* en abril de 2026, aunque TMDB conserve fechas iniciales de 2025.
+*The Liberation* y *Cry to Heaven* mantienen revisión de elegibilidad pendiente:
+en la primera no se verificó un pase calificante anterior al estreno amplio de
+enero; en la segunda solo se confirmó producción, sin fecha de estreno.
+
+La [lectura de las observaciones reconciliadas](audits/2026-09-29/editorial-observations.json)
+confirma la publicación de los 17 casos, *The Drama* y las correcciones de
+Artificial/Ink, conservando las erratas originales. No quedan observaciones de
+esta auditoría pendientes de identidad en las ocho categorías públicas.
+Permanecen cinco pendientes en categorías no públicas (fotografía y canción),
+fuera de este corte; no se incorporan al cálculo actual.
+
 ## Verificación local y estado de entrega
 
-La verificación conjunta pasó **236 pruebas unitarias y 22 pruebas de base de
+La verificación conjunta pasó **263 pruebas unitarias y 25 pruebas de base de
 datos**. También pasaron formato, lint, tipos, build, auditoría de dependencias (cero
 vulnerabilidades) y las 124 pruebas E2E en escritorio y móvil. La suite de The
 Movie State incluye 15 pruebas reproducibles sobre
 formato, identidad, integridad, idempotencia y conservación de la publicación
 original frente a cambios de fecha del CMS.
 
-Las correcciones del catálogo descritas arriba están aplicadas en vivo. Este
-recibo no certifica todavía el despliegue de funciones o web, la importación de
-predicciones corregidas ni su resultado público; se comprobarán en la entrega
-operativa conjunta.
+La entrega está aplicada en [runscars.app](https://runscars.app):
+
+- Web del commit `fd677cf`, deployment `dpl_DnKhnFADoPR9QfvEgZFdPncAPfrq`,
+  promovido al dominio público; 34 rutas correctas
+  [antes de promover](audits/2026-09-29/prediction-release-protected.json) y
+  [en el dominio público](audits/2026-09-29/prediction-release-public.json).
+- Cinco migraciones nuevas aplicadas; las 43 migraciones locales y remotas
+  coinciden. Edge `run-ingestion` versión 40 activa, y cron diario de las 04:17
+  UTC con una petición por conector. No se cambia la hora del refresco Vercel,
+  04:47 UTC.
+- [Primer refresco autenticado](audits/2026-09-29/prediction-refresh-final.json):
+  ocho cortes nuevos, cero fallos, 22,9 segundos.
+  [Repetición](audits/2026-09-29/prediction-refresh-repeat.json): ocho cortes
+  `unchanged`, cero fallos, 15,1 segundos. Los hashes de los ocho cortes
+  bloqueados que estaban publicados al comenzar siguen intactos.
+- `npm run audit:predictions` correcto contra las siete fuentes reales y el
+  estado remoto de los cron. Nueve conectores activos sin `last_error`.
+- Comprobación visual pública en escritorio y móvil: película muestra 50
+  candidaturas, cinco medios y cuatro rankings; actriz, 20 candidaturas, cinco
+  medios y tres rankings, con aviso provisional. Sin desbordamiento horizontal
+  ni errores JavaScript observados. Se esperó la revalidación normal de 60
+  segundos del puntero; no fue necesario purgar la caché.
+- La consulta de logs de error del deployment durante la última hora no devolvió
+  entradas. Esta comprobación se limita a este despliegue y a predicciones; no
+  certifica otros subsistemas ajenos al encargo.
+
+El [recibo operativo final](audits/2026-09-29/prediction-release-summary.json)
+registra las versiones, checks, ausencia de runs interrumpidos y cron activo.
+La [lectura pública de las ocho categorías](audits/2026-09-29/prediction-public-categories.json)
+confirma que cada página muestra el nuevo snapshot, sus recuentos, The Movie
+State y el estado de consenso que corresponde.
+
+Sigue siendo útil incorporar otro ranking independiente, accesible y mantenido
+para las seis categorías con solo tres fuentes ordenadas. Esta auditoría no
+encontró un segundo conector nuevo que superase esas condiciones; no se rebaja
+la puerta de calidad para completar un recuento.

@@ -1,0 +1,93 @@
+{
+  "checkedAt": "2026-09-29T18:38:29.280Z",
+  "results": [
+    {
+      "path": "/temporadas/2027/actor-protagonista",
+      "status": 200,
+      "snapshotId": "periodic-oscars-2027-actor-nomination-2026-09-29-8c0eba0c506d",
+      "matchingSnapshot": true,
+      "candidateText": "21 candidaturas · 5 medios",
+      "matchingCounts": true,
+      "expectedRankedSources": 3,
+      "matchingConsensus": true,
+      "matchingSource": true
+    },
+    {
+      "path": "/temporadas/2027/actriz-protagonista",
+      "status": 200,
+      "snapshotId": "periodic-oscars-2027-actress-nomination-2026-09-29-61b770834156",
+      "matchingSnapshot": true,
+      "candidateText": "20 candidaturas · 5 medios",
+      "matchingCounts": true,
+      "expectedRankedSources": 3,
+      "matchingConsensus": true,
+      "matchingSource": true
+    },
+    {
+      "path": "/temporadas/2027/guion-adaptado",
+      "status": 200,
+      "snapshotId": "periodic-oscars-2027-adapted-screenplay-nomination-2026-09-29-63f93d804e38",
+      "matchingSnapshot": true,
+      "candidateText": "20 candidaturas · 5 medios",
+      "matchingCounts": true,
+      "expectedRankedSources": 3,
+      "matchingConsensus": true,
+      "matchingSource": true
+    },
+    {
+      "path": "/temporadas/2027/mejor-pelicula",
+      "status": 200,
+      "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-09-29-6d08df0e2aac",
+      "matchingSnapshot": true,
+      "candidateText": "50 candidaturas · 5 medios",
+      "matchingCounts": true,
+      "expectedRankedSources": 4,
+      "matchingConsensus": true,
+      "matchingSource": true
+    },
+    {
+      "path": "/temporadas/2027/direccion",
+      "status": 200,
+      "snapshotId": "periodic-oscars-2027-directing-nomination-2026-09-29-f786afcba546",
+      "matchingSnapshot": true,
+      "candidateText": "23 candidaturas · 5 medios",
+      "matchingCounts": true,
+      "expectedRankedSources": 4,
+      "matchingConsensus": true,
+      "matchingSource": true
+    },
+    {
+      "path": "/temporadas/2027/guion-original",
+      "status": 200,
+      "snapshotId": "periodic-oscars-2027-original-screenplay-nomination-2026-09-29-ba2ce9014438",
+      "matchingSnapshot": true,
+      "candidateText": "20 candidaturas · 5 medios",
+      "matchingCounts": true,
+      "expectedRankedSources": 3,
+      "matchingConsensus": true,
+      "matchingSource": true
+    },
+    {
+      "path": "/temporadas/2027/actor-de-reparto",
+      "status": 200,
+      "snapshotId": "periodic-oscars-2027-supporting-actor-nomination-2026-09-29-540b3aaa9667",
+      "matchingSnapshot": true,
+      "candidateText": "20 candidaturas · 5 medios",
+      "matchingCounts": true,
+      "expectedRankedSources": 3,
+      "matchingConsensus": true,
+      "matchingSource": true
+    },
+    {
+      "path": "/temporadas/2027/actriz-de-reparto",
+      "status": 200,
+      "snapshotId": "periodic-oscars-2027-supporting-actress-nomination-2026-09-29-fb25f185b142",
+      "matchingSnapshot": true,
+      "candidateText": "24 candidaturas · 5 medios",
+      "matchingCounts": true,
+      "expectedRankedSources": 3,
+      "matchingConsensus": true,
+      "matchingSource": true
+    }
+  ]
+}
