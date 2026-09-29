@@ -1,6 +1,6 @@
 # Registro de decisiones
 
-**Última revisión:** 2026-09-15
+**Última revisión:** 2026-09-29
 
 ## Cómo usar este registro
 
@@ -79,6 +79,7 @@ pasado para ocultar cambios de criterio.
 | D-059 | Caducidad mensual de predicciones profesionales                | Aceptada    |
 | D-060 | Despliegue por defecto de cambios verificados                   | Aceptada    |
 | D-061 | Cortes históricos comparables con frescura uniforme             | Aceptada    |
+| D-062 | Lectura pública de predicciones reutilizable por corte          | Aceptada    |
 
 ## D-001 · Nombre de trabajo Runscars
 

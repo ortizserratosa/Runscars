@@ -1,0 +1,81 @@
+{
+  "at": "2026-09-29T11:23:21.806Z",
+  "runtime": "next start, actual Next.js 16.3.4 App Router cache; anonymous public data only",
+  "samples": [
+    {
+      "label": "initial_category",
+      "path": "/temporadas/2027/mejor-pelicula",
+      "status": 200,
+      "responseBytes": 162018,
+      "wallMs": 345.2,
+      "databaseReads": {}
+    },
+    {
+      "label": "initial_film",
+      "path": "/peliculas/the-odyssey",
+      "status": 200,
+      "responseBytes": 80862,
+      "wallMs": 807.1,
+      "databaseReads": {
+        "public_other": {
+          "requests": 1,
+          "bytes": 304
+        }
+      }
+    },
+    {
+      "label": "initial_sources",
+      "path": "/fuentes",
+      "status": 200,
+      "responseBytes": 51547,
+      "wallMs": 115.8,
+      "databaseReads": {}
+    },
+    {
+      "label": "repeat_category",
+      "path": "/temporadas/2027/mejor-pelicula",
+      "status": 200,
+      "responseBytes": 162018,
+      "wallMs": 83.8,
+      "databaseReads": {}
+    },
+    {
+      "label": "after_65s_category",
+      "path": "/temporadas/2027/mejor-pelicula",
+      "status": 200,
+      "responseBytes": 162018,
+      "wallMs": 288.8,
+      "databaseReads": {
+        "pointers": {
+          "requests": 1,
+          "bytes": 966
+        }
+      }
+    },
+    {
+      "label": "after_65s_film",
+      "path": "/peliculas/the-odyssey",
+      "status": 200,
+      "responseBytes": 80862,
+      "wallMs": 461.5,
+      "databaseReads": {
+        "public_other": {
+          "requests": 1,
+          "bytes": 304
+        }
+      }
+    },
+    {
+      "label": "after_65s_sources",
+      "path": "/fuentes",
+      "status": 200,
+      "responseBytes": 51547,
+      "wallMs": 71.9,
+      "databaseReads": {}
+    }
+  ],
+  "after65sAggregateReads": 0,
+  "after65sPointerReads": 1,
+  "serverStderrEvents": 0,
+  "pass": true
+}

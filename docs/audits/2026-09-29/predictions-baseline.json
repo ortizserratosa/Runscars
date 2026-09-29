@@ -1,0 +1,196 @@
+{
+  "timestamp": "2026-09-29T11:12:51.137Z",
+  "node": "v26.0.0",
+  "queries": [
+    {
+      "table": "current_aggregate_snapshots",
+      "status": 200,
+      "bytes": 966,
+      "rows": 8,
+      "contentRange": "0-7/*",
+      "contentEncoding": "gzip",
+      "downloadMs": 258.5,
+      "parseWallMs": 0,
+      "parseCpuMs": 0.1
+    },
+    {
+      "table": "aggregate_snapshots",
+      "status": 200,
+      "bytes": 7841347,
+      "rows": 194,
+      "contentRange": "0-193/194",
+      "contentEncoding": "gzip",
+      "downloadMs": 345.3,
+      "parseWallMs": 18.3,
+      "parseCpuMs": 18.3
+    },
+    {
+      "table": "professional_observations",
+      "status": 200,
+      "bytes": 12074,
+      "rows": 200,
+      "contentRange": "0-199/*",
+      "contentEncoding": "gzip",
+      "downloadMs": 73.7,
+      "parseWallMs": 0,
+      "parseCpuMs": 0.1
+    },
+    {
+      "table": "professional_observations",
+      "status": 200,
+      "bytes": 12172,
+      "rows": 200,
+      "contentRange": "0-199/*",
+      "contentEncoding": "gzip",
+      "downloadMs": 65,
+      "parseWallMs": 0,
+      "parseCpuMs": 0
+    },
+    {
+      "table": "professional_observations",
+      "status": 200,
+      "bytes": 12182,
+      "rows": 200,
+      "contentRange": "0-199/*",
+      "contentEncoding": "gzip",
+      "downloadMs": 52.4,
+      "parseWallMs": 0.1,
+      "parseCpuMs": 0.2
+    },
+    {
+      "table": "professional_observations",
+      "status": 200,
+      "bytes": 12198,
+      "rows": 200,
+      "contentRange": "0-199/*",
+      "contentEncoding": "gzip",
+      "downloadMs": 52.1,
+      "parseWallMs": 0.1,
+      "parseCpuMs": 0.1
+    },
+    {
+      "table": "professional_observations",
+      "status": 200,
+      "bytes": 608,
+      "rows": 10,
+      "contentRange": "0-9/*",
+      "contentEncoding": "gzip",
+      "downloadMs": 47.6,
+      "parseWallMs": 0,
+      "parseCpuMs": 0
+    }
+  ],
+  "totalHistoryCount": 194,
+  "returnedRows": 194,
+  "captureDates": 810,
+  "categoryCount": 8,
+  "viewBytes": 170712,
+  "projection": {
+    "iterations": [
+      {
+        "wallMs": 24.7,
+        "cpuMs": 30.3
+      },
+      {
+        "wallMs": 8,
+        "cpuMs": 9.9
+      },
+      {
+        "wallMs": 6.8,
+        "cpuMs": 8.2
+      },
+      {
+        "wallMs": 6.1,
+        "cpuMs": 6.6
+      },
+      {
+        "wallMs": 6.1,
+        "cpuMs": 6.7
+      },
+      {
+        "wallMs": 5.7,
+        "cpuMs": 6.5
+      },
+      {
+        "wallMs": 5.2,
+        "cpuMs": 5.4
+      }
+    ],
+    "medianWallMs": 6.1,
+    "medianCpuMs": 6.7
+  },
+  "categories": [
+    {
+      "categoryId": "best-picture",
+      "rows": 30,
+      "bytes": 1479663,
+      "pointerFound": true,
+      "eligibleRows": 30,
+      "eligibleBytes": 1479663,
+      "pointerBytes": 26716
+    },
+    {
+      "categoryId": "directing",
+      "rows": 27,
+      "bytes": 981289,
+      "pointerFound": true,
+      "eligibleRows": 27,
+      "eligibleBytes": 981289,
+      "pointerBytes": 21281
+    },
+    {
+      "categoryId": "actor",
+      "rows": 24,
+      "bytes": 796955,
+      "pointerFound": true,
+      "eligibleRows": 24,
+      "eligibleBytes": 796955,
+      "pointerBytes": 20957
+    },
+    {
+      "categoryId": "actress",
+      "rows": 24,
+      "bytes": 882845,
+      "pointerFound": true,
+      "eligibleRows": 24,
+      "eligibleBytes": 882845,
+      "pointerBytes": 19386
+    },
+    {
+      "categoryId": "supporting-actor",
+      "rows": 23,
+      "bytes": 810083,
+      "pointerFound": true,
+      "eligibleRows": 23,
+      "eligibleBytes": 810083,
+      "pointerBytes": 19578
+    },
+    {
+      "categoryId": "supporting-actress",
+      "rows": 23,
+      "bytes": 937570,
+      "pointerFound": true,
+      "eligibleRows": 23,
+      "eligibleBytes": 937570,
+      "pointerBytes": 26617
+    },
+    {
+      "categoryId": "original-screenplay",
+      "rows": 22,
+      "bytes": 801115,
+      "pointerFound": true,
+      "eligibleRows": 22,
+      "eligibleBytes": 801115,
+      "pointerBytes": 20577
+    },
+    {
+      "categoryId": "adapted-screenplay",
+      "rows": 21,
+      "bytes": 663599,
+      "pointerFound": true,
+      "eligibleRows": 21,
+      "eligibleBytes": 663599,
+      "pointerBytes": 21066
+    }
+  ]
+}

@@ -10,9 +10,9 @@ iniciar una fase nueva. Se conservan los cambios locales previos en
 |---|---|---|
 | 28/09: completar DNS de `runscars.app` | Vercel devuelve `verified: true`, `misconfigured: false`, sin conflictos. Los A `216.198.79.1` y `64.29.17.1` coinciden con los recomendados; `www` usa `92dbbddb750e1971.vercel-dns-017.com`. HTTPS responde y `www` redirige con 308. | No hay avería: Name.com sigue siendo el DNS autoritativo. No es necesaria la migración opcional de nameservers propuesta por el correo. |
 | 26/09: 100% de Fluid Active CPU | El panel atribuye 4 h 6 min a Runscars en los últimos 30 días; el conjunto del equipo muestra 4 h 7 min. La web sigue disponible. | Optimización de la lectura de predicciones descrita en D-062; el consumo acumulado permanece sujeto a los límites de Vercel. |
-| 19/09 y 05/09: cuota de transformaciones de imágenes | El despliegue vigente `e3ecd3e` ya desactiva el optimizador (D-038). El panel del 29/09 muestra cero transformaciones, lecturas y escrituras en los últimos 30 días. | Mantener la entrega directa desde TMDB y la prueba de regresión existente. |
+| 19/09 y 05/09: cuota de transformaciones de imágenes | El despliegue vigente al inicio, `e3ecd3e`, ya desactiva el optimizador (D-038). El panel del 29/09 muestra cero transformaciones, lecturas y escrituras en los últimos 30 días. | Mantener la entrega directa desde TMDB y la prueba de regresión existente. |
 | 19/09: nuevo acceso | El propietario reconoce expresamente el acceso consultado. | No requiere recuperación de cuenta. No se registran IP ni datos personales en este informe. |
-| 01/09: despliegue de producción fallido | `dpl_BM7rYPQ3QYAtzTaR5VAYuwseBDnp`: `The specified Root Directory "web" does not exist`. Despliegues posteriores están `READY`, incluido el vigente `dpl_DiazDXbbKLugiaR9UnmgriaHsVVr`. | Incidencia histórica superada. Publicar desde la raíz del repositorio, cuyo proyecto Vercel tiene `rootDirectory: web`. |
+| 01/09: despliegue de producción fallido | `dpl_BM7rYPQ3QYAtzTaR5VAYuwseBDnp`: `The specified Root Directory "web" does not exist`. Despliegues posteriores están `READY`, incluido el vigente al inicio, `dpl_DiazDXbbKLugiaR9UnmgriaHsVVr`. | Incidencia histórica superada. Publicar desde la raíz del repositorio, cuyo proyecto Vercel tiene `rootDirectory: web`. |
 
 El correo de DNS describe explícitamente una alternativa A/CNAME compatible.
 La [documentación de DNS de Vercel](https://vercel.com/docs/domains/working-with-dns)
@@ -73,7 +73,53 @@ documentos y sus evidencias permanecen en el repositorio.
 
 ## Verificación y publicación
 
-Pendiente de registrar las comprobaciones y el artefacto final de este corte.
+Comprobaciones completadas:
+
+- `npm ci`: instalación reproducible correcta.
+- `NEXT_PUBLIC_SUPABASE_URL='' NEXT_PUBLIC_SUPABASE_ANON_KEY='' npm run verify`:
+  formato, lint, tipos, 186 pruebas unitarias, 22 pruebas de base de datos,
+  compilación y auditoría correctos; cero vulnerabilidades conocidas. Se usan
+  fixtures reproducibles porque el Supabase local indicado en `.env.local`
+  no está arrancado.
+- `npm run test:e2e`: 124 recorridos correctos en escritorio y móvil, incluidos
+  Chromium, Firefox, WebKit y accesibilidad.
+- Compilación adicional y `next start` con datos públicos de producción:
+  categoría, película y fuentes responden correctamente. Tras 65 segundos,
+  la revalidación lee una vez los punteros (966 bytes) y no vuelve a consultar
+  `aggregate_snapshots`. No aparecen errores de servidor. Esta prueba usa la
+  caché real de Next.js, previamente poblada durante la compilación, y no una
+  simulación de `unstable_cache`.
+- Enlaces relativos de documentación y `git diff --check`: correctos.
+
+Evidencias conservadas de la medición:
+[lectura inicial](audits/2026-09-29/predictions-baseline.json) y
+[reutilización con Next.js](audits/2026-09-29/next-cache-smoke.json).
+Los bytes registrados corresponden al JSON descomprimido; no representan
+transferencia facturada ni una estimación del ahorro mensual de CPU.
+
+Se publicó desde la raíz el commit
+`207185bb0860f84b6e4f6db6a4ad98e2d45878bc`, con autor y committer `noreply`,
+mediante `vercel deploy --prod --skip-domain`. El despliegue
+[`dpl_FD11fVqYJEthWBXa1QbgXHmWoy2P`](https://vercel.com/nazzozzo-s-projects/runscars/FD11fVqYJEthWBXa1QbgXHmWoy2P)
+quedó `READY` y superó
+[23 comprobaciones protegidas](audits/2026-09-29/release-protected.json)
+antes de promoverlo con `vercel promote`.
+
+Tras la promoción, `vercel inspect https://runscars.app` confirma ese mismo
+despliegue en producción. Las
+[24 comprobaciones públicas](audits/2026-09-29/release-public.json)
+devuelven 200: salud y base de datos, portada, categoría, película, fuente,
+acceso, comunidad, festivales y edición semanal en ES/EN, además de un corte
+histórico, robots, sitemap e imagen social. Las páginas comprobadas no usan
+`/_next/image` ni contienen errores de renderizado en el stream. La portada
+carga visualmente en navegador sin errores ni avisos de consola. No se
+repite un inicio de sesión real con Google ni una escritura de quiniela,
+puesto que este corte solo modifica lecturas públicas.
+
+La consulta de logs del despliegue nuevo a las 11:27 UTC no devuelve errores ni
+advertencias. Es una comprobación inmediata de publicación, no una garantía
+de ausencia de incidencias futuras. El artefacto previo disponible para
+reversión es `dpl_DiazDXbbKLugiaR9UnmgriaHsVVr`.
 
 La auditoría viva de parsers (`RUNSCARS_AUDIT_SKIP_PUBLIC=true npm run
 audit:production`) pasó los seis parsers profesionales y ambos mercados.
