@@ -7,6 +7,12 @@ export function festivalImdbUrl(imdbId: string | null | undefined) {
     : null;
 }
 
+export function festivalTmdbUrl(tmdbId: number | null | undefined) {
+  return tmdbId && Number.isSafeInteger(tmdbId) && tmdbId > 0
+    ? `https://www.themoviedb.org/movie/${tmdbId}`
+    : null;
+}
+
 export function festivalSourceFilmUrl(value: unknown): string | null {
   if (typeof value !== "string") return null;
   try {

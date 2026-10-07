@@ -7,11 +7,12 @@ import {
   festivalName,
   festivalPreview,
   festivalStatus,
+  festivalTmdbUrl,
 } from "../../lib/festivals/presentation";
 import { localeTag, localizedPath } from "../../lib/i18n/config";
 import { getRequestLocale } from "../../lib/i18n/server";
 import { absoluteUrl, buildLocalizedMetadata } from "../../lib/seo";
-import { getFilmArtwork } from "../../lib/repositories/artwork";
+import { getFestivalArtwork } from "../../lib/repositories/artwork";
 import { PosterBlock } from "../components/PosterBlock";
 import { JsonLd } from "../components/JsonLd";
 
@@ -37,10 +38,8 @@ export default async function FestivalsPage() {
     getFestivalIndex(),
   ]);
   const en = locale === "en";
-  const artwork = await getFilmArtwork(
-    editions.flatMap((edition) =>
-      festivalPreview(edition).entries.map((entry) => entry.filmId),
-    ),
+  const artwork = await getFestivalArtwork(
+    editions.flatMap((edition) => festivalPreview(edition).entries),
     locale,
   );
   const chronological = [...editions].sort((a, b) =>
@@ -214,35 +213,53 @@ export default async function FestivalsPage() {
                   </p>
                   {preview.entries.length ? (
                     <ul>
-                      {preview.entries.map((entry) => (
-                        <li key={entry.id}>
-                          {entry.filmId && artwork[entry.filmId]?.posterPath ? (
-                            <Link
-                              className="festival-preview-poster"
-                              prefetch={false}
-                              href={localizedPath(
-                                `/peliculas/${entry.filmId}`,
-                                locale,
-                              )}
-                              aria-label={entry.originalTitle}
-                            >
-                              <PosterBlock
-                                title={entry.originalTitle}
-                                locale={locale}
-                                size="small"
-                                imageSize="w185"
-                                imagePath={artwork[entry.filmId].posterPath}
-                              />
-                            </Link>
-                          ) : null}
-                          <strong>{entry.originalTitle}</strong>
-                          <span>
-                            {festivalAwardLabel(entry.awardType, locale) ??
-                              entry.originalRecipient ??
-                              entry.section}
-                          </span>
-                        </li>
-                      ))}
+                      {preview.entries.map((entry) => {
+                        const tmdbUrl = festivalTmdbUrl(entry.tmdbId);
+                        const movie = artwork[entry.id];
+                        const poster = (
+                          <PosterBlock
+                            title={entry.originalTitle}
+                            locale={locale}
+                            size="small"
+                            imageSize="w185"
+                            imagePath={movie?.posterPath}
+                            showOscarEdition={false}
+                          />
+                        );
+                        return (
+                          <li key={entry.id}>
+                            {entry.filmId ? (
+                              <Link
+                                className="festival-preview-poster"
+                                prefetch={false}
+                                href={localizedPath(
+                                  `/peliculas/${entry.filmId}`,
+                                  locale,
+                                )}
+                                aria-label={entry.originalTitle}
+                              >
+                                {poster}
+                              </Link>
+                            ) : tmdbUrl ? (
+                              <a
+                                className="festival-preview-poster"
+                                href={tmdbUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                aria-label={`${entry.originalTitle} · TMDB`}
+                              >
+                                {poster}
+                              </a>
+                            ) : null}
+                            <strong>{entry.originalTitle}</strong>
+                            <span>
+                              {festivalAwardLabel(entry.awardType, locale) ??
+                                entry.originalRecipient ??
+                                entry.section}
+                            </span>
+                          </li>
+                        );
+                      })}
                     </ul>
                   ) : (
                     <p>

@@ -112,9 +112,12 @@ export function corroborateFestivalMovie(movie, claim) {
         (item) => item.kind === "crew" && item.role === "Director",
       )
     : (movie.credits?.crew ?? []).filter((item) => item.job === "Director");
-  const directors = unique(
-    crew.flatMap((item) => [item.name, item.original_name]),
-  );
+  const directors = unique([
+    ...crew.flatMap((item) => [item.name, item.original_name]),
+    ...(movie.directors ?? []).flatMap((item) =>
+      typeof item === "string" ? [item] : [item.name, item.original_name],
+    ),
+  ]);
   const exactDirectors =
     claim.directors.length > 0 &&
     claim.directors.every((name) =>
@@ -134,7 +137,10 @@ export function corroborateFestivalMovie(movie, claim) {
     (claim.productionYear != null &&
       providerYear != null &&
       providerYear < claim.productionYear);
-  const imdbId = movie.external_ids?.imdb_id ?? movie.imdb_id;
+  const originalImdbId = movie.external_ids?.imdb_id ?? movie.imdb_id;
+  const imdbId = IMDb_PATTERN.test(originalImdbId ?? "")
+    ? originalImdbId
+    : null;
   if (
     !matchedTitle ||
     !exactDirectors ||
@@ -160,10 +166,17 @@ export function corroborateFestivalMovie(movie, claim) {
       title: movie.title,
       original_title: movie.original_title,
       release_date: movie.release_date ?? null,
-      imdb_id: imdbId,
+      imdb_id: originalImdbId ?? null,
       directors,
     },
   };
+}
+
+class FestivalTmdbHttpError extends Error {
+  constructor(status) {
+    super(`TMDB respondió HTTP ${status}`);
+    this.status = status;
+  }
 }
 
 export class FestivalTmdbResolver {
@@ -216,8 +229,7 @@ export class FestivalTmdbResolver {
         );
         continue;
       }
-      if (!response.ok)
-        throw new Error(`TMDB respondió HTTP ${response.status}`);
+      if (!response.ok) throw new FestivalTmdbHttpError(response.status);
       return response.json();
     }
     throw new Error("TMDB agotó los reintentos");
@@ -226,11 +238,44 @@ export class FestivalTmdbResolver {
   async movie(id) {
     if (!this.movies.has(id)) {
       const sourceUrl = `https://api.themoviedb.org/3/movie/${id}?append_to_response=credits,external_ids,alternative_titles&language=en-US`;
-      const pending = this.request(sourceUrl).then((movie) => ({
-        movie,
-        sourceUrl,
-        capturedAt: this.now().toISOString(),
-      }));
+      const pending = this.request(sourceUrl)
+        .then((movie) => ({
+          kind: "movie",
+          movie,
+          sourceUrl,
+          capturedAt: this.now().toISOString(),
+        }))
+        .catch(async (error) => {
+          if (!(error instanceof FestivalTmdbHttpError) || error.status !== 404)
+            throw error;
+          const collectionUrl = `https://api.themoviedb.org/3/collection/${id}?language=en-US`;
+          const collection = await this.request(collectionUrl);
+          if (
+            collection.id !== id ||
+            typeof collection.name !== "string" ||
+            !collection.name.trim() ||
+            !Array.isArray(collection.parts) ||
+            !collection.parts.every(
+              (part) =>
+                Number.isSafeInteger(part?.id) &&
+                part.id > 0 &&
+                typeof part.title === "string" &&
+                part.title.trim(),
+            )
+          )
+            throw new Error(
+              "TMDB no corroboró una colección válida tras el 404",
+            );
+          return {
+            kind: "collection",
+            partMovieIds: collection.parts.map((part) => part.id),
+            resourceEvidence: {
+              resourceId: id,
+              resourceType: "collection",
+              sourceUrl: collectionUrl,
+            },
+          };
+        });
       this.movies.set(id, pending);
       pending.catch(() => this.movies.delete(id));
     }
@@ -285,8 +330,15 @@ export class FestivalTmdbResolver {
       }
     }
     const verified = [];
+    const excludedProviderResources = [];
     for (const id of candidateIds) {
       const details = await this.movie(id);
+      if (details.kind === "collection") {
+        excludedProviderResources.push(details.resourceEvidence);
+        // Preserve possible homonyms represented only as collection parts.
+        for (const partId of details.partMovieIds) candidateIds.add(partId);
+        continue;
+      }
       const corroborated = corroborateFestivalMovie(details.movie, claim);
       if (corroborated)
         verified.push({
@@ -295,24 +347,24 @@ export class FestivalTmdbResolver {
           capturedAt: details.capturedAt,
         });
     }
+    excludedProviderResources.sort(
+      (left, right) => left.resourceId - right.resourceId,
+    );
     if (verified.length !== 1)
       return {
         status: verified.length ? "pending_review" : "unmatched",
         reason: verified.length
           ? "ambiguous-exact-title-director"
-          : "no-corroborated-imdb-identity",
+          : "no-corroborated-tmdb-identity",
         candidates: verified.map(({ tmdbId, imdbId }) => ({ tmdbId, imdbId })),
-      };
-    if (!IMDb_PATTERN.test(verified[0].imdbId ?? ""))
-      return {
-        status: "pending_review",
-        reason: "unique-identity-without-valid-imdb-id",
-        candidates: verified.map(({ tmdbId, imdbId }) => ({ tmdbId, imdbId })),
+        excludedProviderResources,
       };
     return {
       status: "confirmed",
-      method: "exact-source-title-director-tmdb-external-ids",
+      method: "exact-source-title-director-tmdb-identity",
       ...verified[0],
+      evidence: { ...verified[0].evidence, excludedProviderResources },
+      excludedProviderResources,
     };
   }
 }
@@ -323,6 +375,7 @@ export async function enrichFestivalLinks({
   limit = 25,
   afterEntryId = 0,
   apply = false,
+  entryIds = null,
   reviewedEvidence = [],
   now = () => new Date(),
 }) {
@@ -349,7 +402,11 @@ export async function enrichFestivalLinks({
     }
   }
   const remaining = allEntries
-    .filter((entry) => entry.entryId > afterEntryId)
+    .filter(
+      (entry) =>
+        entry.entryId > afterEntryId &&
+        (entryIds === null || entryIds.includes(entry.entryId)),
+    )
     .sort((a, b) => a.entryId - b.entryId);
   const entries = remaining.slice(0, limit);
   const results = [];
@@ -383,7 +440,13 @@ export async function enrichFestivalLinks({
       const evidence =
         resolved.status === "confirmed"
           ? { ...resolved.evidence, claim }
-          : { claim, candidates: resolved.candidates, reason: resolved.reason };
+          : {
+              claim,
+              candidates: resolved.candidates,
+              reason: resolved.reason,
+              excludedProviderResources:
+                resolved.excludedProviderResources ?? [],
+            };
       const payload = {
         entryId: entry.entryId,
         status: resolved.status,

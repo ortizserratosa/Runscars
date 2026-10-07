@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "snapshots": [
+    {
+      "tmdb_id": 1470198,
+      "locale": "es-ES",
+      "title": "Bedford Park",
+      "original_title": "Bedford Park",
+      "overview": "",
+      "release_date": "2026-01-24",
+      "runtime": 121,
+      "poster_path": "/afH14yQ0xwyalCy3AyZrhQpRZyB.jpg",
+      "backdrop_path": "/cuctce94c9edsC0ZrCyZFkRzkZZ.jpg",
+      "source_url": "https://api.themoviedb.org/3/movie/1470198?append_to_response=credits,external_ids&language=es-ES",
+      "fetched_at": "2026-10-07T10:04:39.302Z",
+      "last_verified_at": "2026-10-07T10:04:39.302Z",
+      "expires_at": "2027-04-05T10:04:39.302Z",
+      "original_data": {
+        "directors": [
+          {
+            "id": 4779604,
+            "name": "Stephanie Ahn",
+            "original_name": "Stephanie Ahn"
+          }
+        ]
+      }
+    },
+    {
+      "tmdb_id": 1470198,
+      "locale": "en-US",
+      "title": "Bedford Park",
+      "original_title": "Bedford Park",
+      "overview": "Haunted by an abusive childhood, Audrey, a Korean American woman in her 30s, faces her emotional past. When her mother’s car accident brings her back to her parents’ home, she meets the man responsible for the accident. Their relationship builds, passions ignite, and they form a loving connection.",
+      "release_date": "2026-01-24",
+      "runtime": 121,
+      "poster_path": "/afH14yQ0xwyalCy3AyZrhQpRZyB.jpg",
+      "backdrop_path": "/cuctce94c9edsC0ZrCyZFkRzkZZ.jpg",
+      "source_url": "https://api.themoviedb.org/3/movie/1470198?append_to_response=credits,external_ids&language=en-US",
+      "fetched_at": "2026-10-07T10:04:39.314Z",
+      "last_verified_at": "2026-10-07T10:04:39.314Z",
+      "expires_at": "2027-04-05T10:04:39.314Z",
+      "original_data": {
+        "directors": [
+          {
+            "id": 4779604,
+            "name": "Stephanie Ahn",
+            "original_name": "Stephanie Ahn"
+          }
+        ]
+      }
+    },
+    {
+      "tmdb_id": 1558701,
+      "locale": "es-ES",
+      "title": "Carousel",
+      "original_title": "Carousel",
+      "overview": "",
+      "release_date": "2026-01-22",
+      "runtime": 103,
+      "poster_path": "/cu17JPVluk62b60sTLIVo3hwTQN.jpg",
+      "backdrop_path": "/zF6nhLX5BtTx6YY2qPHkTDjlYeH.jpg",
+      "source_url": "https://api.themoviedb.org/3/movie/1558701?append_to_response=credits,external_ids&language=es-ES",
+      "fetched_at": "2026-10-07T10:04:39.454Z",
+      "last_verified_at": "2026-10-07T10:04:39.454Z",
+      "expires_at": "2027-04-05T10:04:39.454Z",
+      "original_data": {
+        "directors": [
+          {
+            "id": 1673686,
+            "name": "Rachel Lambert",
+            "original_name": "Rachel Lambert"
+          }
+        ]
+      }
+    },
+    {
+      "tmdb_id": 1558701,
+      "locale": "en-US",
+      "title": "Carousel",
+      "original_title": "Carousel",
+      "overview": "A divorced doctor’s carefully constructed life in Cleveland is upended when his daughter’s debate aspirations and the unexpected return of a past love force him to confront his own choices and embrace a second chance.",
+      "release_date": "2026-01-22",
+      "runtime": 103,
+      "poster_path": "/cu17JPVluk62b60sTLIVo3hwTQN.jpg",
+      "backdrop_path": "/zF6nhLX5BtTx6YY2qPHkTDjlYeH.jpg",
+      "source_url": "https://api.themoviedb.org/3/movie/1558701?append_to_response=credits,external_ids&language=en-US",
+      "fetched_at": "2026-10-07T10:04:39.464Z",
+      "last_verified_at": "2026-10-07T10:04:39.464Z",
+      "expires_at": "2027-04-05T10:04:39.464Z",
+      "original_data": {
+        "directors": [
+          {
+            "id": 1673686,
+            "name": "Rachel Lambert",
+            "original_name": "Rachel Lambert"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -40,6 +40,7 @@
     "festivals:refresh": "node web/scripts/festivals.mjs refresh",
     "festivals:match": "node web/scripts/festivals.mjs match",
     "festivals:links": "node web/scripts/festivals.mjs enrich-links",
+    "festivals:metadata": "node web/scripts/festivals.mjs refresh-metadata",
     "admin:grant": "node web/scripts/editorial-admin.mjs grant",
     "admin:revoke": "node web/scripts/editorial-admin.mjs revoke",
     "admin:list": "node web/scripts/editorial-admin.mjs list",

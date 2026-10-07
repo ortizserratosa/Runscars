@@ -10,6 +10,7 @@ type PosterBlockProps = {
   size?: "small" | "medium" | "large";
   imagePath?: string | null;
   imageSize?: "w185" | "w342" | "w500";
+  showOscarEdition?: boolean;
 };
 
 export function PosterBlock({
@@ -20,6 +21,7 @@ export function PosterBlock({
   size = "medium",
   imagePath = null,
   imageSize,
+  showOscarEdition = true,
 }: PosterBlockProps) {
   const words = title.split(" ");
   const imageUrl = tmdbImageUrl(
@@ -56,7 +58,9 @@ export function PosterBlock({
           <span key={`${word}-${index}`}>{word}</span>
         ))}
       </span>
-      <span className="poster-edition">OSCAR · 2027</span>
+      {showOscarEdition ? (
+        <span className="poster-edition">OSCAR · 2027</span>
+      ) : null}
     </div>
   );
 }

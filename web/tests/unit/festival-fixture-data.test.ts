@@ -15,7 +15,7 @@ import { getFestivalIndex } from "../../src/lib/festivals/data";
 import externalLinksFixture from "../../data/festivals/2026-external-links-fixture.json";
 
 describe("festival fixtures use current reviewed captures", () => {
-  it("provides verified IMDb identities for films outside the Oscar catalogue", async () => {
+  it("provides verified TMDB and IMDb identities for films outside the Oscar catalogue", async () => {
     const editions = await getFestivalIndex();
     expect(externalLinksFixture.links).toHaveLength(2);
     for (const link of externalLinksFixture.links) {
@@ -25,6 +25,7 @@ describe("festival fixtures use current reviewed captures", () => {
           (entry) => entry.originalTitle === link.originalTitle,
         );
       expect(entry).toMatchObject({
+        tmdbId: link.tmdbId,
         imdbId: link.imdbId,
         filmId: null,
         matchStatus: "unmatched",

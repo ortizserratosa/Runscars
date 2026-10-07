@@ -300,6 +300,20 @@ y `linksOnly`, en lotes acotados. Las invocaciones diarias existentes conservan
 su comportamiento de captura oficial. Ver D-071 en
 [DECISIONS.md](DECISIONS.md).
 
+### Carteles y metadatos TMDB de festivales
+
+`npm run festivals:metadata -- --all` enumera los IDs TMDB corroborados y los
+locales previstos sin llamar a TMDB ni escribir. Con `--apply --all` captura
+`es-ES` y `en-US` en `tmdb_movie_snapshots`, sin insertar `films` ni
+candidaturas. `--limit 50`, `--after <tmdb-id>` y `--concurrency 4` acotan y
+permiten reanudar; `--env-file` y `--report` tienen el mismo propósito que en
+los enlaces externos. Solo se usan los IDs confirmados del conjunto festivalero
+vigente. Se conserva URL, original, hash, captura y caducidad; los fallos de una
+película no bloquean las demás. IMDb es opcional.
+`festivals:links -- --only-without-imdb` permite revisar únicamente identidades
+que antes estaban pendientes por no tener IMDb. Ver D-072 en
+[DECISIONS.md](DECISIONS.md).
+
 ## Ingesta de premios precursores
 
 Los calendarios, nominaciones y ganadores oficiales usan un dominio separado de

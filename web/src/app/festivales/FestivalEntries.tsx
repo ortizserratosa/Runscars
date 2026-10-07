@@ -5,12 +5,13 @@ import Link from "next/link";
 import {
   festivalAwardLabel,
   festivalImdbUrl,
+  festivalTmdbUrl,
   festivalSourceFilmUrl,
 } from "../../lib/festivals/presentation";
 import type { FestivalSetView } from "../../lib/festivals/data";
 import { localizedPath, type Locale } from "../../lib/i18n/config";
 
-import type { FilmArtwork } from "../../lib/repositories/artwork";
+import type { FestivalFilmArtwork } from "../../lib/repositories/artwork";
 import { PosterBlock } from "../components/PosterBlock";
 
 const searchable = (value: string) =>
@@ -26,7 +27,7 @@ export function FestivalEntries({
 }: {
   set: FestivalSetView;
   locale: Locale;
-  artwork: Record<string, FilmArtwork>;
+  artwork: Record<string, FestivalFilmArtwork>;
 }) {
   const en = locale === "en";
   const [query, setQuery] = useState("");
@@ -41,6 +42,7 @@ export function FestivalEntries({
           entry.originalRecipient,
           entry.awardType,
           entry.filmTitle,
+          artwork[entry.id]?.title,
         ].join(" "),
       ).includes(searchable(query.trim())),
   );
@@ -86,24 +88,50 @@ export function FestivalEntries({
       <ul className="festival-entry-list">
         {entries.map((entry) => {
           const imdbUrl = festivalImdbUrl(entry.imdbId);
+          const tmdbUrl = festivalTmdbUrl(entry.tmdbId);
           const sourceFilmUrl = festivalSourceFilmUrl(entry.sourceFilmUrl);
+          const movie = artwork[entry.id];
+          const metadata = [
+            movie?.title &&
+            searchable(movie.title) !== searchable(entry.originalTitle)
+              ? movie.title
+              : null,
+            movie?.releaseDate?.slice(0, 4),
+            movie?.runtime ? `${movie.runtime} min` : null,
+          ]
+            .filter(Boolean)
+            .join(" · ");
+          const poster = (
+            <PosterBlock
+              title={entry.originalTitle}
+              locale={locale}
+              size="small"
+              imageSize="w185"
+              imagePath={movie?.posterPath}
+              showOscarEdition={false}
+            />
+          );
           return (
             <li key={entry.id}>
-              {entry.filmId && artwork[entry.filmId]?.posterPath ? (
+              {entry.filmId ? (
                 <Link
                   className="festival-entry-poster"
                   prefetch={false}
                   href={localizedPath(`/peliculas/${entry.filmId}`, locale)}
                   aria-label={entry.originalTitle}
                 >
-                  <PosterBlock
-                    title={entry.originalTitle}
-                    locale={locale}
-                    size="small"
-                    imageSize="w185"
-                    imagePath={artwork[entry.filmId].posterPath}
-                  />
+                  {poster}
                 </Link>
+              ) : tmdbUrl ? (
+                <a
+                  className="festival-entry-poster"
+                  href={tmdbUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`${entry.originalTitle} · TMDB`}
+                >
+                  {poster}
+                </a>
               ) : (
                 <span className="festival-entry-symbol" aria-hidden="true">
                   {set.kind === "awards" ? "✳" : "↗"}
@@ -124,10 +152,10 @@ export function FestivalEntries({
                     >
                       {entry.originalTitle} <span aria-hidden="true">↗</span>
                     </Link>
-                  ) : imdbUrl ? (
-                    <a href={imdbUrl} target="_blank" rel="noreferrer">
+                  ) : tmdbUrl ? (
+                    <a href={tmdbUrl} target="_blank" rel="noreferrer">
                       {entry.originalTitle}{" "}
-                      <span aria-hidden="true">IMDb ↗</span>
+                      <span aria-hidden="true">TMDB ↗</span>
                     </a>
                   ) : (
                     entry.originalTitle
@@ -136,9 +164,17 @@ export function FestivalEntries({
                 {entry.originalRecipient ? (
                   <p>{entry.originalRecipient}</p>
                 ) : null}
-                {(entry.filmId && imdbUrl) || sourceFilmUrl ? (
+                {metadata ? (
+                  <p className="festival-entry-metadata">{metadata}</p>
+                ) : null}
+                {imdbUrl || sourceFilmUrl || (entry.filmId && tmdbUrl) ? (
                   <p className="festival-entry-links">
-                    {entry.filmId && imdbUrl ? (
+                    {entry.filmId && tmdbUrl ? (
+                      <a href={tmdbUrl} target="_blank" rel="noreferrer">
+                        TMDB ↗
+                      </a>
+                    ) : null}
+                    {imdbUrl ? (
                       <a href={imdbUrl} target="_blank" rel="noreferrer">
                         IMDb ↗
                       </a>

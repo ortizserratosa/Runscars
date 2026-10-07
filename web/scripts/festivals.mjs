@@ -1,6 +1,8 @@
 import { existsSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 import { parseEnv } from "node:util";
+import { buildMovieSnapshot } from "../src/lib/tmdb/catalog.mjs";
+import { refreshFestivalMovieMetadata } from "../../supabase/functions/_shared/festivals/metadata.mjs";
 import {
   enrichFestivalLinks,
   FestivalTmdbResolver,
@@ -96,12 +98,14 @@ async function enrichLinks(args) {
     "--after",
     "--env-file",
     "--report",
+    "--only-without-imdb",
   ]);
   const options = {};
   for (let index = 0; index < args.length; index += 1) {
     const key = args[index];
     if (!allowed.has(key)) throw new Error(`Opción desconocida: ${key}`);
-    if (["--apply", "--all"].includes(key)) options[key] = true;
+    if (["--apply", "--all", "--only-without-imdb"].includes(key))
+      options[key] = true;
     else {
       const value = args[++index];
       if (!value || value.startsWith("--"))
@@ -124,6 +128,11 @@ async function enrichLinks(args) {
     token: environment.TMDB_READ_ACCESS_TOKEN,
     cachedMovies: await linkRepository.cachedMovies(),
   });
+  const retryEntryIds = options["--only-without-imdb"]
+    ? (await linkRepository.retryEntriesWithoutImdb()).map(
+        (entry) => entry.entryId,
+      )
+    : null;
   let afterEntryId = Number(options["--after"] ?? 0);
   const reports = [];
   do {
@@ -134,6 +143,7 @@ async function enrichLinks(args) {
       limit: Number(options["--limit"] ?? 25),
       apply: options["--apply"] === true,
       reviewedEvidence: FESTIVAL_IDENTITY_EVIDENCE,
+      entryIds: retryEntryIds,
     });
     reports.push(report);
     console.log(JSON.stringify(report));
@@ -157,12 +167,89 @@ async function enrichLinks(args) {
   } while (true);
 }
 
+async function refreshMetadata(args) {
+  const allowed = new Set([
+    "--apply",
+    "--all",
+    "--limit",
+    "--after",
+    "--concurrency",
+    "--env-file",
+    "--report",
+  ]);
+  const options = {};
+  for (let index = 0; index < args.length; index++) {
+    const key = args[index];
+    if (!allowed.has(key)) throw new Error(`Opción desconocida: ${key}`);
+    if (["--apply", "--all"].includes(key)) options[key] = true;
+    else {
+      const value = args[++index];
+      if (!value || value.startsWith("--"))
+        throw new Error(`${key} requiere un valor`);
+      options[key] = value;
+    }
+  }
+  const environment = { ...process.env };
+  if (options["--env-file"])
+    Object.assign(
+      environment,
+      parseEnv(await readFile(path.resolve(options["--env-file"]), "utf8")),
+    );
+  const metadataRepository = new SupabaseFestivalExternalLinksRepository({
+    supabaseUrl:
+      environment.NEXT_PUBLIC_SUPABASE_URL ?? environment.SUPABASE_URL,
+    serviceRoleKey: environment.SUPABASE_SERVICE_ROLE_KEY,
+  });
+  const resolver = options["--apply"]
+    ? new FestivalTmdbResolver({ token: environment.TMDB_READ_ACCESS_TOKEN })
+    : null;
+  const client = {
+    fetchMovie: (id, locale) =>
+      resolver.request(
+        `https://api.themoviedb.org/3/movie/${id}?append_to_response=credits,external_ids&language=${locale}`,
+      ),
+  };
+  const reports = [];
+  let afterTmdbId = Number(options["--after"] ?? 0);
+  do {
+    const report = await refreshFestivalMovieMetadata({
+      repository: metadataRepository,
+      client,
+      buildSnapshot: buildMovieSnapshot,
+      afterTmdbId,
+      limit: Number(options["--limit"] ?? 50),
+      concurrency: Number(options["--concurrency"] ?? 4),
+      apply: options["--apply"] === true,
+    });
+    reports.push(report);
+    console.log(JSON.stringify(report));
+    afterTmdbId = report.nextTmdbId;
+    if (options["--report"])
+      await writeFile(
+        path.resolve(options["--report"]),
+        JSON.stringify(
+          {
+            schemaVersion: 1,
+            reports,
+            nextTmdbId: afterTmdbId,
+            hasMore: report.hasMore,
+          },
+          null,
+          2,
+        ) + "\n",
+      );
+    if (report.failed) process.exitCode = 1;
+    if (!options["--all"] || !report.hasMore) break;
+  } while (true);
+}
+
 function help() {
   console.log(`Uso:
   npm run festivals:import -- [ruta-al-manifiesto.json]
   npm run festivals:refresh -- [sundance cannes ...]
   npm run festivals:match -- <entry-id> <film-id> --reason <motivo>
-  npm run festivals:links -- [--apply] [--all] [--limit 25] [--after 0] [--env-file ruta] [--report ruta]`);
+  npm run festivals:links -- [--apply] [--all] [--limit 25] [--after 0] [--env-file ruta] [--report ruta] [--only-without-imdb]
+  npm run festivals:metadata -- [--apply] [--all] [--limit 50] [--after 0] [--concurrency 4] [--env-file ruta] [--report ruta]`);
 }
 
 const [command, ...args] = process.argv.slice(2);
@@ -171,6 +258,7 @@ try {
   else if (command === "refresh") await refresh(args);
   else if (command === "match") await match(args[0], args[1], args.slice(2));
   else if (command === "enrich-links") await enrichLinks(args);
+  else if (command === "refresh-metadata") await refreshMetadata(args);
   else if (!command || ["help", "-h", "--help"].includes(command)) help();
   else throw new Error(`Comando desconocido: ${command}`);
 } catch (error) {

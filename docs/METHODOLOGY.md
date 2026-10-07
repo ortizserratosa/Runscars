@@ -521,7 +521,8 @@ programa mayor verificado. Una nueva sección o corrección crea otra versión y
 mantiene el original y su procedencia.
 
 Los enlaces externos festivaleros tienen historial y puntero propios, separados
-del matching con el catálogo Oscar. TMDB permite obtener el identificador IMDb:
+del matching con el catálogo Oscar. TMDB aporta identidad, carteles y metadatos,
+con IMDb como identificador externo opcional:
 se exige título original o alternativo exacto y dirección coincidente; el año
 se contrasta solo cuando consta explícitamente en la fuente festivalera. No se
 usa el año de edición como año de producción. Un año de estreno explícito debe
@@ -533,6 +534,13 @@ método, las URLs y la captura factual mínima que sustentan la identidad; la
 vista pública expone identificadores y procedencia mínima de enlaces verificados. El
 enriquecimiento no modifica títulos, premios ni conjuntos originales, y no
 crea películas, candidaturas o elegibilidad en el catálogo de predicciones.
+
+Los metadatos festivaleros reutilizan las capturas TMDB por identificador y
+locale, con hash, URL, fecha de captura y caducidad. Solo se consultan identidades
+corroboradas; la visita web lee la caché local, sin llamar a la API ni exponer
+el token. La falta de IMDb no impide mostrar un cartel TMDB verificado. Un
+cartel ausente o una captura vencida conserva el título oficial sin inventar
+imágenes; tampoco se rotula una película festivalera como candidata Oscar.
 
 ### 11.1 Premios precursores oficiales
 

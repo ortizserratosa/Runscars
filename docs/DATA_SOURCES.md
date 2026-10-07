@@ -514,13 +514,18 @@ cinco secciones verificadas. NYFF sigue en curso y conserva Main Slate. El
 exclusiones y lagunas; las ocho ediciones cerradas se mantienen como archivos
 revisados y sus correcciones futuras usan manifiestos versionados.
 
-### IMDb para películas festivaleras fuera del catálogo · D-071
+### TMDB para películas festivaleras fuera del catálogo · D-071 y D-072
 
 La API de TMDB aporta búsquedas, títulos alternativos, créditos de dirección e
-identificadores externos IMDb. Se consulta desde servidor con el token existente
+identificadores externos IMDb, carteles y metadatos localizados. Se consulta
+desde servidor con el token existente
 y se contrasta la identidad con la entrada festivalera original. El enlace a
 IMDb no importa votos, críticas ni resultados y no añade una película a las
 predicciones. Se conservan las URLs de verificación, el método y los datos
 factuales mínimos; los homónimos o créditos insuficientes quedan pendientes.
 Los identificadores y la evidencia se almacenan en historial independiente de
 los recibos oficiales inmutables. No se añade un nuevo Cron en este corte.
+Los carteles y metadatos reutilizan `tmdb_movies` y `tmdb_movie_snapshots` sin
+insertar una película en el catálogo Oscar. IMDb es opcional; su ausencia no
+descarta una identidad TMDB corroborada. Se conserva la atribución TMDB y la
+caducidad de las capturas existentes.

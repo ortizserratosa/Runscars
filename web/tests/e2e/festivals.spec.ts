@@ -1,9 +1,18 @@
 import { expect, test } from "@playwright/test";
 import externalLinksFixture from "../../data/festivals/2026-external-links-fixture.json";
 
-test("links verified festival films to IMDb without requiring an Oscar catalogue page", async ({
+test("shows TMDB posters and metadata outside the Oscar catalogue, with IMDb secondary", async ({
   page,
 }) => {
+  await page.route("**/_next/image?*", (route) =>
+    route.fulfill({
+      contentType: "image/png",
+      body: Buffer.from(
+        "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aG9sAAAAASUVORK5CYII=",
+        "base64",
+      ),
+    }),
+  );
   for (const locale of ["en", "es"] as const) {
     await page.goto(
       locale === "en"
@@ -18,9 +27,25 @@ test("links verified festival films to IMDb without requiring an Oscar catalogue
         .getByRole("link", { name: link.originalTitle, exact: true });
       await expect(title).toHaveAttribute(
         "href",
-        `https://www.imdb.com/title/${link.imdbId}/`,
+        `https://www.themoviedb.org/movie/${link.tmdbId}`,
       );
       await expect(title).toHaveAttribute("target", "_blank");
+      await expect(
+        selection
+          .locator(".festival-entry-links")
+          .getByRole("link", { name: "IMDb" }),
+      ).toHaveAttribute("href", `https://www.imdb.com/title/${link.imdbId}/`);
+      await expect(selection.locator(".festival-entry-poster")).toHaveAttribute(
+        "href",
+        `https://www.themoviedb.org/movie/${link.tmdbId}`,
+      );
+      await expect(selection.locator(".poster-edition")).toHaveCount(0);
+      if (link.originalTitle === "Bedford Park") {
+        await expect(selection.locator(".poster-image")).toBeVisible();
+        await expect(
+          selection.locator(".festival-entry-metadata"),
+        ).toContainText("2026");
+      }
       await expect(selection.locator('a[href*="/peliculas/"]')).toHaveCount(0);
     }
   }
@@ -67,11 +92,27 @@ test("explores the calendar, filters films and keeps source links", async ({
       .filter({ hasText: "FJORD" })
       .getByRole("link", { name: "Film in the source" }),
   ).toHaveAttribute("href", "https://www.festival-cannes.com/en/f/fjord/");
-  await awards.getByRole("link", { name: "FJORD" }).click();
+  await awards.locator("h3").getByRole("link", { name: "FJORD" }).click();
   await expect(page).toHaveURL(/\/en\/peliculas\/fjord$/);
   await expect(
     page.getByRole("heading", { level: 1, name: "Fjord" }),
   ).toBeVisible();
+});
+
+test("keeps a usable unbranded film placeholder when no poster is cached", async ({
+  page,
+}) => {
+  await page.goto("/en/festivales/cannes/2026");
+  const entry = page
+    .locator("#awards .festival-entry-list > li")
+    .filter({ hasText: "FJORD" });
+  const poster = entry.locator(".festival-entry-poster");
+  await expect(poster).toHaveAttribute("href", "/en/peliculas/fjord");
+  await expect(poster.locator(".poster-title")).toContainText("FJORD");
+  await expect(poster.locator("img")).toHaveCount(0);
+  await expect(poster.locator(".poster-edition")).toHaveCount(0);
+  await poster.click();
+  await expect(page).toHaveURL(/\/en\/peliculas\/fjord$/);
 });
 
 test("offers the reviewed programme and explains partial coverage", async ({

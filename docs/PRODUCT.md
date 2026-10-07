@@ -97,10 +97,11 @@ versionados con fuente, captura y matching editorial. No se promedian ni
 participan en el consenso profesional, la recepción, los mercados o la
 comunidad. Telluride y Nueva York figuran como selecciones no competitivas.
 
-Las películas festivaleras pueden enlazar a IMDb aunque no pertenezcan al
-catálogo de predicciones. El enlace exige una identidad verificada y no crea
-una candidatura ni acredita elegibilidad Oscar. Cuando existe ficha en Runscars
-se mantiene también ese acceso; las dudas siguen visibles sin enlace externo.
+Las películas festivaleras pueden mostrar carteles y metadatos de TMDB aunque
+no pertenezcan al catálogo de predicciones. La identidad debe estar verificada;
+no crea una candidatura ni acredita elegibilidad Oscar. Cuando existe ficha en
+Runscars se mantiene ese acceso; fuera del catálogo se puede abrir TMDB. IMDb
+es un enlace secundario opcional. Las dudas siguen visibles sin imagen asociada.
 
 ### Premios precursores
 
@@ -241,8 +242,9 @@ no forman parte de la identidad de la candidatura.
    nueve ediciones de 2026, con fechas, estado y adelantos de películas.
 2. Entra en una edición, busca por película, cineasta o premio y filtra por
    sección. Consulta títulos y destinatarios originales, fuente y fechas.
-3. Sigue un título a su ficha en Runscars o a IMDb cuando existe una identidad
-   verificada, incluida una película fuera de las predicciones. Los títulos sin
+3. Ve el cartel disponible y sigue un título a su ficha en Runscars o TMDB cuando
+   existe una identidad verificada, incluida una película fuera de las
+   predicciones. Los títulos sin
    correspondencia siguen visibles, con la revisión de matching reservada a
    administración.
 4. Si falta una selección o un palmarés en Runscars, se ofrece la web oficial
@@ -366,7 +368,8 @@ el editor ofrece cargar ese borrador antes de guardar con la cuenta. No modifica
 una quiniela existente sin la acción de guardado del usuario. La disponibilidad
 de candidaturas y los límites proceden de los mismos datos que el editor autenticado.
 
-Festivales, la edición semanal y la prueba de quiniela reutilizan carteles del
+Festivales muestran también carteles TMDB de identidades verificadas fuera del
+catálogo. La edición semanal y la prueba de quiniela reutilizan carteles del
 catálogo cuando existen. Las tarjetas al compartir muestran el festival y un
 premiado o película seleccionada, la categoría y su líder, o la semana elegida;
 no confunden una predicción profesional con un ganador oficial.

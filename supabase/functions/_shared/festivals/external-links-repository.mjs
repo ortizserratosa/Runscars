@@ -78,27 +78,74 @@ export class SupabaseFestivalExternalLinksRepository {
     const rows = await allRows((from, to) =>
       this.client
         .from("tmdb_movie_snapshots")
-        .select("tmdb_id,original_data,source_url,fetched_at")
+        .select(
+          "tmdb_id,original_data,source_url,fetched_at,last_verified_at,expires_at",
+        )
         .eq("locale", "en-US")
+        .gt("expires_at", new Date().toISOString())
         .order("tmdb_id")
-        .order("fetched_at", { ascending: false })
+        .order("last_verified_at", { ascending: false })
         .order("id")
         .range(from, to),
     );
     const movies = new Map();
     for (const row of rows) {
-      if (
-        movies.has(row.tmdb_id) ||
-        !/^tt\d{7,10}$/.test(row.original_data?.imdb_id ?? "")
-      )
-        continue;
+      if (movies.has(row.tmdb_id)) continue;
       movies.set(row.tmdb_id, {
         originalData: row.original_data,
         sourceUrl: row.source_url,
-        capturedAt: row.fetched_at,
+        capturedAt: row.last_verified_at ?? row.fetched_at,
       });
     }
     return [...movies.values()];
+  }
+
+  async confirmedMovieIds() {
+    const rows = await allRows((from, to) =>
+      this.client
+        .from("public_festival_external_links")
+        .select("entry_id,tmdb_id")
+        .order("entry_id")
+        .range(from, to),
+    );
+    return [...new Set(rows.map((row) => row.tmdb_id))]
+      .filter((id) => Number.isSafeInteger(id) && id > 0)
+      .sort((a, b) => a - b);
+  }
+
+  async retryEntriesWithoutImdb() {
+    const entries = await this.currentEntries();
+    const reviews = await allRows((from, to) =>
+      this.client
+        .from("festival_entry_external_link_history")
+        .select("entry_id")
+        .eq("status", "pending_review")
+        .eq("method", "unique-identity-without-valid-imdb-id")
+        .order("id")
+        .range(from, to),
+    );
+    const confirmed = await allRows((from, to) =>
+      this.client
+        .from("public_festival_external_links")
+        .select("entry_id")
+        .order("entry_id")
+        .range(from, to),
+    );
+    const confirmedIds = new Set(confirmed.map((row) => row.entry_id));
+    const reviewIds = new Set(reviews.map((row) => row.entry_id));
+    return entries.filter(
+      (entry) =>
+        reviewIds.has(entry.entryId) && !confirmedIds.has(entry.entryId),
+    );
+  }
+
+  async saveMetadata(prepared) {
+    const result = await this.client.rpc("persist_festival_tmdb_metadata", {
+      payload: prepared,
+    });
+    if (result.error)
+      throw new Error(`Metadatos festivaleros TMDB: ${result.error.message}`);
+    return result.data;
   }
 
   async persist(payload) {

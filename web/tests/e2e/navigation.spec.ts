@@ -327,7 +327,7 @@ test("publishes the nine-edition festival circuit in Spanish and English", async
     page.getByRole("heading", { name: "Palmarés oficial" }),
   ).toBeVisible();
   await expect(
-    page.locator("#awards").getByRole("link", { name: "FJORD" }),
+    page.locator("#awards h3").getByRole("link", { name: "FJORD" }),
   ).toBeVisible();
 
   await page.goto("/en/festivales/cannes/2026");

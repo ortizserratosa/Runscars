@@ -172,6 +172,7 @@ describe("complete public repository reads", () => {
       { length: count },
       (_, index) => ({
         entry_id: index + 1,
+        tmdb_id: 9000000 + index,
         imdb_id: `tt${String(9000000 + index)}`,
       }),
     );
@@ -187,6 +188,7 @@ describe("complete public repository reads", () => {
       filmTitle: "Current film 1",
       matchStatus: "matched",
       imdbId: "tt9000000",
+      tmdbId: 9000000,
     });
     expect(edition.selection?.entries[count - 1]).toMatchObject({
       id: String(count),
@@ -195,6 +197,7 @@ describe("complete public repository reads", () => {
       filmTitle: `Current film ${count}`,
       matchStatus: "matched",
       imdbId: `tt${9000000 + count - 1}`,
+      tmdbId: 9000000 + count - 1,
     });
     const entryPages = database.requests.filter(
       (request) => request.table === "festival_entries",

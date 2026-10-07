@@ -119,6 +119,9 @@ Comandos canónicos desde la raíz:
 - `npm run tmdb:import`: importa el manifiesto de fase 4 de forma idempotente.
 - `npm run tmdb:refresh`: renueva en `es-ES` y `en-US` las capturas TMDB de la
   temporada activa sin modificar sus emparejamientos.
+- `npm run festivals:metadata -- --apply --all`: captura metadatos y carteles de
+  los IDs TMDB festivaleros corroborados, sin añadir películas al catálogo Oscar;
+  sin `--apply` solo enumera IDs y locales previstos. Requiere secretos de servidor.
 - `npm run tmdb:match -- <film-id> <tmdb-id> --reason "<motivo>"`: corrección
   editorial trazable. Los dos últimos comandos requieren secretos de servidor.
 - `npm run ingest:manual -- <manifiesto.json>`: carga profesional manual,

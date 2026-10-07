@@ -9,7 +9,10 @@ import type {
 import {
   festivalImdbUrl,
   festivalSourceFilmUrl,
+  festivalTmdbUrl,
 } from "../../src/lib/festivals/presentation";
+import type { FestivalFilmArtwork } from "../../src/lib/repositories/artwork";
+import { PosterBlock } from "../../src/app/components/PosterBlock";
 
 beforeEach(() => vi.stubGlobal("React", React));
 afterEach(() => vi.unstubAllGlobals());
@@ -17,6 +20,7 @@ afterEach(() => vi.unstubAllGlobals());
 function renderEntry(
   overrides: Partial<FestivalEntryView>,
   locale: "es" | "en" = "en",
+  artwork: Record<string, FestivalFilmArtwork> = {},
 ) {
   const entry: FestivalEntryView = {
     id: "test-entry",
@@ -42,16 +46,37 @@ function renderEntry(
     entries: [entry],
   };
   return renderToStaticMarkup(
-    <FestivalEntries set={set} locale={locale} artwork={{}} />,
+    <FestivalEntries set={set} locale={locale} artwork={artwork} />,
   );
 }
 
 describe("verified external festival links", () => {
-  it("links a festival title to IMDb while leaving its catalogue matching unchanged", () => {
-    const html = renderEntry({
-      imdbId: "tt99990001",
-      sourceFilmUrl: "https://festival.example/film",
-    });
+  it("uses verified TMDB for a festival title and poster outside the Oscar catalogue, with IMDb secondary", () => {
+    const html = renderEntry(
+      {
+        tmdbId: 1470198,
+        imdbId: "tt99990001",
+        sourceFilmUrl: "https://festival.example/film",
+      },
+      "en",
+      {
+        "test-entry": {
+          title: "Localized movie title",
+          releaseDate: "2026-01-24",
+          runtime: 118,
+          posterPath: "/verified-poster.jpg",
+          backdropPath: null,
+        },
+      },
+    );
+    expect(html).toMatch(
+      /<h3><a href="https:\/\/www.themoviedb.org\/movie\/1470198"/,
+    );
+    expect(html).toContain('class="festival-entry-poster"');
+    expect(html).toContain("verified-poster.jpg");
+    expect(html).toContain("Localized movie title · 2026 · 118 min");
+    expect(html).toMatch(/<h3><a[^>]*>Festival only film /);
+    expect(html).not.toContain("OSCAR");
     expect(html).toContain('href="https://www.imdb.com/title/tt99990001/"');
     expect(html).toContain('href="https://festival.example/film"');
     expect(html).toContain("Film in the source");
@@ -64,23 +89,42 @@ describe("verified external festival links", () => {
         filmId: "catalog-film",
         filmTitle: "Catalogue film",
         matchStatus: "matched",
+        tmdbId: 1470198,
         imdbId: "tt99990002",
       },
       "es",
     );
     expect(html).toContain('href="/peliculas/catalog-film"');
     expect(html).toContain('href="https://www.imdb.com/title/tt99990002/"');
+    expect(html).toContain('href="https://www.themoviedb.org/movie/1470198"');
     expect(html).toContain("Festival only film");
   });
 
   it("renders unresolved identities as plain text and rejects malformed external destinations", () => {
     const html = renderEntry({
       imdbId: "javascript:invalid",
+      tmdbId: -42,
       sourceFilmUrl: "http://festival.example/film",
     });
     expect(html).toContain("Festival only film");
     expect(html).not.toContain("<a ");
     expect(festivalImdbUrl("tt1234567/path")).toBeNull();
     expect(festivalSourceFilmUrl("javascript:alert(1)")).toBeNull();
+    expect(festivalTmdbUrl(1.5)).toBeNull();
+    expect(festivalTmdbUrl(Number.NaN)).toBeNull();
+  });
+
+  it("keeps a verified TMDB link and an unbranded title placeholder when no poster is available", () => {
+    const html = renderEntry({ tmdbId: 1558701, imdbId: null });
+    expect(html).toContain('href="https://www.themoviedb.org/movie/1558701"');
+    expect(html).toContain('class="poster-title"');
+    expect(html).not.toContain("<img");
+    expect(html).not.toContain("OSCAR");
+    expect(html).not.toContain("IMDb");
+  });
+
+  it("preserves the default Oscar label outside festival context", () => {
+    const html = renderToStaticMarkup(<PosterBlock title="Catalogue film" />);
+    expect(html).toContain("OSCAR · 2027");
   });
 });

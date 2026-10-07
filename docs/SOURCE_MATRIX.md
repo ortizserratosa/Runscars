@@ -229,7 +229,8 @@ a cinco secciones y NYFF a Main Slate. La
 [revisión festivalera](audits/2026-10-07/festival-research.md) acredita las fuentes,
 los formatos excluidos y las correcciones sin eliminar originales.
 
-TMDB verifica enlaces IMDb por título y dirección para películas festivaleras,
-incluidas las ausentes del catálogo Oscar. Es enriquecimiento de identidad;
+TMDB verifica identidades por título y dirección y aporta carteles y metadatos
+para películas festivaleras, incluidas las ausentes del catálogo Oscar. IMDb es
+un enlace secundario opcional. Es enriquecimiento de identidad;
 no aporta una señal, candidatura ni elegibilidad. Los homónimos y las entradas
-con evidencia insuficiente conservan su revisión pendiente (D-071).
+con evidencia insuficiente conservan su revisión pendiente (D-071 y D-072).

@@ -441,8 +441,9 @@ Este corte conserva el MVP y sus ocho categorías públicas. Recupera órdenes
 originales verificables y discovery por categoría, incorpora una voz de Variety
 con conectores independientes, amplía programas y palmarés oficiales de 2026 y
 publica calendarios/resultados de sindicatos, Critics Choice y BAFTA como contexto
-separado. Los enlaces IMDb verificados permiten explorar películas festivaleras
-fuera del catálogo de predicciones. D-068 a D-071 registran las decisiones nuevas.
+separado. Los carteles y metadatos TMDB verificados permiten explorar películas
+festivaleras fuera del catálogo de predicciones, con IMDb opcional. D-068 a
+D-072 registran las decisiones nuevas.
 
 La puerta de este mantenimiento exige fixtures de extracción, importación
 idempotente, RLS e inmutabilidad de los conjuntos nuevos, fuentes originales

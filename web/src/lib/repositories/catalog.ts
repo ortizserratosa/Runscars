@@ -163,6 +163,7 @@ export const getFilmCatalogDetail = cache(async function getFilmCatalogDetail(
       .eq("tmdb_id", film.tmdb_id)
       .in("locale", locale === "es-ES" ? ["es-ES"] : ["en-US", "es-ES"])
       .gt("expires_at", now)
+      .order("last_verified_at", { ascending: false })
       .order("fetched_at", { ascending: false });
 
     const snapshot =

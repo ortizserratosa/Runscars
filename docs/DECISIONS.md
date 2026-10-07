@@ -1429,3 +1429,22 @@ ejemplos manuales de nominaciones y ganador coincidieron con
 - **Operación:** enriquecimiento desde servidor en lotes acotados con el token
   TMDB existente, sin nueva tarea programada. Los secretos no aparecen en las
   vistas públicas ni en los recibos versionados.
+
+## D-072 · Carteles TMDB de películas festivaleras fuera del catálogo
+
+- **Fecha:** 2026-10-07
+- **Estado:** Aceptada
+- **Origen:** aclaración expresa del usuario: la asociación solicitada era para
+  carteles y metadatos TMDB; IMDb tiene prioridad secundaria.
+- **Decisión:** ampliar D-071 para publicar la identidad TMDB corroborada aunque
+  no disponga de IMDb. Reutilizar `tmdb_movies` y `tmdb_movie_snapshots` por ID
+  y locale para las imágenes y metadatos, sin crear entradas en `films`,
+  temporadas o candidaturas. La ficha propia conserva prioridad cuando existe;
+  fuera del catálogo se enlaza TMDB y IMDb queda como enlace opcional.
+- **Integridad:** se mantienen los requisitos de título exacto, dirección y años
+  explícitos, la revisión de homónimos y el historial inmutable. La imagen no
+  acredita elegibilidad ni candidatura Oscar y no muestra ese sello. Se usan las
+  reglas vigentes de hash, caducidad y atribución de metadatos TMDB.
+- **Operación:** captura desde servidor de los IDs verificados, con locales
+  `es-ES` y `en-US`, importación idempotente y fallos aislados. La visita
+  pública lee la caché; no dispara llamadas a TMDB. No se crea un nuevo Cron.

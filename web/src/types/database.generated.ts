@@ -3121,6 +3121,7 @@ export type Database = {
           fetched_at: string;
           expires_at: string;
           created_at: string;
+          last_verified_at: string;
         };
         Insert: {
           id: number;
@@ -3144,6 +3145,7 @@ export type Database = {
           fetched_at: string;
           expires_at: string;
           created_at?: string;
+          last_verified_at: string;
         };
         Update: {
           id?: number;
@@ -3167,6 +3169,7 @@ export type Database = {
           fetched_at?: string;
           expires_at?: string;
           created_at?: string;
+          last_verified_at?: string;
         };
         Relationships: [
           {

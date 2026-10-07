@@ -22,6 +22,7 @@ export type FestivalEntryView = {
   awardType: string | null;
   filmId: string | null;
   filmTitle: string | null;
+  tmdbId?: number | null;
   imdbId?: string | null;
   sourceFilmUrl?: string | null;
   matchStatus: "matched" | "pending_review" | "unmatched";
@@ -280,6 +281,7 @@ function fixtureSets(editionId: string): FestivalSetView[] {
           awardType: "awardType" in entry ? entry.awardType : null,
           filmId: film?.id ?? null,
           filmTitle: film?.title ?? null,
+          tmdbId: externalLink?.tmdbId ?? null,
           imdbId: externalLink?.imdbId ?? null,
           sourceFilmUrl: festivalSourceFilmUrl(
             sourceData.filmUrl ?? sourceData.sourceFilmUrl,
@@ -397,7 +399,7 @@ async function databaseIndex(): Promise<FestivalEditionView[]> {
       fetchAllRows((from, to) =>
         supabase
           .from("public_festival_external_links")
-          .select("entry_id,imdb_id")
+          .select("entry_id,tmdb_id,imdb_id")
           .in("entry_id", ids)
           .order("entry_id")
           .range(from, to),
@@ -405,7 +407,7 @@ async function databaseIndex(): Promise<FestivalEditionView[]> {
     ),
   ]);
   const externalLinkByEntry = new Map(
-    externalLinks.map((link) => [link.entry_id, link.imdb_id]),
+    externalLinks.map((link) => [link.entry_id, link]),
   );
   const historyIds = currentMatches.map((match) => match.match_history_id);
   const histories = await fetchRowsByIds(historyIds, (ids) =>
@@ -482,7 +484,8 @@ async function databaseIndex(): Promise<FestivalEditionView[]> {
             awardType: entry.award_type,
             filmId,
             filmTitle: film?.title ?? null,
-            imdbId: externalLinkByEntry.get(entry.id) ?? null,
+            tmdbId: externalLinkByEntry.get(entry.id)?.tmdb_id ?? null,
+            imdbId: externalLinkByEntry.get(entry.id)?.imdb_id ?? null,
             sourceFilmUrl: festivalSourceFilmUrl(
               entry.source_film_url ?? entry.source_display_film_url,
             ),
@@ -528,7 +531,7 @@ async function databaseIndex(): Promise<FestivalEditionView[]> {
 const cachedDatabaseIndex = unstable_cache(
   databaseIndex,
   [
-    "public-festivals-v3-external-links",
+    "public-festivals-v4-tmdb-metadata",
     process.env.NEXT_PUBLIC_SUPABASE_URL ?? "unconfigured",
   ],
   { revalidate: 60 },

@@ -131,6 +131,120 @@ describe("festival identities separate from Oscar eligibility", () => {
     });
   });
 
+  it("classifies a confirmed collection after a movie 404 and inspects its film parts", async () => {
+    const fetcher = vi.fn(async (input: string | URL | Request) => {
+      const url = new URL(input instanceof Request ? input.url : String(input));
+      if (url.pathname.endsWith("/search/movie"))
+        return Response.json({ total_pages: 1, results: [{ id: 90 }] });
+      if (url.pathname.endsWith("/collection/90"))
+        return Response.json({
+          id: 90,
+          name: "A Common Story Collection",
+          parts: [{ id: 11, title: "A Common Story" }],
+          overview: "This provider text must not be preserved in evidence",
+        });
+      if (url.pathname.endsWith("/movie/90"))
+        return new Response(null, { status: 404 });
+      return Response.json(movie(11));
+    });
+    const resolver = new FestivalTmdbResolver({ token: "test-only", fetcher });
+    const resolved = await resolver.resolve(festivalIdentityClaim(entry));
+    expect(resolved).toMatchObject({
+      status: "confirmed",
+      tmdbId: 11,
+      evidence: {
+        excludedProviderResources: [
+          {
+            resourceId: 90,
+            resourceType: "collection",
+            sourceUrl:
+              "https://api.themoviedb.org/3/collection/90?language=en-US",
+          },
+        ],
+      },
+    });
+    expect(JSON.stringify(resolved)).not.toContain("provider text");
+    expect(
+      fetcher.mock.calls.some(([url]) => String(url).includes("/movie/11?")),
+    ).toBe(true);
+  });
+
+  it("retains ambiguity when a collection contains another exact-title/director film not returned by search", async () => {
+    const fetcher = vi.fn(async (input: string | URL | Request) => {
+      const url = new URL(input instanceof Request ? input.url : String(input));
+      if (url.pathname.endsWith("/search/movie"))
+        return Response.json({
+          total_pages: 1,
+          results: [{ id: 11 }, { id: 90 }],
+        });
+      if (url.pathname.endsWith("/movie/90"))
+        return new Response(null, { status: 404 });
+      if (url.pathname.endsWith("/collection/90"))
+        return Response.json({
+          id: 90,
+          name: "A Common Story Collection",
+          parts: [{ id: 12, title: "A Common Story" }],
+        });
+      return Response.json(movie(Number(url.pathname.split("/").at(-1))));
+    });
+    const resolver = new FestivalTmdbResolver({ token: "test-only", fetcher });
+    expect(await resolver.resolve(festivalIdentityClaim(entry))).toMatchObject({
+      status: "pending_review",
+      reason: "ambiguous-exact-title-director",
+      candidates: [{ tmdbId: 11 }, { tmdbId: 12 }],
+    });
+  });
+
+  it("keeps a missing movie candidate as a failure when its collection endpoint is also unavailable", async () => {
+    const fetcher = vi.fn(async (input: string | URL | Request) => {
+      const url = new URL(input instanceof Request ? input.url : String(input));
+      if (url.pathname.endsWith("/search/movie"))
+        return Response.json({
+          total_pages: 1,
+          results: [{ id: 11 }, { id: 90 }],
+        });
+      if (url.pathname.endsWith("/movie/11")) return Response.json(movie(11));
+      return new Response(null, { status: 404 });
+    });
+    const resolver = new FestivalTmdbResolver({ token: "test-only", fetcher });
+    await expect(
+      resolver.resolve(festivalIdentityClaim(entry)),
+    ).rejects.toThrow("HTTP 404");
+  });
+
+  it.each([
+    { id: 91, name: "Wrong ID", parts: [] },
+    { id: 90, name: "", parts: [] },
+    { id: 90, name: "Invalid parts", parts: {} },
+    {
+      id: 90,
+      name: "Invalid film",
+      parts: [{ id: "11", title: "A Common Story" }],
+    },
+    { ...movie(90), parts: [] },
+  ])(
+    "rejects malformed collection identity instead of hiding a movie failure: %j",
+    async (collection) => {
+      const fetcher = vi.fn(async (input: string | URL | Request) => {
+        const url = new URL(
+          input instanceof Request ? input.url : String(input),
+        );
+        if (url.pathname.endsWith("/search/movie"))
+          return Response.json({ total_pages: 1, results: [{ id: 90 }] });
+        if (url.pathname.endsWith("/collection/90"))
+          return Response.json(collection);
+        return new Response(null, { status: 404 });
+      });
+      const resolver = new FestivalTmdbResolver({
+        token: "test-only",
+        fetcher,
+      });
+      await expect(
+        resolver.resolve(festivalIdentityClaim(entry)),
+      ).rejects.toThrow("colección válida");
+    },
+  );
+
   it("does not claim uniqueness for incomplete candidate pools", async () => {
     const resolver = new FestivalTmdbResolver({
       token: "test-only",
@@ -213,7 +327,7 @@ describe("festival identities separate from Oscar eligibility", () => {
     ).toBeNull();
   });
 
-  it("requires a valid IMDb ID for the unique identity", async () => {
+  it("confirms a unique TMDB identity while retaining an invalid original IMDb value", async () => {
     const resolver = new FestivalTmdbResolver({
       token: "test-only",
       fetcher: api([[11]], {
@@ -221,8 +335,10 @@ describe("festival identities separate from Oscar eligibility", () => {
       }),
     });
     expect(await resolver.resolve(festivalIdentityClaim(entry))).toMatchObject({
-      status: "pending_review",
-      reason: "unique-identity-without-valid-imdb-id",
+      status: "confirmed",
+      tmdbId: 11,
+      imdbId: null,
+      originalData: { imdb_id: "https://wrong.example/id" },
     });
   });
 

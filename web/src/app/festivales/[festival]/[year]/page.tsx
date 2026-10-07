@@ -17,8 +17,8 @@ import type { Locale } from "../../../../lib/i18n/config";
 import { getRequestLocale } from "../../../../lib/i18n/server";
 import { absoluteUrl, buildLocalizedMetadata } from "../../../../lib/seo";
 import {
-  getFilmArtwork,
-  type FilmArtwork,
+  getFestivalArtwork,
+  type FestivalFilmArtwork,
 } from "../../../../lib/repositories/artwork";
 import { ShareButton } from "../../../components/ShareButton";
 import { JsonLd } from "../../../components/JsonLd";
@@ -64,7 +64,7 @@ function SetSection({
   locale,
 }: {
   set: FestivalSetView;
-  artwork: Record<string, FilmArtwork>;
+  artwork: Record<string, FestivalFilmArtwork>;
   en: boolean;
   locale: Locale;
 }) {
@@ -143,8 +143,8 @@ export default async function FestivalEditionPage({ params }: PageProps) {
   const sets = [edition.awards, edition.selection].filter(
     (set): set is FestivalSetView => Boolean(set),
   );
-  const artwork = await getFilmArtwork(
-    sets.flatMap((set) => set.entries.map((entry) => entry.filmId)),
+  const artwork = await getFestivalArtwork(
+    sets.flatMap((set) => set.entries),
     locale,
   );
   const pagePath = localizedPath(
