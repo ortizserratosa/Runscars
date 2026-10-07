@@ -508,7 +508,7 @@ describe("professional ingestion adapters", () => {
         observation.categoryId === "best-picture",
     );
 
-    expect(batch.extractorVersion).toBe("awards-daily-v8");
+    expect(batch.extractorVersion).toBe("awards-daily-v9");
     expect(bestPicture).toHaveLength(10);
     expect(
       bestPicture.every(
@@ -543,7 +543,7 @@ describe("professional ingestion adapters", () => {
       },
     );
 
-    expect(batch.extractorVersion).toBe("awards-daily-v8");
+    expect(batch.extractorVersion).toBe("awards-daily-v9");
     expect(
       batch.publications[0].observations.map(
         (observation: { originalValue: { raw: string } }) =>
@@ -899,7 +899,7 @@ describe("professional ingestion adapters", () => {
       },
     });
 
-    expect(batch.extractorVersion).toBe("awardswatch-multicategory-v6");
+    expect(batch.extractorVersion).toBe("awardswatch-multicategory-v7");
     expect(batch.publications).toEqual([
       expect.objectContaining({
         isMutable: true,

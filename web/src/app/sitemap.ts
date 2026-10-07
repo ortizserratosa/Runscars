@@ -9,6 +9,7 @@ import {
 import { getSourceIndex } from "../lib/repositories/sources";
 import { absoluteUrl } from "../lib/seo";
 import { listFestivalRoutes } from "../lib/festivals/data";
+import { listPrecursorRoutes } from "../lib/precursors/data";
 
 const PUBLIC_ROUTES = [
   "/",
@@ -17,6 +18,7 @@ const PUBLIC_ROUTES = [
   "/archivo",
   "/fuentes",
   "/festivales",
+  "/premios",
   "/metodologia",
   "/evaluacion",
   "/comunidad",
@@ -51,12 +53,14 @@ function localizedEntries(entry: SitemapEntry): MetadataRoute.Sitemap {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [filmIds, personIds, sources, festivalRoutes] = await Promise.all([
-    listCatalogFilmIds(),
-    listCatalogPersonIds(),
-    getSourceIndex(),
-    listFestivalRoutes(),
-  ]);
+  const [filmIds, personIds, sources, festivalRoutes, precursorRoutes] =
+    await Promise.all([
+      listCatalogFilmIds(),
+      listCatalogPersonIds(),
+      getSourceIndex(),
+      listFestivalRoutes(),
+      listPrecursorRoutes(),
+    ]);
   const categoryRoutes = [2026, 2027].flatMap((year) =>
     PUBLIC_CATEGORIES.map((category) => `/temporadas/${year}/${category.slug}`),
   );
@@ -81,6 +85,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       path,
       changeFrequency: "daily" as const,
       priority: 0.8,
+    })),
+    ...precursorRoutes.map((path) => ({
+      path,
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
     })),
     ...filmIds.map((filmId) => ({
       path: `/peliculas/${filmId}`,

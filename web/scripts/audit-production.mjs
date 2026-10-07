@@ -55,7 +55,7 @@ const predictionConnectors = [
   {
     id: "awardswatch-predictions",
     endpoint_url: "https://awardswatch.com/oscar-predictions-hq/",
-    extractor_version: "awardswatch-multicategory-v6",
+    extractor_version: "awardswatch-multicategory-v7",
     configuration: {
       season_id: "oscars-2027",
       ceremony_year: 2027,
@@ -69,7 +69,7 @@ const predictionConnectors = [
     id: "awards-daily-predictions",
     endpoint_url:
       "https://www.awardsdaily.com/wp-json/wp/v2/search?search=2027%20Oscar%20Predictions&per_page=20&_fields=id,url,title,subtype",
-    extractor_version: "awards-daily-v8",
+    extractor_version: "awards-daily-v9",
     configuration: {
       season_id: "oscars-2027",
       ceremony_year: 2027,
@@ -132,6 +132,18 @@ const predictionConnectors = [
         "https://www.theringer.com/2026/03/20/oscars/oscars-2027-predictions-best-picture-movies-contenders",
     },
   },
+  ...publicPredictionCategories.map((categoryId) => ({
+    id: `variety-${categoryId}-predictions`,
+    endpoint_url: "https://variety.com/lists/2027-oscars-predictions/",
+    extractor_version: "variety-datawrapper-v1",
+    configuration: {
+      season_id: "oscars-2027",
+      ceremony_year: 2027,
+      category_id: categoryId,
+      discovery_url: "https://variety.com/lists/2027-oscars-predictions/",
+      required_category_ids: [categoryId],
+    },
+  })),
 ];
 
 async function auditPredictionParsers() {

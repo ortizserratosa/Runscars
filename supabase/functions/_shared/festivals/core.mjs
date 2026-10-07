@@ -177,10 +177,18 @@ export async function prepareFestivalSet(manifest, catalogue = []) {
     return { ...normalized, ...matchFestivalEntry(normalized, catalogue) };
   });
   const identity = {
+    schemaVersion: 2,
     editionId,
     kind,
     source,
-    entries: entries.map(({ originalData: _raw, ...entry }) => entry),
+    entries: entries.map((entry) => ({
+      entryOrder: entry.entryOrder,
+      section: entry.section,
+      originalTitle: entry.originalTitle,
+      originalRecipient: entry.originalRecipient,
+      awardType: entry.awardType,
+      isFeature: entry.isFeature,
+    })),
   };
   const correctsSetId =
     typeof manifest.correctsSetId === "string" ? manifest.correctsSetId : null;

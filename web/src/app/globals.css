@@ -363,6 +363,14 @@
 .festival-entry-copy .festival-award-name {
   font-weight: 650;
 }
+.festival-entry-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}
+.festival-entry-links a {
+  text-underline-offset: 0.2em;
+}
 .festival-provenance {
   margin-top: 1.2rem;
   font-size: 0.8rem;

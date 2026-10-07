@@ -1,0 +1,264 @@
+{
+  "schemaVersion": 1,
+  "scope": "Read-only research probes, no production import; a single result page does not prove uniqueness.",
+  "probes": [
+    {
+      "query": "17",
+      "explicitSourceMovieYear": null,
+      "sourceUrl": "https://api.themoviedb.org/3/search/movie?query=17&language=en-US&include_adult=false",
+      "capturedAt": "2026-10-07T09:09:19.692Z",
+      "publishedAt": null,
+      "totalPages": 59,
+      "page": 1,
+      "originalExactCandidateCountOnPage": 1,
+      "details": [
+        {
+          "sourceUrl": "https://api.themoviedb.org/3/movie/1619815?append_to_response=credits%2Cexternal_ids&language=en-US",
+          "capturedAt": "2026-10-07T09:09:19.709Z",
+          "originalData": {
+            "id": 1619815,
+            "title": "17",
+            "original_title": "17",
+            "release_date": "2026-02-18",
+            "external_ids": {
+              "imdb_id": "tt37775862"
+            },
+            "directors": [
+              {
+                "id": 1686844,
+                "name": "Kosara Mitić",
+                "original_name": "Kosara Mitik",
+                "job": "Director",
+                "credit_id": "696f515d02fb522289abcfab"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "query": "17",
+      "explicitSourceMovieYear": 2026,
+      "sourceUrl": "https://api.themoviedb.org/3/search/movie?query=17&language=en-US&include_adult=false&primary_release_year=2026",
+      "capturedAt": "2026-10-07T09:09:19.804Z",
+      "publishedAt": null,
+      "totalPages": 2,
+      "page": 1,
+      "originalExactCandidateCountOnPage": 1,
+      "details": [
+        {
+          "sourceUrl": "https://api.themoviedb.org/3/movie/1619815?append_to_response=credits%2Cexternal_ids&language=en-US",
+          "capturedAt": "2026-10-07T09:09:19.816Z",
+          "originalData": {
+            "id": 1619815,
+            "title": "17",
+            "original_title": "17",
+            "release_date": "2026-02-18",
+            "external_ids": {
+              "imdb_id": "tt37775862"
+            },
+            "directors": [
+              {
+                "id": 1686844,
+                "name": "Kosara Mitić",
+                "original_name": "Kosara Mitik",
+                "job": "Director",
+                "credit_id": "696f515d02fb522289abcfab"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "query": "A Common Story",
+      "explicitSourceMovieYear": null,
+      "sourceUrl": "https://api.themoviedb.org/3/search/movie?query=A+Common+Story&language=en-US&include_adult=false",
+      "capturedAt": "2026-10-07T09:09:19.828Z",
+      "publishedAt": null,
+      "totalPages": 1,
+      "page": 1,
+      "originalExactCandidateCountOnPage": 2,
+      "details": [
+        {
+          "sourceUrl": "https://api.themoviedb.org/3/movie/1597196?append_to_response=credits%2Cexternal_ids&language=en-US",
+          "capturedAt": "2026-10-07T09:09:19.840Z",
+          "originalData": {
+            "id": 1597196,
+            "title": "A Common Story",
+            "original_title": "Una storia",
+            "release_date": "2026-09-24",
+            "external_ids": {
+              "imdb_id": "tt39307632"
+            },
+            "directors": [
+              {
+                "id": 586953,
+                "name": "Anna Foglietta",
+                "original_name": "Anna Foglietta",
+                "job": "Director",
+                "credit_id": "693befba80532e3360360ac5"
+              }
+            ]
+          }
+        },
+        {
+          "sourceUrl": "https://api.themoviedb.org/3/movie/744254?append_to_response=credits%2Cexternal_ids&language=en-US",
+          "capturedAt": "2026-10-07T09:09:19.864Z",
+          "originalData": {
+            "id": 744254,
+            "title": "A Common Story",
+            "original_title": "Обычная история",
+            "release_date": "2019-10-07",
+            "external_ids": {
+              "imdb_id": null
+            },
+            "directors": [
+              {
+                "id": 2783029,
+                "name": "Ekaterina Beloborodova",
+                "original_name": "Ekaterina Beloborodova",
+                "job": "Director",
+                "credit_id": "5f64683caf3da6003726581d"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "query": "Tear Gas",
+      "explicitSourceMovieYear": null,
+      "sourceUrl": "https://api.themoviedb.org/3/search/movie?query=Tear+Gas&language=en-US&include_adult=false",
+      "capturedAt": "2026-10-07T09:09:19.878Z",
+      "publishedAt": null,
+      "totalPages": 1,
+      "page": 1,
+      "originalExactCandidateCountOnPage": 4,
+      "details": [
+        {
+          "sourceUrl": "https://api.themoviedb.org/3/movie/1246509?append_to_response=credits%2Cexternal_ids&language=en-US",
+          "capturedAt": "2026-10-07T09:09:19.893Z",
+          "originalData": {
+            "id": 1246509,
+            "title": "Tear Gas",
+            "original_title": "Tear Gas",
+            "release_date": "2026-08-12",
+            "external_ids": {
+              "imdb_id": "tt14987186"
+            },
+            "directors": [
+              {
+                "id": 2628961,
+                "name": "Uta Beria",
+                "original_name": "Uta Beria",
+                "job": "Director",
+                "credit_id": "65d1900b6eecee016738225e"
+              }
+            ]
+          }
+        },
+        {
+          "sourceUrl": "https://api.themoviedb.org/3/movie/1309021?append_to_response=credits%2Cexternal_ids&language=en-US",
+          "capturedAt": "2026-10-07T09:09:19.895Z",
+          "originalData": {
+            "id": 1309021,
+            "title": "Tear Gas",
+            "original_title": "Tear Gas",
+            "release_date": "2024-01-09",
+            "external_ids": {
+              "imdb_id": null
+            },
+            "directors": [
+              {
+                "id": 4794934,
+                "name": "Jasper Cable-Alexander",
+                "original_name": "Jasper Cable-Alexander",
+                "job": "Director",
+                "credit_id": "667b3e7a917e8af09cf6a085"
+              }
+            ]
+          }
+        },
+        {
+          "sourceUrl": "https://api.themoviedb.org/3/movie/725094?append_to_response=credits%2Cexternal_ids&language=en-US",
+          "capturedAt": "2026-10-07T09:09:19.913Z",
+          "originalData": {
+            "id": 725094,
+            "title": "Tear Gas",
+            "original_title": "Tear Gas",
+            "release_date": "2019-07-16",
+            "external_ids": {
+              "imdb_id": null
+            },
+            "directors": [
+              {
+                "id": 1718429,
+                "name": "Los Ingrávidos",
+                "original_name": "Los Ingrávidos",
+                "job": "Director",
+                "credit_id": "5f1143e04bfa54003718bd2a"
+              }
+            ]
+          }
+        },
+        {
+          "sourceUrl": "https://api.themoviedb.org/3/movie/1296724?append_to_response=credits%2Cexternal_ids&language=en-US",
+          "capturedAt": "2026-10-07T09:09:19.920Z",
+          "originalData": {
+            "id": 1296724,
+            "title": "tear gas",
+            "original_title": "δακρυγόνο",
+            "release_date": "2024-09-04",
+            "external_ids": {
+              "imdb_id": null
+            },
+            "directors": [
+              {
+                "id": 4076695,
+                "name": "Orestes Spyridakis",
+                "original_name": "Orestes Spyridakis",
+                "job": "Director",
+                "credit_id": "6655552a014c988b1b7fc203"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "query": "Amarga Navidad",
+      "explicitSourceMovieYear": null,
+      "sourceUrl": "https://api.themoviedb.org/3/search/movie?query=Amarga+Navidad&language=en-US&include_adult=false",
+      "capturedAt": "2026-10-07T09:09:19.931Z",
+      "publishedAt": null,
+      "totalPages": 1,
+      "page": 1,
+      "originalExactCandidateCountOnPage": 1,
+      "details": [
+        {
+          "sourceUrl": "https://api.themoviedb.org/3/movie/1088548?append_to_response=credits%2Cexternal_ids&language=en-US",
+          "capturedAt": "2026-10-07T09:09:19.951Z",
+          "originalData": {
+            "id": 1088548,
+            "title": "Bitter Christmas",
+            "original_title": "Amarga Navidad",
+            "release_date": "2026-03-20",
+            "external_ids": {
+              "imdb_id": "tt28088049"
+            },
+            "directors": [
+              {
+                "id": 309,
+                "name": "Pedro Almodóvar",
+                "original_name": "Pedro Almodóvar",
+                "job": "Director",
+                "credit_id": "63f0f890524978009e7788ff"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

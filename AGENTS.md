@@ -130,6 +130,15 @@ Comandos canónicos desde la raíz:
 - `npm run results:import -- <manifiesto.json>`: registra nominaciones o
   ganadores oficiales con procedencia y bloqueo inmutable; requiere credenciales
   de servidor.
+- `npm run precursors:validate -- [manifiesto.json]`: comprueba calendarios y
+  resultados oficiales de sindicatos, críticos y BAFTA sin escribir datos.
+- `npm run precursors:import -- [manifiesto.json]`: importa esos conjuntos de
+  forma versionada e idempotente; requiere credenciales de servidor.
+- `npm run precursors:match -- <entry-id> <film-id> --reason "<motivo>"`:
+  matching editorial trazable dentro de la temporada del premio.
+- `npm run festivals:links -- [--apply] [--all] [--limit 25] [--after 0]`:
+  verifica enlaces IMDb mediante TMDB sin crear películas ni candidaturas;
+  simula por defecto, requiere secretos de servidor y `--apply` para persistir.
 
 Una tarea no está terminada hasta ejecutar las comprobaciones proporcionales al
 riesgo y comunicar sus resultados.

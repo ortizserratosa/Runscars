@@ -1,0 +1,1265 @@
+{
+  "version": "runscars-precursors-v1",
+  "organizations": [
+    {
+      "id": "actor-awards",
+      "name": "Actor Awards · SAG-AFTRA",
+      "nameEn": "Actor Awards · SAG-AFTRA",
+      "kind": "guild",
+      "homepageUrl": "https://www.actorawards.org/",
+      "notes": {
+        "es": "Premia interpretaciones y reparto; el premio de elenco no equivale a Mejor película.",
+        "en": "Honours performances and casts; the cast award is distinct from Best Picture."
+      }
+    },
+    {
+      "id": "dga",
+      "name": "Directors Guild Awards",
+      "nameEn": "Directors Guild Awards",
+      "kind": "guild",
+      "homepageUrl": "https://www.dga.org/",
+      "notes": {
+        "es": "Dirección de largometraje; las reglas de elegibilidad y el cuerpo de votantes son propios del sindicato.",
+        "en": "Feature-film directing; the guild has its own eligibility rules and voting membership."
+      }
+    },
+    {
+      "id": "pga",
+      "name": "Producers Guild Awards",
+      "nameEn": "Producers Guild Awards",
+      "kind": "guild",
+      "homepageUrl": "https://producersguild.org/",
+      "notes": {
+        "es": "Producción de largometraje; las categorías originales y los equipos de producción se conservan.",
+        "en": "Feature-film production; original categories and producing teams are preserved."
+      }
+    },
+    {
+      "id": "wga",
+      "name": "Writers Guild Awards",
+      "nameEn": "Writers Guild Awards",
+      "kind": "guild",
+      "homepageUrl": "https://www.wga.org/",
+      "notes": {
+        "es": "Guion original y adaptado; la elegibilidad sindical es distinta de la de los Oscar.",
+        "en": "Original and adapted screenplays; guild eligibility differs from Oscar eligibility."
+      }
+    },
+    {
+      "id": "critics-choice",
+      "name": "Critics Choice Awards",
+      "nameEn": "Critics Choice Awards",
+      "kind": "critics",
+      "homepageUrl": "https://www.criticschoice.com/",
+      "notes": {
+        "es": "Premios votados por la Critics Choice Association; no son listas de predicciones.",
+        "en": "Awards voted on by the Critics Choice Association; these are not prediction lists."
+      }
+    },
+    {
+      "id": "bafta",
+      "name": "EE BAFTA Film Awards",
+      "nameEn": "EE BAFTA Film Awards",
+      "kind": "academy",
+      "homepageUrl": "https://www.bafta.org/",
+      "notes": {
+        "es": "La academia británica tiene categorías y fechas de estreno elegibles propias.",
+        "en": "The British academy has its own categories and qualifying release dates."
+      }
+    }
+  ],
+  "editions": [
+    {
+      "id": "actor-awards-2027",
+      "organizationId": "actor-awards",
+      "seasonId": "oscars-2027",
+      "ceremonyYear": 2027,
+      "editionNumber": 33
+    },
+    {
+      "id": "actor-awards-2026",
+      "organizationId": "actor-awards",
+      "seasonId": "oscars-2026",
+      "ceremonyYear": 2026,
+      "editionNumber": 32
+    },
+    {
+      "id": "dga-2027",
+      "organizationId": "dga",
+      "seasonId": "oscars-2027",
+      "ceremonyYear": 2027,
+      "editionNumber": 79
+    },
+    {
+      "id": "dga-2026",
+      "organizationId": "dga",
+      "seasonId": "oscars-2026",
+      "ceremonyYear": 2026,
+      "editionNumber": 78
+    },
+    {
+      "id": "pga-2027",
+      "organizationId": "pga",
+      "seasonId": "oscars-2027",
+      "ceremonyYear": 2027,
+      "editionNumber": 38
+    },
+    {
+      "id": "pga-2026",
+      "organizationId": "pga",
+      "seasonId": "oscars-2026",
+      "ceremonyYear": 2026,
+      "editionNumber": 37
+    },
+    {
+      "id": "wga-2027",
+      "organizationId": "wga",
+      "seasonId": "oscars-2027",
+      "ceremonyYear": 2027,
+      "editionNumber": 79
+    },
+    {
+      "id": "wga-2026",
+      "organizationId": "wga",
+      "seasonId": "oscars-2026",
+      "ceremonyYear": 2026,
+      "editionNumber": 78
+    },
+    {
+      "id": "critics-choice-2027",
+      "organizationId": "critics-choice",
+      "seasonId": "oscars-2027",
+      "ceremonyYear": 2027,
+      "editionNumber": 32
+    },
+    {
+      "id": "critics-choice-2026",
+      "organizationId": "critics-choice",
+      "seasonId": "oscars-2026",
+      "ceremonyYear": 2026,
+      "editionNumber": 31
+    },
+    {
+      "id": "bafta-2027",
+      "organizationId": "bafta",
+      "seasonId": "oscars-2027",
+      "ceremonyYear": 2027,
+      "editionNumber": 80
+    },
+    {
+      "id": "bafta-2026",
+      "organizationId": "bafta",
+      "seasonId": "oscars-2026",
+      "ceremonyYear": 2026,
+      "editionNumber": 79
+    }
+  ],
+  "sets": [
+    {
+      "editionId": "actor-awards-2027",
+      "organizationId": "actor-awards",
+      "seasonId": "oscars-2027",
+      "ceremonyYear": 2027,
+      "kind": "schedule",
+      "source": {
+        "url": "https://www.actorawards.org/awards/calendar",
+        "title": "Actor Awards Calendar",
+        "author": "Actor Awards · SAG-AFTRA",
+        "publishedAt": null
+      },
+      "capturedAt": "2026-10-07T08:18:08Z",
+      "extractorVersion": "precursor-official-manual-v1",
+      "schedule": {
+        "ceremonyOn": "2027-02-28",
+        "nominationsOn": "2027-01-06",
+        "milestones": []
+      },
+      "coverage": {
+        "es": "Calendario oficial de la edición 2027. Las nominaciones y los ganadores se incorporarán tras los anuncios oficiales.",
+        "en": "Official calendar for the 2027 edition. Nominations and winners will be added after the official announcements."
+      },
+      "entries": [],
+      "rawCapture": {
+        "method": "official-editorial-transcription",
+        "source": {
+          "url": "https://www.actorawards.org/awards/calendar",
+          "title": "Actor Awards Calendar",
+          "author": "Actor Awards · SAG-AFTRA",
+          "publishedAt": null
+        },
+        "schedule": {
+          "ceremonyOn": "2027-02-28",
+          "nominationsOn": "2027-01-06",
+          "milestones": []
+        }
+      }
+    },
+    {
+      "editionId": "actor-awards-2026",
+      "organizationId": "actor-awards",
+      "seasonId": "oscars-2026",
+      "ceremonyYear": 2026,
+      "kind": "winners",
+      "source": {
+        "url": "https://actorawards.org/media/news/releases/outstanding-film-and-television-performances-honored-32nd-annual-actor-awards",
+        "title": "Outstanding Film and Television Performances Honored at The 32nd Annual Actor Awards Presented by SAG-AFTRA",
+        "author": "Actor Awards · SAG-AFTRA",
+        "publishedAt": "2026-03-01T00:00:00Z"
+      },
+      "capturedAt": "2026-10-07T08:18:08Z",
+      "extractorVersion": "precursor-official-manual-v1",
+      "schedule": {
+        "ceremonyOn": "2026-03-01",
+        "nominationsOn": "2026-01-07",
+        "milestones": []
+      },
+      "coverage": {
+        "es": "Archivo parcial: solo ganadores de las categorías de cine relacionadas con las ocho categorías públicas de Runscars; sin nominaciones completas, televisión ni premios honoríficos.",
+        "en": "Partial archive: film winners related to Runscars’ eight public categories only; full nominations, television and honorary awards are not included."
+      },
+      "entries": [
+        {
+          "originalCategory": "Outstanding Performance by a Cast in a Motion Picture",
+          "originalTitle": "SINNERS",
+          "originalRecipient": null,
+          "categoryId": "best-picture",
+          "categoryRelation": "related",
+          "originalData": {
+            "category": "Outstanding Performance by a Cast in a Motion Picture",
+            "title": "SINNERS",
+            "recipient": null
+          }
+        },
+        {
+          "originalCategory": "Outstanding Performance by a Male Actor in a Leading Role",
+          "originalTitle": "SINNERS",
+          "originalRecipient": "MICHAEL B. JORDAN",
+          "categoryId": "actor",
+          "categoryRelation": "corresponding",
+          "originalData": {
+            "category": "Outstanding Performance by a Male Actor in a Leading Role",
+            "title": "SINNERS",
+            "recipient": "MICHAEL B. JORDAN"
+          }
+        },
+        {
+          "originalCategory": "Outstanding Performance by a Female Actor in a Leading Role",
+          "originalTitle": "HAMNET",
+          "originalRecipient": "JESSIE BUCKLEY",
+          "categoryId": "actress",
+          "categoryRelation": "corresponding",
+          "originalData": {
+            "category": "Outstanding Performance by a Female Actor in a Leading Role",
+            "title": "HAMNET",
+            "recipient": "JESSIE BUCKLEY"
+          }
+        },
+        {
+          "originalCategory": "Outstanding Performance by a Male Actor in a Supporting Role",
+          "originalTitle": "ONE BATTLE AFTER ANOTHER",
+          "originalRecipient": "SEAN PENN",
+          "categoryId": "supporting-actor",
+          "categoryRelation": "corresponding",
+          "originalData": {
+            "category": "Outstanding Performance by a Male Actor in a Supporting Role",
+            "title": "ONE BATTLE AFTER ANOTHER",
+            "recipient": "SEAN PENN"
+          }
+        },
+        {
+          "originalCategory": "Outstanding Performance by a Female Actor in a Supporting Role",
+          "originalTitle": "WEAPONS",
+          "originalRecipient": "AMY MADIGAN",
+          "categoryId": "supporting-actress",
+          "categoryRelation": "corresponding",
+          "originalData": {
+            "category": "Outstanding Performance by a Female Actor in a Supporting Role",
+            "title": "WEAPONS",
+            "recipient": "AMY MADIGAN"
+          }
+        }
+      ],
+      "rawCapture": {
+        "method": "official-editorial-transcription",
+        "source": {
+          "url": "https://actorawards.org/media/news/releases/outstanding-film-and-television-performances-honored-32nd-annual-actor-awards",
+          "title": "Outstanding Film and Television Performances Honored at The 32nd Annual Actor Awards Presented by SAG-AFTRA",
+          "author": "Actor Awards · SAG-AFTRA",
+          "publishedAt": "2026-03-01T00:00:00Z"
+        },
+        "schedule": {
+          "ceremonyOn": "2026-03-01",
+          "nominationsOn": "2026-01-07",
+          "milestones": []
+        },
+        "entries": [
+          {
+            "originalCategory": "Outstanding Performance by a Cast in a Motion Picture",
+            "originalTitle": "SINNERS",
+            "originalRecipient": null,
+            "categoryId": "best-picture",
+            "categoryRelation": "related",
+            "originalData": {
+              "category": "Outstanding Performance by a Cast in a Motion Picture",
+              "title": "SINNERS",
+              "recipient": null
+            }
+          },
+          {
+            "originalCategory": "Outstanding Performance by a Male Actor in a Leading Role",
+            "originalTitle": "SINNERS",
+            "originalRecipient": "MICHAEL B. JORDAN",
+            "categoryId": "actor",
+            "categoryRelation": "corresponding",
+            "originalData": {
+              "category": "Outstanding Performance by a Male Actor in a Leading Role",
+              "title": "SINNERS",
+              "recipient": "MICHAEL B. JORDAN"
+            }
+          },
+          {
+            "originalCategory": "Outstanding Performance by a Female Actor in a Leading Role",
+            "originalTitle": "HAMNET",
+            "originalRecipient": "JESSIE BUCKLEY",
+            "categoryId": "actress",
+            "categoryRelation": "corresponding",
+            "originalData": {
+              "category": "Outstanding Performance by a Female Actor in a Leading Role",
+              "title": "HAMNET",
+              "recipient": "JESSIE BUCKLEY"
+            }
+          },
+          {
+            "originalCategory": "Outstanding Performance by a Male Actor in a Supporting Role",
+            "originalTitle": "ONE BATTLE AFTER ANOTHER",
+            "originalRecipient": "SEAN PENN",
+            "categoryId": "supporting-actor",
+            "categoryRelation": "corresponding",
+            "originalData": {
+              "category": "Outstanding Performance by a Male Actor in a Supporting Role",
+              "title": "ONE BATTLE AFTER ANOTHER",
+              "recipient": "SEAN PENN"
+            }
+          },
+          {
+            "originalCategory": "Outstanding Performance by a Female Actor in a Supporting Role",
+            "originalTitle": "WEAPONS",
+            "originalRecipient": "AMY MADIGAN",
+            "categoryId": "supporting-actress",
+            "categoryRelation": "corresponding",
+            "originalData": {
+              "category": "Outstanding Performance by a Female Actor in a Supporting Role",
+              "title": "WEAPONS",
+              "recipient": "AMY MADIGAN"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "editionId": "dga-2027",
+      "organizationId": "dga",
+      "seasonId": "oscars-2027",
+      "ceremonyYear": 2027,
+      "kind": "schedule",
+      "source": {
+        "url": "https://www.dga.org/Awards/Annual",
+        "title": "79th Annual DGA Awards Schedule",
+        "author": "Directors Guild Awards",
+        "publishedAt": null
+      },
+      "capturedAt": "2026-10-07T08:18:08Z",
+      "extractorVersion": "precursor-official-manual-v1",
+      "schedule": {
+        "ceremonyOn": "2027-01-30",
+        "nominationsOn": "2027-01-07",
+        "milestones": []
+      },
+      "coverage": {
+        "es": "Calendario oficial de la edición 2027. Las nominaciones y los ganadores se incorporarán tras los anuncios oficiales.",
+        "en": "Official calendar for the 2027 edition. Nominations and winners will be added after the official announcements."
+      },
+      "entries": [],
+      "rawCapture": {
+        "method": "official-editorial-transcription",
+        "source": {
+          "url": "https://www.dga.org/Awards/Annual",
+          "title": "79th Annual DGA Awards Schedule",
+          "author": "Directors Guild Awards",
+          "publishedAt": null
+        },
+        "schedule": {
+          "ceremonyOn": "2027-01-30",
+          "nominationsOn": "2027-01-07",
+          "milestones": []
+        }
+      }
+    },
+    {
+      "editionId": "dga-2026",
+      "organizationId": "dga",
+      "seasonId": "oscars-2026",
+      "ceremonyYear": 2026,
+      "kind": "winners",
+      "source": {
+        "url": "https://www.dga.org/news/pressreleases/2026/260207_78th_annual-dga-award-winners",
+        "title": "78th Annual DGA Award Winners",
+        "author": "Directors Guild Awards",
+        "publishedAt": "2026-02-07T00:00:00Z"
+      },
+      "capturedAt": "2026-10-07T08:18:08Z",
+      "extractorVersion": "precursor-official-manual-v1",
+      "schedule": {
+        "ceremonyOn": "2026-02-07",
+        "nominationsOn": null,
+        "milestones": []
+      },
+      "coverage": {
+        "es": "Archivo parcial: solo ganadores de las categorías de cine relacionadas con las ocho categorías públicas de Runscars; sin nominaciones completas, televisión ni premios honoríficos.",
+        "en": "Partial archive: film winners related to Runscars’ eight public categories only; full nominations, television and honorary awards are not included."
+      },
+      "entries": [
+        {
+          "originalCategory": "Outstanding Directorial Achievement in Theatrical Feature Film",
+          "originalTitle": "One Battle After Another",
+          "originalRecipient": "Paul Thomas Anderson",
+          "categoryId": "directing",
+          "categoryRelation": "corresponding",
+          "originalData": {
+            "category": "Outstanding Directorial Achievement in Theatrical Feature Film",
+            "title": "One Battle After Another",
+            "recipient": "Paul Thomas Anderson"
+          }
+        }
+      ],
+      "rawCapture": {
+        "method": "official-editorial-transcription",
+        "source": {
+          "url": "https://www.dga.org/news/pressreleases/2026/260207_78th_annual-dga-award-winners",
+          "title": "78th Annual DGA Award Winners",
+          "author": "Directors Guild Awards",
+          "publishedAt": "2026-02-07T00:00:00Z"
+        },
+        "schedule": {
+          "ceremonyOn": "2026-02-07",
+          "nominationsOn": null,
+          "milestones": []
+        },
+        "entries": [
+          {
+            "originalCategory": "Outstanding Directorial Achievement in Theatrical Feature Film",
+            "originalTitle": "One Battle After Another",
+            "originalRecipient": "Paul Thomas Anderson",
+            "categoryId": "directing",
+            "categoryRelation": "corresponding",
+            "originalData": {
+              "category": "Outstanding Directorial Achievement in Theatrical Feature Film",
+              "title": "One Battle After Another",
+              "recipient": "Paul Thomas Anderson"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "editionId": "pga-2027",
+      "organizationId": "pga",
+      "seasonId": "oscars-2027",
+      "ceremonyYear": 2027,
+      "kind": "schedule",
+      "source": {
+        "url": "https://producersguild.org/2027-2028-producers-guild-awards-key-dates/",
+        "title": "2027 and 2028 Producers Guild Awards – Key Dates",
+        "author": "Producers Guild Awards",
+        "publishedAt": "2026-04-07T00:00:00Z"
+      },
+      "capturedAt": "2026-10-07T08:18:08Z",
+      "extractorVersion": "precursor-official-manual-v1",
+      "schedule": {
+        "ceremonyOn": "2027-02-27",
+        "nominationsOn": "2027-01-08",
+        "milestones": [
+          {
+            "name": "Documentary Motion Pictures nominations",
+            "date": "2026-12-08"
+          }
+        ]
+      },
+      "coverage": {
+        "es": "Calendario oficial de la edición 2027. Las nominaciones y los ganadores se incorporarán tras los anuncios oficiales.",
+        "en": "Official calendar for the 2027 edition. Nominations and winners will be added after the official announcements."
+      },
+      "entries": [],
+      "rawCapture": {
+        "method": "official-editorial-transcription",
+        "source": {
+          "url": "https://producersguild.org/2027-2028-producers-guild-awards-key-dates/",
+          "title": "2027 and 2028 Producers Guild Awards – Key Dates",
+          "author": "Producers Guild Awards",
+          "publishedAt": "2026-04-07T00:00:00Z"
+        },
+        "schedule": {
+          "ceremonyOn": "2027-02-27",
+          "nominationsOn": "2027-01-08",
+          "milestones": [
+            {
+              "name": "Documentary Motion Pictures nominations",
+              "date": "2026-12-08"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "editionId": "pga-2026",
+      "organizationId": "pga",
+      "seasonId": "oscars-2026",
+      "ceremonyYear": 2026,
+      "kind": "winners",
+      "source": {
+        "url": "https://producersguild.org/2026-pga-awards-winners/",
+        "title": "2026 PGA Awards – Winners",
+        "author": "Producers Guild Awards",
+        "publishedAt": "2026-03-01T00:00:00Z"
+      },
+      "capturedAt": "2026-10-07T08:18:08Z",
+      "extractorVersion": "precursor-official-manual-v1",
+      "schedule": {
+        "ceremonyOn": "2026-02-28",
+        "nominationsOn": null,
+        "milestones": []
+      },
+      "coverage": {
+        "es": "Archivo parcial: solo ganadores de las categorías de cine relacionadas con las ocho categorías públicas de Runscars; sin nominaciones completas, televisión ni premios honoríficos.",
+        "en": "Partial archive: film winners related to Runscars’ eight public categories only; full nominations, television and honorary awards are not included."
+      },
+      "entries": [
+        {
+          "originalCategory": "Darryl F. Zanuck Award for Outstanding Producer of Theatrical Motion Picture",
+          "originalTitle": "One Battle After Another",
+          "originalRecipient": "Adam Somner, Sara Murphy, Paul Thomas Anderson",
+          "categoryId": "best-picture",
+          "categoryRelation": "corresponding",
+          "originalData": {
+            "category": "Darryl F. Zanuck Award for Outstanding Producer of Theatrical Motion Picture",
+            "title": "One Battle After Another",
+            "recipient": "Adam Somner, Sara Murphy, Paul Thomas Anderson"
+          }
+        }
+      ],
+      "rawCapture": {
+        "method": "official-editorial-transcription",
+        "source": {
+          "url": "https://producersguild.org/2026-pga-awards-winners/",
+          "title": "2026 PGA Awards – Winners",
+          "author": "Producers Guild Awards",
+          "publishedAt": "2026-03-01T00:00:00Z"
+        },
+        "schedule": {
+          "ceremonyOn": "2026-02-28",
+          "nominationsOn": null,
+          "milestones": []
+        },
+        "entries": [
+          {
+            "originalCategory": "Darryl F. Zanuck Award for Outstanding Producer of Theatrical Motion Picture",
+            "originalTitle": "One Battle After Another",
+            "originalRecipient": "Adam Somner, Sara Murphy, Paul Thomas Anderson",
+            "categoryId": "best-picture",
+            "categoryRelation": "corresponding",
+            "originalData": {
+              "category": "Darryl F. Zanuck Award for Outstanding Producer of Theatrical Motion Picture",
+              "title": "One Battle After Another",
+              "recipient": "Adam Somner, Sara Murphy, Paul Thomas Anderson"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "editionId": "wga-2027",
+      "organizationId": "wga",
+      "seasonId": "oscars-2027",
+      "ceremonyYear": 2027,
+      "kind": "schedule",
+      "source": {
+        "url": "https://awards.wga.org/awards/timeline",
+        "title": "2026-2027 Writers Guild Awards Timeline",
+        "author": "Writers Guild Awards",
+        "publishedAt": null
+      },
+      "capturedAt": "2026-10-07T08:18:08Z",
+      "extractorVersion": "precursor-official-manual-v1",
+      "schedule": {
+        "ceremonyOn": "2027-02-13",
+        "nominationsOn": "2027-01-08",
+        "milestones": []
+      },
+      "coverage": {
+        "es": "Calendario oficial de la edición 2027. Las nominaciones y los ganadores se incorporarán tras los anuncios oficiales.",
+        "en": "Official calendar for the 2027 edition. Nominations and winners will be added after the official announcements."
+      },
+      "entries": [],
+      "rawCapture": {
+        "method": "official-editorial-transcription",
+        "source": {
+          "url": "https://awards.wga.org/awards/timeline",
+          "title": "2026-2027 Writers Guild Awards Timeline",
+          "author": "Writers Guild Awards",
+          "publishedAt": null
+        },
+        "schedule": {
+          "ceremonyOn": "2027-02-13",
+          "nominationsOn": "2027-01-08",
+          "milestones": []
+        }
+      }
+    },
+    {
+      "editionId": "wga-2026",
+      "organizationId": "wga",
+      "seasonId": "oscars-2026",
+      "ceremonyYear": 2026,
+      "kind": "winners",
+      "source": {
+        "url": "https://www.wga.org/news-events/news/press/2026-writers-guild-awards-winners-announced",
+        "title": "2026 Writers Guild Awards: Winners Announced",
+        "author": "Writers Guild Awards",
+        "publishedAt": "2026-03-08T00:00:00Z"
+      },
+      "capturedAt": "2026-10-07T08:18:08Z",
+      "extractorVersion": "precursor-official-manual-v1",
+      "schedule": {
+        "ceremonyOn": "2026-03-08",
+        "nominationsOn": null,
+        "milestones": []
+      },
+      "coverage": {
+        "es": "Archivo parcial: solo ganadores de las categorías de cine relacionadas con las ocho categorías públicas de Runscars; sin nominaciones completas, televisión ni premios honoríficos.",
+        "en": "Partial archive: film winners related to Runscars’ eight public categories only; full nominations, television and honorary awards are not included."
+      },
+      "entries": [
+        {
+          "originalCategory": "Original Screenplay",
+          "originalTitle": "Sinners",
+          "originalRecipient": "Ryan Coogler",
+          "categoryId": "original-screenplay",
+          "categoryRelation": "corresponding",
+          "originalData": {
+            "category": "Original Screenplay",
+            "title": "Sinners",
+            "recipient": "Ryan Coogler"
+          }
+        },
+        {
+          "originalCategory": "Adapted Screenplay",
+          "originalTitle": "One Battle After Another",
+          "originalRecipient": "Paul Thomas Anderson",
+          "categoryId": "adapted-screenplay",
+          "categoryRelation": "corresponding",
+          "originalData": {
+            "category": "Adapted Screenplay",
+            "title": "One Battle After Another",
+            "recipient": "Paul Thomas Anderson"
+          }
+        }
+      ],
+      "rawCapture": {
+        "method": "official-editorial-transcription",
+        "source": {
+          "url": "https://www.wga.org/news-events/news/press/2026-writers-guild-awards-winners-announced",
+          "title": "2026 Writers Guild Awards: Winners Announced",
+          "author": "Writers Guild Awards",
+          "publishedAt": "2026-03-08T00:00:00Z"
+        },
+        "schedule": {
+          "ceremonyOn": "2026-03-08",
+          "nominationsOn": null,
+          "milestones": []
+        },
+        "entries": [
+          {
+            "originalCategory": "Original Screenplay",
+            "originalTitle": "Sinners",
+            "originalRecipient": "Ryan Coogler",
+            "categoryId": "original-screenplay",
+            "categoryRelation": "corresponding",
+            "originalData": {
+              "category": "Original Screenplay",
+              "title": "Sinners",
+              "recipient": "Ryan Coogler"
+            }
+          },
+          {
+            "originalCategory": "Adapted Screenplay",
+            "originalTitle": "One Battle After Another",
+            "originalRecipient": "Paul Thomas Anderson",
+            "categoryId": "adapted-screenplay",
+            "categoryRelation": "corresponding",
+            "originalData": {
+              "category": "Adapted Screenplay",
+              "title": "One Battle After Another",
+              "recipient": "Paul Thomas Anderson"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "editionId": "critics-choice-2027",
+      "organizationId": "critics-choice",
+      "seasonId": "oscars-2027",
+      "ceremonyYear": 2027,
+      "kind": "schedule",
+      "source": {
+        "url": "https://www.criticschoice.com/critics-choice-awards-submissions-and-categories/",
+        "title": "32nd Critics Choice Awards: Submissions and Categories",
+        "author": "Critics Choice Awards",
+        "publishedAt": null
+      },
+      "capturedAt": "2026-10-07T08:18:08Z",
+      "extractorVersion": "precursor-official-manual-v1",
+      "schedule": {
+        "ceremonyOn": "2027-01-03",
+        "nominationsOn": "2026-12-04",
+        "milestones": []
+      },
+      "coverage": {
+        "es": "Calendario oficial de la edición 2027. Las nominaciones y los ganadores se incorporarán tras los anuncios oficiales.",
+        "en": "Official calendar for the 2027 edition. Nominations and winners will be added after the official announcements."
+      },
+      "entries": [],
+      "rawCapture": {
+        "method": "official-editorial-transcription",
+        "source": {
+          "url": "https://www.criticschoice.com/critics-choice-awards-submissions-and-categories/",
+          "title": "32nd Critics Choice Awards: Submissions and Categories",
+          "author": "Critics Choice Awards",
+          "publishedAt": null
+        },
+        "schedule": {
+          "ceremonyOn": "2027-01-03",
+          "nominationsOn": "2026-12-04",
+          "milestones": []
+        }
+      }
+    },
+    {
+      "editionId": "critics-choice-2026",
+      "organizationId": "critics-choice",
+      "seasonId": "oscars-2026",
+      "ceremonyYear": 2026,
+      "kind": "winners",
+      "source": {
+        "url": "https://www.criticschoice.com/one-battle-after-another-wins-best-picture-at-the-31st-annual-critics-choice-awards/",
+        "title": "One Battle After Another Wins Best Picture at the 31st Annual Critics Choice Awards",
+        "author": "Critics Choice Awards",
+        "publishedAt": "2026-01-04T00:00:00Z"
+      },
+      "capturedAt": "2026-10-07T08:18:08Z",
+      "extractorVersion": "precursor-official-manual-v1",
+      "schedule": {
+        "ceremonyOn": "2026-01-04",
+        "nominationsOn": null,
+        "milestones": []
+      },
+      "coverage": {
+        "es": "Archivo parcial: solo ganadores de las categorías de cine relacionadas con las ocho categorías públicas de Runscars; sin nominaciones completas, televisión ni premios honoríficos.",
+        "en": "Partial archive: film winners related to Runscars’ eight public categories only; full nominations, television and honorary awards are not included."
+      },
+      "entries": [
+        {
+          "originalCategory": "BEST PICTURE",
+          "originalTitle": "One Battle After Another",
+          "originalRecipient": null,
+          "categoryId": "best-picture",
+          "categoryRelation": "corresponding",
+          "originalData": {
+            "category": "BEST PICTURE",
+            "title": "One Battle After Another",
+            "recipient": null
+          }
+        },
+        {
+          "originalCategory": "BEST DIRECTOR",
+          "originalTitle": "One Battle After Another",
+          "originalRecipient": "Paul Thomas Anderson",
+          "categoryId": "directing",
+          "categoryRelation": "corresponding",
+          "originalData": {
+            "category": "BEST DIRECTOR",
+            "title": "One Battle After Another",
+            "recipient": "Paul Thomas Anderson"
+          }
+        },
+        {
+          "originalCategory": "BEST ACTOR",
+          "originalTitle": "Marty Supreme",
+          "originalRecipient": "Timothée Chalamet",
+          "categoryId": "actor",
+          "categoryRelation": "corresponding",
+          "originalData": {
+            "category": "BEST ACTOR",
+            "title": "Marty Supreme",
+            "recipient": "Timothée Chalamet"
+          }
+        },
+        {
+          "originalCategory": "BEST ACTRESS",
+          "originalTitle": "Hamnet",
+          "originalRecipient": "Jessie Buckley",
+          "categoryId": "actress",
+          "categoryRelation": "corresponding",
+          "originalData": {
+            "category": "BEST ACTRESS",
+            "title": "Hamnet",
+            "recipient": "Jessie Buckley"
+          }
+        },
+        {
+          "originalCategory": "BEST SUPPORTING ACTOR",
+          "originalTitle": "Frankenstein",
+          "originalRecipient": "Jacob Elordi",
+          "categoryId": "supporting-actor",
+          "categoryRelation": "corresponding",
+          "originalData": {
+            "category": "BEST SUPPORTING ACTOR",
+            "title": "Frankenstein",
+            "recipient": "Jacob Elordi"
+          }
+        },
+        {
+          "originalCategory": "BEST SUPPORTING ACTRESS",
+          "originalTitle": "Weapons",
+          "originalRecipient": "Amy Madigan",
+          "categoryId": "supporting-actress",
+          "categoryRelation": "corresponding",
+          "originalData": {
+            "category": "BEST SUPPORTING ACTRESS",
+            "title": "Weapons",
+            "recipient": "Amy Madigan"
+          }
+        },
+        {
+          "originalCategory": "BEST ORIGINAL SCREENPLAY",
+          "originalTitle": "Sinners",
+          "originalRecipient": "Ryan Coogler",
+          "categoryId": "original-screenplay",
+          "categoryRelation": "corresponding",
+          "originalData": {
+            "category": "BEST ORIGINAL SCREENPLAY",
+            "title": "Sinners",
+            "recipient": "Ryan Coogler"
+          }
+        },
+        {
+          "originalCategory": "BEST ADAPTED SCREENPLAY",
+          "originalTitle": "One Battle After Another",
+          "originalRecipient": "Paul Thomas Anderson",
+          "categoryId": "adapted-screenplay",
+          "categoryRelation": "corresponding",
+          "originalData": {
+            "category": "BEST ADAPTED SCREENPLAY",
+            "title": "One Battle After Another",
+            "recipient": "Paul Thomas Anderson"
+          }
+        }
+      ],
+      "rawCapture": {
+        "method": "official-editorial-transcription",
+        "source": {
+          "url": "https://www.criticschoice.com/one-battle-after-another-wins-best-picture-at-the-31st-annual-critics-choice-awards/",
+          "title": "One Battle After Another Wins Best Picture at the 31st Annual Critics Choice Awards",
+          "author": "Critics Choice Awards",
+          "publishedAt": "2026-01-04T00:00:00Z"
+        },
+        "schedule": {
+          "ceremonyOn": "2026-01-04",
+          "nominationsOn": null,
+          "milestones": []
+        },
+        "entries": [
+          {
+            "originalCategory": "BEST PICTURE",
+            "originalTitle": "One Battle After Another",
+            "originalRecipient": null,
+            "categoryId": "best-picture",
+            "categoryRelation": "corresponding",
+            "originalData": {
+              "category": "BEST PICTURE",
+              "title": "One Battle After Another",
+              "recipient": null
+            }
+          },
+          {
+            "originalCategory": "BEST DIRECTOR",
+            "originalTitle": "One Battle After Another",
+            "originalRecipient": "Paul Thomas Anderson",
+            "categoryId": "directing",
+            "categoryRelation": "corresponding",
+            "originalData": {
+              "category": "BEST DIRECTOR",
+              "title": "One Battle After Another",
+              "recipient": "Paul Thomas Anderson"
+            }
+          },
+          {
+            "originalCategory": "BEST ACTOR",
+            "originalTitle": "Marty Supreme",
+            "originalRecipient": "Timothée Chalamet",
+            "categoryId": "actor",
+            "categoryRelation": "corresponding",
+            "originalData": {
+              "category": "BEST ACTOR",
+              "title": "Marty Supreme",
+              "recipient": "Timothée Chalamet"
+            }
+          },
+          {
+            "originalCategory": "BEST ACTRESS",
+            "originalTitle": "Hamnet",
+            "originalRecipient": "Jessie Buckley",
+            "categoryId": "actress",
+            "categoryRelation": "corresponding",
+            "originalData": {
+              "category": "BEST ACTRESS",
+              "title": "Hamnet",
+              "recipient": "Jessie Buckley"
+            }
+          },
+          {
+            "originalCategory": "BEST SUPPORTING ACTOR",
+            "originalTitle": "Frankenstein",
+            "originalRecipient": "Jacob Elordi",
+            "categoryId": "supporting-actor",
+            "categoryRelation": "corresponding",
+            "originalData": {
+              "category": "BEST SUPPORTING ACTOR",
+              "title": "Frankenstein",
+              "recipient": "Jacob Elordi"
+            }
+          },
+          {
+            "originalCategory": "BEST SUPPORTING ACTRESS",
+            "originalTitle": "Weapons",
+            "originalRecipient": "Amy Madigan",
+            "categoryId": "supporting-actress",
+            "categoryRelation": "corresponding",
+            "originalData": {
+              "category": "BEST SUPPORTING ACTRESS",
+              "title": "Weapons",
+              "recipient": "Amy Madigan"
+            }
+          },
+          {
+            "originalCategory": "BEST ORIGINAL SCREENPLAY",
+            "originalTitle": "Sinners",
+            "originalRecipient": "Ryan Coogler",
+            "categoryId": "original-screenplay",
+            "categoryRelation": "corresponding",
+            "originalData": {
+              "category": "BEST ORIGINAL SCREENPLAY",
+              "title": "Sinners",
+              "recipient": "Ryan Coogler"
+            }
+          },
+          {
+            "originalCategory": "BEST ADAPTED SCREENPLAY",
+            "originalTitle": "One Battle After Another",
+            "originalRecipient": "Paul Thomas Anderson",
+            "categoryId": "adapted-screenplay",
+            "categoryRelation": "corresponding",
+            "originalData": {
+              "category": "BEST ADAPTED SCREENPLAY",
+              "title": "One Battle After Another",
+              "recipient": "Paul Thomas Anderson"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "editionId": "bafta-2027",
+      "organizationId": "bafta",
+      "seasonId": "oscars-2027",
+      "ceremonyYear": 2027,
+      "kind": "schedule",
+      "source": {
+        "url": "https://www.bafta.org/media-centre/press-releases/2027-film-awards-opens-for-entries/",
+        "title": "2027 EE BAFTA Film Awards opens for entries",
+        "author": "EE BAFTA Film Awards",
+        "publishedAt": "2026-07-22T00:00:00Z"
+      },
+      "capturedAt": "2026-10-07T08:18:08Z",
+      "extractorVersion": "precursor-official-manual-v1",
+      "schedule": {
+        "ceremonyOn": "2027-02-21",
+        "nominationsOn": "2027-01-19",
+        "milestones": [
+          {
+            "name": "BAFTA Film Awards longlist",
+            "date": "2027-01-07"
+          }
+        ]
+      },
+      "coverage": {
+        "es": "Calendario oficial de la edición 2027. Las nominaciones y los ganadores se incorporarán tras los anuncios oficiales.",
+        "en": "Official calendar for the 2027 edition. Nominations and winners will be added after the official announcements."
+      },
+      "entries": [],
+      "rawCapture": {
+        "method": "official-editorial-transcription",
+        "source": {
+          "url": "https://www.bafta.org/media-centre/press-releases/2027-film-awards-opens-for-entries/",
+          "title": "2027 EE BAFTA Film Awards opens for entries",
+          "author": "EE BAFTA Film Awards",
+          "publishedAt": "2026-07-22T00:00:00Z"
+        },
+        "schedule": {
+          "ceremonyOn": "2027-02-21",
+          "nominationsOn": "2027-01-19",
+          "milestones": [
+            {
+              "name": "BAFTA Film Awards longlist",
+              "date": "2027-01-07"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "editionId": "bafta-2026",
+      "organizationId": "bafta",
+      "seasonId": "oscars-2026",
+      "ceremonyYear": 2026,
+      "kind": "winners",
+      "source": {
+        "url": "https://www.bafta.org/media-centre/press-releases/winners-announced-2026-film-awards/",
+        "title": "Winners announced: 2026 EE BAFTA Film Awards",
+        "author": "EE BAFTA Film Awards",
+        "publishedAt": "2026-02-22T00:00:00Z"
+      },
+      "capturedAt": "2026-10-07T08:18:08Z",
+      "extractorVersion": "precursor-official-manual-v1",
+      "schedule": {
+        "ceremonyOn": "2026-02-22",
+        "nominationsOn": null,
+        "milestones": []
+      },
+      "coverage": {
+        "es": "Archivo parcial: solo ganadores de las categorías de cine relacionadas con las ocho categorías públicas de Runscars; sin nominaciones completas, televisión ni premios honoríficos.",
+        "en": "Partial archive: film winners related to Runscars’ eight public categories only; full nominations, television and honorary awards are not included."
+      },
+      "entries": [
+        {
+          "originalCategory": "Best Film",
+          "originalTitle": "One Battle After Another",
+          "originalRecipient": null,
+          "categoryId": "best-picture",
+          "categoryRelation": "corresponding",
+          "originalData": {
+            "category": "Best Film",
+            "title": "One Battle After Another",
+            "recipient": null
+          }
+        },
+        {
+          "originalCategory": "Director",
+          "originalTitle": "One Battle After Another",
+          "originalRecipient": "Paul Thomas Anderson",
+          "categoryId": "directing",
+          "categoryRelation": "corresponding",
+          "originalData": {
+            "category": "Director",
+            "title": "One Battle After Another",
+            "recipient": "Paul Thomas Anderson"
+          }
+        },
+        {
+          "originalCategory": "Leading Actor",
+          "originalTitle": "I Swear",
+          "originalRecipient": "Robert Aramayo",
+          "categoryId": "actor",
+          "categoryRelation": "corresponding",
+          "originalData": {
+            "category": "Leading Actor",
+            "title": "I Swear",
+            "recipient": "Robert Aramayo"
+          }
+        },
+        {
+          "originalCategory": "Leading Actress",
+          "originalTitle": "Hamnet",
+          "originalRecipient": "Jessie Buckley",
+          "categoryId": "actress",
+          "categoryRelation": "corresponding",
+          "originalData": {
+            "category": "Leading Actress",
+            "title": "Hamnet",
+            "recipient": "Jessie Buckley"
+          }
+        },
+        {
+          "originalCategory": "Supporting Actor",
+          "originalTitle": "One Battle After Another",
+          "originalRecipient": "Sean Penn",
+          "categoryId": "supporting-actor",
+          "categoryRelation": "corresponding",
+          "originalData": {
+            "category": "Supporting Actor",
+            "title": "One Battle After Another",
+            "recipient": "Sean Penn"
+          }
+        },
+        {
+          "originalCategory": "Supporting Actress",
+          "originalTitle": "Sinners",
+          "originalRecipient": "Wunmi Mosaku",
+          "categoryId": "supporting-actress",
+          "categoryRelation": "corresponding",
+          "originalData": {
+            "category": "Supporting Actress",
+            "title": "Sinners",
+            "recipient": "Wunmi Mosaku"
+          }
+        },
+        {
+          "originalCategory": "Original Screenplay",
+          "originalTitle": "Sinners",
+          "originalRecipient": "Ryan Coogler",
+          "categoryId": "original-screenplay",
+          "categoryRelation": "corresponding",
+          "originalData": {
+            "category": "Original Screenplay",
+            "title": "Sinners",
+            "recipient": "Ryan Coogler"
+          }
+        },
+        {
+          "originalCategory": "Adapted Screenplay",
+          "originalTitle": "One Battle After Another",
+          "originalRecipient": "Paul Thomas Anderson",
+          "categoryId": "adapted-screenplay",
+          "categoryRelation": "corresponding",
+          "originalData": {
+            "category": "Adapted Screenplay",
+            "title": "One Battle After Another",
+            "recipient": "Paul Thomas Anderson"
+          }
+        }
+      ],
+      "rawCapture": {
+        "method": "official-editorial-transcription",
+        "source": {
+          "url": "https://www.bafta.org/media-centre/press-releases/winners-announced-2026-film-awards/",
+          "title": "Winners announced: 2026 EE BAFTA Film Awards",
+          "author": "EE BAFTA Film Awards",
+          "publishedAt": "2026-02-22T00:00:00Z"
+        },
+        "schedule": {
+          "ceremonyOn": "2026-02-22",
+          "nominationsOn": null,
+          "milestones": []
+        },
+        "entries": [
+          {
+            "originalCategory": "Best Film",
+            "originalTitle": "One Battle After Another",
+            "originalRecipient": null,
+            "categoryId": "best-picture",
+            "categoryRelation": "corresponding",
+            "originalData": {
+              "category": "Best Film",
+              "title": "One Battle After Another",
+              "recipient": null
+            }
+          },
+          {
+            "originalCategory": "Director",
+            "originalTitle": "One Battle After Another",
+            "originalRecipient": "Paul Thomas Anderson",
+            "categoryId": "directing",
+            "categoryRelation": "corresponding",
+            "originalData": {
+              "category": "Director",
+              "title": "One Battle After Another",
+              "recipient": "Paul Thomas Anderson"
+            }
+          },
+          {
+            "originalCategory": "Leading Actor",
+            "originalTitle": "I Swear",
+            "originalRecipient": "Robert Aramayo",
+            "categoryId": "actor",
+            "categoryRelation": "corresponding",
+            "originalData": {
+              "category": "Leading Actor",
+              "title": "I Swear",
+              "recipient": "Robert Aramayo"
+            }
+          },
+          {
+            "originalCategory": "Leading Actress",
+            "originalTitle": "Hamnet",
+            "originalRecipient": "Jessie Buckley",
+            "categoryId": "actress",
+            "categoryRelation": "corresponding",
+            "originalData": {
+              "category": "Leading Actress",
+              "title": "Hamnet",
+              "recipient": "Jessie Buckley"
+            }
+          },
+          {
+            "originalCategory": "Supporting Actor",
+            "originalTitle": "One Battle After Another",
+            "originalRecipient": "Sean Penn",
+            "categoryId": "supporting-actor",
+            "categoryRelation": "corresponding",
+            "originalData": {
+              "category": "Supporting Actor",
+              "title": "One Battle After Another",
+              "recipient": "Sean Penn"
+            }
+          },
+          {
+            "originalCategory": "Supporting Actress",
+            "originalTitle": "Sinners",
+            "originalRecipient": "Wunmi Mosaku",
+            "categoryId": "supporting-actress",
+            "categoryRelation": "corresponding",
+            "originalData": {
+              "category": "Supporting Actress",
+              "title": "Sinners",
+              "recipient": "Wunmi Mosaku"
+            }
+          },
+          {
+            "originalCategory": "Original Screenplay",
+            "originalTitle": "Sinners",
+            "originalRecipient": "Ryan Coogler",
+            "categoryId": "original-screenplay",
+            "categoryRelation": "corresponding",
+            "originalData": {
+              "category": "Original Screenplay",
+              "title": "Sinners",
+              "recipient": "Ryan Coogler"
+            }
+          },
+          {
+            "originalCategory": "Adapted Screenplay",
+            "originalTitle": "One Battle After Another",
+            "originalRecipient": "Paul Thomas Anderson",
+            "categoryId": "adapted-screenplay",
+            "categoryRelation": "corresponding",
+            "originalData": {
+              "category": "Adapted Screenplay",
+              "title": "One Battle After Another",
+              "recipient": "Paul Thomas Anderson"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

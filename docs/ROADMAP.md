@@ -1,6 +1,6 @@
 # Hoja de ruta
 
-**Última revisión:** 2026-09-01
+**Última revisión:** 2026-10-07
 
 Cada fase tiene una puerta de salida verificable. Una fase no se considera
 terminada por haber creado archivos o código, sino por cumplir esa puerta.
@@ -434,3 +434,20 @@ Evidencia detallada en [PHASE_10.md](PHASE_10.md) y operación en
 - Trazabilidad de datos.
 - Aplicación móvil y escritorio.
 - Metodología, créditos y recuperación documentados.
+
+## Mantenimiento · integridad y cobertura de fuentes, octubre de 2026
+
+Este corte conserva el MVP y sus ocho categorías públicas. Recupera órdenes
+originales verificables y discovery por categoría, incorpora una voz de Variety
+con conectores independientes, amplía programas y palmarés oficiales de 2026 y
+publica calendarios/resultados de sindicatos, Critics Choice y BAFTA como contexto
+separado. Los enlaces IMDb verificados permiten explorar películas festivaleras
+fuera del catálogo de predicciones. D-068 a D-071 registran las decisiones nuevas.
+
+La puerta de este mantenimiento exige fixtures de extracción, importación
+idempotente, RLS e inmutabilidad de los conjuntos nuevos, fuentes originales
+contrastadas, comprobaciones web en ambos idiomas y despliegue con datos reales.
+Los anuncios futuros, identidades dudosas y fuentes bloqueadas conservan sus
+límites explícitos; no se dan por resueltos con datos estimados. La evidencia y
+los límites de publicación se mantienen en
+[SOURCE_COVERAGE_AUDIT_2026-10-07.md](SOURCE_COVERAGE_AUDIT_2026-10-07.md).

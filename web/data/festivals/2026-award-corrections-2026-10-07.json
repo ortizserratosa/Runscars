@@ -1,0 +1,376 @@
+{
+  "schemaVersion": 1,
+  "scope": "Oscar 2027 · festival circuit 2026 · reviewed award recipient corrections 2026-10-07",
+  "sets": [
+    {
+      "editionId": "berlinale-2026",
+      "kind": "awards",
+      "source": {
+        "url": "https://www.berlinale.de/en/archive/awards-juries/awards.html",
+        "title": "Awards | Berlinale",
+        "publishedAt": null
+      },
+      "capturedAt": "2026-10-07T08:48:57.381Z",
+      "extractorVersion": "berlinale-reviewed-20261007-v1",
+      "correctsSetId": "berlinale-2026-awards-97c60e631bbe",
+      "correctionReason": "Correct HTML entity decoding and remove the connective in: from three recipient fields, while preserving all 21 verified feature award tuples and source details.",
+      "rawCapture": {
+        "method": "Reviewed official archive HTML facts; recipient encoding correction only",
+        "sourceUrl": "https://www.berlinale.de/en/archive/awards-juries/awards.html",
+        "sourceAuthor": null,
+        "sourcePublisher": "Berlinale",
+        "sourceReceipts": [
+          {
+            "filename": "berlinale-awards-official-2026-10-07.html",
+            "sha256": "099fa659b605a5f08b81b43729fc99cc1899994e800d7e45f8e083cd0444264b",
+            "capturedAt": "2026-10-07T08:48:57.381Z"
+          }
+        ],
+        "sourceResponseHeaders": {
+          "contentType": "text/html; charset=UTF-8",
+          "etag": null,
+          "lastModified": null
+        },
+        "priorSetId": "berlinale-2026-awards-97c60e631bbe",
+        "changes": [
+          {
+            "entryOrder": 5,
+            "title": "Rose",
+            "before": "Sandra H&uuml;ller in:",
+            "after": "Sandra Hüller"
+          },
+          {
+            "entryOrder": 6,
+            "title": "Queen at Sea",
+            "before": "Anna Calder-Marshall & Tom Courtenay in:",
+            "after": "Anna Calder-Marshall & Tom Courtenay"
+          },
+          {
+            "entryOrder": 7,
+            "title": "Nina Roza",
+            "before": "Genevi&egrave;ve Dulude-de Celles",
+            "after": "Geneviève Dulude-de Celles"
+          }
+        ],
+        "notes": "All 21 section/award/film tuples were verified against the 2026 official archive. Short films, honorary awards and jury statements excluded. Publication date and author absent in source and retained null. HTTP Last-Modified is transport metadata, never award publication date."
+      },
+      "entries": [
+        {
+          "section": "International Jury 2026",
+          "originalTitle": "Gelbe Briefe",
+          "originalRecipient": null,
+          "awardType": "Golden Bear for Best Film",
+          "originalData": {
+            "award": "Golden Bear for Best Film",
+            "details": "Gelbe Briefe by İlker Çatak",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202615786.html",
+            "rawDetailsHtml": "<a href=\"/en/2026/programme/202615786.html\">Gelbe Briefe</a>\n                                    <br>\n                    by İlker Çatak"
+          },
+          "isFeature": true,
+          "isOfficial": true,
+          "entryType": "feature"
+        },
+        {
+          "section": "International Jury 2026",
+          "originalTitle": "Kurtuluş",
+          "originalRecipient": null,
+          "awardType": "Silver Bear Grand Jury Prize",
+          "originalData": {
+            "award": "Silver Bear Grand Jury Prize",
+            "details": "Kurtuluş by Emin Alper",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202616780.html",
+            "rawDetailsHtml": "<a href=\"/en/2026/programme/202616780.html\">Kurtuluş</a>\n                                    <br>\n                    by Emin Alper"
+          },
+          "isFeature": true,
+          "isOfficial": true,
+          "entryType": "feature"
+        },
+        {
+          "section": "International Jury 2026",
+          "originalTitle": "Queen at Sea",
+          "originalRecipient": null,
+          "awardType": "Silver Bear Jury Prize",
+          "originalData": {
+            "award": "Silver Bear Jury Prize",
+            "details": "Queen at Sea by Lance Hammer",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202616031.html",
+            "rawDetailsHtml": "<a href=\"/en/2026/programme/202616031.html\">Queen at Sea</a>\n                                    <br>\n                    by Lance Hammer"
+          },
+          "isFeature": true,
+          "isOfficial": true,
+          "entryType": "feature"
+        },
+        {
+          "section": "International Jury 2026",
+          "originalTitle": "Everybody Digs Bill Evans",
+          "originalRecipient": "Grant Gee",
+          "awardType": "Silver Bear for Best Director",
+          "originalData": {
+            "award": "Silver Bear for Best Director",
+            "details": "Grant Gee Everybody Digs Bill Evans",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202606467.html",
+            "rawDetailsHtml": "<b>Grant Gee</b><br/>\n                                        <a href=\"/en/2026/programme/202606467.html\">Everybody Digs Bill Evans</a>"
+          },
+          "isFeature": true,
+          "isOfficial": true,
+          "entryType": "feature"
+        },
+        {
+          "section": "International Jury 2026",
+          "originalTitle": "Rose",
+          "originalRecipient": "Sandra Hüller",
+          "awardType": "Silver Bear for Best Leading Performance",
+          "originalData": {
+            "award": "Silver Bear for Best Leading Performance",
+            "details": "Sandra Hüller in: Rose by Markus Schleinzer",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202614656.html",
+            "rawDetailsHtml": "<b>Sandra H&uuml;ller</b> in:<br/>\n                                        <a href=\"/en/2026/programme/202614656.html\">Rose</a>\n                                    <br>\n                    by Markus Schleinzer"
+          },
+          "isFeature": true,
+          "isOfficial": true,
+          "entryType": "feature"
+        },
+        {
+          "section": "International Jury 2026",
+          "originalTitle": "Queen at Sea",
+          "originalRecipient": "Anna Calder-Marshall & Tom Courtenay",
+          "awardType": "Silver Bear for Best Supporting Performance",
+          "originalData": {
+            "award": "Silver Bear for Best Supporting Performance",
+            "details": "Anna Calder-Marshall & Tom Courtenay in: Queen at Sea by Lance Hammer",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202616031.html",
+            "rawDetailsHtml": "<b>Anna Calder-Marshall & Tom Courtenay</b> in:<br/>\n                                        <a href=\"/en/2026/programme/202616031.html\">Queen at Sea</a>\n                                    <br>\n                    by Lance Hammer"
+          },
+          "isFeature": true,
+          "isOfficial": true,
+          "entryType": "feature"
+        },
+        {
+          "section": "International Jury 2026",
+          "originalTitle": "Nina Roza",
+          "originalRecipient": "Geneviève Dulude-de Celles",
+          "awardType": "Silver Bear for Best Screenplay",
+          "originalData": {
+            "award": "Silver Bear for Best Screenplay",
+            "details": "Geneviève Dulude-de Celles Nina Roza by Geneviève Dulude-de Celles",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202606549.html",
+            "rawDetailsHtml": "<b>Genevi&egrave;ve Dulude-de Celles</b><br/>\n                                        <a href=\"/en/2026/programme/202606549.html\">Nina Roza</a>\n                                    <br>\n                    by Geneviève Dulude-de Celles"
+          },
+          "isFeature": true,
+          "isOfficial": true,
+          "entryType": "feature"
+        },
+        {
+          "section": "International Jury 2026",
+          "originalTitle": "Yo (Love is a Rebellious Bird)",
+          "originalRecipient": null,
+          "awardType": "Silver Bear for Outstanding Artistic Contribution",
+          "originalData": {
+            "award": "Silver Bear for Outstanding Artistic Contribution",
+            "details": "Yo (Love is a Rebellious Bird) by Anna Fitch, Banker White",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202610484.html",
+            "rawDetailsHtml": "<a href=\"/en/2026/programme/202610484.html\">Yo (Love is a Rebellious Bird)</a>\n                                    <br>\n                    by Anna Fitch, Banker White"
+          },
+          "isFeature": true,
+          "isOfficial": true,
+          "entryType": "feature"
+        },
+        {
+          "section": "Children's Jury Generation Kplus 2026",
+          "originalTitle": "Feito Pipa",
+          "originalRecipient": null,
+          "awardType": "Crystal Bear for the Best Film",
+          "originalData": {
+            "award": "Crystal Bear for the Best Film",
+            "details": "Feito Pipa by Allan Deberton",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202609138.html",
+            "rawDetailsHtml": "<a href=\"/en/2026/programme/202609138.html\">Feito Pipa</a>\n                                    <br>\n                    by Allan Deberton"
+          },
+          "isFeature": true,
+          "isOfficial": true,
+          "entryType": "feature"
+        },
+        {
+          "section": "Children's Jury Generation Kplus 2026",
+          "originalTitle": "Not a Hero",
+          "originalRecipient": null,
+          "awardType": "Special Mention",
+          "originalData": {
+            "award": "Special Mention",
+            "details": "Not a Hero by Rima Das",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202610128.html",
+            "rawDetailsHtml": "<a href=\"/en/2026/programme/202610128.html\">Not a Hero</a>\n                                    <br>\n                    by Rima Das"
+          },
+          "isFeature": true,
+          "isOfficial": true,
+          "entryType": "feature"
+        },
+        {
+          "section": "Youth Jury Generation 14plus 2026",
+          "originalTitle": "Chicas Tristes",
+          "originalRecipient": null,
+          "awardType": "Crystal Bear for the Best Film",
+          "originalData": {
+            "award": "Crystal Bear for the Best Film",
+            "details": "Chicas Tristes by Fernanda Tovar",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202604753.html",
+            "rawDetailsHtml": "<a href=\"/en/2026/programme/202604753.html\">Chicas Tristes</a>\n                                    <br>\n                    by Fernanda Tovar"
+          },
+          "isFeature": true,
+          "isOfficial": true,
+          "entryType": "feature"
+        },
+        {
+          "section": "Youth Jury Generation 14plus 2026",
+          "originalTitle": "A Family",
+          "originalRecipient": null,
+          "awardType": "Special Mention",
+          "originalData": {
+            "award": "Special Mention",
+            "details": "A Family by Mees Peijnenburg",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202616575.html",
+            "rawDetailsHtml": "<a href=\"/en/2026/programme/202616575.html\">A Family</a>\n                                    <br>\n                    by Mees Peijnenburg"
+          },
+          "isFeature": true,
+          "isOfficial": true,
+          "entryType": "feature"
+        },
+        {
+          "section": "Generation International Jury 2026",
+          "originalTitle": "Feito Pipa",
+          "originalRecipient": null,
+          "awardType": "The Grand Prix of the International Jury for the Best Film in Generation Kplus",
+          "originalData": {
+            "award": "The Grand Prix of the International Jury for the Best Film in Generation Kplus",
+            "details": "Feito Pipa by Allan Deberton",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202609138.html",
+            "rawDetailsHtml": "<a href=\"/en/2026/programme/202609138.html\">Feito Pipa</a>\n                                    <br>\n                    by Allan Deberton"
+          },
+          "isFeature": true,
+          "isOfficial": true,
+          "entryType": "feature"
+        },
+        {
+          "section": "Generation International Jury 2026",
+          "originalTitle": "Atlasul universului",
+          "originalRecipient": null,
+          "awardType": "Special Mention Generation Kplus",
+          "originalData": {
+            "award": "Special Mention Generation Kplus",
+            "details": "Atlasul universului by Paul Negoescu",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202607554.html",
+            "rawDetailsHtml": "<a href=\"/en/2026/programme/202607554.html\">Atlasul universului</a>\n                                    <br>\n                    by Paul Negoescu"
+          },
+          "isFeature": true,
+          "isOfficial": true,
+          "entryType": "feature"
+        },
+        {
+          "section": "Generation International Jury 2026",
+          "originalTitle": "Chicas Tristes",
+          "originalRecipient": null,
+          "awardType": "The Grand Prix of the International Jury for the Best Film in Generation 14plus",
+          "originalData": {
+            "award": "The Grand Prix of the International Jury for the Best Film in Generation 14plus",
+            "details": "Chicas Tristes by Fernanda Tovar",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202604753.html",
+            "rawDetailsHtml": "<a href=\"/en/2026/programme/202604753.html\">Chicas Tristes</a>\n                                    <br>\n                    by Fernanda Tovar"
+          },
+          "isFeature": true,
+          "isOfficial": true,
+          "entryType": "feature"
+        },
+        {
+          "section": "Generation International Jury 2026",
+          "originalTitle": "Matapanki",
+          "originalRecipient": null,
+          "awardType": "Special Mention Generation 14plus",
+          "originalData": {
+            "award": "Special Mention Generation 14plus",
+            "details": "Matapanki by Diego \"Mapache\" Fuentes",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202609924.html",
+            "rawDetailsHtml": "<a href=\"/en/2026/programme/202609924.html\">Matapanki</a>\n                                    <br>\n                    by Diego &quot;Mapache&quot; Fuentes"
+          },
+          "isFeature": true,
+          "isOfficial": true,
+          "entryType": "feature"
+        },
+        {
+          "section": "Perspectives Jury 2026",
+          "originalTitle": "Chronicles From the Siege",
+          "originalRecipient": null,
+          "awardType": "GWFF Best First Feature Award",
+          "originalData": {
+            "award": "GWFF Best First Feature Award",
+            "details": "Chronicles From the Siege by Abdallah Alkhatib produced by: Taqiyeddine Issaad, Salah Issaad",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202610606.html",
+            "rawDetailsHtml": "<a href=\"/en/2026/programme/202610606.html\">Chronicles From the Siege</a>\n                                    <br>\n                    by Abdallah Alkhatib\n                                                        <br>\n                <b>produced by: </b>Taqiyeddine Issaad, Salah Issaad<br/>"
+          },
+          "isFeature": true,
+          "isOfficial": true,
+          "entryType": "feature"
+        },
+        {
+          "section": "Perspectives Jury 2026",
+          "originalTitle": "Forêt Ivre",
+          "originalRecipient": null,
+          "awardType": "Special Mention",
+          "originalData": {
+            "award": "Special Mention",
+            "details": "Forêt Ivre by Manon Coubia",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202605344.html",
+            "rawDetailsHtml": "<a href=\"/en/2026/programme/202605344.html\">Forêt Ivre</a>\n                                    <br>\n                    by Manon Coubia"
+          },
+          "isFeature": true,
+          "isOfficial": true,
+          "entryType": "feature"
+        },
+        {
+          "section": "Jury Berlinale Documentary Award 2026",
+          "originalTitle": "If Pigeons Turned to Gold",
+          "originalRecipient": null,
+          "awardType": "Berlinale Documentary Award",
+          "originalData": {
+            "award": "Berlinale Documentary Award",
+            "details": "If Pigeons Turned to Gold by Pepa Lubojacki produced by: Klára Mamojková, Wanda Kaprálová",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202607964.html",
+            "rawDetailsHtml": "<a href=\"/en/2026/programme/202607964.html\">If Pigeons Turned to Gold</a>\n                                    <br>\n                    by Pepa Lubojacki\n                                                        <br>\n                <b>produced by:</b> Kl&aacute;ra Mamojkov&aacute;, Wanda Kapr&aacute;lov&aacute;<br/>"
+          },
+          "isFeature": true,
+          "isOfficial": true,
+          "entryType": "feature"
+        },
+        {
+          "section": "Jury Berlinale Documentary Award 2026",
+          "originalTitle": "TUTU",
+          "originalRecipient": null,
+          "awardType": "Special Mention",
+          "originalData": {
+            "award": "Special Mention",
+            "details": "TUTU by Sam Pollard",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202609071.html",
+            "rawDetailsHtml": "<a href=\"/en/2026/programme/202609071.html\">TUTU</a>\n                                    <br>\n                    by Sam Pollard"
+          },
+          "isFeature": true,
+          "isOfficial": true,
+          "entryType": "feature"
+        },
+        {
+          "section": "Jury Berlinale Documentary Award 2026",
+          "originalTitle": "Was an Empfindsamkeit bleibt",
+          "originalRecipient": null,
+          "awardType": "Special Mention",
+          "originalData": {
+            "award": "Special Mention",
+            "details": "Was an Empfindsamkeit bleibt by Daniela Magnani Hüller",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202615725.html",
+            "rawDetailsHtml": "<a href=\"/en/2026/programme/202615725.html\">Was an Empfindsamkeit bleibt</a>\n                                    <br>\n                    by Daniela Magnani Hüller"
+          },
+          "isFeature": true,
+          "isOfficial": true,
+          "entryType": "feature"
+        }
+      ]
+    }
+  ]
+}

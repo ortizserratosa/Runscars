@@ -1,0 +1,609 @@
+{
+  "capturedAt": "2026-10-07T08:17:29.066Z",
+  "festival_editions": [
+    {
+      "id": "sundance-2026",
+      "festival_id": "sundance",
+      "season_id": "oscars-2027",
+      "edition_year": 2026,
+      "edition_number": null,
+      "starts_on": "2026-01-22",
+      "ends_on": "2026-02-01",
+      "status": "completed",
+      "awards_status": "published",
+      "official_url": "https://festival.sundance.org/",
+      "selection_url": "https://www.sundance.org/blogs/2026-sundance-film-festival-unveils-97-projects-selected-for-the-feature-film-and-episodic-program/",
+      "awards_url": "https://www.sundance.org/blogs/the-complete-list-of-2026-sundance-film-festival-award-winners/",
+      "last_verified_at": "2026-09-03T00:00:00+00:00",
+      "created_at": "2026-09-03T18:05:24.259158+00:00",
+      "updated_at": "2026-09-03T18:05:24.259158+00:00"
+    },
+    {
+      "id": "cannes-2026",
+      "festival_id": "cannes",
+      "season_id": "oscars-2027",
+      "edition_year": 2026,
+      "edition_number": 79,
+      "starts_on": "2026-05-12",
+      "ends_on": "2026-05-23",
+      "status": "completed",
+      "awards_status": "published",
+      "official_url": "https://www.festival-cannes.com/en/2026/",
+      "selection_url": "https://www.festival-cannes.com/en/press/press-releases/the-films-of-the-official-selection-2026/",
+      "awards_url": "https://www.festival-cannes.com/en/press/press-releases/the-79th-festival-de-cannes-winners-list/",
+      "last_verified_at": "2026-09-03T00:00:00+00:00",
+      "created_at": "2026-09-03T18:05:24.259158+00:00",
+      "updated_at": "2026-09-03T18:05:24.259158+00:00"
+    },
+    {
+      "id": "locarno-2026",
+      "festival_id": "locarno",
+      "season_id": "oscars-2027",
+      "edition_year": 2026,
+      "edition_number": 79,
+      "starts_on": "2026-08-05",
+      "ends_on": "2026-08-15",
+      "status": "completed",
+      "awards_status": "published",
+      "official_url": "https://www.locarnofestival.ch/",
+      "selection_url": "https://www.locarnofestival.ch/en/festival/program.html",
+      "awards_url": "https://www.locarnofestival.ch/en/festival/palmares.html",
+      "last_verified_at": "2026-09-03T00:00:00+00:00",
+      "created_at": "2026-09-03T18:05:24.259158+00:00",
+      "updated_at": "2026-09-03T18:05:24.259158+00:00"
+    },
+    {
+      "id": "venice-2026",
+      "festival_id": "venice",
+      "season_id": "oscars-2027",
+      "edition_year": 2026,
+      "edition_number": 83,
+      "starts_on": "2026-09-02",
+      "ends_on": "2026-09-12",
+      "status": "ongoing",
+      "awards_status": "pending",
+      "official_url": "https://www.labiennale.org/en/cinema/2026/83rd-festival",
+      "selection_url": "https://www.labiennale.org/en/cinema/2026/lineup",
+      "awards_url": "https://www.labiennale.org/en/cinema/2026/awards",
+      "last_verified_at": "2026-09-03T00:00:00+00:00",
+      "created_at": "2026-09-03T18:05:24.259158+00:00",
+      "updated_at": "2026-09-03T18:05:24.259158+00:00"
+    },
+    {
+      "id": "tiff-2026",
+      "festival_id": "tiff",
+      "season_id": "oscars-2027",
+      "edition_year": 2026,
+      "edition_number": 51,
+      "starts_on": "2026-09-10",
+      "ends_on": "2026-09-20",
+      "status": "scheduled",
+      "awards_status": "pending",
+      "official_url": "https://tiff.net/films",
+      "selection_url": "https://tiff.net/press/news",
+      "awards_url": "https://tiff.net/press/news",
+      "last_verified_at": "2026-09-03T00:00:00+00:00",
+      "created_at": "2026-09-03T18:05:24.259158+00:00",
+      "updated_at": "2026-09-03T18:05:24.259158+00:00"
+    },
+    {
+      "id": "telluride-2026",
+      "festival_id": "telluride",
+      "season_id": "oscars-2027",
+      "edition_year": 2026,
+      "edition_number": 53,
+      "starts_on": "2026-09-04",
+      "ends_on": "2026-09-07",
+      "status": "scheduled",
+      "awards_status": "not_applicable",
+      "official_url": "https://www.telluridefilmfestival.org/",
+      "selection_url": "https://www.telluridefilmfestival.org/show",
+      "awards_url": null,
+      "last_verified_at": "2026-09-03T00:00:00+00:00",
+      "created_at": "2026-09-03T18:05:24.259158+00:00",
+      "updated_at": "2026-09-03T18:05:24.259158+00:00"
+    },
+    {
+      "id": "nyff-2026",
+      "festival_id": "nyff",
+      "season_id": "oscars-2027",
+      "edition_year": 2026,
+      "edition_number": 64,
+      "starts_on": "2026-09-25",
+      "ends_on": "2026-10-12",
+      "status": "scheduled",
+      "awards_status": "not_applicable",
+      "official_url": "https://www.filmlinc.org/nyff/",
+      "selection_url": "https://www.filmlinc.org/nyff/nyff64-lineup/",
+      "awards_url": null,
+      "last_verified_at": "2026-09-03T00:00:00+00:00",
+      "created_at": "2026-09-03T18:05:24.259158+00:00",
+      "updated_at": "2026-09-03T18:05:24.259158+00:00"
+    },
+    {
+      "id": "berlinale-2026",
+      "festival_id": "berlinale",
+      "season_id": "oscars-2027",
+      "edition_year": 2026,
+      "edition_number": 76,
+      "starts_on": "2026-02-12",
+      "ends_on": "2026-02-22",
+      "status": "completed",
+      "awards_status": "published",
+      "official_url": "https://www.berlinale.de/en/2026.html",
+      "selection_url": "https://www.berlinale.de/en/programme/berlinale-programme.html/y%3D2026",
+      "awards_url": "https://www.berlinale.de/en/archive/awards-juries/awards.html",
+      "last_verified_at": "2026-09-03T00:00:00+00:00",
+      "created_at": "2026-09-03T18:05:24.259158+00:00",
+      "updated_at": "2026-09-03T18:19:10.144962+00:00"
+    },
+    {
+      "id": "san-sebastian-2026",
+      "festival_id": "san-sebastian",
+      "season_id": "oscars-2027",
+      "edition_year": 2026,
+      "edition_number": 74,
+      "starts_on": "2026-09-18",
+      "ends_on": "2026-09-26",
+      "status": "scheduled",
+      "awards_status": "pending",
+      "official_url": "https://www.sansebastianfestival.com/2026/",
+      "selection_url": "https://www.sansebastianfestival.com/2026/sections_and_films/official_selection/8/in",
+      "awards_url": "https://www.sansebastianfestival.com/2026/awards_and_jury_members/1/23162/in",
+      "last_verified_at": "2026-09-03T00:00:00+00:00",
+      "created_at": "2026-09-03T18:05:24.259158+00:00",
+      "updated_at": "2026-09-03T18:19:10.144962+00:00"
+    }
+  ],
+  "current_festival_sets": [
+    {
+      "edition_id": "cannes-2026",
+      "kind": "selection",
+      "set_id": "cannes-2026-selection-48a5cd7bb846",
+      "updated_at": "2026-09-03T18:10:41.161113+00:00"
+    },
+    {
+      "edition_id": "nyff-2026",
+      "kind": "selection",
+      "set_id": "nyff-2026-selection-a78028ab5b1e",
+      "updated_at": "2026-09-03T18:10:41.447348+00:00"
+    },
+    {
+      "edition_id": "locarno-2026",
+      "kind": "awards",
+      "set_id": "locarno-2026-awards-adfa059a3a8c",
+      "updated_at": "2026-09-03T18:13:46.706525+00:00"
+    },
+    {
+      "edition_id": "cannes-2026",
+      "kind": "awards",
+      "set_id": "cannes-2026-awards-8e80d7821a0a",
+      "updated_at": "2026-09-03T18:14:18.918452+00:00"
+    },
+    {
+      "edition_id": "sundance-2026",
+      "kind": "awards",
+      "set_id": "sundance-2026-awards-762523c8741a",
+      "updated_at": "2026-09-03T18:14:19.730315+00:00"
+    },
+    {
+      "edition_id": "san-sebastian-2026",
+      "kind": "selection",
+      "set_id": "san-sebastian-2026-selection-20ab84139c70",
+      "updated_at": "2026-09-06T15:20:11.573537+00:00"
+    },
+    {
+      "edition_id": "berlinale-2026",
+      "kind": "awards",
+      "set_id": "berlinale-2026-awards-97c60e631bbe",
+      "updated_at": "2026-09-06T15:25:09.655231+00:00"
+    },
+    {
+      "edition_id": "telluride-2026",
+      "kind": "selection",
+      "set_id": "telluride-2026-selection-16dc7c6b5de3",
+      "updated_at": "2026-09-07T22:00:19.83563+00:00"
+    },
+    {
+      "edition_id": "venice-2026",
+      "kind": "selection",
+      "set_id": "venice-2026-selection-3e86d44278f5",
+      "updated_at": "2026-09-11T05:17:08.23338+00:00"
+    }
+  ],
+  "festival_sets": [
+    {
+      "id": "sundance-2026-awards-5743633b4af6",
+      "edition_id": "sundance-2026",
+      "kind": "awards",
+      "version": 1,
+      "source_url": "https://www.sundance.org/blogs/the-complete-list-of-2026-sundance-film-festival-award-winners/",
+      "captured_at": "2026-09-03T00:00:00+00:00",
+      "entry_count": 27
+    },
+    {
+      "id": "berlinale-2026-awards-49b80ddc71a8",
+      "edition_id": "berlinale-2026",
+      "kind": "awards",
+      "version": 1,
+      "source_url": "https://www.berlinale.de/en/archive/awards-juries/awards.html?year=2026",
+      "captured_at": "2026-09-03T00:00:00+00:00",
+      "entry_count": 8
+    },
+    {
+      "id": "cannes-2026-selection-48a5cd7bb846",
+      "edition_id": "cannes-2026",
+      "kind": "selection",
+      "version": 1,
+      "source_url": "https://www.festival-cannes.com/en/press/press-releases/the-films-of-the-official-selection-2026/",
+      "captured_at": "2026-09-03T00:00:00+00:00",
+      "entry_count": 22
+    },
+    {
+      "id": "cannes-2026-awards-fdc52e8f1f05",
+      "edition_id": "cannes-2026",
+      "kind": "awards",
+      "version": 1,
+      "source_url": "https://www.festival-cannes.com/en/press/press-releases/the-79th-festival-de-cannes-winners-list/",
+      "captured_at": "2026-09-03T00:00:00+00:00",
+      "entry_count": 14
+    },
+    {
+      "id": "venice-2026-selection-483ff18b26f9",
+      "edition_id": "venice-2026",
+      "kind": "selection",
+      "version": 1,
+      "source_url": "https://www.labiennale.org/en/cinema/2026/venezia-83-competition",
+      "captured_at": "2026-09-03T00:00:00+00:00",
+      "entry_count": 21
+    },
+    {
+      "id": "nyff-2026-selection-a78028ab5b1e",
+      "edition_id": "nyff-2026",
+      "kind": "selection",
+      "version": 1,
+      "source_url": "https://www.filmlinc.org/nyff2026/daily/64th-new-york-film-festival-main-slate-announced/",
+      "captured_at": "2026-09-03T00:00:00+00:00",
+      "entry_count": 34
+    },
+    {
+      "id": "locarno-2026-awards-adfa059a3a8c",
+      "edition_id": "locarno-2026",
+      "kind": "awards",
+      "version": 1,
+      "source_url": "https://www.locarnofestival.ch/en/festival/palmares.html",
+      "captured_at": "2026-09-03T00:00:00+00:00",
+      "entry_count": 31
+    },
+    {
+      "id": "cannes-2026-awards-8e80d7821a0a",
+      "edition_id": "cannes-2026",
+      "kind": "awards",
+      "version": 2,
+      "source_url": "https://www.festival-cannes.com/en/press/press-releases/the-79th-festival-de-cannes-winners-list/",
+      "captured_at": "2026-09-03T18:14:18.128+00:00",
+      "entry_count": 16
+    },
+    {
+      "id": "sundance-2026-awards-762523c8741a",
+      "edition_id": "sundance-2026",
+      "kind": "awards",
+      "version": 2,
+      "source_url": "https://www.sundance.org/blogs/the-complete-list-of-2026-sundance-film-festival-award-winners/",
+      "captured_at": "2026-09-03T18:14:18.128+00:00",
+      "entry_count": 30
+    },
+    {
+      "id": "berlinale-2026-awards-0fa064848904",
+      "edition_id": "berlinale-2026",
+      "kind": "awards",
+      "version": 2,
+      "source_url": "https://www.berlinale.de/en/archive/awards-juries/awards.html",
+      "captured_at": "2026-09-06T15:12:14.828+00:00",
+      "entry_count": 25
+    },
+    {
+      "id": "venice-2026-selection-5089fb5322e3",
+      "edition_id": "venice-2026",
+      "kind": "selection",
+      "version": 2,
+      "source_url": "https://www.labiennale.org/en/cinema/2026/lineup",
+      "captured_at": "2026-09-06T15:12:14.828+00:00",
+      "entry_count": 91
+    },
+    {
+      "id": "san-sebastian-2026-selection-20ab84139c70",
+      "edition_id": "san-sebastian-2026",
+      "kind": "selection",
+      "version": 1,
+      "source_url": "https://www.sansebastianfestival.com/2026/sections_and_films/official_selection/8/in",
+      "captured_at": "2026-09-06T15:20:08.767+00:00",
+      "entry_count": 25
+    },
+    {
+      "id": "berlinale-2026-awards-97c60e631bbe",
+      "edition_id": "berlinale-2026",
+      "kind": "awards",
+      "version": 3,
+      "source_url": "https://www.berlinale.de/en/archive/awards-juries/awards.html",
+      "captured_at": "2026-09-06T15:25:06.649+00:00",
+      "entry_count": 21
+    },
+    {
+      "id": "telluride-2026-selection-16dc7c6b5de3",
+      "edition_id": "telluride-2026",
+      "kind": "selection",
+      "version": 1,
+      "source_url": "https://telluridecms-production.s3.amazonaws.com/assets/pdfs/53rd-TFF-program-guide-final.pdf",
+      "captured_at": "2026-09-07T20:32:54.058+00:00",
+      "entry_count": 43
+    },
+    {
+      "id": "venice-2026-selection-3e86d44278f5",
+      "edition_id": "venice-2026",
+      "kind": "selection",
+      "version": 3,
+      "source_url": "https://www.labiennale.org/en/cinema/2026/lineup",
+      "captured_at": "2026-09-11T05:17:01.251+00:00",
+      "entry_count": 91
+    }
+  ],
+  "snapshot_refresh_runs": [
+    {
+      "status": "succeeded",
+      "started_at": "2026-10-07T04:47:53.404+00:00",
+      "finished_at": "2026-10-07T04:48:11.943+00:00",
+      "schedules_failed": 0
+    }
+  ],
+  "source_connectors": [
+    {
+      "configuration": {
+        "command": "npm run results:archive",
+        "manifest": "web/data/phase-7/oscars-2026.json",
+        "season_id": "oscars-2026"
+      },
+      "extractor_version": "academy-archive-v1",
+      "id": "academy-archive-2026",
+      "is_active": false,
+      "last_error": null,
+      "last_failure_at": null,
+      "last_success_at": null
+    },
+    {
+      "configuration": {
+        "ceremony_year": 2027,
+        "discovery_concurrency": 4,
+        "discovery_limit": 12,
+        "discovery_url": "https://www.awardsdaily.com/wp-json/wp/v2/search?search=2027%20Oscar%20Predictions&per_page=20&_fields=id,url,title,subtype",
+        "persistence_concurrency": 6,
+        "required_category_ids": [
+          "best-picture",
+          "directing",
+          "actor",
+          "actress",
+          "supporting-actor",
+          "supporting-actress",
+          "original-screenplay",
+          "adapted-screenplay"
+        ],
+        "season_id": "oscars-2027"
+      },
+      "extractor_version": "awards-daily-v8",
+      "id": "awards-daily-predictions",
+      "is_active": true,
+      "last_error": null,
+      "last_failure_at": "2026-07-25 17:36:56.632+00",
+      "last_success_at": "2026-10-07 04:17:33.629+00"
+    },
+    {
+      "configuration": {
+        "category_concurrency": 4,
+        "category_urls": {
+          "actor": "https://awardsradar.com/best-actor/",
+          "actress": "https://awardsradar.com/best-actress/",
+          "adapted-screenplay": "https://awardsradar.com/best-adapted-screenplay/",
+          "best-picture": "https://awardsradar.com/best-picture/",
+          "directing": "https://awardsradar.com/best-director/",
+          "original-screenplay": "https://awardsradar.com/best-original-screenplay/",
+          "supporting-actor": "https://awardsradar.com/best-supporting-actor/",
+          "supporting-actress": "https://awardsradar.com/best-supporting-actress/"
+        },
+        "ceremony_year": 2027,
+        "persistence_concurrency": 6,
+        "required_category_ids": [
+          "best-picture",
+          "directing",
+          "actor",
+          "actress",
+          "supporting-actor",
+          "supporting-actress",
+          "original-screenplay",
+          "adapted-screenplay"
+        ],
+        "season_id": "oscars-2027"
+      },
+      "extractor_version": "awards-radar-v6",
+      "id": "awards-radar-predictions",
+      "is_active": true,
+      "last_error": null,
+      "last_failure_at": "2026-09-29 17:59:03.118+00",
+      "last_success_at": "2026-10-07 04:17:48.453+00"
+    },
+    {
+      "configuration": {
+        "category_id": "best-picture",
+        "intention": "nomination",
+        "season_id": "oscars-2027"
+      },
+      "extractor_version": "awardswatch-v1",
+      "id": "awardswatch-best-picture",
+      "is_active": false,
+      "last_error": null,
+      "last_failure_at": null,
+      "last_success_at": "2026-07-25 04:17:04.337+00"
+    },
+    {
+      "configuration": {
+        "archive_url": "https://awardswatch.com/category/predictions/film-predictions/oscars-predictions/2027-oscar-predictions/",
+        "category_ids": [
+          "best-picture",
+          "directing",
+          "actor",
+          "actress",
+          "supporting-actor",
+          "supporting-actress",
+          "original-screenplay",
+          "adapted-screenplay"
+        ],
+        "ceremony_year": 2027,
+        "panel_author": "Erik Anderson",
+        "persistence_concurrency": 6,
+        "required_category_ids": [
+          "best-picture",
+          "directing",
+          "actor",
+          "actress",
+          "supporting-actor",
+          "supporting-actress",
+          "original-screenplay",
+          "adapted-screenplay"
+        ],
+        "season_id": "oscars-2027"
+      },
+      "extractor_version": "awardswatch-multicategory-v6",
+      "id": "awardswatch-predictions",
+      "is_active": true,
+      "last_error": null,
+      "last_failure_at": "2026-09-29 04:17:02.997+00",
+      "last_success_at": "2026-10-07 04:17:38.697+00"
+    },
+    {
+      "configuration": {
+        "catalog_only": true,
+        "persistence_concurrency": 6,
+        "query": "film review",
+        "requires_secret": "GUARDIAN_CONTENT_API_KEY",
+        "season_id": "oscars-2027"
+      },
+      "extractor_version": "guardian-v1",
+      "id": "guardian-content-api",
+      "is_active": true,
+      "last_error": null,
+      "last_failure_at": null,
+      "last_success_at": "2026-10-07 04:17:33.863+00"
+    },
+    {
+      "configuration": {
+        "format_version": 1
+      },
+      "extractor_version": "manual-v1",
+      "id": "manual-editorial",
+      "is_active": false,
+      "last_error": null,
+      "last_failure_at": null,
+      "last_success_at": "2026-08-25 15:59:20.831+00"
+    },
+    {
+      "configuration": {
+        "ceremony_year": 2027,
+        "discovery_mode": "mutable-page",
+        "persistence_concurrency": 6,
+        "required_category_ids": [
+          "best-picture",
+          "directing",
+          "actor",
+          "actress",
+          "supporting-actor",
+          "supporting-actress",
+          "original-screenplay",
+          "adapted-screenplay"
+        ],
+        "season_id": "oscars-2027"
+      },
+      "extractor_version": "midnight-critics-v2",
+      "id": "midnight-critics-predictions",
+      "is_active": true,
+      "last_error": null,
+      "last_failure_at": null,
+      "last_success_at": "2026-10-07 04:17:38.261+00"
+    },
+    {
+      "configuration": {
+        "ceremony_year": 2027,
+        "required_category_ids": [
+          "best-picture",
+          "directing",
+          "actor",
+          "actress",
+          "supporting-actor",
+          "supporting-actress",
+          "original-screenplay",
+          "adapted-screenplay"
+        ],
+        "season_id": "oscars-2027"
+      },
+      "extractor_version": "movie-state-v1",
+      "id": "movie-state-predictions",
+      "is_active": true,
+      "last_error": null,
+      "last_failure_at": null,
+      "last_success_at": "2026-10-07 04:17:25.201+00"
+    },
+    {
+      "configuration": {
+        "ceremony_year": 2027,
+        "discovery_mode": "mutable-page",
+        "persistence_concurrency": 6,
+        "required_category_ids": [
+          "best-picture",
+          "directing",
+          "actor",
+          "actress",
+          "supporting-actor",
+          "supporting-actress",
+          "original-screenplay",
+          "adapted-screenplay"
+        ],
+        "season_id": "oscars-2027"
+      },
+      "extractor_version": "next-best-picture-v3",
+      "id": "next-best-picture-predictions",
+      "is_active": true,
+      "last_error": null,
+      "last_failure_at": "2026-09-29 17:59:03.118+00",
+      "last_success_at": "2026-10-07 04:17:42.091+00"
+    },
+    {
+      "configuration": {
+        "article_fallback_url": "https://www.theringer.com/2026/03/20/oscars/oscars-2027-predictions-best-picture-movies-contenders",
+        "category_id": "best-picture",
+        "ceremony_year": 2027,
+        "persistence_concurrency": 6,
+        "required_category_ids": [
+          "best-picture"
+        ],
+        "season_id": "oscars-2027"
+      },
+      "extractor_version": "the-ringer-v2",
+      "id": "ringer-best-picture",
+      "is_active": true,
+      "last_error": null,
+      "last_failure_at": null,
+      "last_success_at": "2026-10-07 04:17:04.594+00"
+    },
+    {
+      "configuration": {
+        "allowed_path_prefix": "/reviews/",
+        "persistence_concurrency": 6,
+        "season_id": "oscars-2027"
+      },
+      "extractor_version": "roger-ebert-v1",
+      "id": "roger-ebert-rss",
+      "is_active": true,
+      "last_error": null,
+      "last_failure_at": null,
+      "last_success_at": "2026-10-07 04:17:03.146+00"
+    }
+  ]
+}

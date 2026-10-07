@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FilmCatalogDetails } from "../../components/FilmCatalogDetails";
+import { FilmPrecursorContext } from "../../components/FilmPrecursorContext";
 import { FilmWatchPanel } from "../../components/FilmWatchPanel";
 import { MetacriticScoreCard } from "../../components/MetacriticScoreCard";
 import { Movement } from "../../components/Movement";
@@ -25,6 +26,7 @@ import { getRequestLocale } from "../../../lib/i18n/server";
 import { absoluteUrl, buildLocalizedMetadata } from "../../../lib/seo";
 import { tmdbImageUrl } from "../../../lib/tmdb/images";
 import { getFilmFestivalContext } from "../../../lib/festivals/data";
+import { getFilmPrecursorContext } from "../../../lib/precursors/data";
 
 type FilmPageProps = {
   params: Promise<{ slug: string }>;
@@ -78,11 +80,13 @@ export default async function FilmPage({ params }: FilmPageProps) {
   const film = await getFilmCatalogDetail(slug, en ? "en-US" : "es-ES");
   if (!film) notFound();
 
-  const [predictions, metacriticScore, festivalContext] = await Promise.all([
-    getFilmPredictions(slug),
-    getFilmMetacriticScore(slug),
-    getFilmFestivalContext(slug),
-  ]);
+  const [predictions, metacriticScore, festivalContext, precursorContext] =
+    await Promise.all([
+      getFilmPredictions(slug),
+      getFilmMetacriticScore(slug),
+      getFilmFestivalContext(slug),
+      getFilmPrecursorContext(slug),
+    ]);
   const primaryPrediction =
     predictions.find(
       (prediction) => prediction.categoryId === "best-picture",
@@ -307,6 +311,8 @@ export default async function FilmPage({ params }: FilmPageProps) {
 
       <section className="page-shell film-content">
         <FilmCatalogDetails film={film} locale={locale} />
+
+        <FilmPrecursorContext context={precursorContext} locale={locale} />
 
         {festivalContext.length ? (
           <div className="film-signal-section festival-module">

@@ -1,6 +1,52 @@
 import type { Locale } from "../i18n/config";
 import type { FestivalEditionView } from "./data";
 
+export function festivalImdbUrl(imdbId: string | null | undefined) {
+  return imdbId && /^tt\d{7,10}$/.test(imdbId)
+    ? `https://www.imdb.com/title/${imdbId}/`
+    : null;
+}
+
+export function festivalSourceFilmUrl(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" ? url.href : null;
+  } catch {
+    return null;
+  }
+}
+
+export function festivalCoverageNote(
+  editionId: string,
+  kind: string,
+  rawCapture: unknown,
+  entries: Array<{ section: string }>,
+): { es: string; en: string } | null {
+  if (kind !== "selection") return null;
+  const notes =
+    rawCapture && typeof rawCapture === "object" && "notes" in rawCapture
+      ? String(rawCapture.notes)
+      : "";
+  if (editionId === "locarno-2026" && notes.includes("PARTIAL")) {
+    return {
+      es: "Selección parcial: largometrajes de cinco secciones del festival. La cobertura de otras secciones está pendiente.",
+      en: "Partial selection: feature films from five festival programmes. Coverage of other programmes is pending.",
+    };
+  }
+  if (
+    editionId.startsWith("nyff-") &&
+    entries.length &&
+    entries.every((entry) => /Main Slate/i.test(entry.section))
+  ) {
+    return {
+      es: "Cubre Main Slate. La cobertura de Spotlight y Currents está pendiente.",
+      en: "Covers the Main Slate. Coverage of Spotlight and Currents is pending.",
+    };
+  }
+  return null;
+}
+
 export function festivalDateRange(
   startsOn: string,
   endsOn: string,

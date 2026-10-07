@@ -12,12 +12,12 @@ export async function generateMetadata(): Promise<Metadata> {
     path: "/fuentes",
     title:
       locale === "en"
-        ? "Oscar Prediction Sources and Experts"
-        : "Fuentes de predicciones Oscar",
+        ? "Oscar Sources: Experts and Official Awards"
+        : "Fuentes Oscar: expertos y premios oficiales",
     description:
       locale === "en"
-        ? "Explore the specialist outlets behind Runscars' 2027 Oscar predictions, with original publications and latest verified updates."
-        : "Consulta los medios especializados detrás de las predicciones Oscar 2027, con publicaciones originales y últimas actualizaciones verificadas.",
+        ? "Explore Runscars’ prediction outlets, official award organisations and festivals, with original sources and dates."
+        : "Consulta los medios de predicciones, organismos oficiales de premios y festivales de Runscars, con fuentes y fechas originales.",
   });
 }
 
@@ -65,8 +65,8 @@ export default async function SourcesPage() {
     },
     {
       id: "academy",
-      es: "Academia",
-      en: "Academy",
+      es: "Fuentes oficiales",
+      en: "Official sources",
       sources: sources.filter((source) =>
         source.sourceTypes.includes("official"),
       ),
@@ -117,8 +117,8 @@ export default async function SourcesPage() {
           </div>
           <p>
             {isEnglish
-              ? "Only outlets included in a professional update or with a published critical observation are shown."
-              : "Solo aparecen medios presentes en una actualización profesional o con una observación crítica publicada."}
+              ? "Original sources for predictions, film metadata, markets, festivals and official awards."
+              : "Fuentes originales de predicciones, metadatos cinematográficos, mercados, festivales y premios oficiales."}
           </p>
         </div>
         <div className="source-groups">
@@ -131,6 +131,7 @@ export default async function SourcesPage() {
               <div className="sources-index-grid">
                 {group.sources.map((source) => {
                   const latestUpdateAt =
+                    source.lastCapturedAt ??
                     source.lastChangedAt ??
                     source.lastPublishedAt ??
                     source.lastSuccessfulCheckAt;
@@ -145,7 +146,13 @@ export default async function SourcesPage() {
                       </h3>
                       <p className="source-index-card-update">
                         <span>
-                          {isEnglish ? "Latest update" : "Última actualización"}
+                          {source.lastCapturedAt
+                            ? isEnglish
+                              ? "Last consulted"
+                              : "Última consulta"
+                            : isEnglish
+                              ? "Latest update"
+                              : "Última actualización"}
                         </span>
                         <time dateTime={latestUpdateAt ?? undefined}>
                           {dateLabel(latestUpdateAt, locale)}

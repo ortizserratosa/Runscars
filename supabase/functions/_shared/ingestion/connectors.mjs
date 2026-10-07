@@ -18,6 +18,7 @@ import {
 } from "./professional-predictions.mjs";
 import { fetchResponse } from "../network.mjs";
 import { runMovieStateConnector } from "./movie-state.mjs";
+import { runVarietyConnector, VARIETY_CATEGORIES } from "./variety.mjs";
 
 function requestTimeout(connector) {
   const configured = Number(connector.configuration?.request_timeout_ms);
@@ -160,6 +161,12 @@ const AWARDS_RADAR_CATEGORY_URLS = Object.freeze({
 });
 
 export const CONNECTORS = Object.freeze({
+  ...Object.fromEntries(
+    Object.keys(VARIETY_CATEGORIES).map((categoryId) => [
+      `variety-${categoryId}-predictions`,
+      runVarietyConnector,
+    ]),
+  ),
   "movie-state-predictions": runMovieStateConnector,
   "guardian-content-api": async ({
     connector,
@@ -317,7 +324,7 @@ export const CONNECTORS = Object.freeze({
     return mergeBatches(latest.selected, {
       mode: "wordpress-search",
       indexUrl: discoveryUrl,
-      extractorVersion: "awards-daily-v8",
+      extractorVersion: "awards-daily-v9",
       candidatesFound: candidates.length,
       ignoredUrls,
       supersededUrls: latest.supersededUrls,
@@ -583,7 +590,7 @@ export const CONNECTORS = Object.freeze({
       {
         connectorId: connector.id,
         sourceId: "awardswatch",
-        extractorVersion: "awardswatch-multicategory-v6",
+        extractorVersion: "awardswatch-multicategory-v7",
         seasonId: connector.configuration.season_id,
         capturedAt,
         sourceUrl: connector.endpoint_url,

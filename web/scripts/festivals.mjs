@@ -1,5 +1,12 @@
 import { existsSync } from "node:fs";
-import { readFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
+import { parseEnv } from "node:util";
+import {
+  enrichFestivalLinks,
+  FestivalTmdbResolver,
+} from "../../supabase/functions/_shared/festivals/external-links.mjs";
+import { SupabaseFestivalExternalLinksRepository } from "../../supabase/functions/_shared/festivals/external-links-repository.mjs";
+import { FESTIVAL_IDENTITY_EVIDENCE } from "../../supabase/functions/_shared/festivals/identity-evidence.mjs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { FESTIVAL_CONNECTORS } from "../../supabase/functions/_shared/festivals/connectors.mjs";
@@ -39,9 +46,15 @@ async function importManifest(argument) {
     repository: repository(),
   });
   const inserted = results.filter((result) => result.status === "inserted");
+  const failed = results.filter((result) => result.status === "failed");
+  const unchanged = results.filter((result) => result.status === "duplicate");
   console.log(
-    `Festivales: ${inserted.length} conjuntos insertados; ${results.length - inserted.length} sin cambios.`,
+    `Festivales: ${inserted.length} conjuntos insertados; ${unchanged.length} sin cambios; ${failed.length} fallidos.`,
   );
+  if (failed.length) {
+    console.error(JSON.stringify(failed, null, 2));
+    process.exitCode = 1;
+  }
 }
 
 async function refresh(selected) {
@@ -75,11 +88,81 @@ async function match(entryIdArgument, filmId, args) {
   );
 }
 
+async function enrichLinks(args) {
+  const allowed = new Set([
+    "--apply",
+    "--all",
+    "--limit",
+    "--after",
+    "--env-file",
+    "--report",
+  ]);
+  const options = {};
+  for (let index = 0; index < args.length; index += 1) {
+    const key = args[index];
+    if (!allowed.has(key)) throw new Error(`Opción desconocida: ${key}`);
+    if (["--apply", "--all"].includes(key)) options[key] = true;
+    else {
+      const value = args[++index];
+      if (!value || value.startsWith("--"))
+        throw new Error(`${key} requiere un valor`);
+      options[key] = value;
+    }
+  }
+  const environment = { ...process.env };
+  if (options["--env-file"])
+    Object.assign(
+      environment,
+      parseEnv(await readFile(path.resolve(options["--env-file"]), "utf8")),
+    );
+  const linkRepository = new SupabaseFestivalExternalLinksRepository({
+    supabaseUrl:
+      environment.NEXT_PUBLIC_SUPABASE_URL ?? environment.SUPABASE_URL,
+    serviceRoleKey: environment.SUPABASE_SERVICE_ROLE_KEY,
+  });
+  const resolver = new FestivalTmdbResolver({
+    token: environment.TMDB_READ_ACCESS_TOKEN,
+    cachedMovies: await linkRepository.cachedMovies(),
+  });
+  let afterEntryId = Number(options["--after"] ?? 0);
+  const reports = [];
+  do {
+    const report = await enrichFestivalLinks({
+      repository: linkRepository,
+      resolver,
+      afterEntryId,
+      limit: Number(options["--limit"] ?? 25),
+      apply: options["--apply"] === true,
+      reviewedEvidence: FESTIVAL_IDENTITY_EVIDENCE,
+    });
+    reports.push(report);
+    console.log(JSON.stringify(report));
+    afterEntryId = report.nextEntryId;
+    if (options["--report"])
+      await writeFile(
+        path.resolve(options["--report"]),
+        JSON.stringify(
+          {
+            schemaVersion: 1,
+            reports,
+            nextEntryId: afterEntryId,
+            hasMore: report.hasMore,
+          },
+          null,
+          2,
+        ) + "\n",
+      );
+    if (report.failed) process.exitCode = 1;
+    if (!options["--all"] || !report.hasMore) break;
+  } while (true);
+}
+
 function help() {
   console.log(`Uso:
   npm run festivals:import -- [ruta-al-manifiesto.json]
   npm run festivals:refresh -- [sundance cannes ...]
-  npm run festivals:match -- <entry-id> <film-id> --reason <motivo>`);
+  npm run festivals:match -- <entry-id> <film-id> --reason <motivo>
+  npm run festivals:links -- [--apply] [--all] [--limit 25] [--after 0] [--env-file ruta] [--report ruta]`);
 }
 
 const [command, ...args] = process.argv.slice(2);
@@ -87,6 +170,7 @@ try {
   if (command === "import") await importManifest(args[0]);
   else if (command === "refresh") await refresh(args);
   else if (command === "match") await match(args[0], args[1], args.slice(2));
+  else if (command === "enrich-links") await enrichLinks(args);
   else if (!command || ["help", "-h", "--help"].includes(command)) help();
   else throw new Error(`Comando desconocido: ${command}`);
 } catch (error) {

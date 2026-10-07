@@ -1,0 +1,146 @@
+.hero {
+  padding-block: 2.5rem 3rem;
+  border-bottom: var(--keyline);
+}
+.hero h1 {
+  font: 500 clamp(3rem, 7vw, 6rem)/1.02 var(--serif);
+  margin: 1rem 0;
+}
+.hero h1 em {
+  font-weight: 400;
+}
+.hero p {
+  max-width: 42rem;
+  line-height: 1.65;
+}
+.section {
+  padding-block: 3rem;
+}
+.section h2 {
+  font: 400 clamp(2rem, 4vw, 3rem)/1.1 var(--serif);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+.card {
+  padding: 1.5rem;
+  border: var(--keyline);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+}
+.card h2 {
+  font-size: 2rem;
+  margin: 0;
+}
+.tag {
+  font: 0.7rem var(--mono);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.dates {
+  margin: 0;
+  display: grid;
+  gap: 0.8rem;
+}
+.dates div {
+  display: grid;
+  gap: 0.25rem;
+}
+.dates dt {
+  font: 0.7rem var(--mono);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.dates dd {
+  margin: 0;
+}
+.cardLink {
+  border-top: var(--keyline-soft);
+  padding-top: 1rem;
+  margin-top: auto;
+  font-weight: 600;
+}
+.archive {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+.archive a {
+  border: var(--keyline-soft);
+  padding: 0.65rem 1rem;
+}
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(16rem, 1fr);
+  gap: 3rem;
+  padding-block: 3rem;
+}
+.guide {
+  padding: 1.5rem;
+  background: var(--paper-deep);
+  height: fit-content;
+  line-height: 1.6;
+}
+.guide h2 {
+  font: 400 2rem var(--serif);
+}
+.results {
+  list-style: none;
+  padding: 0;
+}
+.results li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  gap: 1.5rem;
+  padding-block: 1rem;
+  border-top: var(--keyline-soft);
+}
+.results strong {
+  display: block;
+  margin-bottom: 0.35rem;
+}
+.results small {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--muted);
+}
+.provenance {
+  border-top: var(--keyline-soft);
+  margin-top: 1.5rem;
+  padding-top: 0.8rem;
+  overflow-wrap: anywhere;
+}
+.provenance summary {
+  cursor: pointer;
+}
+.notice {
+  padding: 1.5rem;
+  border: var(--keyline-soft);
+  margin-block: 2rem;
+  line-height: 1.6;
+}
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .results li {
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+  }
+  .hero {
+    padding-block: 1.5rem 2rem;
+  }
+}

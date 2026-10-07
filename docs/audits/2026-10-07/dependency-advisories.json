@@ -1,0 +1,93 @@
+{
+  "capturedAt": "2026-10-07T08:25:51.752Z",
+  "patched": {
+    "next": "16.3.8",
+    "sharp": "0.35.5",
+    "brace-expansion": "5.0.12",
+    "source-map-js": "1.2.2"
+  },
+  "runtimeAudit": "npm audit --omit=dev --audit-level=high: 0 vulnerabilities",
+  "remaining": {
+    "package": "braces",
+    "version": "3.0.3",
+    "dependencyPath": [
+      "eslint-config-next",
+      "@next/eslint-plugin-next",
+      "fast-glob",
+      "micromatch",
+      "braces"
+    ],
+    "scope": "development tooling",
+    "severity": "high",
+    "advisory": "https://github.com/advisories/GHSA-vfj7-8cjw-p6xm",
+    "patchAvailable": false,
+    "proposedNpmForceFix": "Downgrade eslint-config-next to 14.2.35 (not applied; incompatible major version)"
+  },
+  "originalAdvisories": [
+    {
+      "name": "brace-expansion",
+      "severity": "high",
+      "advisories": [
+        {
+          "title": "brace-expansion: Quadratic-time expansion of the `{a},b}` rewrite causes CPU denial of service",
+          "url": "https://github.com/advisories/GHSA-q2hr-2g5m-vwhr",
+          "range": ">=4.0.0 <5.0.12"
+        },
+        {
+          "title": "brace-expansion: DoS via uncontrolled recursion on nested brace groups causing stack exhaustion",
+          "url": "https://github.com/advisories/GHSA-qhr7-859c-m2p7",
+          "range": ">=4.0.0 <5.0.11"
+        },
+        {
+          "title": "brace-expansion: DoS via uncontrolled recursion in parseCommaParts causing stack exhaustion",
+          "url": "https://github.com/advisories/GHSA-6j4f-fj2g-mc7p",
+          "range": ">=4.0.0 <5.0.10"
+        }
+      ]
+    },
+    {
+      "name": "braces",
+      "severity": "high",
+      "advisories": [
+        {
+          "title": "braces vulnerable to stack-exhaustion denial of service through deeply nested patterns",
+          "url": "https://github.com/advisories/GHSA-vfj7-8cjw-p6xm",
+          "range": "<=3.0.3"
+        }
+      ]
+    },
+    {
+      "name": "next",
+      "severity": "critical",
+      "advisories": [
+        {
+          "title": "Next.js: Remote Code Execution in next/og ImageResponse",
+          "url": "https://github.com/advisories/GHSA-vcvr-r3jv-pc5j",
+          "range": ">=16.2.0 <16.3.6"
+        }
+      ]
+    },
+    {
+      "name": "sharp",
+      "severity": "high",
+      "advisories": [
+        {
+          "title": "sharp : Vulnerability in librsvg dependency CVE-2026-96889",
+          "url": "https://github.com/advisories/GHSA-wq5f-xc86-pv6w",
+          "range": "<0.35.5"
+        }
+      ]
+    },
+    {
+      "name": "source-map-js",
+      "severity": "high",
+      "advisories": [
+        {
+          "title": "source-map-js allows event-loop denial of service through indexed source-map section offsets",
+          "url": "https://github.com/advisories/GHSA-68fv-2mgg-jv7q",
+          "range": ">=1.0.0 <1.2.2"
+        }
+      ]
+    }
+  ]
+}

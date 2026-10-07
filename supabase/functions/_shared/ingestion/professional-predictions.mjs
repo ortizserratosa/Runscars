@@ -213,6 +213,69 @@ function htmlLines(html) {
     .filter(Boolean);
 }
 
+// HTML ordered lists render their markers outside textContent. Preserve that
+// explicit evidence before flattening the article, while keeping raw labels.
+function htmlPredictionLines(html) {
+  const lists = [];
+  const marked = html
+    .replace(/<(script|style)\b[\s\S]*?<\/\1>/gi, "")
+    .replace(/<\/?(?:ol|ul|li)\b[^>]*>/gi, (tag) => {
+      if (/^<\/(?:ol|ul)\b/i.test(tag)) {
+        lists.pop();
+        return tag;
+      }
+      if (/^<(?:ol|ul)\b/i.test(tag)) {
+        const ordered = /^<ol\b/i.test(tag);
+        if (ordered && /\breversed(?:\s|=|>)/i.test(tag)) {
+          throw new Error("La lista ordenada invertida requiere revisión");
+        }
+        if (lists.some((list) => list.ordered)) {
+          throw new Error("La lista ordenada anidada requiere revisión");
+        }
+        const start = tag.match(
+          /\bstart\s*=\s*(?:"(-?\d+)"|'(-?\d+)'|(-?\d+))/i,
+        );
+        lists.push({
+          ordered,
+          nextRank: Number(start?.[1] ?? start?.[2] ?? start?.[3] ?? 1),
+        });
+        return tag;
+      }
+      const list = lists.at(-1);
+      if (!/^<li\b/i.test(tag) || !list?.ordered) return tag;
+      const value = tag.match(/\bvalue\s*=\s*(?:"(-?\d+)"|'(-?\d+)'|(-?\d+))/i);
+      const rank = value
+        ? Number(value[1] ?? value[2] ?? value[3])
+        : list.nextRank;
+      list.nextRank = rank + 1;
+      return `${tag}\uE000${rank}\uE001`;
+    });
+  return htmlLines(marked);
+}
+
+function rankedPredictionLine(line) {
+  const htmlRank = line.match(/^\uE000(-?\d+)\uE001\s*(.+)$/u);
+  const textRank = line.match(/^(\d+)\s*[.)]\s+(.+)$/);
+  if (htmlRank) {
+    const duplicateMarker = htmlRank[2].match(/^(\d+)\s*[.)]\s+(.+)$/);
+    if (duplicateMarker && Number(duplicateMarker[1]) !== Number(htmlRank[1])) {
+      throw new Error("La numeración HTML contradice el puesto publicado");
+    }
+    return {
+      rank: Number(htmlRank[1]),
+      label: duplicateMarker?.[2] ?? htmlRank[2],
+      raw: htmlRank[2],
+      orderEvidence: "html-ordered-list",
+    };
+  }
+  return {
+    rank: textRank ? Number(textRank[1]) : null,
+    label: textRank?.[2] ?? line,
+    raw: line,
+    orderEvidence: null,
+  };
+}
+
 function divContentByClass(html, className) {
   const openingTags = /<div\b[^>]*>/gi;
   let opening;
@@ -384,7 +447,7 @@ function peopleFromText(value) {
     );
 }
 
-function filmFromText(value) {
+export function filmFromText(value) {
   const primaryFilm = value.replace(/\s+\(or\s+[^()]+\)\s*$/i, "").trim();
   return (
     SOURCE_FILM_ALIASES.get(primaryFilm.toLocaleLowerCase()) ?? primaryFilm
@@ -450,7 +513,13 @@ function subjectParts(categoryId, raw) {
   };
 }
 
-function observation(categoryId, rank, listLength, parts, raw) {
+function awardsWatchSubjectParts(categoryId, raw) {
+  // The source's asterisk refers to its "category placement tbd" footnote,
+  // not the person's name. The exact marker remains in the original label.
+  return subjectParts(categoryId, raw.replace(/^\*\s*(?=\S)/u, ""));
+}
+
+function observation(categoryId, rank, listLength, parts, raw, orderEvidence) {
   return {
     dataType: rank === null ? "prediction_selection" : "prediction_ordered",
     subject: parts.subject,
@@ -462,6 +531,7 @@ function observation(categoryId, rank, listLength, parts, raw) {
         ? { selected: true }
         : { rank, list_length: listLength }),
       raw,
+      ...(orderEvidence ? { order_evidence: orderEvidence } : {}),
       film_subject: parts.filmSubject,
       people_subjects: parts.peopleSubjects,
     },
@@ -499,7 +569,14 @@ function buildBatch({
     const listLength = rows.length;
     observations.push(
       ...rows.map((row) =>
-        observation(categoryId, row.rank, listLength, row.parts, row.raw),
+        observation(
+          categoryId,
+          row.rank,
+          listLength,
+          row.parts,
+          row.raw,
+          row.orderEvidence,
+        ),
       ),
     );
   }
@@ -554,7 +631,13 @@ function awardsRadarCardRows(html, categoryId) {
 
 function parseHeadingLists(
   lines,
-  { numbered, contentStart = 0, removeConsensus = false, maxRows = 25 },
+  {
+    numbered,
+    contentStart = 0,
+    removeConsensus = false,
+    maxRows = 25,
+    maxOrderedRows = maxRows,
+  },
 ) {
   const rowsByCategory = new Map();
   let categoryId = null;
@@ -574,11 +657,11 @@ function parseHeadingLists(
       inAlternates = true;
     }
     if (!categoryId || inAlternates || /^-+$/.test(line)) continue;
-    const rankMatch = line.match(/^(\d+)\s*[.)]\s+(.+)$/);
-    if (numbered && !rankMatch) continue;
+    const ranked = rankedPredictionLine(line);
+    if (numbered && ranked.rank === null) continue;
     if (!numbered && /^\(?next|^also consider/i.test(line)) continue;
-    const rank = rankMatch ? Number(rankMatch[1]) : null;
-    let raw = rankMatch ? rankMatch[2].trim() : line;
+    const rank = ranked.rank;
+    let raw = ranked.label.trim();
     if (removeConsensus) {
       raw = raw
         .replace(/\s*-\s*(?:A\s*LL|ALL)$/i, "")
@@ -587,14 +670,16 @@ function parseHeadingLists(
     }
     const rows = rowsByCategory.get(categoryId);
     if (!raw) continue;
-    if (rows.length >= maxRows) {
+    const rowLimit = rank === null ? maxRows : maxOrderedRows;
+    if (rows.length >= rowLimit) {
       throw new Error(
-        `La lista ${categoryId} excede el límite esperado de ${maxRows} filas`,
+        `La lista ${categoryId} excede el límite esperado de ${rowLimit} filas`,
       );
     }
     rows.push({
       rank,
-      raw: line,
+      raw: ranked.raw,
+      ...(ranked.orderEvidence ? { orderEvidence: ranked.orderEvidence } : {}),
       parts: subjectParts(categoryId, raw),
     });
   }
@@ -612,21 +697,22 @@ export function parseAwardsDailyFixture(
     capturedAt,
   );
   assertPredictionSeason(publication.title, seasonId, "awards-daily");
-  const articleLines = htmlLines(
+  const articleLines = htmlPredictionLines(
     divContentByClass(html, "content-inner") ?? html,
   );
   const footerStart = articleLines.findIndex((line) => /^Tags:/i.test(line));
   const lines =
     footerStart === -1 ? articleLines : articleLines.slice(0, footerStart);
   const predictionsMarker = lastIndexMatching(lines, (line) =>
-    /^Predictions:?$/i.test(line),
+    /^(?:Predictions:?|Here are my (?:\d{4} Oscar (?:nomination )?)?predictions(?: for this week)?[.:]?)$/i.test(
+      line,
+    ),
   );
   const start =
     predictionsMarker >= 0
       ? lines.findIndex(
           (line, index) =>
-            index > predictionsMarker &&
-            headingCategory(line) === "best-picture",
+            index > predictionsMarker && headingCategory(line) !== null,
         )
       : lastIndexMatching(
           lines,
@@ -634,18 +720,19 @@ export function parseAwardsDailyFixture(
         );
   if (start < 0) {
     throw new Error(
-      "awards-daily no contiene un bloque de predicciones Best Picture",
+      "awards-daily no contiene un bloque de predicciones reconocible",
     );
   }
   const rowsByCategory = parseHeadingLists(lines, {
     numbered: false,
     contentStart: start,
     maxRows: 10,
+    maxOrderedRows: Number.POSITIVE_INFINITY,
   });
   return buildBatch({
     connectorId,
     sourceId: "awards-daily",
-    extractorVersion: "awards-daily-v8",
+    extractorVersion: "awards-daily-v9",
     seasonId,
     capturedAt,
     sourceUrl: publication.canonicalUrl,
@@ -981,7 +1068,7 @@ function awardsWatchPanel(section, categoryId, panelAuthor) {
       const row = {
         rank: match ? Number(match[1]) : null,
         raw,
-        parts: subjectParts(categoryId, match?.[2] ?? raw),
+        parts: awardsWatchSubjectParts(categoryId, match?.[2] ?? raw),
       };
       // An unnumbered NEXT block is an alternate tier, not a nomination vote.
       if (isNext && row.rank === null) alternates.push(row);
@@ -1019,14 +1106,17 @@ export function parseAwardsWatchArticleFixture(
   const panel = awardsWatchPanel(section, categoryId, panelAuthor);
   const rows = panel?.rows ?? [];
   if (!panel) {
-    for (const line of htmlLines(section)) {
+    for (const line of htmlPredictionLines(section)) {
       if (/^Full list|alphabetical/i.test(line)) break;
-      const match = line.match(/^(\d+)\.\s+(.+)$/);
-      if (!match) continue;
+      const ranked = rankedPredictionLine(line);
+      if (ranked.rank === null) continue;
       rows.push({
-        rank: Number(match[1]),
-        raw: line,
-        parts: subjectParts(categoryId, match[2].trim()),
+        rank: ranked.rank,
+        raw: ranked.raw,
+        ...(ranked.orderEvidence
+          ? { orderEvidence: ranked.orderEvidence }
+          : {}),
+        parts: awardsWatchSubjectParts(categoryId, ranked.label.trim()),
       });
     }
   }
@@ -1037,7 +1127,7 @@ export function parseAwardsWatchArticleFixture(
   const batch = buildBatch({
     connectorId,
     sourceId: "awardswatch",
-    extractorVersion: "awardswatch-multicategory-v6",
+    extractorVersion: "awardswatch-multicategory-v7",
     seasonId,
     capturedAt,
     sourceUrl: publication.canonicalUrl,

@@ -95,6 +95,9 @@ function SetSection({
           {en ? "Official source" : "Fuente oficial"} ↗
         </a>
       </header>
+      {set.coverageNote ? (
+        <p className="festival-deck">{set.coverageNote[locale]}</p>
+      ) : null}
       <FestivalEntries set={set} locale={locale} artwork={artwork} />
       <details className="festival-provenance">
         <summary>{en ? "Source and dates" : "Fuente y fechas"}</summary>

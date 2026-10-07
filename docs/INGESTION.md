@@ -238,8 +238,10 @@ del Cron.
 ## Ingesta de festivales
 
 `run-festivals` es una Edge Function independiente de profesionales y mercados.
-Consulta diariamente a las **05:17 UTC** los nueve conectores de la temporada
-2027. Cada festival abre y cierra su propio `festival_capture_runs`; un error no
+Consulta diariamente a las **05:17 UTC** los conectores activos de la temporada
+2027. Las ediciones cerradas con recibos estáticos verificados se archivan en
+vez de sustituirlos cada día por un HTML parcial. Cada festival activo abre y
+cierra su propio `festival_capture_runs`; un error no
 bloquea los demás.
 
 Selección y palmarés llegan como manifiestos completos. `prepareFestivalSet`
@@ -266,9 +268,60 @@ npm run festivals:refresh -- cannes venice
 npm run festivals:match -- <entry-id> <film-id> --reason "<motivo>"
 ```
 
-El primer comando carga el recibo versionado inicial; el segundo consulta las
-páginas oficiales vigentes. Ambos necesitan URL de Supabase y
+Los dos primeros comandos cargan el recibo versionado inicial; `refresh` consulta
+las páginas oficiales de los conectores activos. Necesitan URL de Supabase y
 `SUPABASE_SERVICE_ROLE_KEY` solo en servidor.
+
+El suplemento del 07/10 se carga explícitamente con
+`npm run festivals:import -- web/data/festivals/2026-supplement-2026-10-07.json`.
+No se reimporta el manifiesto inicial para volver a activar punteros anteriores.
+El alcance y los límites restantes se registran en
+[SOURCE_COVERAGE_AUDIT_2026-10-07.md](SOURCE_COVERAGE_AUDIT_2026-10-07.md).
+
+### Enlaces externos de películas festivaleras
+
+`npm run festivals:links -- --all` verifica las entradas actuales sin escribir.
+`npm run festivals:links -- --apply --all` persiste la evidencia en historial
+independiente del catálogo y del recibo festivalero. Los lotes tienen 25 entradas
+por defecto y un máximo de 50; `--after <entry-id>` permite reanudar. `--env-file`
+carga un entorno privado de servidor y `--report` guarda un recibo de resultados
+sin secretos. Se necesitan URL de Supabase, `SUPABASE_SERVICE_ROLE_KEY` y
+`TMDB_READ_ACCESS_TOKEN`; el token nunca se envía al cliente web.
+
+El resolver contrasta título original o alternativo y dirección, y el año solo
+si consta en la fuente. Un premio sin dirección puede reutilizar la selección
+inequívoca de la misma edición o una evidencia oficial explícita. Un destinatario
+de interpretación no se utiliza como director. Las dudas se registran sin
+enlace y los fallos conservan los enlaces confirmados anteriores. Las consultas
+usan caché de identidad y reintentos acotados; no se crea un nuevo Cron.
+
+`run-festivals` admite el enriquecimiento autenticado opcional con `enrichLinks`
+y `linksOnly`, en lotes acotados. Las invocaciones diarias existentes conservan
+su comportamiento de captura oficial. Ver D-071 en
+[DECISIONS.md](DECISIONS.md).
+
+## Ingesta de premios precursores
+
+Los calendarios, nominaciones y ganadores oficiales usan un dominio separado de
+observaciones profesionales, mercados y festivales. `precursor_sets` y sus
+entradas son inmutables; `precursor_current_sets` selecciona la versión vigente.
+Se mantiene la categoría original y una relación explícita con la categoría
+Oscar, sin convertir elenco en Mejor película ni acreditar elegibilidad Oscar.
+
+```bash
+npm run precursors:validate
+npm run precursors:import -- web/data/precursors/2026-2027.json
+npm run precursors:match -- <entry-id> <film-id> --reason "<motivo>"
+```
+
+`validate` no escribe. La importación manual asistida verifica el origen oficial,
+la edición y las fechas; un fallo de un organismo no bloquea los demás. Un
+calendario futuro no contiene resultados y se rechazan ganadores anteriores a
+la ceremonia. Repetir un recibo devuelve `duplicate`; no revierte una corrección
+posterior. El matching exige una película de la misma temporada y conserva
+motivo e historial con acceso restringido. El corte inicial ofrece seis
+calendarios 2027 y 25 ganadores relacionados con las ocho categorías públicas
+en el archivo 2026; no tiene Cron propio ni promete nominaciones completas.
 
 ## Pruebas sin red
 

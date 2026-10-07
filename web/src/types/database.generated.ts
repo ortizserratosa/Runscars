@@ -394,6 +394,60 @@ export type Database = {
           },
         ];
       };
+      current_festival_entry_external_links: {
+        Row: {
+          entry_id: number;
+          history_id: number;
+          updated_at: string;
+        };
+        Insert: {
+          entry_id: number;
+          history_id: number;
+          updated_at?: string;
+        };
+        Update: {
+          entry_id?: number;
+          history_id?: number;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "current_festival_entry_external_links_entry_id_fkey";
+            columns: ["entry_id"];
+            isOneToOne: false;
+            referencedRelation: "festival_entries";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "current_festival_entry_external_links_entry_id_history_id_fkey";
+            columns: ["entry_id"];
+            isOneToOne: false;
+            referencedRelation: "festival_entry_external_link_history";
+            referencedColumns: ["entry_id"];
+          },
+          {
+            foreignKeyName: "current_festival_entry_external_links_entry_id_history_id_fkey";
+            columns: ["history_id"];
+            isOneToOne: false;
+            referencedRelation: "festival_entry_external_link_history";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "current_festival_entry_external_links_entry_id_history_id_fkey";
+            columns: ["entry_id"];
+            isOneToOne: false;
+            referencedRelation: "festival_entry_external_link_history";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "current_festival_entry_external_links_entry_id_history_id_fkey";
+            columns: ["history_id"];
+            isOneToOne: false;
+            referencedRelation: "festival_entry_external_link_history";
+            referencedColumns: ["entry_id"];
+          },
+        ];
+      };
       current_festival_entry_matches: {
         Row: {
           entry_id: number;
@@ -496,6 +550,152 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "seasons";
             referencedColumns: ["id"];
+          },
+        ];
+      };
+      current_precursor_entry_matches: {
+        Row: {
+          entry_id: number;
+          match_history_id: number;
+          updated_at: string;
+        };
+        Insert: {
+          entry_id: number;
+          match_history_id: number;
+          updated_at?: string;
+        };
+        Update: {
+          entry_id?: number;
+          match_history_id?: number;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "current_precursor_entry_matches_entry_id_fkey";
+            columns: ["entry_id"];
+            isOneToOne: false;
+            referencedRelation: "precursor_entries";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "current_precursor_entry_matches_match_history_id_entry_id_fkey";
+            columns: ["entry_id"];
+            isOneToOne: false;
+            referencedRelation: "precursor_entry_match_history";
+            referencedColumns: ["entry_id"];
+          },
+          {
+            foreignKeyName: "current_precursor_entry_matches_match_history_id_entry_id_fkey";
+            columns: ["match_history_id"];
+            isOneToOne: false;
+            referencedRelation: "precursor_entry_match_history";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "current_precursor_entry_matches_match_history_id_entry_id_fkey";
+            columns: ["entry_id"];
+            isOneToOne: false;
+            referencedRelation: "precursor_entry_match_history";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "current_precursor_entry_matches_match_history_id_entry_id_fkey";
+            columns: ["match_history_id"];
+            isOneToOne: false;
+            referencedRelation: "precursor_entry_match_history";
+            referencedColumns: ["entry_id"];
+          },
+        ];
+      };
+      current_precursor_sets: {
+        Row: {
+          edition_id: string;
+          kind: string;
+          set_id: string;
+          updated_at: string;
+        };
+        Insert: {
+          edition_id: string;
+          kind: string;
+          set_id: string;
+          updated_at?: string;
+        };
+        Update: {
+          edition_id?: string;
+          kind?: string;
+          set_id?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "current_precursor_sets_edition_id_fkey";
+            columns: ["edition_id"];
+            isOneToOne: false;
+            referencedRelation: "precursor_editions";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "current_precursor_sets_set_id_edition_id_kind_fkey";
+            columns: ["set_id"];
+            isOneToOne: false;
+            referencedRelation: "precursor_sets";
+            referencedColumns: ["edition_id"];
+          },
+          {
+            foreignKeyName: "current_precursor_sets_set_id_edition_id_kind_fkey";
+            columns: ["set_id"];
+            isOneToOne: false;
+            referencedRelation: "precursor_sets";
+            referencedColumns: ["kind"];
+          },
+          {
+            foreignKeyName: "current_precursor_sets_set_id_edition_id_kind_fkey";
+            columns: ["edition_id"];
+            isOneToOne: false;
+            referencedRelation: "precursor_sets";
+            referencedColumns: ["kind"];
+          },
+          {
+            foreignKeyName: "current_precursor_sets_set_id_edition_id_kind_fkey";
+            columns: ["kind"];
+            isOneToOne: false;
+            referencedRelation: "precursor_sets";
+            referencedColumns: ["kind"];
+          },
+          {
+            foreignKeyName: "current_precursor_sets_set_id_edition_id_kind_fkey";
+            columns: ["kind"];
+            isOneToOne: false;
+            referencedRelation: "precursor_sets";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "current_precursor_sets_set_id_edition_id_kind_fkey";
+            columns: ["edition_id"];
+            isOneToOne: false;
+            referencedRelation: "precursor_sets";
+            referencedColumns: ["edition_id"];
+          },
+          {
+            foreignKeyName: "current_precursor_sets_set_id_edition_id_kind_fkey";
+            columns: ["edition_id"];
+            isOneToOne: false;
+            referencedRelation: "precursor_sets";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "current_precursor_sets_set_id_edition_id_kind_fkey";
+            columns: ["set_id"];
+            isOneToOne: false;
+            referencedRelation: "precursor_sets";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "current_precursor_sets_set_id_edition_id_kind_fkey";
+            columns: ["kind"];
+            isOneToOne: false;
+            referencedRelation: "precursor_sets";
+            referencedColumns: ["edition_id"];
           },
         ];
       };
@@ -835,6 +1035,62 @@ export type Database = {
             columns: ["set_id"];
             isOneToOne: false;
             referencedRelation: "festival_sets";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      festival_entry_external_link_history: {
+        Row: {
+          id: number;
+          entry_id: number;
+          status: string;
+          tmdb_id: number | null;
+          imdb_id: string | null;
+          source_url: string;
+          original_source_url: string;
+          captured_at: string;
+          method: string;
+          content_hash: string;
+          evidence: Json;
+          original_data: Json;
+          created_at: string;
+        };
+        Insert: {
+          id: number;
+          entry_id: number;
+          status: string;
+          tmdb_id?: number | null;
+          imdb_id?: string | null;
+          source_url: string;
+          original_source_url: string;
+          captured_at: string;
+          method: string;
+          content_hash: string;
+          evidence: Json;
+          original_data: Json;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          entry_id?: number;
+          status?: string;
+          tmdb_id?: number | null;
+          imdb_id?: string | null;
+          source_url?: string;
+          original_source_url?: string;
+          captured_at?: string;
+          method?: string;
+          content_hash?: string;
+          evidence?: Json;
+          original_data?: Json;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "festival_entry_external_link_history_entry_id_fkey";
+            columns: ["entry_id"];
+            isOneToOne: false;
+            referencedRelation: "festival_entries";
             referencedColumns: ["id"];
           },
         ];
@@ -1860,6 +2116,272 @@ export type Database = {
           },
         ];
       };
+      precursor_editions: {
+        Row: {
+          id: string;
+          organization_id: string;
+          season_id: string;
+          ceremony_year: number;
+          edition_number: number | null;
+        };
+        Insert: {
+          id: string;
+          organization_id: string;
+          season_id: string;
+          ceremony_year: number;
+          edition_number?: number | null;
+        };
+        Update: {
+          id?: string;
+          organization_id?: string;
+          season_id?: string;
+          ceremony_year?: number;
+          edition_number?: number | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "precursor_editions_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: false;
+            referencedRelation: "precursor_organizations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "precursor_editions_season_id_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "seasons";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      precursor_entries: {
+        Row: {
+          id: number;
+          set_id: string;
+          entry_order: number;
+          original_category: string;
+          original_title: string;
+          original_recipient: string | null;
+          category_id: string | null;
+          category_relation: string;
+          original_data: Json;
+        };
+        Insert: {
+          id: number;
+          set_id: string;
+          entry_order: number;
+          original_category: string;
+          original_title: string;
+          original_recipient?: string | null;
+          category_id?: string | null;
+          category_relation: string;
+          original_data: Json;
+        };
+        Update: {
+          id?: number;
+          set_id?: string;
+          entry_order?: number;
+          original_category?: string;
+          original_title?: string;
+          original_recipient?: string | null;
+          category_id?: string | null;
+          category_relation?: string;
+          original_data?: Json;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "precursor_entries_category_id_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "categories";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "precursor_entries_set_id_fkey";
+            columns: ["set_id"];
+            isOneToOne: false;
+            referencedRelation: "precursor_sets";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      precursor_entry_match_history: {
+        Row: {
+          id: number;
+          entry_id: number;
+          normalized_title: string;
+          status: string;
+          film_id: string | null;
+          candidate_film_ids: string[];
+          reason: string;
+          actor: string;
+          created_at: string;
+        };
+        Insert: {
+          id: number;
+          entry_id: number;
+          normalized_title: string;
+          status: string;
+          film_id?: string | null;
+          candidate_film_ids?: string[];
+          reason: string;
+          actor: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          entry_id?: number;
+          normalized_title?: string;
+          status?: string;
+          film_id?: string | null;
+          candidate_film_ids?: string[];
+          reason?: string;
+          actor?: string;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "precursor_entry_match_history_entry_id_fkey";
+            columns: ["entry_id"];
+            isOneToOne: false;
+            referencedRelation: "precursor_entries";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "precursor_entry_match_history_film_id_fkey";
+            columns: ["film_id"];
+            isOneToOne: false;
+            referencedRelation: "films";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      precursor_organizations: {
+        Row: {
+          id: string;
+          source_id: string;
+          name: string;
+          name_en: string;
+          kind: string;
+          homepage_url: string;
+          notes_es: string;
+          notes_en: string;
+        };
+        Insert: {
+          id: string;
+          source_id: string;
+          name: string;
+          name_en: string;
+          kind: string;
+          homepage_url: string;
+          notes_es: string;
+          notes_en: string;
+        };
+        Update: {
+          id?: string;
+          source_id?: string;
+          name?: string;
+          name_en?: string;
+          kind?: string;
+          homepage_url?: string;
+          notes_es?: string;
+          notes_en?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "precursor_organizations_source_id_fkey";
+            columns: ["source_id"];
+            isOneToOne: false;
+            referencedRelation: "sources";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      precursor_sets: {
+        Row: {
+          id: string;
+          edition_id: string;
+          kind: string;
+          version: number;
+          content_hash: string;
+          source_url: string;
+          source_title: string;
+          source_author: string | null;
+          published_at: string | null;
+          captured_at: string;
+          ceremony_on: string | null;
+          nominations_on: string | null;
+          milestones: Json;
+          coverage_es: string;
+          coverage_en: string;
+          raw_capture: Json;
+          extractor_version: string;
+          corrects_set_id: string | null;
+          correction_reason: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id: string;
+          edition_id: string;
+          kind: string;
+          version: number;
+          content_hash: string;
+          source_url: string;
+          source_title: string;
+          source_author?: string | null;
+          published_at?: string | null;
+          captured_at: string;
+          ceremony_on?: string | null;
+          nominations_on?: string | null;
+          milestones?: Json;
+          coverage_es: string;
+          coverage_en: string;
+          raw_capture: Json;
+          extractor_version: string;
+          corrects_set_id?: string | null;
+          correction_reason?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          edition_id?: string;
+          kind?: string;
+          version?: number;
+          content_hash?: string;
+          source_url?: string;
+          source_title?: string;
+          source_author?: string | null;
+          published_at?: string | null;
+          captured_at?: string;
+          ceremony_on?: string | null;
+          nominations_on?: string | null;
+          milestones?: Json;
+          coverage_es?: string;
+          coverage_en?: string;
+          raw_capture?: Json;
+          extractor_version?: string;
+          corrects_set_id?: string | null;
+          correction_reason?: string | null;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "precursor_sets_corrects_set_id_fkey";
+            columns: ["corrects_set_id"];
+            isOneToOne: false;
+            referencedRelation: "precursor_sets";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "precursor_sets_edition_id_fkey";
+            columns: ["edition_id"];
+            isOneToOne: false;
+            referencedRelation: "precursor_editions";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       professional_observations: {
         Row: {
           id: number;
@@ -2018,21 +2540,75 @@ export type Database = {
           },
         ];
       };
+      public_festival_external_links: {
+        Row: {
+          entry_id: number | null;
+          tmdb_id: number | null;
+          imdb_id: string | null;
+          captured_at: string | null;
+          source_url: string | null;
+        };
+        Insert: {
+          entry_id?: number | null;
+          tmdb_id?: number | null;
+          imdb_id?: string | null;
+          captured_at?: string | null;
+          source_url?: string | null;
+        };
+        Update: {
+          entry_id?: number | null;
+          tmdb_id?: number | null;
+          imdb_id?: string | null;
+          captured_at?: string | null;
+          source_url?: string | null;
+        };
+        Relationships: [];
+      };
+      public_festival_freshness: {
+        Row: {
+          source_id: string | null;
+          is_active: boolean | null;
+          last_success_at: string | null;
+          last_failure_at: string | null;
+          configuration: Json | null;
+        };
+        Insert: {
+          source_id?: string | null;
+          is_active?: boolean | null;
+          last_success_at?: string | null;
+          last_failure_at?: string | null;
+          configuration?: Json | null;
+        };
+        Update: {
+          source_id?: string | null;
+          is_active?: boolean | null;
+          last_success_at?: string | null;
+          last_failure_at?: string | null;
+          configuration?: Json | null;
+        };
+        Relationships: [];
+      };
       public_source_freshness: {
         Row: {
           source_id: string | null;
           last_successful_check_at: string | null;
           last_failure_at: string | null;
+          has_current_failure: boolean | null;
+          has_active_connector: boolean | null;
         };
         Insert: {
           source_id?: string | null;
           last_successful_check_at?: string | null;
           last_failure_at?: string | null;
+          has_current_failure?: boolean | null;
+          has_active_connector?: boolean | null;
         };
         Update: {
           source_id?: string | null;
           last_successful_check_at?: string | null;
           last_failure_at?: string | null;
+          has_current_failure?: boolean | null;
+          has_active_connector?: boolean | null;
         };
         Relationships: [];
       };
@@ -2900,18 +3476,18 @@ export type Database = {
             columns: ["category_candidate_id"];
             isOneToOne: false;
             referencedRelation: "category_candidates";
-            referencedColumns: ["season_id"];
+            referencedColumns: ["id"];
           },
           {
             foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
-            columns: ["season_id"];
+            columns: ["category_id"];
             isOneToOne: false;
             referencedRelation: "category_candidates";
             referencedColumns: ["season_id"];
           },
           {
             foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
-            columns: ["category_id"];
+            columns: ["season_id"];
             isOneToOne: false;
             referencedRelation: "category_candidates";
             referencedColumns: ["season_id"];
@@ -2921,7 +3497,7 @@ export type Database = {
             columns: ["category_candidate_id"];
             isOneToOne: false;
             referencedRelation: "category_candidates";
-            referencedColumns: ["id"];
+            referencedColumns: ["season_id"];
           },
           {
             foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
@@ -2929,6 +3505,27 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "category_candidates";
             referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "category_candidates";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "category_candidates";
+            referencedColumns: ["category_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "category_candidates";
+            referencedColumns: ["category_id"];
           },
           {
             foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
@@ -2938,25 +3535,25 @@ export type Database = {
             referencedColumns: ["category_id"];
           },
           {
-            foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
-            columns: ["season_id"];
-            isOneToOne: false;
-            referencedRelation: "category_candidates";
-            referencedColumns: ["category_id"];
-          },
-          {
-            foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
             columns: ["category_id"];
             isOneToOne: false;
-            referencedRelation: "category_candidates";
+            referencedRelation: "user_rankings";
+            referencedColumns: ["user_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
             referencedColumns: ["category_id"];
           },
           {
-            foreignKeyName: "user_ranking_entries_candidate_scope_fkey";
-            columns: ["season_id"];
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["user_id"];
             isOneToOne: false;
-            referencedRelation: "category_candidates";
-            referencedColumns: ["id"];
+            referencedRelation: "user_rankings";
+            referencedColumns: ["category_id"];
           },
           {
             foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
@@ -2964,6 +3561,55 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "user_rankings";
             referencedColumns: ["category_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["season_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["ranking_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["user_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["user_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["user_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["category_id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["ranking_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "user_rankings";
+            referencedColumns: ["id"];
           },
           {
             foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
@@ -2999,76 +3645,6 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "user_rankings";
             referencedColumns: ["season_id"];
-          },
-          {
-            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
-            columns: ["category_id"];
-            isOneToOne: false;
-            referencedRelation: "user_rankings";
-            referencedColumns: ["season_id"];
-          },
-          {
-            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
-            columns: ["ranking_id"];
-            isOneToOne: false;
-            referencedRelation: "user_rankings";
-            referencedColumns: ["user_id"];
-          },
-          {
-            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
-            columns: ["user_id"];
-            isOneToOne: false;
-            referencedRelation: "user_rankings";
-            referencedColumns: ["user_id"];
-          },
-          {
-            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
-            columns: ["season_id"];
-            isOneToOne: false;
-            referencedRelation: "user_rankings";
-            referencedColumns: ["user_id"];
-          },
-          {
-            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
-            columns: ["category_id"];
-            isOneToOne: false;
-            referencedRelation: "user_rankings";
-            referencedColumns: ["user_id"];
-          },
-          {
-            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
-            columns: ["ranking_id"];
-            isOneToOne: false;
-            referencedRelation: "user_rankings";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
-            columns: ["category_id"];
-            isOneToOne: false;
-            referencedRelation: "user_rankings";
-            referencedColumns: ["category_id"];
-          },
-          {
-            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
-            columns: ["season_id"];
-            isOneToOne: false;
-            referencedRelation: "user_rankings";
-            referencedColumns: ["category_id"];
-          },
-          {
-            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
-            columns: ["user_id"];
-            isOneToOne: false;
-            referencedRelation: "user_rankings";
-            referencedColumns: ["category_id"];
-          },
-          {
-            foreignKeyName: "user_ranking_entries_ranking_scope_fkey";
-            columns: ["user_id"];
-            isOneToOne: false;
-            referencedRelation: "user_rankings";
-            referencedColumns: ["id"];
           },
         ];
       };
@@ -3103,17 +3679,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "user_rankings_season_category_fkey";
-            columns: ["season_id"];
-            isOneToOne: false;
-            referencedRelation: "season_categories";
-            referencedColumns: ["category_id"];
-          },
-          {
-            foreignKeyName: "user_rankings_season_category_fkey";
             columns: ["category_id"];
             isOneToOne: false;
             referencedRelation: "season_categories";
-            referencedColumns: ["category_id"];
+            referencedColumns: ["season_id"];
           },
           {
             foreignKeyName: "user_rankings_season_category_fkey";
@@ -3127,7 +3696,14 @@ export type Database = {
             columns: ["category_id"];
             isOneToOne: false;
             referencedRelation: "season_categories";
-            referencedColumns: ["season_id"];
+            referencedColumns: ["category_id"];
+          },
+          {
+            foreignKeyName: "user_rankings_season_category_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "season_categories";
+            referencedColumns: ["category_id"];
           },
           {
             foreignKeyName: "user_rankings_user_id_fkey";

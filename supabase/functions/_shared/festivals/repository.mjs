@@ -160,13 +160,22 @@ export async function importFestivalManifests({
   const catalogue = await repository.catalogue();
   const results = [];
   for (const manifest of manifests) {
-    const prepared = await prepareFestivalSet(manifest, catalogue);
-    const persisted = await repository.persistPreparedSet(prepared, actor);
-    results.push({
-      ...persisted,
-      editionId: prepared.editionId,
-      kind: prepared.kind,
-    });
+    try {
+      const prepared = await prepareFestivalSet(manifest, catalogue);
+      const persisted = await repository.persistPreparedSet(prepared, actor);
+      results.push({
+        ...persisted,
+        editionId: prepared.editionId,
+        kind: prepared.kind,
+      });
+    } catch (error) {
+      results.push({
+        status: "failed",
+        editionId: manifest?.editionId ?? null,
+        kind: manifest?.kind ?? null,
+        error: error instanceof Error ? error.message : "Error desconocido",
+      });
+    }
   }
   return results;
 }

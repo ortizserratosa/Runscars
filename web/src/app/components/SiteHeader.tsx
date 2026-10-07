@@ -31,6 +31,9 @@ export async function SiteHeader() {
         <Link prefetch={false} href={href("/festivales")}>
           {en ? "Festivals" : "Festivales"}
         </Link>
+        <Link prefetch={false} href={href("/premios")}>
+          {en ? "Awards" : "Premios"}
+        </Link>
         <Link prefetch={false} href={href("/archivo")}>
           {en ? "Archive" : "Archivo"}
         </Link>
@@ -55,6 +58,9 @@ export async function SiteHeader() {
           </Link>
           <Link prefetch={false} href={href("/festivales")}>
             {en ? "Festivals" : "Festivales"}
+          </Link>
+          <Link prefetch={false} href={href("/premios")}>
+            {en ? "Awards" : "Premios"}
           </Link>
           <Link prefetch={false} href={href("/archivo")}>
             {en ? "Archive" : "Archivo"}

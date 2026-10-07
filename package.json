@@ -39,6 +39,7 @@
     "festivals:import": "node web/scripts/festivals.mjs import",
     "festivals:refresh": "node web/scripts/festivals.mjs refresh",
     "festivals:match": "node web/scripts/festivals.mjs match",
+    "festivals:links": "node web/scripts/festivals.mjs enrich-links",
     "admin:grant": "node web/scripts/editorial-admin.mjs grant",
     "admin:revoke": "node web/scripts/editorial-admin.mjs revoke",
     "admin:list": "node web/scripts/editorial-admin.mjs list",
@@ -46,13 +47,17 @@
     "audit:predictions": "node web/scripts/audit-production.mjs --predictions",
     "audit:production": "node web/scripts/audit-production.mjs",
     "audit:public": "node web/scripts/audit-public.mjs",
-    "audit:ui": "node web/scripts/audit-ui.mjs"
+    "audit:ui": "node web/scripts/audit-ui.mjs",
+    "precursors:validate": "node web/scripts/precursors.mjs validate",
+    "precursors:import": "node web/scripts/precursors.mjs import",
+    "precursors:match": "node web/scripts/precursors.mjs match"
   },
   "devDependencies": {
-    "brace-expansion": "5.0.9",
+    "brace-expansion": "5.0.12",
     "eslint": "9.39.4",
-    "eslint-config-next": "16.3.4",
+    "eslint-config-next": "16.3.8",
     "prettier": "3.9.6",
+    "source-map-js": "1.2.2",
     "supabase": "2.109.1"
   },
   "overrides": {
@@ -60,8 +65,9 @@
     "js-yaml": "4.3.2",
     "postcss": "8.5.26",
     "next": {
-      "sharp": "0.35.4"
+      "sharp": "0.35.5"
     },
-    "sharp": "0.35.4"
+    "sharp": "0.35.5",
+    "source-map-js": "1.2.2"
   }
 }

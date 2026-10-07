@@ -1,0 +1,793 @@
+[
+  {
+    "edition_id": "berlinale-2026",
+    "kind": "awards",
+    "set_id": "berlinale-2026-awards-97c60e631bbe",
+    "festival_sets": {
+      "id": "berlinale-2026-awards-97c60e631bbe",
+      "version": 3,
+      "source_url": "https://www.berlinale.de/en/archive/awards-juries/awards.html",
+      "captured_at": "2026-09-06T15:25:06.649+00:00",
+      "published_at": null,
+      "source_title": "Berlinale 2026 official data · awards",
+      "festival_entries": [
+        {
+          "id": 345,
+          "section": "International Jury 2026",
+          "award_type": "Golden Bear for Best Film",
+          "is_feature": true,
+          "entry_order": 1,
+          "original_data": {
+            "award": "Golden Bear for Best Film",
+            "details": "Gelbe Briefe by İlker Çatak",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202615786.html"
+          },
+          "original_title": "Gelbe Briefe",
+          "original_recipient": null
+        },
+        {
+          "id": 346,
+          "section": "International Jury 2026",
+          "award_type": "Silver Bear Grand Jury Prize",
+          "is_feature": true,
+          "entry_order": 2,
+          "original_data": {
+            "award": "Silver Bear Grand Jury Prize",
+            "details": "Kurtuluş by Emin Alper",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202616780.html"
+          },
+          "original_title": "Kurtuluş",
+          "original_recipient": null
+        },
+        {
+          "id": 347,
+          "section": "International Jury 2026",
+          "award_type": "Silver Bear Jury Prize",
+          "is_feature": true,
+          "entry_order": 3,
+          "original_data": {
+            "award": "Silver Bear Jury Prize",
+            "details": "Queen at Sea by Lance Hammer",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202616031.html"
+          },
+          "original_title": "Queen at Sea",
+          "original_recipient": null
+        },
+        {
+          "id": 348,
+          "section": "International Jury 2026",
+          "award_type": "Silver Bear for Best Director",
+          "is_feature": true,
+          "entry_order": 4,
+          "original_data": {
+            "award": "Silver Bear for Best Director",
+            "details": "Grant Gee Everybody Digs Bill Evans",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202606467.html"
+          },
+          "original_title": "Everybody Digs Bill Evans",
+          "original_recipient": "Grant Gee"
+        },
+        {
+          "id": 349,
+          "section": "International Jury 2026",
+          "award_type": "Silver Bear for Best Leading Performance",
+          "is_feature": true,
+          "entry_order": 5,
+          "original_data": {
+            "award": "Silver Bear for Best Leading Performance",
+            "details": "Sandra H&uuml;ller in: Rose by Markus Schleinzer",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202614656.html"
+          },
+          "original_title": "Rose",
+          "original_recipient": "Sandra H&uuml;ller in:"
+        },
+        {
+          "id": 350,
+          "section": "International Jury 2026",
+          "award_type": "Silver Bear for Best Supporting Performance",
+          "is_feature": true,
+          "entry_order": 6,
+          "original_data": {
+            "award": "Silver Bear for Best Supporting Performance",
+            "details": "Anna Calder-Marshall & Tom Courtenay in: Queen at Sea by Lance Hammer",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202616031.html"
+          },
+          "original_title": "Queen at Sea",
+          "original_recipient": "Anna Calder-Marshall & Tom Courtenay in:"
+        },
+        {
+          "id": 351,
+          "section": "International Jury 2026",
+          "award_type": "Silver Bear for Best Screenplay",
+          "is_feature": true,
+          "entry_order": 7,
+          "original_data": {
+            "award": "Silver Bear for Best Screenplay",
+            "details": "Genevi&egrave;ve Dulude-de Celles Nina Roza by Geneviève Dulude-de Celles",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202606549.html"
+          },
+          "original_title": "Nina Roza",
+          "original_recipient": "Genevi&egrave;ve Dulude-de Celles"
+        },
+        {
+          "id": 352,
+          "section": "International Jury 2026",
+          "award_type": "Silver Bear for Outstanding Artistic Contribution",
+          "is_feature": true,
+          "entry_order": 8,
+          "original_data": {
+            "award": "Silver Bear for Outstanding Artistic Contribution",
+            "details": "Yo (Love is a Rebellious Bird) by Anna Fitch, Banker White",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202610484.html"
+          },
+          "original_title": "Yo (Love is a Rebellious Bird)",
+          "original_recipient": null
+        },
+        {
+          "id": 353,
+          "section": "Children's Jury Generation Kplus 2026",
+          "award_type": "Crystal Bear for the Best Film",
+          "is_feature": true,
+          "entry_order": 9,
+          "original_data": {
+            "award": "Crystal Bear for the Best Film",
+            "details": "Feito Pipa by Allan Deberton",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202609138.html"
+          },
+          "original_title": "Feito Pipa",
+          "original_recipient": null
+        },
+        {
+          "id": 354,
+          "section": "Children's Jury Generation Kplus 2026",
+          "award_type": "Special Mention",
+          "is_feature": true,
+          "entry_order": 10,
+          "original_data": {
+            "award": "Special Mention",
+            "details": "Not a Hero by Rima Das",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202610128.html"
+          },
+          "original_title": "Not a Hero",
+          "original_recipient": null
+        },
+        {
+          "id": 355,
+          "section": "Youth Jury Generation 14plus 2026",
+          "award_type": "Crystal Bear for the Best Film",
+          "is_feature": true,
+          "entry_order": 11,
+          "original_data": {
+            "award": "Crystal Bear for the Best Film",
+            "details": "Chicas Tristes by Fernanda Tovar",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202604753.html"
+          },
+          "original_title": "Chicas Tristes",
+          "original_recipient": null
+        },
+        {
+          "id": 356,
+          "section": "Youth Jury Generation 14plus 2026",
+          "award_type": "Special Mention",
+          "is_feature": true,
+          "entry_order": 12,
+          "original_data": {
+            "award": "Special Mention",
+            "details": "A Family by Mees Peijnenburg",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202616575.html"
+          },
+          "original_title": "A Family",
+          "original_recipient": null
+        },
+        {
+          "id": 357,
+          "section": "Generation International Jury 2026",
+          "award_type": "The Grand Prix of the International Jury for the Best Film in Generation Kplus",
+          "is_feature": true,
+          "entry_order": 13,
+          "original_data": {
+            "award": "The Grand Prix of the International Jury for the Best Film in Generation Kplus",
+            "details": "Feito Pipa by Allan Deberton",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202609138.html"
+          },
+          "original_title": "Feito Pipa",
+          "original_recipient": null
+        },
+        {
+          "id": 358,
+          "section": "Generation International Jury 2026",
+          "award_type": "Special Mention Generation Kplus",
+          "is_feature": true,
+          "entry_order": 14,
+          "original_data": {
+            "award": "Special Mention Generation Kplus",
+            "details": "Atlasul universului by Paul Negoescu",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202607554.html"
+          },
+          "original_title": "Atlasul universului",
+          "original_recipient": null
+        },
+        {
+          "id": 359,
+          "section": "Generation International Jury 2026",
+          "award_type": "The Grand Prix of the International Jury for the Best Film in Generation 14plus",
+          "is_feature": true,
+          "entry_order": 15,
+          "original_data": {
+            "award": "The Grand Prix of the International Jury for the Best Film in Generation 14plus",
+            "details": "Chicas Tristes by Fernanda Tovar",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202604753.html"
+          },
+          "original_title": "Chicas Tristes",
+          "original_recipient": null
+        },
+        {
+          "id": 360,
+          "section": "Generation International Jury 2026",
+          "award_type": "Special Mention Generation 14plus",
+          "is_feature": true,
+          "entry_order": 16,
+          "original_data": {
+            "award": "Special Mention Generation 14plus",
+            "details": "Matapanki by Diego \"Mapache\" Fuentes",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202609924.html"
+          },
+          "original_title": "Matapanki",
+          "original_recipient": null
+        },
+        {
+          "id": 361,
+          "section": "Perspectives Jury 2026",
+          "award_type": "GWFF Best First Feature Award",
+          "is_feature": true,
+          "entry_order": 17,
+          "original_data": {
+            "award": "GWFF Best First Feature Award",
+            "details": "Chronicles From the Siege by Abdallah Alkhatib produced by: Taqiyeddine Issaad, Salah Issaad",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202610606.html"
+          },
+          "original_title": "Chronicles From the Siege",
+          "original_recipient": null
+        },
+        {
+          "id": 362,
+          "section": "Perspectives Jury 2026",
+          "award_type": "Special Mention",
+          "is_feature": true,
+          "entry_order": 18,
+          "original_data": {
+            "award": "Special Mention",
+            "details": "Forêt Ivre by Manon Coubia",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202605344.html"
+          },
+          "original_title": "Forêt Ivre",
+          "original_recipient": null
+        },
+        {
+          "id": 363,
+          "section": "Jury Berlinale Documentary Award 2026",
+          "award_type": "Berlinale Documentary Award",
+          "is_feature": true,
+          "entry_order": 19,
+          "original_data": {
+            "award": "Berlinale Documentary Award",
+            "details": "If Pigeons Turned to Gold by Pepa Lubojacki produced by: Kl&aacute;ra Mamojkov&aacute;, Wanda Kapr&aacute;lov&aacute;",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202607964.html"
+          },
+          "original_title": "If Pigeons Turned to Gold",
+          "original_recipient": null
+        },
+        {
+          "id": 364,
+          "section": "Jury Berlinale Documentary Award 2026",
+          "award_type": "Special Mention",
+          "is_feature": true,
+          "entry_order": 20,
+          "original_data": {
+            "award": "Special Mention",
+            "details": "TUTU by Sam Pollard",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202609071.html"
+          },
+          "original_title": "TUTU",
+          "original_recipient": null
+        },
+        {
+          "id": 365,
+          "section": "Jury Berlinale Documentary Award 2026",
+          "award_type": "Special Mention",
+          "is_feature": true,
+          "entry_order": 21,
+          "original_data": {
+            "award": "Special Mention",
+            "details": "Was an Empfindsamkeit bleibt by Daniela Magnani Hüller",
+            "filmUrl": "https://www.berlinale.de/en/2026/programme/202615725.html"
+          },
+          "original_title": "Was an Empfindsamkeit bleibt",
+          "original_recipient": null
+        }
+      ],
+      "extractor_version": "berlinale-official-v3"
+    }
+  },
+  {
+    "edition_id": "locarno-2026",
+    "kind": "awards",
+    "set_id": "locarno-2026-awards-adfa059a3a8c",
+    "festival_sets": {
+      "id": "locarno-2026-awards-adfa059a3a8c",
+      "version": 1,
+      "source_url": "https://www.locarnofestival.ch/en/festival/palmares.html",
+      "captured_at": "2026-09-03T00:00:00+00:00",
+      "published_at": "2026-08-15T00:00:00+00:00",
+      "source_title": "Locarno79 Official Awards",
+      "festival_entries": [
+        {
+          "id": 127,
+          "section": "Concorso Internazionale",
+          "award_type": "Pardo d’Oro – Grand Prize of the Festival and City of Locarno",
+          "is_feature": true,
+          "entry_order": 1,
+          "original_data": {
+            "section": "Concorso Internazionale",
+            "awardType": "Pardo d’Oro – Grand Prize of the Festival and City of Locarno",
+            "originalTitle": "NU E LOCUL TAU AICI (YOU DON’T BELONG HERE)",
+            "originalRecipient": "Florin Șerban"
+          },
+          "original_title": "NU E LOCUL TAU AICI (YOU DON’T BELONG HERE)",
+          "original_recipient": "Florin Șerban"
+        },
+        {
+          "id": 128,
+          "section": "Concorso Internazionale",
+          "award_type": "Special Jury Prize – Cities of Ascona and Losone",
+          "is_feature": true,
+          "entry_order": 2,
+          "original_data": {
+            "section": "Concorso Internazionale",
+            "awardType": "Special Jury Prize – Cities of Ascona and Losone",
+            "originalTitle": "A MARGEM DO RIO (THE RIVERBANK)",
+            "originalRecipient": "Matheus Farias and Enock Carvalho"
+          },
+          "original_title": "A MARGEM DO RIO (THE RIVERBANK)",
+          "original_recipient": "Matheus Farias and Enock Carvalho"
+        },
+        {
+          "id": 129,
+          "section": "Concorso Internazionale",
+          "award_type": "Pardo for Best Direction – City and Region of Locarno",
+          "is_feature": true,
+          "entry_order": 3,
+          "original_data": {
+            "section": "Concorso Internazionale",
+            "awardType": "Pardo for Best Direction – City and Region of Locarno",
+            "originalTitle": "NUN DUL DEGA EOMNE (NOWHERE TO LAY MY EYES)",
+            "originalRecipient": "Hong Sangsoo"
+          },
+          "original_title": "NUN DUL DEGA EOMNE (NOWHERE TO LAY MY EYES)",
+          "original_recipient": "Hong Sangsoo"
+        },
+        {
+          "id": 130,
+          "section": "Concorso Internazionale",
+          "award_type": "Pardo for Best Performance",
+          "is_feature": true,
+          "entry_order": 4,
+          "original_data": {
+            "section": "Concorso Internazionale",
+            "awardType": "Pardo for Best Performance",
+            "originalTitle": "NUN DUL DEGA EOMNE (NOWHERE TO LAY MY EYES)",
+            "originalRecipient": "Kim Minhee"
+          },
+          "original_title": "NUN DUL DEGA EOMNE (NOWHERE TO LAY MY EYES)",
+          "original_recipient": "Kim Minhee"
+        },
+        {
+          "id": 131,
+          "section": "Concorso Internazionale",
+          "award_type": "Pardo for Best Performance",
+          "is_feature": true,
+          "entry_order": 5,
+          "original_data": {
+            "section": "Concorso Internazionale",
+            "awardType": "Pardo for Best Performance",
+            "originalTitle": "KETTICÈ",
+            "originalRecipient": "Monica Bellucci"
+          },
+          "original_title": "KETTICÈ",
+          "original_recipient": "Monica Bellucci"
+        },
+        {
+          "id": 132,
+          "section": "Concorso Internazionale",
+          "award_type": "Special Mention",
+          "is_feature": true,
+          "entry_order": 6,
+          "original_data": {
+            "section": "Concorso Internazionale",
+            "awardType": "Special Mention",
+            "originalTitle": "VIOLENCE DU CORPS DE L’AUTRE",
+            "originalRecipient": "Xavier Bergeron"
+          },
+          "original_title": "VIOLENCE DU CORPS DE L’AUTRE",
+          "original_recipient": "Xavier Bergeron"
+        },
+        {
+          "id": 133,
+          "section": "Concorso Internazionale",
+          "award_type": "Special Mention",
+          "is_feature": true,
+          "entry_order": 7,
+          "original_data": {
+            "section": "Concorso Internazionale",
+            "awardType": "Special Mention",
+            "originalTitle": "NU E LOCUL TAU AICI (YOU DON’T BELONG HERE)",
+            "originalRecipient": "Teodor Butănescu"
+          },
+          "original_title": "NU E LOCUL TAU AICI (YOU DON’T BELONG HERE)",
+          "original_recipient": "Teodor Butănescu"
+        },
+        {
+          "id": 134,
+          "section": "Concorso Cineasti del Presente",
+          "award_type": "Pardo d’Oro – Concorso Cineasti del Presente",
+          "is_feature": true,
+          "entry_order": 8,
+          "original_data": {
+            "section": "Concorso Cineasti del Presente",
+            "awardType": "Pardo d’Oro – Concorso Cineasti del Presente",
+            "originalTitle": "LA ILUSIÓN DE UN VERANO SIN FIN",
+            "originalRecipient": "Alessandra Sanguinetti"
+          },
+          "original_title": "LA ILUSIÓN DE UN VERANO SIN FIN",
+          "original_recipient": "Alessandra Sanguinetti"
+        },
+        {
+          "id": 135,
+          "section": "Concorso Cineasti del Presente",
+          "award_type": "Best Emerging Director Award – City and Region of Locarno",
+          "is_feature": true,
+          "entry_order": 9,
+          "original_data": {
+            "section": "Concorso Cineasti del Presente",
+            "awardType": "Best Emerging Director Award – City and Region of Locarno",
+            "originalTitle": "AT NIGHT",
+            "originalRecipient": "Beatrice Gibson"
+          },
+          "original_title": "AT NIGHT",
+          "original_recipient": "Beatrice Gibson"
+        },
+        {
+          "id": 136,
+          "section": "Concorso Cineasti del Presente",
+          "award_type": "Special Jury Prize CINE+OCS",
+          "is_feature": true,
+          "entry_order": 10,
+          "original_data": {
+            "section": "Concorso Cineasti del Presente",
+            "awardType": "Special Jury Prize CINE+OCS",
+            "originalTitle": "REVOLUTIONARIES NEVER DIE",
+            "originalRecipient": "Mohanad Yaqubi"
+          },
+          "original_title": "REVOLUTIONARIES NEVER DIE",
+          "original_recipient": "Mohanad Yaqubi"
+        },
+        {
+          "id": 137,
+          "section": "Concorso Cineasti del Presente",
+          "award_type": "Pardo for Best Performance",
+          "is_feature": true,
+          "entry_order": 11,
+          "original_data": {
+            "section": "Concorso Cineasti del Presente",
+            "awardType": "Pardo for Best Performance",
+            "originalTitle": "EGO REACH WE ALL (OUR TIME WILL COME)",
+            "originalRecipient": "Idrissu Tontie Jr."
+          },
+          "original_title": "EGO REACH WE ALL (OUR TIME WILL COME)",
+          "original_recipient": "Idrissu Tontie Jr."
+        },
+        {
+          "id": 138,
+          "section": "Concorso Cineasti del Presente",
+          "award_type": "Pardo for Best Performance",
+          "is_feature": true,
+          "entry_order": 12,
+          "original_data": {
+            "section": "Concorso Cineasti del Presente",
+            "awardType": "Pardo for Best Performance",
+            "originalTitle": "L’ESTIVE",
+            "originalRecipient": "Manal Issa"
+          },
+          "original_title": "L’ESTIVE",
+          "original_recipient": "Manal Issa"
+        },
+        {
+          "id": 139,
+          "section": "Concorso Cineasti del Presente",
+          "award_type": "Special Mention",
+          "is_feature": true,
+          "entry_order": 13,
+          "original_data": {
+            "section": "Concorso Cineasti del Presente",
+            "awardType": "Special Mention",
+            "originalTitle": "LOS DÍAS LIBRES",
+            "originalRecipient": "Lucila Mariani"
+          },
+          "original_title": "LOS DÍAS LIBRES",
+          "original_recipient": "Lucila Mariani"
+        },
+        {
+          "id": 140,
+          "section": "Concorso Cineasti del Presente",
+          "award_type": "Special Mention",
+          "is_feature": true,
+          "entry_order": 14,
+          "original_data": {
+            "section": "Concorso Cineasti del Presente",
+            "awardType": "Special Mention",
+            "originalTitle": "HANABI",
+            "originalRecipient": "Ana Vaz"
+          },
+          "original_title": "HANABI",
+          "original_recipient": "Ana Vaz"
+        },
+        {
+          "id": 141,
+          "section": "Locarno Kids Screenings",
+          "award_type": "Locarno Kids Award la Mobiliare",
+          "is_feature": true,
+          "entry_order": 15,
+          "original_data": {
+            "section": "Locarno Kids Screenings",
+            "awardType": "Locarno Kids Award la Mobiliare",
+            "originalTitle": "PARADEISA",
+            "originalRecipient": "Marleen Valien"
+          },
+          "original_title": "PARADEISA",
+          "original_recipient": "Marleen Valien"
+        },
+        {
+          "id": 142,
+          "section": "First Feature",
+          "award_type": "Swatch First Feature Award",
+          "is_feature": true,
+          "entry_order": 16,
+          "original_data": {
+            "section": "First Feature",
+            "awardType": "Swatch First Feature Award",
+            "originalTitle": "LA ILUSIÓN DE UN VERANO SIN FIN",
+            "originalRecipient": "Alessandra Sanguinetti"
+          },
+          "original_title": "LA ILUSIÓN DE UN VERANO SIN FIN",
+          "original_recipient": "Alessandra Sanguinetti"
+        },
+        {
+          "id": 143,
+          "section": "Pardo for Change",
+          "award_type": "Pardo for Change",
+          "is_feature": true,
+          "entry_order": 17,
+          "original_data": {
+            "section": "Pardo for Change",
+            "awardType": "Pardo for Change",
+            "originalTitle": "EGO REACH WE ALL (OUR TIME WILL COME)",
+            "originalRecipient": "Amartei Armar"
+          },
+          "original_title": "EGO REACH WE ALL (OUR TIME WILL COME)",
+          "original_recipient": "Amartei Armar"
+        },
+        {
+          "id": 144,
+          "section": "Pardo for Change",
+          "award_type": "Special Mention – Feature Film",
+          "is_feature": true,
+          "entry_order": 18,
+          "original_data": {
+            "section": "Pardo for Change",
+            "awardType": "Special Mention – Feature Film",
+            "originalTitle": "LOS NUEVOS",
+            "originalRecipient": "Rodrigo Plá"
+          },
+          "original_title": "LOS NUEVOS",
+          "original_recipient": "Rodrigo Plá"
+        },
+        {
+          "id": 145,
+          "section": "Independent Juries",
+          "award_type": "Ecumenical Jury Prize",
+          "is_feature": true,
+          "entry_order": 19,
+          "original_data": {
+            "section": "Independent Juries",
+            "awardType": "Ecumenical Jury Prize",
+            "originalTitle": "NUN DUL DEGA EOMNE (NOWHERE TO LAY MY EYES)",
+            "originalRecipient": "Hong Sangsoo"
+          },
+          "original_title": "NUN DUL DEGA EOMNE (NOWHERE TO LAY MY EYES)",
+          "original_recipient": "Hong Sangsoo"
+        },
+        {
+          "id": 146,
+          "section": "Independent Juries",
+          "award_type": "FIPRESCI Prize",
+          "is_feature": true,
+          "entry_order": 20,
+          "original_data": {
+            "section": "Independent Juries",
+            "awardType": "FIPRESCI Prize",
+            "originalTitle": "LEJOS DE LOS ÁRBOLES (FAR FROM THE TREES)",
+            "originalRecipient": "Meritxell Colell Aparicio"
+          },
+          "original_title": "LEJOS DE LOS ÁRBOLES (FAR FROM THE TREES)",
+          "original_recipient": "Meritxell Colell Aparicio"
+        },
+        {
+          "id": 147,
+          "section": "Independent Juries",
+          "award_type": "Europa Cinemas Label",
+          "is_feature": true,
+          "entry_order": 21,
+          "original_data": {
+            "section": "Independent Juries",
+            "awardType": "Europa Cinemas Label",
+            "originalTitle": "NU E LOCUL TAU AICI (YOU DON’T BELONG HERE)",
+            "originalRecipient": "Florin Șerban"
+          },
+          "original_title": "NU E LOCUL TAU AICI (YOU DON’T BELONG HERE)",
+          "original_recipient": "Florin Șerban"
+        },
+        {
+          "id": 148,
+          "section": "Junior Jury – Concorso Internazionale",
+          "award_type": "First Prize",
+          "is_feature": true,
+          "entry_order": 22,
+          "original_data": {
+            "section": "Junior Jury – Concorso Internazionale",
+            "awardType": "First Prize",
+            "originalTitle": "NU E LOCUL TAU AICI (YOU DON’T BELONG HERE)",
+            "originalRecipient": "Florin Șerban"
+          },
+          "original_title": "NU E LOCUL TAU AICI (YOU DON’T BELONG HERE)",
+          "original_recipient": "Florin Șerban"
+        },
+        {
+          "id": 149,
+          "section": "Junior Jury – Concorso Internazionale",
+          "award_type": "Second Prize",
+          "is_feature": true,
+          "entry_order": 23,
+          "original_data": {
+            "section": "Junior Jury – Concorso Internazionale",
+            "awardType": "Second Prize",
+            "originalTitle": "VIOLENCE DU CORPS DE L’AUTRE (NOBODY’S VIOLENCE)",
+            "originalRecipient": "Denis Côté"
+          },
+          "original_title": "VIOLENCE DU CORPS DE L’AUTRE (NOBODY’S VIOLENCE)",
+          "original_recipient": "Denis Côté"
+        },
+        {
+          "id": 150,
+          "section": "Junior Jury – Concorso Internazionale",
+          "award_type": "Third Prize",
+          "is_feature": true,
+          "entry_order": 24,
+          "original_data": {
+            "section": "Junior Jury – Concorso Internazionale",
+            "awardType": "Third Prize",
+            "originalTitle": "MANHUNT",
+            "originalRecipient": "Wayne Wapeemukwa"
+          },
+          "original_title": "MANHUNT",
+          "original_recipient": "Wayne Wapeemukwa"
+        },
+        {
+          "id": 151,
+          "section": "Junior Jury – Concorso Internazionale",
+          "award_type": "The Environment is Quality of Life Prize",
+          "is_feature": true,
+          "entry_order": 25,
+          "original_data": {
+            "section": "Junior Jury – Concorso Internazionale",
+            "awardType": "The Environment is Quality of Life Prize",
+            "originalTitle": "I RARELY WAKE UP DREAMING",
+            "originalRecipient": "Isabelle Stever"
+          },
+          "original_title": "I RARELY WAKE UP DREAMING",
+          "original_recipient": "Isabelle Stever"
+        },
+        {
+          "id": 152,
+          "section": "Junior Jury – Concorso Internazionale",
+          "award_type": "Special Mention",
+          "is_feature": true,
+          "entry_order": 26,
+          "original_data": {
+            "section": "Junior Jury – Concorso Internazionale",
+            "awardType": "Special Mention",
+            "originalTitle": "D’ICI LÀ",
+            "originalRecipient": "Sarah Leonor"
+          },
+          "original_title": "D’ICI LÀ",
+          "original_recipient": "Sarah Leonor"
+        },
+        {
+          "id": 153,
+          "section": "Junior Jury – Concorso Cineasti del Presente",
+          "award_type": "Best Film",
+          "is_feature": true,
+          "entry_order": 27,
+          "original_data": {
+            "section": "Junior Jury – Concorso Cineasti del Presente",
+            "awardType": "Best Film",
+            "originalTitle": "TEAR GAS",
+            "originalRecipient": "Uta Beria"
+          },
+          "original_title": "TEAR GAS",
+          "original_recipient": "Uta Beria"
+        },
+        {
+          "id": 154,
+          "section": "Junior Jury – Concorso Cineasti del Presente",
+          "award_type": "Special Mention",
+          "is_feature": true,
+          "entry_order": 28,
+          "original_data": {
+            "section": "Junior Jury – Concorso Cineasti del Presente",
+            "awardType": "Special Mention",
+            "originalTitle": "LA ILUSIÓN DE UN VERANO SIN FIN (THE ILLUSION OF AN EVERLASTING SUMMER)",
+            "originalRecipient": "Alessandra Sanguinetti"
+          },
+          "original_title": "LA ILUSIÓN DE UN VERANO SIN FIN (THE ILLUSION OF AN EVERLASTING SUMMER)",
+          "original_recipient": "Alessandra Sanguinetti"
+        },
+        {
+          "id": 155,
+          "section": "Semaine de la Critique",
+          "award_type": "Grand Prix Semaine de la Critique – Prix SRG SSR",
+          "is_feature": true,
+          "entry_order": 29,
+          "original_data": {
+            "section": "Semaine de la Critique",
+            "awardType": "Grand Prix Semaine de la Critique – Prix SRG SSR",
+            "originalTitle": "A TERAZ WIOSNA (BLOSSOMING)",
+            "originalRecipient": "Kamila Serwicka"
+          },
+          "original_title": "A TERAZ WIOSNA (BLOSSOMING)",
+          "original_recipient": "Kamila Serwicka"
+        },
+        {
+          "id": 156,
+          "section": "Semaine de la Critique",
+          "award_type": "Marco Zucchi Award",
+          "is_feature": true,
+          "entry_order": 30,
+          "original_data": {
+            "section": "Semaine de la Critique",
+            "awardType": "Marco Zucchi Award",
+            "originalTitle": "SEUL LE SERPENT SAIT (ONLY THE SERPENT KNOWS)",
+            "originalRecipient": "Olivier Séror and Martin Verdet"
+          },
+          "original_title": "SEUL LE SERPENT SAIT (ONLY THE SERPENT KNOWS)",
+          "original_recipient": "Olivier Séror and Martin Verdet"
+        },
+        {
+          "id": 157,
+          "section": "Piazza Grande",
+          "award_type": "Prix du Public UBS",
+          "is_feature": true,
+          "entry_order": 31,
+          "original_data": {
+            "section": "Piazza Grande",
+            "awardType": "Prix du Public UBS",
+            "originalTitle": "FRANK & LOUIS",
+            "originalRecipient": "Petra Volpe"
+          },
+          "original_title": "FRANK & LOUIS",
+          "original_recipient": "Petra Volpe"
+        }
+      ],
+      "extractor_version": "locarno-official-v1"
+    }
+  }
+]

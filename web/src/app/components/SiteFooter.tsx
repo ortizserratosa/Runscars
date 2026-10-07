@@ -33,6 +33,9 @@ export async function SiteFooter() {
         <Link prefetch={false} href={href("/festivales")}>
           {en ? "Festivals" : "Festivales"}
         </Link>
+        <Link prefetch={false} href={href("/premios")}>
+          {en ? "Guild and critics awards" : "Premios de sindicatos y crítica"}
+        </Link>
         <Link prefetch={false} href={href("/archivo")}>
           {en ? "2022–2026 archive" : "Archivo 2022–2026"}
         </Link>

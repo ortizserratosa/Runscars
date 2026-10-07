@@ -134,6 +134,32 @@ export default async function MethodologyPage() {
         </article>
       </section>
 
+      <section className="methodology-steps">
+        <article>
+          <p className="section-index">
+            {en ? "OFFICIAL CONTEXT" : "CONTEXTO OFICIAL"}
+          </p>
+          <h2>
+            {en
+              ? "Festivals and the awards before the Oscars"
+              : "Festivales y premios antes de los Oscar"}
+          </h2>
+          <p>
+            {en
+              ? "Festival programmes and awards, guild awards, Critics Choice and BAFTA retain their original categories, recipients and official sources. Each edition identifies its ceremony year and Oscar season. Cast awards and guild eligibility keep their own meaning. They provide context alongside professional predictions."
+              : "Los programas y palmarés de festivales, los premios de sindicatos, Critics Choice y BAFTA conservan categorías, destinatarios y fuentes oficiales originales. Cada edición identifica su año de ceremonia y temporada Oscar. Los premios de elenco y la elegibilidad sindical mantienen su significado propio. Aportan contexto junto a las predicciones profesionales."}
+          </p>
+          <Link
+            prefetch={false}
+            className="text-link"
+            href={localizedPath("/premios", locale)}
+          >
+            {en
+              ? "Explore guild and critics awards"
+              : "Explorar premios de sindicatos y crítica"}
+          </Link>
+        </article>
+      </section>
       <aside className="methodology-callout">
         <div>
           <p className="section-index">{en ? "RESULTS" : "RESULTADOS"}</p>

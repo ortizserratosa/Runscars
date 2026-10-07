@@ -4,6 +4,7 @@ import { localeTag, localizedPath, type Locale } from "../../lib/i18n/config";
 import { getRequestLocale } from "../../lib/i18n/server";
 import { absoluteUrl } from "../../lib/seo";
 import { getFestivalIndex } from "../../lib/festivals/data";
+import { getPrecursorIndex } from "../../lib/precursors/data";
 import { JsonLd } from "../components/JsonLd";
 
 type CategorySummary = {
@@ -43,7 +44,10 @@ export async function SeasonPageView({
   const locale = await getRequestLocale();
   const en = locale === "en";
   const active = year === 2027;
-  const festivalEditions = active ? await getFestivalIndex() : [];
+  const [festivalEditions, precursorEditions] = await Promise.all([
+    active ? getFestivalIndex() : Promise.resolve([]),
+    getPrecursorIndex(`oscars-${year}`),
+  ]);
   const recentChanges = active
     ? categories
         .filter((category) => category.updatedAt && category.previousUpdatedAt)
@@ -306,6 +310,55 @@ export async function SeasonPageView({
                 href={localizedPath("/festivales", locale)}
               >
                 {en ? "Open the full circuit" : "Abrir el circuito completo"}
+              </Link>
+            </section>
+          ) : null}
+          {precursorEditions.length ? (
+            <section className="season-festival-circuit">
+              <div className="section-heading split-heading">
+                <div>
+                  <p className="section-index">
+                    {en
+                      ? "GUILD AND CRITICS AWARDS"
+                      : "PREMIOS DE SINDICATOS Y CRÍTICA"}
+                  </p>
+                  <h2>{en ? "Before the Oscars" : "Antes de los Oscar"}</h2>
+                </div>
+                <p>
+                  {en
+                    ? "Follow the guilds, Critics Choice and BAFTA, with their official dates and results."
+                    : "Sigue a los sindicatos, Critics Choice y BAFTA, con sus fechas y resultados oficiales."}
+                </p>
+              </div>
+              <div className="season-festival-list">
+                {precursorEditions.map((edition) => (
+                  <Link
+                    prefetch={false}
+                    href={localizedPath(
+                      `/premios/${edition.organizationId}/${edition.ceremonyYear}`,
+                      locale,
+                    )}
+                    key={edition.id}
+                  >
+                    <span>{edition.ceremonyYear}</span>
+                    <strong>{en ? edition.nameEn : edition.name}</strong>
+                    <small>
+                      {dateLabel(
+                        edition.schedule?.ceremonyOn ??
+                          edition.winners?.ceremonyOn ??
+                          null,
+                        locale,
+                      )}
+                    </small>
+                  </Link>
+                ))}
+              </div>
+              <Link
+                prefetch={false}
+                className="text-link"
+                href={localizedPath("/premios", locale)}
+              >
+                {en ? "Explore the awards" : "Explorar los premios"}
               </Link>
             </section>
           ) : null}

@@ -92,8 +92,8 @@ describe("versioned database foundation", () => {
       seasons: 2,
       categories: 21,
       films: 39,
-      sources: 34,
-      connectors: 12,
+      sources: 40,
+      connectors: 20,
     });
 
     const schedules = await database.query<{
@@ -121,7 +121,7 @@ describe("versioned database foundation", () => {
       where id = 'awards-daily-predictions'
     `);
     expect(awardsDaily.rows[0]).toEqual({
-      extractor_version: "awards-daily-v8",
+      extractor_version: "awards-daily-v9",
       endpoint_url:
         "https://www.awardsdaily.com/wp-json/wp/v2/search?search=2027%20Oscar%20Predictions&per_page=20&_fields=id,url,title,subtype",
     });
@@ -183,6 +183,63 @@ describe("versioned database foundation", () => {
     ]);
   });
 
+  it("keeps Variety category failures isolated while contributing one editorial source", async () => {
+    await database.exec(await readFile(seedPath, "utf8"));
+    const result = await database.query<{
+      source_id: string;
+      extractor_version: string;
+      category_id: string;
+      required_category_ids: string[];
+      is_active: boolean;
+      publication_status: string;
+    }>(`
+      select connector.source_id, connector.extractor_version,
+        connector.configuration->>'category_id' as category_id,
+        connector.configuration->'required_category_ids' as required_category_ids,
+        connector.is_active, source.publication_status
+      from public.source_connectors as connector
+      join public.sources as source on source.id = connector.source_id
+      where connector.source_id = 'variety'
+      order by category_id
+    `);
+    expect(result.rows).toHaveLength(8);
+    expect(new Set(result.rows.map((row) => row.source_id))).toEqual(
+      new Set(["variety"]),
+    );
+    expect(
+      result.rows.every(
+        (row) =>
+          row.extractor_version === "variety-datawrapper-v1" &&
+          row.is_active &&
+          row.publication_status === "publishable" &&
+          row.required_category_ids.length === 1 &&
+          row.required_category_ids[0] === row.category_id,
+      ),
+    ).toBe(true);
+    expect(result.rows.map((row) => row.category_id)).toEqual([
+      "actor",
+      "actress",
+      "adapted-screenplay",
+      "best-picture",
+      "directing",
+      "original-screenplay",
+      "supporting-actor",
+      "supporting-actress",
+    ]);
+    const migration = await readFile(
+      path.join(
+        migrationsDirectory,
+        "20261007100000_prediction_order_and_variety.sql",
+      ),
+      "utf8",
+    );
+    await database.exec(migration);
+    const count = await database.query<{ connectors: number }>(
+      "select count(*)::int as connectors from public.source_connectors where source_id = 'variety'",
+    );
+    expect(count.rows[0].connectors).toBe(8);
+  });
+
   it("models the nine 2026 festival editions and official Oscar nominee slots", async () => {
     await database.exec(await readFile(seedPath, "utf8"));
     const result = await database.query<{
@@ -195,6 +252,7 @@ describe("versioned database foundation", () => {
       pending: number;
       not_applicable: number;
       connectors: number;
+      active_festival_connectors: number;
       official_slots: number;
     }>(`
       select
@@ -207,6 +265,7 @@ describe("versioned database foundation", () => {
         (select count(*)::int from public.festival_editions where awards_status = 'pending') as pending,
         (select count(*)::int from public.festival_editions where awards_status = 'not_applicable') as not_applicable,
         (select count(*)::int from public.festival_connectors where schedule_cron = '17 5 * * *') as connectors,
+        (select count(*)::int from public.festival_connectors where is_active) as active_festival_connectors,
         (
           select count(*)::int
           from public.season_categories
@@ -224,13 +283,14 @@ describe("versioned database foundation", () => {
     expect(result.rows[0]).toEqual({
       festivals: 9,
       competitive: 7,
-      completed: 4,
+      completed: 8,
       ongoing: 1,
-      scheduled: 4,
-      published: 4,
-      pending: 3,
+      scheduled: 0,
+      published: 7,
+      pending: 0,
       not_applicable: 2,
       connectors: 9,
+      active_festival_connectors: 1,
       official_slots: 8,
     });
   });
@@ -351,6 +411,41 @@ describe("versioned database foundation", () => {
       current_film_id: "the-odyssey",
       history: 2,
     });
+    const newer = {
+      ...payload,
+      contentHash: "b".repeat(64),
+      capturedAt: "2026-10-07T08:32:29Z",
+    };
+    const historical = {
+      ...payload,
+      contentHash: "c".repeat(64),
+      capturedAt: "2026-08-01T00:00:00Z",
+    };
+    await database.query(
+      "select public.persist_festival_set($1::jsonb, 'database-test')",
+      [JSON.stringify(newer)],
+    );
+    const stale = await database.query<{
+      result: { status: string; isCurrent: boolean };
+    }>(
+      "select public.persist_festival_set($1::jsonb, 'database-test') as result",
+      [JSON.stringify(historical)],
+    );
+    expect(stale.rows[0]?.result).toMatchObject({
+      status: "inserted",
+      isCurrent: false,
+    });
+    await database.query(
+      "select public.persist_festival_set($1::jsonb, 'database-test')",
+      [JSON.stringify(payload)],
+    );
+    const current = await database.query<{
+      content_hash: string;
+      sets: number;
+    }>(
+      `select sets.content_hash, (select count(*)::int from public.festival_sets) as sets from public.current_festival_sets as pointer join public.festival_sets as sets on sets.id=pointer.set_id where pointer.edition_id='cannes-2026' and pointer.kind='awards'`,
+    );
+    expect(current.rows[0]).toEqual({ content_hash: "b".repeat(64), sets: 3 });
     await expect(
       database.exec("update public.festival_sets set version = 2"),
     ).rejects.toThrow("immutable");
@@ -1291,6 +1386,89 @@ describe("versioned database foundation", () => {
     await expect(
       database.query("select last_error from public.public_source_freshness"),
     ).rejects.toThrow();
+  });
+
+  it("publishes safe festival archive evidence to anonymous source readers", async () => {
+    await database.exec(`
+      update public.festival_connectors
+      set last_error = 'Internal failure details',
+          configuration = configuration || '{"internal_field":"restricted"}'::jsonb
+      where festival_id = 'cannes';
+      set role anon;
+    `);
+    const result = await database.query<{
+      source_id: string;
+      is_active: boolean;
+      configuration: Record<string, unknown>;
+    }>(`
+      select source_id,is_active,configuration
+      from public.public_festival_freshness where source_id = 'cannes'
+    `);
+    expect(result.rows[0]?.is_active).toBe(false);
+    expect(result.rows[0]?.configuration).toMatchObject({
+      edition_id: "cannes-2026",
+      manual_archive_kinds: ["selection", "awards"],
+    });
+    expect(Object.keys(result.rows[0]!.configuration).sort()).toEqual([
+      "edition_id",
+      "manual_archive_kinds",
+      "minimum_entries",
+    ]);
+    await expect(
+      database.query("select last_error from public.public_festival_freshness"),
+    ).rejects.toThrow();
+    await expect(
+      database.query("select configuration from public.festival_connectors"),
+    ).rejects.toThrow();
+    await database.exec("reset role");
+  });
+
+  it("exposes an isolated category failure even after another category succeeds", async () => {
+    await database.exec(`
+      update public.source_connectors
+      set last_success_at = '2026-10-07T10:00:00Z',
+          last_failure_at = '2026-10-07T11:00:00Z'
+      where id = 'variety-actor-predictions';
+      update public.source_connectors
+      set last_success_at = '2026-10-07T12:00:00Z'
+      where id = 'variety-best-picture-predictions';
+      set role anon;
+    `);
+    const readHealth = () =>
+      database.query<{
+        has_current_failure: boolean;
+        has_active_connector: boolean;
+      }>(`
+      select has_current_failure, has_active_connector
+      from public.public_source_freshness where source_id = 'variety'
+    `);
+    expect((await readHealth()).rows).toEqual([
+      { has_current_failure: true, has_active_connector: true },
+    ]);
+    await database.exec(`
+      reset role;
+      update public.source_connectors
+      set last_success_at = '2026-10-07T13:00:00Z'
+      where id = 'variety-actor-predictions';
+    `);
+    expect((await readHealth()).rows).toEqual([
+      { has_current_failure: false, has_active_connector: true },
+    ]);
+    await database.exec(`
+      update public.source_connectors
+      set last_failure_at = '2026-10-07T14:00:00Z', is_active = false
+      where id = 'variety-actor-predictions';
+    `);
+    expect((await readHealth()).rows).toEqual([
+      { has_current_failure: false, has_active_connector: true },
+    ]);
+    await database.exec(`
+      update public.source_connectors set is_active = false
+      where source_id = 'variety';
+    `);
+    expect((await readHealth()).rows).toEqual([
+      { has_current_failure: false, has_active_connector: false },
+    ]);
   });
 
   it("keeps locked snapshots identical after later imports and links corrections", async () => {

@@ -1,7 +1,7 @@
 # Contrato de producto
 
 **Estado:** contrato aceptado para el MVP
-**Última revisión:** 2026-09-15
+**Última revisión:** 2026-10-07
 
 ## 1. Visión
 
@@ -22,6 +22,8 @@ comunidad son contextos complementarios y nunca alteran ese consenso.
 - ¿Qué películas ha visto cada usuario y cuál es su ranking?
 - ¿Cuánto acertó el consenso antes de las nominaciones y de la ceremonia?
 - ¿Qué recorrido oficial tuvo una película por los grandes festivales de 2026?
+- ¿Qué fechas, nominaciones y resultados oficiales tienen los premios que
+  preceden a los Oscar de cada temporada?
 
 ## 3. Usuarios
 
@@ -94,6 +96,25 @@ Las selecciones y palmarés oficiales de nueve festivales internacionales de
 versionados con fuente, captura y matching editorial. No se promedian ni
 participan en el consenso profesional, la recepción, los mercados o la
 comunidad. Telluride y Nueva York figuran como selecciones no competitivas.
+
+Las películas festivaleras pueden enlazar a IMDb aunque no pertenezcan al
+catálogo de predicciones. El enlace exige una identidad verificada y no crea
+una candidatura ni acredita elegibilidad Oscar. Cuando existe ficha en Runscars
+se mantiene también ese acceso; las dudas siguen visibles sin enlace externo.
+
+### Premios precursores
+
+Actor Awards de SAG-AFTRA, DGA, PGA, WGA, Critics Choice y BAFTA se consultan en
+`/premios`, con una ficha por organismo y año de ceremonia. Las ediciones 2027
+acompañan a Oscar 2027; el archivo 2026 acompaña a Oscar 2026. Se publican los
+calendarios confirmados y los resultados oficiales disponibles, con cobertura
+explícita, categoría y destinatario originales y enlaces a cada recibo.
+No se anticipan nominaciones ni ganadores todavía no anunciados.
+
+Son contexto oficial separado del consenso profesional. Un premio de elenco
+no se convierte en Mejor película, y las reglas de elegibilidad sindical o
+británica no se presentan como equivalentes a las de Academy. Las películas
+emparejadas permiten consultar este recorrido desde su ficha.
 
 ### Comunidad
 
@@ -220,10 +241,20 @@ no forman parte de la identidad de la candidatura.
    nueve ediciones de 2026, con fechas, estado y adelantos de películas.
 2. Entra en una edición, busca por película, cineasta o premio y filtra por
    sección. Consulta títulos y destinatarios originales, fuente y fechas.
-3. Sigue un título enlazado a su ficha; los títulos sin correspondencia siguen
-   visibles, con la revisión de matching reservada a administración.
+3. Sigue un título a su ficha en Runscars o a IMDb cuando existe una identidad
+   verificada, incluida una película fuera de las predicciones. Los títulos sin
+   correspondencia siguen visibles, con la revisión de matching reservada a
+   administración.
 4. Si falta una selección o un palmarés en Runscars, se ofrece la web oficial
    sin afirmar que el festival no lo haya anunciado.
+
+### R2c. Explorar los premios antes de los Oscar
+
+1. El visitante abre `/premios` y consulta el calendario de la temporada activa.
+2. Abre un organismo y comprueba fechas de nominaciones y ceremonia, recibos
+   oficiales y premios disponibles; los anuncios pendientes permanecen pendientes.
+3. Consulta el archivo de la ceremonia anterior, con su cobertura identificada,
+   y sigue los títulos que tienen correspondencia editorial inequívoca.
 
 ### R3. Crear un ranking
 

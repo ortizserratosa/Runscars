@@ -317,7 +317,7 @@ test("publishes the nine-edition festival circuit in Spanish and English", async
   await expect(page.locator(".festival-card")).toHaveCount(9);
   await expect(
     page.locator(".festival-card").filter({ hasText: "Venecia" }),
-  ).toContainText("En curso");
+  ).toContainText("Finalizado");
   await expect(
     page.locator(".festival-card").filter({ hasText: "Telluride" }),
   ).toContainText("No competitivo");

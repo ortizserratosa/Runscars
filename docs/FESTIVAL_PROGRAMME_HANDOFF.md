@@ -1,56 +1,52 @@
-# Festival programmes: what would help next
+# Festival programmes: current coverage and remaining gaps
 
-The redesigned festival pages are ready to show more verified programmes as they
-arrive. You can send an official PDF, an official URL, or a saved copy of an
-organisation’s programme page. A spreadsheet is optional; you do not need to
-prepare one before sending the original material.
+The 7 October 2026 source audit recovered the static programmes and awards below
+from official publications. The versioned supplement is reproducible; the
+[release audit](SOURCE_COVERAGE_AUDIT_2026-10-07.md) records its import and public
+verification. An official file from the user is no longer needed for TIFF,
+Sundance, Berlinale or the other programmes already recovered.
 
-## Priority material
+| Festival / edition | Feature programme entries | Award entries | Scope and remaining gaps |
+|---|---:|---:|---|
+| Sundance 2026 | 90 | 29 | Official features; award names cleaned from their source, jury quotations and the honorary award excluded. |
+| Berlinale 2026 | 149 | 21 | Eligible features from the official archive; shorts, classics and honorary programmes excluded. |
+| Cannes 2026 | 76 | 16 | Official Selection beyond Competition; independent parallel organisations remain separate. |
+| Locarno 2026 | 63 | 31 | Partial: five sections from the festival's official Letterboxd account, linked by its own site. Open Doors and other sections remain to verify. |
+| Venice 2026 | 91 | 16 | Existing official selection and recovered official feature awards. |
+| TIFF 2026 | 206 | 20 | Eligible features from the official downloadable programme; original section labels and awards, including published mentions and runners-up. |
+| San Sebastián 2026 | 141 | 35 | Eligible films from the official project archive and official published awards, including audience and parallel juries. |
+| Telluride 2026 | 43 | — | 35 Shows and 8 Backlot; non-competitive. |
+| NYFF 2026 | 34 | — | Main Slate only; Spotlight and Currents remain to verify. Non-competitive; the edition is still running on the audit date. |
 
-| Priority | Festival / edition | What would help |
-|---|---|---|
-| 1 | Toronto / TIFF 2026 | The complete official feature-film programme, with section names. A PDF or saved page is particularly useful because the site has returned 403 to our tools. Send the original page URL with the file. |
-| 1 | Sundance 2026 | The official feature-film selection and a clean official awards list. Runscars currently has award entries, but some imported labels contain jury quotations; those are shortened in the public view. |
-| 1 | Berlinale 2026 | The official feature-film selection, preserving its sections. The awards are already listed. |
-| 1 | Locarno 2026 | The official feature-film selection and a current copy of the official awards page to check our existing 31 award entries. The automated page access has been unreliable. |
-| 2 | Cannes 2026 | The official programmes beyond the 22-film Competition selection already listed, including eligible feature films in the other official sections. Keep parallel organisations’ selections separate. |
-| 2 | NYFF 2026 | The official current programme or announcement, to check additions against the 34 entries already listed. Do not include a competitive awards list: NYFF is non-competitive. |
-| 2 | Venice and San Sebastián 2026 | Addenda, corrected programme pages, and official awards when announced. Existing selections contain 91 and 25 entries respectively; those counts are not a claim of complete coverage. |
-| 3 | Telluride 2026 | Any official supplement or correction after the final programme guide. We have prepared 43 features: 35 Shows and 8 Backlot. Telluride is non-competitive. |
+Counts describe programme or award entries, not unique films or a claim that the
+whole circuit is exhaustive. A film can receive more than one award. The scope
+continues to exclude shorts, episodes, immersive work, restorations, honorary
+tributes and industry events.
 
-Counts above were checked against the public database on 7 September 2026,
-before this release’s Telluride import. They count programme/award entries,
-which can include more than one award for the same film.
+## Useful additions
 
-## Include these details if you have them
+The next useful material is Locarno's missing official feature sections and
+NYFF's current Spotlight and Currents programmes. Official addenda and corrections
+for any of the nine editions are also useful. Prefer the original official URL,
+PDF or saved page; an optional transcription does not replace that receipt.
 
-- Festival name, edition year and section names exactly as published.
-- Original film title; director or award recipient when provided.
-- Film format or duration, so features can be separated from shorts and episodes.
-- For awards: the exact award name, winning film and named recipient, including
-  joint winners or special mentions.
-- The official source URL, its publication/update date if shown, and the date
-  you downloaded or saved the material. A screenshot of the page’s date helps
-  when the PDF does not contain it.
-- Any corrections or additions, together with the earlier version if available.
+Preserve edition and section names, original film title, director or recipient,
+format or runtime, exact award name, publication date when shown and capture
+date. Leave unknown values blank. Keep joint winners, special mentions and
+runners-up distinct. Do not infer an Oscar nomination or eligibility from a
+festival selection.
 
-A useful optional table has these columns:
+## Import and corrections
 
-`festival | edition_year | section | original_title | director_or_recipient |
-format_or_runtime | award_name | official_url | published_at | captured_at |
-page_number | notes`
+Use `npm run festivals:import --
+web/data/festivals/2026-supplement-2026-10-07.json` for this supplement. Closed
+editions with verified static receipts are archived rather than overwritten by
+partial daily scrapes. NYFF remains active; a partial refresh must not replace a
+larger verified programme. Older receipts, exact originals and matching history
+remain immutable. Repeating an import creates no duplicate version; ambiguous
+film matches remain unlinked until reviewed.
 
-Leave unknown values blank. Please keep the original PDF or page alongside a
-transcription. Do not translate titles or infer dates and awards to fill gaps.
-We do not need passwords, cookies, account access or any private attendee data.
-
-## What happens after you send it
-
-We check the source and edition, extract the eligible feature films, compare
-against the current listing, and import a new version with its provenance. A
-repeat import makes no duplicate version. Ambiguous film matches stay unlinked
-until reviewed; no existing locked record is overwritten.
-
-The current scope excludes shorts, episodic programmes, immersive work,
-restorations, honorary tributes and industry-market events. Festival selections
-and awards remain separate from expert predictions and user ballots.
+Festival programmes and awards are context, separate from expert predictions,
+critical reception and user ballots. See the
+[research receipts](audits/2026-10-07/festival-research.md) and
+[methodology](METHODOLOGY.md).

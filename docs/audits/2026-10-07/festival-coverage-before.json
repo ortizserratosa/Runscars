@@ -1,0 +1,101 @@
+[
+  {
+    "edition_id": "cannes-2026",
+    "kind": "selection",
+    "set_id": "cannes-2026-selection-48a5cd7bb846",
+    "updated_at": "2026-09-03T18:10:41.161113+00:00",
+    "id": "cannes-2026-selection-48a5cd7bb846",
+    "version": 1,
+    "source_url": "https://www.festival-cannes.com/en/press/press-releases/the-films-of-the-official-selection-2026/",
+    "captured_at": "2026-09-03T00:00:00+00:00",
+    "entry_count": 22
+  },
+  {
+    "edition_id": "nyff-2026",
+    "kind": "selection",
+    "set_id": "nyff-2026-selection-a78028ab5b1e",
+    "updated_at": "2026-09-03T18:10:41.447348+00:00",
+    "id": "nyff-2026-selection-a78028ab5b1e",
+    "version": 1,
+    "source_url": "https://www.filmlinc.org/nyff2026/daily/64th-new-york-film-festival-main-slate-announced/",
+    "captured_at": "2026-09-03T00:00:00+00:00",
+    "entry_count": 34
+  },
+  {
+    "edition_id": "locarno-2026",
+    "kind": "awards",
+    "set_id": "locarno-2026-awards-adfa059a3a8c",
+    "updated_at": "2026-09-03T18:13:46.706525+00:00",
+    "id": "locarno-2026-awards-adfa059a3a8c",
+    "version": 1,
+    "source_url": "https://www.locarnofestival.ch/en/festival/palmares.html",
+    "captured_at": "2026-09-03T00:00:00+00:00",
+    "entry_count": 31
+  },
+  {
+    "edition_id": "cannes-2026",
+    "kind": "awards",
+    "set_id": "cannes-2026-awards-8e80d7821a0a",
+    "updated_at": "2026-09-03T18:14:18.918452+00:00",
+    "id": "cannes-2026-awards-8e80d7821a0a",
+    "version": 2,
+    "source_url": "https://www.festival-cannes.com/en/press/press-releases/the-79th-festival-de-cannes-winners-list/",
+    "captured_at": "2026-09-03T18:14:18.128+00:00",
+    "entry_count": 16
+  },
+  {
+    "edition_id": "sundance-2026",
+    "kind": "awards",
+    "set_id": "sundance-2026-awards-762523c8741a",
+    "updated_at": "2026-09-03T18:14:19.730315+00:00",
+    "id": "sundance-2026-awards-762523c8741a",
+    "version": 2,
+    "source_url": "https://www.sundance.org/blogs/the-complete-list-of-2026-sundance-film-festival-award-winners/",
+    "captured_at": "2026-09-03T18:14:18.128+00:00",
+    "entry_count": 30
+  },
+  {
+    "edition_id": "san-sebastian-2026",
+    "kind": "selection",
+    "set_id": "san-sebastian-2026-selection-20ab84139c70",
+    "updated_at": "2026-09-06T15:20:11.573537+00:00",
+    "id": "san-sebastian-2026-selection-20ab84139c70",
+    "version": 1,
+    "source_url": "https://www.sansebastianfestival.com/2026/sections_and_films/official_selection/8/in",
+    "captured_at": "2026-09-06T15:20:08.767+00:00",
+    "entry_count": 25
+  },
+  {
+    "edition_id": "berlinale-2026",
+    "kind": "awards",
+    "set_id": "berlinale-2026-awards-97c60e631bbe",
+    "updated_at": "2026-09-06T15:25:09.655231+00:00",
+    "id": "berlinale-2026-awards-97c60e631bbe",
+    "version": 3,
+    "source_url": "https://www.berlinale.de/en/archive/awards-juries/awards.html",
+    "captured_at": "2026-09-06T15:25:06.649+00:00",
+    "entry_count": 21
+  },
+  {
+    "edition_id": "telluride-2026",
+    "kind": "selection",
+    "set_id": "telluride-2026-selection-16dc7c6b5de3",
+    "updated_at": "2026-09-07T22:00:19.83563+00:00",
+    "id": "telluride-2026-selection-16dc7c6b5de3",
+    "version": 1,
+    "source_url": "https://telluridecms-production.s3.amazonaws.com/assets/pdfs/53rd-TFF-program-guide-final.pdf",
+    "captured_at": "2026-09-07T20:32:54.058+00:00",
+    "entry_count": 43
+  },
+  {
+    "edition_id": "venice-2026",
+    "kind": "selection",
+    "set_id": "venice-2026-selection-3e86d44278f5",
+    "updated_at": "2026-09-11T05:17:08.23338+00:00",
+    "id": "venice-2026-selection-3e86d44278f5",
+    "version": 3,
+    "source_url": "https://www.labiennale.org/en/cinema/2026/lineup",
+    "captured_at": "2026-09-11T05:17:01.251+00:00",
+    "entry_count": 91
+  }
+]

@@ -228,7 +228,7 @@ values
   ('rotten-tomatoes', 'Rotten Tomatoes', array['score', 'review'], 'https://www.rottentomatoes.com/', 'paused', 'manual', 'review-before-publish', '2026-08-26'),
   ('screen-daily', 'Screen Daily', array['review'], 'https://www.screendaily.com/', 'selected', 'manual', 'review-before-publish', '2026-07-24'),
   ('slant', 'Slant Magazine', array['review', 'score'], 'https://www.slantmagazine.com/film/', 'selected', 'manual', 'review-before-publish', '2026-07-24'),
-  ('variety', 'Variety', array['prediction', 'review'], 'https://variety.com/', 'selected', 'manual', 'review-before-publish', '2026-07-24'),
+  ('variety', 'Variety', array['prediction', 'review'], 'https://variety.com/', 'selected', 'automated', 'publishable', '2026-10-07'),
   ('washington-post', 'The Washington Post', array['review', 'score'], 'https://www.washingtonpost.com/entertainment/movies/', 'selected', 'manual', 'review-before-publish', '2026-07-24')
 on conflict (id) do update set
   name = excluded.name,
@@ -313,7 +313,7 @@ values
     'AwardsWatch Oscar Predictions HQ',
     'html',
     'https://awardswatch.com/oscar-predictions-hq/',
-    'awardswatch-multicategory-v6',
+    'awardswatch-multicategory-v7',
     true,
     '17 4 * * *',
     '{
@@ -349,7 +349,7 @@ values
     'Awards Daily Oscar predictions',
     'html',
     'https://www.awardsdaily.com/wp-json/wp/v2/search?search=2027%20Oscar%20Predictions&per_page=20&_fields=id,url,title,subtype',
-    'awards-daily-v8',
+    'awards-daily-v9',
     true,
     '17 4 * * *',
     '{

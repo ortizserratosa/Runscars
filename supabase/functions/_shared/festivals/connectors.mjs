@@ -1,12 +1,60 @@
+import { isEligibleFestivalEntry } from "./core.mjs";
+
+const htmlEntities = {
+  amp: "&",
+  quot: '"',
+  apos: "'",
+  nbsp: " ",
+  lsquo: "‘",
+  rsquo: "’",
+  ldquo: "“",
+  rdquo: "”",
+  ndash: "–",
+  mdash: "—",
+  aacute: "á",
+  Aacute: "Á",
+  eacute: "é",
+  Eacute: "É",
+  iacute: "í",
+  Iacute: "Í",
+  oacute: "ó",
+  Oacute: "Ó",
+  uacute: "ú",
+  Uacute: "Ú",
+  agrave: "à",
+  Agrave: "À",
+  egrave: "è",
+  Egrave: "È",
+  ugrave: "ù",
+  Ugrave: "Ù",
+  auml: "ä",
+  Auml: "Ä",
+  ouml: "ö",
+  Ouml: "Ö",
+  uuml: "ü",
+  Uuml: "Ü",
+  aelig: "æ",
+  AElig: "Æ",
+  ccedil: "ç",
+  Ccedil: "Ç",
+  ntilde: "ñ",
+  Ntilde: "Ñ",
+};
+
 function decodeHtml(value) {
   return value
+    .replaceAll(/<\/?span\b[^>]*>/gi, "")
     .replaceAll(/<br\s*\/?>/gi, "\n")
     .replaceAll(/<[^>]+>/g, " ")
-    .replaceAll("&amp;", "&")
-    .replaceAll("&quot;", '"')
-    .replaceAll("&#039;", "'")
-    .replaceAll("&#8217;", "’")
-    .replaceAll("&nbsp;", " ")
+    .replaceAll(/&(#x[\da-f]+|#\d+|[a-z]+);/gi, (entity, code) => {
+      if (!code.startsWith("#")) return htmlEntities[code] ?? entity;
+      const point = code.slice(1).toLowerCase().startsWith("x")
+        ? Number.parseInt(code.slice(2), 16)
+        : Number.parseInt(code.slice(1), 10);
+      return point > 0 && point <= 0x10ffff
+        ? String.fromCodePoint(point)
+        : entity;
+    })
     .replaceAll(/\s+/g, " ")
     .trim();
 }
@@ -80,13 +128,49 @@ function jsonLdEntries(html, kind) {
 
 function sundanceAwards(html) {
   const entries = [];
-  const blocks = html.matchAll(
-    /<(?:h4|p)[^>]*>([\s\S]*?(?:was presented to|was awarded to|went to)[\s\S]*?)<\/(?:h4|p)>/gi,
-  );
+  const blocks = html.matchAll(/<p\b[^>]*>(?:(?!<p\b)[\s\S])*?<\/p>/gi);
   for (const [raw] of blocks) {
+    if (!/was presented to|was awarded to|went to/i.test(raw)) continue;
+    // The press release keeps the award and italicized film in separate bold
+    // elements, followed by credits and a synopsis. Keep only the named film;
+    // the previous plain-text split accidentally imported all of the synopsis.
+    const film = raw.match(
+      /<(?:b|strong)[^>]*>\s*<i[^>]*>([\s\S]*?)<\/i>\s*<\/(?:b|strong)>/i,
+    );
+    if (film) {
+      if (!/<(?:b|strong)\b/i.test(raw.slice(0, film.index))) continue;
+      const prefix = decodeHtml(raw.slice(0, film.index));
+      const split = prefix.match(
+        /^(.*?)\s+(?:was presented to|was awarded to|went to)\s*(.*?)$/i,
+      );
+      if (!split || /short film/i.test(split[1])) continue;
+      const award = split[1]
+        .replace(/^(?:The|A)\s+/i, "")
+        .replace(/,?\s*Presented by .+$/i, "")
+        .replace(/\s+for an outstanding feature film.*$/i, "")
+        .trim();
+      if (/NHK|Mentorship|Gayle Stevens/i.test(award)) continue;
+      const recipient = split[2].replace(/\s+for\s*$/i, "").trim();
+      entries.push({
+        section: "Official awards",
+        originalTitle: decodeHtml(film[1]),
+        originalRecipient: recipient || null,
+        awardType: award,
+        isFeature: true,
+        isOfficial: true,
+        entryType: "feature",
+        originalData: {
+          award,
+          recipient: recipient || null,
+          originalTitle: decodeHtml(film[1]),
+        },
+      });
+      continue;
+    }
     const text = decodeHtml(raw);
     const parts = text.split(/ was (?:presented|awarded) to | went to /i);
     if (parts.length !== 2) continue;
+    if (/NHK|Mentorship|Gayle Stevens/i.test(parts[0])) continue;
     let recipient = null;
     let title = parts[1].replace(/[.\s]+$/, "").trim();
     const credited = title.match(/^(.+?)\s+for\s+(.+)$/i);
@@ -98,7 +182,10 @@ function sundanceAwards(html) {
       section: "Official awards",
       originalTitle: title,
       originalRecipient: recipient,
-      awardType: parts[0].trim(),
+      awardType: parts[0]
+        .replace(/^(?:The|A)\s+/i, "")
+        .replace(/,?\s*Presented by .+$/i, "")
+        .trim(),
       isFeature: !/short film/i.test(parts[0]),
       isOfficial: true,
       entryType: "feature",
@@ -108,33 +195,185 @@ function sundanceAwards(html) {
   return entries;
 }
 
-function cannesAwards(html) {
+function sundanceSelection(html) {
   const entries = [];
-  const pattern = /<h5[^>]*>([\s\S]*?)<\/h5>([\s\S]*?)(?=<h5|<h2|<h3|$)/gi;
-  for (const match of html.matchAll(pattern)) {
-    const awardType = decodeHtml(match[1]);
-    const body = decodeHtml(match[2]);
-    if (!awardType || !body) continue;
-    const title = body
-      .split(/\s+(?:directed by|for|in)\s+/i)
-      .at(0)
-      ?.trim();
-    if (!title) continue;
+  let section = null;
+  for (const [raw] of html.matchAll(/<p\b[^>]*>[\s\S]*?<\/p>/gi)) {
+    const text = decodeHtml(raw);
+    if (
+      /^(?:U\.S\. (?:DRAMATIC|DOCUMENTARY) COMPETITION|WORLD CINEMA (?:DRAMATIC|DOCUMENTARY) COMPETITION|NEXT|PREMIERES|MIDNIGHT|SPOTLIGHT|EPISODIC|FAMILY MATINEE|SPECIAL SCREENINGS|NEW FRONTIER)$/i.test(
+        text,
+      )
+    ) {
+      section = text;
+      continue;
+    }
+    if (!section || /episodic|new frontier/i.test(section)) continue;
+    const title = raw.match(/<b[^>]*>\s*<i[^>]*>([\s\S]*?)<\/i>\s*<\/b>/i);
+    if (!title || !/\(\s*Director/.test(text)) continue;
+    const credits = text.match(/\(\s*(Directors?[^)]+)\)/)?.[1] ?? "";
+    const director =
+      credits.match(
+        /^Directors?[^:]*:\s*(.+?)(?=, (?:Screenwriters?|Producers?|Co-[A-Z][^:]*):|$)/,
+      )?.[1] ?? null;
     entries.push({
-      section: /Un Certain Regard/i.test(html.slice(0, match.index))
-        ? "Un Certain Regard"
-        : /Cam[eé]ra d.or/i.test(html.slice(0, match.index))
-          ? "Caméra d’or"
-          : "Feature Films",
-      originalTitle: title,
-      originalRecipient: body.slice(title.length).trim() || null,
-      awardType,
-      isFeature: !/short/i.test(
-        `${awardType} ${html.slice(Math.max(0, match.index - 120), match.index)}`,
-      ),
+      section,
+      originalTitle: decodeHtml(title[1]),
+      originalRecipient: director,
+      isFeature: true,
       isOfficial: true,
       entryType: "feature",
-      originalData: { awardType, body },
+      originalData: {
+        originalTitle: decodeHtml(title[1]),
+        creditLine: credits,
+      },
+    });
+  }
+  return entries;
+}
+
+function cannesSelection(html) {
+  const entries = [];
+  let section = null;
+  for (const match of html.matchAll(/<(h2|p)\b[^>]*>([\s\S]*?)<\/\1>/gi)) {
+    const text = decodeHtml(match[2]);
+    if (match[1].toLowerCase() === "h2") {
+      section =
+        /^(?:In Competition|Un Certain Regard|Out of Competition|Midnight Screenings|Cannes Premi[eè]re|Special Screenings|Family Screening)$/i.test(
+          text,
+        )
+          ? text
+          : null;
+      continue;
+    }
+    if (!section) continue;
+    const credit = text.match(
+      /^(?:Opening film:\s*)?(.+?)\s+by\s+(.+?)(?:\s*\|.*|$)/i,
+    );
+    if (!credit) continue;
+    entries.push({
+      section: /Out of Competition$/i.test(credit[2])
+        ? "Out of Competition"
+        : section,
+      originalTitle: credit[1].trim(),
+      originalRecipient: credit[2]
+        .replace(/\s*[–—-]\s*Out of Competition$/i, "")
+        .trim(),
+      isFeature: true,
+      isOfficial: true,
+      entryType: "feature",
+      originalData: { creditLine: text },
+    });
+  }
+  return entries;
+}
+
+function veniceAwards(html) {
+  const entries = [];
+  let section = null;
+  for (const match of html.matchAll(/<(h4|p)\b[^>]*>([\s\S]*?)<\/\1>/gi)) {
+    const raw = match[2];
+    const text = decodeHtml(raw);
+    if (match[1].toLowerCase() === "h4") {
+      section =
+        /^(?:Venezia \d+|Orizzonti|Venice Award for a Debut Film|Venice Spotlight|Venice Classics)$/i.test(
+          text,
+        )
+          ? text
+          : null;
+      continue;
+    }
+    if (!section || /SHORT FILM|RESTORED FILM/i.test(text)) continue;
+    const film = raw.match(/<em[^>]*>([\s\S]*?)<\/em>/i);
+    if (!film) continue;
+    const prefix = decodeHtml(raw.slice(0, film.index));
+    const divider = prefix.match(
+      /^(.*?)(?:\s+to:|\s+for Best Actress:|\s+for Best Actor:)(.*?)$/i,
+    );
+    if (!divider) continue;
+    const awardType = /for Best (?:Actress|Actor):/i.test(prefix)
+      ? prefix.match(/^(.*?for Best (?:Actress|Actor)):/i)?.[1]
+      : divider[1];
+    const recipient =
+      divider[2].replace(/\s+(?:for|in) the film\s*$/i, "").trim() ||
+      decodeHtml(raw.slice(film.index + film[0].length))
+        .match(/^by\s+(.+?)(?:\s*\(|$)/i)?.[1]
+        ?.trim() ||
+      null;
+    entries.push({
+      section,
+      originalTitle: decodeHtml(film[1]),
+      originalRecipient: recipient,
+      awardType: awardType?.trim(),
+      isFeature: true,
+      isOfficial: true,
+      entryType: "feature",
+      originalData: { awardLine: text },
+    });
+  }
+  return entries;
+}
+
+function cannesAwards(html) {
+  const entries = [];
+  let section = null;
+  let awardType = null;
+  for (const match of html.matchAll(/<(h2|h5|p)\b[^>]*>([\s\S]*?)<\/\1>/gi)) {
+    const raw = match[2];
+    const body = decodeHtml(raw);
+    if (match[1].toLowerCase() === "h2") {
+      section =
+        /^(?:Feature Films|Un Certain Regard|Cam[eé]ra d.or|Superior Technical Commission)$/i.test(
+          body,
+        )
+          ? body
+          : null;
+      awardType = null;
+      continue;
+    }
+    if (!section) continue;
+    if (match[1].toLowerCase() === "h5") {
+      awardType = body;
+      continue;
+    }
+    // A named film link is the film identity; the preceding bold names are
+    // often directors, writers or performers, including shared prizes.
+    const film = [
+      ...raw.matchAll(
+        /<a\b[^>]*href=["'](https:\/\/www\.festival-cannes\.com\/(?:en\/)?f\/[^"']+)["'][^>]*>([\s\S]*?)<\/a\s*>/gi,
+      ),
+    ].find((item) => decodeHtml(item[2]));
+    if (!film) continue;
+    const originalTitle = decodeHtml(film[2]);
+    const prefix = decodeHtml(raw.slice(0, film.index));
+    const suffix = decodeHtml(raw.slice(film.index + film[0].length));
+    let recipient =
+      prefix.replace(/\s+(?:for|in)$/i, "").trim() ||
+      suffix
+        .match(
+          /^directed by (.+?)(?:\s+Un Certain Regard|\s+\(1st film\)|$)/i,
+        )?.[1]
+        ?.trim() ||
+      null;
+    let label = awardType;
+    if (section === "Superior Technical Commission") {
+      const credit = prefix.match(
+        /^(THE CST AWARD.*?)\s+is presented to\s+(.+?),\s+.+?\s+of$/i,
+      );
+      if (!credit) continue;
+      label = credit[1];
+      recipient = credit[2].trim();
+    }
+    if (!label) continue;
+    entries.push({
+      section,
+      originalTitle,
+      originalRecipient: recipient,
+      awardType: label,
+      isFeature: true,
+      isOfficial: true,
+      entryType: "feature",
+      originalData: { awardType: label, awardCredit: body, filmUrl: film[1] },
     });
   }
   return entries;
@@ -177,7 +416,7 @@ function berlinaleAwards(html, year) {
       shortAwardBySection.get(sectionLabel) === true;
     const recipient = decodeHtml(
       details.slice(0, details.indexOf(film[0])),
-    ).replace(/\s+(?:for|in)\s*$/i, "");
+    ).replace(/\s+(?:for|in)\s*:?\s*$/i, "");
     entries.push({
       section: sectionLabel,
       originalTitle: decodeHtml(film[2]),
@@ -293,6 +532,12 @@ export function parseFestivalHtml(festivalId, kind, html, year = 2026) {
   if (!entries.length && festivalId === "sundance" && kind === "awards") {
     entries = sundanceAwards(html);
   }
+  if (!entries.length && festivalId === "sundance" && kind === "selection")
+    entries = sundanceSelection(html);
+  if (!entries.length && festivalId === "cannes" && kind === "selection")
+    entries = cannesSelection(html);
+  if (!entries.length && festivalId === "venice" && kind === "awards")
+    entries = veniceAwards(html);
   if (!entries.length && festivalId === "cannes" && kind === "awards") {
     entries = cannesAwards(html);
   }
@@ -316,6 +561,16 @@ async function fetchPage(fetcher, url) {
   return response.text();
 }
 
+function sourcePublicationTime(html) {
+  for (const [tag] of html.matchAll(/<meta\b[^>]*>/gi)) {
+    const field = attribute(tag, "property") ?? attribute(tag, "name");
+    if (field !== "article:published_time") continue;
+    const value = attribute(tag, "content");
+    if (value && !Number.isNaN(Date.parse(value))) return value;
+  }
+  return null;
+}
+
 function isExpectedPendingAwardsMiss(connector, kind, capturedAt, error) {
   if (
     kind !== "awards" ||
@@ -334,6 +589,9 @@ async function officialAdapter({ connector, capturedAt, fetcher }) {
   const configuration = connector.configuration;
   const manifests = [];
   for (const kind of ["selection", "awards"]) {
+    // Closed editions with a reviewed, versioned archive must not be replaced
+    // by a dynamic page that exposes only part of the original programme.
+    if (configuration.manual_archive_kinds?.includes(kind)) continue;
     const url = configuration[`${kind}_url`];
     if (!url) continue;
     let html;
@@ -387,6 +645,13 @@ async function officialAdapter({ connector, capturedAt, fetcher }) {
       html = JSON.stringify({ index: html, sections: receipts });
       contentType = "application/json";
     }
+    const minimum = configuration.minimum_entries?.[kind] ?? 0;
+    const eligibleCount = entries.filter(isEligibleFestivalEntry).length;
+    if (eligibleCount < minimum) {
+      throw new Error(
+        `Captura parcial de ${connector.festival_id} (${kind}): ${eligibleCount} largometrajes; mínimo revisado ${minimum}`,
+      );
+    }
     if (!entries.length) continue;
     manifests.push({
       editionId: configuration.edition_id,
@@ -394,7 +659,7 @@ async function officialAdapter({ connector, capturedAt, fetcher }) {
       source: {
         url,
         title: `${connector.name} · ${kind}`,
-        publishedAt: null,
+        publishedAt: sourcePublicationTime(html),
       },
       capturedAt,
       extractorVersion: connector.extractor_version,

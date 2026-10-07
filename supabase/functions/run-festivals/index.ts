@@ -1,3 +1,9 @@
+import {
+  enrichFestivalLinks,
+  FestivalTmdbResolver,
+} from "../_shared/festivals/external-links.mjs";
+import { SupabaseFestivalExternalLinksRepository } from "../_shared/festivals/external-links-repository.mjs";
+import { FESTIVAL_IDENTITY_EVIDENCE } from "../_shared/festivals/identity-evidence.mjs";
 import { FESTIVAL_CONNECTORS } from "../_shared/festivals/connectors.mjs";
 import {
   runFestivalConnectors,
@@ -40,21 +46,46 @@ Deno.serve(async (request) => {
       supabaseUrl: Deno.env.get("SUPABASE_URL"),
       serviceRoleKey: Deno.env.get("SUPABASE_SERVICE_ROLE_KEY"),
     });
-    const connectors = await repository.activeConnectors(selected);
+    const connectors =
+      payload.linksOnly === true
+        ? []
+        : await repository.activeConnectors(selected);
     const results = await runFestivalConnectors({
       connectors,
       registry: FESTIVAL_CONNECTORS,
       repository,
       trigger: payload.trigger === "manual" ? "manual" : "scheduled",
     });
-    const failed = results.filter(
-      (result) => result.status === "failed",
-    ).length;
+    const links =
+      payload.enrichLinks === true || payload.linksOnly === true
+        ? await (async () => {
+            const linkRepository = new SupabaseFestivalExternalLinksRepository({
+              supabaseUrl: Deno.env.get("SUPABASE_URL"),
+              serviceRoleKey: Deno.env.get("SUPABASE_SERVICE_ROLE_KEY"),
+            });
+            const resolver = new FestivalTmdbResolver({
+              token: Deno.env.get("TMDB_READ_ACCESS_TOKEN"),
+              cachedMovies: await linkRepository.cachedMovies(),
+            });
+            return enrichFestivalLinks({
+              repository: linkRepository,
+              resolver,
+              apply: true,
+              limit: payload.linkLimit ?? 25,
+              afterEntryId: payload.afterEntryId ?? 0,
+              reviewedEvidence: FESTIVAL_IDENTITY_EVIDENCE,
+            });
+          })()
+        : null;
+    const failed =
+      (links?.failed ?? 0) +
+      results.filter((result) => result.status === "failed").length;
     return json({
       status: failed === 0 ? "succeeded" : "partial",
       connectors: results.length,
       failed,
       results,
+      links,
     });
   } catch (error) {
     return json(

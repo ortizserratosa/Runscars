@@ -3,6 +3,10 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { cache } from "react";
 import { isSupabaseConfigured } from "../environment";
 import { createSupabaseServerClient } from "../supabase/server";
+import { getPrecursorIndex } from "../precursors/data";
+import type { PrecursorEditionView } from "../precursors/types";
+import { fetchAllRows, fetchRowsByIds } from "../supabase/pagination";
+import { getFestivalIndex, type FestivalEditionView } from "../festivals/data";
 import {
   getCurrentCategoryPredictions,
   type CurrentCategoryPredictionView,
@@ -28,6 +32,8 @@ export type SourceIndexView = {
   lastChangedAt: string | null;
   lastSuccessfulCheckAt: string | null;
   lastFailureAt: string | null;
+  lastCapturedAt?: string | null;
+  festivalArchiveReviewed?: boolean;
   health: SourceHealth;
 };
 
@@ -64,12 +70,24 @@ export type SourceCategoryView = {
 export type SourceDetailView = SourceIndexView & {
   notes: string | null;
   categories: SourceCategoryView[];
+  festivalEditions: FestivalEditionView[];
 };
 
 type ConnectorRow = {
   source_id: string | null;
   last_successful_check_at: string | null;
   last_failure_at: string | null;
+  is_active?: boolean;
+  has_current_failure?: boolean;
+  has_active_connector?: boolean;
+};
+
+type FestivalConnectorRow = ConnectorRow & {
+  configuration: {
+    edition_id?: string;
+    manual_archive_kinds?: string[];
+    minimum_entries?: Partial<Record<"selection" | "awards", number>>;
+  };
 };
 
 function latest(left: string | null, right: string | null) {
@@ -87,16 +105,29 @@ function connectorSummary(rows: ConnectorRow[]) {
     (value, row) => latest(value, row.last_failure_at),
     null,
   );
-  const success = lastSuccessfulCheckAt
-    ? Date.parse(lastSuccessfulCheckAt)
+  const automaticRows = rows.filter(
+    (row) => row.is_active !== false && row.has_active_connector !== false,
+  );
+  const automaticSuccess = automaticRows.reduce<string | null>(
+    (value, row) => latest(value, row.last_successful_check_at),
+    null,
+  );
+  const success = automaticSuccess
+    ? Date.parse(automaticSuccess)
     : Number.NEGATIVE_INFINITY;
-  const failure = lastFailureAt
-    ? Date.parse(lastFailureAt)
-    : Number.NEGATIVE_INFINITY;
+  const failed = automaticRows.some(
+    (row) =>
+      row.has_current_failure ??
+      (row.last_failure_at !== null &&
+        Date.parse(row.last_failure_at) >
+          (row.last_successful_check_at
+            ? Date.parse(row.last_successful_check_at)
+            : Number.NEGATIVE_INFINITY)),
+  );
   return {
     lastSuccessfulCheckAt,
     lastFailureAt,
-    health: (failure > success
+    health: (failed
       ? "failed"
       : Number.isFinite(success)
         ? "ok"
@@ -130,6 +161,7 @@ function summaryDates(
 
 function fixtureIndex(
   predictions: CurrentCategoryPredictionView[],
+  precursors: PrecursorEditionView[],
 ): SourceIndexView[] {
   const sourceById = new Map<
     string,
@@ -222,6 +254,14 @@ function fixtureIndex(
       "https://www.filmlinc.org/nyff/",
       "festival",
     ],
+    ...precursors
+      .filter((edition) => edition.ceremonyYear === 2027)
+      .map((edition) => [
+        edition.organizationId,
+        edition.name,
+        edition.homepageUrl,
+        "official",
+      ]),
   ].map(([id, name, homepageUrl, sourceType]) => ({
     id,
     name,
@@ -246,9 +286,102 @@ function fixtureIndex(
     .sort((left, right) => left.name.localeCompare(right.name, "es"));
 }
 
+function withPrecursorEvidence(
+  sources: SourceIndexView[],
+  precursors: PrecursorEditionView[],
+): SourceIndexView[] {
+  return sources.map((source) => {
+    const sets = precursors
+      .filter((edition) => edition.organizationId === source.id)
+      .flatMap((edition) =>
+        [edition.schedule, edition.nominations, edition.winners].filter(
+          (set) => set !== null,
+        ),
+      );
+    if (!sets.length) return source;
+    return {
+      ...source,
+      lastPublishedAt:
+        sets
+          .flatMap((set) => (set.publishedAt ? [set.publishedAt] : []))
+          .sort()
+          .at(-1) ?? null,
+      lastCapturedAt:
+        sets
+          .map((set) => set.capturedAt)
+          .sort()
+          .at(-1) ?? null,
+    };
+  });
+}
+
+function withFestivalEvidence(
+  sources: SourceIndexView[],
+  festivals: FestivalEditionView[],
+  connectors: FestivalConnectorRow[] = [],
+): SourceIndexView[] {
+  return sources.map((source) => {
+    const editions = festivals.filter(
+      (edition) => edition.festivalId === source.id,
+    );
+    const sets = editions.flatMap((edition) =>
+      [edition.selection, edition.awards].filter((set) => set !== null),
+    );
+    if (!editions.length) return source;
+    const archiveConnectors = connectors.filter(
+      (connector) =>
+        connector.source_id === source.id &&
+        connector.is_active === false &&
+        (connector.configuration.manual_archive_kinds?.length ?? 0) > 0,
+    );
+    const festivalArchiveReviewed =
+      archiveConnectors.length > 0 &&
+      archiveConnectors.every((connector) => {
+        const edition = editions.find(
+          (edition) => edition.id === connector.configuration.edition_id,
+        );
+        return (
+          edition?.status === "completed" &&
+          connector.configuration.manual_archive_kinds!.every((kind) => {
+            if (kind !== "selection" && kind !== "awards") return false;
+            const set = edition[kind];
+            return (
+              set !== null &&
+              set.entries.length >=
+                Math.max(
+                  1,
+                  connector.configuration.minimum_entries?.[kind] ?? 1,
+                )
+            );
+          })
+        );
+      });
+    return {
+      ...source,
+      festivalArchiveReviewed,
+      lastPublishedAt: sets.reduce<string | null>(
+        (value, set) => latest(value, set.publishedAt),
+        source.lastPublishedAt,
+      ),
+      lastCapturedAt: sets.reduce<string | null>(
+        (value, set) => latest(value, set.capturedAt),
+        source.lastCapturedAt ?? null,
+      ),
+    };
+  });
+}
+
 export async function getSourceIndex(): Promise<SourceIndexView[]> {
-  const predictions = await getCurrentCategoryPredictions();
-  if (!isSupabaseConfigured()) return fixtureIndex(predictions);
+  const [predictions, precursors, festivals] = await Promise.all([
+    getCurrentCategoryPredictions(),
+    getPrecursorIndex(),
+    getFestivalIndex(),
+  ]);
+  if (!isSupabaseConfigured())
+    return withFestivalEvidence(
+      withPrecursorEvidence(fixtureIndex(predictions, precursors), precursors),
+      festivals,
+    );
   try {
     const supabase = client();
     const [
@@ -264,13 +397,17 @@ export async function getSourceIndex(): Promise<SourceIndexView[]> {
         ),
       supabase
         .from("public_source_freshness")
-        .select("source_id,last_successful_check_at,last_failure_at"),
+        .select(
+          "source_id,last_successful_check_at,last_failure_at,has_current_failure,has_active_connector",
+        ),
       supabase
         .from("market_connectors")
-        .select("source_id,last_success_at,last_failure_at"),
+        .select("source_id,is_active,last_success_at,last_failure_at"),
       supabase
-        .from("festival_connectors")
-        .select("source_id,last_success_at,last_failure_at"),
+        .from("public_festival_freshness")
+        .select(
+          "source_id,is_active,configuration,last_success_at,last_failure_at",
+        ),
     ]);
     if (sourcesResult.error) throw new Error(sourcesResult.error.message);
     const connectorRows: ConnectorRow[] = [
@@ -282,6 +419,7 @@ export async function getSourceIndex(): Promise<SourceIndexView[]> {
         source_id: connector.source_id,
         last_successful_check_at: connector.last_success_at,
         last_failure_at: connector.last_failure_at,
+        is_active: connector.is_active,
       })),
       ...(festivalConnectorsResult.error
         ? []
@@ -290,9 +428,10 @@ export async function getSourceIndex(): Promise<SourceIndexView[]> {
         source_id: connector.source_id,
         last_successful_check_at: connector.last_success_at,
         last_failure_at: connector.last_failure_at,
+        is_active: connector.is_active,
       })),
     ];
-    return (sourcesResult.data ?? [])
+    const sources = (sourcesResult.data ?? [])
       .map((source): SourceIndexView => ({
         id: source.id,
         name: source.name,
@@ -310,9 +449,28 @@ export async function getSourceIndex(): Promise<SourceIndexView[]> {
         ),
       }))
       .sort((left, right) => left.name.localeCompare(right.name, "es"));
+    const festivalConnectors = (
+      festivalConnectorsResult.error
+        ? []
+        : (festivalConnectorsResult.data ?? [])
+    ).map((connector) => ({
+      source_id: connector.source_id,
+      is_active: connector.is_active,
+      configuration: connector.configuration,
+      last_successful_check_at: connector.last_success_at,
+      last_failure_at: connector.last_failure_at,
+    }));
+    return withFestivalEvidence(
+      withPrecursorEvidence(sources, precursors),
+      festivals,
+      festivalConnectors,
+    );
   } catch (error) {
     if (process.env.NODE_ENV === "production") throw error;
-    return fixtureIndex(predictions);
+    return withFestivalEvidence(
+      withPrecursorEvidence(fixtureIndex(predictions, precursors), precursors),
+      festivals,
+    );
   }
 }
 
@@ -398,7 +556,13 @@ function categoryViews(
 export const getSourceDetail = cache(async function getSourceDetail(
   sourceId: string,
 ): Promise<SourceDetailView | null> {
-  const predictions = await getCurrentCategoryPredictions();
+  const [predictions, festivals] = await Promise.all([
+    getCurrentCategoryPredictions(),
+    getFestivalIndex(),
+  ]);
+  const festivalEditions = festivals
+    .filter((edition) => edition.festivalId === sourceId)
+    .sort((left, right) => right.year - left.year);
   const summary = (await getSourceIndex()).find(
     (source) => source.id === sourceId,
   );
@@ -406,6 +570,7 @@ export const getSourceDetail = cache(async function getSourceDetail(
   if (!isSupabaseConfigured()) {
     return {
       ...summary,
+      festivalEditions,
       notes: null,
       categories: categoryViews(sourceId, predictions, new Map(), new Map()),
     };
@@ -431,23 +596,32 @@ export const getSourceDetail = cache(async function getSourceDetail(
     if (publicationResult.error)
       throw new Error(publicationResult.error.message);
     const publicationRows = publicationResult.data ?? [];
-    const databasePublicationIds = publicationRows.map((row) => row.id);
-    const observationsResult = databasePublicationIds.length
-      ? await supabase
+    const observationIds = predictions.flatMap((category) =>
+      category.aggregate.ranking.flatMap((candidate) =>
+        candidate.sourceContributions.flatMap((contribution) =>
+          contribution.sourceId === sourceId && contribution.observationId
+            ? [contribution.observationId]
+            : [],
+        ),
+      ),
+    );
+    const observations = await fetchRowsByIds(observationIds, (ids) =>
+      fetchAllRows((from, to) =>
+        supabase
           .from("professional_observations")
           .select(
             "id,publication_id,original_value,captured_at,extractor_version",
           )
           .eq("source_id", sourceId)
           .eq("state", "published")
-          .in("publication_id", databasePublicationIds)
-      : { data: [], error: null };
-    if (observationsResult.error) {
-      throw new Error(observationsResult.error.message);
-    }
+          .in("id", ids)
+          .order("id")
+          .range(from, to),
+      ),
+    );
     const publications = new Map(
       publicationRows.map((publication) => {
-        const captures = (observationsResult.data ?? [])
+        const captures = observations
           .filter(
             (observation) => observation.publication_id === publication.id,
           )
@@ -470,13 +644,14 @@ export const getSourceDetail = cache(async function getSourceDetail(
       }),
     );
     const originalByObservationId = new Map(
-      (observationsResult.data ?? []).map((observation) => [
+      observations.map((observation) => [
         String(observation.id),
         observation.original_value,
       ]),
     );
     return {
       ...summary,
+      festivalEditions,
       notes: sourceResult.data.notes,
       categories: categoryViews(
         sourceId,
@@ -489,6 +664,7 @@ export const getSourceDetail = cache(async function getSourceDetail(
     if (process.env.NODE_ENV === "production") throw error;
     return {
       ...summary,
+      festivalEditions,
       notes: null,
       categories: categoryViews(sourceId, predictions, new Map(), new Map()),
     };

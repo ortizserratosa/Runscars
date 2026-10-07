@@ -1,7 +1,7 @@
 # Metodología
 
 **Estado:** agregación, snapshots y evaluación profesional operativos
-**Última revisión:** 2026-09-29
+**Última revisión:** 2026-10-07
 
 ## 1. Principios
 
@@ -483,8 +483,9 @@ La interfaz no usa “actualizado” como fecha ambigua:
   cambiaron candidaturas, tipo de aparición, posición o longitud de lista;
 - **comprobación correcta:** `last_success_at` más reciente de los conectores de
   la fuente;
-- **incidencia:** el estado es fallido si `last_failure_at` es posterior al
-  último éxito, sin publicar el texto interno del error.
+- **incidencia:** el estado es fallido si algún conector activo tiene un fallo
+  posterior a su propio último éxito, sin publicar el texto interno del error.
+  El éxito de otra categoría del mismo medio no oculta esa incidencia.
 
 Al navegar por un corte histórico, publicación y cambio pertenecen a ese corte.
 La salud del conector se etiqueta como estado técnico actual y no se presenta
@@ -512,6 +513,46 @@ premios paralelos no publicados en el palmarés oficial.
 Los festivales son contexto: su contribución a Borda y a cualquier denominador
 de cobertura es siempre cero. No se mezclan con predicciones, recepción,
 mercados o comunidad.
+
+Las ediciones cerradas con recibos revisados se archivan. Una revisión manual
+no simula un éxito automático; se conserva su fecha de captura y se declara el
+alcance parcial cuando corresponda. Una captura incompleta no reemplaza un
+programa mayor verificado. Una nueva sección o corrección crea otra versión y
+mantiene el original y su procedencia.
+
+Los enlaces externos festivaleros tienen historial y puntero propios, separados
+del matching con el catálogo Oscar. TMDB permite obtener el identificador IMDb:
+se exige título original o alternativo exacto y dirección coincidente; el año
+se contrasta solo cuando consta explícitamente en la fuente festivalera. No se
+usa el año de edición como año de producción. Un año de estreno explícito debe
+coincidir; un año de producción puede preceder al estreno de TMDB, pero no ser
+posterior. La búsqueda no filtra por año de estreno usando un año de producción.
+Una coincidencia ambigua queda
+pendiente y un fallo de red conserva el enlace ya verificado. Se guardan el
+método, las URLs y la captura factual mínima que sustentan la identidad; la
+vista pública expone identificadores y procedencia mínima de enlaces verificados. El
+enriquecimiento no modifica títulos, premios ni conjuntos originales, y no
+crea películas, candidaturas o elegibilidad en el catálogo de predicciones.
+
+### 11.1 Premios precursores oficiales
+
+Los calendarios, nominaciones y ganadores de SAG-AFTRA/Actor Awards, DGA, PGA,
+WGA, Critics Choice y BAFTA tienen conjuntos, entradas y punteros propios.
+Cada edición relaciona de forma explícita año de ceremonia y temporada Oscar.
+Los conjuntos y sus capturas son inmutables; una corrección añade una versión
+enlazada y un matching corregido conserva su historial.
+
+Se conservan fuente oficial, URL, autor o editor, publicación cuando consta,
+captura, valor original, categoría, película y destinatario. Las selecciones
+parciales declaran su alcance; no se interpretan como listas completas de
+nominaciones. Las categorías propias se relacionan como correspondientes,
+relacionadas o sin equivalencia; el premio de elenco de SAG-AFTRA es relacionado
+con película, sin cambiar su identidad ni la elegibilidad Oscar.
+
+El matching solo acepta un título exacto y único dentro de la misma temporada.
+Las dudas permanecen visibles sin enlace. Los resultados no anunciados no se
+estiman. Ninguna fecha, nominación o premio precursor aporta puntos Borda ni
+completa denominadores de fuentes profesionales.
 
 ## 12. Calibraciones de la fase 1
 

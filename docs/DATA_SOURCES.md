@@ -1,7 +1,7 @@
 # Registro de fuentes
 
 **Estado:** fuentes públicas y circuito festivalero 2026 versionados
-**Última revisión:** 2026-09-29
+**Última revisión:** 2026-10-07
 
 ## 1. Objetivo
 
@@ -457,3 +457,70 @@ No se alcanza el mínimo de consenso inventando posiciones de listas alfabética
 ni multiplicando autores de un mismo medio. `npm run audit:predictions` comprueba
 los parsers y la cobertura requerida con la configuración remota cuando dispone
 de credenciales; su modo sin credenciales identifica expresamente esa limitación.
+
+### Recuperación de cobertura · 7 de octubre de 2026
+
+Variety se incorpora mediante ocho conectores independientes, uno por categoría,
+con una única voz profesional: Clayton Davis. Los artículos oficiales enlazan
+las tablas Datawrapper con columna `Rank`; se conservan artículo, fecha editorial,
+URL inicial/final de la tabla y CSV público original. Mejor película publica 40
+puestos y las otras siete categorías 30. Un fallo o un matching pendiente de una
+categoría no retira el voto verificable de las demás. La activación se limita a
+hechos de predicción y enlaces atribuidos; no incorpora reseñas ni cuerpo de
+artículos. El estado inaccesible observado el 29/09 queda como antecedente,
+no como exclusión permanente. Ver D-068 en [DECISIONS.md](DECISIONS.md).
+
+Awards Daily `awards-daily-v9` reconoce artículos válidos de una categoría sin
+exigir Mejor película y preserva listas HTML ordenadas. AwardsWatch
+`awardswatch-multicategory-v7` reconoce ese mismo orden explícito y retira marcas
+editoriales del sujeto de matching manteniendo el original. Los paneles actuales
+sin orden declarado siguen siendo selecciones: una secuencia de filas no basta
+para atribuir puestos. Las exclusiones vigentes de Midnight Critics y The Ringer
+siguen justificadas por fechas vencidas, no por ausencia de categorías.
+
+### Premios oficiales previos a los Oscar · D-069
+
+Actor Awards / SAG-AFTRA, DGA, PGA, WGA, Critics Choice y BAFTA se incorporan como
+fuentes `official`. Sus calendarios y resultados no se escriben como
+`professional_observations`. El manifiesto
+[2026-2027.json](../web/data/precursors/2026-2027.json) conserva doce conjuntos:
+seis calendarios de ceremonias 2027 y seis selecciones de ganadores de cine 2026.
+El archivo inicial contiene 25 ganadores y declara su cobertura parcial.
+
+Cada fuente supera la puerta con calendario/archivo y anuncio o resultado oficial.
+Se conservan categoría, título y destinatario originales, publicación cuando
+consta, captura, URL y recibo. No se deducen anuncios futuros ni equivalencias de
+elegibilidad. Se opera mediante `npm run precursors:validate`,
+`npm run precursors:import` y `npm run precursors:match`. La ingesta es manual,
+versionada e idempotente; no se promete actualización automática de estos premios
+por el hecho de haber publicado su calendario.
+
+### Recopilación estática del circuito 2026 · D-070
+
+El [suplemento](../web/data/festivals/2026-supplement-2026-10-07.json)
+recupera Sundance, Berlinale, Cannes, Locarno, TIFF y San Sebastián y los palmarés
+pendientes de Venecia, TIFF y San Sebastián. Corrige los títulos/destinatarios de
+Cannes y excluye cortos y el reconocimiento honorífico que se había mezclado en
+Sundance. La [corrección de Berlín](../web/data/festivals/2026-award-corrections-2026-10-07.json)
+conserva las 21 tuplas contrastadas y repara tres destinatarios mal decodificados.
+La revisión del PDF oficial de Locarno confirma sus 31 premios de largos.
+
+Se conserva formato, duración cuando consta, sección, premio, título y
+recipient originales, fuente, autor cuando existe y fechas reales. TIFF usa el
+CSV descargable oficial y la página de resultados renderizada; Locarno usa la
+cuenta Letterboxd enlazada por el propio festival, con limitación explícita a
+cinco secciones verificadas. NYFF sigue en curso y conserva Main Slate. El
+[recibo de investigación](audits/2026-10-07/festival-research.md) documenta
+exclusiones y lagunas; las ocho ediciones cerradas se mantienen como archivos
+revisados y sus correcciones futuras usan manifiestos versionados.
+
+### IMDb para películas festivaleras fuera del catálogo · D-071
+
+La API de TMDB aporta búsquedas, títulos alternativos, créditos de dirección e
+identificadores externos IMDb. Se consulta desde servidor con el token existente
+y se contrasta la identidad con la entrada festivalera original. El enlace a
+IMDb no importa votos, críticas ni resultados y no añade una película a las
+predicciones. Se conservan las URLs de verificación, el método y los datos
+factuales mínimos; los homónimos o créditos insuficientes quedan pendientes.
+Los identificadores y la evidencia se almacenan en historial independiente de
+los recibos oficiales inmutables. No se añade un nuevo Cron en este corte.

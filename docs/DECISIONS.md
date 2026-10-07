@@ -1326,3 +1326,106 @@ ejemplos manuales de nominaciones y ganador coincidieron con
   formatos legados no reconocibles conservan el criterio anterior; una vuelta
   exacta a contenido antiguo que no generó captura nueva no se puede reconstruir.
   No se inventan fechas ni se reescriben snapshots históricos.
+
+## D-068 · Rankings de Variety con aislamiento por categoría
+
+- **Fecha:** 2026-10-07
+- **Estado:** Aceptada
+- **Origen:** petición del usuario de recuperar órdenes originales y evitar
+  descartes indebidos de fuentes por categoría.
+- **Decisión:** activar las tablas públicas de Variety / Clayton Davis en las
+  ocho categorías, conservando su columna `Rank`, longitud completa, artículo
+  canónico, fecha editorial y recibo Datawrapper/CSV. Una galería o una
+  redirección pública de versión se sigue sin eludir controles de acceso.
+- **Aislamiento:** cada categoría tiene su propio conector y run; un fallo no
+  impide actualizar las demás. Los ocho conectores representan una sola fuente
+  Variety en cada agregado, nunca ocho votos. Un sujeto oculto o ambiguo conserva
+  su posición original y queda pendiente de matching; no invalida los demás
+  sujetos inequívocos ni reduce la longitud publicada.
+- **Publicación:** solo hechos de predicción, metadatos y enlaces atribuidos;
+  esta activación no incorpora cuerpo de artículos ni reseñas.
+- **Orden y cobertura:** se mantiene D-063 para los paneles sin orden declarado.
+  AwardsWatch y Awards Daily reconocen listas HTML ordenadas cuando existan;
+  Awards Daily admite artículos de una categoría sin exigir Mejor película.
+  Las marcas editoriales se retiran únicamente del sujeto usado para matching,
+  conservando el original.
+- **Continuidad:** se mantienen Borda, caducidad de 30 días, umbral de consenso,
+  snapshots bloqueados y una voz por medio. No se fabrican posiciones para
+  aumentar cobertura.
+
+## D-069 · Calendarios y resultados de premios precursores
+
+- **Fecha:** 2026-10-07
+- **Estado:** Aceptada
+- **Origen:** petición expresa de añadir premios de sindicatos y críticos
+  anteriores a los Oscar.
+- **Decisión:** incorporar Actor Awards / SAG-AFTRA, DGA, PGA, WGA, Critics
+  Choice y BAFTA con entidades propias de organismo, edición, calendario,
+  nominaciones y ganadores. Las rutas `/premios` y `/premios/organismo/año`
+  muestran los originales, cobertura y recibos oficiales en español e inglés;
+  temporada, Fuentes y películas enlazan este contexto.
+- **Temporadas:** las ceremonias 2027 acompañan a Oscar 2027 y los ganadores
+  archivados de 2026 a Oscar 2026. No se trasladan resultados del año anterior
+  al activo. Los anuncios futuros permanecen pendientes. El archivo inicial
+  declara que recoge únicamente ganadores de cine relacionados con las ocho
+  categorías públicas.
+- **Mapeo:** se conserva la categoría original y se distingue correspondencia,
+  relación contextual y ausencia de equivalencia. El premio de elenco de
+  SAG-AFTRA no se transforma en Mejor película. La elegibilidad propia de un
+  sindicato o BAFTA no acredita elegibilidad Academy.
+- **Integridad:** captura y conjuntos inmutables, importación idempotente,
+  correcciones versionadas y matching exacto y único por temporada. Las dudas
+  siguen visibles sin enlace. Los datos oficiales no aportan puntos ni cobertura
+  profesional; se mantiene la separación de señales.
+- **Operación:** importación manual reproducible desde manifiestos oficiales;
+  este corte no promete un nuevo conector automático para estos organismos.
+
+## D-070 · Recibos estáticos de ediciones festivaleras cerradas
+
+- **Fecha:** 2026-10-07
+- **Estado:** Aceptada
+- **Origen:** petición de ampliar el circuito con información oficial que ya
+  está publicada y es estable.
+- **Decisión:** recuperar programas y palmarés como manifiestos inmutables
+  revisados, archivar los conectores de las ocho ediciones 2026 cerradas y
+  conservar activo NYFF mientras continúa. Una captura automática parcial no
+  sustituye un conjunto revisado mayor; los mínimos declarados hacen fallar
+  solo la fuente afectada.
+- **Cobertura:** las nueve ediciones tienen selección y las siete competitivas
+  tienen palmarés. Locarno declara cinco secciones verificadas, con la cuenta
+  Letterboxd del festival corroborada por su web oficial; no se acepta una lista
+  de terceros como fuente oficial. NYFF conserva Main Slate, con Spotlight y
+  Currents todavía pendientes. No se afirma exhaustividad de todo el circuito.
+- **Correcciones:** ampliar Cannes y San Sebastián o limpiar Sundance crea
+  nuevas versiones enlazadas. Reimportar una versión anterior no reactiva un
+  puntero corregido. Se excluye el premio honorífico de Sundance que se había
+  mezclado con hechos de largometrajes.
+- **Operación:** las correcciones futuras de archivos cerrados siguen el
+  importador manual reproducible y la revisión de identidad/formato. La captura
+  y revisión manual se muestran separadas del último éxito o fallo automático;
+  archivar no inventa un éxito de Cron.
+- **Evidencia:** [fuentes y límites del corte](audits/2026-10-07/festival-research.md).
+
+## D-071 · Enlaces IMDb independientes del catálogo de predicciones
+
+- **Fecha:** 2026-10-07
+- **Estado:** Aceptada
+- **Origen:** petición explícita de enlazar también las películas de festivales
+  que no aparecen entre las predicciones.
+- **Decisión:** guardar enlaces IMDb verificados en un historial festivalero
+  independiente del catálogo Oscar, con puntero vigente y una vista pública de
+  identificadores y procedencia mínima. La ficha propia y el enlace IMDb pueden coexistir.
+- **Identidad:** TMDB debe confirmar título exacto y dirección; se contrasta el
+  año únicamente si la fuente lo declara. Los homónimos y la evidencia
+  insuficiente permanecen pendientes. No se infiere año de producción a partir
+  de la edición ni se usa el destinatario de un premio como director. Se separa
+  producción de estreno: un estreno explícito debe coincidir, y TMDB no puede
+  situar el estreno antes de la producción declarada. No se estrecha una
+  búsqueda por año de estreno con un dato de producción.
+- **Integridad:** evidencia factual, método, URL y captura se conservan sin
+  reemplazar originales; las revisiones son append-only e idempotentes. Un fallo
+  no borra un enlace ya verificado. No se crea una película ni elegibilidad Oscar
+  por aparecer en un festival.
+- **Operación:** enriquecimiento desde servidor en lotes acotados con el token
+  TMDB existente, sin nueva tarea programada. Los secretos no aparecen en las
+  vistas públicas ni en los recibos versionados.

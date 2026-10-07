@@ -4,9 +4,14 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { cache } from "react";
 import manifest from "../../../data/festivals/2026.json";
 import tellurideManifest from "../../../data/festivals/2026-telluride.json";
+import supplementManifest from "../../../data/festivals/2026-supplement-2026-10-07.json";
+import awardCorrectionsManifest from "../../../data/festivals/2026-award-corrections-2026-10-07.json";
+import externalLinksFixture from "../../../data/festivals/2026-external-links-fixture.json";
+import { festivalCoverageNote, festivalSourceFilmUrl } from "./presentation";
 import { filmFixtures } from "../../data/films";
 import { isSupabaseConfigured } from "../environment";
 import { createSupabaseServerClient } from "../supabase/server";
+import { fetchAllRows, fetchRowsByIds } from "../supabase/pagination";
 
 export type FestivalEntryView = {
   id: string;
@@ -17,6 +22,8 @@ export type FestivalEntryView = {
   awardType: string | null;
   filmId: string | null;
   filmTitle: string | null;
+  imdbId?: string | null;
+  sourceFilmUrl?: string | null;
   matchStatus: "matched" | "pending_review" | "unmatched";
 };
 
@@ -29,6 +36,7 @@ export type FestivalSetView = {
   publishedAt: string | null;
   capturedAt: string;
   extractorVersion: string;
+  coverageNote?: { es: string; en: string } | null;
   entries: FestivalEntryView[];
 };
 
@@ -221,19 +229,48 @@ const fixtureFilmByTitle = new Map(
 );
 
 function fixtureSets(editionId: string): FestivalSetView[] {
-  return [...manifest.sets, ...tellurideManifest.sets]
-    .filter((set) => set.editionId === editionId)
-    .map((set, setIndex) => ({
+  const versions = new Map<string, number>();
+  const current = new Map<string, FestivalSetView>();
+  for (const [setIndex, set] of [
+    ...manifest.sets,
+    ...tellurideManifest.sets,
+    ...supplementManifest.sets,
+    ...awardCorrectionsManifest.sets,
+  ]
+    .sort(
+      (left, right) =>
+        Date.parse(left.capturedAt) - Date.parse(right.capturedAt),
+    )
+    .entries()) {
+    if (set.editionId !== editionId) continue;
+    const version = (versions.get(set.kind) ?? 0) + 1;
+    versions.set(set.kind, version);
+    current.set(set.kind, {
       id: `${set.editionId}-${set.kind}-fixture-${setIndex + 1}`,
       kind: set.kind as "selection" | "awards",
-      version: 1,
+      version,
       sourceUrl: set.source.url,
       sourceTitle: set.source.title,
       publishedAt: set.source.publishedAt,
       capturedAt: set.capturedAt,
       extractorVersion: set.extractorVersion,
+      coverageNote: festivalCoverageNote(
+        editionId,
+        set.kind,
+        set.rawCapture,
+        set.entries,
+      ),
       entries: set.entries.map((entry, index) => {
         const film = fixtureFilmByTitle.get(normalize(entry.originalTitle));
+        const sourceData =
+          "originalData" in entry
+            ? (entry.originalData as Record<string, unknown>)
+            : {};
+        const externalLink = externalLinksFixture.links.find(
+          (link) =>
+            link.editionId === editionId &&
+            link.originalTitle === entry.originalTitle,
+        );
         return {
           id: `${set.editionId}-${set.kind}-${index + 1}`,
           order: index + 1,
@@ -243,10 +280,16 @@ function fixtureSets(editionId: string): FestivalSetView[] {
           awardType: "awardType" in entry ? entry.awardType : null,
           filmId: film?.id ?? null,
           filmTitle: film?.title ?? null,
+          imdbId: externalLink?.imdbId ?? null,
+          sourceFilmUrl: festivalSourceFilmUrl(
+            sourceData.filmUrl ?? sourceData.sourceFilmUrl,
+          ),
           matchStatus: film ? ("matched" as const) : ("unmatched" as const),
         };
       }),
-    }));
+    });
+  }
+  return [...current.values()];
 }
 
 function fixtureIndex(): FestivalEditionView[] {
@@ -267,12 +310,20 @@ function fixtureIndex(): FestivalEditionView[] {
       editionNumber: row[6],
       startsOn: row[7],
       endsOn: row[8],
-      status: row[9],
-      awardsStatus: row[10],
+      status: row[8] < "2026-10-07" ? "completed" : "ongoing",
+      awardsStatus: sets.some((set) => set.kind === "awards")
+        ? "published"
+        : row[10],
       officialUrl: row[11],
-      selectionUrl: row[12],
-      awardsUrl: row[13],
-      lastVerifiedAt: "2026-09-03T00:00:00Z",
+      selectionUrl:
+        sets.find((set) => set.kind === "selection")?.sourceUrl ?? row[12],
+      awardsUrl:
+        sets.find((set) => set.kind === "awards")?.sourceUrl ?? row[13],
+      lastVerifiedAt:
+        sets
+          .map((set) => set.capturedAt)
+          .sort()
+          .at(-1) ?? "2026-09-03T00:00:00Z",
       selection: sets.find((set) => set.kind === "selection") ?? null,
       awards: sets.find((set) => set.kind === "awards") ?? null,
     };
@@ -305,54 +356,81 @@ async function databaseIndex(): Promise<FestivalEditionView[]> {
     : { data: [], error: null };
   if (pointersResult.error) throw new Error(pointersResult.error.message);
   const setIds = pointersResult.data.map((pointer) => pointer.set_id);
-  const [setsResult, entriesResult] = await Promise.all([
+  const [setsResult, entries] = await Promise.all([
     setIds.length
       ? supabase
           .from("festival_sets")
           .select(
-            "id,kind,version,source_url,source_title,published_at,captured_at,extractor_version",
+            "id,kind,version,source_url,source_title,published_at,captured_at,extractor_version,coverage_notes:raw_capture->notes",
           )
           .in("id", setIds)
       : Promise.resolve({ data: [], error: null }),
     setIds.length
-      ? supabase
-          .from("festival_entries")
-          .select(
-            "id,set_id,entry_order,section,original_title,original_recipient,award_type,film_id,match_status,films(id,title)",
-          )
-          .in("set_id", setIds)
-          .order("entry_order")
-      : Promise.resolve({ data: [], error: null }),
+      ? fetchAllRows((from, to) =>
+          supabase
+            .from("festival_entries")
+            .select(
+              "id,set_id,entry_order,section,original_title,original_recipient,award_type,film_id,match_status,films(id,title),source_film_url:original_data->>filmUrl,source_display_film_url:original_data->>sourceFilmUrl",
+            )
+            .in("set_id", setIds)
+            .order("set_id")
+            .order("entry_order")
+            .order("id")
+            .range(from, to),
+        )
+      : Promise.resolve([]),
   ]);
   if (setsResult.error) throw new Error(setsResult.error.message);
-  if (entriesResult.error) throw new Error(entriesResult.error.message);
-  const entryIds = entriesResult.data.map((entry) => entry.id);
-  const currentMatchesResult = entryIds.length
-    ? await supabase
-        .from("current_festival_entry_matches")
-        .select("entry_id,match_history_id")
-        .in("entry_id", entryIds)
-    : { data: [], error: null };
-  if (currentMatchesResult.error)
-    throw new Error(currentMatchesResult.error.message);
-  const historyIds = currentMatchesResult.data.map(
-    (match) => match.match_history_id,
+  const entryIds = entries.map((entry) => entry.id);
+  const [currentMatches, externalLinks] = await Promise.all([
+    fetchRowsByIds(entryIds, (ids) =>
+      fetchAllRows((from, to) =>
+        supabase
+          .from("current_festival_entry_matches")
+          .select("entry_id,match_history_id")
+          .in("entry_id", ids)
+          .order("entry_id")
+          .range(from, to),
+      ),
+    ),
+    fetchRowsByIds(entryIds, (ids) =>
+      fetchAllRows((from, to) =>
+        supabase
+          .from("public_festival_external_links")
+          .select("entry_id,imdb_id")
+          .in("entry_id", ids)
+          .order("entry_id")
+          .range(from, to),
+      ),
+    ),
+  ]);
+  const externalLinkByEntry = new Map(
+    externalLinks.map((link) => [link.entry_id, link.imdb_id]),
   );
-  const historiesResult = historyIds.length
-    ? await supabase
+  const historyIds = currentMatches.map((match) => match.match_history_id);
+  const histories = await fetchRowsByIds(historyIds, (ids) =>
+    fetchAllRows((from, to) =>
+      supabase
         .from("festival_entry_match_history")
         .select("id,status,film_id")
-        .in("id", historyIds)
-    : { data: [], error: null };
-  if (historiesResult.error) throw new Error(historiesResult.error.message);
-  const currentFilmIds = historiesResult.data.flatMap((history) =>
+        .in("id", ids)
+        .order("id")
+        .range(from, to),
+    ),
+  );
+  const currentFilmIds = histories.flatMap((history) =>
     history.film_id ? [history.film_id] : [],
   );
-  const currentFilmsResult = currentFilmIds.length
-    ? await supabase.from("films").select("id,title").in("id", currentFilmIds)
-    : { data: [], error: null };
-  if (currentFilmsResult.error)
-    throw new Error(currentFilmsResult.error.message);
+  const currentFilms = await fetchRowsByIds(currentFilmIds, (ids) =>
+    fetchAllRows((from, to) =>
+      supabase
+        .from("films")
+        .select("id,title")
+        .in("id", ids)
+        .order("id")
+        .range(from, to),
+    ),
+  );
   const festivalById = new Map(
     festivalsResult.data.map((festival) => [festival.id, festival]),
   );
@@ -375,18 +453,24 @@ async function databaseIndex(): Promise<FestivalEditionView[]> {
       publishedAt: set.published_at,
       capturedAt: set.captured_at,
       extractorVersion: set.extractor_version,
-      entries: entriesResult.data
+      coverageNote: festivalCoverageNote(
+        editionId,
+        kind,
+        { notes: set.coverage_notes },
+        entries.filter((entry) => entry.set_id === set.id),
+      ),
+      entries: entries
         .filter((entry) => entry.set_id === set.id)
         .map((entry) => {
-          const pointer = currentMatchesResult.data.find(
+          const pointer = currentMatches.find(
             (match) => match.entry_id === entry.id,
           );
-          const currentMatch = historiesResult.data.find(
+          const currentMatch = histories.find(
             (history) => history.id === pointer?.match_history_id,
           );
           const filmId = currentMatch ? currentMatch.film_id : entry.film_id;
           const film = filmId
-            ? (currentFilmsResult.data.find((item) => item.id === filmId) ??
+            ? (currentFilms.find((item) => item.id === filmId) ??
               relation(entry.films))
             : null;
           return {
@@ -398,6 +482,10 @@ async function databaseIndex(): Promise<FestivalEditionView[]> {
             awardType: entry.award_type,
             filmId,
             filmTitle: film?.title ?? null,
+            imdbId: externalLinkByEntry.get(entry.id) ?? null,
+            sourceFilmUrl: festivalSourceFilmUrl(
+              entry.source_film_url ?? entry.source_display_film_url,
+            ),
             matchStatus: currentMatch?.status ?? entry.match_status,
           };
         }),
@@ -440,7 +528,7 @@ async function databaseIndex(): Promise<FestivalEditionView[]> {
 const cachedDatabaseIndex = unstable_cache(
   databaseIndex,
   [
-    "public-festivals-v1",
+    "public-festivals-v3-external-links",
     process.env.NEXT_PUBLIC_SUPABASE_URL ?? "unconfigured",
   ],
   { revalidate: 60 },

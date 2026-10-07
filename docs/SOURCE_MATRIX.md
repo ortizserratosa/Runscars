@@ -1,6 +1,6 @@
 # Matriz de fuentes y circuito festivalero
 
-**Corte de investigación:** 2026-09-29
+**Corte de investigación:** 2026-10-07
 
 **Alcance:** inventario original de 31 fuentes y nueve ediciones festivaleras
 operativas para Oscar 2027.
@@ -196,3 +196,40 @@ pago; requiere acceso autorizado y revisión antes de activación. IndieWire,
 Filmotomy y Cinema Sight aportan selecciones o niveles sin orden, por lo que no
 resuelven el mínimo de rankings. No se han convertido en votos activos ni en
 nuevas decisiones aceptadas de publicación por esta investigación.
+
+## Corte vigente · 7 de octubre de 2026
+
+Este suplemento actualiza los estados de Variety y los premios precursores sin
+reescribir las muestras históricas de discovery. El bloqueo observado antes no
+justifica excluir para siempre una categoría cuya tabla oficial ya es accesible.
+
+| ID | Cobertura | Método | Editorial | Técnico | Publicación | Límite |
+|---|---|---|---|---|---|---|
+| `variety` | Ocho rankings / Clayton Davis, 40 puestos en película y 30 en las demás | Artículo oficial → tabla Datawrapper pública → CSV; ocho conectores independientes | selected | automated | publishable | Solo hechos de predicción; una voz por medio; sujetos ocultos o ambiguos pendientes |
+| `actor-awards` | Calendario 2027 y ganadores de cine 2026 / SAG-AFTRA | Archivo y anuncio oficial; manifiesto versionado | selected | manual | publishable | Elenco es categoría relacionada, sin equivalencia con Mejor película |
+| `dga` | Calendario 2027 y ganador de dirección de largometraje 2026 | Archivo y anuncio oficial; manifiesto versionado | selected | manual | publishable | Reglas y votantes propios del sindicato |
+| `pga` | Calendario 2027 y ganador de producción de largometraje 2026 | Archivo y anuncio oficial; manifiesto versionado | selected | manual | publishable | Conserva categoría y equipo originales |
+| `wga` | Calendario 2027 y ganadores de guion 2026 | Archivo y anuncio oficial; manifiesto versionado | selected | manual | publishable | Elegibilidad sindical propia |
+| `critics-choice` | Calendario 2027 y ocho ganadores de cine 2026 | Archivo y anuncio oficial; manifiesto versionado | selected | manual | publishable | Premios oficiales, sin convertirlos en predicciones del círculo |
+| `bafta` | Calendario 2027 y ocho ganadores de cine 2026 | Archivo y anuncio oficial; manifiesto versionado | selected | manual | publishable | Reglas británicas propias |
+
+El [manifiesto precursor](../web/data/precursors/2026-2027.json) incluye las
+muestras, recibos y campos originales por organismo. El archivo de ganadores
+es parcial y se rotula como Oscar 2026. Las ediciones 2027 solo publican fechas
+confirmadas hasta que existan nominaciones o resultados oficiales.
+
+Awards Daily admite publicaciones de categorías aisladas y AwardsWatch conserva
+orden HTML explícito cuando existe. Las publicaciones sin orden declarado no
+se convierten en rankings; ambas fuentes mantienen el mismo peso y sus originales.
+
+El circuito 2026 usa recibos oficiales estáticos revisados para las ocho ediciones
+cerradas; NYFF continúa activo. Todas las selecciones y los siete palmarés
+competitivos quedan separados de predicciones. Locarno se limita explícitamente
+a cinco secciones y NYFF a Main Slate. La
+[revisión festivalera](audits/2026-10-07/festival-research.md) acredita las fuentes,
+los formatos excluidos y las correcciones sin eliminar originales.
+
+TMDB verifica enlaces IMDb por título y dirección para películas festivaleras,
+incluidas las ausentes del catálogo Oscar. Es enriquecimiento de identidad;
+no aporta una señal, candidatura ni elegibilidad. Los homónimos y las entradas
+con evidencia insuficiente conservan su revisión pendiente (D-071).

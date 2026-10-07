@@ -1,0 +1,20 @@
+{
+  "sourceUrl": "https://www.locarnofestival.ch/dam/jcr:43be8be5-b5f4-4c0c-85d5-774e7ca025ad/Locarno79-Palmar%C3%A8s-ENG.pdf",
+  "linkedFrom": "https://www.locarnofestival.ch/press/press-releases/2026/08/locarno79-the-pardo-d-oro-goes-to-you-don-t-belong-here-by-florin-serban.html",
+  "capturedAt": "2026-10-07T08:51:49.503878Z",
+  "filename": "locarno79-palmares-official-2026-10-07.pdf",
+  "sha256": "f67dbc0df78450ce38c285d4f3a7f1d95e73aebcce7d67160910301f891d716c",
+  "bytes": 201383,
+  "sourceAuthor": null,
+  "sourcePublisher": "Locarno Film Festival",
+  "verification": {
+    "matchedPdfTuples": 30,
+    "matchedOfficialTableAdditionalTuples": 1,
+    "totalCurrentTuples": 31,
+    "pdfPagesReviewed": [3, 4, 7, 8, 9, 10, 11, 12],
+    "tableRows": 30,
+    "tableFeatureTuples": 19,
+    "tableShortTuplesExcluded": 11,
+    "scope": "Current award tuple quality, not a certification of exhaustive festival coverage."
+  }
+}
