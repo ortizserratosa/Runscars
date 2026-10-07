@@ -1,0 +1,33 @@
+{
+  "capturedAt": "2026-10-07T10:10:25.015Z",
+  "corroboratedEntries": 732,
+  "uniqueTmdbMovies": 503,
+  "latestLocaleCaptures": 1006,
+  "moviesWithPoster": 483,
+  "entriesWithPoster": 710,
+  "entriesOutsideCatalogWithPoster": 608,
+  "missingMetadataIds": [],
+  "missingPosterIds": [
+    1736399,
+    1751231,
+    1675193,
+    1736501,
+    1736528,
+    1567132,
+    1616779,
+    1744054,
+    1575461,
+    1563760,
+    1735917,
+    1743993,
+    1743677,
+    1324042,
+    1743238,
+    1743239,
+    1743241,
+    1753587,
+    1776098,
+    1758651
+  ],
+  "identityOnlyEntries": 19
+}

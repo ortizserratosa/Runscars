@@ -1,0 +1,1077 @@
+{
+  "base": "https://runscars-rji0394dy-nazzozzo-s-projects.vercel.app",
+  "capturedAt": "2026-10-07T10:14:57.119Z",
+  "mode": "read-only",
+  "cases": [
+    {
+      "route": "/festivales",
+      "locale": "es",
+      "viewport": "mobile",
+      "status": 200,
+      "sets": [],
+      "images": 21,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 8,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/festivales",
+      "locale": "es",
+      "viewport": "desktop",
+      "status": 200,
+      "sets": [],
+      "images": 21,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 8,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/festivales/sundance/2026",
+      "locale": "es",
+      "viewport": "desktop",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 90,
+          "source": "https://www.sundance.org/blogs/2026-sundance-film-festival-unveils-97-projects-selected-for-the-feature-film-and-episodic-program/"
+        },
+        {
+          "kind": "awards",
+          "entries": 29,
+          "source": "https://www.sundance.org/blogs/the-complete-list-of-2026-sundance-film-festival-award-winners/"
+        }
+      ],
+      "images": 86,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 153,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/festivales/sundance/2026",
+      "locale": "es",
+      "viewport": "mobile",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 90,
+          "source": "https://www.sundance.org/blogs/2026-sundance-film-festival-unveils-97-projects-selected-for-the-feature-film-and-episodic-program/"
+        },
+        {
+          "kind": "awards",
+          "entries": 29,
+          "source": "https://www.sundance.org/blogs/the-complete-list-of-2026-sundance-film-festival-award-winners/"
+        }
+      ],
+      "images": 86,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 153,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/festivales/berlinale/2026",
+      "locale": "es",
+      "viewport": "mobile",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 149,
+          "source": "https://www.berlinale.de/en/archive/programme/programme-archive.html/y=2026/o=desc/p=1/rp=40"
+        },
+        {
+          "kind": "awards",
+          "entries": 21,
+          "source": "https://www.berlinale.de/en/archive/awards-juries/awards.html"
+        }
+      ],
+      "images": 134,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 263,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/festivales/berlinale/2026",
+      "locale": "es",
+      "viewport": "desktop",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 149,
+          "source": "https://www.berlinale.de/en/archive/programme/programme-archive.html/y=2026/o=desc/p=1/rp=40"
+        },
+        {
+          "kind": "awards",
+          "entries": 21,
+          "source": "https://www.berlinale.de/en/archive/awards-juries/awards.html"
+        }
+      ],
+      "images": 134,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 263,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/festivales/cannes/2026",
+      "locale": "es",
+      "viewport": "mobile",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 76,
+          "source": "https://www.festival-cannes.com/en/press/press-releases/the-films-of-the-official-selection-2026/"
+        },
+        {
+          "kind": "awards",
+          "entries": 16,
+          "source": "https://www.festival-cannes.com/en/press/press-releases/the-79th-festival-de-cannes-winners-list/"
+        }
+      ],
+      "images": 66,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 108,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/festivales/cannes/2026",
+      "locale": "es",
+      "viewport": "desktop",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 76,
+          "source": "https://www.festival-cannes.com/en/press/press-releases/the-films-of-the-official-selection-2026/"
+        },
+        {
+          "kind": "awards",
+          "entries": 16,
+          "source": "https://www.festival-cannes.com/en/press/press-releases/the-79th-festival-de-cannes-winners-list/"
+        }
+      ],
+      "images": 66,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 108,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/festivales/locarno/2026",
+      "locale": "es",
+      "viewport": "mobile",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 63,
+          "source": "https://letterboxd.com/filmfestlocarno/list/locarno-film-festival-2026-official-selection/"
+        },
+        {
+          "kind": "awards",
+          "entries": 31,
+          "source": "https://www.locarnofestival.ch/en/festival/palmares.html"
+        }
+      ],
+      "images": 43,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 82,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/festivales/locarno/2026",
+      "locale": "es",
+      "viewport": "desktop",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 63,
+          "source": "https://letterboxd.com/filmfestlocarno/list/locarno-film-festival-2026-official-selection/"
+        },
+        {
+          "kind": "awards",
+          "entries": 31,
+          "source": "https://www.locarnofestival.ch/en/festival/palmares.html"
+        }
+      ],
+      "images": 43,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 82,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/festivales/venice/2026",
+      "locale": "es",
+      "viewport": "mobile",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 91,
+          "source": "https://www.labiennale.org/en/cinema/2026/lineup"
+        },
+        {
+          "kind": "awards",
+          "entries": 16,
+          "source": "https://www.labiennale.org/en/news/official-awards-83rd-venice-international-film-festival"
+        }
+      ],
+      "images": 58,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 112,
+      "axeSerious": 0,
+      "issues": [],
+      "originalExpectationIssues": [
+        "selection: 91 entries instead of 21",
+        "selection official source URL changed",
+        "selection row 1: original recipient missing (Yuval Abraham and Rachel Szor)"
+      ]
+    },
+    {
+      "route": "/festivales/venice/2026",
+      "locale": "es",
+      "viewport": "desktop",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 91,
+          "source": "https://www.labiennale.org/en/cinema/2026/lineup"
+        },
+        {
+          "kind": "awards",
+          "entries": 16,
+          "source": "https://www.labiennale.org/en/news/official-awards-83rd-venice-international-film-festival"
+        }
+      ],
+      "images": 58,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 112,
+      "axeSerious": 0,
+      "issues": [],
+      "originalExpectationIssues": [
+        "selection: 91 entries instead of 21",
+        "selection official source URL changed",
+        "selection row 1: original recipient missing (Yuval Abraham and Rachel Szor)"
+      ]
+    },
+    {
+      "route": "/festivales/tiff/2026",
+      "locale": "es",
+      "viewport": "mobile",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 206,
+          "source": "https://tiff.net/films?thumbnail"
+        },
+        {
+          "kind": "awards",
+          "entries": 20,
+          "source": "https://tiff.net/press/news/tiff-announces-2026-award-winners"
+        }
+      ],
+      "images": 177,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 327,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/festivales/tiff/2026",
+      "locale": "es",
+      "viewport": "desktop",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 206,
+          "source": "https://tiff.net/films?thumbnail"
+        },
+        {
+          "kind": "awards",
+          "entries": 20,
+          "source": "https://tiff.net/press/news/tiff-announces-2026-award-winners"
+        }
+      ],
+      "images": 177,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 327,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/festivales/san-sebastian/2026",
+      "locale": "es",
+      "viewport": "mobile",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 141,
+          "source": "https://www.sansebastianfestival.com/2026/sections_and_films/8/in"
+        },
+        {
+          "kind": "awards",
+          "entries": 35,
+          "source": "https://www.sansebastianfestival.com/2026/awards_and_jury_members/1/23725/in"
+        }
+      ],
+      "images": 116,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 216,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/festivales/san-sebastian/2026",
+      "locale": "es",
+      "viewport": "desktop",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 141,
+          "source": "https://www.sansebastianfestival.com/2026/sections_and_films/8/in"
+        },
+        {
+          "kind": "awards",
+          "entries": 35,
+          "source": "https://www.sansebastianfestival.com/2026/awards_and_jury_members/1/23725/in"
+        }
+      ],
+      "images": 116,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 216,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/festivales/telluride/2026",
+      "locale": "es",
+      "viewport": "desktop",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 43,
+          "source": "https://telluridecms-production.s3.amazonaws.com/assets/pdfs/53rd-TFF-program-guide-final.pdf"
+        }
+      ],
+      "images": 32,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 53,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/festivales/telluride/2026",
+      "locale": "es",
+      "viewport": "mobile",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 43,
+          "source": "https://telluridecms-production.s3.amazonaws.com/assets/pdfs/53rd-TFF-program-guide-final.pdf"
+        }
+      ],
+      "images": 32,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 53,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/festivales/nyff/2026",
+      "locale": "es",
+      "viewport": "desktop",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 34,
+          "source": "https://www.filmlinc.org/nyff2026/daily/64th-new-york-film-festival-main-slate-announced/"
+        }
+      ],
+      "images": 31,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 47,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/festivales/nyff/2026",
+      "locale": "es",
+      "viewport": "mobile",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 34,
+          "source": "https://www.filmlinc.org/nyff2026/daily/64th-new-york-film-festival-main-slate-announced/"
+        }
+      ],
+      "images": 31,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 47,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/en/festivales",
+      "locale": "en",
+      "viewport": "desktop",
+      "status": 200,
+      "sets": [],
+      "images": 21,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 8,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/en/festivales",
+      "locale": "en",
+      "viewport": "mobile",
+      "status": 200,
+      "sets": [],
+      "images": 21,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 8,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/en/festivales/sundance/2026",
+      "locale": "en",
+      "viewport": "desktop",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 90,
+          "source": "https://www.sundance.org/blogs/2026-sundance-film-festival-unveils-97-projects-selected-for-the-feature-film-and-episodic-program/"
+        },
+        {
+          "kind": "awards",
+          "entries": 29,
+          "source": "https://www.sundance.org/blogs/the-complete-list-of-2026-sundance-film-festival-award-winners/"
+        }
+      ],
+      "images": 86,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 153,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/en/festivales/sundance/2026",
+      "locale": "en",
+      "viewport": "mobile",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 90,
+          "source": "https://www.sundance.org/blogs/2026-sundance-film-festival-unveils-97-projects-selected-for-the-feature-film-and-episodic-program/"
+        },
+        {
+          "kind": "awards",
+          "entries": 29,
+          "source": "https://www.sundance.org/blogs/the-complete-list-of-2026-sundance-film-festival-award-winners/"
+        }
+      ],
+      "images": 86,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 153,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/en/festivales/berlinale/2026",
+      "locale": "en",
+      "viewport": "mobile",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 149,
+          "source": "https://www.berlinale.de/en/archive/programme/programme-archive.html/y=2026/o=desc/p=1/rp=40"
+        },
+        {
+          "kind": "awards",
+          "entries": 21,
+          "source": "https://www.berlinale.de/en/archive/awards-juries/awards.html"
+        }
+      ],
+      "images": 134,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 263,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/en/festivales/berlinale/2026",
+      "locale": "en",
+      "viewport": "desktop",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 149,
+          "source": "https://www.berlinale.de/en/archive/programme/programme-archive.html/y=2026/o=desc/p=1/rp=40"
+        },
+        {
+          "kind": "awards",
+          "entries": 21,
+          "source": "https://www.berlinale.de/en/archive/awards-juries/awards.html"
+        }
+      ],
+      "images": 134,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 263,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/en/festivales/cannes/2026",
+      "locale": "en",
+      "viewport": "desktop",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 76,
+          "source": "https://www.festival-cannes.com/en/press/press-releases/the-films-of-the-official-selection-2026/"
+        },
+        {
+          "kind": "awards",
+          "entries": 16,
+          "source": "https://www.festival-cannes.com/en/press/press-releases/the-79th-festival-de-cannes-winners-list/"
+        }
+      ],
+      "images": 66,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 108,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/en/festivales/cannes/2026",
+      "locale": "en",
+      "viewport": "mobile",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 76,
+          "source": "https://www.festival-cannes.com/en/press/press-releases/the-films-of-the-official-selection-2026/"
+        },
+        {
+          "kind": "awards",
+          "entries": 16,
+          "source": "https://www.festival-cannes.com/en/press/press-releases/the-79th-festival-de-cannes-winners-list/"
+        }
+      ],
+      "images": 66,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 108,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/en/festivales/locarno/2026",
+      "locale": "en",
+      "viewport": "desktop",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 63,
+          "source": "https://letterboxd.com/filmfestlocarno/list/locarno-film-festival-2026-official-selection/"
+        },
+        {
+          "kind": "awards",
+          "entries": 31,
+          "source": "https://www.locarnofestival.ch/en/festival/palmares.html"
+        }
+      ],
+      "images": 43,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 82,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/en/festivales/locarno/2026",
+      "locale": "en",
+      "viewport": "mobile",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 63,
+          "source": "https://letterboxd.com/filmfestlocarno/list/locarno-film-festival-2026-official-selection/"
+        },
+        {
+          "kind": "awards",
+          "entries": 31,
+          "source": "https://www.locarnofestival.ch/en/festival/palmares.html"
+        }
+      ],
+      "images": 43,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 82,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/en/festivales/venice/2026",
+      "locale": "en",
+      "viewport": "mobile",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 91,
+          "source": "https://www.labiennale.org/en/cinema/2026/lineup"
+        },
+        {
+          "kind": "awards",
+          "entries": 16,
+          "source": "https://www.labiennale.org/en/news/official-awards-83rd-venice-international-film-festival"
+        }
+      ],
+      "images": 58,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 112,
+      "axeSerious": 0,
+      "issues": [],
+      "originalExpectationIssues": [
+        "selection: 91 entries instead of 21",
+        "selection official source URL changed",
+        "selection row 1: original recipient missing (Yuval Abraham and Rachel Szor)"
+      ]
+    },
+    {
+      "route": "/en/festivales/venice/2026",
+      "locale": "en",
+      "viewport": "desktop",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 91,
+          "source": "https://www.labiennale.org/en/cinema/2026/lineup"
+        },
+        {
+          "kind": "awards",
+          "entries": 16,
+          "source": "https://www.labiennale.org/en/news/official-awards-83rd-venice-international-film-festival"
+        }
+      ],
+      "images": 58,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 112,
+      "axeSerious": 0,
+      "issues": [],
+      "originalExpectationIssues": [
+        "selection: 91 entries instead of 21",
+        "selection official source URL changed",
+        "selection row 1: original recipient missing (Yuval Abraham and Rachel Szor)"
+      ]
+    },
+    {
+      "route": "/en/festivales/tiff/2026",
+      "locale": "en",
+      "viewport": "desktop",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 206,
+          "source": "https://tiff.net/films?thumbnail"
+        },
+        {
+          "kind": "awards",
+          "entries": 20,
+          "source": "https://tiff.net/press/news/tiff-announces-2026-award-winners"
+        }
+      ],
+      "images": 177,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 327,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/en/festivales/tiff/2026",
+      "locale": "en",
+      "viewport": "mobile",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 206,
+          "source": "https://tiff.net/films?thumbnail"
+        },
+        {
+          "kind": "awards",
+          "entries": 20,
+          "source": "https://tiff.net/press/news/tiff-announces-2026-award-winners"
+        }
+      ],
+      "images": 177,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 327,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/en/festivales/san-sebastian/2026",
+      "locale": "en",
+      "viewport": "mobile",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 141,
+          "source": "https://www.sansebastianfestival.com/2026/sections_and_films/8/in"
+        },
+        {
+          "kind": "awards",
+          "entries": 35,
+          "source": "https://www.sansebastianfestival.com/2026/awards_and_jury_members/1/23725/in"
+        }
+      ],
+      "images": 116,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 216,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/en/festivales/san-sebastian/2026",
+      "locale": "en",
+      "viewport": "desktop",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 141,
+          "source": "https://www.sansebastianfestival.com/2026/sections_and_films/8/in"
+        },
+        {
+          "kind": "awards",
+          "entries": 35,
+          "source": "https://www.sansebastianfestival.com/2026/awards_and_jury_members/1/23725/in"
+        }
+      ],
+      "images": 116,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 216,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/en/festivales/telluride/2026",
+      "locale": "en",
+      "viewport": "mobile",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 43,
+          "source": "https://telluridecms-production.s3.amazonaws.com/assets/pdfs/53rd-TFF-program-guide-final.pdf"
+        }
+      ],
+      "images": 32,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 53,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/en/festivales/telluride/2026",
+      "locale": "en",
+      "viewport": "desktop",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 43,
+          "source": "https://telluridecms-production.s3.amazonaws.com/assets/pdfs/53rd-TFF-program-guide-final.pdf"
+        }
+      ],
+      "images": 32,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 53,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/en/festivales/nyff/2026",
+      "locale": "en",
+      "viewport": "desktop",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 34,
+          "source": "https://www.filmlinc.org/nyff2026/daily/64th-new-york-film-festival-main-slate-announced/"
+        }
+      ],
+      "images": 31,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 47,
+      "axeSerious": 0,
+      "issues": []
+    },
+    {
+      "route": "/en/festivales/nyff/2026",
+      "locale": "en",
+      "viewport": "mobile",
+      "status": 200,
+      "sets": [
+        {
+          "kind": "selection",
+          "entries": 34,
+          "source": "https://www.filmlinc.org/nyff2026/daily/64th-new-york-film-festival-main-slate-announced/"
+        }
+      ],
+      "images": 31,
+      "sampledLoadedImages": 3,
+      "tmdbLinks": 47,
+      "axeSerious": 0,
+      "issues": []
+    }
+  ],
+  "examples": [
+    {
+      "route": "/festivales/sundance/2026",
+      "viewport": "desktop",
+      "title": "Bedford Park",
+      "tmdbId": 1470198,
+      "metadata": "2026 · 121 min",
+      "image": {
+        "src": "https://image.tmdb.org/t/p/w185/afH14yQ0xwyalCy3AyZrhQpRZyB.jpg",
+        "naturalWidth": 185,
+        "naturalHeight": 278
+      },
+      "outsideCatalogue": true
+    },
+    {
+      "route": "/festivales/sundance/2026",
+      "viewport": "desktop",
+      "title": "Carousel",
+      "tmdbId": 1558701,
+      "metadata": "2026 · 103 min",
+      "image": {
+        "src": "https://image.tmdb.org/t/p/w185/cu17JPVluk62b60sTLIVo3hwTQN.jpg",
+        "naturalWidth": 185,
+        "naturalHeight": 278
+      },
+      "outsideCatalogue": true
+    },
+    {
+      "route": "/festivales/sundance/2026",
+      "viewport": "mobile",
+      "title": "Bedford Park",
+      "tmdbId": 1470198,
+      "metadata": "2026 · 121 min",
+      "image": {
+        "src": "https://image.tmdb.org/t/p/w185/afH14yQ0xwyalCy3AyZrhQpRZyB.jpg",
+        "naturalWidth": 185,
+        "naturalHeight": 278
+      },
+      "outsideCatalogue": true
+    },
+    {
+      "route": "/festivales/sundance/2026",
+      "viewport": "mobile",
+      "title": "Carousel",
+      "tmdbId": 1558701,
+      "metadata": "2026 · 103 min",
+      "image": {
+        "src": "https://image.tmdb.org/t/p/w185/cu17JPVluk62b60sTLIVo3hwTQN.jpg",
+        "naturalWidth": 185,
+        "naturalHeight": 278
+      },
+      "outsideCatalogue": true
+    },
+    {
+      "route": "/festivales/berlinale/2026",
+      "viewport": "mobile",
+      "title": "Ghost School",
+      "tmdbId": 1516456,
+      "metadata": "گوسٹ اسکول · 2026 · 88 min",
+      "image": {
+        "src": "https://image.tmdb.org/t/p/w185/d36eqygq3ReUBgS2ytmjrho26OH.jpg",
+        "naturalWidth": 185,
+        "naturalHeight": 278
+      },
+      "outsideCatalogue": true
+    },
+    {
+      "route": "/festivales/berlinale/2026",
+      "viewport": "desktop",
+      "title": "Ghost School",
+      "tmdbId": 1516456,
+      "metadata": "گوسٹ اسکول · 2026 · 88 min",
+      "image": {
+        "src": "https://image.tmdb.org/t/p/w185/d36eqygq3ReUBgS2ytmjrho26OH.jpg",
+        "naturalWidth": 185,
+        "naturalHeight": 278
+      },
+      "outsideCatalogue": true
+    },
+    {
+      "route": "/en/festivales/sundance/2026",
+      "viewport": "mobile",
+      "title": "Bedford Park",
+      "tmdbId": 1470198,
+      "metadata": "2026 · 121 min",
+      "image": {
+        "src": "https://image.tmdb.org/t/p/w185/afH14yQ0xwyalCy3AyZrhQpRZyB.jpg",
+        "naturalWidth": 185,
+        "naturalHeight": 278
+      },
+      "outsideCatalogue": true
+    },
+    {
+      "route": "/en/festivales/sundance/2026",
+      "viewport": "desktop",
+      "title": "Bedford Park",
+      "tmdbId": 1470198,
+      "metadata": "2026 · 121 min",
+      "image": {
+        "src": "https://image.tmdb.org/t/p/w185/afH14yQ0xwyalCy3AyZrhQpRZyB.jpg",
+        "naturalWidth": 185,
+        "naturalHeight": 278
+      },
+      "outsideCatalogue": true
+    },
+    {
+      "route": "/en/festivales/sundance/2026",
+      "viewport": "mobile",
+      "title": "Carousel",
+      "tmdbId": 1558701,
+      "metadata": "2026 · 103 min",
+      "image": {
+        "src": "https://image.tmdb.org/t/p/w185/cu17JPVluk62b60sTLIVo3hwTQN.jpg",
+        "naturalWidth": 185,
+        "naturalHeight": 278
+      },
+      "outsideCatalogue": true
+    },
+    {
+      "route": "/en/festivales/sundance/2026",
+      "viewport": "desktop",
+      "title": "Carousel",
+      "tmdbId": 1558701,
+      "metadata": "2026 · 103 min",
+      "image": {
+        "src": "https://image.tmdb.org/t/p/w185/cu17JPVluk62b60sTLIVo3hwTQN.jpg",
+        "naturalWidth": 185,
+        "naturalHeight": 278
+      },
+      "outsideCatalogue": true
+    },
+    {
+      "route": "/en/festivales/berlinale/2026",
+      "viewport": "mobile",
+      "title": "Ghost School",
+      "tmdbId": 1516456,
+      "metadata": "2026 · 88 min",
+      "image": {
+        "src": "https://image.tmdb.org/t/p/w185/d36eqygq3ReUBgS2ytmjrho26OH.jpg",
+        "naturalWidth": 185,
+        "naturalHeight": 278
+      },
+      "outsideCatalogue": true
+    },
+    {
+      "route": "/en/festivales/berlinale/2026",
+      "viewport": "desktop",
+      "title": "Ghost School",
+      "tmdbId": 1516456,
+      "metadata": "2026 · 88 min",
+      "image": {
+        "src": "https://image.tmdb.org/t/p/w185/d36eqygq3ReUBgS2ytmjrho26OH.jpg",
+        "naturalWidth": 185,
+        "naturalHeight": 278
+      },
+      "outsideCatalogue": true
+    }
+  ],
+  "imageFailures": [],
+  "consoleErrors": [],
+  "issues": [],
+  "screenshots": [
+    "festival-posters-desktop.png",
+    "festival-posters-mobile.png"
+  ],
+  "finishedAt": "2026-10-07T10:15:39.953Z",
+  "baselineResolution": {
+    "reason": "Local initial Venice manifest has 21 entries; already-published production baseline/current version 3 has 91. Verified all original titles and recipients in ES/EN desktop/mobile against public database SELECT and pre-change baseline.",
+    "set": {
+      "id": "venice-2026-selection-3e86d44278f5",
+      "version": 3,
+      "source_url": "https://www.labiennale.org/en/cinema/2026/lineup",
+      "captured_at": "2026-09-11T05:17:01.251+00:00"
+    },
+    "entryCount": 91,
+    "checks": [
+      {
+        "route": "/festivales/venice/2026",
+        "locale": "es",
+        "viewport": "desktop",
+        "status": 200,
+        "entries": 91,
+        "sourceUrl": "https://www.labiennale.org/en/cinema/2026/lineup",
+        "issues": []
+      },
+      {
+        "route": "/en/festivales/venice/2026",
+        "locale": "en",
+        "viewport": "desktop",
+        "status": 200,
+        "entries": 91,
+        "sourceUrl": "https://www.labiennale.org/en/cinema/2026/lineup",
+        "issues": []
+      },
+      {
+        "route": "/festivales/venice/2026",
+        "locale": "es",
+        "viewport": "mobile",
+        "status": 200,
+        "entries": 91,
+        "sourceUrl": "https://www.labiennale.org/en/cinema/2026/lineup",
+        "issues": []
+      },
+      {
+        "route": "/en/festivales/venice/2026",
+        "locale": "en",
+        "viewport": "mobile",
+        "status": 200,
+        "entries": 91,
+        "sourceUrl": "https://www.labiennale.org/en/cinema/2026/lineup",
+        "issues": []
+      }
+    ]
+  }
+}

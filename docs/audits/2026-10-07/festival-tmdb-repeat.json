@@ -1,0 +1,60 @@
+{
+  "capturedAt": "2026-10-07T10:11:28.159Z",
+  "apply": true,
+  "processed": 3,
+  "afterTmdbId": 0,
+  "nextTmdbId": 1558701,
+  "hasMore": false,
+  "failed": 0,
+  "results": [
+    {
+      "tmdbId": 1470198,
+      "captures": [
+        {
+          "locale": "es-ES",
+          "status": "refreshed",
+          "hasPoster": true
+        },
+        {
+          "locale": "en-US",
+          "status": "refreshed",
+          "hasPoster": true
+        }
+      ]
+    },
+    {
+      "tmdbId": 1516456,
+      "captures": [
+        {
+          "locale": "es-ES",
+          "status": "refreshed",
+          "hasPoster": true
+        },
+        {
+          "locale": "en-US",
+          "status": "refreshed",
+          "hasPoster": true
+        }
+      ]
+    },
+    {
+      "tmdbId": 1558701,
+      "captures": [
+        {
+          "locale": "es-ES",
+          "status": "refreshed",
+          "hasPoster": true
+        },
+        {
+          "locale": "en-US",
+          "status": "refreshed",
+          "hasPoster": true
+        }
+      ]
+    }
+  ],
+  "snapshotsBefore": 6,
+  "snapshotsAfter": 6,
+  "newSnapshots": 0,
+  "originalCapturesPreserved": true
+}

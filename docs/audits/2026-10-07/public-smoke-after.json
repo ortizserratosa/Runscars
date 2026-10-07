@@ -1,0 +1,36 @@
+[
+  {
+    "path": "/api/health",
+    "status": 200
+  },
+  {
+    "path": "/api/health/database",
+    "status": 200
+  },
+  {
+    "path": "/festivales/sundance/2026",
+    "status": 200,
+    "bedfordTmdb": true,
+    "bedfordPoster": true,
+    "carouselPoster": true
+  },
+  {
+    "path": "/en/festivales/sundance/2026",
+    "status": 200,
+    "bedfordTmdb": true,
+    "bedfordPoster": true,
+    "carouselPoster": true
+  },
+  {
+    "path": "/premios",
+    "status": 200
+  },
+  {
+    "path": "/en/premios",
+    "status": 200
+  },
+  {
+    "path": "/temporadas/2027/actor-protagonista",
+    "status": 200
+  }
+]

@@ -542,6 +542,11 @@ el token. La falta de IMDb no impide mostrar un cartel TMDB verificado. Un
 cartel ausente o una captura vencida conserva el título oficial sin inventar
 imágenes; tampoco se rotula una película festivalera como candidata Oscar.
 
+Una respuesta TMDB idéntica renueva únicamente `last_verified_at` y la caducidad
+de esa captura y locale. Conserva `fetched_at`, hash, original y URL; las lecturas
+eligen la última verificación por idioma, incluso si TMDB vuelve a un contenido
+anterior. Un recibo más antiguo no rejuvenece la caché ni sustituye el vigente.
+
 ### 11.1 Premios precursores oficiales
 
 Los calendarios, nominaciones y ganadores de SAG-AFTRA/Actor Awards, DGA, PGA,

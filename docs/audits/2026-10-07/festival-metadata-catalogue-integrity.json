@@ -1,0 +1,20 @@
+{
+  "before": {
+    "capturedAt": "2026-10-07T09:59:50.671Z",
+    "films": 112,
+    "category_candidates": 482,
+    "tmdb_movies": 113,
+    "tmdb_movie_snapshots": 270,
+    "festival_entry_external_link_history": 1080,
+    "season_films": 112
+  },
+  "after": {
+    "capturedAt": "2026-10-07T10:12:11.211Z",
+    "films": 112,
+    "category_candidates": 482,
+    "season_films": 112,
+    "tmdb_movies": 574,
+    "tmdb_movie_snapshots": 1276
+  },
+  "catalogueCountsPreserved": true
+}

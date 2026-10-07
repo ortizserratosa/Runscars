@@ -1,0 +1,233 @@
+{
+  "capturedAt": "2026-10-07T10:10:25.489Z",
+  "sourceFreshness": [
+    {
+      "source_id": "academy",
+      "last_successful_check_at": null,
+      "last_failure_at": null,
+      "has_current_failure": false,
+      "has_active_connector": false
+    },
+    {
+      "source_id": "awards-daily",
+      "last_successful_check_at": "2026-10-07T09:28:11.654+00:00",
+      "last_failure_at": "2026-07-25T17:36:56.632+00:00",
+      "has_current_failure": false,
+      "has_active_connector": true
+    },
+    {
+      "source_id": "awards-radar",
+      "last_successful_check_at": "2026-10-07T04:17:48.453+00:00",
+      "last_failure_at": "2026-09-29T17:59:03.118+00:00",
+      "has_current_failure": false,
+      "has_active_connector": true
+    },
+    {
+      "source_id": "awardswatch",
+      "last_successful_check_at": "2026-10-07T09:28:13.118+00:00",
+      "last_failure_at": "2026-09-29T04:17:02.997+00:00",
+      "has_current_failure": false,
+      "has_active_connector": true
+    },
+    {
+      "source_id": "guardian",
+      "last_successful_check_at": "2026-10-07T04:17:33.863+00:00",
+      "last_failure_at": null,
+      "has_current_failure": false,
+      "has_active_connector": true
+    },
+    {
+      "source_id": "midnight-critics",
+      "last_successful_check_at": "2026-10-07T04:17:38.261+00:00",
+      "last_failure_at": null,
+      "has_current_failure": false,
+      "has_active_connector": true
+    },
+    {
+      "source_id": "next-best-picture",
+      "last_successful_check_at": "2026-10-07T04:17:42.091+00:00",
+      "last_failure_at": "2026-09-29T17:59:03.118+00:00",
+      "has_current_failure": false,
+      "has_active_connector": true
+    },
+    {
+      "source_id": "roger-ebert",
+      "last_successful_check_at": "2026-10-07T04:17:03.146+00:00",
+      "last_failure_at": null,
+      "has_current_failure": false,
+      "has_active_connector": true
+    },
+    {
+      "source_id": "the-movie-state",
+      "last_successful_check_at": "2026-10-07T04:17:25.201+00:00",
+      "last_failure_at": null,
+      "has_current_failure": false,
+      "has_active_connector": true
+    },
+    {
+      "source_id": "the-ringer",
+      "last_successful_check_at": "2026-10-07T04:17:04.594+00:00",
+      "last_failure_at": null,
+      "has_current_failure": false,
+      "has_active_connector": true
+    },
+    {
+      "source_id": "variety",
+      "last_successful_check_at": "2026-10-07T09:28:14.473+00:00",
+      "last_failure_at": null,
+      "has_current_failure": false,
+      "has_active_connector": true
+    }
+  ],
+  "festivalFreshness": [
+    {
+      "source_id": "berlinale",
+      "is_active": false,
+      "last_success_at": "2026-10-07T05:17:05.244+00:00",
+      "last_failure_at": "2026-09-03T18:14:18.822+00:00",
+      "configuration": {
+        "edition_id": "berlinale-2026",
+        "minimum_entries": {
+          "awards": 21,
+          "selection": 149
+        },
+        "manual_archive_kinds": [
+          "selection",
+          "awards"
+        ]
+      }
+    },
+    {
+      "source_id": "cannes",
+      "is_active": false,
+      "last_success_at": "2026-10-07T05:17:02.909+00:00",
+      "last_failure_at": null,
+      "configuration": {
+        "edition_id": "cannes-2026",
+        "minimum_entries": {
+          "awards": 16,
+          "selection": 76
+        },
+        "manual_archive_kinds": [
+          "selection",
+          "awards"
+        ]
+      }
+    },
+    {
+      "source_id": "locarno",
+      "is_active": false,
+      "last_success_at": null,
+      "last_failure_at": "2026-10-07T05:17:02.775+00:00",
+      "configuration": {
+        "edition_id": "locarno-2026",
+        "minimum_entries": {
+          "awards": 31,
+          "selection": 63
+        },
+        "manual_archive_kinds": [
+          "selection",
+          "awards"
+        ]
+      }
+    },
+    {
+      "source_id": "nyff",
+      "is_active": true,
+      "last_success_at": "2026-09-06T05:17:06.408+00:00",
+      "last_failure_at": "2026-10-07T09:29:42.484+00:00",
+      "configuration": {
+        "edition_id": "nyff-2026",
+        "minimum_entries": {
+          "selection": 34
+        },
+        "manual_archive_kinds": []
+      }
+    },
+    {
+      "source_id": "san-sebastian",
+      "is_active": false,
+      "last_success_at": "2026-09-27T05:17:05.12+00:00",
+      "last_failure_at": "2026-10-07T05:17:04.988+00:00",
+      "configuration": {
+        "edition_id": "san-sebastian-2026",
+        "minimum_entries": {
+          "awards": 35,
+          "selection": 141
+        },
+        "manual_archive_kinds": [
+          "selection",
+          "awards"
+        ]
+      }
+    },
+    {
+      "source_id": "sundance",
+      "is_active": false,
+      "last_success_at": "2026-10-07T05:17:04.754+00:00",
+      "last_failure_at": null,
+      "configuration": {
+        "edition_id": "sundance-2026",
+        "minimum_entries": {
+          "awards": 29,
+          "selection": 90
+        },
+        "manual_archive_kinds": [
+          "selection",
+          "awards"
+        ]
+      }
+    },
+    {
+      "source_id": "telluride",
+      "is_active": false,
+      "last_success_at": "2026-09-06T05:17:03.566+00:00",
+      "last_failure_at": "2026-10-07T05:17:03.28+00:00",
+      "configuration": {
+        "edition_id": "telluride-2026",
+        "minimum_entries": {
+          "selection": 43
+        },
+        "manual_archive_kinds": [
+          "selection"
+        ]
+      }
+    },
+    {
+      "source_id": "tiff",
+      "is_active": false,
+      "last_success_at": "2026-09-06T05:17:03.023+00:00",
+      "last_failure_at": "2026-10-07T05:17:02.77+00:00",
+      "configuration": {
+        "edition_id": "tiff-2026",
+        "minimum_entries": {
+          "awards": 20,
+          "selection": 206
+        },
+        "manual_archive_kinds": [
+          "selection",
+          "awards"
+        ]
+      }
+    },
+    {
+      "source_id": "venice",
+      "is_active": false,
+      "last_success_at": "2026-09-13T05:17:02.969+00:00",
+      "last_failure_at": "2026-10-07T05:17:09.216+00:00",
+      "configuration": {
+        "edition_id": "venice-2026",
+        "minimum_entries": {
+          "awards": 16,
+          "selection": 91
+        },
+        "manual_archive_kinds": [
+          "selection",
+          "awards"
+        ]
+      }
+    }
+  ],
+  "precursorSets": 12,
+  "precursorEntries": 25
+}

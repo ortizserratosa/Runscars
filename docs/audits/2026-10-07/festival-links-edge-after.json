@@ -1,0 +1,44 @@
+[
+  {
+    "body": {
+      "connectors": 0,
+      "failed": 0,
+      "links": {
+        "afterEntryId": 137,
+        "apply": true,
+        "confirmed": 1,
+        "failed": 0,
+        "hasMore": true,
+        "nextEntryId": 138,
+        "pending": 0,
+        "processed": 1,
+        "results": [
+          {
+            "capturedAt": "2026-10-07T10:09:25.848+00:00",
+            "entryId": 138,
+            "excludedProviderResources": [],
+            "imdbId": null,
+            "method": "exact-source-title-director-tmdb-identity",
+            "originalTitle": "L’ESTIVE",
+            "persisted": {
+              "historyId": 1100,
+              "linkStatus": "confirmed",
+              "status": "inserted"
+            },
+            "sourceUrl": "https://api.themoviedb.org/3/movie/1729636",
+            "status": "confirmed",
+            "tmdbId": 1729636
+          }
+        ],
+        "retryAfterEntryId": null,
+        "unmatched": 0
+      },
+      "results": [],
+      "status": "succeeded"
+    },
+    "error_msg": null,
+    "id": 1598,
+    "status_code": 200,
+    "timed_out": false
+  }
+]

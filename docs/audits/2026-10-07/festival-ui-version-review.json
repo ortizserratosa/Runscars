@@ -1,0 +1,82 @@
+{
+  "base": "https://runscars-rji0394dy-nazzozzo-s-projects.vercel.app",
+  "capturedAt": "2026-10-07T10:18:03.967Z",
+  "mode": "read-only",
+  "cases": [
+    {
+      "route": "/en/festivales/sundance/2026",
+      "viewport": "desktop",
+      "visibleImages": [
+        {
+          "src": "https://image.tmdb.org/t/p/w185/afH14yQ0xwyalCy3AyZrhQpRZyB.jpg",
+          "naturalWidth": 185
+        },
+        {
+          "src": "https://image.tmdb.org/t/p/w185/cu17JPVluk62b60sTLIVo3hwTQN.jpg",
+          "naturalWidth": 185
+        },
+        {
+          "src": "https://image.tmdb.org/t/p/w185/5uRKIfMNcEzS1vWl0l69YUYoW1F.jpg",
+          "naturalWidth": 185
+        },
+        {
+          "src": "https://image.tmdb.org/t/p/w185/w98RWv9o05OhXYfTvauDrotRZ13.jpg",
+          "naturalWidth": 185
+        }
+      ],
+      "horizontalOverflow": false
+    },
+    {
+      "route": "/en/festivales/locarno/2026",
+      "viewport": "desktop",
+      "title": "House of Criticism",
+      "found": false
+    },
+    {
+      "route": "/en/festivales/locarno/2026",
+      "viewport": "desktop",
+      "title": "L'ESTIVE",
+      "found": false
+    },
+    {
+      "route": "/en/festivales/sundance/2026",
+      "viewport": "mobile",
+      "visibleImages": [
+        {
+          "src": "https://image.tmdb.org/t/p/w185/afH14yQ0xwyalCy3AyZrhQpRZyB.jpg",
+          "naturalWidth": 185
+        },
+        {
+          "src": "https://image.tmdb.org/t/p/w185/cu17JPVluk62b60sTLIVo3hwTQN.jpg",
+          "naturalWidth": 185
+        },
+        {
+          "src": "https://image.tmdb.org/t/p/w185/5uRKIfMNcEzS1vWl0l69YUYoW1F.jpg",
+          "naturalWidth": 185
+        },
+        {
+          "src": "https://image.tmdb.org/t/p/w185/w98RWv9o05OhXYfTvauDrotRZ13.jpg",
+          "naturalWidth": 185
+        }
+      ],
+      "horizontalOverflow": false
+    },
+    {
+      "route": "/en/festivales/locarno/2026",
+      "viewport": "mobile",
+      "title": "House of Criticism",
+      "found": false
+    },
+    {
+      "route": "/en/festivales/locarno/2026",
+      "viewport": "mobile",
+      "title": "L'ESTIVE",
+      "found": false
+    }
+  ],
+  "screenshots": [
+    "/tmp/runscars-festival-posters-desktop.png",
+    "/tmp/runscars-festival-posters-mobile.png"
+  ],
+  "errors": []
+}

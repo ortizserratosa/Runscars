@@ -1,0 +1,530 @@
+[
+  {
+    "category": "actor",
+    "snapshotId": "periodic-oscars-2027-actor-nomination-2026-10-07-58cb778ecf2c",
+    "lockedAt": "2026-10-07T09:30:39.707+00:00",
+    "consensus": true,
+    "orderedSourceCount": 4,
+    "sourceCount": 6,
+    "sources": [
+      {
+        "source": "awards-daily",
+        "listLength": null,
+        "ordered": 0,
+        "selection": 5,
+        "publishedAt": "2026-10-02T00:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://www.awardsdaily.com/2026/10/02/2027-oscar-predictions-what-are-the-oscars-in-their-99th-year/"
+      },
+      {
+        "source": "awards-radar",
+        "listLength": 20,
+        "ordered": 20,
+        "selection": 0,
+        "publishedAt": "2026-09-23T00:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://awardsradar.com/best-actor/"
+      },
+      {
+        "source": "awardswatch",
+        "listLength": null,
+        "ordered": 0,
+        "selection": 5,
+        "publishedAt": "2026-09-17T20:26:16+00:00",
+        "freshnessAt": null,
+        "url": "https://awardswatch.com/2027-oscar-predictions-best-actor-and-best-actress-september/"
+      },
+      {
+        "source": "next-best-picture",
+        "listLength": 5,
+        "ordered": 5,
+        "selection": 0,
+        "publishedAt": null,
+        "freshnessAt": "2026-10-03T04:17:01.184+00:00",
+        "url": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+      },
+      {
+        "source": "the-movie-state",
+        "listLength": 5,
+        "ordered": 5,
+        "selection": 0,
+        "publishedAt": "2026-09-14T15:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+      },
+      {
+        "source": "variety",
+        "listLength": 30,
+        "ordered": 30,
+        "selection": 0,
+        "publishedAt": "2026-10-01T00:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://variety.com/feature/2027-oscars-best-actor-predictions-1236834269/"
+      }
+    ],
+    "included": 70,
+    "excluded": 10
+  },
+  {
+    "category": "actress",
+    "snapshotId": "periodic-oscars-2027-actress-nomination-2026-10-07-0ce24807ef6a",
+    "lockedAt": "2026-10-07T09:30:39.707+00:00",
+    "consensus": true,
+    "orderedSourceCount": 4,
+    "sourceCount": 6,
+    "sources": [
+      {
+        "source": "awards-daily",
+        "listLength": null,
+        "ordered": 0,
+        "selection": 5,
+        "publishedAt": "2026-10-02T00:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://www.awardsdaily.com/2026/10/02/2027-oscar-predictions-what-are-the-oscars-in-their-99th-year/"
+      },
+      {
+        "source": "awards-radar",
+        "listLength": 20,
+        "ordered": 20,
+        "selection": 0,
+        "publishedAt": "2026-09-23T00:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://awardsradar.com/best-actress/"
+      },
+      {
+        "source": "awardswatch",
+        "listLength": null,
+        "ordered": 0,
+        "selection": 5,
+        "publishedAt": "2026-09-17T20:26:16+00:00",
+        "freshnessAt": null,
+        "url": "https://awardswatch.com/2027-oscar-predictions-best-actor-and-best-actress-september/"
+      },
+      {
+        "source": "next-best-picture",
+        "listLength": 5,
+        "ordered": 5,
+        "selection": 0,
+        "publishedAt": null,
+        "freshnessAt": "2026-09-17T04:17:27.438+00:00",
+        "url": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+      },
+      {
+        "source": "the-movie-state",
+        "listLength": 5,
+        "ordered": 5,
+        "selection": 0,
+        "publishedAt": "2026-09-14T15:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+      },
+      {
+        "source": "variety",
+        "listLength": 30,
+        "ordered": 28,
+        "selection": 0,
+        "publishedAt": "2026-10-01T00:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://variety.com/feature/2027-oscars-best-actress-predictions-1236834270/"
+      }
+    ],
+    "included": 68,
+    "excluded": 9
+  },
+  {
+    "category": "adapted-screenplay",
+    "snapshotId": "periodic-oscars-2027-adapted-screenplay-nomination-2026-10-07-de62683a22eb",
+    "lockedAt": "2026-10-07T09:30:39.707+00:00",
+    "consensus": true,
+    "orderedSourceCount": 4,
+    "sourceCount": 6,
+    "sources": [
+      {
+        "source": "awards-daily",
+        "listLength": null,
+        "ordered": 0,
+        "selection": 5,
+        "publishedAt": "2026-10-02T00:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://www.awardsdaily.com/2026/10/02/2027-oscar-predictions-what-are-the-oscars-in-their-99th-year/"
+      },
+      {
+        "source": "awards-radar",
+        "listLength": 20,
+        "ordered": 20,
+        "selection": 0,
+        "publishedAt": "2026-09-23T00:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://awardsradar.com/best-adapted-screenplay/"
+      },
+      {
+        "source": "awardswatch",
+        "listLength": null,
+        "ordered": 0,
+        "selection": 5,
+        "publishedAt": "2026-09-21T19:01:01+00:00",
+        "freshnessAt": null,
+        "url": "https://awardswatch.com/2027-oscar-predictions-adapted-screenplay-and-original-screenplay-september/"
+      },
+      {
+        "source": "next-best-picture",
+        "listLength": 5,
+        "ordered": 5,
+        "selection": 0,
+        "publishedAt": null,
+        "freshnessAt": "2026-10-07T04:17:01.405+00:00",
+        "url": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+      },
+      {
+        "source": "the-movie-state",
+        "listLength": 5,
+        "ordered": 5,
+        "selection": 0,
+        "publishedAt": "2026-09-14T15:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+      },
+      {
+        "source": "variety",
+        "listLength": 30,
+        "ordered": 22,
+        "selection": 0,
+        "publishedAt": "2026-10-01T00:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://variety.com/feature/2027-oscars-best-adapted-screenplay-predictions-1236834275/"
+      }
+    ],
+    "included": 62,
+    "excluded": 10
+  },
+  {
+    "category": "best-picture",
+    "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-10-07-ba2b31fadd3c",
+    "lockedAt": "2026-10-07T09:30:39.707+00:00",
+    "consensus": true,
+    "orderedSourceCount": 5,
+    "sourceCount": 6,
+    "sources": [
+      {
+        "source": "awards-daily",
+        "listLength": null,
+        "ordered": 0,
+        "selection": 10,
+        "publishedAt": "2026-10-02T00:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://www.awardsdaily.com/2026/10/02/2027-oscar-predictions-what-are-the-oscars-in-their-99th-year/"
+      },
+      {
+        "source": "awards-radar",
+        "listLength": 50,
+        "ordered": 50,
+        "selection": 0,
+        "publishedAt": "2026-09-23T00:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://awardsradar.com/best-picture/"
+      },
+      {
+        "source": "awardswatch",
+        "listLength": 15,
+        "ordered": 15,
+        "selection": 0,
+        "publishedAt": "2026-09-17T17:11:32+00:00",
+        "freshnessAt": null,
+        "url": "https://awardswatch.com/2027-oscar-predictions-best-picture-and-best-director-september/"
+      },
+      {
+        "source": "next-best-picture",
+        "listLength": 10,
+        "ordered": 10,
+        "selection": 0,
+        "publishedAt": null,
+        "freshnessAt": "2026-10-07T04:17:01.405+00:00",
+        "url": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+      },
+      {
+        "source": "the-movie-state",
+        "listLength": 10,
+        "ordered": 10,
+        "selection": 0,
+        "publishedAt": "2026-09-14T15:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+      },
+      {
+        "source": "variety",
+        "listLength": 40,
+        "ordered": 38,
+        "selection": 0,
+        "publishedAt": "2026-10-01T00:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://variety.com/lists/2027-oscars-best-picture-predictions/"
+      }
+    ],
+    "included": 133,
+    "excluded": 18
+  },
+  {
+    "category": "directing",
+    "snapshotId": "periodic-oscars-2027-directing-nomination-2026-10-07-0b915f608625",
+    "lockedAt": "2026-10-07T09:30:39.707+00:00",
+    "consensus": true,
+    "orderedSourceCount": 5,
+    "sourceCount": 6,
+    "sources": [
+      {
+        "source": "awards-daily",
+        "listLength": null,
+        "ordered": 0,
+        "selection": 5,
+        "publishedAt": "2026-10-02T00:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://www.awardsdaily.com/2026/10/02/2027-oscar-predictions-what-are-the-oscars-in-their-99th-year/"
+      },
+      {
+        "source": "awards-radar",
+        "listLength": 20,
+        "ordered": 20,
+        "selection": 0,
+        "publishedAt": "2026-09-23T00:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://awardsradar.com/best-director/"
+      },
+      {
+        "source": "awardswatch",
+        "listLength": 10,
+        "ordered": 10,
+        "selection": 0,
+        "publishedAt": "2026-09-17T17:11:32+00:00",
+        "freshnessAt": null,
+        "url": "https://awardswatch.com/2027-oscar-predictions-best-picture-and-best-director-september/"
+      },
+      {
+        "source": "next-best-picture",
+        "listLength": 5,
+        "ordered": 5,
+        "selection": 0,
+        "publishedAt": null,
+        "freshnessAt": "2026-10-06T04:17:02.098+00:00",
+        "url": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+      },
+      {
+        "source": "the-movie-state",
+        "listLength": 5,
+        "ordered": 5,
+        "selection": 0,
+        "publishedAt": "2026-09-14T15:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+      },
+      {
+        "source": "variety",
+        "listLength": 30,
+        "ordered": 30,
+        "selection": 0,
+        "publishedAt": "2026-10-01T00:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://variety.com/feature/2027-oscars-best-director-predictions-1236834268/"
+      }
+    ],
+    "included": 75,
+    "excluded": 10
+  },
+  {
+    "category": "original-screenplay",
+    "snapshotId": "periodic-oscars-2027-original-screenplay-nomination-2026-10-07-9968270d59cc",
+    "lockedAt": "2026-10-07T09:30:39.707+00:00",
+    "consensus": true,
+    "orderedSourceCount": 4,
+    "sourceCount": 6,
+    "sources": [
+      {
+        "source": "awards-daily",
+        "listLength": null,
+        "ordered": 0,
+        "selection": 5,
+        "publishedAt": "2026-10-02T00:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://www.awardsdaily.com/2026/10/02/2027-oscar-predictions-what-are-the-oscars-in-their-99th-year/"
+      },
+      {
+        "source": "awards-radar",
+        "listLength": 20,
+        "ordered": 20,
+        "selection": 0,
+        "publishedAt": "2026-09-23T00:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://awardsradar.com/best-original-screenplay/"
+      },
+      {
+        "source": "awardswatch",
+        "listLength": null,
+        "ordered": 0,
+        "selection": 5,
+        "publishedAt": "2026-09-21T19:01:01+00:00",
+        "freshnessAt": null,
+        "url": "https://awardswatch.com/2027-oscar-predictions-adapted-screenplay-and-original-screenplay-september/"
+      },
+      {
+        "source": "next-best-picture",
+        "listLength": 5,
+        "ordered": 5,
+        "selection": 0,
+        "publishedAt": null,
+        "freshnessAt": "2026-10-06T04:17:02.098+00:00",
+        "url": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+      },
+      {
+        "source": "the-movie-state",
+        "listLength": 5,
+        "ordered": 5,
+        "selection": 0,
+        "publishedAt": "2026-09-14T15:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+      },
+      {
+        "source": "variety",
+        "listLength": 30,
+        "ordered": 23,
+        "selection": 0,
+        "publishedAt": "2026-10-01T00:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://variety.com/feature/2027-oscars-best-original-screenplay-predictions-1236834273/"
+      }
+    ],
+    "included": 63,
+    "excluded": 9
+  },
+  {
+    "category": "supporting-actor",
+    "snapshotId": "periodic-oscars-2027-supporting-actor-nomination-2026-10-07-e3d4164865fe",
+    "lockedAt": "2026-10-07T09:30:39.707+00:00",
+    "consensus": true,
+    "orderedSourceCount": 4,
+    "sourceCount": 6,
+    "sources": [
+      {
+        "source": "awards-daily",
+        "listLength": null,
+        "ordered": 0,
+        "selection": 5,
+        "publishedAt": "2026-10-02T00:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://www.awardsdaily.com/2026/10/02/2027-oscar-predictions-what-are-the-oscars-in-their-99th-year/"
+      },
+      {
+        "source": "awards-radar",
+        "listLength": 20,
+        "ordered": 20,
+        "selection": 0,
+        "publishedAt": "2026-09-23T00:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://awardsradar.com/best-supporting-actor/"
+      },
+      {
+        "source": "awardswatch",
+        "listLength": null,
+        "ordered": 0,
+        "selection": 5,
+        "publishedAt": "2026-09-18T16:41:45+00:00",
+        "freshnessAt": null,
+        "url": "https://awardswatch.com/2027-oscar-predictions-supporting-actor-and-supporting-actress-september/"
+      },
+      {
+        "source": "next-best-picture",
+        "listLength": 5,
+        "ordered": 5,
+        "selection": 0,
+        "publishedAt": null,
+        "freshnessAt": "2026-10-07T04:17:01.405+00:00",
+        "url": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+      },
+      {
+        "source": "the-movie-state",
+        "listLength": 5,
+        "ordered": 5,
+        "selection": 0,
+        "publishedAt": "2026-09-14T15:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+      },
+      {
+        "source": "variety",
+        "listLength": 30,
+        "ordered": 30,
+        "selection": 0,
+        "publishedAt": "2026-10-01T00:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://variety.com/feature/2027-oscars-best-supporting-actor-predictions-1236834271/"
+      }
+    ],
+    "included": 70,
+    "excluded": 10
+  },
+  {
+    "category": "supporting-actress",
+    "snapshotId": "periodic-oscars-2027-supporting-actress-nomination-2026-10-07-06d3bcf6bde2",
+    "lockedAt": "2026-10-07T09:30:39.707+00:00",
+    "consensus": true,
+    "orderedSourceCount": 4,
+    "sourceCount": 6,
+    "sources": [
+      {
+        "source": "awards-daily",
+        "listLength": null,
+        "ordered": 0,
+        "selection": 5,
+        "publishedAt": "2026-10-02T00:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://www.awardsdaily.com/2026/10/02/2027-oscar-predictions-what-are-the-oscars-in-their-99th-year/"
+      },
+      {
+        "source": "awards-radar",
+        "listLength": 20,
+        "ordered": 20,
+        "selection": 0,
+        "publishedAt": "2026-09-23T00:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://awardsradar.com/best-supporting-actress/"
+      },
+      {
+        "source": "awardswatch",
+        "listLength": null,
+        "ordered": 0,
+        "selection": 5,
+        "publishedAt": "2026-09-18T16:41:45+00:00",
+        "freshnessAt": null,
+        "url": "https://awardswatch.com/2027-oscar-predictions-supporting-actor-and-supporting-actress-september/"
+      },
+      {
+        "source": "next-best-picture",
+        "listLength": 5,
+        "ordered": 5,
+        "selection": 0,
+        "publishedAt": null,
+        "freshnessAt": "2026-10-07T04:17:01.405+00:00",
+        "url": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+      },
+      {
+        "source": "the-movie-state",
+        "listLength": 5,
+        "ordered": 5,
+        "selection": 0,
+        "publishedAt": "2026-09-14T15:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://themoviestate.com/2026/09/14/2027-oscar-predictions/"
+      },
+      {
+        "source": "variety",
+        "listLength": 30,
+        "ordered": 28,
+        "selection": 0,
+        "publishedAt": "2026-10-01T00:00:00+00:00",
+        "freshnessAt": null,
+        "url": "https://variety.com/feature/2027-oscars-best-supporting-actress-predictions-1236834272/"
+      }
+    ],
+    "included": 68,
+    "excluded": 10
+  }
+]

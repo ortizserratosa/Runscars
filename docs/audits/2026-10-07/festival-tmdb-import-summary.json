@@ -1,0 +1,13 @@
+{
+  "capturedAt": "2026-10-07T10:20:47.883Z",
+  "batches": 11,
+  "moviesProcessed": 503,
+  "localeCaptures": 1006,
+  "failedCaptures": 0,
+  "hasMore": false,
+  "concurrency": 4,
+  "locales": [
+    "es-ES",
+    "en-US"
+  ]
+}

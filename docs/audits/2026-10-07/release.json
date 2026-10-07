@@ -1,0 +1,44 @@
+{
+  "capturedAt": "2026-10-07T10:22:27.882Z",
+  "publicUrl": "https://runscars.app",
+  "testedWebCommit": "8f0e87a86a686ff6297fefd507349c46eba16851",
+  "testedDeployment": {
+    "id": "dpl_HSYmBBDnTL6D5yT9ZDBhTiPkdyKS",
+    "url": "https://runscars-rji0394dy-nazzozzo-s-projects.vercel.app",
+    "state": "READY",
+    "promoted": true
+  },
+  "migrations": 49,
+  "newMigrations": 6,
+  "edgeFunctions": [
+    "run-ingestion",
+    "run-festivals"
+  ],
+  "checks": {
+    "unit": 349,
+    "database": 46,
+    "e2eVerified": 142,
+    "e2eDetail": "140 passed in full run; two ambiguous navigation selectors corrected and both passed in focused desktop/mobile rerun",
+    "previousRealUi": 160,
+    "newFestivalUi": 40,
+    "sampledLoadedPosters": 120,
+    "metadataExamples": 12,
+    "publicGraphPages": 5218,
+    "publicGraphFailures": 0,
+    "productionRuntimeErrors": 0,
+    "runtimeAuditVulnerabilities": 0
+  },
+  "knownLimitations": [
+    "NYFF HTTP 403 on importer; latest official Main Slate preserved, Spotlight/Currents pending",
+    "Locarno selection scope: five verified sections",
+    "20 corroborated TMDB films lack posters",
+    "braces 3.0.3 high advisory in development tools: npm run audit/verify fail at audit; five dependency nodes, no patched version"
+  ],
+  "receipts": [
+    "public-smoke-after.json",
+    "festival-ui-after.json",
+    "festival-tmdb-metadata-after.json",
+    "festival-metadata-catalogue-integrity.json",
+    "production-audit-summary.json"
+  ]
+}

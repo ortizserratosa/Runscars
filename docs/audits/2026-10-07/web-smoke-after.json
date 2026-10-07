@@ -1,0 +1,68 @@
+[
+  {
+    "path": "/api/health",
+    "status": 200,
+    "health": {
+      "status": "ok",
+      "service": "runscars-web",
+      "databaseConfigured": true
+    }
+  },
+  {
+    "path": "/api/health/database",
+    "status": 200
+  },
+  {
+    "path": "/robots.txt",
+    "status": 200
+  },
+  {
+    "path": "/sitemap.xml",
+    "status": 200
+  },
+  {
+    "path": "/api/social?kind=festival&id=sundance&lang=es",
+    "status": 200,
+    "contentType": "image/png"
+  },
+  {
+    "path": "/",
+    "status": 200
+  },
+  {
+    "path": "/en",
+    "status": 200
+  },
+  {
+    "path": "/peliculas/fjord",
+    "status": 200
+  },
+  {
+    "path": "/en/peliculas/fjord",
+    "status": 200
+  },
+  {
+    "path": "/acceso",
+    "status": 200
+  },
+  {
+    "path": "/en/acceso",
+    "status": 200
+  },
+  {
+    "path": "/comunidad",
+    "status": 200
+  },
+  {
+    "path": "/en/comunidad",
+    "status": 200
+  },
+  {
+    "path": "/quiniela",
+    "status": 200
+  },
+  {
+    "path": "/en/quiniela",
+    "status": 200
+  }
+]

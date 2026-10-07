@@ -211,10 +211,11 @@ revisarse editorialmente y publicarse una versión manual nueva.
 
 ### Enlaces externos de películas
 
-La ficha conserva el título original y abre IMDb si hay una identidad externa
-confirmada, incluso cuando la película no pertenece al catálogo Oscar. Si hay
-ficha propia, el título sigue abriendo Runscars y ofrece IMDb como enlace
-adicional. El enlace de la película en la fuente se conserva cuando el recibo
+Tras la aclaración del usuario, TMDB es el destino principal para el título y
+cartel de una película fuera del catálogo Oscar. IMDb queda como enlace
+secundario opcional. La ficha conserva el título original; si hay ficha propia,
+el título sigue abriendo Runscars y ofrece también los enlaces externos. El
+enlace de la película en la fuente se conserva cuando el recibo
 incluye `filmUrl` o `sourceFilmUrl`; no se reconstruyen direcciones.
 
 La lectura usa `public_festival_external_links` con filtros de hasta 200 IDs y
@@ -233,6 +234,40 @@ Ahn, TMDB `1470198`, IMDb `tt35504660`; y **Carousel**, Rachel Lambert, TMDB
 los recibos originales. Se mantiene `filmId: null` y el estado de matching
 `unmatched`; el enlace externo confirmado no crea candidatura ni ficha Oscar.
 Las siete pruebas focalizadas de enlaces, fixtures y paginación son verdes.
+
+### Carteles y metadatos TMDB independientes del catálogo
+
+`FestivalEntryView.tmdbId` procede exclusivamente del puntero confirmado de
+`public_festival_external_links`. `getFestivalArtwork` consulta capturas locales
+vigentes de `tmdb_movie_snapshots` por ese ID, sin llamar a TMDB durante una
+visita ni crear películas, candidaturas o elegibilidad. Se muestran título
+localizado cuando difiere, año de estreno y duración, separados de los títulos,
+destinatarios, premios y temporadas originales.
+
+La lectura conserva solo la última verificación por idioma, usando
+`last_verified_at` y `fetched_at` para capturas legadas. El cartel puede caer al
+otro idioma vigente; nunca recupera una imagen de una revisión antigua retirada
+ni mezcla una imagen de un `filmId` anterior con la identidad TMDB confirmada.
+Sin imagen se conserva un bloque de título y su enlace. El contexto festivalero
+retira el sello Oscar del componente de cartel; sus demás usos conservan el
+comportamiento existente.
+
+`2026-tmdb-metadata-fixture.json` contiene capturas reales del 7 de octubre a las
+10:04 UTC: Bedford Park, 121 minutos, y Carousel, 103 minutos, en `es-ES` y
+`en-US`, con rutas de cartel/fondo, fechas y URLs originales. No se descargan
+imágenes ni se guardan credenciales. Las pruebas reproducibles comprueban
+renderizado y enlaces sin depender de una petición al CDN en tiempo real.
+
+- **16 pruebas unitarias verdes** en cinco archivos: identidad externa,
+  original/localizado separados, metadatos, retirada de cartel, expiración,
+  verificación de hash restaurado, filtros y paginación de más de 2.000 IDs,
+  fallo de caché y conservación del sello en contextos ajenos al festival.
+- **8 E2E verdes** en escritorio y móvil: carteles fuera del catálogo Oscar,
+  título/cartel hacia TMDB, IMDb secundario, fuentes originales, ausencia del
+  sello y placeholder sin imagen con destino conservado.
+- **2 recorridos de navegación verdes** tras acotar la búsqueda del enlace de
+  FJORD al título, ya que el cartel también permite abrir la ficha.
+- Lint verde; la revisión de tipos incluye la nueva columna de verificación.
 
 ### Capturas, listados y navegación
 

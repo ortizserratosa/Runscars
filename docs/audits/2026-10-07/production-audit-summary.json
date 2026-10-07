@@ -1,0 +1,17 @@
+{
+  "startedAt": "2026-10-07T09:43:29.250Z",
+  "completedAt": "2026-10-07T09:51:32.363Z",
+  "baseUrl": "https://runscars.app/",
+  "sitemapUrls": 4820,
+  "visited": 5218,
+  "publicFailures": 0,
+  "predictionConnectorsChecked": 15,
+  "predictionCategoryCoverage": "complete",
+  "kalshi2027Contracts": 92,
+  "polymarket2027Contracts": 133,
+  "operationalFailures": [
+    "festival-nyff: última ejecución correcta fuera de la ventana operativa",
+    "festival-nyff: incidencia vigente, Film at Lincoln Center devuelve HTTP 403"
+  ],
+  "report": "public-after.json"
+}

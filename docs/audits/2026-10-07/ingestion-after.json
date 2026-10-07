@@ -1,0 +1,235 @@
+{
+  "capturedAt": "2026-10-07T09:29:06.522Z",
+  "rows": [
+    {
+      "requestId": 1586,
+      "httpStatus": 200,
+      "timedOut": false,
+      "error": null,
+      "status": "succeeded",
+      "connectors": 1,
+      "failed": 0,
+      "results": [
+        {
+          "connectorId": "awards-daily-predictions",
+          "runId": 718,
+          "status": "succeeded",
+          "publicationsSeen": 1,
+          "capturesInserted": 1,
+          "capturesDuplicate": 0,
+          "observationsSeen": 80,
+          "observationsInserted": 80,
+          "observationsDuplicate": 0,
+          "reviewItemsCreated": 1
+        }
+      ]
+    },
+    {
+      "requestId": 1587,
+      "httpStatus": 200,
+      "timedOut": false,
+      "error": null,
+      "status": "succeeded",
+      "connectors": 1,
+      "failed": 0,
+      "results": [
+        {
+          "connectorId": "awardswatch-predictions",
+          "runId": 713,
+          "status": "succeeded",
+          "publicationsSeen": 8,
+          "capturesInserted": 8,
+          "capturesDuplicate": 0,
+          "observationsSeen": 55,
+          "observationsInserted": 55,
+          "observationsDuplicate": 0,
+          "reviewItemsCreated": 0
+        }
+      ]
+    },
+    {
+      "requestId": 1588,
+      "httpStatus": 200,
+      "timedOut": false,
+      "error": null,
+      "status": "succeeded",
+      "connectors": 1,
+      "failed": 0,
+      "results": [
+        {
+          "connectorId": "variety-actor-predictions",
+          "runId": 711,
+          "status": "succeeded",
+          "publicationsSeen": 1,
+          "capturesInserted": 1,
+          "capturesDuplicate": 0,
+          "observationsSeen": 30,
+          "observationsInserted": 30,
+          "observationsDuplicate": 0,
+          "reviewItemsCreated": 0
+        }
+      ]
+    },
+    {
+      "requestId": 1589,
+      "httpStatus": 200,
+      "timedOut": false,
+      "error": null,
+      "status": "succeeded",
+      "connectors": 1,
+      "failed": 0,
+      "results": [
+        {
+          "connectorId": "variety-actress-predictions",
+          "runId": 714,
+          "status": "succeeded",
+          "publicationsSeen": 1,
+          "capturesInserted": 1,
+          "capturesDuplicate": 0,
+          "observationsSeen": 30,
+          "observationsInserted": 30,
+          "observationsDuplicate": 0,
+          "reviewItemsCreated": 2
+        }
+      ]
+    },
+    {
+      "requestId": 1590,
+      "httpStatus": 200,
+      "timedOut": false,
+      "error": null,
+      "status": "succeeded",
+      "connectors": 1,
+      "failed": 0,
+      "results": [
+        {
+          "connectorId": "variety-adapted-screenplay-predictions",
+          "runId": 712,
+          "status": "succeeded",
+          "publicationsSeen": 1,
+          "capturesInserted": 1,
+          "capturesDuplicate": 0,
+          "observationsSeen": 30,
+          "observationsInserted": 30,
+          "observationsDuplicate": 0,
+          "reviewItemsCreated": 8
+        }
+      ]
+    },
+    {
+      "requestId": 1591,
+      "httpStatus": 200,
+      "timedOut": false,
+      "error": null,
+      "status": "succeeded",
+      "connectors": 1,
+      "failed": 0,
+      "results": [
+        {
+          "connectorId": "variety-best-picture-predictions",
+          "runId": 710,
+          "status": "succeeded",
+          "publicationsSeen": 1,
+          "capturesInserted": 1,
+          "capturesDuplicate": 0,
+          "observationsSeen": 40,
+          "observationsInserted": 40,
+          "observationsDuplicate": 0,
+          "reviewItemsCreated": 2
+        }
+      ]
+    },
+    {
+      "requestId": 1592,
+      "httpStatus": 200,
+      "timedOut": false,
+      "error": null,
+      "status": "succeeded",
+      "connectors": 1,
+      "failed": 0,
+      "results": [
+        {
+          "connectorId": "variety-directing-predictions",
+          "runId": 716,
+          "status": "succeeded",
+          "publicationsSeen": 1,
+          "capturesInserted": 1,
+          "capturesDuplicate": 0,
+          "observationsSeen": 30,
+          "observationsInserted": 30,
+          "observationsDuplicate": 0,
+          "reviewItemsCreated": 0
+        }
+      ]
+    },
+    {
+      "requestId": 1593,
+      "httpStatus": 200,
+      "timedOut": false,
+      "error": null,
+      "status": "succeeded",
+      "connectors": 1,
+      "failed": 0,
+      "results": [
+        {
+          "connectorId": "variety-original-screenplay-predictions",
+          "runId": 709,
+          "status": "succeeded",
+          "publicationsSeen": 1,
+          "capturesInserted": 1,
+          "capturesDuplicate": 0,
+          "observationsSeen": 30,
+          "observationsInserted": 30,
+          "observationsDuplicate": 0,
+          "reviewItemsCreated": 7
+        }
+      ]
+    },
+    {
+      "requestId": 1594,
+      "httpStatus": 200,
+      "timedOut": false,
+      "error": null,
+      "status": "succeeded",
+      "connectors": 1,
+      "failed": 0,
+      "results": [
+        {
+          "connectorId": "variety-supporting-actor-predictions",
+          "runId": 717,
+          "status": "succeeded",
+          "publicationsSeen": 1,
+          "capturesInserted": 1,
+          "capturesDuplicate": 0,
+          "observationsSeen": 30,
+          "observationsInserted": 30,
+          "observationsDuplicate": 0,
+          "reviewItemsCreated": 0
+        }
+      ]
+    },
+    {
+      "requestId": 1595,
+      "httpStatus": 200,
+      "timedOut": false,
+      "error": null,
+      "status": "succeeded",
+      "connectors": 1,
+      "failed": 0,
+      "results": [
+        {
+          "connectorId": "variety-supporting-actress-predictions",
+          "runId": 715,
+          "status": "succeeded",
+          "publicationsSeen": 1,
+          "capturesInserted": 1,
+          "capturesDuplicate": 0,
+          "observationsSeen": 30,
+          "observationsInserted": 30,
+          "observationsDuplicate": 0,
+          "reviewItemsCreated": 2
+        }
+      ]
+    }
+  ]
+}
