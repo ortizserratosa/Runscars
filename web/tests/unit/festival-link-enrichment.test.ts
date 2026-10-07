@@ -1,4 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
+import festivalManifest from "../../data/festivals/2026.json";
+import { FESTIVAL_IDENTITY_EVIDENCE } from "../../../supabase/functions/_shared/festivals/identity-evidence.mjs";
 import {
   corroborateFestivalMovie,
   enrichFestivalLinks,
@@ -46,6 +48,52 @@ function api(
 }
 
 describe("festival identities separate from Oscar eligibility", () => {
+  it("corroborates all archived Locarno award titles including verified parenthetical original/translated forms", () => {
+    const awards = festivalManifest.sets.find(
+      (set) => set.editionId === "locarno-2026" && set.kind === "awards",
+    )!;
+    expect(
+      awards.entries.some(
+        (award) =>
+          award.originalTitle === "NU E LOCUL TAU AICI (YOU DON’T BELONG HERE)",
+      ),
+    ).toBe(true);
+    for (const award of awards.entries) {
+      const claim = festivalIdentityClaim(
+        {
+          ...entry,
+          editionId: "locarno-2026",
+          kind: "awards",
+          originalTitle: award.originalTitle,
+          originalRecipient: award.originalRecipient,
+        },
+        FESTIVAL_IDENTITY_EVIDENCE,
+      );
+      expect(claim.directors.length, award.originalTitle).toBeGreaterThan(0);
+      const proof =
+        FESTIVAL_IDENTITY_EVIDENCE.find((fact) =>
+          fact.officialTitles.includes(award.originalTitle),
+        ) ??
+        FESTIVAL_IDENTITY_EVIDENCE.find(
+          (fact) => fact.directors.join("|") === claim.directors.join("|"),
+        )!;
+      expect(
+        corroborateFestivalMovie(
+          {
+            ...movie(11),
+            title: proof.officialTitles[0],
+            original_title: proof.officialTitles[0],
+            credits: {
+              crew: proof.directors.map((name) => ({ job: "Director", name })),
+            },
+          },
+          claim,
+        ),
+        award.originalTitle,
+      ).toMatchObject({ tmdbId: 11 });
+    }
+  });
+
   it("checks every page and exact homonym director before linking, with a shared identity cache", async () => {
     const fetcher = api([[11], [12]], {
       11: movie(11, "Wrong Director"),

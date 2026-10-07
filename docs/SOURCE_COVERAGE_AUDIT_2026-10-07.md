@@ -50,7 +50,7 @@ destinos rotos en 4.418 rutas visitadas de un sitemap de 3.816 URLs.
 
 ## Seguridad y verificación
 
-Han pasado `npm ci`, formato, lint, TypeScript, 330 pruebas unitarias, 41 pruebas
+Han pasado `npm ci`, formato, lint, TypeScript, 331 pruebas unitarias, 41 pruebas
 de base de datos y compilación. Los tipos se generaron a partir de 48 migraciones.
 Se validaron 12 conjuntos precursores y los dos manifiestos festivaleros nuevos.
 Los 140 recorridos E2E han pasado en escritorio, móvil y smoke WebKit. La

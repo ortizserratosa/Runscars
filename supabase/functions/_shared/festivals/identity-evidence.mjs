@@ -1,7 +1,11 @@
 // Reviewed primary-source film credits; no inferred IMDb IDs or Oscar eligibility.
 export const FESTIVAL_IDENTITY_EVIDENCE = [
   {
-    officialTitles: ["NU E LOCUL TAU AICI", "YOU DON'T BELONG HERE"],
+    officialTitles: [
+      "NU E LOCUL TAU AICI",
+      "YOU DON'T BELONG HERE",
+      "NU E LOCUL TAU AICI (YOU DON’T BELONG HERE)",
+    ],
     directors: ["Florin Șerban"],
     productionYear: null,
     sourceUrl:
@@ -14,7 +18,11 @@ export const FESTIVAL_IDENTITY_EVIDENCE = [
     editionId: "locarno-2026",
   },
   {
-    officialTitles: ["A MARGEM DO RIO", "THE RIVERBANK"],
+    officialTitles: [
+      "A MARGEM DO RIO",
+      "THE RIVERBANK",
+      "A MARGEM DO RIO (THE RIVERBANK)",
+    ],
     directors: ["Matheus Farias", "Enock Carvalho"],
     productionYear: null,
     sourceUrl:
@@ -27,7 +35,11 @@ export const FESTIVAL_IDENTITY_EVIDENCE = [
     editionId: "locarno-2026",
   },
   {
-    officialTitles: ["NUN DUL DEGA EOMNE", "NOWHERE TO LAY MY EYES"],
+    officialTitles: [
+      "NUN DUL DEGA EOMNE",
+      "NOWHERE TO LAY MY EYES",
+      "NUN DUL DEGA EOMNE (NOWHERE TO LAY MY EYES)",
+    ],
     directors: ["Hong Sangsoo"],
     productionYear: null,
     sourceUrl:
@@ -53,7 +65,11 @@ export const FESTIVAL_IDENTITY_EVIDENCE = [
     editionId: "locarno-2026",
   },
   {
-    officialTitles: ["VIOLENCE DU CORPS DE L'AUTRE", "NOBODY'S VIOLENCE"],
+    officialTitles: [
+      "VIOLENCE DU CORPS DE L'AUTRE",
+      "NOBODY'S VIOLENCE",
+      "VIOLENCE DU CORPS DE L’AUTRE (NOBODY’S VIOLENCE)",
+    ],
     directors: ["Denis Côté"],
     productionYear: null,
     sourceUrl:
@@ -69,6 +85,7 @@ export const FESTIVAL_IDENTITY_EVIDENCE = [
     officialTitles: [
       "LA ILUSIÓN DE UN VERANO SIN FIN",
       "THE ILLUSION OF AN EVERLASTING SUMMER",
+      "LA ILUSIÓN DE UN VERANO SIN FIN (THE ILLUSION OF AN EVERLASTING SUMMER)",
     ],
     directors: ["Alessandra Sanguinetti"],
     productionYear: null,
@@ -108,7 +125,11 @@ export const FESTIVAL_IDENTITY_EVIDENCE = [
     editionId: "locarno-2026",
   },
   {
-    officialTitles: ["EGO REACH WE ALL", "OUR TIME WILL COME"],
+    officialTitles: [
+      "EGO REACH WE ALL",
+      "OUR TIME WILL COME",
+      "EGO REACH WE ALL (OUR TIME WILL COME)",
+    ],
     directors: ["Amartei Armar"],
     productionYear: null,
     sourceUrl:
@@ -186,7 +207,11 @@ export const FESTIVAL_IDENTITY_EVIDENCE = [
     editionId: "locarno-2026",
   },
   {
-    officialTitles: ["LEJOS DE LOS ÁRBOLES", "FAR FROM THE TREES"],
+    officialTitles: [
+      "LEJOS DE LOS ÁRBOLES",
+      "FAR FROM THE TREES",
+      "LEJOS DE LOS ÁRBOLES (FAR FROM THE TREES)",
+    ],
     directors: ["Meritxell Colell Aparicio"],
     productionYear: null,
     sourceUrl:
@@ -251,7 +276,11 @@ export const FESTIVAL_IDENTITY_EVIDENCE = [
     editionId: "locarno-2026",
   },
   {
-    officialTitles: ["A TERAZ WIOSNA", "BLOSSOMING"],
+    officialTitles: [
+      "A TERAZ WIOSNA",
+      "BLOSSOMING",
+      "A TERAZ WIOSNA (BLOSSOMING)",
+    ],
     directors: ["Kamila Serwicka"],
     productionYear: null,
     sourceUrl:
@@ -264,7 +293,11 @@ export const FESTIVAL_IDENTITY_EVIDENCE = [
     editionId: "locarno-2026",
   },
   {
-    officialTitles: ["SEUL LE SERPENT SAIT", "ONLY THE SERPENT KNOWS"],
+    officialTitles: [
+      "SEUL LE SERPENT SAIT",
+      "ONLY THE SERPENT KNOWS",
+      "SEUL LE SERPENT SAIT (ONLY THE SERPENT KNOWS)",
+    ],
     directors: ["Olivier Séror", "Martin Verdet"],
     productionYear: null,
     sourceUrl:
