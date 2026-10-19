@@ -1,4 +1,5 @@
 import type { CurrentCategoryPredictionView } from "./signals";
+import { AGGREGATION_METHOD_VERSION_V4 } from "../aggregation/v2";
 import {
   isPredictionFresh,
   PREDICTION_FRESHNESS_DAYS,
@@ -53,6 +54,81 @@ function numeric(value: unknown, key: string): number | null {
     : null;
 }
 
+function effectiveHeadMatches(
+  evidence: PredictionEvidenceRow[],
+  category: CurrentCategoryPredictionView,
+) {
+  const sourceId = evidence[0].source_id;
+  const source = category.aggregate.sourceLists.find(
+    (item) => item.sourceId === sourceId,
+  );
+  if (
+    !source ||
+    category.aggregate.categoryId !== category.categoryId ||
+    category.aggregate.intention !== evidence[0].prediction_intention
+  )
+    return false;
+  const bounded =
+    category.aggregate.methodVersion === AGGREGATION_METHOD_VERSION_V4;
+  const scoringDepth = category.aggregate.scoringDepth;
+  if (
+    bounded &&
+    (typeof scoringDepth !== "number" ||
+      !Number.isInteger(scoringDepth) ||
+      scoringDepth <= 0)
+  )
+    return false;
+  const expected = category.aggregate.ranking.flatMap((candidate) => {
+    const contribution = candidate.sourceContributions.find(
+      (item) => item.sourceId === sourceId && item.appeared,
+    );
+    return contribution
+      ? [
+          JSON.stringify([
+            candidate.candidateId,
+            contribution.appearanceKind,
+            contribution.rank,
+            bounded ? null : contribution.listLength,
+          ]),
+        ]
+      : [];
+  });
+  if (expected.length === 0) return false;
+  const actual: string[] = [];
+  for (const row of evidence) {
+    if (row.source_id !== sourceId) return false;
+    if (!row.participates) continue;
+    const ordered = row.data_type === "prediction_ordered";
+    const rank = numeric(row.original_value, "rank");
+    if (ordered && rank === null) return false;
+    if (ordered && bounded) {
+      if (rank === null || scoringDepth === undefined) return false;
+      if (rank > scoringDepth) continue;
+    }
+    if (!row.category_candidate_id) return false;
+    actual.push(
+      JSON.stringify([
+        row.category_candidate_id,
+        ordered ? "ordered" : "selection",
+        ordered ? rank : null,
+        bounded
+          ? null
+          : ordered
+            ? numeric(row.original_value, "list_length")
+            : (source.listLength ?? 0),
+      ]),
+    );
+  }
+  // New captures can change only metadata or the unused tail. Their IDs differ,
+  // so compare the entire effective ballot before reusing any frozen points.
+  // URLs remain latest provenance: a new article with the same ballot need not
+  // create a provider cut either. Changed or incomplete heads fail closed.
+  return (
+    new Set(actual).size === actual.length &&
+    JSON.stringify(actual.sort()) === JSON.stringify(expected.sort())
+  );
+}
+
 export function sourceEvidenceCategories(
   rows: PredictionEvidenceRow[],
   predictions: CurrentCategoryPredictionView[],
@@ -67,43 +143,41 @@ export function sourceEvidenceCategories(
     );
     const first = evidence[0];
     if (!first) return [];
-    const source = category.aggregate.sourceLists.find(
-      (item) => item.sourceId === first.source_id,
-    );
-    const consideredIds = new Set(
-      source
-        ? [...source.orderedObservationIds, ...source.selectionObservationIds]
-        : [],
-    );
     const connector = connectors.find(
       (item) =>
         item.source_id === first.source_id &&
         item.category_id === category.categoryId,
     );
     const state = predictionEvidenceState(first.freshness_at, now);
+    const matchesHead =
+      !state.expired && effectiveHeadMatches(evidence, category);
     const entries = evidence
       .map((row) => {
+        const rank = numeric(row.original_value, "rank");
+        const appearanceKind: "ordered" | "selection" =
+          row.data_type === "prediction_ordered" ? "ordered" : "selection";
         const candidate = category.aggregate.ranking.find(
           (item) => item.candidateId === row.category_candidate_id,
         );
         const contribution = candidate?.sourceContributions.find(
           (item) =>
             item.sourceId === row.source_id &&
-            item.observationId === String(row.id),
+            item.appeared &&
+            item.appearanceKind === appearanceKind &&
+            item.rank === (appearanceKind === "ordered" ? rank : null),
         );
+        const considered =
+          matchesHead && row.participates && Boolean(contribution);
         return {
           observationId: String(row.id),
           candidateId: row.category_candidate_id ?? String(row.id),
           label: row.candidate_label ?? row.original_subject,
-          appearanceKind:
-            row.data_type === "prediction_ordered"
-              ? ("ordered" as const)
-              : ("selection" as const),
-          rank: numeric(row.original_value, "rank"),
+          appearanceKind,
+          rank,
           listLength:
             numeric(row.original_value, "list_length") ?? evidence.length,
-          considered: !state.expired && consideredIds.has(String(row.id)),
-          points: contribution?.points ?? 0,
+          considered,
+          points: considered ? (contribution?.points ?? 0) : 0,
           originalValue: row.original_value,
           aggregatePosition: candidate?.position ?? 0,
           aggregateScore: candidate?.scoreOutOf100 ?? 0,

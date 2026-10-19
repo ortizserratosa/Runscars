@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { phase71FixtureAggregate } from "../../src/data/phase71-fixture";
+import type { PredictionAggregateV2 } from "../../src/lib/aggregation/v2";
 import type { CurrentCategoryPredictionView } from "../../src/lib/repositories/signals";
 import {
   predictionEvidenceState,
@@ -8,7 +9,10 @@ import {
 } from "../../src/lib/repositories/source-evidence";
 
 function prediction(): CurrentCategoryPredictionView {
-  const aggregate = phase71FixtureAggregate("best-picture");
+  const aggregate: PredictionAggregateV2 = {
+    ...phase71FixtureAggregate("best-picture"),
+    methodVersion: "runscars-aggregation-v4",
+  };
   aggregate.sourceLists = [
     {
       sourceId: "radar",
@@ -21,7 +25,28 @@ function prediction(): CurrentCategoryPredictionView {
       selectionObservationIds: [],
     },
   ];
-  aggregate.ranking = [];
+  aggregate.ranking = [
+    {
+      ...aggregate.ranking[0],
+      id: "film-1",
+      candidateId: "film-1",
+      sourceContributions: [
+        {
+          sourceId: "radar",
+          sourceName: "Radar",
+          publicationId: "article",
+          publicationUrl: "https://example.com/article",
+          publishedAt: "2026-10-14T00:00:00Z",
+          rank: 1,
+          listLength: 50,
+          points: 1,
+          appeared: true,
+          appearanceKind: "ordered",
+          observationId: "1",
+        },
+      ],
+    },
+  ];
   aggregate.scoringDepth = 20;
   return {
     categoryId: "best-picture",
