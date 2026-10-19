@@ -109,7 +109,10 @@ vi.mock("../../src/lib/supabase/server", () => ({
           rows = rows.filter((row) => String(row[column]) <= value);
           return query;
         },
-        order(column: string, options: { ascending: boolean }) {
+        order(
+          column: string,
+          options: { ascending: boolean } = { ascending: true },
+        ) {
           orders.push([column, options.ascending]);
           return query;
         },
@@ -171,7 +174,9 @@ function pointer(id: string, categoryId = "best-picture") {
 }
 
 function historyReads() {
-  return state.calls.filter((call) => call.range !== null);
+  return state.calls.filter(
+    (call) => call.table === "aggregate_snapshots" && call.range !== null,
+  );
 }
 
 beforeEach(() => {

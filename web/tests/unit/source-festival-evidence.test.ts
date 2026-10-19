@@ -21,6 +21,10 @@ vi.mock("../../src/lib/i18n/server", () => ({
 vi.mock("../../src/lib/environment", () => ({
   isSupabaseConfigured: () => true,
 }));
+vi.mock("../../src/lib/repositories/prediction-evidence-reads", () => ({
+  getPredictionSourceStatuses: async () => [],
+  getPredictionSourceEvidence: async () => [],
+}));
 vi.mock("../../src/lib/repositories/signals", () => ({
   getCurrentCategoryPredictions: async () => [],
 }));

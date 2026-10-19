@@ -5,7 +5,10 @@ import { isSupabaseConfigured } from "../environment";
 import { createSupabaseServerClient } from "../supabase/server";
 import { getPrecursorIndex } from "../precursors/data";
 import type { PrecursorEditionView } from "../precursors/types";
-import { fetchAllRows } from "../supabase/pagination";
+import {
+  getPredictionSourceStatuses,
+  getPredictionSourceEvidence,
+} from "./prediction-evidence-reads";
 import {
   sourceEvidenceCategories,
   type PredictionEvidenceRow,
@@ -406,7 +409,7 @@ export async function getSourceIndex(): Promise<SourceIndexView[]> {
       connectorsResult,
       marketConnectorsResult,
       festivalConnectorsResult,
-      predictionStatusResult,
+      predictionStatuses,
     ] = await Promise.all([
       supabase
         .from("sources")
@@ -426,9 +429,7 @@ export async function getSourceIndex(): Promise<SourceIndexView[]> {
         .select(
           "source_id,is_active,configuration,last_success_at,last_failure_at",
         ),
-      supabase
-        .from("public_prediction_source_status")
-        .select("source_id,published_at,captured_at"),
+      getPredictionSourceStatuses(),
     ]);
     if (sourcesResult.error) throw new Error(sourcesResult.error.message);
     const connectorRows: ConnectorRow[] = [
@@ -463,7 +464,7 @@ export async function getSourceIndex(): Promise<SourceIndexView[]> {
         publicationStatus: source.publication_status,
         lastReviewedOn: source.last_reviewed_on,
         ...summaryDates(source.id, predictions),
-        lastPublishedAt: (predictionStatusResult.data ?? [])
+        lastPublishedAt: predictionStatuses
           .filter((row) => row.source_id === source.id)
           .reduce<string | null>(
             (date, row) => latest(date, row.published_at),
@@ -608,15 +609,7 @@ export const getSourceDetail = cache(async function getSourceDetail(
       "prediction",
     )
       ? await Promise.all([
-          fetchAllRows((from, to) =>
-            supabase
-              .from("public_prediction_source_evidence")
-              .select("*")
-              .eq("source_id", sourceId)
-              .eq("season_id", "oscars-2027")
-              .order("id")
-              .range(from, to),
-          ),
+          getPredictionSourceEvidence(sourceId),
           supabase
             .from("public_prediction_connector_freshness")
             .select("*")

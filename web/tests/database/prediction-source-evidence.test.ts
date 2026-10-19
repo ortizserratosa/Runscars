@@ -132,6 +132,13 @@ describe("public source prediction evidence", () => {
       },
       "2026-10-14T00:00:00Z",
     );
+    const privateCategory = await publication(
+      "awards-radar",
+      "private-category",
+    );
+    await capture(privateCategory, "awards-radar", "2026-10-19T04:17:00Z", {
+      cinematography: entries("Private category title"),
+    });
     const pending = await publication("awards-radar", "pending-evidence");
     await capture(
       pending,
@@ -162,6 +169,10 @@ describe("public source prediction evidence", () => {
       `select original_count,matched_count from public.public_prediction_source_status where source_id='awards-radar'`,
     );
     expect(status.rows).toEqual([{ original_count: 50, matched_count: 2 }]);
+    const categories = await database.query(
+      `select distinct category_id from public.public_prediction_source_status`,
+    );
+    expect(categories.rows).toEqual([{ category_id: "best-picture" }]);
     const columns = await database.query<{ column_name: string }>(
       `select column_name from information_schema.columns where table_schema='public' and table_name in ('public_prediction_source_evidence','public_prediction_connector_freshness')`,
     );

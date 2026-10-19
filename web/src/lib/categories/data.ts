@@ -7,6 +7,7 @@ import {
   phase71FixturePreviousAggregate,
 } from "../../data/phase71-fixture";
 import { predictionEvidenceState } from "../repositories/source-evidence";
+import { getPredictionSourceStatuses } from "../repositories/prediction-evidence-reads";
 import type { PredictionAggregateV2 } from "../aggregation/v2";
 import { isSupabaseConfigured } from "../environment";
 import { selectMarketSignals } from "../markets/presentation";
@@ -656,23 +657,11 @@ const cachedConnectorFreshness = unstable_cache(
   ],
   { revalidate: 60 },
 );
-const cachedSourceStatus = unstable_cache(
-  async (categoryId: PublicCategoryId) => {
-    const result = await client()
-      .from("public_prediction_source_status")
-      .select("*")
-      .eq("category_id", categoryId)
-      .eq("season_id", "oscars-2027")
-      .eq("prediction_intention", "nomination");
-    if (result.error) throw new Error(result.error.message);
-    return result.data ?? [];
-  },
-  [
-    "public-category-evidence-v1",
-    process.env.NEXT_PUBLIC_SUPABASE_URL ?? "unconfigured",
-  ],
-  { revalidate: 60 },
-);
+async function cachedSourceStatus(categoryId: PublicCategoryId) {
+  return (await getPredictionSourceStatuses()).filter(
+    (row) => row.category_id === categoryId,
+  );
+}
 
 export async function getCategoryView(
   seasonYear: 2026 | 2027,
