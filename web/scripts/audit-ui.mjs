@@ -28,7 +28,36 @@ const festivals = [
   "telluride",
   "nyff",
 ];
-const paths = before
+function parseRoutePaths(value) {
+  if (value === undefined) return undefined;
+  const message =
+    "RUNSCARS_UI_PATHS must be a non-empty JSON array of unprefixed local route paths without queries or fragments";
+  let routes;
+  try {
+    routes = JSON.parse(value);
+  } catch {
+    throw new Error(message);
+  }
+  if (
+    !Array.isArray(routes) ||
+    routes.length === 0 ||
+    routes.some((route) => {
+      if (
+        typeof route !== "string" ||
+        !route.startsWith("/") ||
+        route.startsWith("//") ||
+        /[\\\s?#]/u.test(route) ||
+        /^\/(?:es|en)(?:\/|$)/u.test(route)
+      )
+        return true;
+      return new URL(route, "https://runscars.invalid").pathname !== route;
+    })
+  )
+    throw new Error(message);
+  return [...new Set(routes)];
+}
+const customPaths = parseRoutePaths(process.env.RUNSCARS_UI_PATHS);
+const defaultPaths = before
   ? ["/", "/temporadas/2027/mejor-pelicula", "/peliculas/fjord"]
   : [
       "/",
@@ -53,8 +82,9 @@ const paths = before
       ...festivals.map((f) => `/festivales/${f}/2026`),
       ...[2022, 2023, 2024, 2025, 2026].map((y) => `/archivo/${y}`),
     ];
+const paths = customPaths ?? defaultPaths;
 const cases = ["desktop", "mobile"].flatMap((device) =>
-  (before ? ["es"] : ["es", "en"]).flatMap((locale) =>
+  (before && !customPaths ? ["es"] : ["es", "en"]).flatMap((locale) =>
     paths.map((route) => ({ device, locale, route })),
   ),
 );

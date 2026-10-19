@@ -53,8 +53,8 @@ export default async function MethodologyPage() {
           <h2>{en ? "Predictions" : "Predicción"}</h2>
           <p>
             {en
-              ? "Each professional source contributes its most recent eligible publication for each category and intention. A source counts once, even when it publishes several experts. AwardsWatch follows Erik Anderson’s column and Next Best Picture follows Matt Neglia’s profile, with attribution to each author."
-              : "Cada fuente profesional aporta su publicación elegible más reciente por categoría e intención. Una fuente cuenta una vez, aunque publique varios expertos. De AwardsWatch se sigue la columna de Erik Anderson y de Next Best Picture el perfil de Matt Neglia, con atribución a cada autor."}
+              ? "Each professional source contributes its most recent eligible publication for each category and intention. A source counts once, even when it publishes several experts. AwardsWatch follows Erik Anderson’s column and Next Best Picture follows Matt Neglia’s profile. The Ankler follows Christopher Rosen and The Rolling Tape follows Danny Jarabek, with attribution to each author."
+              : "Cada fuente profesional aporta su publicación elegible más reciente por categoría e intención. Una fuente cuenta una vez, aunque publique varios expertos. De AwardsWatch se sigue la columna de Erik Anderson y de Next Best Picture el perfil de Matt Neglia. The Ankler sigue a Christopher Rosen y The Rolling Tape a Danny Jarabek, con atribución a cada autor."}
           </p>
         </article>
         <article>
@@ -80,13 +80,18 @@ export default async function MethodologyPage() {
           </h2>
           <div className="method-formula">
             {en
-              ? "points = (length − rank + 1) / length"
-              : "puntos = (longitud − puesto + 1) / longitud"}
+              ? "points = (K − rank + 1) / K, for ranks 1…K"
+              : "puntos = (K − puesto + 1) / K, en puestos 1…K"}
           </div>
           <p>
             {en
-              ? "First place receives 1 and last place receives 1/length. Points are averaged across eligible ordered sources; an absent candidate receives zero. Unordered selections count towards coverage only. Consensus requires four current, automated, publishable ranked sources. Scores are not nomination probabilities; different list lengths can assign different points to the same rank."
-              : "El primer puesto recibe 1 y el último 1/longitud. Se promedian los puntos entre las fuentes ordenadas elegibles; una candidatura ausente recibe cero. Las selecciones sin orden solo aportan cobertura. El consenso exige cuatro fuentes con rankings vigentes, automáticos y publicables. Los puntos no son probabilidades: listas de distinta longitud pueden dar puntos diferentes al mismo puesto."}
+              ? "K is 20 for Best Picture and 10 for every other category. All ranked sources use that common horizon, even when their original lists are shorter. First place receives 1; rank K receives 1/K. Later positions and absences receive zero and no coverage. Original complete lists remain available on each source page. Points are averaged across eligible ordered sources. Explicit unordered selections contribute coverage, with no inferred rank or Borda points. Consensus requires four current, automated, publishable ranked sources. Scores are ordinal points, not nomination probabilities."
+              : "K es 20 en Mejor película y 10 en las demás categorías. Todas las fuentes ordenadas usan ese horizonte común, aunque su lista original sea más corta. El primer puesto recibe 1; el puesto K recibe 1/K. Los puestos posteriores y las ausencias reciben cero y ninguna cobertura. Las listas originales completas siguen disponibles en la ficha de cada fuente. Se promedian los puntos entre las fuentes ordenadas elegibles. Las selecciones explícitas sin orden aportan cobertura, sin inventar puestos ni puntos Borda. El consenso exige cuatro fuentes con rankings vigentes, automáticos y publicables. Son puntos ordinales, no probabilidades de nominación."}
+          </p>
+          <p>
+            {en
+              ? "This common horizon is methodology v4. Earlier v2/v3 cuts retain their original method and list-length formula; movements across that change are not compared."
+              : "Este horizonte común corresponde a la metodología v4. Los cortes anteriores v2/v3 conservan su método y la fórmula basada en la longitud original; no se comparan movimientos entre esos métodos."}
           </p>
         </article>
         <article>

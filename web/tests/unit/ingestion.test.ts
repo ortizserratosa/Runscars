@@ -899,7 +899,7 @@ describe("professional ingestion adapters", () => {
       },
     });
 
-    expect(batch.extractorVersion).toBe("awardswatch-multicategory-v7");
+    expect(batch.extractorVersion).toBe("awardswatch-multicategory-v8");
     expect(batch.publications).toEqual([
       expect.objectContaining({
         isMutable: true,

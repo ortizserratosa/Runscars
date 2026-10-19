@@ -1,7 +1,7 @@
 # Registro de fuentes
 
 **Estado:** fuentes públicas y circuito festivalero 2026 versionados
-**Última revisión:** 2026-10-07
+**Última revisión:** 2026-10-19
 
 ## 1. Objetivo
 
@@ -529,3 +529,35 @@ Los carteles y metadatos reutilizan `tmdb_movies` y `tmdb_movie_snapshots` sin
 insertar una película en el catálogo Oscar. IMDb es opcional; su ausencia no
 descarta una identidad TMDB corroborada. Se conserva la atribución TMDB y la
 caducidad de las capturas existentes.
+
+### Auditoría de predicciones · 19 de octubre de 2026
+
+El [diagnóstico de este corte](SOURCE_AUDIT_2026-10-19.md) distingue caducidad,
+fallos de extracción, selecciones y profundidad original. El 19/10 había tres
+rankings vigentes por categoría salvo actriz, con dos. AwardsWatch fallaba por
+`ADAPTED SCREEPNPLAY` y NEXT dentro de una tabla; sus publicaciones de octubre
+siguen siendo selecciones. Awards Daily tampoco declara un orden completo.
+Variety adaptado declara posiciones completas físicamente reordenadas; se
+ordenan por Rank. Duplicados y huecos de sus otras dos tablas no se reparan
+artificialmente: conservan la última captura válida y una incidencia.
+
+| Fuente / autor fijo | Muestra y segunda evidencia | Original película / resto | Captura y límites |
+|---|---|---:|---|
+| The Ankler / Christopher Rosen | [Ballot](https://anklerpundits.com/pundit/christopher-rosen/) · [panel y atribución](https://anklerpundits.com/predictions/best-picture/) | 10 / 5 | HTML público; fecha por categoría; no usar el consenso del panel ni sumar sus otros autores |
+| The Rolling Tape / Danny Jarabek | [Ballot](https://therollingtape.com/danny-jarabek-oscar-predictions/) · [biografía editorial](https://therollingtape.com/danny-jarabek/) · [JSON público](https://therollingtape.com/wp-json/op/v1/predictors/danny-jarabek) | 20 / 10 | Endpoint usado por la propia web; `last_updated` por categoría, nunca `last_synced`; controlar temporada y cierre de nominaciones |
+
+Ambas se seleccionan como `prediction`, `automated`, `publishable` para valores
+fácticos y enlaces atribuidos (D-074). Se capturan completas, se validan antes
+de persistir y se someten al mismo matching conservador. No se publica contenido
+editorial ni se duplica la voz de un medio por sus autores. La metodología v4
+considera puestos hasta 20/10 con escala común; conserva longitud original y
+frescura de 30 días (D-073).
+
+Gold Derby queda pendiente: se verificaron páginas públicas separadas de
+[editores](https://www.goldderby.com/awardshows/editor-predictions/oscars-nominations-2027/)
+y [expertos](https://www.goldderby.com/awardshows/expert-predictions/oscars-nominations-2027/),
+pero falta un representante editorial estable y comprobar las ocho categorías.
+[Music City Drive-In / Richard Valero](https://musiccitydrivein.com/2026/10/13/2027-oscar-predictions-best-picture-october-2026/)
+tiene un top diez explícito de película; no se activa en este corte. THR sigue
+requiriendo acceso autorizado. No se verificó un nuevo orden utilizable en
+IndieWire, Filmotomy, Cinema Sight o The Contending.

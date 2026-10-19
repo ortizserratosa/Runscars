@@ -1,7 +1,7 @@
 # Contrato de producto
 
 **Estado:** contrato aceptado para el MVP
-**Última revisión:** 2026-10-07
+**Última revisión:** 2026-10-19
 
 ## 1. Visión
 
@@ -173,6 +173,13 @@ no forman parte de la identidad de la candidatura.
 - Importación manual disponible para el resto.
 - Una fuente seleccionada puede activarse gradualmente; solo sus observaciones
   elegibles participan en el agregado correspondiente.
+- El consenso v4 puntúa hasta veinte posiciones originales por medio en Mejor
+  película y diez en las otras categorías, con una escala común independiente
+  de la longitud publicada. Las listas originales completas siguen consultables.
+- Cada categoría distingue medios con datos, rankings que puntúan, candidatos
+  considerados y originales fuera de la ventana. La caducidad editorial y la
+  salud técnica del conector se muestran por separado, también en fuentes
+  temporalmente ausentes del consenso.
 - Una predicción con más de 30 días de antigüedad se conserva como información
   adicional, pero no participa en el consenso hasta que la fuente publique una
   actualización.

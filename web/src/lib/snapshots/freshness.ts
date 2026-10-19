@@ -4,6 +4,7 @@ import type { PredictionAggregateV2 } from "../aggregation/v2";
 export type ConnectorFreshnessState = {
   lastSuccessfulCheckAt: string | null;
   lastFailureAt: string | null;
+  hasCurrentFailure?: boolean;
 };
 
 export type SourceFreshnessView = {
@@ -11,11 +12,18 @@ export type SourceFreshnessView = {
   sourceName: string;
   publicationUrl: string;
   publishedAt: string | null;
-  lastChangedAt: string;
+  lastChangedAt: string | null;
   lastSuccessfulCheckAt: string | null;
   lastFailureAt: string | null;
   status: "ok" | "failed" | "unknown";
   changedInSelectedCut: boolean;
+  freshnessAt?: string | null;
+  expiresAt?: string | null;
+  expired?: boolean;
+  originalCount?: number;
+  consideredCount?: number;
+  ordered?: boolean;
+  scoringDepth?: number | null;
 };
 
 function freshnessStatus(state: ConnectorFreshnessState | undefined) {
@@ -26,7 +34,7 @@ function freshnessStatus(state: ConnectorFreshnessState | undefined) {
   const failed = state.lastFailureAt
     ? Date.parse(state.lastFailureAt)
     : Number.NEGATIVE_INFINITY;
-  if (failed > successful) return "failed" as const;
+  if (state.hasCurrentFailure || failed > successful) return "failed" as const;
   if (Number.isFinite(successful)) return "ok" as const;
   return "unknown" as const;
 }
@@ -68,6 +76,22 @@ export function sourceFreshnessForSelection(
         sourceName: source.sourceName,
         publicationUrl: source.publicationUrl,
         publishedAt: source.publishedAt,
+        freshnessAt: source.publishedAt ?? source.freshnessAt ?? null,
+        expiresAt:
+          source.publishedAt || source.freshnessAt
+            ? new Date(
+                Date.parse(source.publishedAt ?? source.freshnessAt!) +
+                  30 * 86_400_000,
+              ).toISOString()
+            : null,
+        expired: false,
+        originalCount:
+          source.listLength ?? source.selectionObservationIds.length,
+        consideredCount:
+          source.orderedObservationIds.length +
+          source.selectionObservationIds.length,
+        ordered: source.orderedObservationIds.length > 0,
+        scoringDepth: aggregate.scoringDepth ?? null,
         lastChangedAt: lastChanged?.lockedAt ?? selected.lockedAt,
         lastSuccessfulCheckAt: connector?.lastSuccessfulCheckAt ?? null,
         lastFailureAt: connector?.lastFailureAt ?? null,

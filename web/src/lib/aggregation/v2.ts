@@ -2,10 +2,13 @@ import { isPredictionFresh } from "./freshness";
 
 export const AGGREGATION_METHOD_VERSION_V2 = "runscars-aggregation-v2";
 export const AGGREGATION_METHOD_VERSION_V3 = "runscars-aggregation-v3";
+export const AGGREGATION_METHOD_VERSION_V4 = "runscars-aggregation-v4";
 export const MINIMUM_ORDERED_SOURCES_V2 = 4;
 
 export type PredictionAggregationMethodVersionV2 =
-  typeof AGGREGATION_METHOD_VERSION_V2 | typeof AGGREGATION_METHOD_VERSION_V3;
+  | typeof AGGREGATION_METHOD_VERSION_V2
+  | typeof AGGREGATION_METHOD_VERSION_V3
+  | typeof AGGREGATION_METHOD_VERSION_V4;
 
 export type CategoryCandidatePerson = {
   id: string;
@@ -86,12 +89,16 @@ export type PredictionSourceListV2 = {
   publishedAt: string | null;
   freshnessAt?: string;
   listLength: number | null;
+  /** Published observations considered by v4, without renumbering matching gaps. */
+  consideredCount?: number;
   orderedObservationIds: string[];
   selectionObservationIds: string[];
 };
 
 export type PredictionAggregateV2 = {
   methodVersion: PredictionAggregationMethodVersionV2;
+  /** Common scoring window; absent from immutable v2/v3 payloads. */
+  scoringDepth?: number;
   seasonId: string;
   categoryId: string;
   intention: "nomination" | "winner";
@@ -131,6 +138,15 @@ export type PredictionAggregateOptionsV2 = {
 export type PredictionAggregateV3 = PredictionAggregateV2 & {
   methodVersion: typeof AGGREGATION_METHOD_VERSION_V3;
 };
+
+export type PredictionAggregateV4 = PredictionAggregateV2 & {
+  methodVersion: typeof AGGREGATION_METHOD_VERSION_V4;
+  scoringDepth: number;
+};
+
+export function predictionScoringDepth(categoryId: string) {
+  return categoryId === "best-picture" ? 20 : 10;
+}
 
 const END_OF_DAY = "T23:59:59.999Z";
 
@@ -323,6 +339,35 @@ export function aggregatePredictionsV2(
   observations: PredictionObservationV2[],
   options: PredictionAggregateOptionsV2,
 ): PredictionAggregateV3 {
+  return aggregatePredictions(
+    observations,
+    options,
+    false,
+  ) as PredictionAggregateV3;
+}
+
+export function aggregatePredictionsV4(
+  observations: PredictionObservationV2[],
+  options: PredictionAggregateOptionsV2,
+): PredictionAggregateV4 {
+  return aggregatePredictions(
+    observations,
+    options,
+    true,
+  ) as PredictionAggregateV4;
+}
+
+function aggregatePredictions(
+  observations: PredictionObservationV2[],
+  options: PredictionAggregateOptionsV2,
+  bounded: boolean,
+): PredictionAggregateV2 {
+  const methodVersion = bounded
+    ? AGGREGATION_METHOD_VERSION_V4
+    : AGGREGATION_METHOD_VERSION_V3;
+  const scoringDepth = predictionScoringDepth(options.categoryId);
+  const considered = (observation: PredictionObservationV2) =>
+    !bounded || (observation.rank !== null && observation.rank <= scoringDepth);
   const cutoff = instant(options.cutoffDate);
   const relevant = observations.filter(
     (observation) =>
@@ -357,14 +402,16 @@ export function aggregatePredictionsV2(
     if (staleSourceIds.has(source.sourceId)) {
       return source.observations.map((observation) => observation.id);
     }
-    return source.ordered.length > 0 && !source.orderedIsValid
-      ? source.ordered.map((observation) => observation.id)
-      : [];
+    return source.ordered
+      .filter(
+        (observation) => !source.orderedIsValid || !considered(observation),
+      )
+      .map((observation) => observation.id);
   });
   const candidates = new Map<string, CategoryCandidate>();
   for (const source of activeSources) {
     for (const observation of [
-      ...(source.orderedIsValid ? source.ordered : []),
+      ...(source.orderedIsValid ? source.ordered.filter(considered) : []),
       ...source.selection,
     ]) {
       candidates.set(observation.candidate.id, observation.candidate);
@@ -376,14 +423,17 @@ export function aggregatePredictionsV2(
       const sourceContributions: PredictionSourceContributionV2[] =
         orderedSources.map((source) => {
           const ordered = source.ordered.find(
-            (observation) => observation.candidate.id === candidate.id,
+            (observation) =>
+              observation.candidate.id === candidate.id &&
+              considered(observation),
           );
           const selected = source.selection.find(
             (observation) => observation.candidate.id === candidate.id,
           );
           const listLength = source.listLength!;
+          const depth = bounded ? scoringDepth : listLength;
           const points = ordered
-            ? stableDecimal((listLength - ordered.rank! + 1) / listLength)
+            ? stableDecimal((depth - ordered.rank! + 1) / depth)
             : 0;
           return {
             sourceId: source.sourceId,
@@ -467,10 +517,15 @@ export function aggregatePredictionsV2(
 
   ranking.sort(predictionSort);
   const previousPositions = new Map(
-    options.previous?.ranking.map((candidate) => [
-      candidate.candidateId,
-      candidate.position,
-    ]) ?? [],
+    options.previous?.methodVersion === methodVersion &&
+      options.previous.seasonId === options.seasonId &&
+      options.previous.categoryId === options.categoryId &&
+      options.previous.intention === options.intention
+      ? options.previous.ranking.map((candidate) => [
+          candidate.candidateId,
+          candidate.position,
+        ])
+      : [],
   );
   ranking.forEach((candidate, index) => {
     candidate.position = index + 1;
@@ -489,8 +544,19 @@ export function aggregatePredictionsV2(
     publishedAt: source.publishedAt,
     ...(source.freshnessAt ? { freshnessAt: source.freshnessAt } : {}),
     listLength: source.orderedIsValid ? source.listLength : null,
+    ...(bounded
+      ? {
+          consideredCount:
+            (source.orderedIsValid
+              ? source.ordered.filter(considered).length
+              : 0) + source.selection.length,
+        }
+      : {}),
     orderedObservationIds: source.orderedIsValid
-      ? source.ordered.map((observation) => observation.id).sort()
+      ? source.ordered
+          .filter(considered)
+          .map((observation) => observation.id)
+          .sort()
       : [],
     selectionObservationIds: source.selection
       .map((observation) => observation.id)
@@ -498,7 +564,8 @@ export function aggregatePredictionsV2(
   }));
 
   return {
-    methodVersion: AGGREGATION_METHOD_VERSION_V3,
+    methodVersion,
+    ...(bounded ? { scoringDepth } : {}),
     seasonId: options.seasonId,
     categoryId: options.categoryId,
     intention: options.intention,

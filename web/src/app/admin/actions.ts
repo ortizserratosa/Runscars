@@ -4,7 +4,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
-import { aggregatePredictionsV2 } from "../../lib/aggregation/v2";
+import { aggregatePredictionsV4 } from "../../lib/aggregation/v2";
 import { requireEditorialAdmin } from "../../lib/admin/auth";
 import { sha256 } from "../../lib/snapshots";
 import {
@@ -466,7 +466,7 @@ export async function createFinalSnapshotAction(formData: FormData) {
     };
     const now = new Date().toISOString();
     const observations = await repository.predictionObservationsV2(schedule);
-    const aggregate = aggregatePredictionsV2(observations, {
+    const aggregate = aggregatePredictionsV4(observations, {
       seasonId: schedule.seasonId,
       categoryId: schedule.categoryId,
       intention: schedule.intention,

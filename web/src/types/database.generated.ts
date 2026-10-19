@@ -2588,6 +2588,165 @@ export type Database = {
         };
         Relationships: [];
       };
+      public_prediction_connector_freshness: {
+        Row: {
+          source_id: string | null;
+          category_id: string | null;
+          last_successful_check_at: string | null;
+          last_failure_at: string | null;
+          has_current_failure: boolean | null;
+        };
+        Insert: {
+          source_id?: string | null;
+          category_id?: string | null;
+          last_successful_check_at?: string | null;
+          last_failure_at?: string | null;
+          has_current_failure?: boolean | null;
+        };
+        Update: {
+          source_id?: string | null;
+          category_id?: string | null;
+          last_successful_check_at?: string | null;
+          last_failure_at?: string | null;
+          has_current_failure?: boolean | null;
+        };
+        Relationships: [];
+      };
+      public_prediction_source_evidence: {
+        Row: {
+          id: number | null;
+          source_id: string | null;
+          source_name: string | null;
+          season_id: string | null;
+          category_id: string | null;
+          prediction_intention:
+            Database["public"]["Enums"]["prediction_intention"] | null;
+          category_candidate_id: string | null;
+          original_subject: string | null;
+          original_value: Json | null;
+          data_type:
+            Database["public"]["Enums"]["professional_observation_type"] | null;
+          participates: boolean | null;
+          published_at: string | null;
+          captured_at: string | null;
+          extractor_version: string | null;
+          publication_external_id: string | null;
+          publication_title: string | null;
+          publication_url: string | null;
+          author: string | null;
+          candidate_label: string | null;
+          original_count: number | null;
+          freshness_at: string | null;
+        };
+        Insert: {
+          id?: number | null;
+          source_id?: string | null;
+          source_name?: string | null;
+          season_id?: string | null;
+          category_id?: string | null;
+          prediction_intention?:
+            Database["public"]["Enums"]["prediction_intention"] | null;
+          category_candidate_id?: string | null;
+          original_subject?: string | null;
+          original_value?: Json | null;
+          data_type?:
+            Database["public"]["Enums"]["professional_observation_type"] | null;
+          participates?: boolean | null;
+          published_at?: string | null;
+          captured_at?: string | null;
+          extractor_version?: string | null;
+          publication_external_id?: string | null;
+          publication_title?: string | null;
+          publication_url?: string | null;
+          author?: string | null;
+          candidate_label?: string | null;
+          original_count?: number | null;
+          freshness_at?: string | null;
+        };
+        Update: {
+          id?: number | null;
+          source_id?: string | null;
+          source_name?: string | null;
+          season_id?: string | null;
+          category_id?: string | null;
+          prediction_intention?:
+            Database["public"]["Enums"]["prediction_intention"] | null;
+          category_candidate_id?: string | null;
+          original_subject?: string | null;
+          original_value?: Json | null;
+          data_type?:
+            Database["public"]["Enums"]["professional_observation_type"] | null;
+          participates?: boolean | null;
+          published_at?: string | null;
+          captured_at?: string | null;
+          extractor_version?: string | null;
+          publication_external_id?: string | null;
+          publication_title?: string | null;
+          publication_url?: string | null;
+          author?: string | null;
+          candidate_label?: string | null;
+          original_count?: number | null;
+          freshness_at?: string | null;
+        };
+        Relationships: [];
+      };
+      public_prediction_source_status: {
+        Row: {
+          source_id: string | null;
+          source_name: string | null;
+          season_id: string | null;
+          category_id: string | null;
+          prediction_intention:
+            Database["public"]["Enums"]["prediction_intention"] | null;
+          publication_external_id: string | null;
+          publication_title: string | null;
+          publication_url: string | null;
+          author: string | null;
+          published_at: string | null;
+          captured_at: string | null;
+          freshness_at: string | null;
+          matched_count: number | null;
+          original_count: number | null;
+          ordered: boolean | null;
+        };
+        Insert: {
+          source_id?: string | null;
+          source_name?: string | null;
+          season_id?: string | null;
+          category_id?: string | null;
+          prediction_intention?:
+            Database["public"]["Enums"]["prediction_intention"] | null;
+          publication_external_id?: string | null;
+          publication_title?: string | null;
+          publication_url?: string | null;
+          author?: string | null;
+          published_at?: string | null;
+          captured_at?: string | null;
+          freshness_at?: string | null;
+          matched_count?: number | null;
+          original_count?: number | null;
+          ordered?: boolean | null;
+        };
+        Update: {
+          source_id?: string | null;
+          source_name?: string | null;
+          season_id?: string | null;
+          category_id?: string | null;
+          prediction_intention?:
+            Database["public"]["Enums"]["prediction_intention"] | null;
+          publication_external_id?: string | null;
+          publication_title?: string | null;
+          publication_url?: string | null;
+          author?: string | null;
+          published_at?: string | null;
+          captured_at?: string | null;
+          freshness_at?: string | null;
+          matched_count?: number | null;
+          original_count?: number | null;
+          ordered?: boolean | null;
+        };
+        Relationships: [];
+      };
       public_source_freshness: {
         Row: {
           source_id: string | null;

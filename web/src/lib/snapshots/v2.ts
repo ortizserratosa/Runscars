@@ -117,7 +117,9 @@ export function createPredictionSnapshotPayloadV2(
   );
   const isEmptyPeriodicCut =
     options.kind === "periodic" &&
-    aggregate.methodVersion === "runscars-aggregation-v3" &&
+    ["runscars-aggregation-v3", "runscars-aggregation-v4"].includes(
+      aggregate.methodVersion,
+    ) &&
     aggregate.ranking.length === 0 &&
     activeSourceIds.length === 0 &&
     aggregate.orderedSourceCount === 0 &&

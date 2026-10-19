@@ -18,6 +18,10 @@ import {
 } from "./professional-predictions.mjs";
 import { fetchResponse } from "../network.mjs";
 import { runMovieStateConnector } from "./movie-state.mjs";
+import {
+  runAnklerConnector,
+  runRollingTapeConnector,
+} from "./editorial-ballots.mjs";
 import { runVarietyConnector, VARIETY_CATEGORIES } from "./variety.mjs";
 
 function requestTimeout(connector) {
@@ -168,6 +172,8 @@ export const CONNECTORS = Object.freeze({
     ]),
   ),
   "movie-state-predictions": runMovieStateConnector,
+  "ankler-predictions": runAnklerConnector,
+  "rolling-tape-predictions": runRollingTapeConnector,
   "guardian-content-api": async ({
     connector,
     capturedAt,
@@ -590,7 +596,7 @@ export const CONNECTORS = Object.freeze({
       {
         connectorId: connector.id,
         sourceId: "awardswatch",
-        extractorVersion: "awardswatch-multicategory-v7",
+        extractorVersion: "awardswatch-multicategory-v8",
         seasonId: connector.configuration.season_id,
         capturedAt,
         sourceUrl: connector.endpoint_url,

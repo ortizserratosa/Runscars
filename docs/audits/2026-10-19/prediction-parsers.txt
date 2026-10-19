@@ -1,0 +1,24 @@
+
+> runscars@0.1.0 audit:predictions
+> node web/scripts/audit-production.mjs --predictions
+
+awardswatch-predictions: 8 publicaciones; 45 observaciones; cobertura requerida completa.
+awards-daily-predictions: 1 publicaciones; 80 observaciones; cobertura requerida completa.
+awards-radar-predictions: 8 publicaciones; 190 observaciones; cobertura requerida completa.
+next-best-picture-predictions: 1 publicaciones; 110 observaciones; cobertura requerida completa.
+midnight-critics-predictions: 1 publicaciones; 150 observaciones; cobertura requerida completa.
+movie-state-predictions: 1 publicaciones; 45 observaciones; cobertura requerida completa.
+ankler-predictions: 8 publicaciones; 45 observaciones; cobertura requerida completa.
+rolling-tape-predictions: 8 publicaciones; 90 observaciones; cobertura requerida completa.
+ringer-best-picture: 1 publicaciones; 3 observaciones; cobertura requerida completa.
+variety-best-picture-predictions: 1 publicaciones; 40 observaciones; cobertura requerida completa.
+variety-directing-predictions: 1 publicaciones; 30 observaciones; cobertura requerida completa.
+variety-actor-predictions: 1 publicaciones; 30 observaciones; cobertura requerida completa.
+variety-actress-predictions: 1 publicaciones; 30 observaciones; cobertura requerida completa.
+variety-supporting-actor-predictions: 1 publicaciones; 30 observaciones; cobertura requerida completa.
+variety-adapted-screenplay-predictions: 1 publicaciones; 30 observaciones; cobertura requerida completa.
+AVISO: Parsers comprobados con configuración versionada; sin verificar configuración remota
+AVISO: Sin credenciales de servidor: no se auditó la frescura interna de cron
+FALLO: variety-supporting-actress-predictions: Variety: posiciones no consecutivas o duplicadas
+FALLO: variety-original-screenplay-predictions: Variety: posiciones no consecutivas o duplicadas
+Auditoría de producción fallida: 2 incidencias.

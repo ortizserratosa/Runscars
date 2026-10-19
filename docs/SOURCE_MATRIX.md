@@ -234,3 +234,22 @@ para películas festivaleras, incluidas las ausentes del catálogo Oscar. IMDb e
 un enlace secundario opcional. Es enriquecimiento de identidad;
 no aporta una señal, candidatura ni elegibilidad. Los homónimos y las entradas
 con evidencia insuficiente conservan su revisión pendiente (D-071 y D-072).
+
+## Corte de predicciones · 19 de octubre de 2026
+
+| ID | Autor seguido | Cobertura | Original película / resto | Editorial | Técnico | Publicación |
+|---|---|---|---:|---|---|---|
+| `ankler` | Christopher Rosen | Ocho rankings de nominaciones | 10 / 5 | selected | automated | publishable |
+| `the-rolling-tape` | Danny Jarabek | Ocho rankings de nominaciones | 20 / 10 | selected | automated | publishable |
+
+Autoridad, dos puntos de comprobación, método público y límites se registran en
+[DATA_SOURCES.md](DATA_SOURCES.md#auditoría-de-predicciones--19-de-octubre-de-2026).
+Los paneles de otros autores no se suman como votos independientes. Gold Derby
+y Music City Drive-In continúan como candidatas pendientes.
+
+AwardsWatch de octubre y Awards Daily se conservan como selecciones sin orden.
+AwardsWatch v8 corrige el encabezado y los bloques NEXT; Variety v2 usa Rank sin
+confundirlo con el orden físico de filas. Los duplicados de posición reales
+mantienen incidencia y el último original válido. Desde v4 el consenso considera
+puestos 1–20 de película y 1–10 en las otras categorías con escala común; todas
+las capturas originales conservan su longitud (D-073 a D-075).

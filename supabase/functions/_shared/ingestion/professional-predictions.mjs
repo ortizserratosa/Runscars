@@ -995,7 +995,14 @@ function awardsWatchCategorySection(article, categoryId) {
     ...article.matchAll(/<h[2-6]\b[^>]*>([\s\S]*?)<\/h[2-6]>/gi),
   ]
     .map((match) => ({
-      categoryId: headingCategory(stripTags(match[1])),
+      // October's canonical AwardsWatch article misspells this heading. Keep
+      // the alias local to this source rather than guessing other categories.
+      categoryId: headingCategory(
+        stripTags(match[1]).replace(
+          /^ADAPTED SCREEPNPLAY$/i,
+          "ADAPTED SCREENPLAY",
+        ),
+      ),
       index: match.index,
       end: match.index + match[0].length,
     }))
@@ -1044,6 +1051,7 @@ function awardsWatchPanel(section, categoryId, panelAuthor) {
       (cell) => cell.toLocaleLowerCase() === panelAuthor.toLocaleLowerCase(),
     );
     const isNext = header.every((cell) => /^NEXT$/i.test(cell));
+    let nextTier = isNext;
     if (authorIndex >= 0) {
       if (foundAuthor)
         throw new Error(
@@ -1060,6 +1068,12 @@ function awardsWatchPanel(section, categoryId, panelAuthor) {
     }
     for (const cells of tableRows.slice(tableRows.indexOf(header) + 1)) {
       if (cells.every((cell) => !cell)) continue;
+      if (cells.every((cell) => /^NEXT$/i.test(cell))) {
+        nextTier = true;
+        continue;
+      }
+      if (cells.every((cell) => /^\*category placement tbd$/i.test(cell)))
+        continue;
       if (cells.length !== columnCount || !cells[column]) {
         throw new Error("AwardsWatch contiene una fila de panel incompleta");
       }
@@ -1071,7 +1085,7 @@ function awardsWatchPanel(section, categoryId, panelAuthor) {
         parts: awardsWatchSubjectParts(categoryId, match?.[2] ?? raw),
       };
       // An unnumbered NEXT block is an alternate tier, not a nomination vote.
-      if (isNext && row.rank === null) alternates.push(row);
+      if (nextTier && row.rank === null) alternates.push(row);
       else rows.push(row);
     }
   }
@@ -1127,7 +1141,7 @@ export function parseAwardsWatchArticleFixture(
   const batch = buildBatch({
     connectorId,
     sourceId: "awardswatch",
-    extractorVersion: "awardswatch-multicategory-v7",
+    extractorVersion: "awardswatch-multicategory-v8",
     seasonId,
     capturedAt,
     sourceUrl: publication.canonicalUrl,

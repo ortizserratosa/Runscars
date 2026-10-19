@@ -1,4 +1,7 @@
-import type { PredictionAggregateV2 } from "../aggregation/v2";
+import {
+  AGGREGATION_METHOD_VERSION_V4,
+  type PredictionAggregateV2,
+} from "../aggregation/v2";
 import {
   hasIncompleteComparisonDates,
   projectComparableAggregate,
@@ -36,10 +39,19 @@ function sameScope(
   previous: PredictionAggregateV2,
 ) {
   return (
+    sameEditorialScope(current, previous) &&
+    current.methodVersion === previous.methodVersion
+  );
+}
+
+function sameEditorialScope(
+  current: PredictionAggregateV2,
+  previous: PredictionAggregateV2,
+) {
+  return (
     current.seasonId === previous.seasonId &&
     current.categoryId === previous.categoryId &&
-    current.intention === previous.intention &&
-    current.methodVersion === previous.methodVersion
+    current.intention === previous.intention
   );
 }
 
@@ -55,6 +67,9 @@ function entrySort(left: ProviderEntryState, right: ProviderEntryState) {
 
 export function effectiveProviderState(
   aggregate: PredictionAggregateV2,
+  comparisonDepth = aggregate.methodVersion === AGGREGATION_METHOD_VERSION_V4
+    ? aggregate.scoringDepth
+    : undefined,
 ): ProviderState[] {
   return aggregate.sourceLists
     .map((source): ProviderState => {
@@ -66,12 +81,25 @@ export function effectiveProviderState(
           if (!contribution || contribution.appearanceKind === "absent") {
             return [];
           }
+          if (
+            comparisonDepth !== undefined &&
+            contribution.appearanceKind === "ordered" &&
+            (contribution.rank === null || contribution.rank > comparisonDepth)
+          ) {
+            return [];
+          }
           return [
             {
               candidateId: candidate.candidateId,
               appearanceKind: contribution.appearanceKind,
               rank: contribution.rank,
-              listLength: contribution.listLength,
+              // Appending a tail beyond the common window changes provenance,
+              // not v4 scores or the effective provider cut.
+              listLength:
+                comparisonDepth !== undefined &&
+                contribution.appearanceKind === "ordered"
+                  ? comparisonDepth
+                  : contribution.listLength,
             },
           ];
         },
@@ -95,19 +123,22 @@ export function changedProviderSourceIds(
   current: PredictionAggregateV2,
   previous: PredictionAggregateV2 | null,
 ): string[] {
+  // Compare editorial positions under the same window across a methodology
+  // boundary; changing the formula alone is not an expert updating a ballot.
+  const comparisonDepth = current.scoringDepth ?? previous?.scoringDepth;
   const currentState = new Map(
-    effectiveProviderState(current).map((source) => [
+    effectiveProviderState(current, comparisonDepth).map((source) => [
       source.sourceId,
       JSON.stringify(source.entries),
     ]),
   );
-  if (!previous || !sameScope(current, previous)) {
+  if (!previous || !sameEditorialScope(current, previous)) {
     return [...currentState.keys()].sort((left, right) =>
       left.localeCompare(right, "en"),
     );
   }
   const previousState = new Map(
-    effectiveProviderState(previous).map((source) => [
+    effectiveProviderState(previous, comparisonDepth).map((source) => [
       source.sourceId,
       JSON.stringify(source.entries),
     ]),

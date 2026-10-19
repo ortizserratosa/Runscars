@@ -38,7 +38,9 @@ test("publishes all eight database-shaped category routes", async ({
     await expect(
       page.getByRole("heading", { name: "Datos verificados" }),
     ).toBeVisible();
-    await expect(page.getByText("fuentes con consenso")).toBeVisible();
+    await expect(
+      page.getByText(/votos ordenados · \d+ medios con cobertura$/),
+    ).toBeVisible();
     await expect(
       page.getByRole("heading", { name: "Consenso profesional" }),
     ).toBeVisible();
@@ -682,7 +684,12 @@ test("excludes stale The Ringer predictions from Best Picture", async ({
   page,
 }) => {
   await page.goto("/temporadas/2027/mejor-pelicula");
-  await expect(page.getByText("5 medios")).toBeVisible();
+  await expect(
+    page
+      .locator(".category-title-row > div")
+      .first()
+      .getByText(/5 medios$/),
+  ).toBeVisible();
   await page.getByText("Ver procedencia y cálculo").first().click();
   const ringer = page
     .locator(".source-calculations")

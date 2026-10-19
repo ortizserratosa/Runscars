@@ -1,0 +1,1544 @@
+{
+  "capturedAt": "2026-10-19T17:15:52.386204+00:00",
+  "connectors": [
+    {
+      "active": false,
+      "extractorVersion": "academy-archive-v1",
+      "id": "academy-archive-2026",
+      "lastFailureAt": null,
+      "lastSuccessAt": null,
+      "sourceId": "academy"
+    },
+    {
+      "active": true,
+      "extractorVersion": "awards-daily-v9",
+      "id": "awards-daily-predictions",
+      "lastFailureAt": "2026-10-10T04:17:33.724+00:00",
+      "lastSuccessAt": "2026-10-19T04:17:45.815+00:00",
+      "sourceId": "awards-daily"
+    },
+    {
+      "active": true,
+      "extractorVersion": "awards-radar-v6",
+      "id": "awards-radar-predictions",
+      "lastFailureAt": "2026-09-29T17:59:03.118+00:00",
+      "lastSuccessAt": "2026-10-19T04:17:53.053+00:00",
+      "sourceId": "awards-radar"
+    },
+    {
+      "active": false,
+      "extractorVersion": "awardswatch-v1",
+      "id": "awardswatch-best-picture",
+      "lastFailureAt": null,
+      "lastSuccessAt": "2026-07-25T04:17:04.337+00:00",
+      "sourceId": "awardswatch"
+    },
+    {
+      "active": true,
+      "extractorVersion": "awardswatch-multicategory-v7",
+      "id": "awardswatch-predictions",
+      "lastFailureAt": "2026-10-19T04:17:05.139+00:00",
+      "lastSuccessAt": "2026-10-15T04:17:55.173+00:00",
+      "sourceId": "awardswatch"
+    },
+    {
+      "active": true,
+      "extractorVersion": "guardian-v1",
+      "id": "guardian-content-api",
+      "lastFailureAt": null,
+      "lastSuccessAt": "2026-10-19T04:17:41.38+00:00",
+      "sourceId": "guardian"
+    },
+    {
+      "active": false,
+      "extractorVersion": "manual-v1",
+      "id": "manual-editorial",
+      "lastFailureAt": null,
+      "lastSuccessAt": "2026-08-25T15:59:20.831+00:00",
+      "sourceId": null
+    },
+    {
+      "active": true,
+      "extractorVersion": "midnight-critics-v2",
+      "id": "midnight-critics-predictions",
+      "lastFailureAt": null,
+      "lastSuccessAt": "2026-10-19T04:17:43.761+00:00",
+      "sourceId": "midnight-critics"
+    },
+    {
+      "active": true,
+      "extractorVersion": "movie-state-v1",
+      "id": "movie-state-predictions",
+      "lastFailureAt": null,
+      "lastSuccessAt": "2026-10-19T04:17:25.923+00:00",
+      "sourceId": "the-movie-state"
+    },
+    {
+      "active": true,
+      "extractorVersion": "next-best-picture-v3",
+      "id": "next-best-picture-predictions",
+      "lastFailureAt": "2026-09-29T17:59:03.118+00:00",
+      "lastSuccessAt": "2026-10-19T04:17:38.262+00:00",
+      "sourceId": "next-best-picture"
+    },
+    {
+      "active": true,
+      "extractorVersion": "the-ringer-v2",
+      "id": "ringer-best-picture",
+      "lastFailureAt": null,
+      "lastSuccessAt": "2026-10-19T04:17:05.618+00:00",
+      "sourceId": "the-ringer"
+    },
+    {
+      "active": true,
+      "extractorVersion": "roger-ebert-v1",
+      "id": "roger-ebert-rss",
+      "lastFailureAt": null,
+      "lastSuccessAt": "2026-10-19T04:17:04.416+00:00",
+      "sourceId": "roger-ebert"
+    },
+    {
+      "active": true,
+      "extractorVersion": "variety-datawrapper-v1",
+      "id": "variety-actor-predictions",
+      "lastFailureAt": null,
+      "lastSuccessAt": "2026-10-19T04:17:23.077+00:00",
+      "sourceId": "variety"
+    },
+    {
+      "active": true,
+      "extractorVersion": "variety-datawrapper-v1",
+      "id": "variety-actress-predictions",
+      "lastFailureAt": null,
+      "lastSuccessAt": "2026-10-19T04:17:23.741+00:00",
+      "sourceId": "variety"
+    },
+    {
+      "active": true,
+      "extractorVersion": "variety-datawrapper-v1",
+      "id": "variety-adapted-screenplay-predictions",
+      "lastFailureAt": "2026-10-19T04:17:03.99+00:00",
+      "lastSuccessAt": "2026-10-15T04:17:25.021+00:00",
+      "sourceId": "variety"
+    },
+    {
+      "active": true,
+      "extractorVersion": "variety-datawrapper-v1",
+      "id": "variety-best-picture-predictions",
+      "lastFailureAt": "2026-10-15T04:17:03.562+00:00",
+      "lastSuccessAt": "2026-10-19T04:17:21.052+00:00",
+      "sourceId": "variety"
+    },
+    {
+      "active": true,
+      "extractorVersion": "variety-datawrapper-v1",
+      "id": "variety-directing-predictions",
+      "lastFailureAt": null,
+      "lastSuccessAt": "2026-10-19T04:17:24.893+00:00",
+      "sourceId": "variety"
+    },
+    {
+      "active": true,
+      "extractorVersion": "variety-datawrapper-v1",
+      "id": "variety-original-screenplay-predictions",
+      "lastFailureAt": "2026-10-19T04:17:03.319+00:00",
+      "lastSuccessAt": "2026-10-15T04:17:25.805+00:00",
+      "sourceId": "variety"
+    },
+    {
+      "active": true,
+      "extractorVersion": "variety-datawrapper-v1",
+      "id": "variety-supporting-actor-predictions",
+      "lastFailureAt": null,
+      "lastSuccessAt": "2026-10-19T04:17:25.353+00:00",
+      "sourceId": "variety"
+    },
+    {
+      "active": true,
+      "extractorVersion": "variety-datawrapper-v1",
+      "id": "variety-supporting-actress-predictions",
+      "lastFailureAt": "2026-10-19T04:17:02.98+00:00",
+      "lastSuccessAt": "2026-10-15T04:17:27.764+00:00",
+      "sourceId": "variety"
+    }
+  ],
+  "project": "lgiqzrxeifwciykckzrn",
+  "schedules": [
+    {
+      "active": true,
+      "name": "runscars-festivals-daily",
+      "schedule": "17 5 * * *"
+    },
+    {
+      "active": true,
+      "name": "runscars-ingestion-daily",
+      "schedule": "17 4 * * *"
+    },
+    {
+      "active": true,
+      "name": "runscars-markets-hourly",
+      "schedule": "17 * * * *"
+    }
+  ],
+  "snapshots": [
+    {
+      "contentHash": "16b0dbde8c01707c07fef2eb8d6e8ad77695213e8466a7e47c05e5818a9838b2",
+      "id": "periodic-oscars-2027-actor-nomination-2026-07-25-16b0dbde8c01",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "1f63dfbb0075c794fbb93b92cdf9548d241d88e350ffdf6ef3d962f31fb440c2",
+      "id": "periodic-oscars-2027-actor-nomination-2026-07-25-1f63dfbb0075",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "97ba10c285a487c3e35c100db7a0914107655c4ecda39d51ebaac90c3c92b1de",
+      "id": "periodic-oscars-2027-actor-nomination-2026-07-25-97ba10c285a4",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "b3698bd964478ba108a8eb0416ac05d9a819e3939312d0e3cbfdf9fb61e94f46",
+      "id": "periodic-oscars-2027-actor-nomination-2026-07-25-b3698bd96447",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "f1a3b1d2abd71de43a4db4318d614cb0404e454560b1ea04cfa15bf75b37bb38",
+      "id": "periodic-oscars-2027-actor-nomination-2026-07-25-f1a3b1d2abd7",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "d2e69420f34905926ea9fdcb9c76d82fe7528e14556b7820981db92b16ad90f7",
+      "id": "periodic-oscars-2027-actor-nomination-2026-07-27-d2e69420f349",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "09a3cb814327b76e8cc6e12b6568aeed8102403de55084d1fc390f29dd5b6d6e",
+      "id": "periodic-oscars-2027-actor-nomination-2026-08-03-09a3cb814327",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "1278ff7b30f287c13e125487408013bbe31f25ddaf752860c5170d64b0ec7377",
+      "id": "periodic-oscars-2027-actor-nomination-2026-08-07-1278ff7b30f2",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "cb08675a03a6362a0c3ca8c269d6b34810f34c9d7f3c3fdbbd36a62aca93904d",
+      "id": "periodic-oscars-2027-actor-nomination-2026-08-07-cb08675a03a6",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "c6107e1e310ab3974b4ab89f4e45fdcb3d359f5054944b378e1fbd6db5c13c25",
+      "id": "periodic-oscars-2027-actor-nomination-2026-08-24-c6107e1e310a",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "d9d0924ed165efbcee9a58d3c585e0081fe0d058be315e79d21b638eeafa4cb8",
+      "id": "periodic-oscars-2027-actor-nomination-2026-09-01-d9d0924ed165",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "9b2ad8e82a8937900b9c570b574948ca0cc0373b9b21ff4d50193fc07408db33",
+      "id": "periodic-oscars-2027-actor-nomination-2026-09-05-9b2ad8e82a89",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "fb05f4fdf20bc0885b91b5e56f4387dabc2bcf9d5614fe9c112bce424d968b4e",
+      "id": "periodic-oscars-2027-actor-nomination-2026-09-06-fb05f4fdf20b",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "77f5e34c3847121f2920c8eeebc123df683c5f3dbb1e713467f7c24e1575b24d",
+      "id": "periodic-oscars-2027-actor-nomination-2026-09-08-77f5e34c3847",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "7f8c7131d2782c9878aedb7b8f2f3a80454ea4f56127bcaf2217dd6230a67725",
+      "id": "periodic-oscars-2027-actor-nomination-2026-09-09-7f8c7131d278",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "c544d875e5a19150c36d3a9c82ffdcb52fe7bb76b85f8df84a9777604f24e85a",
+      "id": "periodic-oscars-2027-actor-nomination-2026-09-09-c544d875e5a1",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "223dc617f23123c17e7f78ce9f4cdbfdbf890ba36a52e6bd80ed51165167bfe4",
+      "id": "periodic-oscars-2027-actor-nomination-2026-09-12-223dc617f231",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "d45ad18afbe1f539bee46282f724a88192f1a4db1284d2ed4ab30a8e8c596c06",
+      "id": "periodic-oscars-2027-actor-nomination-2026-09-14-d45ad18afbe1",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "ae620fc59d612127f36aa4fe5ce53ecee262f5cae680dc2f6b8d2f30e0aab241",
+      "id": "periodic-oscars-2027-actor-nomination-2026-09-17-ae620fc59d61",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "93583034be704340bfba479cb21bd2039550004bec83fe16481c7df4cccca285",
+      "id": "periodic-oscars-2027-actor-nomination-2026-09-20-93583034be70",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "495db402c0a11e80704b08c4c3d37386fd6bee33dabefbd71aac260cc773a794",
+      "id": "periodic-oscars-2027-actor-nomination-2026-09-21-495db402c0a1",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "8d029838333bd58e4c88095d1f34ded85423a10cfc5c4f48fb25bab0c8ef1451",
+      "id": "periodic-oscars-2027-actor-nomination-2026-09-23-8d029838333b",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "9d5ad46750b02b9c9f9e276e3e20fb7146c71a1989c24346a212882c2451dc4e",
+      "id": "periodic-oscars-2027-actor-nomination-2026-09-26-9d5ad46750b0",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "637b266521fd5056b584e666441232246838dd83c299c47e40114655603918ba",
+      "id": "periodic-oscars-2027-actor-nomination-2026-09-27-637b266521fd",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "8c0eba0c506d09acea2323dfe147f2c412b3f2cc604f8f62a07dbeb9a76f5220",
+      "id": "periodic-oscars-2027-actor-nomination-2026-09-29-8c0eba0c506d",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "23d027ea43d5cb794c8bf3463924b91064e3b5891ddef51de6a7c1df1fd93a0c",
+      "id": "periodic-oscars-2027-actor-nomination-2026-09-30-23d027ea43d5",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "29d197fe86410b1c2ea12290ffee4399680a1107d91889394ddeac8e04298955",
+      "id": "periodic-oscars-2027-actor-nomination-2026-10-03-29d197fe8641",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "628e6cfbecd1f977cd76d283b4bdd6fe37448c9d58739cc84de95d4e36047569",
+      "id": "periodic-oscars-2027-actor-nomination-2026-10-06-628e6cfbecd1",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "58cb778ecf2c54d507fa75da117064c6728276fc72cc5a0f79f6a4eaa3a479cc",
+      "id": "periodic-oscars-2027-actor-nomination-2026-10-07-58cb778ecf2c",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "806a0ee0ee5f069ae7261afc4f004ad036fb5f76062ac9e82a3431098c864812",
+      "id": "periodic-oscars-2027-actor-nomination-2026-10-08-806a0ee0ee5f",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "f2d106568bea527bef4db68851b06fbf3b24ac229bb5502043e6970f3b4025be",
+      "id": "periodic-oscars-2027-actor-nomination-2026-10-09-f2d106568bea",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "8b7863fc1ccbf2c9222078d1963326ecb6320efdc6c81174e4d644d27b08723e",
+      "id": "periodic-oscars-2027-actor-nomination-2026-10-11-8b7863fc1ccb",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "11f599a354fc13af7bf33c921ebd393d380bd7c1ae00400c905ca8e8ed1c4cd3",
+      "id": "periodic-oscars-2027-actor-nomination-2026-10-15-11f599a354fc",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "292d5721f9ab81e1cff3aaf504bcecdd2d4434ad238089ea0c6922e6271a9e15",
+      "id": "periodic-oscars-2027-actor-nomination-2026-10-16-292d5721f9ab",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "2064a4c1b28b3b73d1665df27e0bec7a82a14ec931c3d315fe682af2e75ccf04",
+      "id": "periodic-oscars-2027-actor-nomination-2026-10-17-2064a4c1b28b",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "3e797b9be6bf18a9aa2c1edf2efc7a862167b774ba5b3d0e9d623fdabd1158fe",
+      "id": "periodic-oscars-2027-actress-nomination-2026-07-25-3e797b9be6bf",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "75fadf7387644d74526c602b6026211c199ff8827ff299a5531692cc95e28f84",
+      "id": "periodic-oscars-2027-actress-nomination-2026-07-25-75fadf738764",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "789df2f8d7233470dff0cf5833c46c624cc66a1d84a6d7574f4b7add84b1920c",
+      "id": "periodic-oscars-2027-actress-nomination-2026-07-25-789df2f8d723",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "a03714ed46f0d7d7c1a8305eb0cee3b690cbb91920847dd86effa9a33c1b47d9",
+      "id": "periodic-oscars-2027-actress-nomination-2026-07-25-a03714ed46f0",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "e71d45050fc741099693f1225901d3147b6d744f3f75e9e7f9d95cf4207f4250",
+      "id": "periodic-oscars-2027-actress-nomination-2026-07-25-e71d45050fc7",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "aab88adba54d2f5ed3cfb6269b3a81292df32afd8a2f2849cba75ff218646d0c",
+      "id": "periodic-oscars-2027-actress-nomination-2026-07-27-aab88adba54d",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "e807f2fd7258f98fb84ce5bc58890d4eb4ed3c332a6ed375f5df51a71fb12e33",
+      "id": "periodic-oscars-2027-actress-nomination-2026-08-03-e807f2fd7258",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "337bd66c9e1cb987d324fe01a24c3c743ade21570c19f2836d67fcc1c8bc763d",
+      "id": "periodic-oscars-2027-actress-nomination-2026-08-07-337bd66c9e1c",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "3adc8e5d3b852d2dafdf3896b98be35018fc2b2cef1cb6b4879a40b9b6e3e0d5",
+      "id": "periodic-oscars-2027-actress-nomination-2026-08-07-3adc8e5d3b85",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "53ca4cc5bf34305cd18f6e17909c2c227b546d19f58502d5593d6e0a7a0eb3f8",
+      "id": "periodic-oscars-2027-actress-nomination-2026-08-10-53ca4cc5bf34",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "0118f36cfb62e0fcd09829f5b2eddb926a1e0427e127cca7617716f6668d5c61",
+      "id": "periodic-oscars-2027-actress-nomination-2026-08-15-0118f36cfb62",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "c0ef51acc4f782ab899a44ebcf786b1c4400ea69078c5f68c6f2caf40aa37e06",
+      "id": "periodic-oscars-2027-actress-nomination-2026-08-24-c0ef51acc4f7",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "eb8ccc4e8fefad68974263fa9f2332f0f4f793b687f812e64abffb6722ac4882",
+      "id": "periodic-oscars-2027-actress-nomination-2026-09-01-eb8ccc4e8fef",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "76365be2857df337b0ce0fd8e0d3acc68065e1501a01fae8de00e6960029ca8f",
+      "id": "periodic-oscars-2027-actress-nomination-2026-09-05-76365be2857d",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "7defd41cac5b7f5999afc4aa9f9908003646b5c69ff7d5d467a4f1f39ae27f27",
+      "id": "periodic-oscars-2027-actress-nomination-2026-09-06-7defd41cac5b",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "c149fb7b586393bde695d363ccc8eaab78ddc340f7f749a031f21abefa57dc08",
+      "id": "periodic-oscars-2027-actress-nomination-2026-09-08-c149fb7b5863",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "d79a2eec6506aa99b0694b67e4d0e18aca7d38427c3d53ffe569c075bde7b788",
+      "id": "periodic-oscars-2027-actress-nomination-2026-09-09-d79a2eec6506",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "7128e04390cc922377615e85253f6fb4587234aaf52c9cbc5485a9e30cabec15",
+      "id": "periodic-oscars-2027-actress-nomination-2026-09-12-7128e04390cc",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "fc80aafed0c1fad08b7f12708453f69a39c5369bd65b34ec9ef337898cb17a1c",
+      "id": "periodic-oscars-2027-actress-nomination-2026-09-14-fc80aafed0c1",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "059488b20777fb89e9adb392f5e1c76dc2304f6c560d538a3d4f2881962378d0",
+      "id": "periodic-oscars-2027-actress-nomination-2026-09-17-059488b20777",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "205fe3ff94f2b1d6138a55c8e3152b780e7dc9aa2c91f992eea1b5f4b2e5a045",
+      "id": "periodic-oscars-2027-actress-nomination-2026-09-19-205fe3ff94f2",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "5ba20d8e58edbe8557bc1d71fca91a813a76d94f606b301ebef747c913394f50",
+      "id": "periodic-oscars-2027-actress-nomination-2026-09-21-5ba20d8e58ed",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "b17a66f1cdd775b85a5bc70d082fc99a48774b92b634df303518fa540e53f109",
+      "id": "periodic-oscars-2027-actress-nomination-2026-09-24-b17a66f1cdd7",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "8166e0d87be946963be724d6468b81472246e2b0ef8f2e677b56b2e56dd865c2",
+      "id": "periodic-oscars-2027-actress-nomination-2026-09-26-8166e0d87be9",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "61b770834156962f53a70a79956c0020702ea64976adff729f2d3f3dae1bb09b",
+      "id": "periodic-oscars-2027-actress-nomination-2026-09-29-61b770834156",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "533a7078de8e2f70ce4f05c5af5bcd479f5a4155b3c474a19ec0de55c7670cb8",
+      "id": "periodic-oscars-2027-actress-nomination-2026-10-03-533a7078de8e",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "0ce24807ef6a40df3a80f4e0c1551b7ebfa888e0d7b167f2c449dbec25f0a841",
+      "id": "periodic-oscars-2027-actress-nomination-2026-10-07-0ce24807ef6a",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "7713bc0969443d5aa9ecd49c4c703d7cbe43b536d59622d2d402a930b78fd2cc",
+      "id": "periodic-oscars-2027-actress-nomination-2026-10-08-7713bc096944",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "2342979125d5bf8390124c6b1c7b4ed5c45592881e724935ee46ba4f58b1e849",
+      "id": "periodic-oscars-2027-actress-nomination-2026-10-09-2342979125d5",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "b6a354b0ff28615e18106f8867f6f010ac9a6948957702de4778f2664328a553",
+      "id": "periodic-oscars-2027-actress-nomination-2026-10-15-b6a354b0ff28",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "48eacea98da6e9c85704139e3fc82838bf0c163e1b4e8941f176f0d96d35b4c4",
+      "id": "periodic-oscars-2027-actress-nomination-2026-10-16-48eacea98da6",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "ba48515423e78347b5345a2571b1210ce9b1b4d6a15dddf3601d54f8e43864b9",
+      "id": "periodic-oscars-2027-actress-nomination-2026-10-17-ba48515423e7",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "10d15068d3092b183b89aee74595604eca44ee2df8aa9c8c984aefea76c16748",
+      "id": "periodic-oscars-2027-actress-nomination-2026-10-18-10d15068d309",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "28ebf7c9c04db81ece6e1e2ce7a42b586e262bcffc5c5b8f0e0f1f18eb614d33",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-07-25-28ebf7c9c04d",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "2cc788cb60681264245226f6415317d37e3f3814f8b456970e5a5dcd2bb6dbf2",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-07-25-2cc788cb6068",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "3daaa95b0a1d84e453ec6c615b34af36b69302356712dc9c56bb325f63603c14",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-07-25-3daaa95b0a1d",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "8dc077a0cad4e581e051bc30170e3639868d791c7c603ff9c470ff631b4f8809",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-07-25-8dc077a0cad4",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "e16426cf267d28066a9cdb28e0caf533926508fee65febd2bdb30162a810e273",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-07-25-e16426cf267d",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "21cd4c6a7079e7c0bb7cccdc67e91945406b22744c3d7fb538e6ef025ebceb5e",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-07-27-21cd4c6a7079",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "37b0f5163a1b489ca06196f4110d4cd10931d8adb565ccc9c959577c0fb6c486",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-08-03-37b0f5163a1b",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "4403c3476039287ae2cd483e6fd27f1efd6beb5cecbd1a4e382b6289cfca0ee0",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-08-07-4403c3476039",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "6e52298e32bb49753ee9655ece5e8e2d1e3749ab896d86c220489845071408c6",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-08-07-6e52298e32bb",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "f3c9a72798e8d3286f02adf2b5aee1085f5fcfd33a0badbd6a49ec2f8225bde9",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-08-15-f3c9a72798e8",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "74166d4e1142b9fe0fffda6fcc9608ec7a40897a9d4176c477dde5e14433bec2",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-08-29-74166d4e1142",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "f4e6b26bf92142d11e72f2211d1be943fd8e3db8646aeae85a79a68ee174c505",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-08-29-f4e6b26bf921",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "cabca70e6b5d7a75789ad4fd5a02a53e4e79933cd4d4cf19d523cef120c1cdee",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-09-01-cabca70e6b5d",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "ff1970ad6f3ab7702b44d665b066c04452cc702807f08210e6a35c97b0a6f832",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-09-03-ff1970ad6f3a",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "678c865b391b90de188814a5638ff006f740f73cfc3463240a39290869888225",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-09-04-678c865b391b",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "69b4e2b8c9fc05118535adee3c6ad31ef98be734fa246cca3ba49c1ac399e028",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-09-05-69b4e2b8c9fc",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "e3c9fa40bfb32338c070e23719d260caa72184fbf4be57dbe222c732d8569637",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-09-08-e3c9fa40bfb3",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "f955ecbf759ef0beaa0fcd03679c577fe9fbf9428b7494c913c9d21403a44235",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-09-09-f955ecbf759e",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "bd67914e92cfb70d39309f053977b6fe834ff01c23b9ce667cf93287f5f90292",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-09-17-bd67914e92cf",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "147dbc8a21671f74b13d8c17f88cee4521c5d1000ed0461b7cc23ea65be6386c",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-09-19-147dbc8a2167",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "d6db7459026a4add69aa8bb4b8a92343cb8a3dc4a835e1b89cb4b47017fe33e3",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-09-26-d6db7459026a",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "63f93d804e38f642a4060b31cb8f369ff2ee9fa95e5b6b31cd1fabb0bb4ac75f",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-09-29-63f93d804e38",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "8eff7a232b927814f22782266ee31e48796c5ec615bfc1b07d83b1bb262e5add",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-10-07-8eff7a232b92",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "de62683a22eb031aa55039eda8a9d777345891b80eb8629afd2090ebc1413fef",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-10-07-de62683a22eb",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "026e353f6062bdaceb1fd23c864e392b8779ad675ec8884c6a858a98afc3f2f9",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-10-08-026e353f6062",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "2b99dd2de220c1045cbd969267fe8fa4f66b9c99b50b9c201607c5fd08162d0a",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-10-09-2b99dd2de220",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "be128b49dd56847d1a27d896660253c50b719f25f79a6ddc53112bfcc84e40c9",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-10-12-be128b49dd56",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "b4bf11793621a8ff0643b8cc784deb834aea556faf4344478665b904fd4255fb",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-10-14-b4bf11793621",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "b340e3344e73f275e7ce911e0a51c4736e0af16d2a14eb1cb9df4913846882fa",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-10-15-b340e3344e73",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "1baba5f19a33db541260f960c880f2683c39ab43265b975845e21fc5b9093b00",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-07-25-1baba5f19a33",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "317e07b691cc829b52946c7ca6ddb83dfcf50e97aad654ef676de4e4f0b9bb8f",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-07-25-317e07b691cc",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "863da5b1a5d1f155e76d13ad1beeccc87d690231f1816415976bcc3993a90007",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-07-25-863da5b1a5d1",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "a7c0b61410f73081a0a41d9f61c3f94dfe230642f8d0342f3133b3264bdbebbf",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-07-25-a7c0b61410f7",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "ea050ef022b9701c9bc8b2ef27cd1f44b7242cb4f7bcd398b9493a9b182a15c3",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-07-25-ea050ef022b9",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "d323dd7772f383528730c31b28de0466ba79bcab3728401173244ed8ce6561b7",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-07-27-d323dd7772f3",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "1c00c70a6d6e77a606d125741eed25b8898201e5df0a17b5e41261fc6fecfdb4",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-08-03-1c00c70a6d6e",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "52e4ba19ae898075c86e82ed0e3ed8c4f55c715aa0fae1bfa793d4859d654812",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-08-07-52e4ba19ae89",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "e5b5c80d398469ad848bea590c5d10bc6e6446dc5b1783857f99f35a1f84ded0",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-08-07-e5b5c80d3984",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "bfef05af2cc700a016546e102fc9d543381e4920abe9fd7d0f4e9cb9c1987e45",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-08-10-bfef05af2cc7",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "e3e260864695c23b16f1ddcfc1bf628f7cd44ca949931294a2a4f64245c56089",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-08-19-e3e260864695",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "c02f20c82b560c6a8c29862c7e34515036a700b161b2eb215499a762901e74f2",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-08-24-c02f20c82b56",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "64347c2737acda2e4d4e9cb38ad751d26417272d567ba59512b67514c139697f",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-08-29-64347c2737ac",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "9c79d959e4531378c5495ef6a64f4e8135f41d89aa8075c909e915ed51dd0e53",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-08-29-9c79d959e453",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "29c5d4e5a43add820cb57a57f1ad86005f56083318cd7ceb7e3c59b3377e952b",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-08-30-29c5d4e5a43a",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "740a2f1f90b095dbd80e21ef2ef9c43d5d1fb7d209c64eac14f6e65802987598",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-08-31-740a2f1f90b0",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "7bf49752e35c169b285adec85c4f286ce07a39efa209c029c0e763875cd28b9c",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-09-01-7bf49752e35c",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "c037ce5006a0b78a0e6bbce9c03fd383f25277e7e194708244c2b2323477149e",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-09-05-c037ce5006a0",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "234b4c943dab3ea33028d336be19cea2a2b15d951d8c8c32510e4193d084a435",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-09-06-234b4c943dab",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "63d5fb25187f6c409082b000b5ca4c14fe0f63a742b78492985ad4155326023e",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-09-08-63d5fb25187f",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "3264734501947f2fcecf6a79b634d15dfdc57a3a8fbd0ace839db86453c11ed3",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-09-09-326473450194",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "3265455a17f8779f0953bd4f3f7d6065ce9bac2798971e8d6757e0ded9d7b120",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-09-09-3265455a17f8",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "172751606cd68be3cdf158cc68512de5b073adf28f85ed7e1944e070746b4933",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-09-12-172751606cd6",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "5c0c05587cc12a928f8fa6e00eb54f5892dd61cea60a42402f2c98bdcafe9b15",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-09-14-5c0c05587cc1",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "7a34ee31ed6b5406efe8367a43a04581b792d52d8bd6b28eb1e7cb72ce870d08",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-09-16-7a34ee31ed6b",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "1d06888351eb8a7cf112616befbed5ad5aa791db843bafecef887e7422705c81",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-09-17-1d06888351eb",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "36f0372f172ba1685beba1b38420b256eb14f26b8bbccecf685dc54b51a6ce29",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-09-18-36f0372f172b",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "84c9f1d995ca651770e74662bec01fe9630f70aa35bdd653dc31afe12790389a",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-09-19-84c9f1d995ca",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "058da869967fcce1aa1453a18ed9b05541545089bc16fe07de596280191a0b71",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-09-26-058da869967f",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "3f9c63725de6515ccdb00bb834fb384d66245aa3ca9e36054d6436c4785b0aad",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-09-28-3f9c63725de6",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "6d08df0e2aace04b18bac12d570723ae8c5b528b0041b3434442376e9fbb039e",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-09-29-6d08df0e2aac",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "82ebac64eaad16bc58ee52de25ee4ffea41a8c5ae465703c755b434ee60f04ae",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-10-01-82ebac64eaad",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "ba2b31fadd3c1923a524e4fef64401dcb79b052af46dfc4ddc730265c03b4a41",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-10-07-ba2b31fadd3c",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "cc73e25aa896e98fb5698242b3a82479209c346a28c31cc6600c51740f9632c4",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-10-07-cc73e25aa896",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "3e600f755c0b7993886ff370e482d9522a772442135787925ee39dffc55114ff",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-10-08-3e600f755c0b",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "71effb528cf588899b160d168e9948135fbc085ea1e0c7ce12cb50489495318b",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-10-11-71effb528cf5",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "20e8e8432080541eab32909d5e7bd5dcb7a41785b01b1bc3addb207716515bd8",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-10-15-20e8e8432080",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "6f038c3b4d6f674c0fcce96979763387ffc85f507885b51b974baff3e1978925",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-10-16-6f038c3b4d6f",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "d26ad0d7fe02627ad1d4a23679842e90a09dd00598726f2ccd4b4df9632404c9",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-10-17-d26ad0d7fe02",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "e93da1f381fa97df18c0794adb98fa8e6ebfb3e3bcd20ddb2194da677c12aa92",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-10-18-e93da1f381fa",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "04fccda19f6d0758b9b2ced90421f2880f6c2c0d757511c2ee3be60b838f9a01",
+      "id": "periodic-oscars-2027-directing-nomination-2026-07-25-04fccda19f6d",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "83c54dc79a51891ff9f0b2d70d6ef7bd4c4a772c2d2f9431fe10893959be0862",
+      "id": "periodic-oscars-2027-directing-nomination-2026-07-25-83c54dc79a51",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "ad8b5aa4e4900f4c349e477d569d644b674bc143dc3c60907e25144b5a42612b",
+      "id": "periodic-oscars-2027-directing-nomination-2026-07-25-ad8b5aa4e490",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "b5e0de99a9383c89dc3b155f5f78a2deb2a7589c567e6a0892a80863c261619e",
+      "id": "periodic-oscars-2027-directing-nomination-2026-07-25-b5e0de99a938",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "ef7726a436b7c4730ecc96c2019501d76fc63a8b454eaabc529ea535a45c830d",
+      "id": "periodic-oscars-2027-directing-nomination-2026-07-25-ef7726a436b7",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "4c6dcc8eb7026b8b6769d0a2aded708b9af19f9f7a25d7be3bc831e6422bd23e",
+      "id": "periodic-oscars-2027-directing-nomination-2026-07-27-4c6dcc8eb702",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "d620d7b1874a15951f8867be6910313783e4a0a5305b81fc21fdcf8373fd7a61",
+      "id": "periodic-oscars-2027-directing-nomination-2026-08-03-d620d7b1874a",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "d631b4597c917e00b5329dd7bf6fb637d1042bf01f7f167c6f8f61e3fbde59f6",
+      "id": "periodic-oscars-2027-directing-nomination-2026-08-07-d631b4597c91",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "f22e120db74a2532d6a41a6f4851964f7f1efd7ed4327afe4edd4bcc75c73953",
+      "id": "periodic-oscars-2027-directing-nomination-2026-08-07-f22e120db74a",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "34c44f3a061203dd5e517a59d4dd92eb7da1c09cbfed784a8d1d10a6fc2a4a1d",
+      "id": "periodic-oscars-2027-directing-nomination-2026-08-10-34c44f3a0612",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "b64639d5e309847857fa18ff9410d68e1e1fc84db0d4b173f003563bc6ca6d90",
+      "id": "periodic-oscars-2027-directing-nomination-2026-08-19-b64639d5e309",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "b4a974da272444b6e0d221c080321cff499679c05593ee02333705f808f75a65",
+      "id": "periodic-oscars-2027-directing-nomination-2026-08-24-b4a974da2724",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "777dc040dafb611413993334319bb4c877acc6fe94837c1435d1d9b0a12804c3",
+      "id": "periodic-oscars-2027-directing-nomination-2026-08-29-777dc040dafb",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "98007014fe680933ed894adffee1cb21833a5870c1a043d5e63ece8401ca591b",
+      "id": "periodic-oscars-2027-directing-nomination-2026-08-29-98007014fe68",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "5df76be62582b028057fdaf2d8dd0eed99f743320a735143b26c3c18597be66d",
+      "id": "periodic-oscars-2027-directing-nomination-2026-08-30-5df76be62582",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "28e6a0cab3fff44172d514c377514665fe61ab8f393488697fc52972d54da2d5",
+      "id": "periodic-oscars-2027-directing-nomination-2026-09-01-28e6a0cab3ff",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "18b3301ec3dfdda32f702302c63e988a24eacd9d385dc2a4af7cce811eed6a72",
+      "id": "periodic-oscars-2027-directing-nomination-2026-09-05-18b3301ec3df",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "dcdb1ba8a818371899b7357b28f072e5af8cad6cbe5f2ca775f9530e30aa030d",
+      "id": "periodic-oscars-2027-directing-nomination-2026-09-06-dcdb1ba8a818",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "8680cc402dbbb8524f1074d5c991668489c05eb10ed40915aff542ac88fd1418",
+      "id": "periodic-oscars-2027-directing-nomination-2026-09-09-8680cc402dbb",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "d88ab249b624242815951cb5c9d613754efcf953dde6a9ffb747ff0b55458d9c",
+      "id": "periodic-oscars-2027-directing-nomination-2026-09-12-d88ab249b624",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "a5a0e521b9b27682e07156f2da8cdb0c04eea38c93cc5634601672d4dfa3177f",
+      "id": "periodic-oscars-2027-directing-nomination-2026-09-14-a5a0e521b9b2",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "0782c684a20459cf223a3963f27c4db06fb5f2eb353a85d50eff812848a6360c",
+      "id": "periodic-oscars-2027-directing-nomination-2026-09-15-0782c684a204",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "7cafd1d4f23fb55981e0a6af61c4b0b4c709a5e5ee8b9911a82440ae0c43b7af",
+      "id": "periodic-oscars-2027-directing-nomination-2026-09-17-7cafd1d4f23f",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "e154d4e9e568f233cba7e9f386aed0dce56207c9c98521e5bb61f80d32839be0",
+      "id": "periodic-oscars-2027-directing-nomination-2026-09-18-e154d4e9e568",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "29a3fad72248307eec44388b3c24085fb1671b09e732e154bc9f408a90238fe6",
+      "id": "periodic-oscars-2027-directing-nomination-2026-09-19-29a3fad72248",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "9d82ae607910d5916d3d804de641f2fde7747eb043470508d83c8f5ef0394bd7",
+      "id": "periodic-oscars-2027-directing-nomination-2026-09-24-9d82ae607910",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "87bebbd09f318edbe62663f4398a7b3c2586f886756c47985e123174007bef2f",
+      "id": "periodic-oscars-2027-directing-nomination-2026-09-26-87bebbd09f31",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "f786afcba5461a824df09fd748719a0c7dcc742a9f48b9736967fab2d1333c97",
+      "id": "periodic-oscars-2027-directing-nomination-2026-09-29-f786afcba546",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "15ca2a018b1a8908293b04db5f19218e93ce61e030ee909a62106a7fa5bf2d70",
+      "id": "periodic-oscars-2027-directing-nomination-2026-10-01-15ca2a018b1a",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "35beb0c7eee01e9112df2fad106e5bcf9ddf9b9b39085e39581ec33e67bd61b8",
+      "id": "periodic-oscars-2027-directing-nomination-2026-10-06-35beb0c7eee0",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "0b915f608625f0735b0f9bb59050de02d4dc585b825637fe827e760a0a4fe422",
+      "id": "periodic-oscars-2027-directing-nomination-2026-10-07-0b915f608625",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "94893911a22e7a5daba625cef04430b454832bad7472eea8590758f685e6abd8",
+      "id": "periodic-oscars-2027-directing-nomination-2026-10-08-94893911a22e",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "b192c4006c6a194d94b6bddc8e2eac17052a59b6061e18ae3437c5d872504014",
+      "id": "periodic-oscars-2027-directing-nomination-2026-10-09-b192c4006c6a",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "8a01473b9821d20e21eb4dd2cc1f2b5170851cf0f13dece826641b853555bf3f",
+      "id": "periodic-oscars-2027-directing-nomination-2026-10-11-8a01473b9821",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "9eb8216a24d8996268c61a14b8d58d4b0b3a65af19c5241c4afeb6ce37c58884",
+      "id": "periodic-oscars-2027-directing-nomination-2026-10-15-9eb8216a24d8",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "c6621d34b0eccdea5ade8fc566e289c61086c8ee87df0b38aafff93620253f55",
+      "id": "periodic-oscars-2027-directing-nomination-2026-10-16-c6621d34b0ec",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "3f9da6f91f20a0f920eeb9031412c7de7d7848ad4d5cd641faf4e4f8fa01913e",
+      "id": "periodic-oscars-2027-directing-nomination-2026-10-17-3f9da6f91f20",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "2e35ce761aca87467c74e9c48ecc42b6c7c0fc8ec88dfba1f0cc6137b7ff075e",
+      "id": "periodic-oscars-2027-directing-nomination-2026-10-18-2e35ce761aca",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "92c40d4b02d32c3b0bd8c4c9c97a9c784d2ad98277a2807f1ece9277a70cd52b",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-07-25-92c40d4b02d3",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "97a6b06d388b7ba822dd3f43b0980cfe07fcac1a534d29c9e29633266b0841ad",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-07-25-97a6b06d388b",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "de2a208e9907361bbfaace5294734b0f49511ef8475136b2403bf51ff458766f",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-07-25-de2a208e9907",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "fda2f080c5c759932970ec8c8b36fb9887652da5935cfd5a9877abbd788191b4",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-07-25-fda2f080c5c7",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "fe8f23b4d4781d68f97eee3d0212ad92034eb270ba61a91e5a9fc9250a31c9c3",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-07-25-fe8f23b4d478",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "4cc9ed586bfa94bdbe282e49c633570e0cbad9259844e2eef34ac11f44cc00dd",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-07-27-4cc9ed586bfa",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "71d5768a0ac214fe30a157243a43db3fd2be10759628906e29ae555eba78fa83",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-08-03-71d5768a0ac2",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "03c6dac97de6c9513acccc07d67532afd365f26c7e6ed8ab7895ecc2ce481c89",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-08-07-03c6dac97de6",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "e13a5f9ee1f0e8a161845dfe2d5abda9a819e1b7abffe0511d6441a729bffb38",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-08-07-e13a5f9ee1f0",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "7d653b8d6b759b51ff3702ccdbe02af72fae026efead5f75fc9f533fedcb7b6e",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-08-10-7d653b8d6b75",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "931f2149ee81dc7de4590114c02c0a4301bee2df62798eb350952c6262dbef0f",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-08-15-931f2149ee81",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "6c390984b8f9f3826a23e0904cb196901392f3eaf0f86d56c629a984fc90d111",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-08-25-6c390984b8f9",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "899dea3421cb5646db3947ea4aedec682b8732c8d26dc4ded53f95f7c45c77ac",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-09-01-899dea3421cb",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "72bfb5015b67d73d234aadfe58ee99d48e46b8f852a71d58833d4ad2b540e6d9",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-09-04-72bfb5015b67",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "400e9642612a3bd0eb8a74d7ef7ad04e446d5980d6006d3d7925d9cf9af1bece",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-09-05-400e9642612a",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "c6b7dd30d8324b0d9e45f68bdca55c7f896e36a1227044e1c2bbfe0c54d9860c",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-09-08-c6b7dd30d832",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "bd84921b2d0125aea0f81bca4d282971487aff26cf35f5f046382f59814b4c9f",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-09-09-bd84921b2d01",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "2fc4ededdeaf8c1ac606abc2e03a8a86f8e2b4b3d845b441a71267aee502e9e4",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-09-14-2fc4ededdeaf",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "eb1ab25b1c9bd6933299b8a8e434effdb658d1efe31a64bd46a9b3ae009937bf",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-09-17-eb1ab25b1c9b",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "cbc96b805e9cdbe4e13e45341c4de8da7cc517306c5094fdfd451546dad7ef10",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-09-24-cbc96b805e9c",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "f425c40ae2b3e91ce35e2b0051f726ed2d93298ea0c31ea2c61eb4f04bb9134e",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-09-26-f425c40ae2b3",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "4e88184e120fd20880b67a26eadde35237bdc4f907f45fb739cf2b725f67e00e",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-09-28-4e88184e120f",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "ba2ce901443880a7124d2da0a9150deb7f7c2c74ae35fc70d80bddb9e2abc1be",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-09-29-ba2ce9014438",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "b52e169ab56bfc7462c8f63545ef30d73838f7511521a2c23fcc7a260888cd07",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-10-06-b52e169ab56b",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "9968270d59cce0b41e9ef8931af2abd454a9f736e99bf7f2681b40f8c3d877d7",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-10-07-9968270d59cc",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "e3f880a335de6bc6a1a086dc2586647782bf626c57d12f81c9a9b77a5cc3c3ef",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-10-08-e3f880a335de",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "ea927c31f0b8a81beb089c5384b17a2a957f2b8677ec16daa7ce4c0a1df3a0cc",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-10-09-ea927c31f0b8",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "0f2f9245617bcae09faa88370f6c5b6c8e897527824e1c101bb0310f71d3bdcc",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-10-11-0f2f9245617b",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "23883f9f3aeef0188fa268e0385303de6c68da607f8a22d8f5135b0f10a0e954",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-10-12-23883f9f3aee",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "858a6703e6a44c39fa6d67c34d81c84f9a5929c84e653c82d9127741687aa694",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-10-14-858a6703e6a4",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "5c25c84b4fd4577d3db6b55370257439eae2e308cdd226ec9aff6f9afdc2024b",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-10-15-5c25c84b4fd4",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "02ffecfe24b9c58d460e3057f0dd127a1d533992af876ba3d26f5b11b76bb369",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-07-25-02ffecfe24b9",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "6c1b97a6d61230c2507936786c85facce270c8c6b56e27f6c68f3658ac64d520",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-07-25-6c1b97a6d612",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "89e38f7113f82cc626d3442495b78bd8dbcb78a07d0696b215d9ec16bd0dbe58",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-07-25-89e38f7113f8",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "94e6f06b066e116dfec2d1413e2127a9fcda01fc43dae8ed01cc8ad49edc2e59",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-07-25-94e6f06b066e",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "c79a39e4e81393a19d6d5a1367859d76cb2712c932bb8c364de2d75a8f8c1c51",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-07-25-c79a39e4e813",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "cb38269de726bbfca46124d61c9b9adda2b8d33eb4df3a59c91382a78ea5aea0",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-07-27-cb38269de726",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "e452060ea30868d6ed679564cab5c2e65f6289415c25117ca3312d2bc6757eea",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-08-03-e452060ea308",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "9e59071776c643a582a2d193b28d513888550d02d8dc6be7e9eddab9fa6823ac",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-08-07-9e59071776c6",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "c68014a59feb96c403f3c4a3c3735333688ebf4cf2ec5d731876feaa91128d56",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-08-07-c68014a59feb",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "91cadd7ac10b1e59b124090ac334846787c3d0859e0dd054b5fb70dc9aab5971",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-08-17-91cadd7ac10b",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "204979667614022289486b2f2b50c461fd192909ffa5692429e4530c32885efb",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-08-20-204979667614",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "3662768e2289545764028e917cee26dbeea56867597e71eaf401d9fe84b7b473",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-09-01-3662768e2289",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "3917973d7899bdf1f42b8059da4806808593715df551c4d568138c8abd4eeba0",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-09-03-3917973d7899",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "bbb46c380a191611593bb1d5ede91405e0314353330489aa81cc62f9eb6b16eb",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-09-04-bbb46c380a19",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "afb5e5248e93f46a20de7e32fc254f5c9333b5744c09fe659a82611e5d11e5e0",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-09-05-afb5e5248e93",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "dcf925389401ab827de637b3ca62f505ac5676a76ab6a7a94177e705d03d51e3",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-09-08-dcf925389401",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "d0201b22e96535d0284ff9ab7806915910a389bd3954a4c286c63a9db003e6c7",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-09-09-d0201b22e965",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "3e92034f298e7d7776a7bbe9b682482e826d10a87582c6df269f16e63fc6bbb2",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-09-17-3e92034f298e",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "798dbfbac0c4a5fc6114506cb104197be39776feea8ddb0612375dacf2dc8078",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-09-19-798dbfbac0c4",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "0f565ddfce6e8ac492390b7031d8801a256ba3ad82ecca2351d73efc763eb5e4",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-09-23-0f565ddfce6e",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "b731946f0d8776934c772737bd351656cfd996cfdefb1d47fdba87f8d2fa8096",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-09-24-b731946f0d87",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "02d2e1b942f8d53c4e5112f34d3f09c81771c5129872591f0776932e43de15e4",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-09-26-02d2e1b942f8",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "010d5a1f97868fb5e62012645513c3dbe9fb135ff570662f15a6ca94be3576ac",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-09-27-010d5a1f9786",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "540b3aaa96672b3b0ab85e280420d610f0781a22292ec2757dbe163a7df82477",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-09-29-540b3aaa9667",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "04d7b5c2c5af64d6266950638ea7881ef6e8e312a27c39f9f15e6357b9c07175",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-10-01-04d7b5c2c5af",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "9445fe9dbfe77659d063a7207b43cbe5368984e630920a6c0af1154e17e1911e",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-10-07-9445fe9dbfe7",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "e3d4164865fe85feec03a0d4a7387eaefbc635a4dc9b66ce353207453f0c868f",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-10-07-e3d4164865fe",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "1f3613cecba627254d960c8249fb154811dcc343ffc50f8e8e26d3363c6e7019",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-10-08-1f3613cecba6",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "3de5e047387154a7bcd38be09fe871f4ce71cacdd2fde115f3aa6a95d2bea92f",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-10-09-3de5e0473871",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "ed599ccac116396aeeebbc6dd99673a330486f05280167ed3b6aaefe857e2bce",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-10-11-ed599ccac116",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "44cec91190295535a27d67a357315bb8b42c144119c596de0a70afa2f835ef53",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-10-14-44cec9119029",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "6ccfe81b099005e893590dc6db187336ed506ca5ddd072a9288804aebd5ad35e",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-10-15-6ccfe81b0990",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "72f876914bd61570e9fd7688b092a98fdb95c07a3f666b49d93fc66fe8c74bcd",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-10-16-72f876914bd6",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "da3738ccaec0c2888202ecdaa3f20556b73448161fc50b71a3f775d4b9a5c5c2",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-10-17-da3738ccaec0",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "977cc852971421e951efb17005752fe0788444af3f6be8d8ebeaef2847b7d68a",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-07-25-977cc8529714",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "a1e509247fae00d3a927327226d30737fefe8be626116bb616b3ad2f1d11dd19",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-07-25-a1e509247fae",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "abd7a14216e35cc22be9a7b23ac0e4a57a4caebeb3700e8b1db261714caca9c7",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-07-25-abd7a14216e3",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "bf3c85ed813701caebd2961e3d14569d824ed9f74d840401c6a971901f2a56f6",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-07-25-bf3c85ed8137",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "cdadbc01d023387ece6b9aaa9377f1fabb204ae5436e7f0800534bed98e20f0c",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-07-25-cdadbc01d023",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "eda182dd7ef127ded24ac37f435f023c4d36ac9d9b0059179665fdadd7415536",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-07-27-eda182dd7ef1",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "6a722a6a4ab36156eeb2b339434ef08fcef9bf806f34ccdb024fe2bd0857ed9b",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-08-03-6a722a6a4ab3",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "13c63d1beb9ce78e232ea6cb97cd96e19756124a64307245aed7ed182c78a5d4",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-08-07-13c63d1beb9c",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "ae80cbb5dd16485e9fe96a6b10821d72c04dcd2d757946fee6e6aa6bb2e42597",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-08-07-ae80cbb5dd16",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "8c521888a158387ef50ff9a2b2c2d5d5b2724caca2802b176d9275710685ac40",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-08-17-8c521888a158",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "c63a44a36a34f0fea8ed39f08023474e6abd2e6034a6c8124a16523b648af9a0",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-08-20-c63a44a36a34",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "d9d1d40cb520afa50449fefe7c5e2a465b06f7930ed4420e7c1fc39ac69b39c1",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-08-24-d9d1d40cb520",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "5f96b62e2659684aa474f3d8b8a058ee7ad316d8b0b308021877811c2981ca83",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-08-29-5f96b62e2659",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "fb0342ec1b58c79f0576ce5ac0e03e11e6e15268e8951874f5ba4212f764085a",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-08-29-fb0342ec1b58",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "1e55c38d3dbe5107b2b556b806f3773273fa65984bb7419372c62cb357cba1f7",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-09-01-1e55c38d3dbe",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "973fd7d0b31dc1ae02d94073dafdd02be672e9f66835fc7dc27840d78201442f",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-09-01-973fd7d0b31d",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "f90314d109a678c300b506a77f25a3337e50a7a0d38b0f4c38936e3c2cda8b07",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-09-05-f90314d109a6",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "07d9e714ee1f59c05dcd8b7639ef51949ad7a634d2fa121424d1514421835ca5",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-09-06-07d9e714ee1f",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "e54a36748f3cb8dfadc549e3dcdc3fb383b36b730a168bbb1d5bd68b405023eb",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-09-08-e54a36748f3c",
+      "methodVersion": "runscars-aggregation-v2"
+    },
+    {
+      "contentHash": "14a6b0f777e079d2bc025870138fa9b18f9d1e95aae972af28937c250796c8f0",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-09-09-14a6b0f777e0",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "e4b874acc904fb5a30896293da6c1776c4722ba0345e9e44a768c975c590df3f",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-09-19-e4b874acc904",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "2bdd73b038af386859588f08821201e9afd82df64366382ebf676d53149f6088",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-09-24-2bdd73b038af",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "21230bd422ea2a52b90527a1cf0b2c1fff2dfd086d8f5f3df3e8002cfd406d95",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-09-26-21230bd422ea",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "fb25f185b1421c37d65c877810edb3182fbd46ffae2d77d1676a8e51eb71ab8d",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-09-29-fb25f185b142",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "4296a64d194aa66d364df0e5ffb59e16e059292283c9ade28a81a2e83f0fc1a4",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-10-03-4296a64d194a",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "06d3bcf6bde21aa73b53dae0536790257da7443e388fa4e6b9e8f581b35a9444",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-10-07-06d3bcf6bde2",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "a6e81b3a657fb7504db1992b343d8ae3afef3ce1b10c8eea2cdca411e6501f63",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-10-07-a6e81b3a657f",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "ba5ac18b75ca794215135e08771d7d79b19ace3d1cc1b9e106bd1f6c1e8b9291",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-10-08-ba5ac18b75ca",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "0a517185ea3e8aeabe10be45cf2d049caa840e418829bbc0fb97c57a4630528f",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-10-09-0a517185ea3e",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "bbc998ca163265dc7f3a8b91c276bb4c91188bc96f3de97b1deff45527fd402b",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-10-15-bbc998ca1632",
+      "methodVersion": "runscars-aggregation-v3"
+    },
+    {
+      "contentHash": "62a3abf710c0bb06bc6911bd6d3762d43bb89e583efaf80304c7cb296f6e167e",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-10-18-62a3abf710c0",
+      "methodVersion": "runscars-aggregation-v3"
+    }
+  ],
+  "vaultNames": [
+    "runscars_ingestion_cron_secret",
+    "runscars_snapshot_cron_secret"
+  ]
+}

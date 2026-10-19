@@ -94,6 +94,43 @@ describe("source ordering and category retention", () => {
     });
   });
 
+  it("recognizes the October AwardsWatch typo and keeps inline NEXT outside its selection", () => {
+    const batch = parseAwardsWatchArticleFixture(
+      `<article><h1>2027 Oscar Predictions</h1>
+       <h2>ADAPTED SCREEPNPLAY</h2><table><tbody>
+       <tr><td>ERIK ANDERSON</td><td>RYAN MCQUADE</td></tr>
+       <tr><td>La Bola Negra (Netflix)</td><td>The Odyssey (Universal Pictures)</td></tr>
+       <tr><td>The Odyssey (Universal Pictures)</td><td>La Bola Negra (Netflix)</td></tr>
+       <tr><td>NEXT</td><td>NEXT</td></tr>
+       <tr><td>The Invite (A24)</td><td>All of a Sudden (NEON)</td></tr>
+       </tbody></table>
+       <h2>ORIGINAL SCREENPLAY</h2><ol><li>Wild Horse Nine</li></ol></article>`,
+      {
+        ...dailyOptions,
+        connectorId: "awardswatch-predictions",
+        endpointUrl:
+          "https://awardswatch.com/2027-oscar-predictions-screenplay-october/",
+        categoryId: "adapted-screenplay",
+      },
+    );
+    const publication = batch.publications[0];
+    expect(
+      publication.observations.map((row: { subject: string }) => row.subject),
+    ).toEqual(["La Bola Negra", "The Odyssey"]);
+    expect(
+      publication.observations.every(
+        (row: { dataType: string }) => row.dataType === "prediction_selection",
+      ),
+    ).toBe(true);
+    expect(publication.originalData.panel.alternates).toHaveLength(1);
+    expect(publication.originalData.panel.alternates[0].raw).toBe(
+      "The Invite (A24)",
+    );
+    expect(() =>
+      validateRequiredPredictionCategories(batch, ["adapted-screenplay"]),
+    ).not.toThrow();
+  });
+
   it("matches the AwardsWatch editorial asterisk without overwriting its original label", async () => {
     const batch = parseAwardsWatchArticleFixture(
       `<h1>2027 Oscar Predictions</h1><h2>BEST SUPPORTING ACTOR</h2><ol><li>*Guitarricadelafuente, La Bola Negra</li></ol>`,

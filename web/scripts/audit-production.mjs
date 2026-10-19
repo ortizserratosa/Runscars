@@ -55,7 +55,7 @@ const predictionConnectors = [
   {
     id: "awardswatch-predictions",
     endpoint_url: "https://awardswatch.com/oscar-predictions-hq/",
-    extractor_version: "awardswatch-multicategory-v7",
+    extractor_version: "awardswatch-multicategory-v8",
     configuration: {
       season_id: "oscars-2027",
       ceremony_year: 2027,
@@ -121,6 +121,27 @@ const predictionConnectors = [
     },
   },
   {
+    id: "ankler-predictions",
+    endpoint_url: "https://anklerpundits.com/pundit/christopher-rosen/",
+    extractor_version: "ankler-rosen-v1",
+    configuration: {
+      season_id: "oscars-2027",
+      ceremony_year: 2027,
+      required_category_ids: publicPredictionCategories,
+    },
+  },
+  {
+    id: "rolling-tape-predictions",
+    endpoint_url:
+      "https://therollingtape.com/wp-json/op/v1/predictors/danny-jarabek",
+    extractor_version: "rolling-tape-jarabek-v1",
+    configuration: {
+      season_id: "oscars-2027",
+      ceremony_year: 2027,
+      required_category_ids: publicPredictionCategories,
+    },
+  },
+  {
     id: "ringer-best-picture",
     endpoint_url: "https://www.theringer.com/topic/oscars",
     extractor_version: "the-ringer-v2",
@@ -135,7 +156,7 @@ const predictionConnectors = [
   ...publicPredictionCategories.map((categoryId) => ({
     id: `variety-${categoryId}-predictions`,
     endpoint_url: "https://variety.com/lists/2027-oscars-predictions/",
-    extractor_version: "variety-datawrapper-v1",
+    extractor_version: "variety-datawrapper-v2",
     configuration: {
       season_id: "oscars-2027",
       ceremony_year: 2027,

@@ -6,6 +6,7 @@ import {
   phase71FixtureAggregate,
   phase71FixturePreviousAggregate,
 } from "../../data/phase71-fixture";
+import { predictionEvidenceState } from "../repositories/source-evidence";
 import type { PredictionAggregateV2 } from "../aggregation/v2";
 import { isSupabaseConfigured } from "../environment";
 import { selectMarketSignals } from "../markets/presentation";
@@ -433,39 +434,70 @@ async function activeCategoryFromDatabase(
     pointer.snapshot_id,
     selectedSnapshotId,
   );
-  const sourceIds =
-    selection.selected?.aggregate.sourceLists.map(
-      (source) => source.sourceId,
-    ) ?? [];
-  const connectorFreshness = new Map<string, ConnectorFreshnessState>();
-  if (sourceIds.length) {
-    const connectors = await cachedConnectorFreshness([...sourceIds].sort());
-    for (const connector of connectors) {
-      if (!connector.source_id) continue;
-      const previous = connectorFreshness.get(connector.source_id);
-      const latest = (left: string | null, right: string | null) => {
-        if (!left) return right;
-        if (!right) return left;
-        return Date.parse(right) > Date.parse(left) ? right : left;
-      };
-      connectorFreshness.set(connector.source_id, {
-        lastSuccessfulCheckAt: latest(
-          previous?.lastSuccessfulCheckAt ?? null,
-          connector.last_successful_check_at,
-        ),
-        lastFailureAt: latest(
-          previous?.lastFailureAt ?? null,
-          connector.last_failure_at,
-        ),
-      });
-    }
-  }
-  return activeViewFromSelection({
+  const [connectors, evidence] = await Promise.all([
+    cachedConnectorFreshness(categoryId),
+    cachedSourceStatus(categoryId),
+  ]);
+  const connectorFreshness = new Map<string, ConnectorFreshnessState>(
+    connectors.map((connector) => [
+      connector.source_id,
+      {
+        lastSuccessfulCheckAt: connector.last_successful_check_at,
+        lastFailureAt: connector.last_failure_at,
+        hasCurrentFailure: connector.has_current_failure,
+      },
+    ]),
+  );
+  const view = activeViewFromSelection({
     selection,
     markets,
     connectorFreshness,
     dataState: "database",
   });
+  if (view.snapshot?.isLatest) {
+    for (const row of evidence) {
+      const state = predictionEvidenceState(
+        row.freshness_at,
+        new Date().toISOString(),
+      );
+      const current = view.sourceFreshness.find(
+        (source) => source.sourceId === row.source_id,
+      );
+      if (current) {
+        current.originalCount = row.original_count;
+        current.freshnessAt = state.freshnessAt;
+        current.expiresAt = state.expiresAt;
+        current.expired = state.expired;
+        if (state.expired) current.consideredCount = 0;
+      } else {
+        const connector = connectorFreshness.get(row.source_id);
+        view.sourceFreshness.push({
+          sourceId: row.source_id,
+          sourceName: row.source_name,
+          publicationUrl: row.publication_url,
+          publishedAt: row.published_at,
+          lastChangedAt: null,
+          lastSuccessfulCheckAt: connector?.lastSuccessfulCheckAt ?? null,
+          lastFailureAt: connector?.lastFailureAt ?? null,
+          status: connector?.hasCurrentFailure
+            ? "failed"
+            : connector?.lastSuccessfulCheckAt
+              ? "ok"
+              : "unknown",
+          changedInSelectedCut: false,
+          ...state,
+          originalCount: row.original_count,
+          consideredCount: 0,
+          ordered: row.ordered,
+          scoringDepth: view.aggregate?.scoringDepth ?? null,
+        });
+      }
+    }
+    view.sourceFreshness.sort((a, b) =>
+      a.sourceName.localeCompare(b.sourceName, "es"),
+    );
+  }
+  return view;
 }
 
 async function archiveCategoryFromDatabase(
@@ -608,15 +640,35 @@ const cachedMarketViews = unstable_cache(
   { revalidate: 60 },
 );
 const cachedConnectorFreshness = unstable_cache(
-  async (sourceIds: string[]) => {
+  async (categoryId: PublicCategoryId) => {
     const result = await client()
-      .from("public_source_freshness")
-      .select("source_id,last_successful_check_at,last_failure_at")
-      .in("source_id", sourceIds);
-    return result.error ? [] : (result.data ?? []);
+      .from("public_prediction_connector_freshness")
+      .select(
+        "source_id,last_successful_check_at,last_failure_at,has_current_failure",
+      )
+      .eq("category_id", categoryId);
+    if (result.error) throw new Error(result.error.message);
+    return result.data ?? [];
   },
   [
-    "public-category-freshness-v1",
+    "public-category-freshness-v2",
+    process.env.NEXT_PUBLIC_SUPABASE_URL ?? "unconfigured",
+  ],
+  { revalidate: 60 },
+);
+const cachedSourceStatus = unstable_cache(
+  async (categoryId: PublicCategoryId) => {
+    const result = await client()
+      .from("public_prediction_source_status")
+      .select("*")
+      .eq("category_id", categoryId)
+      .eq("season_id", "oscars-2027")
+      .eq("prediction_intention", "nomination");
+    if (result.error) throw new Error(result.error.message);
+    return result.data ?? [];
+  },
+  [
+    "public-category-evidence-v1",
     process.env.NEXT_PUBLIC_SUPABASE_URL ?? "unconfigured",
   ],
   { revalidate: 60 },

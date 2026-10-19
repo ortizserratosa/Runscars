@@ -1,0 +1,394 @@
+[
+  {
+    "category_id": "actor",
+    "freshness_at": "2026-10-14 16:19:34+00",
+    "matched_count": 4,
+    "original_count": 5,
+    "published_at": "2026-10-14 16:19:34+00",
+    "source_id": "awardswatch"
+  },
+  {
+    "category_id": "actress",
+    "freshness_at": "2026-10-15 17:51:58+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": "2026-10-15 17:51:58+00",
+    "source_id": "awardswatch"
+  },
+  {
+    "category_id": "adapted-screenplay",
+    "freshness_at": "2026-10-15 20:00:39+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": "2026-10-15 20:00:39+00",
+    "source_id": "awardswatch"
+  },
+  {
+    "category_id": "best-picture",
+    "freshness_at": "2026-10-16 16:07:08+00",
+    "matched_count": 10,
+    "original_count": 10,
+    "published_at": "2026-10-16 16:07:08+00",
+    "source_id": "awardswatch"
+  },
+  {
+    "category_id": "directing",
+    "freshness_at": "2026-10-16 16:07:08+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": "2026-10-16 16:07:08+00",
+    "source_id": "awardswatch"
+  },
+  {
+    "category_id": "original-screenplay",
+    "freshness_at": "2026-10-15 20:00:39+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": "2026-10-15 20:00:39+00",
+    "source_id": "awardswatch"
+  },
+  {
+    "category_id": "supporting-actor",
+    "freshness_at": "2026-10-13 15:18:03+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": "2026-10-13 15:18:03+00",
+    "source_id": "awardswatch"
+  },
+  {
+    "category_id": "supporting-actress",
+    "freshness_at": "2026-10-13 17:02:32+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": "2026-10-13 17:02:32+00",
+    "source_id": "awardswatch"
+  },
+  {
+    "category_id": "actor",
+    "freshness_at": "2026-07-25 16:00:33.369+00",
+    "matched_count": 10,
+    "original_count": 10,
+    "published_at": null,
+    "source_id": "midnight-critics"
+  },
+  {
+    "category_id": "actress",
+    "freshness_at": "2026-07-25 17:09:16.734+00",
+    "matched_count": 9,
+    "original_count": 10,
+    "published_at": null,
+    "source_id": "midnight-critics"
+  },
+  {
+    "category_id": "adapted-screenplay",
+    "freshness_at": "2026-07-25 16:00:33.369+00",
+    "matched_count": 10,
+    "original_count": 10,
+    "published_at": null,
+    "source_id": "midnight-critics"
+  },
+  {
+    "category_id": "animated-feature",
+    "freshness_at": "2026-07-25 16:00:33.369+00",
+    "matched_count": 4,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "midnight-critics"
+  },
+  {
+    "category_id": "best-picture",
+    "freshness_at": "2026-07-25 17:09:16.734+00",
+    "matched_count": 15,
+    "original_count": 15,
+    "published_at": null,
+    "source_id": "midnight-critics"
+  },
+  {
+    "category_id": "casting",
+    "freshness_at": "2026-07-25 17:09:16.734+00",
+    "matched_count": 10,
+    "original_count": 10,
+    "published_at": null,
+    "source_id": "midnight-critics"
+  },
+  {
+    "category_id": "cinematography",
+    "freshness_at": "2026-07-25 16:00:33.369+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "midnight-critics"
+  },
+  {
+    "category_id": "costume-design",
+    "freshness_at": "2026-07-25 16:00:33.369+00",
+    "matched_count": 4,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "midnight-critics"
+  },
+  {
+    "category_id": "directing",
+    "freshness_at": "2026-07-25 16:00:33.369+00",
+    "matched_count": 10,
+    "original_count": 10,
+    "published_at": null,
+    "source_id": "midnight-critics"
+  },
+  {
+    "category_id": "documentary-feature",
+    "freshness_at": "2026-07-25 16:00:33.369+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "midnight-critics"
+  },
+  {
+    "category_id": "film-editing",
+    "freshness_at": "2026-07-25 16:00:33.369+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "midnight-critics"
+  },
+  {
+    "category_id": "international-feature",
+    "freshness_at": "2026-07-25 16:00:33.369+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "midnight-critics"
+  },
+  {
+    "category_id": "makeup-hairstyling",
+    "freshness_at": "2026-07-25 16:00:33.369+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "midnight-critics"
+  },
+  {
+    "category_id": "original-score",
+    "freshness_at": "2026-07-25 16:00:33.369+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "midnight-critics"
+  },
+  {
+    "category_id": "original-screenplay",
+    "freshness_at": "2026-07-25 17:09:16.734+00",
+    "matched_count": 9,
+    "original_count": 10,
+    "published_at": null,
+    "source_id": "midnight-critics"
+  },
+  {
+    "category_id": "production-design",
+    "freshness_at": "2026-07-25 16:00:33.369+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "midnight-critics"
+  },
+  {
+    "category_id": "sound",
+    "freshness_at": "2026-07-25 16:00:33.369+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "midnight-critics"
+  },
+  {
+    "category_id": "supporting-actor",
+    "freshness_at": "2026-07-25 17:09:16.734+00",
+    "matched_count": 10,
+    "original_count": 10,
+    "published_at": null,
+    "source_id": "midnight-critics"
+  },
+  {
+    "category_id": "supporting-actress",
+    "freshness_at": "2026-07-25 16:00:33.369+00",
+    "matched_count": 10,
+    "original_count": 10,
+    "published_at": null,
+    "source_id": "midnight-critics"
+  },
+  {
+    "category_id": "visual-effects",
+    "freshness_at": "2026-07-25 16:00:33.369+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "midnight-critics"
+  },
+  {
+    "category_id": "actor",
+    "freshness_at": "2026-10-17 04:17:02.17+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "next-best-picture"
+  },
+  {
+    "category_id": "actress",
+    "freshness_at": "2026-09-17 04:17:27.438+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "next-best-picture"
+  },
+  {
+    "category_id": "adapted-screenplay",
+    "freshness_at": "2026-10-15 04:17:02.677+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "next-best-picture"
+  },
+  {
+    "category_id": "animated-feature",
+    "freshness_at": "2026-09-27 04:17:17.163+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "next-best-picture"
+  },
+  {
+    "category_id": "best-picture",
+    "freshness_at": "2026-10-15 04:17:02.677+00",
+    "matched_count": 10,
+    "original_count": 10,
+    "published_at": null,
+    "source_id": "next-best-picture"
+  },
+  {
+    "category_id": "casting",
+    "freshness_at": "2026-10-15 04:17:02.677+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "next-best-picture"
+  },
+  {
+    "category_id": "cinematography",
+    "freshness_at": "2026-10-15 04:17:02.677+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "next-best-picture"
+  },
+  {
+    "category_id": "costume-design",
+    "freshness_at": "2026-10-15 04:17:02.677+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "next-best-picture"
+  },
+  {
+    "category_id": "directing",
+    "freshness_at": "2026-10-15 04:17:02.677+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "next-best-picture"
+  },
+  {
+    "category_id": "documentary-feature",
+    "freshness_at": "2026-10-10 04:17:01.462+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "next-best-picture"
+  },
+  {
+    "category_id": "film-editing",
+    "freshness_at": "2026-10-15 04:17:02.677+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "next-best-picture"
+  },
+  {
+    "category_id": "international-feature",
+    "freshness_at": "2026-10-15 04:17:02.677+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "next-best-picture"
+  },
+  {
+    "category_id": "makeup-hairstyling",
+    "freshness_at": "2026-09-28 04:17:15.61+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "next-best-picture"
+  },
+  {
+    "category_id": "original-score",
+    "freshness_at": "2026-10-15 04:17:02.677+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "next-best-picture"
+  },
+  {
+    "category_id": "original-screenplay",
+    "freshness_at": "2026-10-12 04:17:02.343+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "next-best-picture"
+  },
+  {
+    "category_id": "original-song",
+    "freshness_at": "2026-09-07 04:17:25.804+00",
+    "matched_count": 1,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "next-best-picture"
+  },
+  {
+    "category_id": "production-design",
+    "freshness_at": "2026-10-15 04:17:02.677+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "next-best-picture"
+  },
+  {
+    "category_id": "sound",
+    "freshness_at": "2026-10-15 04:17:02.677+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "next-best-picture"
+  },
+  {
+    "category_id": "supporting-actor",
+    "freshness_at": "2026-10-17 04:17:02.17+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "next-best-picture"
+  },
+  {
+    "category_id": "supporting-actress",
+    "freshness_at": "2026-10-07 04:17:01.405+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "next-best-picture"
+  },
+  {
+    "category_id": "visual-effects",
+    "freshness_at": "2026-10-07 04:17:01.405+00",
+    "matched_count": 5,
+    "original_count": 5,
+    "published_at": null,
+    "source_id": "next-best-picture"
+  }
+]

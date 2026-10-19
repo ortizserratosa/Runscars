@@ -178,9 +178,7 @@ export default async function SourcePage({ params }: SourcePageProps) {
             </div>
             <div>
               <p className="kicker">
-                {isEnglish
-                  ? "Active source · provenance"
-                  : "Fuente activa · procedencia"}
+                {isEnglish ? "Source · provenance" : "Fuente · procedencia"}
               </p>
               <h1>{source.name}</h1>
               <p>
@@ -366,7 +364,13 @@ export default async function SourcePage({ params }: SourcePageProps) {
                 <div className="source-capture-header">
                   <div>
                     <p className="section-index">
-                      {isEnglish ? "ACTIVE PUBLICATION" : "PUBLICACIÓN ACTIVA"}
+                      {category.expired
+                        ? isEnglish
+                          ? "EXPIRED PUBLICATION"
+                          : "PUBLICACIÓN VENCIDA"
+                        : isEnglish
+                          ? "LATEST PUBLICATION"
+                          : "ÚLTIMA PUBLICACIÓN"}
                     </p>
                     <h2>
                       {localizedCategoryNameBySlug(
@@ -375,7 +379,15 @@ export default async function SourcePage({ params }: SourcePageProps) {
                         category.categoryName,
                       )}
                     </h2>
-                    <p>{category.publication.title}</p>
+                    <p>
+                      <a
+                        href={category.publication.url}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {category.publication.title} ↗
+                      </a>
+                    </p>
                   </div>
                   <span className="verified-badge">
                     {isEnglish
@@ -416,26 +428,115 @@ export default async function SourcePage({ params }: SourcePageProps) {
                   </div>
                 </div>
 
+                {category.originalCount !== undefined ? (
+                  <div className="capture-metadata">
+                    <div>
+                      <span>
+                        {isEnglish
+                          ? "Original entries"
+                          : "Candidaturas originales"}
+                      </span>
+                      <strong>{category.originalCount}</strong>
+                    </div>
+                    <div>
+                      <span>
+                        {isEnglish
+                          ? "Matched entries"
+                          : "Candidaturas emparejadas"}
+                      </span>
+                      <strong>{category.matchedCount}</strong>
+                    </div>
+                    <div>
+                      <span>
+                        {isEnglish
+                          ? "Considered in the current ranking"
+                          : "Consideradas en la clasificación actual"}
+                      </span>
+                      <strong>{category.consideredCount}</strong>
+                    </div>
+                    <div>
+                      <span>
+                        {isEnglish ? "Freshness starts" : "Inicio de vigencia"}
+                      </span>
+                      <strong>
+                        {dateLabel(category.freshnessAt ?? null, locale, true)}
+                      </strong>
+                    </div>
+                    <div>
+                      <span>
+                        {isEnglish ? "Expires after" : "Vence después de"}
+                      </span>
+                      <strong>
+                        {dateLabel(category.expiresAt ?? null, locale, true)}
+                      </strong>
+                    </div>
+                    <div>
+                      <span>
+                        {isEnglish
+                          ? "Category connector"
+                          : "Conector de la categoría"}
+                      </span>
+                      <strong>
+                        {category.health === "failed"
+                          ? isEnglish
+                            ? "Incident"
+                            : "Incidencia"
+                          : category.health === "ok"
+                            ? isEnglish
+                              ? "Healthy"
+                              : "Correcto"
+                            : isEnglish
+                              ? "No status"
+                              : "Sin estado"}
+                      </strong>
+                      <small>
+                        {dateLabel(
+                          category.lastSuccessfulCheckAt ?? null,
+                          locale,
+                          true,
+                        )}
+                      </small>
+                    </div>
+                  </div>
+                ) : null}
+                {category.expired ? (
+                  <p className="insufficient-note">
+                    {isEnglish
+                      ? "Outside the current ranking: this prediction is more than 30 days old. A successful connector check does not renew the publication. Its original list remains available below."
+                      : "Fuera de la clasificación actual: esta predicción tiene más de 30 días. Una comprobación correcta del conector no renueva la publicación. La lista original se conserva a continuación."}
+                  </p>
+                ) : null}
+                {category.scoringDepth ? (
+                  <p>
+                    {isEnglish
+                      ? `The common scoring horizon is the first ${category.scoringDepth} positions. Later original positions remain visible and contribute zero points and no coverage.`
+                      : `El horizonte común considera las primeras ${category.scoringDepth} posiciones. Los puestos originales posteriores siguen visibles y aportan cero puntos y ninguna cobertura.`}
+                  </p>
+                ) : null}
                 <div className="source-ranking-section">
                   <div className="section-heading compact-heading">
                     <div>
                       <p className="section-index">
                         {isEnglish ? "ORIGINAL VALUES" : "VALORES ORIGINALES"}
                       </p>
-                      <h2>
-                        {isEnglish ? "Included list" : "Lista que participa"}
-                      </h2>
+                      <h2>{isEnglish ? "Original list" : "Lista original"}</h2>
                     </div>
                     <span className="aggregate-chip">
-                      {category.entries.some(
-                        (entry) => entry.appearanceKind === "ordered",
-                      )
+                      {category.expired
                         ? isEnglish
-                          ? "Contributes Borda points"
-                          : "Aporta puntos Borda"
-                        : isEnglish
-                          ? "Coverage only"
-                          : "Solo cobertura"}
+                          ? "Outside consensus"
+                          : "Fuera del consenso"
+                        : category.entries.some(
+                              (entry) =>
+                                entry.appearanceKind === "ordered" &&
+                                entry.considered !== false,
+                            )
+                          ? isEnglish
+                            ? "Contributes Borda points"
+                            : "Aporta puntos Borda"
+                          : isEnglish
+                            ? "Coverage only"
+                            : "Solo cobertura"}
                     </span>
                   </div>
                   {category.entries[0]?.appearanceKind === "ordered" &&
@@ -448,7 +549,7 @@ export default async function SourcePage({ params }: SourcePageProps) {
                   ) : null}
                   <ol className="source-ranking">
                     {category.entries.map((entry) => (
-                      <li key={entry.candidateId}>
+                      <li key={entry.observationId ?? entry.candidateId}>
                         <span>
                           {entry.rank
                             ? String(entry.rank).padStart(2, "0")
@@ -456,52 +557,65 @@ export default async function SourcePage({ params }: SourcePageProps) {
                         </span>
                         <div className="source-entry-copy">
                           <strong>{entry.label}</strong>
+                          {entry.considered === false ? (
+                            <small>
+                              {category.expired
+                                ? isEnglish
+                                  ? "Expired · not considered"
+                                  : "Vencida · no considerada"
+                                : isEnglish
+                                  ? "Outside current scoring · 0 points"
+                                  : "Fuera del cálculo actual · 0 puntos"}
+                            </small>
+                          ) : null}
                           <span className="original-value">
                             {isEnglish ? "Original" : "Original"}:{" "}
                             {originalLabel(entry.originalValue)}
                           </span>
                         </div>
-                        <div
-                          aria-label={`${isEnglish ? "Current Borda score for" : "Puntuación Borda vigente de"} ${entry.label}`}
-                          className="source-entry-consensus"
-                        >
-                          <span>
-                            {isEnglish
-                              ? "Current Borda score"
-                              : "Puntuación Borda vigente"}
-                          </span>
-                          <strong>
-                            {entry.aggregateScore.toLocaleString(
-                              localeTag(locale),
-                              {
-                                minimumFractionDigits: 1,
-                                maximumFractionDigits: 1,
-                              },
-                            )}
-                          </strong>
-                          <small>
-                            #{entry.aggregatePosition} ·{" "}
-                            {entry.aggregateCoverage}
-                          </small>
-                          <small className="source-entry-sources">
-                            {isEnglish ? "Sources" : "Fuentes"}:{" "}
-                            {entry.aggregateSources.map(
-                              (aggregateSource, index) => (
-                                <span key={aggregateSource.id}>
-                                  {index ? ", " : ""}
-                                  <Link
-                                    href={localizedPath(
-                                      `/fuentes/${aggregateSource.id}`,
-                                      locale,
-                                    )}
-                                  >
-                                    {aggregateSource.name}
-                                  </Link>
-                                </span>
-                              ),
-                            )}
-                          </small>
-                        </div>
+                        {entry.aggregatePosition > 0 ? (
+                          <div
+                            aria-label={`${isEnglish ? "Current Borda score for" : "Puntuación Borda vigente de"} ${entry.label}`}
+                            className="source-entry-consensus"
+                          >
+                            <span>
+                              {isEnglish
+                                ? "Current Borda score"
+                                : "Puntuación Borda vigente"}
+                            </span>
+                            <strong>
+                              {entry.aggregateScore.toLocaleString(
+                                localeTag(locale),
+                                {
+                                  minimumFractionDigits: 1,
+                                  maximumFractionDigits: 1,
+                                },
+                              )}
+                            </strong>
+                            <small>
+                              #{entry.aggregatePosition} ·{" "}
+                              {entry.aggregateCoverage}
+                            </small>
+                            <small className="source-entry-sources">
+                              {isEnglish ? "Sources" : "Fuentes"}:{" "}
+                              {entry.aggregateSources.map(
+                                (aggregateSource, index) => (
+                                  <span key={aggregateSource.id}>
+                                    {index ? ", " : ""}
+                                    <Link
+                                      href={localizedPath(
+                                        `/fuentes/${aggregateSource.id}`,
+                                        locale,
+                                      )}
+                                    >
+                                      {aggregateSource.name}
+                                    </Link>
+                                  </span>
+                                ),
+                              )}
+                            </small>
+                          </div>
+                        ) : null}
                       </li>
                     ))}
                   </ol>

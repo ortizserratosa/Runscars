@@ -9,7 +9,7 @@ import {
   type PredictionSnapshotKind,
 } from ".";
 import {
-  aggregatePredictionsV2,
+  aggregatePredictionsV4,
   type PredictionAggregateV2,
   type PredictionObservationV2,
 } from "../aggregation/v2";
@@ -151,7 +151,7 @@ export async function runScheduledSnapshotsV2(
         });
         continue;
       }
-      const aggregate = aggregatePredictionsV2(observations, {
+      const aggregate = aggregatePredictionsV4(observations, {
         seasonId: schedule.seasonId,
         categoryId: schedule.categoryId,
         intention: schedule.intention,

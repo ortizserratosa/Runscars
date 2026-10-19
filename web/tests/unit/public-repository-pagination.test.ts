@@ -228,7 +228,7 @@ describe("complete public repository reads", () => {
     }
   });
 
-  it("reads the snapshot's exact source observation instead of truncating or choosing newer historical captures", async () => {
+  it("reads complete published source evidence, including original positions outside snapshot scoring", async () => {
     const sourceId = "variety";
     database.tables.sources = [
       {
@@ -289,6 +289,8 @@ describe("complete public repository reads", () => {
               publicationId: "variety-current",
               publicationUrl: "https://variety.com/lists/current/",
               publishedAt: "2026-10-01T00:00:00Z",
+              orderedObservationIds: ["9001"],
+              selectionObservationIds: [],
             },
           ],
           ranking: [
@@ -323,6 +325,34 @@ describe("complete public repository reads", () => {
       observation(9001, "Exact current original", "2026-10-01T08:00:00Z"),
       observation(9100, "Newer unrelated capture", "2026-10-07T08:00:00Z"),
     );
+    database.tables.public_prediction_source_evidence = [9001, 9002].map(
+      (id) => ({
+        ...observation(
+          id,
+          id === 9001 ? "Exact current original" : "Original tail",
+          "2026-10-01T08:00:00Z",
+        ),
+        season_id: "oscars-2027",
+        category_id: "best-picture",
+        prediction_intention: "nomination",
+        category_candidate_id: id === 9001 ? "the-odyssey" : "tail",
+        candidate_label: id === 9001 ? "The Odyssey" : "Tail",
+        original_subject: id === 9001 ? "The Odyssey" : "Tail",
+        data_type: "prediction_ordered",
+        participates: true,
+        original_value: {
+          rank: id === 9001 ? 1 : 40,
+          list_length: 40,
+          raw: id === 9001 ? "Exact current original" : "Original tail",
+        },
+        publication_external_id: "variety-current",
+        publication_url: "https://variety.com/lists/current/",
+        publication_title: "Current prediction",
+        published_at: "2026-10-01T00:00:00Z",
+        freshness_at: "2026-10-01T00:00:00Z",
+        author: "Clayton Davis",
+      }),
+    );
     const source = await getSourceDetail(sourceId);
     expect(source?.categories[0].entries[0].originalValue).toEqual({
       rank: 1,
@@ -333,9 +363,20 @@ describe("complete public repository reads", () => {
       "2026-10-01T08:00:00Z",
     );
     const queries = database.requests.filter(
-      (request) => request.table === "professional_observations",
+      (request) => request.table === "public_prediction_source_evidence",
     );
     expect(queries).toHaveLength(1);
-    expect(queries[0].filters).toEqual([{ column: "id", ids: ["9001"] }]);
+    expect(queries[0].range).toEqual([0, 499]);
+    expect(source?.categories[0].entries).toHaveLength(2);
+    expect(source?.categories[0].entries[1]).toMatchObject({
+      rank: 40,
+      considered: false,
+      originalValue: { raw: "Original tail" },
+    });
+    expect(
+      database.requests.some(
+        (request) => request.table === "professional_observations",
+      ),
+    ).toBe(false);
   });
 });

@@ -352,7 +352,12 @@ export function parseVarietyFixture(
       throw new Error("Variety: cabecera de ranking no reconocida");
     }
     const rank = Number(row[0]);
-    if (!tier || !/^\d+$/.test(row[0]) || rank !== ranked.length + 1)
+    if (
+      !tier ||
+      !/^\d+$/.test(row[0]) ||
+      !Number.isSafeInteger(rank) ||
+      rank < 1
+    )
       throw new Error("Variety: posiciones no consecutivas");
     const cells = Object.fromEntries(
       columns.map((column, index) => [column, row[index]]),
@@ -393,11 +398,20 @@ export function parseVarietyFixture(
     ranked.length < (categoryId === "best-picture" ? 10 : 5)
   )
     throw new Error("Variety: ranking o fecha incompletos");
+  const positions = new Set(ranked.map((row) => row.rank));
+  if (
+    positions.size !== ranked.length ||
+    ranked.some((row) => row.rank > ranked.length)
+  )
+    throw new Error("Variety: posiciones no consecutivas o duplicadas");
+  // Keep the CSV's physical order in the original receipt; its explicit Rank
+  // column determines the prediction order even when rows have been moved.
+  const ordered = [...ranked].sort((left, right) => left.rank - right.rank);
   const captured = new Date(capturedAt).toISOString();
   return {
     connectorId,
     sourceId: "variety",
-    extractorVersion: "variety-datawrapper-v1",
+    extractorVersion: "variety-datawrapper-v2",
     seasonId,
     capturedAt: captured,
     sourceUrl: canonicalUrl,
@@ -429,7 +443,7 @@ export function parseVarietyFixture(
           columns,
           ranking_rows: ranked.map(({ cells, tier }) => ({ cells, tier })),
         },
-        observations: ranked.map(
+        observations: ordered.map(
           ({ rank, cells, tier, filmSubject, peopleSubjects }) => ({
             dataType: "prediction_ordered",
             subject: peopleSubjects.length

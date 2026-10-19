@@ -236,16 +236,16 @@ function ActiveCategory({
               </p>
             </div>
             <div className="category-hero-stat">
-              <span>{en ? "Coverage" : "Cobertura"}</span>
+              <span>{en ? "Ranked sources" : "Fuentes ordenadas"}</span>
               <strong>{aggregate?.orderedSourceCount ?? 0}</strong>
               <small>
                 {aggregate?.isConsensus
                   ? en
-                    ? "sources in consensus"
-                    : "fuentes con consenso"
+                    ? `ranked votes · ${aggregate?.applicableSourceCount ?? 0} contributing outlets`
+                    : `votos ordenados · ${aggregate?.applicableSourceCount ?? 0} medios con cobertura`
                   : en
-                    ? "sources · consensus pending"
-                    : "fuentes · consenso pendiente"}
+                    ? `ranked votes · ${aggregate?.applicableSourceCount ?? 0} contributing outlets · consensus pending`
+                    : `votos ordenados · ${aggregate?.applicableSourceCount ?? 0} medios con cobertura · consenso pendiente`}
               </small>
             </div>
           </div>
@@ -461,7 +461,42 @@ function ActiveCategory({
                                   : "Sin estado"}
                           </span>
                         </div>
+                        {source.expired ? (
+                          <p>
+                            {en
+                              ? "Expired · outside consensus"
+                              : "Vencida · fuera del consenso"}
+                          </p>
+                        ) : null}
                         <dl>
+                          {source.originalCount !== undefined ? (
+                            <div>
+                              <dt>
+                                {en
+                                  ? "Original / considered"
+                                  : "Originales / consideradas"}
+                              </dt>
+                              <dd>
+                                {source.originalCount} /{" "}
+                                {source.consideredCount ?? 0} ·{" "}
+                                {source.ordered
+                                  ? en
+                                    ? "ranked"
+                                    : "ordenadas"
+                                  : en
+                                    ? "selection"
+                                    : "selección"}
+                              </dd>
+                            </div>
+                          ) : null}
+                          {source.expiresAt ? (
+                            <div>
+                              <dt>
+                                {en ? "Expires after" : "Vence después de"}
+                              </dt>
+                              <dd>{dateLabel(source.expiresAt, locale)}</dd>
+                            </div>
+                          ) : null}
                           <div>
                             <dt>{en ? "Published" : "Publicada"}</dt>
                             <dd>
@@ -476,7 +511,13 @@ function ActiveCategory({
                             <dt>
                               {en ? "Ranking changed" : "Cambió el ranking"}
                             </dt>
-                            <dd>{dateLabel(source.lastChangedAt, locale)}</dd>
+                            <dd>
+                              {source.lastChangedAt
+                                ? dateLabel(source.lastChangedAt, locale)
+                                : en
+                                  ? "not recorded"
+                                  : "no registrado"}
+                            </dd>
                           </div>
                           <div>
                             <dt>

@@ -5,7 +5,12 @@ import { isSupabaseConfigured } from "../environment";
 import { createSupabaseServerClient } from "../supabase/server";
 import { getPrecursorIndex } from "../precursors/data";
 import type { PrecursorEditionView } from "../precursors/types";
-import { fetchAllRows, fetchRowsByIds } from "../supabase/pagination";
+import { fetchAllRows } from "../supabase/pagination";
+import {
+  sourceEvidenceCategories,
+  type PredictionEvidenceRow,
+  type PredictionConnectorRow,
+} from "./source-evidence";
 import { getFestivalIndex, type FestivalEditionView } from "../festivals/data";
 import {
   getCurrentCategoryPredictions,
@@ -42,7 +47,17 @@ export type SourceCategoryView = {
   categorySlug: string;
   categoryName: string;
   intention: "nomination" | "winner";
-  lastChangedAt: string;
+  lastChangedAt: string | null;
+  freshnessAt?: string;
+  expiresAt?: string;
+  expired?: boolean;
+  originalCount?: number;
+  matchedCount?: number;
+  consideredCount?: number;
+  scoringDepth?: number | null;
+  health?: SourceHealth;
+  lastSuccessfulCheckAt?: string | null;
+  lastFailureAt?: string | null;
   publication: {
     externalId: string;
     title: string;
@@ -53,6 +68,8 @@ export type SourceCategoryView = {
     extractorVersion: string | null;
   };
   entries: Array<{
+    observationId?: string;
+    considered?: boolean;
     candidateId: string;
     label: string;
     appearanceKind: "ordered" | "selection";
@@ -389,6 +406,7 @@ export async function getSourceIndex(): Promise<SourceIndexView[]> {
       connectorsResult,
       marketConnectorsResult,
       festivalConnectorsResult,
+      predictionStatusResult,
     ] = await Promise.all([
       supabase
         .from("sources")
@@ -408,6 +426,9 @@ export async function getSourceIndex(): Promise<SourceIndexView[]> {
         .select(
           "source_id,is_active,configuration,last_success_at,last_failure_at",
         ),
+      supabase
+        .from("public_prediction_source_status")
+        .select("source_id,published_at,captured_at"),
     ]);
     if (sourcesResult.error) throw new Error(sourcesResult.error.message);
     const connectorRows: ConnectorRow[] = [
@@ -442,6 +463,12 @@ export async function getSourceIndex(): Promise<SourceIndexView[]> {
         publicationStatus: source.publication_status,
         lastReviewedOn: source.last_reviewed_on,
         ...summaryDates(source.id, predictions),
+        lastPublishedAt: (predictionStatusResult.data ?? [])
+          .filter((row) => row.source_id === source.id)
+          .reduce<string | null>(
+            (date, row) => latest(date, row.published_at),
+            null,
+          ),
         ...connectorSummary(
           connectorRows.filter(
             (connector) => connector.source_id === source.id,
@@ -577,88 +604,49 @@ export const getSourceDetail = cache(async function getSourceDetail(
   }
   try {
     const supabase = client();
-    const publicationIds = predictions.flatMap((category) =>
-      category.aggregate.sourceLists
-        .filter((source) => source.sourceId === sourceId)
-        .map((source) => source.publicationId),
+    const [evidence, connectorResult] = summary.sourceTypes.includes(
+      "prediction",
+    )
+      ? await Promise.all([
+          fetchAllRows((from, to) =>
+            supabase
+              .from("public_prediction_source_evidence")
+              .select("*")
+              .eq("source_id", sourceId)
+              .eq("season_id", "oscars-2027")
+              .order("id")
+              .range(from, to),
+          ),
+          supabase
+            .from("public_prediction_connector_freshness")
+            .select("*")
+            .eq("source_id", sourceId),
+        ])
+      : [[], { data: [], error: null }];
+    if (connectorResult.error) throw new Error(connectorResult.error.message);
+    const categories = sourceEvidenceCategories(
+      evidence as PredictionEvidenceRow[],
+      predictions,
+      (connectorResult.data ?? []) as PredictionConnectorRow[],
+      new Date().toISOString(),
     );
-    const [sourceResult, publicationResult] = await Promise.all([
-      supabase.from("sources").select("notes").eq("id", sourceId).single(),
-      publicationIds.length
-        ? supabase
-            .from("source_publications")
-            .select("id,external_id,canonical_url,title,author,published_at")
-            .eq("source_id", sourceId)
-            .in("external_id", publicationIds)
-        : Promise.resolve({ data: [], error: null }),
-    ]);
-    if (sourceResult.error) throw new Error(sourceResult.error.message);
-    if (publicationResult.error)
-      throw new Error(publicationResult.error.message);
-    const publicationRows = publicationResult.data ?? [];
-    const observationIds = predictions.flatMap((category) =>
-      category.aggregate.ranking.flatMap((candidate) =>
-        candidate.sourceContributions.flatMap((contribution) =>
-          contribution.sourceId === sourceId && contribution.observationId
-            ? [contribution.observationId]
-            : [],
-        ),
-      ),
-    );
-    const observations = await fetchRowsByIds(observationIds, (ids) =>
-      fetchAllRows((from, to) =>
-        supabase
-          .from("professional_observations")
-          .select(
-            "id,publication_id,original_value,captured_at,extractor_version",
-          )
-          .eq("source_id", sourceId)
-          .eq("state", "published")
-          .in("id", ids)
-          .order("id")
-          .range(from, to),
-      ),
-    );
-    const publications = new Map(
-      publicationRows.map((publication) => {
-        const captures = observations
-          .filter(
-            (observation) => observation.publication_id === publication.id,
-          )
-          .sort(
-            (left, right) =>
-              Date.parse(right.captured_at) - Date.parse(left.captured_at),
-          );
-        return [
-          publication.external_id,
-          {
-            externalId: publication.external_id,
-            title: publication.title,
-            url: publication.canonical_url,
-            author: publication.author,
-            publishedAt: publication.published_at,
-            capturedAt: captures[0]?.captured_at ?? null,
-            extractorVersion: captures[0]?.extractor_version ?? null,
-          },
-        ] as const;
-      }),
-    );
-    const originalByObservationId = new Map(
-      observations.map((observation) => [
-        String(observation.id),
-        observation.original_value,
-      ]),
-    );
+    const notes = summary.sourceTypes.includes("prediction")
+      ? null
+      : await supabase
+          .from("sources")
+          .select("notes")
+          .eq("id", sourceId)
+          .single();
+    if (notes?.error) throw new Error(notes.error.message);
     return {
       ...summary,
-      festivalEditions,
-      notes: sourceResult.data.notes,
-      categories: categoryViews(
-        sourceId,
-        predictions,
-        publications,
-        originalByObservationId,
+      lastPublishedAt: categories.reduce<string | null>(
+        (date, category) => latest(date, category.publication.publishedAt),
+        summary.lastPublishedAt,
       ),
+      festivalEditions,
+      notes: notes?.data?.notes ?? null,
+      categories,
     };
   } catch (error) {
     if (process.env.NODE_ENV === "production") throw error;

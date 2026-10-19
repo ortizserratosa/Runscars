@@ -389,8 +389,8 @@ export async function SeasonPageView({
             <p>
               {active
                 ? en
-                  ? "outlets with data in the least-covered category"
-                  : "medios con datos en la categoría menos cubierta"
+                  ? "ranked sources in the category with the fewest ranked votes"
+                  : "fuentes ordenadas en la categoría con menos votos ordenados"
                 : en
                   ? "official nominees across the eight categories"
                   : "candidaturas oficiales entre las ocho categorías"}

@@ -452,3 +452,16 @@ Los anuncios futuros, identidades dudosas y fuentes bloqueadas conservan sus
 límites explícitos; no se dan por resueltos con datos estimados. La evidencia y
 los límites de publicación se mantienen en
 [SOURCE_COVERAGE_AUDIT_2026-10-07.md](SOURCE_COVERAGE_AUDIT_2026-10-07.md).
+
+## Mantenimiento · predicciones v4 y transparencia, 19 de octubre de 2026
+
+Corte aprobado en [SOURCE_AUDIT_2026-10-19.md](SOURCE_AUDIT_2026-10-19.md):
+reparar AwardsWatch/Variety, incorporar The Ankler y The Rolling Tape, puntuar
+ventana común 20/10 sin truncar originales y distinguir caducidad de salud técnica.
+D-073 a D-075 gobiernan este corte. No abre otra fase ni cambia categorías,
+frescura de treinta días o mínimo de cuatro rankings para declarar consenso.
+
+Su salida exige fixtures de las regresiones, cálculo v4 y compatibilidad histórica,
+migraciones/RLS/idempotencia, interfaz ES/EN y escritorio/móvil, importaciones
+aisladas, publicación y comprobaciones públicas. Mientras falte alguna verificación,
+la auditoría conserva el estado pendiente y los límites reales de las fuentes.

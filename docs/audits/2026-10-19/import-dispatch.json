@@ -1,0 +1,70 @@
+[
+  {
+    "connector_id": "ankler-predictions",
+    "request_id": 2110
+  },
+  {
+    "connector_id": "awards-daily-predictions",
+    "request_id": 2111
+  },
+  {
+    "connector_id": "awards-radar-predictions",
+    "request_id": 2112
+  },
+  {
+    "connector_id": "awardswatch-predictions",
+    "request_id": 2113
+  },
+  {
+    "connector_id": "midnight-critics-predictions",
+    "request_id": 2114
+  },
+  {
+    "connector_id": "movie-state-predictions",
+    "request_id": 2115
+  },
+  {
+    "connector_id": "next-best-picture-predictions",
+    "request_id": 2116
+  },
+  {
+    "connector_id": "ringer-best-picture",
+    "request_id": 2117
+  },
+  {
+    "connector_id": "rolling-tape-predictions",
+    "request_id": 2118
+  },
+  {
+    "connector_id": "variety-actor-predictions",
+    "request_id": 2119
+  },
+  {
+    "connector_id": "variety-actress-predictions",
+    "request_id": 2120
+  },
+  {
+    "connector_id": "variety-adapted-screenplay-predictions",
+    "request_id": 2121
+  },
+  {
+    "connector_id": "variety-best-picture-predictions",
+    "request_id": 2122
+  },
+  {
+    "connector_id": "variety-directing-predictions",
+    "request_id": 2123
+  },
+  {
+    "connector_id": "variety-original-screenplay-predictions",
+    "request_id": 2124
+  },
+  {
+    "connector_id": "variety-supporting-actor-predictions",
+    "request_id": 2125
+  },
+  {
+    "connector_id": "variety-supporting-actress-predictions",
+    "request_id": 2126
+  }
+]

@@ -1,0 +1,435 @@
+{
+  "predictor": {
+    "name": "Danny Jarabek",
+    "profile_url": "https://therollingtape.com/danny-jarabek-oscar-predictions/",
+    "social_trt_author_url": "https://therollingtape.com/danny-jarabek/"
+  },
+  "nominations_locked": false,
+  "historical_date": null,
+  "categories": [
+    {
+      "slug": "picture",
+      "name": "Best Picture",
+      "nominee_slot_count": 10,
+      "last_updated": "2026-10-11T17:40:02+00:00",
+      "picks": [
+        {
+          "rank": 1,
+          "nominee": "La Bola Negra"
+        },
+        {
+          "rank": 2,
+          "nominee": "The Odyssey"
+        },
+        {
+          "rank": 3,
+          "nominee": "The Invite"
+        },
+        {
+          "rank": 4,
+          "nominee": "Dune: Part Three"
+        },
+        {
+          "rank": 5,
+          "nominee": "All of a Sudden"
+        },
+        {
+          "rank": 6,
+          "nominee": "Project Hail Mary"
+        },
+        {
+          "rank": 7,
+          "nominee": "Wild Horse Nine"
+        },
+        {
+          "rank": 8,
+          "nominee": "The Debut"
+        },
+        {
+          "rank": 9,
+          "nominee": "Artificial"
+        },
+        {
+          "rank": 10,
+          "nominee": "Obsession"
+        },
+        {
+          "rank": 11,
+          "nominee": "Being Heumann"
+        },
+        {
+          "rank": 12,
+          "nominee": "I Play Rocky"
+        },
+        {
+          "rank": 13,
+          "nominee": "Fjord"
+        },
+        {
+          "rank": 14,
+          "nominee": "Digger"
+        },
+        {
+          "rank": 15,
+          "nominee": "Behemoth!"
+        },
+        {
+          "rank": 16,
+          "nominee": "Club Kid"
+        },
+        {
+          "rank": 17,
+          "nominee": "Possible Love"
+        },
+        {
+          "rank": 18,
+          "nominee": "Michael"
+        },
+        {
+          "rank": 19,
+          "nominee": "Elsinore"
+        },
+        {
+          "rank": 20,
+          "nominee": "You Can See Everything"
+        }
+      ]
+    },
+    {
+      "slug": "director",
+      "name": "Director",
+      "nominee_slot_count": 5,
+      "last_updated": "2026-09-23T12:40:20+00:00",
+      "picks": [
+        {
+          "rank": 1,
+          "nominee": "Christopher Nolan (The Odyssey)"
+        },
+        {
+          "rank": 2,
+          "nominee": "Ryūsuke Hamaguchi (All of a Sudden)"
+        },
+        {
+          "rank": 3,
+          "nominee": "Javier Ambrossi, Javier Calvo (La Bola Negra)"
+        },
+        {
+          "rank": 4,
+          "nominee": "Cristian Mungiu (Fjord)"
+        },
+        {
+          "rank": 5,
+          "nominee": "Tony Gilroy (Behemoth!)"
+        },
+        {
+          "rank": 6,
+          "nominee": "Alejandro G. Iñárritu (Digger)"
+        },
+        {
+          "rank": 7,
+          "nominee": "Phil Lord, Christopher Miller (Project Hail Mary)"
+        },
+        {
+          "rank": 8,
+          "nominee": "Martin McDonagh (Wild Horse Nine)"
+        },
+        {
+          "rank": 9,
+          "nominee": "Denis Villeneuve (Dune: Part Three)"
+        },
+        {
+          "rank": 10,
+          "nominee": "Paweł Pawlikowski (Fatherland)"
+        }
+      ]
+    },
+    {
+      "slug": "writing-original-screenplay",
+      "name": "Original Screenplay",
+      "nominee_slot_count": 5,
+      "last_updated": "2026-10-11T17:10:03+00:00",
+      "picks": [
+        {
+          "rank": 1,
+          "nominee": "The Debut"
+        },
+        {
+          "rank": 2,
+          "nominee": "Wild Horse Nine"
+        },
+        {
+          "rank": 3,
+          "nominee": "Obsession"
+        },
+        {
+          "rank": 4,
+          "nominee": "Artificial"
+        },
+        {
+          "rank": 5,
+          "nominee": "Fjord"
+        },
+        {
+          "rank": 6,
+          "nominee": "Club Kid"
+        },
+        {
+          "rank": 7,
+          "nominee": "Behemoth!"
+        },
+        {
+          "rank": 8,
+          "nominee": "Elsinore"
+        },
+        {
+          "rank": 9,
+          "nominee": "Josephine"
+        },
+        {
+          "rank": 10,
+          "nominee": "Digger"
+        }
+      ]
+    },
+    {
+      "slug": "writing-adapted-screenplay",
+      "name": "Adapted Screenplay",
+      "nominee_slot_count": 5,
+      "last_updated": "2026-10-11T17:40:02+00:00",
+      "picks": [
+        {
+          "rank": 1,
+          "nominee": "La Bola Negra"
+        },
+        {
+          "rank": 2,
+          "nominee": "The Invite"
+        },
+        {
+          "rank": 3,
+          "nominee": "The Odyssey"
+        },
+        {
+          "rank": 4,
+          "nominee": "Project Hail Mary"
+        },
+        {
+          "rank": 5,
+          "nominee": "All of a Sudden"
+        },
+        {
+          "rank": 6,
+          "nominee": "Being Heumann"
+        },
+        {
+          "rank": 7,
+          "nominee": "Dune: Part Three"
+        },
+        {
+          "rank": 8,
+          "nominee": "Sense and Sensibility"
+        },
+        {
+          "rank": 9,
+          "nominee": "Primetime"
+        },
+        {
+          "rank": 10,
+          "nominee": "Ink"
+        }
+      ]
+    },
+    {
+      "slug": "actor-in-a-leading-role",
+      "name": "Actor",
+      "nominee_slot_count": 5,
+      "last_updated": "2026-10-11T17:40:02+00:00",
+      "picks": [
+        {
+          "rank": 1,
+          "nominee": "Tom Cruise (Digger)"
+        },
+        {
+          "rank": 2,
+          "nominee": "Ryan Gosling (Project Hail Mary)"
+        },
+        {
+          "rank": 3,
+          "nominee": "Matt Damon (The Odyssey)"
+        },
+        {
+          "rank": 4,
+          "nominee": "Pedro Pascal (Behemoth!)"
+        },
+        {
+          "rank": 5,
+          "nominee": "Andrew Scott (Elsinore)"
+        },
+        {
+          "rank": 6,
+          "nominee": "Sebastian Stan (Fjord)"
+        },
+        {
+          "rank": 7,
+          "nominee": "Robert Pattinson (Primetime)"
+        },
+        {
+          "rank": 8,
+          "nominee": "Jaafar Jackson (Michael)"
+        },
+        {
+          "rank": 9,
+          "nominee": "John Malkovich (Wild Horse Nine)"
+        },
+        {
+          "rank": 10,
+          "nominee": "Anthony Ippolito (I Play Rocky)"
+        }
+      ]
+    },
+    {
+      "slug": "actress-in-a-leading-role",
+      "name": "Actress",
+      "nominee_slot_count": 5,
+      "last_updated": "2026-10-11T17:10:03+00:00",
+      "picks": [
+        {
+          "rank": 1,
+          "nominee": "Julianne Moore (The Debut)"
+        },
+        {
+          "rank": 2,
+          "nominee": "Renate Reinsve (Fjord)"
+        },
+        {
+          "rank": 3,
+          "nominee": "Inde Navarrette (Obsession)"
+        },
+        {
+          "rank": 4,
+          "nominee": "Virginie Efira (All of a Sudden)"
+        },
+        {
+          "rank": 5,
+          "nominee": "Olivia Wilde (The Invite)"
+        },
+        {
+          "rank": 6,
+          "nominee": "Ruth Madeley (Being Heumann)"
+        },
+        {
+          "rank": 7,
+          "nominee": "Sandra Hüller (Rose)"
+        },
+        {
+          "rank": 8,
+          "nominee": "Léa Seydoux (Gentle Monster)"
+        },
+        {
+          "rank": 9,
+          "nominee": "Cynthia Erivo (Prima Facie)"
+        },
+        {
+          "rank": 10,
+          "nominee": "Emily Blunt (Disclosure Day)"
+        }
+      ]
+    },
+    {
+      "slug": "actor-in-a-supporting-role",
+      "name": "Supporting Actor",
+      "nominee_slot_count": 5,
+      "last_updated": "2026-10-11T17:40:02+00:00",
+      "picks": [
+        {
+          "rank": 1,
+          "nominee": "Edward Norton (The Invite)"
+        },
+        {
+          "rank": 2,
+          "nominee": "Paul Giamatti (The Debut)"
+        },
+        {
+          "rank": 3,
+          "nominee": "John Goodman (Digger)"
+        },
+        {
+          "rank": 4,
+          "nominee": "Guitarricadelafuente (La Bola Negra)"
+        },
+        {
+          "rank": 5,
+          "nominee": "Sam Rockwell (Wild Horse Nine)"
+        },
+        {
+          "rank": 6,
+          "nominee": "Andrew Garfield (Artificial)"
+        },
+        {
+          "rank": 7,
+          "nominee": "John Leguizamo (The Odyssey)"
+        },
+        {
+          "rank": 8,
+          "nominee": "Colman Domingo (Michael)"
+        },
+        {
+          "rank": 9,
+          "nominee": "Guy Pearce (Ink)"
+        },
+        {
+          "rank": 10,
+          "nominee": "Channing Tatum (Josephine)"
+        }
+      ]
+    },
+    {
+      "slug": "actress-in-a-supporting-role",
+      "name": "Supporting Actress",
+      "nominee_slot_count": 5,
+      "last_updated": "2026-09-27T13:40:11+00:00",
+      "picks": [
+        {
+          "rank": 1,
+          "nominee": "Penélope Cruz (La Bola Negra)"
+        },
+        {
+          "rank": 2,
+          "nominee": "Anne Hathaway (The Odyssey)"
+        },
+        {
+          "rank": 3,
+          "nominee": "Sandra Hüller (Project Hail Mary)"
+        },
+        {
+          "rank": 4,
+          "nominee": "Samantha Morton (The Odyssey)"
+        },
+        {
+          "rank": 5,
+          "nominee": "Tao Okamoto (All of a Sudden)"
+        },
+        {
+          "rank": 6,
+          "nominee": "Olivia Colman (Elsinore)"
+        },
+        {
+          "rank": 7,
+          "nominee": "Mariana Di Girólamo (Wild Horse Nine)"
+        },
+        {
+          "rank": 8,
+          "nominee": "Sandra Hüller (Digger)"
+        },
+        {
+          "rank": 9,
+          "nominee": "Zendaya (Dune: Part Three)"
+        },
+        {
+          "rank": 10,
+          "nominee": "Lola Dueñas (La Bola Negra)"
+        }
+      ]
+    }
+  ]
+}

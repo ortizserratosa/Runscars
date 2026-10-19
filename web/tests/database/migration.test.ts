@@ -92,8 +92,8 @@ describe("versioned database foundation", () => {
       seasons: 2,
       categories: 21,
       films: 39,
-      sources: 40,
-      connectors: 20,
+      sources: 42,
+      connectors: 22,
     });
 
     const schedules = await database.query<{
@@ -183,6 +183,78 @@ describe("versioned database foundation", () => {
     ]);
   });
 
+  it("registers two daily independent ballots with category coverage and idempotent source metadata", async () => {
+    await database.exec(await readFile(seedPath, "utf8"));
+    const selectProfiles = () =>
+      database.query<{
+        id: string;
+        source_id: string;
+        author: string;
+        kind: string;
+        extractor_version: string;
+        schedule_cron: string;
+        active: boolean;
+        publication_status: string;
+        categories: string[];
+      }>(`
+      select connector.id, connector.source_id,
+        connector.configuration->>'editorial_author' as author,
+        connector.kind::text as kind, connector.extractor_version,
+        connector.schedule_cron, connector.is_active as active,
+        source.publication_status,
+        connector.configuration->'required_category_ids' as categories
+      from public.source_connectors connector
+      join public.sources source on source.id = connector.source_id
+      where connector.id in ('ankler-predictions', 'rolling-tape-predictions')
+      order by connector.id
+    `);
+    const before = await selectProfiles();
+    const categories = [
+      "best-picture",
+      "directing",
+      "actor",
+      "actress",
+      "supporting-actor",
+      "supporting-actress",
+      "original-screenplay",
+      "adapted-screenplay",
+    ];
+    expect(before.rows).toEqual([
+      {
+        id: "ankler-predictions",
+        source_id: "ankler",
+        author: "Christopher Rosen",
+        kind: "html",
+        extractor_version: "ankler-rosen-v1",
+        schedule_cron: "17 4 * * *",
+        active: true,
+        publication_status: "publishable",
+        categories,
+      },
+      {
+        id: "rolling-tape-predictions",
+        source_id: "the-rolling-tape",
+        author: "Danny Jarabek",
+        kind: "api_json",
+        extractor_version: "rolling-tape-jarabek-v1",
+        schedule_cron: "17 4 * * *",
+        active: true,
+        publication_status: "publishable",
+        categories,
+      },
+    ]);
+    const migration = await readFile(
+      path.join(
+        migrationsDirectory,
+        "20261019100000_prediction_sources_ankler_rolling_tape.sql",
+      ),
+      "utf8",
+    );
+    await database.exec(migration);
+    await database.exec(migration);
+    expect((await selectProfiles()).rows).toEqual(before.rows);
+  });
+
   it("keeps Variety category failures isolated while contributing one editorial source", async () => {
     await database.exec(await readFile(seedPath, "utf8"));
     const result = await database.query<{
@@ -209,7 +281,7 @@ describe("versioned database foundation", () => {
     expect(
       result.rows.every(
         (row) =>
-          row.extractor_version === "variety-datawrapper-v1" &&
+          row.extractor_version === "variety-datawrapper-v2" &&
           row.is_active &&
           row.publication_status === "publishable" &&
           row.required_category_ids.length === 1 &&
@@ -1799,6 +1871,7 @@ describe("versioned database foundation", () => {
       excluded = [observationId],
       category = "best-picture",
       payloadExcluded = excluded,
+      methodVersion = "runscars-aggregation-v3",
     ) =>
       database.query<{ inserted: boolean }>(
         `
@@ -1808,11 +1881,13 @@ describe("versioned database foundation", () => {
         snapshot_category_id => $2,
         snapshot_intention => 'nomination',
         snapshot_kind => $3::public.aggregate_snapshot_kind,
-        snapshot_cutoff_at => '2026-09-01T00:00:00Z',
+        snapshot_cutoff_at => case when $6 = 'runscars-aggregation-v4'
+          then '2026-10-19T00:00:00Z'::timestamptz
+          else '2026-09-01T00:00:00Z'::timestamptz end,
         snapshot_time_zone => 'UTC',
-        snapshot_method_version => 'runscars-aggregation-v3',
+        snapshot_method_version => $6,
         snapshot_schema_version => 'runscars-snapshot-v2',
-        snapshot_content_hash => repeat('f', 64),
+        snapshot_content_hash => repeat(case when $6 = 'runscars-aggregation-v4' then '4' else 'f' end, 64),
         snapshot_payload => $4::jsonb,
         snapshot_active_source_ids => '{}'::text[],
         included_observation_ids => '{}'::bigint[],
@@ -1831,7 +1906,7 @@ describe("versioned database foundation", () => {
             seasonId: "oscars-2027",
             categoryId: category,
             intention: "nomination",
-            methodVersion: "runscars-aggregation-v3",
+            methodVersion,
             activeSourceIds: [],
             includedObservationIds: [],
             excludedObservationIds: payloadExcluded.map(String),
@@ -1844,6 +1919,7 @@ describe("versioned database foundation", () => {
             },
           }),
           excluded,
+          methodVersion,
         ],
       );
 
@@ -1890,6 +1966,50 @@ describe("versioned database foundation", () => {
         and prediction_intention = 'nomination' and kind = 'periodic'
     `);
     expect(pointer.rows[0].snapshot_id).toBe("empty-expiry-cut");
+    expect(
+      (
+        await lockEmptyCut(
+          "empty-v4-expiry-cut",
+          "periodic",
+          [observationId],
+          "best-picture",
+          [observationId],
+          "runscars-aggregation-v4",
+        )
+      ).rows[0].inserted,
+    ).toBe(true);
+    expect(
+      (
+        await lockEmptyCut(
+          "empty-v4-expiry-cut",
+          "periodic",
+          [observationId],
+          "best-picture",
+          [observationId],
+          "runscars-aggregation-v4",
+        )
+      ).rows[0].inserted,
+    ).toBe(false);
+    await expect(
+      lockEmptyCut(
+        "empty-v4-final",
+        "nomination_final",
+        [observationId],
+        "best-picture",
+        [observationId],
+        "runscars-aggregation-v4",
+      ),
+    ).rejects.toThrow("needs included observations");
+    await expect(
+      lockEmptyCut(
+        "empty-v4-without-evidence",
+        "periodic",
+        [],
+        "best-picture",
+        [],
+        "runscars-aggregation-v4",
+      ),
+    ).rejects.toThrow("needs included observations");
     const retained = await database.query<{ payload: unknown }>(`
       select payload from public.aggregate_snapshots
       where id = 'periodic-database-reference'

@@ -1,7 +1,7 @@
 # Metodología
 
 **Estado:** agregación, snapshots y evaluación profesional operativos
-**Última revisión:** 2026-10-07
+**Última revisión:** 2026-10-19
 
 ## 1. Principios
 
@@ -161,15 +161,28 @@ Para cada candidatura se muestran:
 
 ### 4.2 Puntuación Borda normalizada
 
-Para una lista ordenada con longitud `L` y una candidatura en la posición `p`:
+Desde `runscars-aggregation-v4`, la ventana común `K` es 20 en Mejor película
+y 10 en las otras siete categorías públicas. Para una candidatura en su puesto
+original `p` dentro de esa ventana:
 
 ```text
-puntos_fuente = (L - p + 1) / L
+puntos_fuente = (K - p + 1) / K, si p <= K; 0 en otro caso
 ```
 
-La primera posición recibe `1`; la última, `1/L`; una candidatura ausente
-recibe `0`. El consenso es la media aritmética de los puntos obtenidos en todas
-las listas ordenadas aplicables. Todas las fuentes tienen el mismo peso.
+La primera posición recibe `1`; el último puesto de la ventana, `1/K`. El mismo
+puesto recibe los mismos puntos aunque un medio publique menos candidaturas.
+Las listas cortas no se rellenan y una candidatura ausente recibe `0`. El
+consenso es la media aritmética de los puntos obtenidos en todas las listas
+ordenadas aplicables. Todas las fuentes tienen el mismo peso.
+
+Se conservan la lista y longitud originales completas. Las posiciones posteriores
+a `K` no aportan puntos, apariciones, posiciones ni desempates al agregado; se
+consultan como contexto en la ficha de fuente. Los huecos por matching pendiente
+mantienen el puesto original y no comprimen la lista. El agregado registra la
+ventana aplicada y el número de observaciones consideradas por fuente (D-073).
+
+Los snapshots v1–v3 conservan su fórmula histórica `(L-p+1)/L`. No se modifican
+sus payloads ni hashes y no se comparan movimientos entre v4 y métodos anteriores.
 
 Esta puntuación ordena el consenso, pero no representa una probabilidad de
 nominación o victoria. Siempre se muestra junto a cobertura, posiciones y número
@@ -195,9 +208,9 @@ de persistirla; el último corte válido permanece vigente.
 El orden debe estar numerado, marcado como lista ordenada o declarado por el
 medio; los saltos de línea o las filas de una tabla no prueban por sí solos
 un ranking. Se conserva la longitud completa del ranking extraído, sin un
-límite técnico silencioso de filas. Las listas de distinta longitud pueden
-otorgar puntos diferentes al mismo puesto: Borda es un índice ordinal, no una
-probabilidad calibrada.
+límite técnico silencioso de filas. La ventana v4 se aplica únicamente al
+agregado y se declara públicamente; nunca trunca la captura original. Borda es
+un índice ordinal, no una probabilidad calibrada.
 
 Una selección sin orden contribuye a cobertura, pero no a la puntuación Borda ni
 a las posiciones media o mediana.
@@ -228,11 +241,11 @@ usa únicamente la publicación elegible más reciente de cada fuente:
 - una fuente con solo selección cuenta para cobertura, pero no entra en el
   denominador Borda.
 
-La implementación `runscars-aggregation-v3` representa los puntos decimales con
+La implementación `runscars-aggregation-v4` representa los puntos decimales con
 doce posiciones estables antes de ordenar. Esto elimina artefactos binarios —por
 ejemplo `0,65` frente a `0,649999…`— sin redondear para presentación ni alterar
 un empate matemático. Su salida usa `candidateId`, película, obra y personas. Las
-versiones v1 y v2 permanecen documentadas exclusivamente para reproducir
+versiones v1, v2 y v3 permanecen documentadas exclusivamente para reproducir
 snapshots históricos.
 
 La publicación elegible más reciente se elige por fuente, categoría e intención:
@@ -240,7 +253,8 @@ si una publicación nueva omite una categoría, no elimina la última lista
 elegible anterior de esa categoría. Un medio aporta una sola fuente aunque
 publique varios autores, miembros o bloques. En el panel actual de AwardsWatch
 se sigue exclusivamente la columna de Erik Anderson; Next Best Picture sigue
-el perfil de Matt Neglia. No se atribuyen estas listas a un consenso de equipo.
+el perfil de Matt Neglia. The Ankler sigue exclusivamente a Christopher Rosen y
+The Rolling Tape a Danny Jarabek (D-074). No se atribuyen estas listas a un consenso de equipo.
 La última revisión de una misma URL se resuelve antes de comparar las fechas
 de publicaciones distintas, evitando una elección dependiente del orden de filas.
 
@@ -381,7 +395,8 @@ son públicos.
 - persona o proceso que lo bloqueó.
 
 Un snapshot periódico programado solo se bloquea cuando su estado efectivo de
-proveedores difiere del puntero periódico vigente. Cuando vencen todas las fuentes, se permite un corte periódico v3 sin ranking
+proveedores difiere del puntero periódico vigente o cambia a la metodología v4.
+Cuando vencen todas las fuentes, se permite un corte periódico v3/v4 sin ranking
 ni fuentes activas y con las observaciones excluidas como evidencia, para retirar
 el consenso vencido. Un corte sin ninguna evidencia sigue siendo inválido.
 Los cierres finales y las

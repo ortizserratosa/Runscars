@@ -104,6 +104,39 @@ describe("Variety public category rankings", () => {
     ).toBe("The Further Mis-Adventures of Cliff Booth");
   });
 
+  it("sorts complete explicit ranks while preserving the CSV row order in its receipt", () => {
+    const csv = fixture.categories["best-picture"].csv;
+    const rows = csv.split("\n");
+    const second = rows.findIndex((row) => row.startsWith("2,"));
+    const third = rows.findIndex((row) => row.startsWith("3,"));
+    expect(second).toBeGreaterThan(0);
+    expect(third).toBeGreaterThan(second);
+    [rows[second], rows[third]] = [rows[third], rows[second]];
+    const publication = parse("best-picture", { csv: rows.join("\n") })
+      .publications[0];
+    expect(
+      publication.observations.map(
+        (row: { originalValue: { rank: number } }) => row.originalValue.rank,
+      ),
+    ).toEqual(Array.from({ length: 40 }, (_, index) => index + 1));
+    expect(
+      publication.originalData.ranking_rows
+        .slice(0, 3)
+        .map((row: { cells: Record<string, string> }) => row.cells.Rank),
+    ).toEqual(["1", "3", "2"]);
+  });
+
+  it.each(["4", "6"])(
+    "rejects a duplicated source rank %s instead of inventing its missing position",
+    (rank) => {
+      const csv = fixture.categories["best-picture"].csv.replace(
+        /^5,/m,
+        `${rank},`,
+      );
+      expect(() => parse("best-picture", { csv })).toThrow("posiciones");
+    },
+  );
+
   it("keeps an undisclosed performer pending without removing its position or length", async () => {
     const batch = parse("supporting-actress");
     const prepared = await prepareBatch(batch, [

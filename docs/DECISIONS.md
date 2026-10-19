@@ -1,6 +1,6 @@
 # Registro de decisiones
 
-**Última revisión:** 2026-09-29
+**Última revisión:** 2026-10-19
 
 ## Cómo usar este registro
 
@@ -80,6 +80,9 @@ pasado para ocultar cambios de criterio.
 | D-060 | Despliegue por defecto de cambios verificados                   | Aceptada    |
 | D-061 | Cortes históricos comparables con frescura uniforme             | Aceptada    |
 | D-062 | Lectura pública de predicciones reutilizable por corte          | Aceptada    |
+| D-073 | Ventana común 20/10 y puntuación profesional v4                  | Aceptada    |
+| D-074 | The Ankler y The Rolling Tape con autor fijo                     | Aceptada    |
+| D-075 | Estado editorial, profundidad y salud por categoría              | Aceptada    |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -1448,3 +1451,60 @@ ejemplos manuales de nominaciones y ganador coincidieron con
 - **Operación:** captura desde servidor de los IDs verificados, con locales
   `es-ES` y `en-US`, importación idempotente y fallos aislados. La visita
   pública lee la caché; no dispara llamadas a TMDB. No se crea un nuevo Cron.
+
+## D-073 · Ventana común 20/10 y puntuación profesional v4
+
+- **Fecha:** 2026-10-19
+- **Estado:** Aceptada
+- **Origen:** plan aprobado explícitamente por el usuario tras comparar longitudes
+  de 50/20 de Awards Radar y 40/30 de Variety con listas de 10/5.
+- **Decisión:** la metodología v4 usa `K=20` en película y `K=10` en las otras
+  siete categorías públicas. Cada puesto original `p<=K` recibe `(K-p+1)/K`;
+  los demás reciben cero. El mismo puesto vale lo mismo con cualquier longitud
+  publicada. Las listas cortas no se rellenan ni pierden su peso de una fuente.
+- **Profundidad:** posiciones posteriores a K no aportan cobertura, posiciones
+  ni desempates. La captura y la longitud publicadas siguen completas; las
+  identidades pendientes conservan huecos y no desplazan otras candidaturas.
+  Las selecciones explícitas aportan solo cobertura y NEXT/Alt queda separado.
+- **Compatibilidad:** v4 registra la ventana en el agregado y crea su primer
+  corte aunque el proveedor no haya cambiado. No se modifican snapshots ni
+  hashes históricos; no hay movimientos entre v4 y v1–v3. Continúan la frescura
+  de 30 días, cuatro rankings mínimos y el mismo peso por medio.
+- **Precedencia:** sustituye únicamente la fórmula y uso de longitud de D-011,
+  D-063 y D-068 para los nuevos cortes; sus demás reglas se conservan.
+
+## D-074 · The Ankler y The Rolling Tape con autor fijo
+
+- **Fecha:** 2026-10-19
+- **Estado:** Aceptada
+- **Origen:** aprobación expresa de incorporar las dos fuentes verificadas.
+- **Decisión:** incorporar The Ankler / Christopher Rosen (10/5 posiciones) y
+  The Rolling Tape / Danny Jarabek (20/10), con un conector diario por medio y
+  cobertura de las ocho categorías. Su autoridad, muestra y segunda evidencia
+  figuran en el registro de fuentes y la auditoría de este corte.
+- **Integridad:** solo sus ballots individuales; ningún consenso del panel,
+  usuario, cuota ni otros autores. Conservar fecha editorial por categoría,
+  captura real, URL, autor, valor y puesto originales. La sincronización técnica
+  no rejuvenece predicciones. Matching conservador y revisión ante dudas.
+- **Operación:** captura HTTPS pública ordinaria, fixtures reproducibles,
+  validación completa, revisiones idempotentes y fallos aislados entre medios.
+  Publicación limitada a hechos de predicción y atribución, sin cuerpo editorial.
+  Los originales públicos podrán cambiar de formato o temporada: un cambio
+  incompatible debe fallar conservando la última captura válida.
+
+## D-075 · Estado editorial, profundidad y salud por categoría
+
+- **Fecha:** 2026-10-19
+- **Estado:** Aceptada
+- **Decisión:** distinguir medios con datos y rankings que puntúan. Mostrar por
+  fuente/categoría publicación o evidencia de frescura, vencimiento, longitud
+  original, candidaturas consideradas y comprobación técnica. Una fuente
+  caducada puede conservar conector activo y comprobación correcta.
+- **Integridad:** las fichas preservan los originales publicados fuera del
+  agregado y explican por qué no puntúan. Los datos públicos no exponen secretos,
+  notas editoriales privadas ni observaciones en revisión. Variety se comprueba
+  por categoría sin convertir ocho conectores en ocho voces.
+- **Orden:** AwardsWatch de octubre y Awards Daily siguen como selecciones.
+  La errata de encabezado y NEXT de AwardsWatch se corrigen en el extractor;
+  Variety acepta filas físicamente reordenadas con Rank único y completo, pero
+  rechaza duplicados o huecos reales conservando su última captura válida.
