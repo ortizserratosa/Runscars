@@ -1,0 +1,18 @@
+{
+  "commit": "9b3c681ae05ef7fd1a5dbea3e4c3173a9363a364",
+  "id": "dpl_5TeFmXJgPGv1f8ny6Jmtfyg3dAQG",
+  "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app",
+  "productionUrl": "https://runscars-nazzozzo-s-projects.vercel.app",
+  "inspectorUrl": "https://vercel.com/nazzozzo-s-projects/runscars/5TeFmXJgPGv1f8ny6Jmtfyg3dAQG",
+  "readyState": "READY",
+  "target": "production",
+  "deploymentApiUrl": "https://api.vercel.com/v13/deployments/dpl_5TeFmXJgPGv1f8ny6Jmtfyg3dAQG",
+  "buildMachine": {
+    "cores": 2,
+    "memory": 8192,
+    "machine": "basic",
+    "selectionType": "fixed",
+    "selectionSource": "plan-default"
+  },
+  "deploymentProtection": []
+}

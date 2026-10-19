@@ -1,0 +1,57 @@
+{
+  "checkedAt": "2026-10-19T17:33:52.377Z",
+  "baseline": 271,
+  "current": 279,
+  "unchanged": 271,
+  "alteredIds": [],
+  "newSnapshots": [
+    {
+      "content_hash": "a4fa6cf5025eafe03ebd2101d3406837cc2b342e0ef9a40ef72fc2a8cc93fe27",
+      "id": "periodic-oscars-2027-actor-nomination-2026-10-19-a4fa6cf5025e",
+      "locked_at": "2026-10-19 17:31:45.865+00",
+      "method_version": "runscars-aggregation-v4"
+    },
+    {
+      "content_hash": "c4edd0a3c2c8ac4ce158c17a2ad7f633d6d5dd14364f80cf3cf6a6db92a0ad7b",
+      "id": "periodic-oscars-2027-actress-nomination-2026-10-19-c4edd0a3c2c8",
+      "locked_at": "2026-10-19 17:31:45.865+00",
+      "method_version": "runscars-aggregation-v4"
+    },
+    {
+      "content_hash": "d5e85a1b07398bde925ad2de2ccf577e8be17b540389e131e6cf296d2ce4d475",
+      "id": "periodic-oscars-2027-adapted-screenplay-nomination-2026-10-19-d5e85a1b0739",
+      "locked_at": "2026-10-19 17:31:45.865+00",
+      "method_version": "runscars-aggregation-v4"
+    },
+    {
+      "content_hash": "b8db4744c858296d0c0bdcdd0b3384f137849e094d5206cb4007db02b949da43",
+      "id": "periodic-oscars-2027-best-picture-nomination-2026-10-19-b8db4744c858",
+      "locked_at": "2026-10-19 17:31:45.865+00",
+      "method_version": "runscars-aggregation-v4"
+    },
+    {
+      "content_hash": "2f86bb47787f183561c028f108c700d0d4d32224e8f7f47aa212b4e1cd75c8db",
+      "id": "periodic-oscars-2027-directing-nomination-2026-10-19-2f86bb47787f",
+      "locked_at": "2026-10-19 17:31:45.865+00",
+      "method_version": "runscars-aggregation-v4"
+    },
+    {
+      "content_hash": "f7a849a739824f1cf7195212ac74b491b6bf79e337fd89ec354ac546d9d51be2",
+      "id": "periodic-oscars-2027-original-screenplay-nomination-2026-10-19-f7a849a73982",
+      "locked_at": "2026-10-19 17:31:45.865+00",
+      "method_version": "runscars-aggregation-v4"
+    },
+    {
+      "content_hash": "fd9637baf39f6de87102ccbdb7e450e30c5446d8e0a48f8320db4c10f8f6b246",
+      "id": "periodic-oscars-2027-supporting-actor-nomination-2026-10-19-fd9637baf39f",
+      "locked_at": "2026-10-19 17:31:45.865+00",
+      "method_version": "runscars-aggregation-v4"
+    },
+    {
+      "content_hash": "23b7b6e504953e56e434b9e1963bb61fdf5c392cf25e98870a60c694d3ab5b6d",
+      "id": "periodic-oscars-2027-supporting-actress-nomination-2026-10-19-23b7b6e50495",
+      "locked_at": "2026-10-19 17:31:45.865+00",
+      "method_version": "runscars-aggregation-v4"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "status": "ok",
+  "deployment": {
+    "id": "dpl_CGBqHgh8i7Y1M7bm9i4m5cTYtr1s",
+    "url": "https://runscars-d7x6ltnrz-nazzozzo-s-projects.vercel.app",
+    "productionUrl": "https://runscars-nazzozzo-s-projects.vercel.app",
+    "inspectorUrl": "https://vercel.com/nazzozzo-s-projects/runscars/CGBqHgh8i7Y1M7bm9i4m5cTYtr1s",
+    "readyState": "READY",
+    "target": "production",
+    "deploymentApiUrl": "https://api.vercel.com/v13/deployments/dpl_CGBqHgh8i7Y1M7bm9i4m5cTYtr1s",
+    "buildMachine": {
+      "cores": 2,
+      "memory": 8192,
+      "machine": "basic",
+      "selectionType": "fixed",
+      "selectionSource": "plan-default"
+    },
+    "deploymentProtection": []
+  },
+  "message": "Deployment runscars-d7x6ltnrz-nazzozzo-s-projects.vercel.app ready. Production URL: https://runscars-nazzozzo-s-projects.vercel.app",
+  "next": [
+    {
+      "command": "vercel curl https://runscars-nazzozzo-s-projects.vercel.app",
+      "when": "Verify deployment, including when Deployment Protection is enabled"
+    },
+    {
+      "command": "vercel inspect runscars-d7x6ltnrz-nazzozzo-s-projects.vercel.app",
+      "when": "Inspect deployment"
+    },
+    {
+      "command": "vercel deploy --prod",
+      "when": "Promote to production"
+    }
+  ]
+}

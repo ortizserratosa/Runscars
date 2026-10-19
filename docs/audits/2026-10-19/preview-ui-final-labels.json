@@ -1,0 +1,158 @@
+{
+  "capturedAt": "2026-10-19T17:54:50.783Z",
+  "base": "https://runscars-85umlgifu-nazzozzo-s-projects.vercel.app",
+  "measurement": "Unthrottled lab page-load LCP/CLS, not field Core Web Vitals or INP",
+  "results": [
+    {
+      "url": "https://runscars-85umlgifu-nazzozzo-s-projects.vercel.app/en/temporadas/2027",
+      "device": "desktop",
+      "status": 200,
+      "title": "Oscar Predictions 2027 by Category | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 1620,
+        "cls": 0
+      },
+      "ttfb": 342,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-85umlgifu-nazzozzo-s-projects.vercel.app/temporadas/2027",
+      "device": "desktop",
+      "status": 200,
+      "title": "Predicciones Oscar 2027 por categoría | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 1216,
+        "cls": 0
+      },
+      "ttfb": 342.10000002384186,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-85umlgifu-nazzozzo-s-projects.vercel.app/temporadas/2027/mejor-pelicula",
+      "device": "desktop",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: Mejor película | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 2000,
+        "cls": 0
+      },
+      "ttfb": 341.7000000476837,
+      "rankingY": 825.421875,
+      "errors": [],
+      "violations": [],
+      "screenshot": "/tmp/runscars-preview-labels/desktop-mejor-pelicula.png"
+    },
+    {
+      "url": "https://runscars-85umlgifu-nazzozzo-s-projects.vercel.app/temporadas/2027",
+      "device": "mobile",
+      "status": 200,
+      "title": "Predicciones Oscar 2027 por categoría | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 488,
+        "cls": 0
+      },
+      "ttfb": 35.300000071525574,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-85umlgifu-nazzozzo-s-projects.vercel.app/en/temporadas/2027/mejor-pelicula",
+      "device": "desktop",
+      "status": 200,
+      "title": "Best Picture Oscar Predictions 2027 | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 672,
+        "cls": 0
+      },
+      "ttfb": 32.700000047683716,
+      "rankingY": 825.421875,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-85umlgifu-nazzozzo-s-projects.vercel.app/temporadas/2027/mejor-pelicula",
+      "device": "mobile",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: Mejor película | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 1024,
+        "cls": 0
+      },
+      "ttfb": 32.39999997615814,
+      "rankingY": 1072.796875,
+      "errors": [],
+      "violations": [],
+      "screenshot": "/tmp/runscars-preview-labels/mobile-mejor-pelicula.png"
+    },
+    {
+      "url": "https://runscars-85umlgifu-nazzozzo-s-projects.vercel.app/en/temporadas/2027",
+      "device": "mobile",
+      "status": 200,
+      "title": "Oscar Predictions 2027 by Category | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 472,
+        "cls": 0
+      },
+      "ttfb": 27.700000047683716,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-85umlgifu-nazzozzo-s-projects.vercel.app/en/temporadas/2027/mejor-pelicula",
+      "device": "mobile",
+      "status": 200,
+      "title": "Best Picture Oscar Predictions 2027 | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 600,
+        "cls": 0
+      },
+      "ttfb": 30.199999928474426,
+      "rankingY": 1072.796875,
+      "errors": [],
+      "violations": []
+    }
+  ],
+  "failed": 0
+}

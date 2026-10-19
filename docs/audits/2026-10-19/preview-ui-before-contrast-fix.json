@@ -1,0 +1,928 @@
+{
+  "capturedAt": "2026-10-19T17:28:59.448Z",
+  "base": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app",
+  "measurement": "Unthrottled lab page-load LCP/CLS, not field Core Web Vitals or INP",
+  "results": [
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/",
+      "device": "desktop",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: ranking y consenso | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 1204,
+        "cls": 0
+      },
+      "ttfb": 54.200000047683716,
+      "errors": [],
+      "violations": [],
+      "screenshot": "/tmp/runscars-preview-prediction-ui/desktop-home.png"
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/temporadas/2027",
+      "device": "desktop",
+      "status": 200,
+      "title": "Predicciones Oscar 2027 por categoría | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 5184,
+        "cls": 0
+      },
+      "ttfb": 55.39999997615814,
+      "errors": [],
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                ".category-card.muted-category:nth-child(3) > .category-index"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.48 (foreground color: #5d5e59, background color: #f4a8bd, font size: 8.2pt (10.88px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".category-card.muted-category:nth-child(4) > .category-index"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.93 (foreground color: #5d5e59, background color: #85adff, font size: 8.2pt (10.88px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".category-card.muted-category:nth-child(7) > .category-index"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.48 (foreground color: #5d5e59, background color: #f4a8bd, font size: 8.2pt (10.88px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".category-card.muted-category:nth-child(8) > .category-index"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.93 (foreground color: #5d5e59, background color: #85adff, font size: 8.2pt (10.88px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/temporadas/2027/mejor-pelicula",
+      "device": "desktop",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: Mejor película | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 768,
+        "cls": 0.00006324106475453318
+      },
+      "ttfb": 33.89999997615814,
+      "errors": [],
+      "violations": [],
+      "screenshot": "/tmp/runscars-preview-prediction-ui/desktop-mejor-pelicula.png"
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/temporadas/2027/actriz-protagonista",
+      "device": "desktop",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: Actriz protagonista | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 2096,
+        "cls": 0
+      },
+      "ttfb": 34.199999928474426,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/fuentes/the-rolling-tape",
+      "device": "desktop",
+      "status": 200,
+      "title": "The Rolling Tape: fuente de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 4128,
+        "cls": 0
+      },
+      "ttfb": 31.90000009536743,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/fuentes/ankler",
+      "device": "desktop",
+      "status": 200,
+      "title": "The Ankler: fuente de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 4276,
+        "cls": 0
+      },
+      "ttfb": 29.699999928474426,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/fuentes/awardswatch",
+      "device": "desktop",
+      "status": 200,
+      "title": "AwardsWatch: fuente de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 4016,
+        "cls": 0
+      },
+      "ttfb": 35.90000009536743,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/fuentes/variety",
+      "device": "desktop",
+      "status": 200,
+      "title": "Variety: fuente de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 4620,
+        "cls": 0
+      },
+      "ttfb": 29.600000023841858,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/fuentes/the-movie-state",
+      "device": "desktop",
+      "status": 200,
+      "title": "The Movie State: fuente de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 3872,
+        "cls": 0
+      },
+      "ttfb": 27.600000023841858,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/fuentes/next-best-picture",
+      "device": "desktop",
+      "status": 200,
+      "title": "Next Best Picture: fuente de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 3924,
+        "cls": 0
+      },
+      "ttfb": 32.39999997615814,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/metodologia",
+      "device": "desktop",
+      "status": 200,
+      "title": "Cómo funciona el consenso de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 300,
+        "cls": 0
+      },
+      "ttfb": 38.799999952316284,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/en",
+      "device": "desktop",
+      "status": 200,
+      "title": "Oscar Predictions 2027: Expert Consensus | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 444,
+        "cls": 0
+      },
+      "ttfb": 39.10000002384186,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/en/temporadas/2027/mejor-pelicula",
+      "device": "desktop",
+      "status": 200,
+      "title": "Best Picture Oscar Predictions 2027 | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 692,
+        "cls": 0
+      },
+      "ttfb": 32.10000002384186,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/en/temporadas/2027",
+      "device": "desktop",
+      "status": 200,
+      "title": "Oscar Predictions 2027 by Category | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 3744,
+        "cls": 0.0026015283805941357
+      },
+      "ttfb": 28.899999976158142,
+      "errors": [],
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                ".category-card.muted-category:nth-child(3) > .category-index"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.48 (foreground color: #5d5e59, background color: #f4a8bd, font size: 8.2pt (10.88px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".category-card.muted-category:nth-child(4) > .category-index"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.93 (foreground color: #5d5e59, background color: #85adff, font size: 8.2pt (10.88px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".category-card.muted-category:nth-child(7) > .category-index"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.48 (foreground color: #5d5e59, background color: #f4a8bd, font size: 8.2pt (10.88px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".category-card.muted-category:nth-child(8) > .category-index"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.93 (foreground color: #5d5e59, background color: #85adff, font size: 8.2pt (10.88px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/en/temporadas/2027/actriz-protagonista",
+      "device": "desktop",
+      "status": 200,
+      "title": "Actress in a Leading Role Oscar Predictions 2027 | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 720,
+        "cls": 0
+      },
+      "ttfb": 35.60000002384186,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/en/fuentes/ankler",
+      "device": "desktop",
+      "status": 200,
+      "title": "The Ankler: Oscar Predictions Source | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 2668,
+        "cls": 0
+      },
+      "ttfb": 35.89999997615814,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/en/fuentes/awardswatch",
+      "device": "desktop",
+      "status": 200,
+      "title": "AwardsWatch: Oscar Predictions Source | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 3788,
+        "cls": 0
+      },
+      "ttfb": 32,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/en/fuentes/the-rolling-tape",
+      "device": "desktop",
+      "status": 200,
+      "title": "The Rolling Tape: Oscar Predictions Source | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 3712,
+        "cls": 0
+      },
+      "ttfb": 31.800000071525574,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/en/fuentes/next-best-picture",
+      "device": "desktop",
+      "status": 200,
+      "title": "Next Best Picture: Oscar Predictions Source | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 3812,
+        "cls": 0.000040914444216975454
+      },
+      "ttfb": 33,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/en/fuentes/variety",
+      "device": "desktop",
+      "status": 200,
+      "title": "Variety: Oscar Predictions Source | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 3840,
+        "cls": 0
+      },
+      "ttfb": 33.39999997615814,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/en/metodologia",
+      "device": "desktop",
+      "status": 200,
+      "title": "How the Oscar Predictions Consensus Works | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 264,
+        "cls": 0
+      },
+      "ttfb": 31.700000047683716,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/en/fuentes/the-movie-state",
+      "device": "desktop",
+      "status": 200,
+      "title": "The Movie State: Oscar Predictions Source | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 3896,
+        "cls": 0
+      },
+      "ttfb": 29.899999976158142,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/",
+      "device": "mobile",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: ranking y consenso | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 432,
+        "cls": 0
+      },
+      "ttfb": 34.699999928474426,
+      "errors": [],
+      "violations": [],
+      "screenshot": "/tmp/runscars-preview-prediction-ui/mobile-home.png"
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/temporadas/2027",
+      "device": "mobile",
+      "status": 200,
+      "title": "Predicciones Oscar 2027 por categoría | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 3924,
+        "cls": 0.0010146029698819743
+      },
+      "ttfb": 32.90000009536743,
+      "errors": [],
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                ".category-card.muted-category:nth-child(3) > .category-index"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.48 (foreground color: #5d5e59, background color: #f4a8bd, font size: 8.2pt (10.88px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".category-card.muted-category:nth-child(4) > .category-index"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.93 (foreground color: #5d5e59, background color: #85adff, font size: 8.2pt (10.88px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".category-card.muted-category:nth-child(7) > .category-index"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.48 (foreground color: #5d5e59, background color: #f4a8bd, font size: 8.2pt (10.88px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".category-card.muted-category:nth-child(8) > .category-index"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.93 (foreground color: #5d5e59, background color: #85adff, font size: 8.2pt (10.88px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/temporadas/2027/actriz-protagonista",
+      "device": "mobile",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: Actriz protagonista | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 656,
+        "cls": 0
+      },
+      "ttfb": 33.800000071525574,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/temporadas/2027/mejor-pelicula",
+      "device": "mobile",
+      "status": 200,
+      "title": "Predicciones Oscar 2027: Mejor película | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 808,
+        "cls": 0
+      },
+      "ttfb": 29.799999952316284,
+      "errors": [],
+      "violations": [],
+      "screenshot": "/tmp/runscars-preview-prediction-ui/mobile-mejor-pelicula.png"
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/fuentes/ankler",
+      "device": "mobile",
+      "status": 200,
+      "title": "The Ankler: fuente de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 3908,
+        "cls": 0.0073526489744597965
+      },
+      "ttfb": 28.5,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/fuentes/the-rolling-tape",
+      "device": "mobile",
+      "status": 200,
+      "title": "The Rolling Tape: fuente de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 3824,
+        "cls": 0
+      },
+      "ttfb": 28.700000047683716,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/fuentes/awardswatch",
+      "device": "mobile",
+      "status": 200,
+      "title": "AwardsWatch: fuente de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 3908,
+        "cls": 0
+      },
+      "ttfb": 33.699999928474426,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/fuentes/variety",
+      "device": "mobile",
+      "status": 200,
+      "title": "Variety: fuente de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 4160,
+        "cls": 0.0000778930144338479
+      },
+      "ttfb": 36.700000047683716,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/fuentes/next-best-picture",
+      "device": "mobile",
+      "status": 200,
+      "title": "Next Best Picture: fuente de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 3896,
+        "cls": 0
+      },
+      "ttfb": 31.200000047683716,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/fuentes/the-movie-state",
+      "device": "mobile",
+      "status": 200,
+      "title": "The Movie State: fuente de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 4072,
+        "cls": 0
+      },
+      "ttfb": 30.799999952316284,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/metodologia",
+      "device": "mobile",
+      "status": 200,
+      "title": "Cómo funciona el consenso de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 264,
+        "cls": 0
+      },
+      "ttfb": 30,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/en",
+      "device": "mobile",
+      "status": 200,
+      "title": "Oscar Predictions 2027: Expert Consensus | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 424,
+        "cls": 0
+      },
+      "ttfb": 30.199999928474426,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/en/temporadas/2027/mejor-pelicula",
+      "device": "mobile",
+      "status": 200,
+      "title": "Best Picture Oscar Predictions 2027 | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 812,
+        "cls": 0
+      },
+      "ttfb": 28.899999976158142,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/en/temporadas/2027",
+      "device": "mobile",
+      "status": 200,
+      "title": "Oscar Predictions 2027 by Category | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 3844,
+        "cls": 0
+      },
+      "ttfb": 32.39999997615814,
+      "errors": [],
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                ".category-card.muted-category:nth-child(3) > .category-index"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.48 (foreground color: #5d5e59, background color: #f4a8bd, font size: 8.2pt (10.88px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".category-card.muted-category:nth-child(4) > .category-index"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.93 (foreground color: #5d5e59, background color: #85adff, font size: 8.2pt (10.88px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".category-card.muted-category:nth-child(7) > .category-index"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.48 (foreground color: #5d5e59, background color: #f4a8bd, font size: 8.2pt (10.88px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".category-card.muted-category:nth-child(8) > .category-index"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.93 (foreground color: #5d5e59, background color: #85adff, font size: 8.2pt (10.88px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/en/temporadas/2027/actriz-protagonista",
+      "device": "mobile",
+      "status": 200,
+      "title": "Actress in a Leading Role Oscar Predictions 2027 | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 644,
+        "cls": 0
+      },
+      "ttfb": 33.89999997615814,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/en/fuentes/ankler",
+      "device": "mobile",
+      "status": 200,
+      "title": "The Ankler: Oscar Predictions Source | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 2960,
+        "cls": 0
+      },
+      "ttfb": 33.700000047683716,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/en/fuentes/awardswatch",
+      "device": "mobile",
+      "status": 200,
+      "title": "AwardsWatch: Oscar Predictions Source | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 3700,
+        "cls": 0
+      },
+      "ttfb": 36.800000071525574,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/en/fuentes/the-rolling-tape",
+      "device": "mobile",
+      "status": 200,
+      "title": "The Rolling Tape: Oscar Predictions Source | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 3384,
+        "cls": 0
+      },
+      "ttfb": 36.5,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/en/fuentes/next-best-picture",
+      "device": "mobile",
+      "status": 200,
+      "title": "Next Best Picture: Oscar Predictions Source | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 3944,
+        "cls": 0.0017639237057380905
+      },
+      "ttfb": 32.10000002384186,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/en/fuentes/variety",
+      "device": "mobile",
+      "status": 200,
+      "title": "Variety: Oscar Predictions Source | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 3816,
+        "cls": 0
+      },
+      "ttfb": 32.5,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/en/metodologia",
+      "device": "mobile",
+      "status": 200,
+      "title": "How the Oscar Predictions Consensus Works | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 292,
+        "cls": 0
+      },
+      "ttfb": 41.5,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-61pxxbukn-nazzozzo-s-projects.vercel.app/en/fuentes/the-movie-state",
+      "device": "mobile",
+      "status": 200,
+      "title": "The Movie State: Oscar Predictions Source | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 2452,
+        "cls": 0
+      },
+      "ttfb": 29.199999928474426,
+      "errors": [],
+      "violations": []
+    }
+  ],
+  "failed": 4
+}

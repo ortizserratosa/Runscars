@@ -1,0 +1,224 @@
+{
+  "capturedAt": "2026-10-19T17:50:30.398Z",
+  "base": "https://runscars-deg4xfqb2-nazzozzo-s-projects.vercel.app",
+  "measurement": "Unthrottled lab page-load LCP/CLS, not field Core Web Vitals or INP",
+  "results": [
+    {
+      "url": "https://runscars-deg4xfqb2-nazzozzo-s-projects.vercel.app/temporadas/2027",
+      "device": "desktop",
+      "status": 200,
+      "title": "Predicciones Oscar 2027 por categoría | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 2708,
+        "cls": 0
+      },
+      "ttfb": 379.89999997615814,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-deg4xfqb2-nazzozzo-s-projects.vercel.app/fuentes/variety",
+      "device": "desktop",
+      "status": 200,
+      "title": "Variety: fuente de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 2504,
+        "cls": 0
+      },
+      "ttfb": 380.8000000715256,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-deg4xfqb2-nazzozzo-s-projects.vercel.app/fuentes/ankler",
+      "device": "desktop",
+      "status": 200,
+      "title": "The Ankler: fuente de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 3536,
+        "cls": 0
+      },
+      "ttfb": 381.3000000715256,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-deg4xfqb2-nazzozzo-s-projects.vercel.app/en/temporadas/2027",
+      "device": "desktop",
+      "status": 200,
+      "title": "Oscar Predictions 2027 by Category | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 588,
+        "cls": 0
+      },
+      "ttfb": 32.300000071525574,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-deg4xfqb2-nazzozzo-s-projects.vercel.app/en/fuentes/ankler",
+      "device": "desktop",
+      "status": 200,
+      "title": "The Ankler: Oscar Predictions Source | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 744,
+        "cls": 0
+      },
+      "ttfb": 30.600000023841858,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-deg4xfqb2-nazzozzo-s-projects.vercel.app/en/fuentes/variety",
+      "device": "desktop",
+      "status": 200,
+      "title": "Variety: Oscar Predictions Source | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 1000,
+        "cls": 0
+      },
+      "ttfb": 34.799999952316284,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-deg4xfqb2-nazzozzo-s-projects.vercel.app/temporadas/2027",
+      "device": "mobile",
+      "status": 200,
+      "title": "Predicciones Oscar 2027 por categoría | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 948,
+        "cls": 0
+      },
+      "ttfb": 28.5,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-deg4xfqb2-nazzozzo-s-projects.vercel.app/fuentes/ankler",
+      "device": "mobile",
+      "status": 200,
+      "title": "The Ankler: fuente de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 1520,
+        "cls": 0
+      },
+      "ttfb": 31.300000071525574,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-deg4xfqb2-nazzozzo-s-projects.vercel.app/fuentes/variety",
+      "device": "mobile",
+      "status": 200,
+      "title": "Variety: fuente de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 1672,
+        "cls": 0
+      },
+      "ttfb": 29.199999928474426,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-deg4xfqb2-nazzozzo-s-projects.vercel.app/en/temporadas/2027",
+      "device": "mobile",
+      "status": 200,
+      "title": "Oscar Predictions 2027 by Category | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 456,
+        "cls": 0
+      },
+      "ttfb": 29,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-deg4xfqb2-nazzozzo-s-projects.vercel.app/en/fuentes/ankler",
+      "device": "mobile",
+      "status": 200,
+      "title": "The Ankler: Oscar Predictions Source | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 1108,
+        "cls": 0
+      },
+      "ttfb": 29,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-deg4xfqb2-nazzozzo-s-projects.vercel.app/en/fuentes/variety",
+      "device": "mobile",
+      "status": 200,
+      "title": "Variety: Oscar Predictions Source | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 1096,
+        "cls": 0
+      },
+      "ttfb": 92,
+      "errors": [],
+      "violations": []
+    }
+  ],
+  "failed": 0
+}

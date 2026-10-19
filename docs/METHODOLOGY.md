@@ -296,9 +296,11 @@ la fase 7.
 Desde el mantenimiento previo a la fase 9, una ejecución programada solo crea
 un corte público cuando cambia el estado efectivo de al menos una fuente
 profesional del mismo alcance. Ese estado se define, por fuente, mediante las
-candidaturas presentes, su condición de ranking o selección y, cuando existe,
-su posición y longitud de lista. Cambios de hora de captura, URL, extractor o
-metadatos que no alteren esa superficie no crean un corte.
+candidaturas presentes, su condición de ranking o selección y su posición.
+En v1–v3 incluye también la longitud de lista. En v4 compara únicamente los
+puestos dentro de K y las selecciones explícitas: cambiar la longitud original
+o la cola posterior a 20/10 no crea un corte. Cambios de hora de captura, URL,
+extractor o metadatos que no alteren esa superficie no crean un corte.
 
 Como la cadencia pública es diaria, varias envolventes bloqueadas en una misma
 fecha UTC se consolidan en el último estado del día antes de construir la
@@ -319,11 +321,11 @@ corte anterior aparece como nueva.
 La interfaz permite seleccionar cada corte real mediante una URL estable y
 muestra su instante y los proveedores que cambiaron. Si no existe un corte real
 anterior, no atribuye movimientos. El selector y las ediciones semanales
-incluyen también los cortes bloqueados con versiones anteriores. Para comparar,
-se reconstruye al leer cada corte un agregado comparable con las fórmulas de
-`runscars-aggregation-v3` y el plazo de 30 días evaluado en la fecha de ese
-corte. No se usa la fecha de la visita. Así una fuente vencida deja de contar
-también en los cortes anteriores a la introducción de v3: The Ringer,
+incluyen también los cortes bloqueados con versiones anteriores. Para comparar
+históricos v1–v3, se reconstruye al leer cada corte un agregado comparable con
+las fórmulas de `runscars-aggregation-v3` y el plazo de 30 días evaluado en la
+fecha de ese corte. No se usa la fecha de la visita. Así una fuente vencida deja
+de contar también en los cortes anteriores a la introducción de v3: The Ringer,
 publicada por última vez en marzo de 2026, no suma cobertura a los cortes
 posteriores a su vencimiento. Una publicación nueva puede reactivarla sin borrar
 su historial. El agregado v2 bloqueado no conserva la fecha de captura por
@@ -332,12 +334,14 @@ observaciones originales persistidas. Si esa evidencia no puede recuperarse,
 conserva el voto bloqueado y evita atribuir movimientos entre ese corte y
 cualquier otro, incluso dentro de v2 o en una edición semanal.
 
-La vista identifica este agregado como comparación con reglas actuales y
+La vista identifica esa proyección histórica con sus reglas comparables y
 conserva la versión, payload y hash originales del snapshot para auditoría. Dos
-cortes bloqueados con métodos iguales o distintos pueden mostrar movimiento si
-ambos agregados de lectura usan las fórmulas v3, comparten temporada, categoría
-e intención y cuentan con fechas suficientes. La proyección no altera ninguna
-envolvente inmutable ni los resultados usados para evaluaciones oficiales.
+cortes históricos v1–v3 pueden mostrar movimiento si ambos agregados de lectura
+usan las fórmulas v3, comparten temporada, categoría e intención y cuentan con
+fechas suficientes. Los cortes v4 usan su propia ventana y se comparan solo con
+otros v4: el primer corte v4 no muestra movimientos frente a v1–v3. La proyección
+no altera ninguna envolvente inmutable ni los resultados usados para evaluaciones
+oficiales.
 
 Los mercados no forman parte de esta identidad: Kalshi y Polymarket mantienen
 su cadencia y evolución append-only separadas y nunca provocan un corte Borda.

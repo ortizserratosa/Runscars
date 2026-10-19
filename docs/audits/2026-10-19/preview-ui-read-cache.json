@@ -1,0 +1,224 @@
+{
+  "capturedAt": "2026-10-19T17:42:59.020Z",
+  "base": "https://runscars-d7x6ltnrz-nazzozzo-s-projects.vercel.app",
+  "measurement": "Unthrottled lab page-load LCP/CLS, not field Core Web Vitals or INP",
+  "results": [
+    {
+      "url": "https://runscars-d7x6ltnrz-nazzozzo-s-projects.vercel.app/temporadas/2027",
+      "device": "desktop",
+      "status": 200,
+      "title": "Predicciones Oscar 2027 por categoría | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 2876,
+        "cls": 0
+      },
+      "ttfb": 350,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-d7x6ltnrz-nazzozzo-s-projects.vercel.app/fuentes/next-best-picture",
+      "device": "desktop",
+      "status": 200,
+      "title": "Next Best Picture: fuente de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 2656,
+        "cls": 0
+      },
+      "ttfb": 349.60000002384186,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-d7x6ltnrz-nazzozzo-s-projects.vercel.app/fuentes/the-movie-state",
+      "device": "desktop",
+      "status": 200,
+      "title": "The Movie State: fuente de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 3228,
+        "cls": 0.04596674814431756
+      },
+      "ttfb": 348.60000002384186,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-d7x6ltnrz-nazzozzo-s-projects.vercel.app/en/temporadas/2027",
+      "device": "desktop",
+      "status": 200,
+      "title": "Oscar Predictions 2027 by Category | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 540,
+        "cls": 0
+      },
+      "ttfb": 33.10000002384186,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-d7x6ltnrz-nazzozzo-s-projects.vercel.app/en/fuentes/the-movie-state",
+      "device": "desktop",
+      "status": 200,
+      "title": "The Movie State: Oscar Predictions Source | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 760,
+        "cls": 0
+      },
+      "ttfb": 30.199999928474426,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-d7x6ltnrz-nazzozzo-s-projects.vercel.app/en/fuentes/next-best-picture",
+      "device": "desktop",
+      "status": 200,
+      "title": "Next Best Picture: Oscar Predictions Source | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 780,
+        "cls": 0
+      },
+      "ttfb": 29.300000071525574,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-d7x6ltnrz-nazzozzo-s-projects.vercel.app/temporadas/2027",
+      "device": "mobile",
+      "status": 200,
+      "title": "Predicciones Oscar 2027 por categoría | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 988,
+        "cls": 0
+      },
+      "ttfb": 29.5,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-d7x6ltnrz-nazzozzo-s-projects.vercel.app/fuentes/next-best-picture",
+      "device": "mobile",
+      "status": 200,
+      "title": "Next Best Picture: fuente de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 1336,
+        "cls": 0
+      },
+      "ttfb": 34.5,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-d7x6ltnrz-nazzozzo-s-projects.vercel.app/fuentes/the-movie-state",
+      "device": "mobile",
+      "status": 200,
+      "title": "The Movie State: fuente de predicciones Oscar | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 1360,
+        "cls": 0
+      },
+      "ttfb": 34.800000071525574,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-d7x6ltnrz-nazzozzo-s-projects.vercel.app/en/temporadas/2027",
+      "device": "mobile",
+      "status": 200,
+      "title": "Oscar Predictions 2027 by Category | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 404,
+        "cls": 0
+      },
+      "ttfb": 35.60000002384186,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-d7x6ltnrz-nazzozzo-s-projects.vercel.app/en/fuentes/the-movie-state",
+      "device": "mobile",
+      "status": 200,
+      "title": "The Movie State: Oscar Predictions Source | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 832,
+        "cls": 0
+      },
+      "ttfb": 35.90000009536743,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-d7x6ltnrz-nazzozzo-s-projects.vercel.app/en/fuentes/next-best-picture",
+      "device": "mobile",
+      "status": 200,
+      "title": "Next Best Picture: Oscar Predictions Source | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 868,
+        "cls": 0
+      },
+      "ttfb": 35.39999997615814,
+      "errors": [],
+      "violations": []
+    }
+  ],
+  "failed": 0
+}

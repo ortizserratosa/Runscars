@@ -1,0 +1,158 @@
+{
+  "checkedAt": "2026-10-19T17:58:36.432Z",
+  "codeCommit": "29451e44d3118efb9f3f09db4569027d435a226a",
+  "deployment": {
+    "id": "dpl_98zPhuq6zq6JWeubwwUdu9rZFpDj",
+    "url": "https://runscars-85umlgifu-nazzozzo-s-projects.vercel.app",
+    "publicUrl": "https://runscars.app",
+    "state": "READY"
+  },
+  "database": {
+    "migrations": 57,
+    "appliedMigrations": 8,
+    "releaseChecks": {
+      "correct_scoring_depth_count": 8,
+      "current_pointer_count": 8,
+      "expected_categories": 8,
+      "freshness_violations": 0,
+      "v4_pointer_count": 8
+    }
+  },
+  "verification": {
+    "unitTests": 419,
+    "databaseTests": 53,
+    "e2eTests": 142,
+    "finalLabelE2ERetests": 4,
+    "publicUiCases": 100,
+    "publicUiFailures": 0,
+    "publicHealthChecks": 5,
+    "publicHealthFailures": 0,
+    "runtimeErrors": 0,
+    "relativeLinks": 58,
+    "brokenLinks": 0,
+    "generalAudit": "known braces advisory in five development packages; verify exits 1 at audit",
+    "runtimeAuditVulnerabilities": 0
+  },
+  "categoryCoverage": [
+    {
+      "category": "best-picture",
+      "outletsWithData": 7,
+      "rankingsThatScore": 5,
+      "consensus": true
+    },
+    {
+      "category": "directing",
+      "outletsWithData": 7,
+      "rankingsThatScore": 5,
+      "consensus": true
+    },
+    {
+      "category": "actor",
+      "outletsWithData": 7,
+      "rankingsThatScore": 5,
+      "consensus": true
+    },
+    {
+      "category": "actress",
+      "outletsWithData": 6,
+      "rankingsThatScore": 4,
+      "consensus": true
+    },
+    {
+      "category": "supporting-actor",
+      "outletsWithData": 7,
+      "rankingsThatScore": 5,
+      "consensus": true
+    },
+    {
+      "category": "supporting-actress",
+      "outletsWithData": 7,
+      "rankingsThatScore": 5,
+      "consensus": true
+    },
+    {
+      "category": "original-screenplay",
+      "outletsWithData": 7,
+      "rankingsThatScore": 5,
+      "consensus": true
+    },
+    {
+      "category": "adapted-screenplay",
+      "outletsWithData": 7,
+      "rankingsThatScore": 5,
+      "consensus": true
+    }
+  ],
+  "sources": [
+    {
+      "active_category_count": 8,
+      "considered_entries_across_categories": 45,
+      "ranked_category_count": 8,
+      "source_id": "ankler",
+      "source_name": "The Ankler"
+    },
+    {
+      "active_category_count": 8,
+      "considered_entries_across_categories": 45,
+      "ranked_category_count": 0,
+      "source_id": "awards-daily",
+      "source_name": "Awards Daily"
+    },
+    {
+      "active_category_count": 8,
+      "considered_entries_across_categories": 89,
+      "ranked_category_count": 8,
+      "source_id": "awards-radar",
+      "source_name": "Awards Radar"
+    },
+    {
+      "active_category_count": 8,
+      "considered_entries_across_categories": 44,
+      "ranked_category_count": 0,
+      "source_id": "awardswatch",
+      "source_name": "AwardsWatch"
+    },
+    {
+      "active_category_count": 7,
+      "considered_entries_across_categories": 40,
+      "ranked_category_count": 7,
+      "source_id": "next-best-picture",
+      "source_name": "Next Best Picture"
+    },
+    {
+      "active_category_count": 8,
+      "considered_entries_across_categories": 90,
+      "ranked_category_count": 8,
+      "source_id": "the-rolling-tape",
+      "source_name": "The Rolling Tape"
+    },
+    {
+      "active_category_count": 8,
+      "considered_entries_across_categories": 89,
+      "ranked_category_count": 8,
+      "source_id": "variety",
+      "source_name": "Variety"
+    }
+  ],
+  "integrity": {
+    "historical": 271,
+    "unchanged": 271,
+    "altered": 0,
+    "newSnapshots": 8
+  },
+  "ingestion": {
+    "connectorsInvoked": 17,
+    "succeeded": 15,
+    "sourceInvalid": 2,
+    "repeatedObservationsReused": 948,
+    "repeatedCapturesInserted": 0,
+    "repeatedObservationsInserted": 0
+  },
+  "remaining": {
+    "sourceErrors": [
+      "Variety supporting-actress duplicate rank 4; missing 7",
+      "Variety original-screenplay duplicate rank 6; missing 5"
+    ],
+    "latestPendingMatching": 19
+  }
+}

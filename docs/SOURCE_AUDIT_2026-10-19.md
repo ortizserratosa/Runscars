@@ -1,6 +1,6 @@
 # Auditoría y corrección de predicciones · 19 de octubre de 2026
 
-**Estado:** implementación en verificación; publicación pendiente de comprobación.
+**Estado:** publicada y verificada en producción; límites externos documentados.
 
 ## Diagnóstico inicial
 
@@ -85,5 +85,93 @@ mínimos, frescura de treinta días y ocho categorías públicas.
 La copia previa está fuera de Git, en
 `/Users/nacho/Documents/Side/Runscars-backups/2026-10-19-prediction-sources`,
 con directorio 0700 y SQL 0600. Se preservan los cambios locales previos de
-operación y la auditoría de indexación de septiembre. Los resultados finales de
-pruebas, importaciones y publicación se añadirán una vez verificados.
+operación y la auditoría de indexación de septiembre. Los recibos de este corte
+conservan pruebas, importaciones y publicación sin secretos ni datos de usuarios.
+
+### Verificación de implementación e ingestas
+
+- `npm ci`, formato, lint, tipos y compilación correctos. La compilación local
+  usa fixtures con Supabase desactivado explícitamente; Vercel compila contra
+  la base real. Tipos regenerados desde 57 migraciones.
+- **419 pruebas unitarias y 53 de base de datos** correctas. Las seis pruebas
+  nuevas de evidencias cubren RLS/publicación, frescura por URL entre IDs distintos,
+  huecos, Unicode, créditos de guion, correcciones de fechas y salud por categoría.
+- El recorrido E2E general completo pasó **142/142 casos**, en escritorio,
+  móvil, Chromium, Firefox y WebKit. Las aserciones reflejan las nuevas etiquetas.
+- Diecisiete invocaciones Edge independientes devolvieron HTTP 200: quince
+  importaciones correctas y dos incidencias explícitas de Variety por duplicados
+  en sus propios Rank. Ankler importó 45 observaciones, Rolling Tape 90 y
+  AwardsWatch 45. Los originales válidos de Variety se conservaron por categoría.
+- La repetición reutilizó **948 observaciones**, insertó **cero capturas y cero
+  observaciones**. Las dos incidencias originales de Variety permanecen visibles.
+- La auditoría de ejecución tiene cero vulnerabilidades conocidas. `npm run
+  verify` termina con código 1 únicamente en la auditoría general: persiste el
+  aviso previo de `braces`, arrastrado por cinco paquetes de herramientas de
+  desarrollo. La alternativa sugerida implica un downgrade incompatible de Next;
+  no se aplica en este corte.
+- La comprobación pública detectó timeouts anónimos que no aparecían en el
+  `EXPLAIN ANALYZE` administrativo. Se corrigieron con frescura diferida,
+  categorías públicas, caché de 60 segundos por fuente y una lectura compartida
+  de estados para las ocho categorías. El benchmark anónimo final pasó **7/7**
+  lecturas, incluidas tres concurrentes: entre **149 y 1.739 ms**, sin errores.
+  Las doce comprobaciones de preview en ambos idiomas y dispositivos pasaron;
+  sus logs de ejecución no contienen errores.
+- Las fichas comparan la lista efectiva completa antes de conservar puntos entre
+  capturas con IDs nuevos. Un cambio de cola, formato o artículo con votos
+  idénticos mantiene las contribuciones; una cabeza distinta o incompleta no.
+  Veinte regresiones verifican este caso, las selecciones, los métodos históricos
+  y los cero puntos de una publicación caducada.
+
+### Resultado de datos en producción
+
+| Categorías | Medios con datos | Rankings que puntúan | Consenso |
+|---|---:|---:|---|
+| Película, dirección, actor, repartos y guiones | 7 | 5 | Sí |
+| Actriz protagonista | 6 | 4 | Sí |
+
+Los ocho punteros actuales corresponden a v4 y tienen la ventana correcta; no hay
+contribuciones vencidas. Las 271 versiones históricas conservan sus hashes;
+se crearon ocho snapshots nuevos y repetir el refresco devolvió ocho `unchanged`.
+
+Las candidaturas consideradas sumadas por fuente y categoría son: Radar 89,
+Variety 89, Rolling Tape 90, Ankler 45, Awards Daily 45, AwardsWatch 44 y NBP 40.
+No son longitudes originales: descuentan ventanas, caducidad y matching pendiente.
+En las capturas actuales hay 19 observaciones pendientes de matching editorial
+(Radar 1, AwardsWatch 1 y Variety 17); las dos fuentes nuevas no tienen pendientes.
+
+Los [recibos de ingesta](audits/2026-10-19/import-responses.json),
+[repetición](audits/2026-10-19/repeat-responses.json),
+[parsers vivos](audits/2026-10-19/prediction-parsers.txt) y
+[estado editorial](audits/2026-10-19/source-status-after-import.json) conservan
+la evidencia sin secretos ni datos de usuarios.
+
+### Publicación
+
+El código `29451e4` está publicado en el artefacto
+`dpl_98zPhuq6zq6JWeubwwUdu9rZFpDj`, promovido a
+[Runscars](https://runscars.app/temporadas/2027) tras ocho comprobaciones del
+último ajuste de etiquetas y las doce comprobaciones previas de datos reales.
+Se aplicaron ocho migraciones aditivas y se desplegó `run-ingestion`; los nuevos
+conectores diarios usan el schedule profesional existente.
+
+Los [conteos públicos](audits/2026-10-19/public-source-counts.json) verifican las
+ocho categorías de ocho fuentes, incluida Movie State con cero consideradas.
+El [benchmark anónimo](audits/2026-10-19/anonymous-read-benchmark.json), la
+[integridad histórica](audits/2026-10-19/snapshot-integrity.json),
+[verificación completa](audits/2026-10-19/verification.txt) y
+[E2E](audits/2026-10-19/e2e.txt) conservan los resultados reproducibles.
+
+La [comprobación pública final](audits/2026-10-19/production-ui-final.json)
+pasó **100/100 casos**, en español e inglés, escritorio y móvil: ocho categorías,
+seis fichas de predicciones, fuentes, metodología y recorridos relacionados.
+No hubo errores de navegador, imágenes rotas, desbordamientos ni infracciones
+graves/críticas de accesibilidad automatizada. La revisión visual confirmó las
+etiquetas separadas y la conservación del historial.
+
+Los [logs del artefacto final](audits/2026-10-19/production-runtime-final.jsonl)
+no contienen errores durante la comprobación. [Salud web/base de datos, robots,
+sitemap y tarjeta social](audits/2026-10-19/public-health-final.json) respondieron
+HTTP 200; el sitemap incluye las dos fuentes nuevas. El
+[dominio público](audits/2026-10-19/production-deployment.txt) apunta al mismo
+artefacto verificado. Son comprobaciones de laboratorio y de este intervalo;
+no equivalen a métricas de campo ni garantizan disponibilidad futura de las fuentes.

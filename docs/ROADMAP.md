@@ -461,7 +461,9 @@ ventana común 20/10 sin truncar originales y distinguir caducidad de salud téc
 D-073 a D-075 gobiernan este corte. No abre otra fase ni cambia categorías,
 frescura de treinta días o mínimo de cuatro rankings para declarar consenso.
 
-Su salida exige fixtures de las regresiones, cálculo v4 y compatibilidad histórica,
-migraciones/RLS/idempotencia, interfaz ES/EN y escritorio/móvil, importaciones
-aisladas, publicación y comprobaciones públicas. Mientras falte alguna verificación,
-la auditoría conserva el estado pendiente y los límites reales de las fuentes.
+Su puerta quedó verificada y publicada el 19/10: fixtures de las regresiones,
+cálculo v4 y compatibilidad histórica, migraciones/RLS/idempotencia, interfaz
+ES/EN y escritorio/móvil, importaciones aisladas y comprobaciones públicas.
+La auditoría conserva los recibos y los límites reales: dos tablas inválidas de
+Variety, matching editorial pendiente y el aviso previo de dependencias de
+desarrollo. Los snapshots anteriores permanecen inmutables.

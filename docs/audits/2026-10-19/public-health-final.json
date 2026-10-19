@@ -1,0 +1,42 @@
+{
+  "checkedAt": "2026-10-19T17:55:29.434Z",
+  "base": "https://runscars.app",
+  "results": [
+    {
+      "path": "/api/health",
+      "status": 200,
+      "contentType": "application/json",
+      "body": {
+        "status": "ok",
+        "service": "runscars-web",
+        "databaseConfigured": true
+      }
+    },
+    {
+      "path": "/api/health/database",
+      "status": 200,
+      "contentType": "application/json",
+      "body": {
+        "status": "ok",
+        "database": "reachable"
+      }
+    },
+    {
+      "path": "/robots.txt",
+      "status": 200,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "path": "/sitemap.xml",
+      "status": 200,
+      "contentType": "application/xml",
+      "anklerPresent": true,
+      "rollingTapePresent": true
+    },
+    {
+      "path": "/api/social?kind=category&id=mejor-pelicula",
+      "status": 200,
+      "contentType": "image/png"
+    }
+  ]
+}

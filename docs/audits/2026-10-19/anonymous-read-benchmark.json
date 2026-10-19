@@ -1,0 +1,79 @@
+{
+  "capturedAt": "2026-10-19T17:41:00.425Z",
+  "role": "anon",
+  "season": "oscars-2027",
+  "targetMs": 3000,
+  "timeoutMs": 15000,
+  "results": [
+    {
+      "label": "status:all-season",
+      "status": 200,
+      "ms": 952,
+      "rowCount": 73,
+      "errorCode": null,
+      "withinTarget": true,
+      "ok": true
+    },
+    {
+      "label": "evidence:the-movie-state",
+      "status": 200,
+      "ms": 174,
+      "rowCount": 45,
+      "errorCode": null,
+      "withinTarget": true,
+      "ok": true
+    },
+    {
+      "label": "evidence:variety",
+      "status": 200,
+      "ms": 149,
+      "rowCount": 233,
+      "errorCode": null,
+      "withinTarget": true,
+      "ok": true
+    },
+    {
+      "label": "evidence:next-best-picture",
+      "status": 200,
+      "ms": 559,
+      "rowCount": 45,
+      "errorCode": null,
+      "withinTarget": true,
+      "ok": true
+    },
+    {
+      "label": "status:concurrent-1",
+      "status": 200,
+      "ms": 1106,
+      "rowCount": 73,
+      "errorCode": null,
+      "withinTarget": true,
+      "ok": true
+    },
+    {
+      "label": "status:concurrent-2",
+      "status": 200,
+      "ms": 1722,
+      "rowCount": 73,
+      "errorCode": null,
+      "withinTarget": true,
+      "ok": true
+    },
+    {
+      "label": "status:concurrent-3",
+      "status": 200,
+      "ms": 1739,
+      "rowCount": 73,
+      "errorCode": null,
+      "withinTarget": true,
+      "ok": true
+    }
+  ],
+  "summary": {
+    "requests": 7,
+    "passed": 7,
+    "failed": 0,
+    "allWithinTarget": true,
+    "maxMs": 1739
+  }
+}

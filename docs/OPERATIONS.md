@@ -44,7 +44,7 @@ Comprobaciones mínimas después de cada despliegue:
 La salud se comprueba sobre ejecuciones reales, no solo sobre la existencia del
 Cron:
 
-- profesionales: nueve conectores activos (siete de predicciones y dos de
+- profesionales: diecinueve conectores activos (diecisiete de predicciones y dos de
   crítica), último run diario terminado y ninguna categoría requerida ausente;
 - mercados: Kalshi y Polymarket con éxito dentro de las dos últimas horas;
 - snapshots: un `snapshot_refresh_runs` terminado dentro de las últimas 36
@@ -82,7 +82,7 @@ npm run festivals:refresh
 La auditoría viva no forma parte de CI porque consulta páginas externas. Tras
 cada importación o despliegue se ejecuta `npm run audit:production`; recorre el
 sitemap con reintentos acotados, abre cada candidatura, comprueba enlaces
-internos, ejecuta los siete parsers de predicciones contra sus páginas vigentes,
+internos, ejecuta los diecisiete conectores de predicciones contra sus páginas vigentes,
 revisa Kalshi/Polymarket y comprueba frescura de conectores cuando dispone de
 credenciales de servidor.
 
@@ -298,3 +298,36 @@ Rollback de frontend: promover `dpl_91mSHvFFpcDXRbdxpXmq4JsD5eht`, el artefacto
 previo verificado. No borrar el conjunto inmutable de Telluride para revertir
 la interfaz. La edición semanal usa los cortes existentes; RSS no requiere
 un nuevo cron. [Entrega y evidencias](PUBLIC_UX_AUDIT_2026-09-07.md).
+
+## Publicación de predicciones v4 · 19 de octubre de 2026
+
+Se publicó `29451e4` mediante el artefacto `dpl_98zPhuq6zq6JWeubwwUdu9rZFpDj`,
+verificado antes de promover el mismo URL a `https://runscars.app`. El release
+aplica ocho migraciones aditivas (`20261019100000` a `20261019143000`, 57 en total)
+y despliega `run-ingestion` con los extractores nuevos. Los dos conectores diarios
+nuevos usan el schedule profesional existente; se conserva una invocación por
+conector y una sola voz por medio.
+
+Los diecisiete conectores de predicciones se invocaron individualmente: quince
+éxitos y dos fallos explícitos de las tablas de Variety, que conservan su última
+captura válida por categoría. Repetir las invocaciones reutilizó 948 observaciones,
+sin insertar capturas ni observaciones. Los ocho cortes v4 alcanzan consenso y
+repetir su refresco devuelve ocho `unchanged`. Los hashes de los 271 snapshots
+anteriores permanecen intactos.
+
+Las vistas públicas conservan procedencia, originales y caducidad, limitadas a
+las ocho categorías aprobadas. La comprobación pública detectó timeouts en la
+primera publicación: las lecturas ahora comparten caché de 60 segundos, evitan
+calcular frescura innecesaria y filtran categorías privadas antes de procesar
+el historial. Siete lecturas anónimas, incluidas tres simultáneas, finalizaron
+sin errores y en menos de 1.740 ms. Los recibos finales de UI, salud y logs están
+en [SOURCE_AUDIT_2026-10-19.md](SOURCE_AUDIT_2026-10-19.md).
+
+La copia previa de roles, esquema y datos públicos/Auth/Storage queda
+fuera de Git en
+`/Users/nacho/Documents/Side/Runscars-backups/2026-10-19-prediction-sources`,
+con directorio 0700 y SQL 0600. No se ensayó una restauración nueva durante este
+corte. No ejecutar `db reset --linked` ni borrar snapshots para revertir la web.
+El fallback web comprobado `dpl_AJcyHy2J945YQgh9vGBZSCy1WGfk` conserva v4 y las
+lecturas optimizadas; precede a la unificación final de etiquetas ES/EN.
+Tras promover cualquier fallback, comprobar salud, fuentes y consenso ES/EN.

@@ -1,0 +1,80 @@
+{
+  "capturedAt": "2026-10-19T17:31:04.806Z",
+  "base": "https://runscars-3hsb3yf4v-nazzozzo-s-projects.vercel.app",
+  "measurement": "Unthrottled lab page-load LCP/CLS, not field Core Web Vitals or INP",
+  "results": [
+    {
+      "url": "https://runscars-3hsb3yf4v-nazzozzo-s-projects.vercel.app/temporadas/2027",
+      "device": "desktop",
+      "status": 200,
+      "title": "Predicciones Oscar 2027 por categoría | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 5328,
+        "cls": 0
+      },
+      "ttfb": 308.5,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-3hsb3yf4v-nazzozzo-s-projects.vercel.app/en/temporadas/2027",
+      "device": "desktop",
+      "status": 200,
+      "title": "Oscar Predictions 2027 by Category | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 7932,
+        "cls": 0.0007437124633789062
+      },
+      "ttfb": 309,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-3hsb3yf4v-nazzozzo-s-projects.vercel.app/en/temporadas/2027",
+      "device": "mobile",
+      "status": 200,
+      "title": "Oscar Predictions 2027 by Category | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 4368,
+        "cls": 0
+      },
+      "ttfb": 32.299999952316284,
+      "errors": [],
+      "violations": []
+    },
+    {
+      "url": "https://runscars-3hsb3yf4v-nazzozzo-s-projects.vercel.app/temporadas/2027",
+      "device": "mobile",
+      "status": 200,
+      "title": "Predicciones Oscar 2027 por categoría | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "brokenImages": 0,
+      "main": 1,
+      "h1": 1,
+      "vitals": {
+        "lcp": 6288,
+        "cls": 0.0010146029698819743
+      },
+      "ttfb": 32.200000047683716,
+      "errors": [],
+      "violations": []
+    }
+  ],
+  "failed": 0
+}

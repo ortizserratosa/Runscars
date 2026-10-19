@@ -1,0 +1,169 @@
+
+> runscars@0.1.0 verify
+> npm run format && npm run lint && npm run typecheck && npm run test && npm run test:db && npm run build && npm run audit
+
+
+> runscars@0.1.0 format
+> prettier --check "web/**/*.{ts,tsx,mjs,css,json,md}" "supabase/functions/**/*.{ts,mjs,json}" "scripts/**/*.mjs" package.json .prettierrc.json
+
+Checking formatting...
+All matched files use Prettier code style!
+
+> runscars@0.1.0 lint
+> npm --workspace web run lint
+
+
+> @runscars/web@0.1.0 lint
+> eslint .
+
+
+> runscars@0.1.0 typecheck
+> npm --workspace web run typecheck
+
+
+> @runscars/web@0.1.0 typecheck
+> next typegen && tsc --noEmit
+
+Generating route types...
+✓ Types generated successfully
+
+> runscars@0.1.0 test
+> npm --workspace web run test
+
+
+> @runscars/web@0.1.0 test
+> vitest run tests/unit
+
+
+ RUN  v4.1.11 /Users/nacho/Documents/Side/Runscars/web
+
+
+ Test Files  50 passed (50)
+      Tests  419 passed (419)
+   Start at  18:48:51
+   Duration  779ms (transform 2.86s, setup 0ms, import 4.53s, tests 1.64s, environment 2ms)
+
+
+> runscars@0.1.0 test:db
+> npm --workspace web run test:db
+
+
+> @runscars/web@0.1.0 test:db
+> vitest run tests/database
+
+
+ RUN  v4.1.11 /Users/nacho/Documents/Side/Runscars/web
+
+
+ Test Files  6 passed (6)
+      Tests  53 passed (53)
+   Start at  18:48:52
+   Duration  14.27s (transform 324ms, setup 0ms, import 476ms, tests 21.77s, environment 0ms)
+
+
+> runscars@0.1.0 build
+> npm --workspace web run build
+
+
+> @runscars/web@0.1.0 build
+> next build
+
+▲ Next.js 16.3.8 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 10ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 517ms
+  Running TypeScript ...
+  Finished TypeScript in 1346ms ...
+  Collecting page data using 17 workers ...
+  Generating static pages using 17 workers (0/88) ...
+  Generating static pages using 17 workers (22/88)
+  Generating static pages using 17 workers (44/88)
+  Generating static pages using 17 workers (66/88)
+✓ Generating static pages using 17 workers (88/88) in 117ms
+  Finalizing page optimization ...
+
+Route (app)                                          Revalidate  Expire
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /acceso
+├ ƒ /admin
+├ ƒ /api/comunidad/verificar-tmdb
+├ ƒ /api/cron/snapshots
+├ ƒ /api/cuenta/exportar
+├ ƒ /api/health
+├ ƒ /api/health/database
+├ ƒ /api/locale
+├ ƒ /api/social
+├ ƒ /archivo
+├ ƒ /archivo/[year]
+├ ƒ /auth/callback
+├ ƒ /comunidad
+├ ƒ /creditos
+├ ƒ /critica
+├ ƒ /cuenta
+├ ƒ /evaluacion
+├ ƒ /festivales
+├ ƒ /festivales/[festival]/[year]
+├ ƒ /fuentes
+├ ƒ /fuentes/[slug]
+├ ○ /icon.svg
+├ ○ /manifest.webmanifest
+├ ƒ /metodologia
+├ ƒ /peliculas/[slug]
+├ ● /personas/[slug]
+├ ƒ /premios
+├ ƒ /premios/[organization]/[year]
+├ ƒ /privacidad
+├ ƒ /quiniela
+├ ○ /robots.txt
+├ ƒ /semana
+├ ƒ /semana/[week]
+├ ƒ /semana/feed
+├ ○ /sitemap.xml                                             1d      1y
+├ ƒ /temporadas/2026
+├ ƒ /temporadas/2026/[categorySlug]
+├ ƒ /temporadas/2027
+├ ƒ /temporadas/2027/[categorySlug]
+├ ƒ /terminos
+├ ƒ /usuarios/[slug]
+├ ƒ /usuarios/[slug]/[categorySlug]
+└ ƒ /usuarios/[slug]/[categorySlug]/opengraph-image
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+
+> runscars@0.1.0 audit
+> npm audit --audit-level=high
+
+# npm audit report
+
+braces  *
+Severity: high
+braces vulnerable to stack-exhaustion denial of service through deeply nested patterns - https://github.com/advisories/GHSA-vfj7-8cjw-p6xm
+fix available via `npm audit fix --force`
+Will install eslint-config-next@14.2.35, which is a breaking change
+node_modules/braces
+  micromatch  >=0.2.0
+  Depends on vulnerable versions of braces
+  node_modules/micromatch
+    fast-glob  *
+    Depends on vulnerable versions of micromatch
+    node_modules/fast-glob
+      @next/eslint-plugin-next  >=14.3.0-canary.0
+      Depends on vulnerable versions of fast-glob
+      node_modules/@next/eslint-plugin-next
+        eslint-config-next  >=14.3.0-canary.0
+        Depends on vulnerable versions of @next/eslint-plugin-next
+        node_modules/eslint-config-next
+
+5 high severity vulnerabilities
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force

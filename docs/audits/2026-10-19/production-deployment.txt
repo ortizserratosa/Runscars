@@ -1,0 +1,45 @@
+Vercel CLI 64.5.0
+Fetching deployment "runscars.app" in nazzozzo-s-projects
+> Fetched deployment "runscars-85umlgifu-nazzozzo-s-projects.vercel.app" in nazzozzo-s-projects [453ms]
+
+  General
+
+    id		dpl_98zPhuq6zq6JWeubwwUdu9rZFpDj
+    name	runscars
+    target	production
+    status	● Ready
+    url		https://runscars-85umlgifu-nazzozzo-s-projects.vercel.app
+    created	Mon Oct 19 2026 18:53:43 GMT+0100 (British Summer Time) [3m ago]
+
+
+  Build Machine
+
+    requested build machine basic
+    actual assigned cores   2 vCPU (actual assignment)
+    memory                  8192 MiB
+    selection type          fixed
+    selection source        plan-default
+
+
+  Duration
+
+    build duration	53s
+    post-build duration	28s
+    billable duration	2m
+    CPU Minutes Usage	4 minutes (2m x 2vCPU)
+
+
+  Aliases
+
+    ╶ https://runscars-nazzozzo-s-projects.vercel.app
+
+
+  Builds
+
+    ┌ .        [0ms]
+    ├── λ index (10.83MB) [iad1]
+    ├── λ _not-found (10.83MB) [iad1]
+    ├── λ _not-found.rsc (10.83MB) [iad1]
+    ├── λ acceso (10.83MB) [iad1]
+    ├── λ acceso.rsc (10.83MB) [iad1]
+    └── 83 output items hidden

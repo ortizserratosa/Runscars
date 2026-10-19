@@ -1,0 +1,160 @@
+{
+  "checkedAt": "2026-10-19T17:51:55.839Z",
+  "base": "https://runscars.app",
+  "results": [
+    {
+      "source": "ankler",
+      "status": 200,
+      "categories": 8,
+      "counts": [
+        10,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "total": 45,
+      "expected": 45,
+      "ok": true
+    },
+    {
+      "source": "the-rolling-tape",
+      "status": 200,
+      "categories": 8,
+      "counts": [
+        20,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10
+      ],
+      "total": 90,
+      "expected": 90,
+      "ok": true
+    },
+    {
+      "source": "awardswatch",
+      "status": 200,
+      "categories": 8,
+      "counts": [
+        10,
+        5,
+        4,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "total": 44,
+      "expected": 44,
+      "ok": true
+    },
+    {
+      "source": "awards-daily",
+      "status": 200,
+      "categories": 8,
+      "counts": [
+        10,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "total": 45,
+      "expected": 45,
+      "ok": true
+    },
+    {
+      "source": "awards-radar",
+      "status": 200,
+      "categories": 8,
+      "counts": [
+        20,
+        10,
+        10,
+        10,
+        10,
+        9,
+        10,
+        10
+      ],
+      "total": 89,
+      "expected": 89,
+      "ok": true
+    },
+    {
+      "source": "variety",
+      "status": 200,
+      "categories": 8,
+      "counts": [
+        20,
+        10,
+        10,
+        10,
+        10,
+        9,
+        10,
+        10
+      ],
+      "total": 89,
+      "expected": 89,
+      "ok": true
+    },
+    {
+      "source": "next-best-picture",
+      "status": 200,
+      "categories": 8,
+      "counts": [
+        10,
+        5,
+        5,
+        0,
+        5,
+        5,
+        5,
+        5
+      ],
+      "total": 40,
+      "expected": 40,
+      "ok": true
+    },
+    {
+      "source": "the-movie-state",
+      "status": 200,
+      "categories": 8,
+      "counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "total": 0,
+      "expected": 0,
+      "ok": true
+    }
+  ],
+  "categoryOrder": [
+    "best-picture",
+    "directing",
+    "actor",
+    "actress",
+    "supporting-actor",
+    "supporting-actress",
+    "original-screenplay",
+    "adapted-screenplay"
+  ]
+}
