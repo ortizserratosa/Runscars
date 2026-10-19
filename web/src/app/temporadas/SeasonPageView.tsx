@@ -389,8 +389,8 @@ export async function SeasonPageView({
             <p>
               {active
                 ? en
-                  ? "ranked sources in the category with the fewest ranked votes"
-                  : "fuentes ordenadas en la categoría con menos votos ordenados"
+                  ? "rankings that score, at minimum, in every category"
+                  : "rankings que puntúan, como mínimo, en cada categoría"
                 : en
                   ? "official nominees across the eight categories"
                   : "candidaturas oficiales entre las ocho categorías"}

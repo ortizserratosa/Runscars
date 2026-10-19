@@ -39,7 +39,7 @@ test("publishes all eight database-shaped category routes", async ({
       page.getByRole("heading", { name: "Datos verificados" }),
     ).toBeVisible();
     await expect(
-      page.getByText(/votos ordenados · \d+ medios con cobertura$/),
+      page.getByText(/votos ordenados · \d+ medios con datos$/),
     ).toBeVisible();
     await expect(
       page.getByRole("heading", { name: "Consenso profesional" }),

@@ -236,16 +236,16 @@ function ActiveCategory({
               </p>
             </div>
             <div className="category-hero-stat">
-              <span>{en ? "Ranked sources" : "Fuentes ordenadas"}</span>
+              <span>{en ? "Rankings that score" : "Rankings que puntúan"}</span>
               <strong>{aggregate?.orderedSourceCount ?? 0}</strong>
               <small>
                 {aggregate?.isConsensus
                   ? en
-                    ? `ranked votes · ${aggregate?.applicableSourceCount ?? 0} contributing outlets`
-                    : `votos ordenados · ${aggregate?.applicableSourceCount ?? 0} medios con cobertura`
+                    ? `ranked votes · ${aggregate?.applicableSourceCount ?? 0} outlets with data`
+                    : `votos ordenados · ${aggregate?.applicableSourceCount ?? 0} medios con datos`
                   : en
-                    ? `ranked votes · ${aggregate?.applicableSourceCount ?? 0} contributing outlets · consensus pending`
-                    : `votos ordenados · ${aggregate?.applicableSourceCount ?? 0} medios con cobertura · consenso pendiente`}
+                    ? `ranked votes · ${aggregate?.applicableSourceCount ?? 0} outlets with data · consensus pending`
+                    : `votos ordenados · ${aggregate?.applicableSourceCount ?? 0} medios con datos · consenso pendiente`}
               </small>
             </div>
           </div>
