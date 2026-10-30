@@ -1,0 +1,50 @@
+{
+  "at": "2026-10-30T18:19:00.168Z",
+  "deployment": "dpl_DPkhjBuZ9vq4e87Uw9nR4wieMpG8",
+  "sourceCommit": "d74c0796cdae9713b9eb1c45831315e5c18cb2cb",
+  "codeIdenticalTo": "c5d826aaa7982356ba0e887e6c86a43edc64f937",
+  "pass": true,
+  "results": [
+    {
+      "path": "/api/health/database",
+      "status": 200,
+      "finalPath": "/api/health/database",
+      "broken": false
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "finalPath": "/",
+      "lang": "es-ES",
+      "broken": false
+    },
+    {
+      "path": "/en",
+      "status": 200,
+      "finalPath": "/en",
+      "lang": "en-GB",
+      "broken": false
+    },
+    {
+      "path": "/peliculas/the-odyssey",
+      "status": 200,
+      "finalPath": "/peliculas/the-odyssey",
+      "lang": "es-ES",
+      "broken": false
+    },
+    {
+      "path": "/en/admin",
+      "status": 200,
+      "finalPath": "/en/acceso",
+      "lang": "en-GB",
+      "broken": false
+    },
+    {
+      "path": "/en/personas/tmdb-7",
+      "status": 200,
+      "finalPath": "/en/personas/tmdb-7",
+      "lang": "en-GB",
+      "broken": false
+    }
+  ]
+}

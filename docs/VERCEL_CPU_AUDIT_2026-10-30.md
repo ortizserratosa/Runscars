@@ -207,6 +207,26 @@ salud continua ni una resolución de los grupos históricos de Supabase.
 No se modifica la base de datos, no hay migraciones ni funciones Edge que
 desplegar, y se conservan los cuatro proyectos y el plan Hobby.
 
+## Verificación posterior del repositorio y la cuota
+
+La [CI de GitHub 41105297650](https://github.com/ortizserratosa/Runscars/actions/runs/41105297650)
+terminó correctamente el 30/10 a las 18:22:48 UTC sobre `d74c0796`. Reproduce
+433 pruebas unitarias, 53 de base de datos, 142 E2E, tipos, formato, compilación
+y auditoría con cero vulnerabilidades conocidas.
+
+El push generó el artefacto Git
+[`dpl_DPkhjBuZ9vq4e87Uw9nR4wieMpG8`](https://vercel.com/nazzozzo-s-projects/runscars/DPkhjBuZ9vq4e87Uw9nR4wieMpG8),
+con código de aplicación idéntico al verificado. Su API confirma `READY`, commit
+`d74c0796` y asignación de `runscars.app`. Pasan las
+[seis comprobaciones posteriores](audits/2026-10-30/git-deployment-public-check.json),
+incluida la ficha de persona en inglés y la redirección privada de administración.
+
+La consulta posterior del equipo conserva `plan: hobby`, `blocked: null` y
+`softBlock: null`; los cuatro proyectos siguen `READY`. El panel actualizado
+muestra Runscars en **4 h 5 min** de CPU, Criter en 52 s y Writing Studio en 8 s.
+La cuota acumulada no se ha recuperado. No se atribuye esa variación de una
+ventana móvil al cambio publicado ni se certifica un ahorro mensual todavía.
+
 ## Pendiente de recuperación de cuota
 
 - Resolver con el usuario la comunicación a soporte para comprobar el aumento
