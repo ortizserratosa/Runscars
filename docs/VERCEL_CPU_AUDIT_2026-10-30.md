@@ -118,9 +118,9 @@ el uso vuelva a estar dentro de los límites.
 La [guía actual de Vercel Staff para equipos pausados](https://community.vercel.com/t/what-to-do-when-your-team-is-paused-or-blocked/45069)
 ofrece otra vía: el asistente de [Vercel Help](https://vercel.com/help) puede
 conceder un aumento de cuota **por una sola vez** para reactivar los proyectos.
-Su disponibilidad en esta cuenta y la concesión efectiva siguen pendientes.
-Comunicar la petición a soporte requiere autorización del usuario; esta
-auditoría no envía mensajes ni afirma que se haya concedido el aumento.
+El usuario autorizó expresamente contactar con soporte el 30/10. La consulta y
+el intento de desbloqueo se describen abajo; no se afirma que se haya concedido
+el aumento.
 
 La [documentación de planes](https://vercel.com/docs/plans) advierte que Hobby
 se pausa al exceder los recursos incluidos. La página de
@@ -227,10 +227,51 @@ muestra Runscars en **4 h 5 min** de CPU, Criter en 52 s y Writing Studio en 8 s
 La cuota acumulada no se ha recuperado. No se atribuye esa variación de una
 ventana móvil al cambio publicado ni se certifica un ahorro mensual todavía.
 
+## Contacto autorizado con soporte y límite del desbloqueo
+
+El 30/10 el usuario autoriza contactar con Vercel. Se consulta al asistente de
+soporte y se intenta la acción gratuita de desbloqueo. El formulario devuelve
+`This endpoint only works for teams that are currently soft-blocked`: el equipo
+sigue activo y la acción no ha aplicado ninguna excepción ni cancelado la pausa.
+
+El asistente indica que la cortesía sería única, duraría treinta días y el
+intento rechazado no la ha consumido. Son indicaciones del asistente, no una
+confirmación de cambio de cuenta. Ante la imposibilidad preventiva se envía un
+caso gratuito de revisión de cuentas, que queda `Open`, pendiente de respuesta
+humana. La referencia y URL privadas se conservan fuera de Git en
+`/Users/nacho/Documents/Side/Runscars-backups/2026-10-30-vercel-cpu/support-case.json`
+(0600, directorio 0700). No se contratan planes, pruebas ni complementos.
+
+## Riesgo de superar de nuevo la cuota
+
+Se obtiene una [medición corta con ventanas fijas](audits/2026-10-30/short-window-cpu.json)
+del panel gratuito. La ventana anterior, 06:00–12:00 UTC, registra Runscars en
+10 min 55 s y 2.946 invocaciones. La posterior, 12:20–18:20 UTC, registra
+3 min 1 s y 1.475 invocaciones. Los cocientes son aproximadamente 222 y 123 ms
+por invocación, respectivamente. Cambian tráfico, mezcla de rutas y errores;
+además hay verificaciones y despliegues. No es una comparación causal controlada.
+
+El presupuesto compartido de cuatro horas cada treinta días equivale a
+8 min/día o 2 min cada seis horas en promedio. Se propone como objetivo
+operativo 6 min/día (1 min 30 s cada seis horas), con 25 % de reserva. La
+muestra posterior supera ese promedio sostenible y no acredita que el cambio
+baste para evitar otra superación. Se necesitan al menos veinticuatro horas
+normales y varios días para comprobar el ritmo.
+
+La caché nueva conserva datos de catálogo durante sesenta segundos; no evita
+el render de HTML en cada visita. Con URLs distintas o separadas por más de
+un minuto puede ahorrar poco. La memoización React del catálogo dentro de una
+petición ya existía y no debe atribuirse como ahorro nuevo. Las auditorías
+acotadas y Auth anónimo reducen trabajo, pero no garantizan un porcentaje.
+Si el ritmo sigue alto, el siguiente corte con mayor potencial sería cachear
+HTML público mediante prerenderizado/ISR, aislando idioma y partes privadas;
+no imponer una caché pública sobre las respuestas actuales con sesión.
+
 ## Pendiente de recuperación de cuota
 
-- Resolver con el usuario la comunicación a soporte para comprobar el aumento
-  único gratuito y, si se concede, verificar la retirada efectiva de la pausa.
+- Esperar la revisión del caso de cuentas y verificar cualquier cambio efectivo.
+- Si se activa la pausa, tramitar la cortesía disponible y comprobar los cuatro
+  proyectos; el formulario preventivo actual la rechaza.
 - Medir CPU e invocaciones posteriores con una ventana comparable; separar
   tráfico, duración y lecturas evitadas antes de atribuir un ahorro.
 - Confirmar el estado del equipo y los proyectos después de la fecha anunciada.

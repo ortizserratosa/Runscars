@@ -1,0 +1,36 @@
+{
+  "captured_at": "2026-10-30T18:39:42.302478+00:00",
+  "source": "Authenticated Vercel Usage UI; fixed UTC windows selected via visible from/to URL parameters.",
+  "project": "runscars",
+  "windows": [
+    {
+      "start": "2026-10-30T06:00:00Z",
+      "end": "2026-10-30T12:00:00Z",
+      "cpu_label": "10m 55s",
+      "cpu_seconds": 655,
+      "invocations": 2946,
+      "cpu_ms_per_invocation": 222.3
+    },
+    {
+      "start": "2026-10-30T12:20:00Z",
+      "end": "2026-10-30T18:20:00Z",
+      "cpu_label": "3m 1s",
+      "cpu_seconds": 181,
+      "invocations": 1475,
+      "cpu_ms_per_invocation": 122.7
+    }
+  ],
+  "budget": {
+    "included_cpu_seconds_per_30_days": 14400,
+    "average_seconds_per_6_hours": 120,
+    "recommended_seconds_per_6_hours": 90,
+    "recommended_reserve_fraction": 0.25
+  },
+  "limitations": [
+    "CPU labels are rounded by the dashboard.",
+    "Different traffic volumes and route/error mix; not a controlled causal comparison.",
+    "The post-deploy window includes our verification traffic and deployments.",
+    "Six hours cannot establish a sustainable 24-hour or rolling 30-day rate.",
+    "Current sample is above the sustainable average budget; no claim that future overages are prevented."
+  ]
+}
