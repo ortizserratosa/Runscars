@@ -1,6 +1,6 @@
 # Registro de decisiones
 
-**Última revisión:** 2026-10-19
+**Última revisión:** 2026-10-30
 
 ## Cómo usar este registro
 
@@ -83,6 +83,7 @@ pasado para ocultar cambios de criterio.
 | D-073 | Ventana común 20/10 y puntuación profesional v4                  | Aceptada    |
 | D-074 | The Ankler y The Rolling Tape con autor fijo                     | Aceptada    |
 | D-075 | Estado editorial, profundidad y salud por categoría              | Aceptada    |
+| D-076 | Catálogo público reutilizable y sesión anónima sin trabajo Auth | Aceptada    |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -1508,3 +1509,37 @@ ejemplos manuales de nominaciones y ganador coincidieron con
   La errata de encabezado y NEXT de AwardsWatch se corrigen en el extractor;
   Variety acepta filas físicamente reordenadas con Rank único y completo, pero
   rechaza duplicados o huecos reales conservando su última captura válida.
+
+## D-076 · Catálogo público reutilizable y sesión anónima sin trabajo Auth
+
+- **Fecha:** 2026-10-30
+- **Estado:** Aceptada
+- **Origen:** petición del usuario de resolver el agotamiento de CPU activa del
+  equipo Hobby de Vercel sin pagar y teniendo en cuenta todos sus proyectos.
+  Runscars concentra el 99,6 % de la CPU mostrada en la ventana auditada.
+- **Decisión:** reutilizar las lecturas anónimas de fichas de películas y
+  personas entre peticiones con revalidación de 60 segundos. La clave distingue
+  backend, tipo de entidad, ID e idioma. React memoiza además las lecturas
+  repetidas dentro de una misma petición, incluidas las de metadata y página.
+- **Sesión:** cuando no hay cookie de sesión Supabase, no se crea el cliente
+  Auth ni se invoca la comprobación de sesión desde el proxy o la lectura del
+  usuario. Se reconocen cookies completas y fragmentadas. Su presencia solo
+  selecciona el camino de autenticación: las sesiones suministradas conservan
+  la validación de Supabase, también si son inválidas o han caducado. La lectura
+  del usuario se memoiza únicamente dentro de la petición.
+- **Aislamiento:** la caché compartida usa el cliente anónimo y datos públicos;
+  no contiene cookies, usuarios, rankings privados, visionado ni administración.
+  Se conservan RLS, autorización de acciones y reglas de expiración de TMDB.
+  No se comparten sesiones entre visitantes ni se amplía su vigencia.
+- **Continuidad:** amplía la reutilización pública de D-056 y D-062 sin alterar
+  fórmulas, frescura de predicciones, procedencia, snapshots ni calendario de
+  importaciones. Es mantenimiento del coste operativo, sin abrir otra fase,
+  cambiar el stack ni contratar un plan o complemento de pago.
+- **Verificación pública:** la auditoría ordinaria usa una muestra explícita y
+  acotada; recorrer todo el sitemap y sus enlaces requiere `--full`, con
+  presupuesto de peticiones y User-Agent identificable. Las auditorías propias
+  también generan tráfico y deben poder distinguirse de otras visitas.
+- **Límite:** reducir trabajo futuro no devuelve la cuota ya consumida ni
+  acredita por sí solo la retirada de una pausa del equipo. El estado del
+  proveedor y el consumo posterior deben comprobarse por separado.
+- **Evidencia:** [auditoría de CPU del equipo](VERCEL_CPU_AUDIT_2026-10-30.md).

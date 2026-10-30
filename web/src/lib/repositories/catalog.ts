@@ -1,4 +1,5 @@
 import "server-only";
+import { unstable_cache } from "next/cache";
 import { cache } from "react";
 import { filmFixtures, findFilmById } from "../../data/films";
 import { isSupabaseConfigured } from "../environment";
@@ -110,14 +111,10 @@ function fixtureDetail(slug: string): FilmCatalogDetail | null {
   };
 }
 
-export const getFilmCatalogDetail = cache(async function getFilmCatalogDetail(
+async function databaseFilmCatalogDetail(
   slug: string,
   locale: "es-ES" | "en-US" = "es-ES",
 ): Promise<FilmCatalogDetail | null> {
-  if (!isSupabaseConfigured()) {
-    return fixtureDetail(slug);
-  }
-
   try {
     const supabase = createSupabaseServerClient();
     const { data: film, error: filmError } = await supabase
@@ -266,118 +263,143 @@ export const getFilmCatalogDetail = cache(async function getFilmCatalogDetail(
       ? error
       : new Error(`No se pudo cargar la película ${slug}`);
   }
-});
+}
 
-export const getPersonCatalogDetail = cache(
-  async function getPersonCatalogDetail(
-    personId: string,
-    locale: "es-ES" | "en-US" = "es-ES",
-  ): Promise<PersonCatalogDetail | null> {
-    if (!isSupabaseConfigured()) {
+async function databasePersonCatalogDetail(
+  personId: string,
+  locale: "es-ES" | "en-US" = "es-ES",
+): Promise<PersonCatalogDetail | null> {
+  try {
+    const supabase = createSupabaseServerClient();
+    const { data: person, error: personError } = await supabase
+      .from("people")
+      .select("id, name, tmdb_id")
+      .eq("id", personId)
+      .maybeSingle();
+
+    if (personError) {
+      throw new Error(
+        `No se pudo consultar la persona ${personId}: ${personError.message}`,
+      );
+    }
+    if (!person) {
       return null;
     }
 
-    try {
-      const supabase = createSupabaseServerClient();
-      const { data: person, error: personError } = await supabase
-        .from("people")
-        .select("id, name, tmdb_id")
-        .eq("id", personId)
-        .maybeSingle();
+    const [
+      { data: snapshots, error: snapshotError },
+      { data: creditRows, error: creditsError },
+    ] = await Promise.all([
+      supabase
+        .from("tmdb_person_snapshots")
+        .select(
+          "tmdb_id, locale, original_name, known_for_department, biography, birthday, deathday, place_of_birth, homepage_url, imdb_id, profile_path, fetched_at, expires_at",
+        )
+        .eq("tmdb_id", person.tmdb_id)
+        .in(
+          "locale",
+          locale === "es-ES" ? ["es-ES", "en-US"] : ["en-US", "es-ES"],
+        )
+        .order("fetched_at", { ascending: false }),
+      supabase
+        .from("film_credits")
+        .select("film_id, role")
+        .eq("person_id", person.id),
+    ]);
 
-      if (personError) {
-        throw new Error(
-          `No se pudo consultar la persona ${personId}: ${personError.message}`,
-        );
-      }
-      if (!person) {
-        return null;
-      }
+    const snapshot =
+      snapshots?.find((item) => item.locale === locale) ?? snapshots?.[0];
 
-      const [
-        { data: snapshots, error: snapshotError },
-        { data: creditRows, error: creditsError },
-      ] = await Promise.all([
-        supabase
-          .from("tmdb_person_snapshots")
-          .select(
-            "tmdb_id, locale, original_name, known_for_department, biography, birthday, deathday, place_of_birth, homepage_url, imdb_id, profile_path, fetched_at, expires_at",
-          )
-          .eq("tmdb_id", person.tmdb_id)
-          .in(
-            "locale",
-            locale === "es-ES" ? ["es-ES", "en-US"] : ["en-US", "es-ES"],
-          )
-          .order("fetched_at", { ascending: false }),
-        supabase
-          .from("film_credits")
-          .select("film_id, role")
-          .eq("person_id", person.id),
-      ]);
-
-      const snapshot =
-        snapshots?.find((item) => item.locale === locale) ?? snapshots?.[0];
-
-      if (snapshotError) {
-        throw new Error(
-          `No se pudo consultar TMDB para ${personId}: ${snapshotError.message}`,
-        );
-      }
-
-      if (creditsError) {
-        throw new Error(
-          `No se pudieron consultar los créditos de ${personId}: ${creditsError.message}`,
-        );
-      }
-
-      const filmIds = [...new Set(creditRows.map((credit) => credit.film_id))];
-      const { data: films, error: filmsError } =
-        filmIds.length === 0
-          ? { data: [], error: null }
-          : await supabase.from("films").select("id, title").in("id", filmIds);
-      if (filmsError)
-        throw new Error(
-          `No se pudieron consultar las películas de ${personId}: ${filmsError.message}`,
-        );
-      const rolesByFilmId = new Map<string, string[]>();
-      for (const credit of creditRows) {
-        const roles = rolesByFilmId.get(credit.film_id) ?? [];
-        roles.push(credit.role);
-        rolesByFilmId.set(credit.film_id, roles);
-      }
-
-      return {
-        id: person.id,
-        name: person.name,
-        tmdb: snapshot
-          ? {
-              id: snapshot.tmdb_id,
-              originalName: snapshot.original_name,
-              knownForDepartment: snapshot.known_for_department,
-              biography: snapshot.biography,
-              birthday: snapshot.birthday,
-              deathday: snapshot.deathday,
-              placeOfBirth: snapshot.place_of_birth,
-              homepageUrl: snapshot.homepage_url,
-              imdbId: snapshot.imdb_id,
-              profilePath: snapshot.profile_path,
-              fetchedAt: snapshot.fetched_at,
-              expiresAt: snapshot.expires_at,
-              url: `https://www.themoviedb.org/person/${snapshot.tmdb_id}`,
-            }
-          : null,
-        films: (films ?? []).map((film) => ({
-          id: film.id,
-          title: film.title,
-          roles: rolesByFilmId.get(film.id) ?? [],
-        })),
-      };
-    } catch (error) {
-      throw error instanceof Error
-        ? error
-        : new Error(`No se pudo cargar la persona ${personId}`);
+    if (snapshotError) {
+      throw new Error(
+        `No se pudo consultar TMDB para ${personId}: ${snapshotError.message}`,
+      );
     }
+
+    if (creditsError) {
+      throw new Error(
+        `No se pudieron consultar los créditos de ${personId}: ${creditsError.message}`,
+      );
+    }
+
+    const filmIds = [...new Set(creditRows.map((credit) => credit.film_id))];
+    const { data: films, error: filmsError } =
+      filmIds.length === 0
+        ? { data: [], error: null }
+        : await supabase.from("films").select("id, title").in("id", filmIds);
+    if (filmsError)
+      throw new Error(
+        `No se pudieron consultar las películas de ${personId}: ${filmsError.message}`,
+      );
+    const rolesByFilmId = new Map<string, string[]>();
+    for (const credit of creditRows) {
+      const roles = rolesByFilmId.get(credit.film_id) ?? [];
+      roles.push(credit.role);
+      rolesByFilmId.set(credit.film_id, roles);
+    }
+
+    return {
+      id: person.id,
+      name: person.name,
+      tmdb: snapshot
+        ? {
+            id: snapshot.tmdb_id,
+            originalName: snapshot.original_name,
+            knownForDepartment: snapshot.known_for_department,
+            biography: snapshot.biography,
+            birthday: snapshot.birthday,
+            deathday: snapshot.deathday,
+            placeOfBirth: snapshot.place_of_birth,
+            homepageUrl: snapshot.homepage_url,
+            imdbId: snapshot.imdb_id,
+            profilePath: snapshot.profile_path,
+            fetchedAt: snapshot.fetched_at,
+            expiresAt: snapshot.expires_at,
+            url: `https://www.themoviedb.org/person/${snapshot.tmdb_id}`,
+          }
+        : null,
+      films: (films ?? []).map((film) => ({
+        id: film.id,
+        title: film.title,
+        roles: rolesByFilmId.get(film.id) ?? [],
+      })),
+    };
+  } catch (error) {
+    throw error instanceof Error
+      ? error
+      : new Error(`No se pudo cargar la persona ${personId}`);
+  }
+}
+
+// Only the anonymous catalog client is used inside these cache scopes. Locale
+// and ID are arguments (and therefore cache keys); sessions stay request-local.
+const catalogCacheScope =
+  process.env.NEXT_PUBLIC_SUPABASE_URL ?? "unconfigured";
+const cachedFilmCatalogDetail = unstable_cache(
+  databaseFilmCatalogDetail,
+  ["public-film-catalog-v1", catalogCacheScope],
+  { revalidate: 60 },
+);
+const cachedPersonCatalogDetail = unstable_cache(
+  databasePersonCatalogDetail,
+  ["public-person-catalog-v1", catalogCacheScope],
+  { revalidate: 60 },
+);
+
+export const getFilmCatalogDetail = cache(
+  async (slug: string, locale: "es-ES" | "en-US" = "es-ES") => {
+    if (!isSupabaseConfigured()) return fixtureDetail(slug);
+    const detail = await cachedFilmCatalogDetail(slug, locale);
+    // A cache entry must not extend TMDB's validity. An expired entry is read
+    // again so the existing editorial-title/no-metadata fallback stays intact.
+    return detail?.tmdb && Date.parse(detail.tmdb.expiresAt) <= Date.now()
+      ? databaseFilmCatalogDetail(slug, locale)
+      : detail;
   },
+);
+export const getPersonCatalogDetail = cache(
+  async (personId: string, locale: "es-ES" | "en-US" = "es-ES") =>
+    isSupabaseConfigured() ? cachedPersonCatalogDetail(personId, locale) : null,
 );
 
 async function listCatalogIds(table: "films" | "people") {

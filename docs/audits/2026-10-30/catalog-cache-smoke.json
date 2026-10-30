@@ -1,0 +1,115 @@
+{
+  "capturedAt": "2026-10-30T12:11:50.983Z",
+  "runtime": "next build + next start, deterministic localhost Supabase fixture",
+  "scope": "Separate HTTP requests with real Next Data Cache; no production credentials/services",
+  "cpuLimit": "Local process CPU includes rendering, cache and runtime overhead; it is not Vercel billed CPU or a monthly savings forecast",
+  "samples": [
+    {
+      "route": "/en/personas/cache-english-first",
+      "responseBytes": 30608,
+      "wallMs": 65.1,
+      "databaseReads": [
+        "/rest/v1/people?select=id%2Cname%2Ctmdb_id&id=eq.cache-english-first",
+        "/rest/v1/tmdb_person_snapshots?select=tmdb_id%2Clocale%2Coriginal_name%2Cknown_for_department%2Cbiography%2Cbirthday%2Cdeathday%2Cplace_of_birth%2Chomepage_url%2Cimdb_id%2Cprofile_path%2Cfetched_at%2Cexpires_at&tmdb_id=eq.100&locale=in.%28en-US%2Ces-ES%29&order=fetched_at.desc",
+        "/rest/v1/film_credits?select=film_id%2Crole&person_id=eq.cache-english-first"
+      ]
+    },
+    {
+      "route": "/personas/cache-smoke-person",
+      "responseBytes": 30536,
+      "wallMs": 10.9,
+      "databaseReads": [
+        "/rest/v1/people?select=id%2Cname%2Ctmdb_id&id=eq.cache-smoke-person",
+        "/rest/v1/tmdb_person_snapshots?select=tmdb_id%2Clocale%2Coriginal_name%2Cknown_for_department%2Cbiography%2Cbirthday%2Cdeathday%2Cplace_of_birth%2Chomepage_url%2Cimdb_id%2Cprofile_path%2Cfetched_at%2Cexpires_at&tmdb_id=eq.100&locale=in.%28es-ES%2Cen-US%29&order=fetched_at.desc",
+        "/rest/v1/film_credits?select=film_id%2Crole&person_id=eq.cache-smoke-person"
+      ]
+    },
+    {
+      "route": "/personas/cache-smoke-person",
+      "responseBytes": 30536,
+      "wallMs": 9.7,
+      "databaseReads": []
+    },
+    {
+      "route": "/en/personas/cache-smoke-person",
+      "responseBytes": 30566,
+      "wallMs": 10.1,
+      "databaseReads": [
+        "/rest/v1/people?select=id%2Cname%2Ctmdb_id&id=eq.cache-smoke-person",
+        "/rest/v1/tmdb_person_snapshots?select=tmdb_id%2Clocale%2Coriginal_name%2Cknown_for_department%2Cbiography%2Cbirthday%2Cdeathday%2Cplace_of_birth%2Chomepage_url%2Cimdb_id%2Cprofile_path%2Cfetched_at%2Cexpires_at&tmdb_id=eq.100&locale=in.%28en-US%2Ces-ES%29&order=fetched_at.desc",
+        "/rest/v1/film_credits?select=film_id%2Crole&person_id=eq.cache-smoke-person"
+      ]
+    },
+    {
+      "route": "/peliculas/cache-smoke-film",
+      "responseBytes": 35770,
+      "wallMs": 19.4,
+      "databaseReads": [
+        "/rest/v1/films?select=id%2Ctitle%2Calternate_titles%2Crelease_status%2Crelease_date%2Cverification_url%2Cnotes%2Ctmdb_id&id=eq.cache-smoke-film",
+        "/rest/v1/tmdb_movie_snapshots?select=tmdb_id%2Clocale%2Ctitle%2Coriginal_title%2Coriginal_language%2Coverview%2Crelease_date%2Cruntime%2Cstatus%2Ctagline%2Cimdb_id%2Cposter_path%2Cbackdrop_path%2Cgenres%2Cfetched_at%2Cexpires_at&tmdb_id=eq.200&locale=in.%28es-ES%29&expires_at=gt.2026-10-30T12%3A11%3A50.968Z&order=last_verified_at.desc%2Cfetched_at.desc",
+        "/rest/v1/film_credits?select=person_id%2Ccredit_kind%2Crole%2Cdepartment%2Cbilling_order%2Ctmdb_credit_id&film_id=eq.cache-smoke-film&order=credit_kind.asc%2Cbilling_order.asc.nullslast",
+        "/rest/v1/professional_observations?select=original_value%2Coriginal_scale%2Csource_url%2Ccaptured_at&film_id=eq.cache-smoke-film&source_id=eq.metacritic&data_type=eq.score_aggregate&state=eq.published&order=captured_at.desc&limit=5"
+      ]
+    },
+    {
+      "route": "/peliculas/cache-smoke-film",
+      "responseBytes": 35770,
+      "wallMs": 7.7,
+      "databaseReads": [
+        "/rest/v1/professional_observations?select=original_value%2Coriginal_scale%2Csource_url%2Ccaptured_at&film_id=eq.cache-smoke-film&source_id=eq.metacritic&data_type=eq.score_aggregate&state=eq.published&order=captured_at.desc&limit=5"
+      ]
+    }
+  ],
+  "cpuSamples": [
+    {
+      "path": "/api/health",
+      "cpuMicroseconds": {
+        "user": 27405,
+        "system": 1688
+      }
+    },
+    {
+      "path": "/en/personas/cache-english-first",
+      "cpuMicroseconds": {
+        "user": 79576,
+        "system": 4207
+      }
+    },
+    {
+      "path": "/personas/cache-smoke-person",
+      "cpuMicroseconds": {
+        "user": 12633,
+        "system": 1407
+      }
+    },
+    {
+      "path": "/personas/cache-smoke-person",
+      "cpuMicroseconds": {
+        "user": 18965,
+        "system": 1395
+      }
+    },
+    {
+      "path": "/en/personas/cache-smoke-person",
+      "cpuMicroseconds": {
+        "user": 16556,
+        "system": 1037
+      }
+    },
+    {
+      "path": "/peliculas/cache-smoke-film",
+      "cpuMicroseconds": {
+        "user": 20322,
+        "system": 1476
+      }
+    },
+    {
+      "path": "/peliculas/cache-smoke-film",
+      "cpuMicroseconds": {
+        "user": 7203,
+        "system": 542
+      }
+    }
+  ],
+  "pass": true
+}

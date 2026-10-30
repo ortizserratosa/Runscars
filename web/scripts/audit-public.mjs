@@ -10,6 +10,25 @@ const reportPath =
 const concurrency = Number(process.env.RUNSCARS_AUDIT_CONCURRENCY ?? 6);
 if (!Number.isInteger(concurrency) || concurrency < 1 || concurrency > 24)
   throw new Error("RUNSCARS_AUDIT_CONCURRENCY must be an integer from 1 to 24");
+const mode =
+  process.argv.includes("--full") || process.env.RUNSCARS_AUDIT_FULL === "true"
+    ? "full"
+    : "sample";
+const maxRequests = Number(
+  process.env.RUNSCARS_AUDIT_MAX_REQUESTS ||
+    (mode === "sample" ? 64 : Infinity),
+);
+if (
+  (maxRequests !== Infinity &&
+    (!Number.isInteger(maxRequests) || maxRequests < 1)) ||
+  (mode === "sample" && maxRequests > 80)
+)
+  throw new Error(
+    "RUNSCARS_AUDIT_MAX_REQUESTS must be a positive integer (at most 80 in sample mode)",
+  );
+let requests = 0;
+let budgetExhausted = false;
+class RequestBudgetError extends Error {}
 const startedAt = new Date().toISOString();
 const failures = [];
 const pages = [];
@@ -23,11 +42,36 @@ const decode = (value) =>
 async function request(url) {
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
-      const response = await fetch(url, { signal: AbortSignal.timeout(25000) });
-      if (response.status >= 500 && attempt < 2) continue;
+      let target = url;
+      let response;
+      // Count redirects and retries against the same budget as page requests.
+      for (let redirects = 0; ; redirects++) {
+        if (requests >= maxRequests) {
+          budgetExhausted = true;
+          throw new RequestBudgetError("Request budget exhausted");
+        }
+        requests += 1;
+        response = await fetch(target, {
+          signal: AbortSignal.timeout(25000),
+          redirect: "manual",
+          headers: { "User-Agent": "RunscarsAudit/1.0" },
+        });
+        if (
+          ![301, 302, 303, 307, 308].includes(response.status) ||
+          !response.headers.get("location")
+        )
+          break;
+        await response.body?.cancel();
+        if (redirects >= 5) throw new Error("Too many redirects");
+        target = new URL(response.headers.get("location"), target);
+      }
+      if (response.status >= 500 && attempt < 2) {
+        await response.body?.cancel();
+        continue;
+      }
       return response;
     } catch (error) {
-      if (attempt === 2) throw error;
+      if (error instanceof RequestBudgetError || attempt === 2) throw error;
     }
   }
 }
@@ -43,17 +87,62 @@ function localize(url) {
   return new URL(parsed.pathname + parsed.search, base).href;
 }
 const sitemap = new Set(sitemapUrls.map(localize));
+function representativeSample(urls) {
+  const groups = new Map();
+  for (const url of urls) {
+    const segments = new URL(url).pathname.split("/").filter(Boolean);
+    const locale = segments[0] === "en" ? segments.shift() : "es";
+    const family = segments[0] ?? "home";
+    const key = `${family}/${locale}`;
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(url);
+  }
+  const orderedGroups = [...groups.entries()]
+    .sort(([left], [right]) => left.localeCompare(right, "en"))
+    .map(([, urls]) =>
+      urls.sort((left, right) => {
+        const a = new URL(left).pathname;
+        const b = new URL(right).pathname;
+        return (
+          a.split("/").length - b.split("/").length ||
+          a.localeCompare(b, "en", { numeric: true })
+        );
+      }),
+    );
+  const selected = [];
+  for (let index = 0; selected.length < 32; index++) {
+    let found = false;
+    for (const urls of orderedGroups) {
+      if (urls[index] && selected.length < 32) {
+        selected.push(urls[index]);
+        found = true;
+      }
+    }
+    if (!found) break;
+  }
+  return selected;
+}
+const selectedUrls =
+  mode === "full" ? [...sitemap] : representativeSample(sitemap);
+const selected = new Set(selectedUrls);
 const resumePath = process.env.RUNSCARS_AUDIT_RESUME;
 let previousReport = null;
 if (resumePath) {
   previousReport = JSON.parse(await readFile(resumePath, "utf8"));
   if (previousReport.baseUrl !== base.href)
     throw new Error("Resume report belongs to another origin");
+  // Reports from the original crawler always represented the full graph.
+  if ((previousReport.mode ?? "full") !== mode)
+    throw new Error("Resume report belongs to another audit mode");
   const failedUrls = new Set(
     previousReport.failures.map((failure) => failure.url),
   );
   for (const page of previousReport.pages) {
-    if (page.status === 200 && !failedUrls.has(page.url)) {
+    if (
+      page.status === 200 &&
+      !failedUrls.has(page.url) &&
+      (mode === "full" || selected.has(page.url))
+    ) {
       pages.push(page);
       seen.add(page.url);
     }
@@ -61,12 +150,17 @@ if (resumePath) {
 }
 let queue = [
   ...new Set([
-    ...sitemap,
-    ...(previousReport?.failures.map((failure) => failure.url) ?? []),
+    ...selectedUrls,
+    ...(previousReport?.pendingUrls?.filter(
+      (url) => mode === "full" || selected.has(url),
+    ) ?? []),
+    ...(previousReport?.failures
+      .map((failure) => failure.url)
+      .filter((url) => mode === "full" || selected.has(url)) ?? []),
   ]),
 ].filter((url) => !seen.has(url));
 const auxiliary = /^\/(?:en\/)?(?:api|auth)(?:\/|$)/;
-while (queue.length) {
+while (queue.length && !budgetExhausted) {
   const batch = queue.splice(0, concurrency).filter((url) => !seen.has(url));
   batch.forEach((url) => seen.add(url));
   await Promise.all(
@@ -149,7 +243,7 @@ while (queue.length) {
             }
           }
         }
-        if (response.ok)
+        if (response.ok && mode === "full")
           for (const [, raw] of html.matchAll(/<a\b[^>]*\bhref="([^"]+)"/g)) {
             const href = decode(raw);
             if (/^(?:mailto:|tel:|#)/.test(href)) continue;
@@ -180,6 +274,17 @@ const report = {
   startedAt,
   completedAt: new Date().toISOString(),
   baseUrl: base.href,
+  mode,
+  completeness: budgetExhausted ? "incomplete" : mode,
+  fullGraphComplete:
+    mode === "full" && !budgetExhausted && !queue.length && !failures.length,
+  selectedUrls,
+  requests,
+  maxRequests: Number.isFinite(maxRequests) ? maxRequests : null,
+  budgetExhausted,
+  pendingUrls: [...new Set([...selectedUrls, ...seen, ...queue])].filter(
+    (url) => !pages.some((page) => page.url === url),
+  ),
   sitemapUrls: sitemap.size,
   visited: seen.size,
   ...(previousReport
@@ -196,10 +301,14 @@ const report = {
 await writeFile(reportPath, JSON.stringify(report, null, 2));
 console.log(
   JSON.stringify({
+    mode: report.mode,
+    completeness: report.completeness,
+    fullGraphComplete: report.fullGraphComplete,
     sitemapUrls: sitemap.size,
     visited: seen.size,
+    requests,
     failures: failures.length,
     reportPath,
   }),
 );
-if (failures.length) process.exitCode = 1;
+if (failures.length || budgetExhausted) process.exitCode = 1;

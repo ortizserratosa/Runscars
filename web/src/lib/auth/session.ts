@@ -1,13 +1,20 @@
 import "server-only";
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
+import { cache } from "react";
 import { isSupabaseConfigured } from "../environment";
 import { createSupabaseAuthServerClient } from "../supabase/server";
 import { getRequestLocale, getRequestPath } from "../i18n/server";
 import { localizedPath } from "../i18n/config";
 import { safeReturnPath } from "./return-path";
+import { hasSessionCookie } from "./session-cookie";
 
-export async function getCurrentUser() {
+export const getCurrentUser = cache(async function getCurrentUser() {
   if (!isSupabaseConfigured()) {
+    return null;
+  }
+
+  if (!hasSessionCookie((await cookies()).getAll())) {
     return null;
   }
 
@@ -18,7 +25,7 @@ export async function getCurrentUser() {
   }
 
   return { supabase, user: data.user };
-}
+});
 
 export async function requireCurrentUser() {
   const current = await getCurrentUser();

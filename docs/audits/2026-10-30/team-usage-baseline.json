@@ -1,0 +1,43 @@
+{
+  "capturedAt": "2026-10-30T12:06:00Z",
+  "source": "Authenticated Vercel dashboard",
+  "url": "https://vercel.com/nazzozzo-s-projects/~/usage/vercel-functions-fluid-cpu-duration",
+  "windowLabel": "Last 30 Days; Sep 30, 5:00 - Oct 30, 6:00 (as displayed)",
+  "team": {
+    "slug": "nazzozzo-s-projects",
+    "plan": "hobby",
+    "cpuLabel": "4h 4m",
+    "functionInvocations": 148973,
+    "cdnRequests": 94625,
+    "blocked": null,
+    "softBlock": null
+  },
+  "projects": [
+    {
+      "name": "runscars",
+      "cpuLabel": "4h 3m",
+      "shareLabel": "99.6%"
+    },
+    {
+      "name": "criter",
+      "cpuLabel": "52s",
+      "shareLabel": "0.4%"
+    },
+    {
+      "name": "criter-writing-studio",
+      "cpuLabel": "8s",
+      "shareLabel": "0.1%"
+    },
+    {
+      "name": "q3-daily",
+      "cpuLabel": null,
+      "note": "No series visible; not evidence of absolute zero CPU"
+    }
+  ],
+  "limitations": [
+    "Labels are rounded",
+    "Cannot infer human visits from invocation counts",
+    "CPU query through CLI requires paid Observability Plus and was not purchased",
+    "READY deployments and null blocks do not withdraw the future pause notice"
+  ]
+}

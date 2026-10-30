@@ -80,10 +80,19 @@ npm run festivals:refresh
 ```
 
 La auditoría viva no forma parte de CI porque consulta páginas externas. Tras
-cada importación o despliegue se ejecuta `npm run audit:production`; recorre el
-sitemap con reintentos acotados, abre cada candidatura, comprueba enlaces
-internos, ejecuta los diecisiete conectores de predicciones contra sus páginas vigentes,
-revisa Kalshi/Polymarket y comprueba frescura de conectores cuando dispone de
+cada importación o despliegue se ejecuta `npm run audit:production`: comprueba
+una muestra determinista de hasta 32 páginas del sitemap, repartida por familias
+de rutas e idiomas ES/EN, con un presupuesto de 64 solicitudes que incluye
+reintentos y redirecciones (máximo configurable de 80 mediante
+`RUNSCARS_AUDIT_MAX_REQUESTS`). Conserva las comprobaciones de canonical,
+alternates y JSON-LD y declara `mode: sample`; no acredita cobertura completa.
+Para una auditoría del grafo completo se usa explícitamente
+`RUNSCARS_AUDIT_FULL=true npm run audit:production` o
+`npm run audit:public -- --full`; puede acotarse con la misma variable de
+presupuesto y el informe declara si quedó incompleta. Las solicitudes llevan
+`User-Agent: RunscarsAudit/1.0`. La auditoría de producción también ejecuta los
+diecisiete conectores de predicciones contra sus páginas vigentes, revisa
+Kalshi/Polymarket y comprueba frescura de conectores cuando dispone de
 credenciales de servidor.
 
 Para un corte limitado a predicciones, `npm run audit:predictions` comprueba

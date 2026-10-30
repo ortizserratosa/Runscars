@@ -1,6 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import type { Database } from "../../types/database.generated";
+import { hasSessionCookie } from "../auth/session-cookie";
 
 export async function updateSupabaseSession(request: NextRequest) {
   return updateSupabaseSessionWithResponse(request);
@@ -22,7 +23,11 @@ export async function updateSupabaseSessionWithResponse(
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-  if (!supabaseUrl || !supabaseKey) {
+  if (
+    !supabaseUrl ||
+    !supabaseKey ||
+    !hasSessionCookie(request.cookies.getAll())
+  ) {
     return response;
   }
 
