@@ -32,6 +32,8 @@ sumarse como medidas exactas. La ausencia de una serie visible de `q3-daily` no 
 afirmar consumo absoluto cero. Se conservan las horas tal como se observaron,
 sin atribuirles una zona horaria que el recibo no especifica.
 
+Se conserva un [recibo compacto del panel](audits/2026-10-30/team-usage-baseline.json).
+
 En la misma revisión, el equipo registra aproximadamente **149.000 invocaciones
 de runtime** y **94.625 peticiones de CDN**, mostradas también como unas 95.000.
 Las invocaciones y las peticiones de CDN son métricas diferentes; no se suman
@@ -73,6 +75,14 @@ La consulta de métricas mediante CLI requiere Observability Plus en esta
 cuenta. No se contrata ese complemento. El desglose anterior procede del panel
 autenticado y el estado del equipo/despliegues procede de las consultas de API;
 no se presenta una descarga de métricas CLI inexistente.
+
+La consulta de grupos de errores también muestra incidencias previas de
+Supabase: revalidaciones con `statement timeout`, `upstream request timeout`
+y peticiones agotadas a los 300 segundos, con eventos del 30/10 anteriores a
+este despliegue. No se atribuyen a este mantenimiento ni se declaran resueltas
+por reducir CPU. La consulta reciente de logs de aplicación de treinta minutos
+no devuelve entradas de error/advertencia; una ventana vacía no invalida los
+grupos históricos.
 
 ## Contribución posible de las auditorías propias
 
@@ -150,8 +160,8 @@ Archivos principales:
 [sesión](../web/src/lib/auth/session.ts),
 [detección de cookie](../web/src/lib/auth/session-cookie.ts) y
 [proxy de Supabase](../web/src/lib/supabase/proxy.ts).
-Esta sección describe el alcance del cambio local; todavía no certifica su
-publicación ni su ahorro.
+El mantenimiento está publicado; su efecto sobre el consumo mensual sigue
+pendiente de una ventana comparable.
 
 ## Verificación local
 
@@ -174,16 +184,36 @@ de Next.js. Se actualizan Next.js y su configuración ESLint a 16.4.3, Zod a
 4.6.7 y Vitest a 4.1.12, con el parche transitivo de Vite. La instalación final
 con `npm ci` y `npm run audit` devuelve cero vulnerabilidades conocidas.
 
-## Pendiente de cierre
+## Publicación y comprobación
 
-- Completar la verificación del despliegue con datos reales.
-- Desplegar el mantenimiento y comprobar el resultado público conforme a
-  [OPERATIONS.md](OPERATIONS.md).
-- Medir CPU e invocaciones posteriores con una ventana comparable; separar
-  tráfico, duración y lecturas evitadas antes de atribuir un ahorro.
+Se publica el commit `c5d826aaa7982356ba0e887e6c86a43edc64f937`, con autor y
+committer GitHub `noreply`, desde la raíz enlazada al proyecto `runscars` del
+equipo auditado. El artefacto de producción
+[`dpl_6dm2GGypZYXLPMYSYZ2JtDnXnUWA`](https://vercel.com/nazzozzo-s-projects/runscars/6dm2GGypZYXLPMYSYZ2JtDnXnUWA)
+queda `READY`. Supera las [27 comprobaciones previas](audits/2026-10-30/release-staged.json)
+antes de promover ese mismo URL a `https://runscars.app`.
+
+Las [27 comprobaciones públicas](audits/2026-10-30/release-public.json) pasan:
+salud y base de datos, portada, categoría, película, fuente, acceso, comunidad,
+festivales, edición y semana, en ES/EN, además de robots, sitemap e imagen
+social. Sin sesión, cuenta y administración redirigen al acceso en su idioma.
+El [muestreo público nuevo](audits/2026-10-30/public-sample.json) recorre 32 de
+las 4.950 URLs del sitemap con 33 solicitudes y cero hallazgos; declara
+`mode: sample` y `fullGraphComplete: false`.
+
+La consulta de errores/advertencias del artefacto nuevo realizada a las
+12:18 UTC no devuelve logs. Es una comprobación inmediata, no una garantía de
+salud continua ni una resolución de los grupos históricos de Supabase.
+No se modifica la base de datos, no hay migraciones ni funciones Edge que
+desplegar, y se conservan los cuatro proyectos y el plan Hobby.
+
+## Pendiente de recuperación de cuota
+
 - Resolver con el usuario la comunicación a soporte para comprobar el aumento
   único gratuito y, si se concede, verificar la retirada efectiva de la pausa.
+- Medir CPU e invocaciones posteriores con una ventana comparable; separar
+  tráfico, duración y lecturas evitadas antes de atribuir un ahorro.
 - Confirmar el estado del equipo y los proyectos después de la fecha anunciada.
 
-No se declara resuelta la cuota ya agotada, cancelada la pausa o completado el
-despliegue mientras estos puntos permanezcan pendientes.
+La publicación y sus pruebas están terminadas. No se declara recuperada la
+cuota ni cancelada la pausa mientras Vercel no lo confirme.

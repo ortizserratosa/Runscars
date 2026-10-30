@@ -1,0 +1,276 @@
+{
+  "startedAt": "2026-10-30T12:17:50.764Z",
+  "completedAt": "2026-10-30T12:17:57.725Z",
+  "baseUrl": "https://runscars.app/",
+  "mode": "sample",
+  "completeness": "sample",
+  "fullGraphComplete": false,
+  "selectedUrls": [
+    "https://runscars.app/en/archivo",
+    "https://runscars.app/archivo",
+    "https://runscars.app/en/comunidad",
+    "https://runscars.app/comunidad",
+    "https://runscars.app/en/evaluacion",
+    "https://runscars.app/evaluacion",
+    "https://runscars.app/en/festivales",
+    "https://runscars.app/festivales",
+    "https://runscars.app/en/fuentes",
+    "https://runscars.app/fuentes",
+    "https://runscars.app/en",
+    "https://runscars.app/",
+    "https://runscars.app/en/metodologia",
+    "https://runscars.app/metodologia",
+    "https://runscars.app/en/peliculas/14th",
+    "https://runscars.app/peliculas/14th",
+    "https://runscars.app/en/personas/tmdb-7",
+    "https://runscars.app/personas/tmdb-7",
+    "https://runscars.app/en/premios",
+    "https://runscars.app/premios",
+    "https://runscars.app/en/quiniela",
+    "https://runscars.app/quiniela",
+    "https://runscars.app/en/semana",
+    "https://runscars.app/semana",
+    "https://runscars.app/en/temporadas/2026",
+    "https://runscars.app/temporadas/2026",
+    "https://runscars.app/en/archivo/2022",
+    "https://runscars.app/archivo/2022",
+    "https://runscars.app/en/festivales/berlinale/2026",
+    "https://runscars.app/festivales/berlinale/2026",
+    "https://runscars.app/en/fuentes/academy",
+    "https://runscars.app/fuentes/academy"
+  ],
+  "requests": 33,
+  "maxRequests": 64,
+  "budgetExhausted": false,
+  "pendingUrls": [],
+  "sitemapUrls": 4950,
+  "visited": 32,
+  "externalLinks": 0,
+  "failures": [],
+  "pages": [
+    {
+      "url": "https://runscars.app/en/archivo",
+      "status": 200,
+      "canonical": "https://runscars.app/en/archivo",
+      "title": "Oscars Archive 2022–2026: Nominees and Winners | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/evaluacion",
+      "status": 200,
+      "canonical": "https://runscars.app/evaluacion",
+      "title": "Acierto y evaluación de predicciones Oscar | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/en/comunidad",
+      "status": 200,
+      "canonical": "https://runscars.app/en/comunidad",
+      "title": "Oscar 2027 Community Ballots | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/archivo",
+      "status": 200,
+      "canonical": "https://runscars.app/archivo",
+      "title": "Archivo Oscar 2022–2026: nominados y ganadores | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/comunidad",
+      "status": 200,
+      "canonical": "https://runscars.app/comunidad",
+      "title": "Quinielas Oscar 2027 de la comunidad | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/en/evaluacion",
+      "status": 200,
+      "canonical": "https://runscars.app/en/evaluacion",
+      "title": "Oscar Prediction Accuracy and Evaluation | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/en/festivales",
+      "status": 200,
+      "canonical": "https://runscars.app/en/festivales",
+      "title": "2026 International Film Festival Circuit | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/festivales",
+      "status": 200,
+      "canonical": "https://runscars.app/festivales",
+      "title": "Circuito internacional de festivales de cine 2026 | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/",
+      "status": 200,
+      "canonical": "https://runscars.app",
+      "title": "Predicciones Oscar 2027: ranking y consenso | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/en",
+      "status": 200,
+      "canonical": "https://runscars.app/en",
+      "title": "Oscar Predictions 2027: Expert Consensus | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/fuentes",
+      "status": 200,
+      "canonical": "https://runscars.app/fuentes",
+      "title": "Fuentes Oscar: expertos y premios oficiales | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/en/fuentes",
+      "status": 200,
+      "canonical": "https://runscars.app/en/fuentes",
+      "title": "Oscar Sources: Experts and Official Awards | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/metodologia",
+      "status": 200,
+      "canonical": "https://runscars.app/metodologia",
+      "title": "Cómo funciona el consenso de predicciones Oscar | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/en/metodologia",
+      "status": 200,
+      "canonical": "https://runscars.app/en/metodologia",
+      "title": "How the Oscar Predictions Consensus Works | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/personas/tmdb-7",
+      "status": 200,
+      "canonical": "https://runscars.app/personas/tmdb-7",
+      "title": "Andrew Stanton: películas y predicciones Oscar | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/en/personas/tmdb-7",
+      "status": 200,
+      "canonical": "https://runscars.app/en/personas/tmdb-7",
+      "title": "Andrew Stanton: Films and Oscar Predictions | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/peliculas/14th",
+      "status": 200,
+      "canonical": "https://runscars.app/peliculas/14th",
+      "title": "14th: predicciones Oscar 2027 | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/en/peliculas/14th",
+      "status": 200,
+      "canonical": "https://runscars.app/en/peliculas/14th",
+      "title": "14th: 2027 Oscar Predictions | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/premios",
+      "status": 200,
+      "canonical": "https://runscars.app/premios",
+      "title": "Premios de sindicatos y críticos rumbo a los Oscar 2027 | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/en/premios",
+      "status": 200,
+      "canonical": "https://runscars.app/en/premios",
+      "title": "Guild and Critics Awards on the Road to Oscar 2027 | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/en/quiniela",
+      "status": 200,
+      "canonical": "https://runscars.app/en/quiniela",
+      "title": "Make your Oscar 2027 ballot | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/quiniela",
+      "status": 200,
+      "canonical": "https://runscars.app/quiniela",
+      "title": "Crea tu quiniela de los Oscar 2027 | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/semana",
+      "status": 200,
+      "canonical": "https://runscars.app/semana",
+      "title": "Esta semana en la carrera a los Oscar 2027 | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/en/semana",
+      "status": 200,
+      "canonical": "https://runscars.app/en/semana",
+      "title": "This week in the Oscar 2027 race | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/en/archivo/2022",
+      "status": 200,
+      "canonical": "https://runscars.app/en/archivo/2022",
+      "title": "2022 Oscars Nominees and Winners | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/archivo/2022",
+      "status": 200,
+      "canonical": "https://runscars.app/archivo/2022",
+      "title": "Oscar 2022: nominados y ganadores | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/temporadas/2026",
+      "status": 200,
+      "canonical": "https://runscars.app/temporadas/2026",
+      "title": "Oscar 2026: nominados y ganadores | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/en/festivales/berlinale/2026",
+      "status": 200,
+      "canonical": "https://runscars.app/en/festivales/berlinale/2026",
+      "title": "Berlin International Film Festival 2026: Official Selection and Awards | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/en/temporadas/2026",
+      "status": 200,
+      "canonical": "https://runscars.app/en/temporadas/2026",
+      "title": "2026 Oscars Nominees and Winners | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/festivales/berlinale/2026",
+      "status": 200,
+      "canonical": "https://runscars.app/festivales/berlinale/2026",
+      "title": "Festival Internacional de Cine de Berlín 2026: selección y palmarés oficial | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/fuentes/academy",
+      "status": 200,
+      "canonical": "https://runscars.app/fuentes/academy",
+      "title": "Academy of Motion Picture Arts and Sciences: fuente original | Runscars",
+      "inSitemap": true
+    },
+    {
+      "url": "https://runscars.app/en/fuentes/academy",
+      "status": 200,
+      "canonical": "https://runscars.app/en/fuentes/academy",
+      "title": "Academy of Motion Picture Arts and Sciences: Original Source | Runscars",
+      "inSitemap": true
+    }
+  ]
+}
