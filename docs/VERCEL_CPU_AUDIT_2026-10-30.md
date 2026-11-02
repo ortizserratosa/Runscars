@@ -1,5 +1,10 @@
 # CPU activa de Vercel · 30 de octubre de 2026
 
+**Actualización 02/11:** la pausa se produjo y se ha recuperado el servicio de
+los cuatro proyectos mediante la cortesía gratuita. El límite temporal triple
+vence el 02/12; véase la [recuperación y medición ampliada](VERCEL_CPU_RECOVERY_2026-11-02.md).
+El contenido siguiente conserva las observaciones del 30/10.
+
 ## Resultado del diagnóstico
 
 El aviso recibido declara agotadas las cuatro horas de CPU activa incluidas en

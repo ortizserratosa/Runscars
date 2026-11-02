@@ -1,7 +1,7 @@
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import SourcePage from "../../src/app/fuentes/[slug]/page";
+import SourcePage from "../../src/app/(dynamic)/fuentes/[slug]/page";
 
 const state = vi.hoisted(() => ({ locale: "es" }));
 vi.mock("../../src/lib/i18n/server", () => ({

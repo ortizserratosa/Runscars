@@ -1,7 +1,7 @@
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import SourcePage from "../../src/app/fuentes/[slug]/page";
+import SourcePage from "../../src/app/(dynamic)/fuentes/[slug]/page";
 import type { FestivalEditionView } from "../../src/lib/festivals/data";
 import {
   getSourceDetail,

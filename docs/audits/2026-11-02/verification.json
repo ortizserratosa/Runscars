@@ -1,0 +1,47 @@
+{
+  "verifiedAt": "2026-11-02T11:49:54.702926+00:00",
+  "checks": {
+    "format": "pass",
+    "lint": "pass",
+    "typecheck": "pass",
+    "unit": {
+      "pass": true,
+      "tests": 484,
+      "files": 56
+    },
+    "database": {
+      "pass": true,
+      "tests": 53,
+      "files": 6
+    },
+    "productionBuild": "pass (normal build after fixture smoke)",
+    "e2e": {
+      "pass": true,
+      "tests": 142,
+      "duration": "1.1m",
+      "browsers": [
+        "Chromium desktop",
+        "Chromium mobile",
+        "Firefox smoke",
+        "WebKit smoke"
+      ]
+    },
+    "localHtmlSmoke": {
+      "pass": true,
+      "cases": 30,
+      "httpRequests": 32
+    },
+    "audit": {
+      "passesHighSeverityGate": true,
+      "high": 0,
+      "critical": 0,
+      "moderate": 16,
+      "scope": "ESLint/minimatch development dependency chain"
+    }
+  },
+  "resolvedDuringVerification": [
+    "Retained the historical profile Open Graph image route outside the route group to avoid Next metadata filename hash changes.",
+    "Quarantined stale generated .next/dev output after route migration; fresh browser navigation and all 142 E2E tests pass."
+  ],
+  "deploymentMethodRequired": "Remote standard production build with Vercel production environment; never deploy the fixture output with --prebuilt."
+}

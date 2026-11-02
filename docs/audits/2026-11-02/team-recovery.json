@@ -1,0 +1,29 @@
+{
+  "checkedAt": "2026-11-02T11:10:00Z",
+  "scope": "nazzozzo-s-projects",
+  "plan": "hobby",
+  "trial": null,
+  "blocked": null,
+  "softBlock": null,
+  "featureBlocks": {},
+  "limited": false,
+  "hobbyBlockThresholdModifier": [
+    {
+      "source": "self-serve",
+      "startsAt": 1793617802569,
+      "expiresAt": 1796209802569,
+      "multiplier": 3
+    }
+  ],
+  "before": {
+    "softBlock": {
+      "blockedAt": 1793446383578,
+      "reason": "FAIR_USE_LIMITS_EXCEEDED",
+      "blockedDueToOverageType": "fluidCpuDuration",
+      "unpauseAt": 1796038383578
+    },
+    "allFourProjectsHttp": 402,
+    "vercelError": "DEPLOYMENT_DISABLED"
+  },
+  "action": "One-time self-service courtesy unblock, explicitly authorized by user. No paid plan, trial, or add-on."
+}

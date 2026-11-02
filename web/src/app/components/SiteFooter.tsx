@@ -1,10 +1,12 @@
 import Link from "next/link";
-import { localizedPath } from "../../lib/i18n/config";
+import { localizedPath, type Locale } from "../../lib/i18n/config";
 import { getRequestLocale } from "../../lib/i18n/server";
 import { BrandLogo } from "./BrandLogo";
 
-export async function SiteFooter() {
-  const locale = await getRequestLocale();
+export async function SiteFooter({
+  locale: suppliedLocale,
+}: { locale?: Locale } = {}) {
+  const locale = suppliedLocale ?? (await getRequestLocale());
   const en = locale === "en";
   const href = (path: string) => localizedPath(path, locale);
   return (

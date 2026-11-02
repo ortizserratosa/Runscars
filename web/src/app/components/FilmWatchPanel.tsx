@@ -1,9 +1,8 @@
-import Link from "next/link";
 import { getCurrentUser } from "../../lib/auth/session";
 import type { FilmWatchState } from "../../lib/community/validation";
 import { setFilmStateAction } from "../comunidad/actions";
-import { localizedPath } from "../../lib/i18n/config";
 import { getRequestLocale } from "../../lib/i18n/server";
+import { AnonymousFilmWatchPanel } from "./AnonymousFilmWatchPanel";
 
 export async function FilmWatchPanel({ filmId }: { filmId: string }) {
   const [current, locale] = await Promise.all([
@@ -12,22 +11,7 @@ export async function FilmWatchPanel({ filmId }: { filmId: string }) {
   ]);
   const en = locale === "en";
   if (!current) {
-    return (
-      <div className="film-community-card">
-        <div>
-          <p className="section-index">{en ? "YOUR STATE" : "TU ESTADO"}</p>
-          <h3>{en ? "Have you seen it?" : "¿Ya la has visto?"}</h3>
-          <p>
-            {en
-              ? "Sign in to save this state privately."
-              : "Inicia sesión para guardar este estado de forma privada."}
-          </p>
-        </div>
-        <Link className="ghost-button" href={localizedPath("/acceso", locale)}>
-          {en ? "Sign in" : "Entrar"}
-        </Link>
-      </div>
-    );
+    return <AnonymousFilmWatchPanel locale={locale} />;
   }
 
   const { data } = await current.supabase

@@ -1,0 +1,38 @@
+{
+  "observedAt": "2026-11-02T11:12:00Z",
+  "source": "Authenticated Vercel Usage UI, fixed from/to query, Projects view",
+  "from": "2026-10-30T12:20:00Z",
+  "to": "2026-10-31T11:20:00Z",
+  "hours": 23,
+  "beforePauseAt": "2026-10-31T11:33:03.578Z",
+  "projects": {
+    "runscars": {
+      "displayedActiveCpu": "8m 14s",
+      "cpuSeconds": 494,
+      "displayedShare": "99.9%",
+      "invocations": 3586
+    },
+    "criter": {
+      "displayedActiveCpu": "0s",
+      "displayedShare": "0.1%",
+      "invocations": 1
+    },
+    "criter-writing-studio": {
+      "displayedActiveCpu": "0s",
+      "displayedShare": "0.0%",
+      "invocations": 1
+    },
+    "q3-daily": {
+      "displayedActiveCpu": null,
+      "note": "No visible series; not proof of absolute zero"
+    }
+  },
+  "normalTeamBudgetSecondsForWindow": 460,
+  "runscarsDailyRateMinutesIfUnchanged": 8.591304347826087,
+  "runscarsThirtyDayCpuHoursIfUnchanged": 4.2956521739130435,
+  "limitations": [
+    "Only 23 hours, includes release checks and changing traffic/route/error mix.",
+    "Conditional arithmetic, not a monthly traffic forecast or causal estimate of savings.",
+    "Rounded per-project CPU does not prove zero CPU in other projects."
+  ]
+}

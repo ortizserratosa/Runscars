@@ -340,3 +340,33 @@ corte. No ejecutar `db reset --linked` ni borrar snapshots para revertir la web.
 El fallback web comprobado `dpl_AJcyHy2J945YQgh9vGBZSCy1WGfk` conserva v4 y las
 lecturas optimizadas; precede a la unificación final de etiquetas ES/EN.
 Tras promover cualquier fallback, comprobar salud, fuentes y consenso ES/EN.
+
+## HTML público y recuperación de cuota · 2 de noviembre de 2026
+
+La cortesía gratuita de Vercel recupera los cuatro proyectos y multiplica sus
+límites por tres hasta el 02/12/2026 a las 11:10 UTC. Es temporal y única; no
+sustituye el límite ordinario compartido de 4 h de CPU cada treinta días.
+El promedio sostenible es 8 min/día para todo el equipo. La
+[medición y recuperación](VERCEL_CPU_RECOVERY_2026-11-02.md) conserva los recibos.
+
+El corte de HTML anónimo utiliza rutas internas distintas de las que procesan
+sesiones. Para comprobarlo localmente con datos reproducibles:
+
+```bash
+RUNSCARS_HTML_CACHE_SMOKE_REPORT=/tmp/runscars-html-cache-smoke.json \
+  node web/scripts/smoke-public-html-cache.mjs
+npm run build
+```
+
+El smoke construye y arranca Next con PostgREST/Auth locales; sustituye
+`web/.next`, por lo que requiere la compilación normal posterior y no debe
+publicarse ese resultado con `--prebuilt`. Comprueba HTML y Flight ES/EN,
+sesiones completas y fragmentadas, un usuario local con estado privado, el
+anónimo posterior, parámetros semánticos y métodos de escritura. En Vercel,
+volver a comprobar HIT/PRERENDER anónimo sin `Set-Cookie` y respuestas privadas
+sin caché compartida. Un HIT de HTML elimina ese render; el proxy aún puede
+realizar trabajo y la cuota mensual debe medirse aparte.
+
+Conservar los dominios y protecciones de los otros proyectos. Cambiar de origen
+puede separar almacenamiento local del navegador aunque el código desplegado
+sea idéntico; no consolidar proyectos como remedio a la CPU de Runscars.

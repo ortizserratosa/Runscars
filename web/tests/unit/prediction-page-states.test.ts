@@ -1,7 +1,7 @@
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import Home from "../../src/app/page";
+import Home from "../../src/app/(dynamic)/page";
 import { CategoryPageView } from "../../src/app/temporadas/CategoryPageView";
 import { aggregatePredictionsV2 } from "../../src/lib/aggregation/v2";
 import { phase71FixtureObservations } from "../../src/data/phase71-fixture";

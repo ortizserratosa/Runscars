@@ -1,13 +1,17 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import { localizedPath } from "../../lib/i18n/config";
+import { localizedPath, type Locale } from "../../lib/i18n/config";
 import { getRequestLocale } from "../../lib/i18n/server";
 import { AccountNav } from "./AccountNav";
 import { BrandLogo } from "./BrandLogo";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { PublicLanguageSwitcher } from "./PublicLanguageSwitcher";
 
-export async function SiteHeader() {
-  const locale = await getRequestLocale();
+export async function SiteHeader({
+  locale: suppliedLocale,
+  anonymous = false,
+}: { locale?: Locale; anonymous?: boolean } = {}) {
+  const locale = suppliedLocale ?? (await getRequestLocale());
   const en = locale === "en";
   const href = (path: string) => localizedPath(path, locale);
   return (
@@ -82,17 +86,31 @@ export async function SiteHeader() {
           <span aria-hidden="true" />
           Oscar 2027
         </span>
-        <Suspense
-          fallback={
-            <span className="ghost-button compact" aria-hidden="true">
-              {en ? "Account" : "Cuenta"}
-            </span>
-          }
-        >
-          <AccountNav />
-        </Suspense>
+        {anonymous ? (
+          <Link
+            prefetch={false}
+            className="ghost-button compact"
+            href={href("/acceso")}
+          >
+            {en ? "Sign in" : "Entrar"}
+          </Link>
+        ) : (
+          <Suspense
+            fallback={
+              <span className="ghost-button compact" aria-hidden="true">
+                {en ? "Account" : "Cuenta"}
+              </span>
+            }
+          >
+            <AccountNav />
+          </Suspense>
+        )}
         <Suspense fallback={<span aria-hidden="true">{en ? "ES" : "EN"}</span>}>
-          <LanguageSwitcher />
+          {anonymous ? (
+            <PublicLanguageSwitcher locale={locale} />
+          ) : (
+            <LanguageSwitcher />
+          )}
         </Suspense>
       </div>
     </header>

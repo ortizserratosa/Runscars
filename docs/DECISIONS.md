@@ -84,6 +84,7 @@ pasado para ocultar cambios de criterio.
 | D-074 | The Ankler y The Rolling Tape con autor fijo                     | Aceptada    |
 | D-075 | Estado editorial, profundidad y salud por categoría              | Aceptada    |
 | D-076 | Catálogo público reutilizable y sesión anónima sin trabajo Auth | Aceptada    |
+| D-077 | HTML público anónimo separado del render con sesión            | Propuesta   |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -1543,3 +1544,36 @@ ejemplos manuales de nominaciones y ganador coincidieron con
   acredita por sí solo la retirada de una pausa del equipo. El estado del
   proveedor y el consumo posterior deben comprobarse por separado.
 - **Evidencia:** [auditoría de CPU del equipo](VERCEL_CPU_AUDIT_2026-10-30.md).
+
+## D-077 · HTML público anónimo separado del render con sesión
+
+- **Fecha:** 2026-11-02
+- **Estado:** Propuesta
+- **Origen:** continuidad del mantenimiento de CPU solicitado por el usuario.
+  La cortesía gratuita recupera el servicio hasta el 02/12, pero la muestra
+  posterior al primer cambio aún supera el promedio del límite ordinario.
+- **Diseño en verificación:** reutilizar HTML anónimo de portada, películas y
+  personas mediante ISR con revalidación de 60 segundos. Un árbol de rutas
+  independiente recibe idioma y contenido explícitos, sin leer cookies ni
+  cabeceras de la petición para generar HTML compartido.
+- **Sesiones:** cualquier cookie Supabase de sesión, completa o fragmentada,
+  selecciona el render dinámico existente, donde Supabase sigue validándola.
+  La cookie no autoriza acceso. Acciones, métodos de escritura, rutas privadas
+  y consultas con significado propio mantienen su tratamiento dinámico.
+- **Aislamiento:** no incluir rankings públicos revocables, estados de visionado
+  ni datos de cuenta en el HTML compartido. Las ramas anónimas muestran las
+  opciones de acceso existentes; las sesiones conservan su interfaz actual.
+- **URLs e idioma:** la ruta visible sigue determinando ES/EN, las URLs públicas
+  y canónicas permanecen estables y el selector conserva parámetros. Los
+  destinos internos de render no se anuncian como páginas indexables.
+- **Frescura:** se conserva la revalidación de datos y no se alteran snapshots,
+  hashes, fechas de captura ni reglas de cálculo. ISR puede servir el último
+  HTML válido mientras regenera; no equivale a una consulta nueva del backend
+  en cada visita ni a expiración inmediata ante una actualización editorial.
+- **Alternativas:** no activar Cache Components/PPR para este corte, porque los
+  huecos de autenticación seguirían invocando una función por visita. Tampoco
+  imponer cabeceras de caché pública al árbol actual que lee sesiones.
+- **Puerta de salida:** pruebas con Next real de HIT anónimo en ES/EN,
+  exclusión de sesiones y escrituras, idioma y metadata correctos, regresión
+  funcional y comprobación del artefacto publicado antes de darla por aceptada.
+- **Evidencia:** [recuperación y consumo posterior](VERCEL_CPU_RECOVERY_2026-11-02.md).

@@ -1,0 +1,80 @@
+import type { Metadata } from "next";
+import { localizedPath, stripLocalePrefix, type Locale } from "./i18n/config";
+import { SITE_NAME, SOCIAL_IMAGE_PATH, siteOrigin } from "./seo";
+
+export function rootMetadata(locale: Locale, visiblePath = "/"): Metadata {
+  const origin = siteOrigin();
+  const english = locale === "en";
+  const description = english
+    ? "Follow the 2027 Oscar predictions with an updated, source-by-source expert consensus for Best Picture and every major category."
+    : "Sigue las predicciones de los Oscar 2027 con un consenso de expertos actualizado y verificable para Mejor película y las categorías principales.";
+  const title = english
+    ? "Oscar Predictions 2027 | Runscars"
+    : "Predicciones Oscar 2027 | Runscars";
+  const socialTitle = english
+    ? "Oscar Predictions 2027: Expert Consensus | Runscars"
+    : "Predicciones Oscar 2027: consenso de expertos | Runscars";
+  const internalPath = stripLocalePrefix(visiblePath);
+  const canonicalPath = localizedPath(internalPath, locale);
+  const socialImageUrl = new URL(SOCIAL_IMAGE_PATH, origin).toString();
+  const allowIndexing = process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true";
+
+  return {
+    metadataBase: new URL(origin),
+    applicationName: SITE_NAME,
+    title: {
+      default: title,
+      template: `%s | ${SITE_NAME}`,
+    },
+    description,
+    creator: SITE_NAME,
+    publisher: SITE_NAME,
+    category: "entertainment",
+    alternates: {
+      canonical: canonicalPath,
+      languages: {
+        es: localizedPath(internalPath, "es"),
+        en: localizedPath(internalPath, "en"),
+        "x-default": localizedPath(internalPath, "es"),
+      },
+    },
+    robots: {
+      index: allowIndexing,
+      follow: allowIndexing,
+      googleBot: {
+        index: allowIndexing,
+        follow: allowIndexing,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
+    },
+    verification: {
+      google: "-DG9WuRmmS-JvJT-S6igJwvwDLONugSKILf30hgmOC0",
+    },
+    openGraph: {
+      title: socialTitle,
+      description,
+      type: "website",
+      url: canonicalPath,
+      siteName: SITE_NAME,
+      locale: locale === "en" ? "en_GB" : "es_ES",
+      alternateLocale: locale === "en" ? ["es_ES"] : ["en_GB"],
+      images: [
+        {
+          url: socialImageUrl,
+          width: 1680,
+          height: 945,
+          alt: socialTitle,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: socialTitle,
+      description,
+      images: [socialImageUrl],
+    },
+    manifest: "/manifest.webmanifest",
+  };
+}

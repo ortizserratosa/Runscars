@@ -1,0 +1,78 @@
+{
+  "checkedAt": "2026-11-02T11:10:39.924405+00:00",
+  "scope": "nazzozzo-s-projects",
+  "method": "authenticated vercel curl; GET only; response bodies and cookies omitted",
+  "checks": [
+    {
+      "project": "runscars",
+      "url": "https://runscars.app/",
+      "cliExit": 0,
+      "httpChain": [
+        200
+      ],
+      "finalHttp": 200,
+      "vercelErrors": [],
+      "markers": [],
+      "elapsedSeconds": 3.26,
+      "responseBytes": 59470,
+      "available": true
+    },
+    {
+      "project": "runscars-health",
+      "url": "https://runscars.app/api/health",
+      "cliExit": 0,
+      "httpChain": [
+        200
+      ],
+      "finalHttp": 200,
+      "vercelErrors": [],
+      "markers": [],
+      "elapsedSeconds": 1.98,
+      "responseBytes": 1041,
+      "available": true
+    },
+    {
+      "project": "criter",
+      "url": "https://criter.vercel.app/",
+      "cliExit": 0,
+      "httpChain": [
+        307,
+        200
+      ],
+      "finalHttp": 200,
+      "vercelErrors": [],
+      "markers": [],
+      "elapsedSeconds": 1.69,
+      "responseBytes": 14938,
+      "available": true
+    },
+    {
+      "project": "criter-writing-studio",
+      "url": "https://criter-writing-studio.vercel.app/",
+      "cliExit": 0,
+      "httpChain": [
+        200
+      ],
+      "finalHttp": 200,
+      "vercelErrors": [],
+      "markers": [],
+      "elapsedSeconds": 1.44,
+      "responseBytes": 11055,
+      "available": true
+    },
+    {
+      "project": "q3-daily",
+      "url": "https://q3-daily.vercel.app/",
+      "cliExit": 0,
+      "httpChain": [
+        200
+      ],
+      "finalHttp": 200,
+      "vercelErrors": [],
+      "markers": [],
+      "elapsedSeconds": 1.56,
+      "responseBytes": 15655,
+      "available": true
+    }
+  ]
+}
