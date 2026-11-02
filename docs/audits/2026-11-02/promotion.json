@@ -1,0 +1,15 @@
+{
+  "id": "dpl_FVYRrGiurveMFfDH5CsS99ZCVCcE",
+  "url": "runscars-fyjl6nyjx-nazzozzo-s-projects.vercel.app",
+  "target": "production",
+  "readyState": "READY",
+  "capturedAt": "2026-11-02T12:11:37.530011+00:00",
+  "projectId": "prj_byXLvlU9VmeVdVZ6YWqhlc94nEjd",
+  "verifiedVia": "vercel inspect https://runscars.app after promotion",
+  "resolvedDomain": "runscars.app",
+  "cliListedAliases": [
+    "runscars-nazzozzo-s-projects.vercel.app"
+  ],
+  "appCommit": "5519ac6002170e2983642f8ca30f6fb1362058c6",
+  "planChanged": false
+}

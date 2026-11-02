@@ -51,7 +51,7 @@ eliminaba deserializaciones, pero el ahorro local medido era aproximadamente
 0,44 ms por petición. No justifica añadir otra capa de caché como remedio a
 una media de unos 138 ms de CPU por invocación en la muestra ampliada.
 
-## HTML anónimo en verificación
+## HTML anónimo publicado
 
 El corte separa HTML público anónimo de portada, películas y personas mediante
 ISR de 60 segundos. Recibe idioma y contenido explícitos; las cookies Supabase
@@ -78,4 +78,60 @@ ISR puede servir el último HTML válido mientras regenera. No cambia las fechas
 ni la caducidad guardadas de TMDB, pero no garantiza que el HTML se sustituya
 en el instante exacto de su vencimiento. Tampoco elimina todo el trabajo del
 proxy. El HIT acredita render reutilizado, no un porcentaje de ahorro mensual.
-La regresión final y la comprobación de Vercel siguen pendientes de publicación.
+La regresión final pasa las **142 pruebas end-to-end**, incluidas navegación
+en escritorio y móvil y los smoke de Firefox y WebKit. Se conserva la ruta
+histórica de la imagen Open Graph de los perfiles. Tras cambiar los grupos de
+rutas, se aparta la salida generada antigua de `.next/dev` y se repite la suite
+completa desde un arranque limpio. El [recibo de verificación](audits/2026-11-02/verification.json)
+identifica las comprobaciones y sus límites.
+
+El código `5519ac6002170e2983642f8ca30f6fb1362058c6` se construye remotamente
+con el entorno de producción, sin `--prebuilt`, en
+`dpl_FVYRrGiurveMFfDH5CsS99ZCVCcE`. Antes de promoverlo pasan las
+[27 comprobaciones de rutas](audits/2026-11-02/release-staged.json) y el
+[verificador de caché](audits/2026-11-02/staged-html-cache-swr.json): las seis
+páginas ES/EN regeneran de `STALE` a `HIT` y repiten `HIT`; las cookies de sesión
+quedan en SSR privado y Flight no contiene estado privado. La regeneración
+observada tarda varios segundos: las primeras pruebas con espera de 1,25 s
+eran insuficientes. Se conserva la exigencia de un HIT real y un presupuesto
+máximo de 36 peticiones.
+
+Se promueve ese mismo artefacto a `runscars.app` el 02/11 hacia las 12:08 UTC.
+En el dominio principal pasan otras [27 comprobaciones de rutas](audits/2026-11-02/release-production.json)
+y [30 peticiones del verificador de caché](audits/2026-11-02/production-html-cache.json),
+sin reintentos. No se modifican bases de datos, importaciones ni los otros
+tres proyectos. El fallback anterior es `dpl_DPkhjBuZ9vq4e87Uw9nR4wieMpG8`;
+tras promover cualquier fallback hay que repetir salud y aislamiento de sesión.
+
+La recuperación y la publicación están comprobadas. **El ahorro mensual aún
+no está medido.** Como siguiente puerta se requiere una ventana completa de
+24 h posterior al despliegue, sin pausa y con las tareas programadas normales,
+sumando la CPU de los cuatro proyectos. El objetivo de ingeniería es no
+superar 6 min/día (25 % de margen frente a 8 min/día); una muestra de 48–72 h
+con tráfico representativo daría mayor confianza. La cortesía temporal no
+demuestra que el equipo quepa en su límite normal.
+
+## Visitantes: medición gratuita desde el 02/11
+
+Web Analytics estaba desactivado. La vista inicial de demostración no contenía
+un histórico del proyecto; no permite reconstruir cuántas personas visitaron
+Runscars antes de esta fecha. La aplicación ya incluía el componente Analytics.
+
+Con autorización explícita del usuario se activa **Web Analytics en Hobby**,
+incluido en el plan. El script público devuelve HTTP 200 y una visita real de
+comprobación aparece en el panel de **Production**, con **1 visitante y
+1 página vista**. Esa cifra corresponde a la comprobación, no a audiencia
+orgánica ni a todas las visitas anteriores. El [recibo](audits/2026-11-02/analytics-enabled.json)
+no almacena identificadores de visitantes.
+
+El plan incluye 50.000 eventos mensuales compartidos por el equipo y treinta
+días de histórico. Al agotar la cuota se detiene la recogida; no se activan
+cargos adicionales ni un plan de pago. Los eventos personalizados de quiniela
+no se consideran operativos en Hobby. Fuentes oficiales:
+[límites de Analytics](https://vercel.com/docs/analytics/limits-and-pricing) y
+[eventos personalizados](https://vercel.com/docs/analytics/custom-events).
+
+El contador de visitantes de Vercel usa identificadores que se renuevan cada
+día; no equivale a una deduplicación de personas durante todo un mes. Tampoco
+debe confundirse con las invocaciones de funciones. Véase
+[cómo determina visitantes](https://vercel.com/docs/analytics#how-visitors-are-determined).

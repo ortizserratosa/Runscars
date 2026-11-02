@@ -1,0 +1,94 @@
+{
+  "capturedAt": "2026-11-02T11:56:44.008Z",
+  "baseOrigin": "https://runscars-fyjl6nyjx-nazzozzo-s-projects.vercel.app",
+  "canonicalOrigin": "https://runscars.app",
+  "scope": "Public HTML cache, URL locale, metadata and anonymous/session isolation",
+  "limitations": [
+    "Read-only anonymous and invalid-cookie requests do not establish a real signed-in user's behavior.",
+    "Cache hits prove the sampled artifact behavior, not monthly CPU savings or team quota recovery."
+  ],
+  "includeRsc": true,
+  "requestBudget": 36,
+  "requestCount": 5,
+  "cacheRetryCount": 3,
+  "cacheRetryDelaysMs": [
+    250,
+    500,
+    500
+  ],
+  "samples": [
+    {
+      "kind": "anonymous-warm",
+      "route": "/",
+      "method": "GET",
+      "status": 200,
+      "cache": "STALE",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "contentType": "text/html; charset=utf-8",
+      "hasSetCookie": false,
+      "bytes": 62022,
+      "wallMs": 104,
+      "lang": "es-ES",
+      "canonical": "https://runscars.app/"
+    },
+    {
+      "kind": "anonymous-repeat-1",
+      "route": "/",
+      "method": "GET",
+      "status": 200,
+      "cache": "STALE",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "contentType": "text/html; charset=utf-8",
+      "hasSetCookie": false,
+      "bytes": 62022,
+      "wallMs": 44,
+      "lang": "es-ES",
+      "canonical": "https://runscars.app/"
+    },
+    {
+      "kind": "anonymous-repeat-1-retry-1-after-stale",
+      "route": "/",
+      "method": "GET",
+      "status": 200,
+      "cache": "STALE",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "contentType": "text/html; charset=utf-8",
+      "hasSetCookie": false,
+      "bytes": 62022,
+      "wallMs": 49,
+      "lang": "es-ES",
+      "canonical": "https://runscars.app/"
+    },
+    {
+      "kind": "anonymous-repeat-1-retry-2-after-stale",
+      "route": "/",
+      "method": "GET",
+      "status": 200,
+      "cache": "STALE",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "contentType": "text/html; charset=utf-8",
+      "hasSetCookie": false,
+      "bytes": 62022,
+      "wallMs": 94,
+      "lang": "es-ES",
+      "canonical": "https://runscars.app/"
+    },
+    {
+      "kind": "anonymous-repeat-1-retry-3-after-stale",
+      "route": "/",
+      "method": "GET",
+      "status": 200,
+      "cache": "STALE",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "contentType": "text/html; charset=utf-8",
+      "hasSetCookie": false,
+      "bytes": 62022,
+      "wallMs": 38,
+      "lang": "es-ES",
+      "canonical": "https://runscars.app/"
+    }
+  ],
+  "pass": false,
+  "error": "anonymous-repeat-1 /: expected x-vercel-cache HIT/PRERENDER after warming; received STALE.",
+  "completedAt": "2026-11-02T11:56:45.595Z"
+}

@@ -1,0 +1,32 @@
+{
+  "capturedAt": "2026-11-02T12:11:37.530011+00:00",
+  "project": "runscars",
+  "team": "nazzozzo-s-projects",
+  "plan": "hobby",
+  "authorizedByUser": "Sí, activarlo gratis",
+  "enabled": true,
+  "paidUpgrade": false,
+  "dashboard": "https://vercel.com/nazzozzo-s-projects/runscars/analytics?period=30d",
+  "environment": "Production",
+  "publicScript": {
+    "url": "https://runscars.app/_vercel/insights/script.js",
+    "status": 200,
+    "contentType": "application/javascript; charset=utf-8"
+  },
+  "firstObservation": {
+    "visitors": 1,
+    "pageViews": 1,
+    "interpretation": "One real verification visit; not organic audience or a reconstructed historical count."
+  },
+  "priorState": "Disabled; initial preview was demo data. Historical visitors are unavailable.",
+  "scope": "Basic page views; custom ballot events not considered operational on Hobby.",
+  "monthlyTeamEventLimit": 50000,
+  "onLimit": "Collection pauses without additional usage charges.",
+  "historyDays": 30,
+  "sources": [
+    "https://vercel.com/docs/analytics/limits-and-pricing",
+    "https://vercel.com/docs/analytics/custom-events",
+    "https://vercel.com/docs/analytics#how-visitors-are-determined"
+  ],
+  "evidence": "Screenshot retained outside Git in the private recovery backup directory; contains no visitor identifiers."
+}

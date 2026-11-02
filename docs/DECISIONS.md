@@ -84,7 +84,8 @@ pasado para ocultar cambios de criterio.
 | D-074 | The Ankler y The Rolling Tape con autor fijo                     | Aceptada    |
 | D-075 | Estado editorial, profundidad y salud por categoría              | Aceptada    |
 | D-076 | Catálogo público reutilizable y sesión anónima sin trabajo Auth | Aceptada    |
-| D-077 | HTML público anónimo separado del render con sesión            | Propuesta   |
+| D-077 | HTML público anónimo separado del render con sesión            | Aceptada    |
+| D-078 | Web Analytics básico en el plan gratuito                       | Aceptada    |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -1548,11 +1549,11 @@ ejemplos manuales de nominaciones y ganador coincidieron con
 ## D-077 · HTML público anónimo separado del render con sesión
 
 - **Fecha:** 2026-11-02
-- **Estado:** Propuesta
+- **Estado:** Aceptada
 - **Origen:** continuidad del mantenimiento de CPU solicitado por el usuario.
-  La cortesía gratuita recupera el servicio hasta el 02/12, pero la muestra
+  La cortesía gratuita amplía los límites hasta el 02/12, pero la muestra
   posterior al primer cambio aún supera el promedio del límite ordinario.
-- **Diseño en verificación:** reutilizar HTML anónimo de portada, películas y
+- **Diseño:** reutilizar HTML anónimo de portada, películas y
   personas mediante ISR con revalidación de 60 segundos. Un árbol de rutas
   independiente recibe idioma y contenido explícitos, sin leer cookies ni
   cabeceras de la petición para generar HTML compartido.
@@ -1577,3 +1578,22 @@ ejemplos manuales de nominaciones y ganador coincidieron con
   exclusión de sesiones y escrituras, idioma y metadata correctos, regresión
   funcional y comprobación del artefacto publicado antes de darla por aceptada.
 - **Evidencia:** [recuperación y consumo posterior](VERCEL_CPU_RECOVERY_2026-11-02.md).
+
+## D-078 · Web Analytics básico en el plan gratuito
+
+- **Fecha:** 2026-11-02
+- **Estado:** Aceptada
+- **Origen:** el usuario solicita conocer los visitantes de Runscars y autoriza
+  expresamente activar la opción gratuita tras comprobar que estaba desactivada.
+- **Decisión:** activar Web Analytics básico incluido en Hobby. No contratar
+  Pro ni complementos de pago. La integración existente recoge páginas vistas;
+  no considerar operativos los eventos personalizados de quiniela en este plan.
+- **Límites:** 50.000 eventos mensuales compartidos por el equipo y treinta días
+  de histórico. La recogida se pausa al agotar la cuota, sin cargos adicionales.
+  No existe un recuento reconstruible anterior a la activación. El contador de
+  visitantes utiliza identificadores diarios y no representa personas únicas
+  deduplicadas durante todo un mes.
+- **Verificación:** script público HTTP 200 y una visita de comprobación
+  visible en el panel de Production. No atribuir esa visita a audiencia orgánica.
+- **Evidencia:** [recibo de activación](audits/2026-11-02/analytics-enabled.json)
+  e [informe de recuperación](VERCEL_CPU_RECOVERY_2026-11-02.md).

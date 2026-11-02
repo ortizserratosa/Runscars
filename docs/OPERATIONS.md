@@ -370,3 +370,30 @@ realizar trabajo y la cuota mensual debe medirse aparte.
 Conservar los dominios y protecciones de los otros proyectos. Cambiar de origen
 puede separar almacenamiento local del navegador aunque el código desplegado
 sea idéntico; no consolidar proyectos como remedio a la CPU de Runscars.
+
+Comprobación del artefacto publicado (máximo 36 peticiones):
+
+```bash
+node scripts/check-public-html-cache.mjs https://runscars.app \
+  /tmp/runscars-production-html-cache.json --rsc
+```
+
+El verificador espera brevemente si Vercel está regenerando HTML vencido y
+exige un HIT posterior dentro de la misma ejecución. Un STALE seguido de HIT
+es compatible con ISR; servir contenido vencido indefinidamente no pasa la
+comprobación. Los recibos del 02/11 están en el informe de recuperación.
+
+Web Analytics básico se activa gratuitamente el 02/11 por autorización del
+usuario. El [panel de Production](https://vercel.com/nazzozzo-s-projects/runscars/analytics?period=30d)
+empieza a registrar desde esa fecha; no hay histórico recuperable anterior.
+Hobby incluye 50.000 eventos mensuales compartidos por el equipo y treinta días
+de histórico. Al alcanzar la cuota se pausa la recogida sin cargos adicionales.
+No activar Pro ni complementos; los eventos personalizados de quiniela no se
+consideran operativos en Hobby. La primera visita registrada es de comprobación.
+
+Medición pendiente tras este release: 02/11 a las 13:00 → 03/11 a las 13:00 UTC.
+Sumar la CPU de los cuatro proyectos; 480 s/día es el techo del límite ordinario
+y 360 s/día el objetivo con 25 % de reserva. La ventana intermedia del 02/11 de
+13:00 a 19:00 permite orientar (120 s de techo; 90 s de objetivo), pero no
+sustituye un ciclo completo con las tareas programadas. La ampliación temporal
+no debe usarse como prueba de sostenibilidad.

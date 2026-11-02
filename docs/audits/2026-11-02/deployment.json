@@ -1,0 +1,13 @@
+{
+  "id": "dpl_FVYRrGiurveMFfDH5CsS99ZCVCcE",
+  "url": "runscars-fyjl6nyjx-nazzozzo-s-projects.vercel.app",
+  "projectId": "prj_byXLvlU9VmeVdVZ6YWqhlc94nEjd",
+  "target": "production",
+  "readyState": "READY",
+  "source": "cli",
+  "alias": [
+    "runscars-nazzozzo-s-projects.vercel.app"
+  ],
+  "gitCommitSha": "5519ac6002170e2983642f8ca30f6fb1362058c6",
+  "gitDirty": "1"
+}

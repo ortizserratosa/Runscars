@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { setTimeout as delay } from "node:timers/promises";
 
 // Read-only HTTP verification of an already published artifact. No credentials,
 // environment files, browser session, database writes or protection bypasses.
@@ -41,6 +42,8 @@ try {
 const includeRsc = flags.includes("--rsc");
 const canonicalOrigin = "https://runscars.app";
 const requestBudget = 36;
+const warmSettleMs = 3000;
+const cacheRetryDelaysMs = [1000, 2000, 3000];
 const reportPath = path.resolve(reportArgument);
 const routes = [
   "/",
@@ -65,6 +68,9 @@ const report = {
   includeRsc,
   requestBudget,
   requestCount: 0,
+  cacheRetryCount: 0,
+  warmSettleMs,
+  cacheRetryDelaysMs,
   samples: [],
   pass: false,
 };
@@ -106,6 +112,11 @@ async function sample(route, kind, headers = {}) {
     status: response.status,
     cache: response.headers.get("x-vercel-cache")?.toUpperCase() ?? null,
     cacheControl: response.headers.get("cache-control"),
+    ageSeconds: response.headers.has("age")
+      ? Number(response.headers.get("age"))
+      : null,
+    matchedPath: response.headers.get("x-matched-path"),
+    nextCache: response.headers.get("x-nextjs-cache"),
     contentType: response.headers.get("content-type"),
     hasSetCookie: response.headers.has("set-cookie"),
     bytes: Buffer.byteLength(body),
@@ -178,8 +189,22 @@ function assertHtml(sampled, route) {
 async function assertCachedHtml(route, kind) {
   let result = await sample(route, kind);
   assertHtml(result, route);
-  if (result.item.cache === "STALE") {
-    result = await sample(route, `${kind}-after-stale`);
+  // Vercel can still be publishing a cold entry or regenerating a stale one
+  // when the warm request completes. Allow bounded propagation time, while
+  // retaining the same hard request budget and requiring a genuine final HIT.
+  for (
+    let retry = 0;
+    retry < cacheRetryDelaysMs.length &&
+    ["MISS", "STALE"].includes(result.item.cache);
+    retry += 1
+  ) {
+    await delay(cacheRetryDelaysMs[retry]);
+    const previousCache = result.item.cache.toLowerCase();
+    result = await sample(
+      route,
+      `${kind}-retry-${retry + 1}-after-${previousCache}`,
+    );
+    report.cacheRetryCount += 1;
     assertHtml(result, route);
   }
   assert.ok(
@@ -271,7 +296,12 @@ async function checkRsc(route) {
 
 try {
   for (const route of routes) {
-    assertHtml(await sample(route, "anonymous-warm"), route);
+    const warm = await sample(route, "anonymous-warm");
+    assertHtml(warm, route);
+    if (["MISS", "STALE"].includes(warm.item.cache)) {
+      warm.item.settleBeforeRepeatMs = warmSettleMs;
+      await delay(warmSettleMs);
+    }
     await assertCachedHtml(route, "anonymous-repeat-1");
     await assertCachedHtml(route, "anonymous-repeat-2");
   }
