@@ -6,6 +6,8 @@ import { expect, it } from "vitest";
 const root = path.resolve(import.meta.dirname, "../../..");
 const migrationName = "20261106140000_archive_completed_nyff.sql";
 
+// This integration test boots PostgreSQL and applies the entire migration
+// history; its initialization exceeds Vitest's five seconds on shared CI CPUs.
 it("archives completed NYFF without changing its reviewed programme, pointers or automatic history", async () => {
   const database = new PGlite();
   try {
@@ -111,4 +113,4 @@ it("archives completed NYFF without changing its reviewed programme, pointers or
   } finally {
     await database.close();
   }
-});
+}, 30_000);
