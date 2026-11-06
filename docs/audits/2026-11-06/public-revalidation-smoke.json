@@ -1,0 +1,27 @@
+{
+  "startedAt": "2026-11-06T14:14:01.785Z",
+  "finishedAt": "2026-11-06T14:14:02.680Z",
+  "results": [
+    {
+      "path": "/",
+      "status": 200,
+      "durationMs": 333,
+      "hasOdyssey": true,
+      "hasCurrentCut": false
+    },
+    {
+      "path": "/temporadas/2027/mejor-pelicula",
+      "status": 200,
+      "durationMs": 862,
+      "hasOdyssey": true,
+      "hasCurrentCut": true
+    },
+    {
+      "path": "/en/temporadas/2027/mejor-pelicula",
+      "status": 200,
+      "durationMs": 762,
+      "hasOdyssey": true,
+      "hasCurrentCut": true
+    }
+  ]
+}

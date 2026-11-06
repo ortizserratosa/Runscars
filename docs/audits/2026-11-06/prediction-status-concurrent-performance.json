@@ -1,0 +1,63 @@
+{
+  "auditedAt": "2026-11-06T14:12:54.150Z",
+  "change": "20261106150000_prediction_source_status_summary.sql",
+  "exactApplicationQuery": "public_prediction_source_status.select('*').eq('season_id','oscars-2027').eq('prediction_intention','nomination').order('source_id').order('category_id').range(0,499)",
+  "readOnlyPreMigrationValidation": {
+    "proposedExecutionMs": 443.081,
+    "planningMs": 6.511,
+    "comparedRows": 73,
+    "proposedDifferences": 0,
+    "currentDifferences": 0
+  },
+  "concurrencyPerRole": 3,
+  "results": [
+    {
+      "role": "anon",
+      "concurrentRequest": 1,
+      "durationMs": 1578,
+      "rowCount": 73,
+      "contentHash": "b79f461fffc12b244a8ba283b89e0da0767b6d839a845e4ef88cd676917b8dbb",
+      "error": null
+    },
+    {
+      "role": "anon",
+      "concurrentRequest": 2,
+      "durationMs": 1578,
+      "rowCount": 73,
+      "contentHash": "b79f461fffc12b244a8ba283b89e0da0767b6d839a845e4ef88cd676917b8dbb",
+      "error": null
+    },
+    {
+      "role": "anon",
+      "concurrentRequest": 3,
+      "durationMs": 1576,
+      "rowCount": 73,
+      "contentHash": "b79f461fffc12b244a8ba283b89e0da0767b6d839a845e4ef88cd676917b8dbb",
+      "error": null
+    },
+    {
+      "role": "service_role",
+      "concurrentRequest": 1,
+      "durationMs": 1127,
+      "rowCount": 73,
+      "contentHash": "b79f461fffc12b244a8ba283b89e0da0767b6d839a845e4ef88cd676917b8dbb",
+      "error": null
+    },
+    {
+      "role": "service_role",
+      "concurrentRequest": 2,
+      "durationMs": 1122,
+      "rowCount": 73,
+      "contentHash": "b79f461fffc12b244a8ba283b89e0da0767b6d839a845e4ef88cd676917b8dbb",
+      "error": null
+    },
+    {
+      "role": "service_role",
+      "concurrentRequest": 3,
+      "durationMs": 1411,
+      "rowCount": 73,
+      "contentHash": "b79f461fffc12b244a8ba283b89e0da0767b6d839a845e4ef88cd676917b8dbb",
+      "error": null
+    }
+  ]
+}

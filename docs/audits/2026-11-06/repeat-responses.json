@@ -1,0 +1,376 @@
+[
+  {
+    "connector": "ankler-predictions",
+    "httpStatus": 200,
+    "durationMs": 6837,
+    "status": "succeeded",
+    "connectors": 1,
+    "failed": 0,
+    "results": [
+      {
+        "connectorId": "ankler-predictions",
+        "runId": 1120,
+        "status": "succeeded",
+        "publicationsSeen": 8,
+        "capturesInserted": 0,
+        "capturesDuplicate": 8,
+        "observationsSeen": 45,
+        "observationsInserted": 0,
+        "observationsDuplicate": 45,
+        "reviewItemsCreated": 0
+      }
+    ]
+  },
+  {
+    "connector": "awards-daily-predictions",
+    "httpStatus": 200,
+    "durationMs": 4016,
+    "status": "succeeded",
+    "connectors": 1,
+    "failed": 0,
+    "results": [
+      {
+        "connectorId": "awards-daily-predictions",
+        "runId": 1121,
+        "status": "succeeded",
+        "publicationsSeen": 1,
+        "capturesInserted": 0,
+        "capturesDuplicate": 1,
+        "observationsSeen": 80,
+        "observationsInserted": 0,
+        "observationsDuplicate": 80,
+        "reviewItemsCreated": 0
+      }
+    ]
+  },
+  {
+    "connector": "awards-radar-predictions",
+    "httpStatus": 200,
+    "durationMs": 5145,
+    "status": "succeeded",
+    "connectors": 1,
+    "failed": 0,
+    "results": [
+      {
+        "connectorId": "awards-radar-predictions",
+        "runId": 1122,
+        "status": "succeeded",
+        "publicationsSeen": 8,
+        "capturesInserted": 0,
+        "capturesDuplicate": 8,
+        "observationsSeen": 190,
+        "observationsInserted": 0,
+        "observationsDuplicate": 190,
+        "reviewItemsCreated": 0
+      }
+    ]
+  },
+  {
+    "connector": "awardswatch-predictions",
+    "httpStatus": 200,
+    "durationMs": 7413,
+    "status": "succeeded",
+    "connectors": 1,
+    "failed": 0,
+    "results": [
+      {
+        "connectorId": "awardswatch-predictions",
+        "runId": 1123,
+        "status": "succeeded",
+        "publicationsSeen": 8,
+        "capturesInserted": 0,
+        "capturesDuplicate": 8,
+        "observationsSeen": 45,
+        "observationsInserted": 0,
+        "observationsDuplicate": 45,
+        "reviewItemsCreated": 0
+      }
+    ]
+  },
+  {
+    "connector": "midnight-critics-predictions",
+    "httpStatus": 200,
+    "durationMs": 2064,
+    "status": "succeeded",
+    "connectors": 1,
+    "failed": 0,
+    "results": [
+      {
+        "connectorId": "midnight-critics-predictions",
+        "runId": 1124,
+        "status": "succeeded",
+        "publicationsSeen": 1,
+        "capturesInserted": 0,
+        "capturesDuplicate": 1,
+        "observationsSeen": 150,
+        "observationsInserted": 0,
+        "observationsDuplicate": 150,
+        "reviewItemsCreated": 0
+      }
+    ]
+  },
+  {
+    "connector": "movie-state-predictions",
+    "httpStatus": 200,
+    "durationMs": 1328,
+    "status": "succeeded",
+    "connectors": 1,
+    "failed": 0,
+    "results": [
+      {
+        "connectorId": "movie-state-predictions",
+        "runId": 1125,
+        "status": "succeeded",
+        "publicationsSeen": 1,
+        "capturesInserted": 0,
+        "capturesDuplicate": 1,
+        "observationsSeen": 45,
+        "observationsInserted": 0,
+        "observationsDuplicate": 45,
+        "reviewItemsCreated": 0
+      }
+    ]
+  },
+  {
+    "connector": "next-best-picture-predictions",
+    "httpStatus": 200,
+    "durationMs": 7925,
+    "status": "succeeded",
+    "connectors": 1,
+    "failed": 0,
+    "results": [
+      {
+        "connectorId": "next-best-picture-predictions",
+        "runId": 1126,
+        "status": "succeeded",
+        "publicationsSeen": 1,
+        "capturesInserted": 0,
+        "capturesDuplicate": 1,
+        "observationsSeen": 110,
+        "observationsInserted": 0,
+        "observationsDuplicate": 110,
+        "reviewItemsCreated": 0
+      }
+    ]
+  },
+  {
+    "connector": "ringer-best-picture",
+    "httpStatus": 200,
+    "durationMs": 1907,
+    "status": "succeeded",
+    "connectors": 1,
+    "failed": 0,
+    "results": [
+      {
+        "connectorId": "ringer-best-picture",
+        "runId": 1127,
+        "status": "succeeded",
+        "publicationsSeen": 1,
+        "capturesInserted": 0,
+        "capturesDuplicate": 1,
+        "observationsSeen": 3,
+        "observationsInserted": 0,
+        "observationsDuplicate": 3,
+        "reviewItemsCreated": 0
+      }
+    ]
+  },
+  {
+    "connector": "rolling-tape-predictions",
+    "httpStatus": 200,
+    "durationMs": 6350,
+    "status": "succeeded",
+    "connectors": 1,
+    "failed": 0,
+    "results": [
+      {
+        "connectorId": "rolling-tape-predictions",
+        "runId": 1128,
+        "status": "succeeded",
+        "publicationsSeen": 8,
+        "capturesInserted": 0,
+        "capturesDuplicate": 8,
+        "observationsSeen": 90,
+        "observationsInserted": 0,
+        "observationsDuplicate": 90,
+        "reviewItemsCreated": 0
+      }
+    ]
+  },
+  {
+    "connector": "variety-actor-predictions",
+    "httpStatus": 200,
+    "durationMs": 1540,
+    "status": "succeeded",
+    "connectors": 1,
+    "failed": 0,
+    "results": [
+      {
+        "connectorId": "variety-actor-predictions",
+        "runId": 1129,
+        "status": "succeeded",
+        "publicationsSeen": 1,
+        "capturesInserted": 0,
+        "capturesDuplicate": 1,
+        "observationsSeen": 30,
+        "observationsInserted": 0,
+        "observationsDuplicate": 30,
+        "reviewItemsCreated": 0
+      }
+    ]
+  },
+  {
+    "connector": "variety-actress-predictions",
+    "httpStatus": 200,
+    "durationMs": 3140,
+    "status": "succeeded",
+    "connectors": 1,
+    "failed": 0,
+    "results": [
+      {
+        "connectorId": "variety-actress-predictions",
+        "runId": 1130,
+        "status": "succeeded",
+        "publicationsSeen": 1,
+        "capturesInserted": 0,
+        "capturesDuplicate": 1,
+        "observationsSeen": 30,
+        "observationsInserted": 0,
+        "observationsDuplicate": 30,
+        "reviewItemsCreated": 0
+      }
+    ]
+  },
+  {
+    "connector": "variety-adapted-screenplay-predictions",
+    "httpStatus": 200,
+    "durationMs": 2990,
+    "status": "succeeded",
+    "connectors": 1,
+    "failed": 0,
+    "results": [
+      {
+        "connectorId": "variety-adapted-screenplay-predictions",
+        "runId": 1131,
+        "status": "succeeded",
+        "publicationsSeen": 1,
+        "capturesInserted": 0,
+        "capturesDuplicate": 1,
+        "observationsSeen": 30,
+        "observationsInserted": 0,
+        "observationsDuplicate": 30,
+        "reviewItemsCreated": 0
+      }
+    ]
+  },
+  {
+    "connector": "variety-best-picture-predictions",
+    "httpStatus": 200,
+    "durationMs": 3100,
+    "status": "succeeded",
+    "connectors": 1,
+    "failed": 0,
+    "results": [
+      {
+        "connectorId": "variety-best-picture-predictions",
+        "runId": 1132,
+        "status": "succeeded",
+        "publicationsSeen": 1,
+        "capturesInserted": 0,
+        "capturesDuplicate": 1,
+        "observationsSeen": 40,
+        "observationsInserted": 0,
+        "observationsDuplicate": 40,
+        "reviewItemsCreated": 0
+      }
+    ]
+  },
+  {
+    "connector": "variety-directing-predictions",
+    "httpStatus": 200,
+    "durationMs": 1619,
+    "status": "succeeded",
+    "connectors": 1,
+    "failed": 0,
+    "results": [
+      {
+        "connectorId": "variety-directing-predictions",
+        "runId": 1133,
+        "status": "succeeded",
+        "publicationsSeen": 1,
+        "capturesInserted": 0,
+        "capturesDuplicate": 1,
+        "observationsSeen": 30,
+        "observationsInserted": 0,
+        "observationsDuplicate": 30,
+        "reviewItemsCreated": 0
+      }
+    ]
+  },
+  {
+    "connector": "variety-original-screenplay-predictions",
+    "httpStatus": 200,
+    "durationMs": 2761,
+    "status": "succeeded",
+    "connectors": 1,
+    "failed": 0,
+    "results": [
+      {
+        "connectorId": "variety-original-screenplay-predictions",
+        "runId": 1134,
+        "status": "succeeded",
+        "publicationsSeen": 1,
+        "capturesInserted": 0,
+        "capturesDuplicate": 1,
+        "observationsSeen": 30,
+        "observationsInserted": 0,
+        "observationsDuplicate": 30,
+        "reviewItemsCreated": 0
+      }
+    ]
+  },
+  {
+    "connector": "variety-supporting-actor-predictions",
+    "httpStatus": 200,
+    "durationMs": 1424,
+    "status": "succeeded",
+    "connectors": 1,
+    "failed": 0,
+    "results": [
+      {
+        "connectorId": "variety-supporting-actor-predictions",
+        "runId": 1135,
+        "status": "succeeded",
+        "publicationsSeen": 1,
+        "capturesInserted": 0,
+        "capturesDuplicate": 1,
+        "observationsSeen": 30,
+        "observationsInserted": 0,
+        "observationsDuplicate": 30,
+        "reviewItemsCreated": 0
+      }
+    ]
+  },
+  {
+    "connector": "variety-supporting-actress-predictions",
+    "httpStatus": 200,
+    "durationMs": 4548,
+    "status": "succeeded",
+    "connectors": 1,
+    "failed": 0,
+    "results": [
+      {
+        "connectorId": "variety-supporting-actress-predictions",
+        "runId": 1136,
+        "status": "succeeded",
+        "publicationsSeen": 1,
+        "capturesInserted": 0,
+        "capturesDuplicate": 1,
+        "observationsSeen": 30,
+        "observationsInserted": 0,
+        "observationsDuplicate": 30,
+        "reviewItemsCreated": 0
+      }
+    ]
+  }
+]

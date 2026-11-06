@@ -1,0 +1,40 @@
+[
+  {
+    "connector": "guardian-content-api",
+    "httpStatus": 200,
+    "durationMs": 1017,
+    "status": "partial",
+    "connectors": 1,
+    "failed": 1,
+    "results": [
+      {
+        "connectorId": "guardian-content-api",
+        "runId": 1118,
+        "status": "failed",
+        "error": "HTTP 401 al consultar content.guardianapis.com"
+      }
+    ]
+  },
+  {
+    "connector": "roger-ebert-rss",
+    "httpStatus": 200,
+    "durationMs": 1016,
+    "status": "succeeded",
+    "connectors": 1,
+    "failed": 0,
+    "results": [
+      {
+        "connectorId": "roger-ebert-rss",
+        "runId": 1119,
+        "status": "succeeded",
+        "publicationsSeen": 0,
+        "capturesInserted": 0,
+        "capturesDuplicate": 0,
+        "observationsSeen": 0,
+        "observationsInserted": 0,
+        "observationsDuplicate": 0,
+        "reviewItemsCreated": 0
+      }
+    ]
+  }
+]

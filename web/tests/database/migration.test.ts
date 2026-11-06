@@ -355,14 +355,14 @@ describe("versioned database foundation", () => {
     expect(result.rows[0]).toEqual({
       festivals: 9,
       competitive: 7,
-      completed: 8,
-      ongoing: 1,
+      completed: 9,
+      ongoing: 0,
       scheduled: 0,
       published: 7,
       pending: 0,
       not_applicable: 2,
       connectors: 9,
-      active_festival_connectors: 1,
+      active_festival_connectors: 0,
       official_slots: 8,
     });
   });

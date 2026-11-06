@@ -1,0 +1,56 @@
+{
+  "httpStatus": 200,
+  "status": "succeeded",
+  "schedules": 8,
+  "failed": 0,
+  "results": [
+    {
+      "scheduleId": "oscars-2027-actor-nomination-weekly",
+      "status": "created",
+      "snapshotId": "periodic-oscars-2027-actor-nomination-2026-11-06-62ce348ad891",
+      "contentHash": "62ce348ad8914b7200f5f0ef742766f7f7d0349d4ef7dea1eb18eb4170171531"
+    },
+    {
+      "scheduleId": "oscars-2027-actress-nomination-weekly",
+      "status": "created",
+      "snapshotId": "periodic-oscars-2027-actress-nomination-2026-11-06-6c3dc4a15d74",
+      "contentHash": "6c3dc4a15d744b33d787f9f4c20fac639269a5b83d029b359ed1bff7edf1e208"
+    },
+    {
+      "scheduleId": "oscars-2027-adapted-screenplay-nomination-weekly",
+      "status": "created",
+      "snapshotId": "periodic-oscars-2027-adapted-screenplay-nomination-2026-11-06-02b280b2e5bd",
+      "contentHash": "02b280b2e5bd63adf0fd9a64fcbfeeabb98de7b585d44545d8666e46f59121c6"
+    },
+    {
+      "scheduleId": "oscars-2027-best-picture-nomination-weekly",
+      "status": "created",
+      "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-11-06-2dc0716cd5a6",
+      "contentHash": "2dc0716cd5a6f9c95300afc66163900c44c07457c030b5b4c803053cd7349fba"
+    },
+    {
+      "scheduleId": "oscars-2027-directing-nomination-weekly",
+      "status": "created",
+      "snapshotId": "periodic-oscars-2027-directing-nomination-2026-11-06-41fc719c83ba",
+      "contentHash": "41fc719c83ba615d33fcaece057b0e162a8d4d62c0c0106e24f646f11d1a3358"
+    },
+    {
+      "scheduleId": "oscars-2027-original-screenplay-nomination-weekly",
+      "status": "created",
+      "snapshotId": "periodic-oscars-2027-original-screenplay-nomination-2026-11-06-e906b91a30ea",
+      "contentHash": "e906b91a30ea5b45580015057366d24117f214074774baa4ce5ef2eb25099060"
+    },
+    {
+      "scheduleId": "oscars-2027-supporting-actor-nomination-weekly",
+      "status": "created",
+      "snapshotId": "periodic-oscars-2027-supporting-actor-nomination-2026-11-06-ed039e99a314",
+      "contentHash": "ed039e99a314c3fd0e54af810edaa79f50ec58634e0d923cf42dd80ba4a4e3a7"
+    },
+    {
+      "scheduleId": "oscars-2027-supporting-actress-nomination-weekly",
+      "status": "created",
+      "snapshotId": "periodic-oscars-2027-supporting-actress-nomination-2026-11-06-8922852e2514",
+      "contentHash": "8922852e2514b195a64b6ed9b9d8c3a6803ca7906652dda5fcf6f1a432457d0c"
+    }
+  ]
+}

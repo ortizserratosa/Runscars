@@ -1,0 +1,53 @@
+[
+  {
+    "path": "/api/health",
+    "status": 200,
+    "durationMs": 345,
+    "contentType": "application/json",
+    "body": {
+      "status": "ok",
+      "service": "runscars-web",
+      "databaseConfigured": true
+    }
+  },
+  {
+    "path": "/api/health/database",
+    "status": 200,
+    "durationMs": 771,
+    "contentType": "application/json",
+    "body": {
+      "status": "ok",
+      "database": "reachable"
+    }
+  },
+  {
+    "path": "/robots.txt",
+    "status": 200,
+    "durationMs": 150,
+    "contentType": "text/plain; charset=utf-8"
+  },
+  {
+    "path": "/sitemap.xml",
+    "status": 200,
+    "durationMs": 279,
+    "contentType": "application/xml"
+  },
+  {
+    "path": "/runscars-social-v1.png",
+    "status": 200,
+    "durationMs": 194,
+    "contentType": "image/png"
+  },
+  {
+    "path": "/comunidad",
+    "status": 200,
+    "durationMs": 2368,
+    "contentType": "text/html; charset=utf-8"
+  },
+  {
+    "path": "/acceso",
+    "status": 200,
+    "durationMs": 198,
+    "contentType": "text/html; charset=utf-8"
+  }
+]

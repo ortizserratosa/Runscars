@@ -1,0 +1,48 @@
+{
+  "verifiedAt": "2026-11-06T14:16:35.750Z",
+  "commands": {
+    "npm ci": "passed",
+    "npm run verify": "passed (fixture environment)",
+    "npm run build against production database": "passed",
+    "npm run test:e2e": "passed",
+    "npm audit --omit=dev --audit-level=high": "passed: 0 vulnerabilities",
+    "git diff --check": "passed"
+  },
+  "unit": {
+    "files": 58,
+    "tests": 511
+  },
+  "database": {
+    "files": 8,
+    "tests": 60
+  },
+  "e2e": {
+    "tests": 142,
+    "projects": [
+      "chromium",
+      "mobile-chrome",
+      "firefox-smoke",
+      "webkit-smoke"
+    ]
+  },
+  "dependencies": {
+    "high": 0,
+    "critical": 0,
+    "moderateDevelopment": 8,
+    "productionKnownVulnerabilities": 0
+  },
+  "relativeDocumentationLinks": {
+    "checked": 53,
+    "broken": 0
+  },
+  "publicUi": {
+    "generalCases": 68,
+    "integrityCases": 8,
+    "failures": 0
+  },
+  "productionReads": {
+    "statuses": 73,
+    "concurrency": 3,
+    "errors": 0
+  }
+}

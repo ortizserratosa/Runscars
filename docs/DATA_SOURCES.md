@@ -18,6 +18,8 @@ columna adicional de guiones de Variety, comillas de Movie State y delimitadores
 de Awards Daily. Este último declara orden explícito en Mejor película el 30/10;
 las demás categorías de esa pieza siguen siendo selecciones. La captura técnica
 no rejuvenece la publicación editorial ni resuelve identidades dudosas.
+NYFF 2026 se archiva tras su cierre del 12/10, conforme a D-070: conserva las
+34 películas revisadas de Main Slate; Spotlight y Currents siguen pendientes.
 
 ## 2. Tipos de fuente
 

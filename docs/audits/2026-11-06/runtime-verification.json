@@ -1,0 +1,25 @@
+{
+  "deploymentId": "dpl_GAMj1snibeKW3tYJBinpwmDemeoX",
+  "beforeSummaryOptimization": {
+    "errorCount": 3,
+    "errorType": "source status cache revalidation statement timeout",
+    "timestamps": [
+      "2026-11-06T14:03:51.948Z",
+      "2026-11-06T14:03:50.481Z",
+      "2026-11-06T14:03:49.522Z"
+    ]
+  },
+  "afterSummaryOptimization": {
+    "type": "summary",
+    "recordsReturned": 0,
+    "timeRange": {
+      "start": "2026-11-06T14:13:00.000Z",
+      "end": "2026-11-06T14:16:35.175Z"
+    },
+    "pagination": {
+      "hasMore": false,
+      "next": null
+    },
+    "excludedIntervals": []
+  }
+}

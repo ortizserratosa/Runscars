@@ -480,3 +480,9 @@ La puerta exige regresión de interrupción y reintento, RLS e inmutabilidad,
 contraste de los diecisiete conectores, recálculo desde capturas completas,
 conservación de hashes, verificaciones web ES/EN y despliegue. Estado y evidencia
 en [PREDICTION_INTEGRITY_AUDIT_2026-11-06.md](PREDICTION_INTEGRITY_AUDIT_2026-11-06.md).
+
+Puerta verificada y publicada el 06/11: 511 pruebas unitarias, 60 de base,
+142 E2E, diecisiete importadores y repetición idempotente, ocho cortes nuevos,
+76 comprobaciones públicas ES/EN y lectura concurrente sin timeouts. Los cuatro
+cortes inválidos quedan identificados y los 330 hashes previos intactos. La
+credencial de crítica de Guardian mantiene una incidencia externa explícita.

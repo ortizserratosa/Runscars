@@ -1,0 +1,550 @@
+[
+  {
+    "snapshotId": "periodic-oscars-2027-actor-nomination-2026-11-06-62ce348ad891",
+    "category": "actor",
+    "lockedAt": "2026-11-06T13:59:39.512+00:00",
+    "orderedSources": 5,
+    "leaders": [
+      {
+        "position": 1,
+        "label": "Andrew Scott — Elsinore",
+        "points": 90,
+        "firstPlaceCount": 2
+      },
+      {
+        "position": 2,
+        "label": "John Malkovich — Wild Horse Nine",
+        "points": 90,
+        "firstPlaceCount": 1
+      },
+      {
+        "position": 3,
+        "label": "Matt Damon — The Odyssey",
+        "points": 88,
+        "firstPlaceCount": 2
+      },
+      {
+        "position": 4,
+        "label": "Tom Cruise — Digger",
+        "points": 48,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 5,
+        "label": "Anthony Ippolito — I Play Rocky",
+        "points": 46,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 6,
+        "label": "Ryan Gosling — Project Hail Mary",
+        "points": 42,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 7,
+        "label": "John Turturro — The Only Living Pickpocket in New York",
+        "points": 32,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 8,
+        "label": "Pedro Pascal — Behemoth!",
+        "points": 24,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 9,
+        "label": "Jaafar Jackson — Michael",
+        "points": 14.000000000000002,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 10,
+        "label": "Sebastian Stan — Fjord",
+        "points": 10,
+        "firstPlaceCount": 0
+      }
+    ]
+  },
+  {
+    "snapshotId": "periodic-oscars-2027-actress-nomination-2026-11-06-6c3dc4a15d74",
+    "category": "actress",
+    "lockedAt": "2026-11-06T13:59:39.512+00:00",
+    "orderedSources": 4,
+    "leaders": [
+      {
+        "position": 1,
+        "label": "Julianne Moore — The Debut",
+        "points": 100,
+        "firstPlaceCount": 4
+      },
+      {
+        "position": 2,
+        "label": "Inde Navarrette — Obsession",
+        "points": 85,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 3,
+        "label": "Olivia Wilde — The Invite",
+        "points": 75,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 4,
+        "label": "Sandra Hüller — Rose",
+        "points": 65,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 5,
+        "label": "Ruth Madeley — Being Heumann",
+        "points": 32.5,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 6,
+        "label": "Zendaya — Dune: Part Three",
+        "points": 27.500000000000004,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 7,
+        "label": "Renate Reinsve — Fjord",
+        "points": 25,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 8,
+        "label": "Emily Blunt — Disclosure Day",
+        "points": 25,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 9,
+        "label": "Marion Bailey — Tender Loving Care",
+        "points": 25,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 10,
+        "label": "Carrie Coon — The Liberation",
+        "points": 17.5,
+        "firstPlaceCount": 0
+      }
+    ],
+    "dune": 6
+  },
+  {
+    "snapshotId": "periodic-oscars-2027-adapted-screenplay-nomination-2026-11-06-02b280b2e5bd",
+    "category": "adapted-screenplay",
+    "lockedAt": "2026-11-06T13:59:39.512+00:00",
+    "orderedSources": 5,
+    "leaders": [
+      {
+        "position": 1,
+        "label": "La Bola Negra",
+        "points": 94,
+        "firstPlaceCount": 3
+      },
+      {
+        "position": 2,
+        "label": "The Odyssey",
+        "points": 84,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 3,
+        "label": "The Invite",
+        "points": 84,
+        "firstPlaceCount": 1
+      },
+      {
+        "position": 4,
+        "label": "Project Hail Mary",
+        "points": 74,
+        "firstPlaceCount": 1
+      },
+      {
+        "position": 5,
+        "label": "All of a Sudden",
+        "points": 36,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 6,
+        "label": "Dune: Part Three",
+        "points": 30,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 7,
+        "label": "Ink",
+        "points": 18,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 8,
+        "label": "The Adventures of Cliff Booth",
+        "points": 14.000000000000002,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 9,
+        "label": "Primetime",
+        "points": 14.000000000000002,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 10,
+        "label": "Being Heumann",
+        "points": 12,
+        "firstPlaceCount": 0
+      }
+    ],
+    "dune": 6
+  },
+  {
+    "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-11-06-2dc0716cd5a6",
+    "category": "best-picture",
+    "lockedAt": "2026-11-06T13:59:39.512+00:00",
+    "orderedSources": 6,
+    "leaders": [
+      {
+        "position": 1,
+        "label": "The Odyssey",
+        "points": 99.1666666667,
+        "firstPlaceCount": 5
+      },
+      {
+        "position": 2,
+        "label": "La Bola Negra",
+        "points": 90,
+        "firstPlaceCount": 1
+      },
+      {
+        "position": 3,
+        "label": "Wild Horse Nine",
+        "points": 80,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 4,
+        "label": "Project Hail Mary",
+        "points": 77.5,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 5,
+        "label": "The Invite",
+        "points": 74.1666666667,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 6,
+        "label": "You Can See Everything",
+        "points": 70.8333333333,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 7,
+        "label": "Dune: Part Three",
+        "points": 66.6666666667,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 8,
+        "label": "I Play Rocky",
+        "points": 54.1666666667,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 9,
+        "label": "Elsinore",
+        "points": 46.6666666667,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 10,
+        "label": "The Debut",
+        "points": 43.3333333333,
+        "firstPlaceCount": 0
+      }
+    ],
+    "dune": 7
+  },
+  {
+    "snapshotId": "periodic-oscars-2027-directing-nomination-2026-11-06-41fc719c83ba",
+    "category": "directing",
+    "lockedAt": "2026-11-06T13:59:39.512+00:00",
+    "orderedSources": 5,
+    "leaders": [
+      {
+        "position": 1,
+        "label": "Christopher Nolan — The Odyssey",
+        "points": 96,
+        "firstPlaceCount": 3
+      },
+      {
+        "position": 2,
+        "label": "Javier Ambrossi, Javier Calvo — La Bola Negra",
+        "points": 88,
+        "firstPlaceCount": 1
+      },
+      {
+        "position": 3,
+        "label": "Denis Villeneuve — Dune: Part Three",
+        "points": 60,
+        "firstPlaceCount": 1
+      },
+      {
+        "position": 4,
+        "label": "Martin McDonagh — Wild Horse Nine",
+        "points": 48,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 5,
+        "label": "Nathan Fielder, Lance Oppenheim — You Can See Everything",
+        "points": 46,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 6,
+        "label": "Olivia Wilde — The Invite",
+        "points": 36,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 7,
+        "label": "Phil Lord, Christopher Miller — Project Hail Mary",
+        "points": 34,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 8,
+        "label": "Ryusuke Hamaguchi — All of a Sudden",
+        "points": 18,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 9,
+        "label": "Lee Chang-dong — Possible Love",
+        "points": 14.000000000000002,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 10,
+        "label": "Peter Farrelly — I Play Rocky",
+        "points": 14.000000000000002,
+        "firstPlaceCount": 0
+      }
+    ],
+    "dune": 3
+  },
+  {
+    "snapshotId": "periodic-oscars-2027-original-screenplay-nomination-2026-11-06-e906b91a30ea",
+    "category": "original-screenplay",
+    "lockedAt": "2026-11-06T13:59:39.512+00:00",
+    "orderedSources": 5,
+    "leaders": [
+      {
+        "position": 1,
+        "label": "Wild Horse Nine",
+        "points": 98,
+        "firstPlaceCount": 4
+      },
+      {
+        "position": 2,
+        "label": "The Debut",
+        "points": 88,
+        "firstPlaceCount": 1
+      },
+      {
+        "position": 3,
+        "label": "Artificial",
+        "points": 56.00000000000001,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 4,
+        "label": "Tender Loving Care",
+        "points": 42,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 5,
+        "label": "I Play Rocky",
+        "points": 40,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 6,
+        "label": "Obsession",
+        "points": 40,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 7,
+        "label": "Elsinore",
+        "points": 32,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 8,
+        "label": "Club Kid",
+        "points": 30,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 9,
+        "label": "Fjord",
+        "points": 24,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 10,
+        "label": "Paper Tiger",
+        "points": 14.000000000000002,
+        "firstPlaceCount": 0
+      }
+    ]
+  },
+  {
+    "snapshotId": "periodic-oscars-2027-supporting-actor-nomination-2026-11-06-ed039e99a314",
+    "category": "supporting-actor",
+    "lockedAt": "2026-11-06T13:59:39.512+00:00",
+    "orderedSources": 5,
+    "leaders": [
+      {
+        "position": 1,
+        "label": "Andrew Garfield — Artificial",
+        "points": 90,
+        "firstPlaceCount": 2
+      },
+      {
+        "position": 2,
+        "label": "Paul Giamatti — The Debut",
+        "points": 82,
+        "firstPlaceCount": 1
+      },
+      {
+        "position": 3,
+        "label": "Sam Rockwell — Wild Horse Nine",
+        "points": 76,
+        "firstPlaceCount": 1
+      },
+      {
+        "position": 4,
+        "label": "John Leguizamo — The Odyssey",
+        "points": 74,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 5,
+        "label": "Edward Norton — The Invite",
+        "points": 50,
+        "firstPlaceCount": 1
+      },
+      {
+        "position": 6,
+        "label": "Guitarricadelafuente — La Bola Negra",
+        "points": 40,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 7,
+        "label": "Colman Domingo — Michael",
+        "points": 32,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 8,
+        "label": "Robert Pattinson — The Odyssey",
+        "points": 16,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 9,
+        "label": "Adam Driver — Paper Tiger",
+        "points": 10,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 10,
+        "label": "Steve Buscemi — Wild Horse Nine",
+        "points": 8,
+        "firstPlaceCount": 0
+      }
+    ]
+  },
+  {
+    "snapshotId": "periodic-oscars-2027-supporting-actress-nomination-2026-11-06-8922852e2514",
+    "category": "supporting-actress",
+    "lockedAt": "2026-11-06T13:59:39.512+00:00",
+    "orderedSources": 4,
+    "leaders": [
+      {
+        "position": 1,
+        "label": "Anne Hathaway — The Odyssey",
+        "points": 95,
+        "firstPlaceCount": 3
+      },
+      {
+        "position": 2,
+        "label": "Penélope Cruz — The Invite",
+        "points": 85,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 3,
+        "label": "Sandra Hüller — Project Hail Mary",
+        "points": 57.49999999999999,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 4,
+        "label": "Samantha Morton — The Odyssey",
+        "points": 52.5,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 5,
+        "label": "Amanda Seyfried — You Can See Everything",
+        "points": 37.5,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 6,
+        "label": "Kate O'Flynn — Tender Loving Care",
+        "points": 32.5,
+        "firstPlaceCount": 1
+      },
+      {
+        "position": 7,
+        "label": "Sandra Hüller — Fatherland",
+        "points": 32.5,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 8,
+        "label": "Penélope Cruz — La Bola Negra",
+        "points": 27.500000000000004,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 9,
+        "label": "Olivia Colman — Elsinore",
+        "points": 25,
+        "firstPlaceCount": 0
+      },
+      {
+        "position": 10,
+        "label": "Merritt Wever — Primetime",
+        "points": 15,
+        "firstPlaceCount": 0
+      }
+    ]
+  }
+]

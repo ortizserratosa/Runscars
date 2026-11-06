@@ -397,3 +397,41 @@ y 360 s/día el objetivo con 25 % de reserva. La ventana intermedia del 02/11 de
 13:00 a 19:00 permite orientar (120 s de techo; 90 s de objetivo), pero no
 sustituye un ciclo completo con las tareas programadas. La ampliación temporal
 no debe usarse como prueba de sostenibilidad.
+
+## Integridad de predicciones · 6 de noviembre de 2026
+
+Publicado el artefacto `dpl_GAMj1snibeKW3tYJBinpwmDemeoX`, commit web `7ffecb6`,
+en `https://runscars.app`. Las migraciones `20261106090000` a `20261106150000`
+certifican capturas completas, alinean las lecturas y registran cuatro cortes
+inválidos sin modificar sus hashes. Las optimizaciones de estados conservan
+RLS y la barrera pública; evitan expandir candidatos para calcular un resumen.
+`run-ingestion` contiene los extractores y el certificado de finalización nuevos.
+
+El despacho profesional instala diecinueve jobs por ID, de 04:17 a 04:35 UTC;
+el refresco de cortes sigue a las 04:47. Cada job comprueba `is_active` y lee Vault
+al ejecutarse. Incorporar un ID nuevo o activar uno sin job exige reaplicar
+`supabase/schedules/run-ingestion-daily.sql` y comprobar el margen anterior al
+corte. No se aumenta el timeout ni se sustituye un fallo por un éxito ficticio.
+
+Las diecisiete fuentes de predicciones terminaron correctamente y su repetición
+reutilizó 1.008 observaciones sin inserciones. Ocho cortes nuevos se publicaron;
+repetir el refresco devolvió ocho `unchanged`. Los 330 hashes previos permanecen
+intactos. Mejor película muestra The Odyssey primera y Dune: Part Three séptima.
+
+Las nueve ediciones festivaleras 2026 quedan archivadas. NYFF conserva sus 34
+películas de Main Slate y la revisión del 07/10; Spotlight y Currents permanecen
+pendientes. Se conserva el historial de fallos y su último éxito automático.
+Guardian devuelve HTTP 401: requiere validar o renovar la credencial de Content
+API. Su crítica no participa en el consenso profesional; las demás fuentes siguen
+actualizándose.
+
+La copia previa de roles, esquema y datos públicos/Auth/Storage permanece fuera
+de Git en `/Users/nacho/Documents/Side/Runscars-backups/2026-11-06-prediction-integrity`
+(directorio 0700, SQL 0600), sin nueva restauración ensayada. No borrar capturas,
+certificados, correcciones ni snapshots para revertir una publicación. Una web
+anterior no contiene la barrera del scheduler ni filtra los cortes retirados:
+antes de usarla como emergencia, pausar el refresco de snapshots y verificar la
+lectura pública; se prefiere corregir sobre este artefacto.
+
+Resultados, limitaciones y recibos en
+[PREDICTION_INTEGRITY_AUDIT_2026-11-06.md](PREDICTION_INTEGRITY_AUDIT_2026-11-06.md).

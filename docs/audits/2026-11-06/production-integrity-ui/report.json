@@ -1,0 +1,1768 @@
+{
+  "capturedAt": "2026-11-06T14:15:24.555Z",
+  "base": "https://runscars.app/",
+  "mode": "Eight-page read-only live audit; no imports, account actions or writes",
+  "results": [
+    {
+      "url": "https://runscars.app/temporadas/2027/mejor-pelicula",
+      "device": "desktop",
+      "locale": "es",
+      "mode": "current",
+      "errors": [],
+      "status": 200,
+      "title": "Predicciones Oscar 2027: Mejor película | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "notices": [],
+      "selectedHref": "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-11-06-2dc0716cd5a6",
+      "historyHrefs": [
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-11-06-2dc0716cd5a6",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-11-05-23759c60417f",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-31-42302510d0b6",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-27-5658f298141f",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-26-71a64ac70b61",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-25-c60997e0062d",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-24-570ef8636fdd",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-23-7632567e8d23",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-22-0063fc8085c3",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-19-b8db4744c858",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-18-e93da1f381fa",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-17-d26ad0d7fe02",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-16-6f038c3b4d6f",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-15-20e8e8432080",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-11-71effb528cf5",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-08-3e600f755c0b",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-07-ba2b31fadd3c",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-01-82ebac64eaad",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-29-6d08df0e2aac",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-28-3f9c63725de6",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-26-058da869967f",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-19-84c9f1d995ca",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-18-36f0372f172b",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-17-1d06888351eb",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-16-7a34ee31ed6b",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-14-5c0c05587cc1",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-12-172751606cd6",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-09-3265455a17f8",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-08-63d5fb25187f",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-06-234b4c943dab",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-05-c037ce5006a0",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-01-7bf49752e35c",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-31-740a2f1f90b0",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-30-29c5d4e5a43a",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-29-64347c2737ac",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-24-c02f20c82b56",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-19-e3e260864695",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-10-bfef05af2cc7",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-07-52e4ba19ae89",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-03-1c00c70a6d6e",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-07-27-d323dd7772f3",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-07-25-317e07b691cc"
+      ],
+      "ranking": [
+        {
+          "position": 1,
+          "label": "The Odyssey",
+          "href": "/peliculas/the-odyssey",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 2,
+          "label": "La Bola Negra",
+          "href": "/peliculas/la-bola-negra",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 3,
+          "label": "Wild Horse Nine",
+          "href": "/peliculas/wild-horse-nine",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 4,
+          "label": "Project Hail Mary",
+          "href": "/peliculas/project-hail-mary",
+          "movement": "Sube 1 posición"
+        },
+        {
+          "position": 5,
+          "label": "The Invite",
+          "href": "/peliculas/the-invite",
+          "movement": "Sube 2 posiciones"
+        },
+        {
+          "position": 6,
+          "label": "You Can See Everything",
+          "href": "/peliculas/you-can-see-everything",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 7,
+          "label": "Dune: Part Three",
+          "href": "/peliculas/dune-part-three",
+          "movement": "Baja 3 posiciones"
+        },
+        {
+          "position": 8,
+          "label": "I Play Rocky",
+          "href": "/peliculas/i-play-rocky",
+          "movement": "Sube 2 posiciones"
+        },
+        {
+          "position": 9,
+          "label": "Elsinore",
+          "href": "/peliculas/elsinore",
+          "movement": "Baja 1 posición"
+        },
+        {
+          "position": 10,
+          "label": "The Debut",
+          "href": "/peliculas/the-debut",
+          "movement": "Baja 1 posición"
+        },
+        {
+          "position": 11,
+          "label": "Fjord",
+          "href": "/peliculas/fjord",
+          "movement": "Sube 1 posición"
+        },
+        {
+          "position": 12,
+          "label": "Artificial",
+          "href": "/peliculas/artificial",
+          "movement": "Baja 1 posición"
+        },
+        {
+          "position": 13,
+          "label": "All of a Sudden",
+          "href": "/peliculas/all-of-a-sudden",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 14,
+          "label": "Obsession",
+          "href": "/peliculas/obsession",
+          "movement": "Sube 6 posiciones"
+        },
+        {
+          "position": 15,
+          "label": "Club Kid",
+          "href": "/peliculas/club-kid",
+          "movement": "Baja 1 posición"
+        },
+        {
+          "position": 16,
+          "label": "Digger",
+          "href": "/peliculas/digger",
+          "movement": "Baja 1 posición"
+        },
+        {
+          "position": 17,
+          "label": "Being Heumann",
+          "href": "/peliculas/being-heumann",
+          "movement": "Sube 2 posiciones"
+        },
+        {
+          "position": 18,
+          "label": "The Adventures of Cliff Booth",
+          "href": "/peliculas/cliff-booth",
+          "movement": "Sube 7 posiciones"
+        },
+        {
+          "position": 19,
+          "label": "Wildwood",
+          "href": "/peliculas/wildwood",
+          "movement": "Baja 3 posiciones"
+        },
+        {
+          "position": 20,
+          "label": "Tender Loving Care",
+          "href": "/peliculas/tender-loving-care",
+          "movement": "Baja 2 posiciones"
+        },
+        {
+          "position": 21,
+          "label": "Behemoth!",
+          "href": "/peliculas/behemoth",
+          "movement": "Baja 4 posiciones"
+        },
+        {
+          "position": 22,
+          "label": "Michael",
+          "href": "/peliculas/michael",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 23,
+          "label": "Paper Tiger",
+          "href": "/peliculas/paper-tiger",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 24,
+          "label": "Josephine",
+          "href": "/peliculas/josephine",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 25,
+          "label": "Possible Love",
+          "href": "/peliculas/possible-love",
+          "movement": "Baja 4 posiciones"
+        }
+      ],
+      "selectedSnapshotId": "periodic-oscars-2027-best-picture-nomination-2026-11-06-2dc0716cd5a6",
+      "dunePosition": 7,
+      "violations": [],
+      "screenshots": {
+        "overview": "/Users/nacho/Documents/Side/Runscars/docs/audits/2026-11-06/production-integrity-ui/desktop-es-current-overview.png",
+        "snapshot": "/Users/nacho/Documents/Side/Runscars/docs/audits/2026-11-06/production-integrity-ui/desktop-es-current-snapshot.png",
+        "ranking": "/Users/nacho/Documents/Side/Runscars/docs/audits/2026-11-06/production-integrity-ui/desktop-es-current-ranking.png"
+      }
+    },
+    {
+      "url": "https://runscars.app/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-11-04-4c018ee649f5",
+      "device": "desktop",
+      "locale": "es",
+      "mode": "withdrawn",
+      "errors": [],
+      "status": 200,
+      "title": "Predicciones Oscar 2027: Mejor película | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "notices": [
+        "Actualización histórica retiradaEl corte solicitado incluía una importación incompleta y se ha excluido del historial y de las comparaciones de movimientos.A continuación se muestra una actualización válida."
+      ],
+      "selectedHref": "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-31-42302510d0b6",
+      "historyHrefs": [
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-11-06-2dc0716cd5a6",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-11-05-23759c60417f",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-31-42302510d0b6",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-27-5658f298141f",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-26-71a64ac70b61",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-25-c60997e0062d",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-24-570ef8636fdd",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-23-7632567e8d23",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-22-0063fc8085c3",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-19-b8db4744c858",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-18-e93da1f381fa",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-17-d26ad0d7fe02",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-16-6f038c3b4d6f",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-15-20e8e8432080",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-11-71effb528cf5",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-08-3e600f755c0b",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-07-ba2b31fadd3c",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-01-82ebac64eaad",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-29-6d08df0e2aac",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-28-3f9c63725de6",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-26-058da869967f",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-19-84c9f1d995ca",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-18-36f0372f172b",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-17-1d06888351eb",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-16-7a34ee31ed6b",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-14-5c0c05587cc1",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-12-172751606cd6",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-09-3265455a17f8",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-08-63d5fb25187f",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-06-234b4c943dab",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-05-c037ce5006a0",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-01-7bf49752e35c",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-31-740a2f1f90b0",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-30-29c5d4e5a43a",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-29-64347c2737ac",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-24-c02f20c82b56",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-19-e3e260864695",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-10-bfef05af2cc7",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-07-52e4ba19ae89",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-03-1c00c70a6d6e",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-07-27-d323dd7772f3",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-07-25-317e07b691cc"
+      ],
+      "ranking": [
+        {
+          "position": 1,
+          "label": "The Odyssey",
+          "href": "/peliculas/the-odyssey",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 2,
+          "label": "La Bola Negra",
+          "href": "/peliculas/la-bola-negra",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 3,
+          "label": "Wild Horse Nine",
+          "href": "/peliculas/wild-horse-nine",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 4,
+          "label": "Dune: Part Three",
+          "href": "/peliculas/dune-part-three",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 5,
+          "label": "Project Hail Mary",
+          "href": "/peliculas/project-hail-mary",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 6,
+          "label": "The Invite",
+          "href": "/peliculas/the-invite",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 7,
+          "label": "You Can See Everything",
+          "href": "/peliculas/you-can-see-everything",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 8,
+          "label": "I Play Rocky",
+          "href": "/peliculas/i-play-rocky",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 9,
+          "label": "The Debut",
+          "href": "/peliculas/the-debut",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 10,
+          "label": "Artificial",
+          "href": "/peliculas/artificial",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 11,
+          "label": "Elsinore",
+          "href": "/peliculas/elsinore",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 12,
+          "label": "Fjord",
+          "href": "/peliculas/fjord",
+          "movement": "Sube 1 posición"
+        },
+        {
+          "position": 13,
+          "label": "All of a Sudden",
+          "href": "/peliculas/all-of-a-sudden",
+          "movement": "Sube 1 posición"
+        },
+        {
+          "position": 14,
+          "label": "Club Kid",
+          "href": "/peliculas/club-kid",
+          "movement": "Baja 2 posiciones"
+        },
+        {
+          "position": 15,
+          "label": "Possible Love",
+          "href": "/peliculas/possible-love",
+          "movement": "Sube 6 posiciones"
+        },
+        {
+          "position": 16,
+          "label": "Wildwood",
+          "href": "/peliculas/wildwood",
+          "movement": "Baja 1 posición"
+        },
+        {
+          "position": 17,
+          "label": "Behemoth!",
+          "href": "/peliculas/behemoth",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 18,
+          "label": "Being Heumann",
+          "href": "/peliculas/being-heumann",
+          "movement": "Baja 2 posiciones"
+        },
+        {
+          "position": 19,
+          "label": "Digger",
+          "href": "/peliculas/digger",
+          "movement": "Baja 1 posición"
+        },
+        {
+          "position": 20,
+          "label": "Tender Loving Care",
+          "href": "/peliculas/tender-loving-care",
+          "movement": "Baja 1 posición"
+        },
+        {
+          "position": 21,
+          "label": "Obsession",
+          "href": "/peliculas/obsession",
+          "movement": "Baja 1 posición"
+        },
+        {
+          "position": 22,
+          "label": "Michael",
+          "href": "/peliculas/michael",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 23,
+          "label": "Paper Tiger",
+          "href": "/peliculas/paper-tiger",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 24,
+          "label": "Josephine",
+          "href": "/peliculas/josephine",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 25,
+          "label": "The Adventures of Cliff Booth",
+          "href": "/peliculas/cliff-booth",
+          "movement": "Sin cambios desde la última actualización"
+        }
+      ],
+      "selectedSnapshotId": "periodic-oscars-2027-best-picture-nomination-2026-10-31-42302510d0b6",
+      "dunePosition": 4,
+      "violations": [],
+      "screenshots": {
+        "overview": "/Users/nacho/Documents/Side/Runscars/docs/audits/2026-11-06/production-integrity-ui/desktop-es-withdrawn-overview.png",
+        "snapshot": "/Users/nacho/Documents/Side/Runscars/docs/audits/2026-11-06/production-integrity-ui/desktop-es-withdrawn-snapshot.png",
+        "ranking": "/Users/nacho/Documents/Side/Runscars/docs/audits/2026-11-06/production-integrity-ui/desktop-es-withdrawn-ranking.png"
+      }
+    },
+    {
+      "url": "https://runscars.app/en/temporadas/2027/mejor-pelicula",
+      "device": "desktop",
+      "locale": "en",
+      "mode": "current",
+      "errors": [],
+      "status": 200,
+      "title": "Best Picture Oscar Predictions 2027 | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "notices": [],
+      "selectedHref": "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-11-06-2dc0716cd5a6",
+      "historyHrefs": [
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-11-06-2dc0716cd5a6",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-11-05-23759c60417f",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-31-42302510d0b6",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-27-5658f298141f",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-26-71a64ac70b61",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-25-c60997e0062d",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-24-570ef8636fdd",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-23-7632567e8d23",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-22-0063fc8085c3",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-19-b8db4744c858",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-18-e93da1f381fa",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-17-d26ad0d7fe02",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-16-6f038c3b4d6f",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-15-20e8e8432080",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-11-71effb528cf5",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-08-3e600f755c0b",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-07-ba2b31fadd3c",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-01-82ebac64eaad",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-29-6d08df0e2aac",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-28-3f9c63725de6",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-26-058da869967f",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-19-84c9f1d995ca",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-18-36f0372f172b",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-17-1d06888351eb",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-16-7a34ee31ed6b",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-14-5c0c05587cc1",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-12-172751606cd6",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-09-3265455a17f8",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-08-63d5fb25187f",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-06-234b4c943dab",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-05-c037ce5006a0",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-01-7bf49752e35c",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-31-740a2f1f90b0",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-30-29c5d4e5a43a",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-29-64347c2737ac",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-24-c02f20c82b56",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-19-e3e260864695",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-10-bfef05af2cc7",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-07-52e4ba19ae89",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-03-1c00c70a6d6e",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-07-27-d323dd7772f3",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-07-25-317e07b691cc"
+      ],
+      "ranking": [
+        {
+          "position": 1,
+          "label": "The Odyssey",
+          "href": "/en/peliculas/the-odyssey",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 2,
+          "label": "La Bola Negra",
+          "href": "/en/peliculas/la-bola-negra",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 3,
+          "label": "Wild Horse Nine",
+          "href": "/en/peliculas/wild-horse-nine",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 4,
+          "label": "Project Hail Mary",
+          "href": "/en/peliculas/project-hail-mary",
+          "movement": "Up 1 place"
+        },
+        {
+          "position": 5,
+          "label": "The Invite",
+          "href": "/en/peliculas/the-invite",
+          "movement": "Up 2 places"
+        },
+        {
+          "position": 6,
+          "label": "You Can See Everything",
+          "href": "/en/peliculas/you-can-see-everything",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 7,
+          "label": "Dune: Part Three",
+          "href": "/en/peliculas/dune-part-three",
+          "movement": "Down 3 places"
+        },
+        {
+          "position": 8,
+          "label": "I Play Rocky",
+          "href": "/en/peliculas/i-play-rocky",
+          "movement": "Up 2 places"
+        },
+        {
+          "position": 9,
+          "label": "Elsinore",
+          "href": "/en/peliculas/elsinore",
+          "movement": "Down 1 place"
+        },
+        {
+          "position": 10,
+          "label": "The Debut",
+          "href": "/en/peliculas/the-debut",
+          "movement": "Down 1 place"
+        },
+        {
+          "position": 11,
+          "label": "Fjord",
+          "href": "/en/peliculas/fjord",
+          "movement": "Up 1 place"
+        },
+        {
+          "position": 12,
+          "label": "Artificial",
+          "href": "/en/peliculas/artificial",
+          "movement": "Down 1 place"
+        },
+        {
+          "position": 13,
+          "label": "All of a Sudden",
+          "href": "/en/peliculas/all-of-a-sudden",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 14,
+          "label": "Obsession",
+          "href": "/en/peliculas/obsession",
+          "movement": "Up 6 places"
+        },
+        {
+          "position": 15,
+          "label": "Club Kid",
+          "href": "/en/peliculas/club-kid",
+          "movement": "Down 1 place"
+        },
+        {
+          "position": 16,
+          "label": "Digger",
+          "href": "/en/peliculas/digger",
+          "movement": "Down 1 place"
+        },
+        {
+          "position": 17,
+          "label": "Being Heumann",
+          "href": "/en/peliculas/being-heumann",
+          "movement": "Up 2 places"
+        },
+        {
+          "position": 18,
+          "label": "The Adventures of Cliff Booth",
+          "href": "/en/peliculas/cliff-booth",
+          "movement": "Up 7 places"
+        },
+        {
+          "position": 19,
+          "label": "Wildwood",
+          "href": "/en/peliculas/wildwood",
+          "movement": "Down 3 places"
+        },
+        {
+          "position": 20,
+          "label": "Tender Loving Care",
+          "href": "/en/peliculas/tender-loving-care",
+          "movement": "Down 2 places"
+        },
+        {
+          "position": 21,
+          "label": "Behemoth!",
+          "href": "/en/peliculas/behemoth",
+          "movement": "Down 4 places"
+        },
+        {
+          "position": 22,
+          "label": "Michael",
+          "href": "/en/peliculas/michael",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 23,
+          "label": "Paper Tiger",
+          "href": "/en/peliculas/paper-tiger",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 24,
+          "label": "Josephine",
+          "href": "/en/peliculas/josephine",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 25,
+          "label": "Possible Love",
+          "href": "/en/peliculas/possible-love",
+          "movement": "Down 4 places"
+        }
+      ],
+      "selectedSnapshotId": "periodic-oscars-2027-best-picture-nomination-2026-11-06-2dc0716cd5a6",
+      "dunePosition": 7,
+      "violations": [],
+      "screenshots": {
+        "overview": "/Users/nacho/Documents/Side/Runscars/docs/audits/2026-11-06/production-integrity-ui/desktop-en-current-overview.png",
+        "snapshot": "/Users/nacho/Documents/Side/Runscars/docs/audits/2026-11-06/production-integrity-ui/desktop-en-current-snapshot.png",
+        "ranking": "/Users/nacho/Documents/Side/Runscars/docs/audits/2026-11-06/production-integrity-ui/desktop-en-current-ranking.png"
+      }
+    },
+    {
+      "url": "https://runscars.app/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-11-04-4c018ee649f5",
+      "device": "desktop",
+      "locale": "en",
+      "mode": "withdrawn",
+      "errors": [],
+      "status": 200,
+      "title": "Best Picture Oscar Predictions 2027 | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "notices": [
+        "Historical update withdrawnThe requested update included an incomplete import and has been excluded from the history and movement comparisons.A valid update is shown below."
+      ],
+      "selectedHref": "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-31-42302510d0b6",
+      "historyHrefs": [
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-11-06-2dc0716cd5a6",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-11-05-23759c60417f",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-31-42302510d0b6",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-27-5658f298141f",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-26-71a64ac70b61",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-25-c60997e0062d",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-24-570ef8636fdd",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-23-7632567e8d23",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-22-0063fc8085c3",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-19-b8db4744c858",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-18-e93da1f381fa",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-17-d26ad0d7fe02",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-16-6f038c3b4d6f",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-15-20e8e8432080",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-11-71effb528cf5",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-08-3e600f755c0b",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-07-ba2b31fadd3c",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-01-82ebac64eaad",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-29-6d08df0e2aac",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-28-3f9c63725de6",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-26-058da869967f",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-19-84c9f1d995ca",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-18-36f0372f172b",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-17-1d06888351eb",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-16-7a34ee31ed6b",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-14-5c0c05587cc1",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-12-172751606cd6",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-09-3265455a17f8",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-08-63d5fb25187f",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-06-234b4c943dab",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-05-c037ce5006a0",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-01-7bf49752e35c",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-31-740a2f1f90b0",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-30-29c5d4e5a43a",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-29-64347c2737ac",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-24-c02f20c82b56",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-19-e3e260864695",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-10-bfef05af2cc7",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-07-52e4ba19ae89",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-03-1c00c70a6d6e",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-07-27-d323dd7772f3",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-07-25-317e07b691cc"
+      ],
+      "ranking": [
+        {
+          "position": 1,
+          "label": "The Odyssey",
+          "href": "/en/peliculas/the-odyssey",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 2,
+          "label": "La Bola Negra",
+          "href": "/en/peliculas/la-bola-negra",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 3,
+          "label": "Wild Horse Nine",
+          "href": "/en/peliculas/wild-horse-nine",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 4,
+          "label": "Dune: Part Three",
+          "href": "/en/peliculas/dune-part-three",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 5,
+          "label": "Project Hail Mary",
+          "href": "/en/peliculas/project-hail-mary",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 6,
+          "label": "The Invite",
+          "href": "/en/peliculas/the-invite",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 7,
+          "label": "You Can See Everything",
+          "href": "/en/peliculas/you-can-see-everything",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 8,
+          "label": "I Play Rocky",
+          "href": "/en/peliculas/i-play-rocky",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 9,
+          "label": "The Debut",
+          "href": "/en/peliculas/the-debut",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 10,
+          "label": "Artificial",
+          "href": "/en/peliculas/artificial",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 11,
+          "label": "Elsinore",
+          "href": "/en/peliculas/elsinore",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 12,
+          "label": "Fjord",
+          "href": "/en/peliculas/fjord",
+          "movement": "Up 1 place"
+        },
+        {
+          "position": 13,
+          "label": "All of a Sudden",
+          "href": "/en/peliculas/all-of-a-sudden",
+          "movement": "Up 1 place"
+        },
+        {
+          "position": 14,
+          "label": "Club Kid",
+          "href": "/en/peliculas/club-kid",
+          "movement": "Down 2 places"
+        },
+        {
+          "position": 15,
+          "label": "Possible Love",
+          "href": "/en/peliculas/possible-love",
+          "movement": "Up 6 places"
+        },
+        {
+          "position": 16,
+          "label": "Wildwood",
+          "href": "/en/peliculas/wildwood",
+          "movement": "Down 1 place"
+        },
+        {
+          "position": 17,
+          "label": "Behemoth!",
+          "href": "/en/peliculas/behemoth",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 18,
+          "label": "Being Heumann",
+          "href": "/en/peliculas/being-heumann",
+          "movement": "Down 2 places"
+        },
+        {
+          "position": 19,
+          "label": "Digger",
+          "href": "/en/peliculas/digger",
+          "movement": "Down 1 place"
+        },
+        {
+          "position": 20,
+          "label": "Tender Loving Care",
+          "href": "/en/peliculas/tender-loving-care",
+          "movement": "Down 1 place"
+        },
+        {
+          "position": 21,
+          "label": "Obsession",
+          "href": "/en/peliculas/obsession",
+          "movement": "Down 1 place"
+        },
+        {
+          "position": 22,
+          "label": "Michael",
+          "href": "/en/peliculas/michael",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 23,
+          "label": "Paper Tiger",
+          "href": "/en/peliculas/paper-tiger",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 24,
+          "label": "Josephine",
+          "href": "/en/peliculas/josephine",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 25,
+          "label": "The Adventures of Cliff Booth",
+          "href": "/en/peliculas/cliff-booth",
+          "movement": "No change since the latest update"
+        }
+      ],
+      "selectedSnapshotId": "periodic-oscars-2027-best-picture-nomination-2026-10-31-42302510d0b6",
+      "dunePosition": 4,
+      "violations": [],
+      "screenshots": {
+        "overview": "/Users/nacho/Documents/Side/Runscars/docs/audits/2026-11-06/production-integrity-ui/desktop-en-withdrawn-overview.png",
+        "snapshot": "/Users/nacho/Documents/Side/Runscars/docs/audits/2026-11-06/production-integrity-ui/desktop-en-withdrawn-snapshot.png",
+        "ranking": "/Users/nacho/Documents/Side/Runscars/docs/audits/2026-11-06/production-integrity-ui/desktop-en-withdrawn-ranking.png"
+      }
+    },
+    {
+      "url": "https://runscars.app/temporadas/2027/mejor-pelicula",
+      "device": "mobile",
+      "locale": "es",
+      "mode": "current",
+      "errors": [],
+      "status": 200,
+      "title": "Predicciones Oscar 2027: Mejor película | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "notices": [],
+      "selectedHref": "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-11-06-2dc0716cd5a6",
+      "historyHrefs": [
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-11-06-2dc0716cd5a6",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-11-05-23759c60417f",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-31-42302510d0b6",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-27-5658f298141f",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-26-71a64ac70b61",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-25-c60997e0062d",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-24-570ef8636fdd",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-23-7632567e8d23",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-22-0063fc8085c3",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-19-b8db4744c858",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-18-e93da1f381fa",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-17-d26ad0d7fe02",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-16-6f038c3b4d6f",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-15-20e8e8432080",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-11-71effb528cf5",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-08-3e600f755c0b",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-07-ba2b31fadd3c",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-01-82ebac64eaad",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-29-6d08df0e2aac",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-28-3f9c63725de6",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-26-058da869967f",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-19-84c9f1d995ca",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-18-36f0372f172b",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-17-1d06888351eb",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-16-7a34ee31ed6b",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-14-5c0c05587cc1",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-12-172751606cd6",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-09-3265455a17f8",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-08-63d5fb25187f",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-06-234b4c943dab",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-05-c037ce5006a0",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-01-7bf49752e35c",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-31-740a2f1f90b0",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-30-29c5d4e5a43a",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-29-64347c2737ac",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-24-c02f20c82b56",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-19-e3e260864695",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-10-bfef05af2cc7",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-07-52e4ba19ae89",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-03-1c00c70a6d6e",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-07-27-d323dd7772f3",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-07-25-317e07b691cc"
+      ],
+      "ranking": [
+        {
+          "position": 1,
+          "label": "The Odyssey",
+          "href": "/peliculas/the-odyssey",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 2,
+          "label": "La Bola Negra",
+          "href": "/peliculas/la-bola-negra",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 3,
+          "label": "Wild Horse Nine",
+          "href": "/peliculas/wild-horse-nine",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 4,
+          "label": "Project Hail Mary",
+          "href": "/peliculas/project-hail-mary",
+          "movement": "Sube 1 posición"
+        },
+        {
+          "position": 5,
+          "label": "The Invite",
+          "href": "/peliculas/the-invite",
+          "movement": "Sube 2 posiciones"
+        },
+        {
+          "position": 6,
+          "label": "You Can See Everything",
+          "href": "/peliculas/you-can-see-everything",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 7,
+          "label": "Dune: Part Three",
+          "href": "/peliculas/dune-part-three",
+          "movement": "Baja 3 posiciones"
+        },
+        {
+          "position": 8,
+          "label": "I Play Rocky",
+          "href": "/peliculas/i-play-rocky",
+          "movement": "Sube 2 posiciones"
+        },
+        {
+          "position": 9,
+          "label": "Elsinore",
+          "href": "/peliculas/elsinore",
+          "movement": "Baja 1 posición"
+        },
+        {
+          "position": 10,
+          "label": "The Debut",
+          "href": "/peliculas/the-debut",
+          "movement": "Baja 1 posición"
+        },
+        {
+          "position": 11,
+          "label": "Fjord",
+          "href": "/peliculas/fjord",
+          "movement": "Sube 1 posición"
+        },
+        {
+          "position": 12,
+          "label": "Artificial",
+          "href": "/peliculas/artificial",
+          "movement": "Baja 1 posición"
+        },
+        {
+          "position": 13,
+          "label": "All of a Sudden",
+          "href": "/peliculas/all-of-a-sudden",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 14,
+          "label": "Obsession",
+          "href": "/peliculas/obsession",
+          "movement": "Sube 6 posiciones"
+        },
+        {
+          "position": 15,
+          "label": "Club Kid",
+          "href": "/peliculas/club-kid",
+          "movement": "Baja 1 posición"
+        },
+        {
+          "position": 16,
+          "label": "Digger",
+          "href": "/peliculas/digger",
+          "movement": "Baja 1 posición"
+        },
+        {
+          "position": 17,
+          "label": "Being Heumann",
+          "href": "/peliculas/being-heumann",
+          "movement": "Sube 2 posiciones"
+        },
+        {
+          "position": 18,
+          "label": "The Adventures of Cliff Booth",
+          "href": "/peliculas/cliff-booth",
+          "movement": "Sube 7 posiciones"
+        },
+        {
+          "position": 19,
+          "label": "Wildwood",
+          "href": "/peliculas/wildwood",
+          "movement": "Baja 3 posiciones"
+        },
+        {
+          "position": 20,
+          "label": "Tender Loving Care",
+          "href": "/peliculas/tender-loving-care",
+          "movement": "Baja 2 posiciones"
+        },
+        {
+          "position": 21,
+          "label": "Behemoth!",
+          "href": "/peliculas/behemoth",
+          "movement": "Baja 4 posiciones"
+        },
+        {
+          "position": 22,
+          "label": "Michael",
+          "href": "/peliculas/michael",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 23,
+          "label": "Paper Tiger",
+          "href": "/peliculas/paper-tiger",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 24,
+          "label": "Josephine",
+          "href": "/peliculas/josephine",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 25,
+          "label": "Possible Love",
+          "href": "/peliculas/possible-love",
+          "movement": "Baja 4 posiciones"
+        }
+      ],
+      "selectedSnapshotId": "periodic-oscars-2027-best-picture-nomination-2026-11-06-2dc0716cd5a6",
+      "dunePosition": 7,
+      "violations": [],
+      "screenshots": {
+        "overview": "/Users/nacho/Documents/Side/Runscars/docs/audits/2026-11-06/production-integrity-ui/mobile-es-current-overview.png",
+        "snapshot": "/Users/nacho/Documents/Side/Runscars/docs/audits/2026-11-06/production-integrity-ui/mobile-es-current-snapshot.png",
+        "ranking": "/Users/nacho/Documents/Side/Runscars/docs/audits/2026-11-06/production-integrity-ui/mobile-es-current-ranking.png"
+      }
+    },
+    {
+      "url": "https://runscars.app/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-11-04-4c018ee649f5",
+      "device": "mobile",
+      "locale": "es",
+      "mode": "withdrawn",
+      "errors": [],
+      "status": 200,
+      "title": "Predicciones Oscar 2027: Mejor película | Runscars",
+      "lang": "es-ES",
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "notices": [
+        "Actualización histórica retiradaEl corte solicitado incluía una importación incompleta y se ha excluido del historial y de las comparaciones de movimientos.A continuación se muestra una actualización válida."
+      ],
+      "selectedHref": "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-31-42302510d0b6",
+      "historyHrefs": [
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-11-06-2dc0716cd5a6",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-11-05-23759c60417f",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-31-42302510d0b6",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-27-5658f298141f",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-26-71a64ac70b61",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-25-c60997e0062d",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-24-570ef8636fdd",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-23-7632567e8d23",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-22-0063fc8085c3",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-19-b8db4744c858",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-18-e93da1f381fa",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-17-d26ad0d7fe02",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-16-6f038c3b4d6f",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-15-20e8e8432080",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-11-71effb528cf5",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-08-3e600f755c0b",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-07-ba2b31fadd3c",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-01-82ebac64eaad",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-29-6d08df0e2aac",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-28-3f9c63725de6",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-26-058da869967f",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-19-84c9f1d995ca",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-18-36f0372f172b",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-17-1d06888351eb",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-16-7a34ee31ed6b",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-14-5c0c05587cc1",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-12-172751606cd6",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-09-3265455a17f8",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-08-63d5fb25187f",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-06-234b4c943dab",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-05-c037ce5006a0",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-01-7bf49752e35c",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-31-740a2f1f90b0",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-30-29c5d4e5a43a",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-29-64347c2737ac",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-24-c02f20c82b56",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-19-e3e260864695",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-10-bfef05af2cc7",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-07-52e4ba19ae89",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-03-1c00c70a6d6e",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-07-27-d323dd7772f3",
+        "/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-07-25-317e07b691cc"
+      ],
+      "ranking": [
+        {
+          "position": 1,
+          "label": "The Odyssey",
+          "href": "/peliculas/the-odyssey",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 2,
+          "label": "La Bola Negra",
+          "href": "/peliculas/la-bola-negra",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 3,
+          "label": "Wild Horse Nine",
+          "href": "/peliculas/wild-horse-nine",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 4,
+          "label": "Dune: Part Three",
+          "href": "/peliculas/dune-part-three",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 5,
+          "label": "Project Hail Mary",
+          "href": "/peliculas/project-hail-mary",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 6,
+          "label": "The Invite",
+          "href": "/peliculas/the-invite",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 7,
+          "label": "You Can See Everything",
+          "href": "/peliculas/you-can-see-everything",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 8,
+          "label": "I Play Rocky",
+          "href": "/peliculas/i-play-rocky",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 9,
+          "label": "The Debut",
+          "href": "/peliculas/the-debut",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 10,
+          "label": "Artificial",
+          "href": "/peliculas/artificial",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 11,
+          "label": "Elsinore",
+          "href": "/peliculas/elsinore",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 12,
+          "label": "Fjord",
+          "href": "/peliculas/fjord",
+          "movement": "Sube 1 posición"
+        },
+        {
+          "position": 13,
+          "label": "All of a Sudden",
+          "href": "/peliculas/all-of-a-sudden",
+          "movement": "Sube 1 posición"
+        },
+        {
+          "position": 14,
+          "label": "Club Kid",
+          "href": "/peliculas/club-kid",
+          "movement": "Baja 2 posiciones"
+        },
+        {
+          "position": 15,
+          "label": "Possible Love",
+          "href": "/peliculas/possible-love",
+          "movement": "Sube 6 posiciones"
+        },
+        {
+          "position": 16,
+          "label": "Wildwood",
+          "href": "/peliculas/wildwood",
+          "movement": "Baja 1 posición"
+        },
+        {
+          "position": 17,
+          "label": "Behemoth!",
+          "href": "/peliculas/behemoth",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 18,
+          "label": "Being Heumann",
+          "href": "/peliculas/being-heumann",
+          "movement": "Baja 2 posiciones"
+        },
+        {
+          "position": 19,
+          "label": "Digger",
+          "href": "/peliculas/digger",
+          "movement": "Baja 1 posición"
+        },
+        {
+          "position": 20,
+          "label": "Tender Loving Care",
+          "href": "/peliculas/tender-loving-care",
+          "movement": "Baja 1 posición"
+        },
+        {
+          "position": 21,
+          "label": "Obsession",
+          "href": "/peliculas/obsession",
+          "movement": "Baja 1 posición"
+        },
+        {
+          "position": 22,
+          "label": "Michael",
+          "href": "/peliculas/michael",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 23,
+          "label": "Paper Tiger",
+          "href": "/peliculas/paper-tiger",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 24,
+          "label": "Josephine",
+          "href": "/peliculas/josephine",
+          "movement": "Sin cambios desde la última actualización"
+        },
+        {
+          "position": 25,
+          "label": "The Adventures of Cliff Booth",
+          "href": "/peliculas/cliff-booth",
+          "movement": "Sin cambios desde la última actualización"
+        }
+      ],
+      "selectedSnapshotId": "periodic-oscars-2027-best-picture-nomination-2026-10-31-42302510d0b6",
+      "dunePosition": 4,
+      "violations": [],
+      "screenshots": {
+        "overview": "/Users/nacho/Documents/Side/Runscars/docs/audits/2026-11-06/production-integrity-ui/mobile-es-withdrawn-overview.png",
+        "snapshot": "/Users/nacho/Documents/Side/Runscars/docs/audits/2026-11-06/production-integrity-ui/mobile-es-withdrawn-snapshot.png",
+        "ranking": "/Users/nacho/Documents/Side/Runscars/docs/audits/2026-11-06/production-integrity-ui/mobile-es-withdrawn-ranking.png"
+      }
+    },
+    {
+      "url": "https://runscars.app/en/temporadas/2027/mejor-pelicula",
+      "device": "mobile",
+      "locale": "en",
+      "mode": "current",
+      "errors": [],
+      "status": 200,
+      "title": "Best Picture Oscar Predictions 2027 | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "notices": [],
+      "selectedHref": "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-11-06-2dc0716cd5a6",
+      "historyHrefs": [
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-11-06-2dc0716cd5a6",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-11-05-23759c60417f",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-31-42302510d0b6",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-27-5658f298141f",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-26-71a64ac70b61",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-25-c60997e0062d",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-24-570ef8636fdd",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-23-7632567e8d23",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-22-0063fc8085c3",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-19-b8db4744c858",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-18-e93da1f381fa",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-17-d26ad0d7fe02",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-16-6f038c3b4d6f",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-15-20e8e8432080",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-11-71effb528cf5",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-08-3e600f755c0b",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-07-ba2b31fadd3c",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-01-82ebac64eaad",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-29-6d08df0e2aac",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-28-3f9c63725de6",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-26-058da869967f",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-19-84c9f1d995ca",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-18-36f0372f172b",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-17-1d06888351eb",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-16-7a34ee31ed6b",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-14-5c0c05587cc1",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-12-172751606cd6",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-09-3265455a17f8",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-08-63d5fb25187f",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-06-234b4c943dab",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-05-c037ce5006a0",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-01-7bf49752e35c",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-31-740a2f1f90b0",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-30-29c5d4e5a43a",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-29-64347c2737ac",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-24-c02f20c82b56",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-19-e3e260864695",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-10-bfef05af2cc7",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-07-52e4ba19ae89",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-03-1c00c70a6d6e",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-07-27-d323dd7772f3",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-07-25-317e07b691cc"
+      ],
+      "ranking": [
+        {
+          "position": 1,
+          "label": "The Odyssey",
+          "href": "/en/peliculas/the-odyssey",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 2,
+          "label": "La Bola Negra",
+          "href": "/en/peliculas/la-bola-negra",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 3,
+          "label": "Wild Horse Nine",
+          "href": "/en/peliculas/wild-horse-nine",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 4,
+          "label": "Project Hail Mary",
+          "href": "/en/peliculas/project-hail-mary",
+          "movement": "Up 1 place"
+        },
+        {
+          "position": 5,
+          "label": "The Invite",
+          "href": "/en/peliculas/the-invite",
+          "movement": "Up 2 places"
+        },
+        {
+          "position": 6,
+          "label": "You Can See Everything",
+          "href": "/en/peliculas/you-can-see-everything",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 7,
+          "label": "Dune: Part Three",
+          "href": "/en/peliculas/dune-part-three",
+          "movement": "Down 3 places"
+        },
+        {
+          "position": 8,
+          "label": "I Play Rocky",
+          "href": "/en/peliculas/i-play-rocky",
+          "movement": "Up 2 places"
+        },
+        {
+          "position": 9,
+          "label": "Elsinore",
+          "href": "/en/peliculas/elsinore",
+          "movement": "Down 1 place"
+        },
+        {
+          "position": 10,
+          "label": "The Debut",
+          "href": "/en/peliculas/the-debut",
+          "movement": "Down 1 place"
+        },
+        {
+          "position": 11,
+          "label": "Fjord",
+          "href": "/en/peliculas/fjord",
+          "movement": "Up 1 place"
+        },
+        {
+          "position": 12,
+          "label": "Artificial",
+          "href": "/en/peliculas/artificial",
+          "movement": "Down 1 place"
+        },
+        {
+          "position": 13,
+          "label": "All of a Sudden",
+          "href": "/en/peliculas/all-of-a-sudden",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 14,
+          "label": "Obsession",
+          "href": "/en/peliculas/obsession",
+          "movement": "Up 6 places"
+        },
+        {
+          "position": 15,
+          "label": "Club Kid",
+          "href": "/en/peliculas/club-kid",
+          "movement": "Down 1 place"
+        },
+        {
+          "position": 16,
+          "label": "Digger",
+          "href": "/en/peliculas/digger",
+          "movement": "Down 1 place"
+        },
+        {
+          "position": 17,
+          "label": "Being Heumann",
+          "href": "/en/peliculas/being-heumann",
+          "movement": "Up 2 places"
+        },
+        {
+          "position": 18,
+          "label": "The Adventures of Cliff Booth",
+          "href": "/en/peliculas/cliff-booth",
+          "movement": "Up 7 places"
+        },
+        {
+          "position": 19,
+          "label": "Wildwood",
+          "href": "/en/peliculas/wildwood",
+          "movement": "Down 3 places"
+        },
+        {
+          "position": 20,
+          "label": "Tender Loving Care",
+          "href": "/en/peliculas/tender-loving-care",
+          "movement": "Down 2 places"
+        },
+        {
+          "position": 21,
+          "label": "Behemoth!",
+          "href": "/en/peliculas/behemoth",
+          "movement": "Down 4 places"
+        },
+        {
+          "position": 22,
+          "label": "Michael",
+          "href": "/en/peliculas/michael",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 23,
+          "label": "Paper Tiger",
+          "href": "/en/peliculas/paper-tiger",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 24,
+          "label": "Josephine",
+          "href": "/en/peliculas/josephine",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 25,
+          "label": "Possible Love",
+          "href": "/en/peliculas/possible-love",
+          "movement": "Down 4 places"
+        }
+      ],
+      "selectedSnapshotId": "periodic-oscars-2027-best-picture-nomination-2026-11-06-2dc0716cd5a6",
+      "dunePosition": 7,
+      "violations": [],
+      "screenshots": {
+        "overview": "/Users/nacho/Documents/Side/Runscars/docs/audits/2026-11-06/production-integrity-ui/mobile-en-current-overview.png",
+        "snapshot": "/Users/nacho/Documents/Side/Runscars/docs/audits/2026-11-06/production-integrity-ui/mobile-en-current-snapshot.png",
+        "ranking": "/Users/nacho/Documents/Side/Runscars/docs/audits/2026-11-06/production-integrity-ui/mobile-en-current-ranking.png"
+      }
+    },
+    {
+      "url": "https://runscars.app/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-11-04-4c018ee649f5",
+      "device": "mobile",
+      "locale": "en",
+      "mode": "withdrawn",
+      "errors": [],
+      "status": 200,
+      "title": "Best Picture Oscar Predictions 2027 | Runscars",
+      "lang": "en-GB",
+      "overflow": false,
+      "mainCount": 1,
+      "h1Count": 1,
+      "notices": [
+        "Historical update withdrawnThe requested update included an incomplete import and has been excluded from the history and movement comparisons.A valid update is shown below."
+      ],
+      "selectedHref": "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-31-42302510d0b6",
+      "historyHrefs": [
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-11-06-2dc0716cd5a6",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-11-05-23759c60417f",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-31-42302510d0b6",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-27-5658f298141f",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-26-71a64ac70b61",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-25-c60997e0062d",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-24-570ef8636fdd",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-23-7632567e8d23",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-22-0063fc8085c3",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-19-b8db4744c858",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-18-e93da1f381fa",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-17-d26ad0d7fe02",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-16-6f038c3b4d6f",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-15-20e8e8432080",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-11-71effb528cf5",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-08-3e600f755c0b",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-07-ba2b31fadd3c",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-10-01-82ebac64eaad",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-29-6d08df0e2aac",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-28-3f9c63725de6",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-26-058da869967f",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-19-84c9f1d995ca",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-18-36f0372f172b",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-17-1d06888351eb",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-16-7a34ee31ed6b",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-14-5c0c05587cc1",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-12-172751606cd6",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-09-3265455a17f8",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-08-63d5fb25187f",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-06-234b4c943dab",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-05-c037ce5006a0",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-09-01-7bf49752e35c",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-31-740a2f1f90b0",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-30-29c5d4e5a43a",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-29-64347c2737ac",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-24-c02f20c82b56",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-19-e3e260864695",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-10-bfef05af2cc7",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-07-52e4ba19ae89",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-08-03-1c00c70a6d6e",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-07-27-d323dd7772f3",
+        "/en/temporadas/2027/mejor-pelicula?corte=periodic-oscars-2027-best-picture-nomination-2026-07-25-317e07b691cc"
+      ],
+      "ranking": [
+        {
+          "position": 1,
+          "label": "The Odyssey",
+          "href": "/en/peliculas/the-odyssey",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 2,
+          "label": "La Bola Negra",
+          "href": "/en/peliculas/la-bola-negra",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 3,
+          "label": "Wild Horse Nine",
+          "href": "/en/peliculas/wild-horse-nine",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 4,
+          "label": "Dune: Part Three",
+          "href": "/en/peliculas/dune-part-three",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 5,
+          "label": "Project Hail Mary",
+          "href": "/en/peliculas/project-hail-mary",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 6,
+          "label": "The Invite",
+          "href": "/en/peliculas/the-invite",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 7,
+          "label": "You Can See Everything",
+          "href": "/en/peliculas/you-can-see-everything",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 8,
+          "label": "I Play Rocky",
+          "href": "/en/peliculas/i-play-rocky",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 9,
+          "label": "The Debut",
+          "href": "/en/peliculas/the-debut",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 10,
+          "label": "Artificial",
+          "href": "/en/peliculas/artificial",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 11,
+          "label": "Elsinore",
+          "href": "/en/peliculas/elsinore",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 12,
+          "label": "Fjord",
+          "href": "/en/peliculas/fjord",
+          "movement": "Up 1 place"
+        },
+        {
+          "position": 13,
+          "label": "All of a Sudden",
+          "href": "/en/peliculas/all-of-a-sudden",
+          "movement": "Up 1 place"
+        },
+        {
+          "position": 14,
+          "label": "Club Kid",
+          "href": "/en/peliculas/club-kid",
+          "movement": "Down 2 places"
+        },
+        {
+          "position": 15,
+          "label": "Possible Love",
+          "href": "/en/peliculas/possible-love",
+          "movement": "Up 6 places"
+        },
+        {
+          "position": 16,
+          "label": "Wildwood",
+          "href": "/en/peliculas/wildwood",
+          "movement": "Down 1 place"
+        },
+        {
+          "position": 17,
+          "label": "Behemoth!",
+          "href": "/en/peliculas/behemoth",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 18,
+          "label": "Being Heumann",
+          "href": "/en/peliculas/being-heumann",
+          "movement": "Down 2 places"
+        },
+        {
+          "position": 19,
+          "label": "Digger",
+          "href": "/en/peliculas/digger",
+          "movement": "Down 1 place"
+        },
+        {
+          "position": 20,
+          "label": "Tender Loving Care",
+          "href": "/en/peliculas/tender-loving-care",
+          "movement": "Down 1 place"
+        },
+        {
+          "position": 21,
+          "label": "Obsession",
+          "href": "/en/peliculas/obsession",
+          "movement": "Down 1 place"
+        },
+        {
+          "position": 22,
+          "label": "Michael",
+          "href": "/en/peliculas/michael",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 23,
+          "label": "Paper Tiger",
+          "href": "/en/peliculas/paper-tiger",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 24,
+          "label": "Josephine",
+          "href": "/en/peliculas/josephine",
+          "movement": "No change since the latest update"
+        },
+        {
+          "position": 25,
+          "label": "The Adventures of Cliff Booth",
+          "href": "/en/peliculas/cliff-booth",
+          "movement": "No change since the latest update"
+        }
+      ],
+      "selectedSnapshotId": "periodic-oscars-2027-best-picture-nomination-2026-10-31-42302510d0b6",
+      "dunePosition": 4,
+      "violations": [],
+      "screenshots": {
+        "overview": "/Users/nacho/Documents/Side/Runscars/docs/audits/2026-11-06/production-integrity-ui/mobile-en-withdrawn-overview.png",
+        "snapshot": "/Users/nacho/Documents/Side/Runscars/docs/audits/2026-11-06/production-integrity-ui/mobile-en-withdrawn-snapshot.png",
+        "ranking": "/Users/nacho/Documents/Side/Runscars/docs/audits/2026-11-06/production-integrity-ui/mobile-en-withdrawn-ranking.png"
+      }
+    }
+  ],
+  "failed": 0
+}
