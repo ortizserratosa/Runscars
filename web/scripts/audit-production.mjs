@@ -69,7 +69,7 @@ const predictionConnectors = [
     id: "awards-daily-predictions",
     endpoint_url:
       "https://www.awardsdaily.com/wp-json/wp/v2/search?search=2027%20Oscar%20Predictions&per_page=20&_fields=id,url,title,subtype",
-    extractor_version: "awards-daily-v9",
+    extractor_version: "awards-daily-v10",
     configuration: {
       season_id: "oscars-2027",
       ceremony_year: 2027,
@@ -113,7 +113,7 @@ const predictionConnectors = [
     id: "movie-state-predictions",
     endpoint_url:
       "https://themoviestate.com/the-movie-state/features/award-predictions/",
-    extractor_version: "movie-state-v1",
+    extractor_version: "movie-state-v2",
     configuration: {
       season_id: "oscars-2027",
       ceremony_year: 2027,
@@ -156,7 +156,7 @@ const predictionConnectors = [
   ...publicPredictionCategories.map((categoryId) => ({
     id: `variety-${categoryId}-predictions`,
     endpoint_url: "https://variety.com/lists/2027-oscars-predictions/",
-    extractor_version: "variety-datawrapper-v2",
+    extractor_version: "variety-datawrapper-v3",
     configuration: {
       season_id: "oscars-2027",
       ceremony_year: 2027,
@@ -293,6 +293,20 @@ async function auditCronFreshness() {
     return;
   }
   const client = createClient(url, key, { auth: { persistSession: false } });
+  const abandoned = await client
+    .from("ingestion_runs")
+    .select("id,connector_id,started_at")
+    .eq("status", "running")
+    .lt("started_at", new Date(Date.now() - 15 * 60 * 1000).toISOString());
+  if (abandoned.error) {
+    failures.push(`Ejecuciones profesionales: ${abandoned.error.message}`);
+  } else {
+    for (const run of abandoned.data ?? []) {
+      failures.push(
+        `${run.connector_id}: ejecución ${run.id} abandonada desde ${run.started_at}`,
+      );
+    }
+  }
   for (const table of predictionsOnly
     ? ["source_connectors"]
     : ["source_connectors", "market_connectors", "festival_connectors"]) {

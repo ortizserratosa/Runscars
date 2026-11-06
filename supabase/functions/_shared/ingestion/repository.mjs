@@ -52,6 +52,7 @@ export class SupabaseIngestionRepository {
     this.client = createClient(supabaseUrl, serviceRoleKey, {
       auth: { persistSession: false, autoRefreshToken: false },
     });
+    this.captureMembership = new Map();
   }
 
   async activeConnectors(selectedIds = null) {
@@ -623,11 +624,12 @@ export class SupabaseIngestionRepository {
   }) {
     let equivalentQuery = this.client
       .from("professional_observations")
-      .select("id,state,original_value")
+      .select("id,state,original_value,capture_id")
       .eq("source_id", batch.sourceId)
       .eq("publication_id", publicationId)
       .eq("original_subject", observation.subject)
-      .eq("data_type", observation.dataType);
+      .eq("data_type", observation.dataType)
+      .order("id");
     equivalentQuery = observation.categoryId
       ? equivalentQuery.eq("category_id", observation.categoryId)
       : equivalentQuery.is("category_id", null);
@@ -641,11 +643,16 @@ export class SupabaseIngestionRepository {
       await equivalentQuery,
       "No se pudo comprobar la identidad de la observación",
     );
-    const equivalent = equivalentRows.find(
+    const equivalents = equivalentRows.filter(
       (row) =>
         canonicalJson(row.original_value) ===
         canonicalJson(observation.originalValue),
     );
+    const members = this.captureMembership.get(captureId);
+    const equivalent =
+      equivalents.find((row) => members?.has(row.id)) ??
+      equivalents.find((row) => row.capture_id === captureId) ??
+      equivalents[0];
     if (equivalent) {
       await this.reconcilePendingObservation({
         batch,
@@ -721,6 +728,57 @@ export class SupabaseIngestionRepository {
           ? observation.state
           : existing.state,
     };
+  }
+
+  async captureIsComplete(captureId, expectedObservationCount) {
+    const completion = databaseError(
+      await this.client
+        .from("source_capture_completions")
+        .select("expected_observation_count")
+        .eq("capture_id", captureId)
+        .maybeSingle(),
+      "No se pudo comprobar la finalización de la captura",
+    );
+    if (completion?.expected_observation_count !== expectedObservationCount)
+      return false;
+    // Pending identities must still be retried after editorial/catalog changes.
+    // A fully resolved immutable capture can bypass the expensive per-row work.
+    const rows = [];
+    for (let from = 0; ; from += 500) {
+      const page = databaseError(
+        await this.client
+          .from("source_capture_observations")
+          .select("observation_id,professional_observations!inner(state)")
+          .eq("capture_id", captureId)
+          .order("observation_id")
+          .range(from, from + 499),
+        "No se pudo comprobar el estado de la captura",
+      );
+      rows.push(...page);
+      if (page.length < 500) break;
+    }
+    this.captureMembership.set(
+      captureId,
+      new Set(rows.map((row) => row.observation_id)),
+    );
+    return (
+      rows.length === expectedObservationCount &&
+      rows.every((row) =>
+        ["published", "excluded"].includes(row.professional_observations.state),
+      )
+    );
+  }
+
+  async finalizeCapture(captureId, observationIds) {
+    databaseError(
+      await this.client.rpc("finalize_source_capture", {
+        p_capture_id: captureId,
+        p_expected_observation_count: observationIds.length,
+        p_observation_ids: observationIds,
+        p_completed_at: new Date().toISOString(),
+      }),
+      "No se pudo publicar la captura completa",
+    );
   }
 
   async reconcilePendingObservation({
@@ -955,8 +1013,20 @@ export async function persistBatch({
         if (capture.inserted) counters.capturesInserted += 1;
         else counters.capturesDuplicate += 1;
       }
+      const expectedUniqueCount = new Set(
+        publication.observations.map((observation) => observation.dedupeKey),
+      ).size;
 
-      await mapWithConcurrency(
+      if (
+        capture?.inserted === false &&
+        (await repository.captureIsComplete?.(captureId, expectedUniqueCount))
+      ) {
+        counters.observationsSeen += publication.observations.length;
+        counters.observationsDuplicate += publication.observations.length;
+        continue;
+      }
+
+      const savedObservationIds = await mapWithConcurrency(
         publication.observations,
         persistenceConcurrency,
         async (observation) => {
@@ -1007,8 +1077,14 @@ export async function persistBatch({
             });
             if (created) counters.reviewItemsCreated += 1;
           }
+          return saved.id;
         },
       );
+      // This is the visibility barrier: interrupted row writes remain private.
+      // Reused observations are linked too, even if another capture created them.
+      await repository.finalizeCapture(captureId, [
+        ...new Set(savedObservationIds),
+      ]);
     }
 
     const finishedAt = new Date().toISOString();

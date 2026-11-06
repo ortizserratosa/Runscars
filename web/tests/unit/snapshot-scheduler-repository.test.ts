@@ -11,14 +11,22 @@ const state = vi.hoisted(() => ({
     ids: unknown[];
   }[],
   failedOffset: -1,
-  failedTable: "professional_observations",
+  failedTable: "completed_professional_observations",
 }));
 
 vi.mock("server-only", () => ({}));
 vi.mock("@supabase/supabase-js", () => ({
   createClient: () => ({
     from(table: string) {
-      let rows = [...(state.tables[table] ?? [])];
+      const dataTable =
+        table === "completed_professional_observations"
+          ? "professional_observations"
+          : table === "completed_source_publication_captures"
+            ? "source_publication_captures"
+            : table;
+      let rows = [...(state.tables[dataTable] ?? [])].filter(
+        (row) => row.incomplete !== true,
+      );
       let page: [number, number] | null = null;
       let ids: unknown[] = [];
       const query = {
@@ -82,7 +90,7 @@ function repository() {
 beforeEach(() => {
   state.requests = [];
   state.failedOffset = -1;
-  state.failedTable = "professional_observations";
+  state.failedTable = "completed_professional_observations";
   state.tables = {
     sources: [
       { id: "source", name: "Source", publication_status: "publishable" },
@@ -248,7 +256,7 @@ describe("snapshot repository undated category evidence", () => {
     };
     const observations = await repository().predictionObservationsV2(schedule);
     expect(observations[0].freshnessAt).toBeUndefined();
-    state.failedTable = "source_publication_captures";
+    state.failedTable = "completed_source_publication_captures";
     state.failedOffset = 0;
     await expect(
       repository().predictionObservationsV2(schedule),
@@ -257,6 +265,32 @@ describe("snapshot repository undated category evidence", () => {
 });
 
 describe("snapshot repository history pagination", () => {
+  it("keeps the previous committed ballot while a newer publication is only partly persisted", async () => {
+    state.tables.professional_observations.push({
+      ...state.tables.professional_observations[0],
+      id: 1002,
+      publication_id: 1002,
+      category_candidate_id: "candidate-1001",
+      published_at: "2026-09-30T00:00:00Z",
+      captured_at: "2026-09-30T04:17:00Z",
+      original_value: { rank: 6, list_length: 10 },
+      incomplete: true,
+    });
+    state.tables.source_publications.push({
+      id: 1002,
+      external_id: "unfinished-publication",
+      canonical_url: "https://example.com/live",
+    });
+    const observations = await repository().predictionObservationsV2(schedule);
+    expect(observations.some((row) => row.id === "1002")).toBe(false);
+    const aggregate = aggregatePredictionsV2(observations, {
+      ...schedule,
+      cutoffDate: "2026-09-30T12:00:00Z",
+    });
+    expect(aggregate.includedObservationIds).toEqual(["1001"]);
+    expect(aggregate.ranking[0].sourceContributions[0].rank).toBe(1);
+  });
+
   it("retains the latest revision beyond 1,000 observations and reference rows", async () => {
     const observations = await repository().predictionObservationsV2(schedule);
     expect(observations).toHaveLength(1001);
@@ -268,7 +302,9 @@ describe("snapshot repository history pagination", () => {
     expect(aggregate.ranking[0].candidateId).toBe("candidate-1001");
     expect(
       state.requests
-        .filter((request) => request.table === "professional_observations")
+        .filter(
+          (request) => request.table === "completed_professional_observations",
+        )
         .map((request) => request.range),
     ).toEqual([
       [0, 499],
@@ -287,7 +323,7 @@ describe("snapshot repository history pagination", () => {
     ).rejects.toThrow("Page failed");
     expect(
       state.requests.every(
-        (request) => request.table === "professional_observations",
+        (request) => request.table === "completed_professional_observations",
       ),
     ).toBe(true);
   });

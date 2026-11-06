@@ -467,3 +467,16 @@ ES/EN y escritorio/móvil, importaciones aisladas y comprobaciones públicas.
 La auditoría conserva los recibos y los límites reales: dos tablas inválidas de
 Variety, matching editorial pendiente y el aviso previo de dependencias de
 desarrollo. Los snapshots anteriores permanecen inmutables.
+
+## Mantenimiento · integridad de importaciones, 6 de noviembre de 2026
+
+La auditoría de las ocho categorías identifica importaciones interrumpidas que
+habían entrado como listas parciales al cálculo. D-079 incorpora una barrera
+transaccional de completitud, reintento idempotente, corrección aditiva del
+historial y reparación de formatos originales. No cambia la fórmula v4, sus
+pesos, ventanas, vigencia ni el alcance público.
+
+La puerta exige regresión de interrupción y reintento, RLS e inmutabilidad,
+contraste de los diecisiete conectores, recálculo desde capturas completas,
+conservación de hashes, verificaciones web ES/EN y despliegue. Estado y evidencia
+en [PREDICTION_INTEGRITY_AUDIT_2026-11-06.md](PREDICTION_INTEGRITY_AUDIT_2026-11-06.md).

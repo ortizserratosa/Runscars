@@ -143,9 +143,11 @@ function identityClaims(batch, title) {
   const claims = new Map();
   for (const publication of batch.publications) {
     for (const observation of publication.observations) {
+      const filmSubject = observation.filmSubject ?? observation.subject;
       if (
-        normalizeIdentity(observation.filmSubject ?? observation.subject) !==
-          normalizedTitle ||
+        typeof filmSubject !== "string" ||
+        !filmSubject.trim() ||
+        normalizeIdentity(filmSubject) !== normalizedTitle ||
         !["prediction_ordered", "prediction_selection"].includes(
           observation.dataType,
         )

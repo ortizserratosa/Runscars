@@ -1,7 +1,7 @@
 # Metodología
 
 **Estado:** agregación, snapshots y evaluación profesional operativos
-**Última revisión:** 2026-10-19
+**Última revisión:** 2026-11-06
 
 ## 1. Principios
 
@@ -48,6 +48,14 @@ La identidad `CategoryCandidate` combina temporada, categoría, película u obra
 el conjunto de personas. El conjunto identifica la candidatura y su orden
 conserva cómo se presenta el equipo. Así pueden coexistir dos intérpretes de la
 misma película, una persona con varias películas y equipos de dirección.
+
+Una captura solo alimenta lecturas y agregados cuando una transacción certifica
+que se han persistido **todas** sus observaciones extraídas, incluidas las
+pendientes de matching. La certificación conserva la membresía exacta, también
+cuando un reintento reutiliza filas de otro intento o captura. Una escritura
+interrumpida no sustituye la última revisión completa. La completitud de
+persistencia no exige resolver todas las identidades ni modifica la ventana o
+los puestos originales (D-079).
 
 ### 2.1 Elegibilidad de una fuente
 
@@ -429,6 +437,11 @@ Un snapshot bloqueado no se modifica. Si se descubre un error:
 
 La versión vigente vive en un puntero separado. Cambiar ese puntero no modifica
 ningún snapshot ni resultado oficial previo.
+
+Los cortes afectados por una incidencia de integridad pueden recibir un registro
+aditivo con motivo y fecha. Se conservan el snapshot original y su hash; las
+series públicas excluyen esos cortes de los movimientos y explican la incidencia
+al consultarlos. No se reconstruyen votos retrospectivos que no estaban capturados.
 
 ## 8. Evaluación del acierto
 

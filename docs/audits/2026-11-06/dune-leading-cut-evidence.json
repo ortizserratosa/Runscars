@@ -1,0 +1,1562 @@
+{
+  "badCut": {
+    "id": "periodic-oscars-2027-best-picture-nomination-2026-11-04-4c018ee649f5",
+    "lockedAt": "2026-11-04T04:47:53.568+00:00",
+    "ranking": [
+      {
+        "label": "Dune: Part Three",
+        "position": 1,
+        "score": 81,
+        "sourceContributions": [
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": false,
+            "sourceId": "awards-daily",
+            "listLength": 0,
+            "sourceName": "Awards Daily",
+            "publishedAt": "2026-10-23T00:00:00+00:00",
+            "observationId": null,
+            "publicationId": "2026/10/23/2027-oscar-predictions-hollywood-should-not-give-up-on-itself@c1af78027878f680",
+            "appearanceKind": "absent",
+            "publicationUrl": "https://www.awardsdaily.com/2026/10/23/2027-oscar-predictions-hollywood-should-not-give-up-on-itself/"
+          },
+          {
+            "rank": 7,
+            "points": 0.7,
+            "appeared": true,
+            "sourceId": "awards-radar",
+            "listLength": 50,
+            "sourceName": "Awards Radar",
+            "publishedAt": "2026-10-26T00:00:00+00:00",
+            "observationId": "12463",
+            "publicationId": "best-picture@92e8100f13222292",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://awardsradar.com/best-picture/"
+          },
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": true,
+            "sourceId": "awardswatch",
+            "listLength": 0,
+            "sourceName": "AwardsWatch",
+            "publishedAt": "2026-10-16T16:07:08+00:00",
+            "observationId": "11476",
+            "publicationId": "2027-oscar-predictions-best-picture-and-best-director-october@b17b7f8d49a146e4",
+            "appearanceKind": "selection",
+            "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-best-picture-and-best-director-october/"
+          },
+          {
+            "rank": 4,
+            "points": 0.85,
+            "appeared": true,
+            "sourceId": "next-best-picture",
+            "listLength": 10,
+            "sourceName": "Next Best Picture",
+            "publishedAt": null,
+            "observationId": "12731",
+            "publicationId": "u/655756da85df4c0efaa10bd2/oscars@c207e286109dee7e",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+          },
+          {
+            "rank": 6,
+            "points": 0.75,
+            "appeared": true,
+            "sourceId": "ankler",
+            "listLength": 10,
+            "sourceName": "The Ankler",
+            "publishedAt": "2026-11-03T00:00:00+00:00",
+            "observationId": "12855",
+            "publicationId": "pundit/christopher-rosen/best-picture@4b5b4ec3f90c326a",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://anklerpundits.com/pundit/christopher-rosen/"
+          },
+          {
+            "rank": 4,
+            "points": 0.85,
+            "appeared": true,
+            "sourceId": "the-rolling-tape",
+            "listLength": 20,
+            "sourceName": "The Rolling Tape",
+            "publishedAt": "2026-11-03T17:40:16+00:00",
+            "observationId": "12843",
+            "publicationId": "danny-jarabek-oscar-predictions/best-picture@697c19b00566b5c8",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://therollingtape.com/danny-jarabek-oscar-predictions/"
+          },
+          {
+            "rank": 3,
+            "points": 0.9,
+            "appeared": true,
+            "sourceId": "variety",
+            "listLength": 40,
+            "sourceName": "Variety",
+            "publishedAt": "2026-10-22T00:00:00+00:00",
+            "observationId": "12682",
+            "publicationId": "lists/2027-oscars-best-picture-predictions@427e61db8eb091e6",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://variety.com/lists/2027-oscars-best-picture-predictions/"
+          }
+        ]
+      },
+      {
+        "label": "The Odyssey",
+        "position": 2,
+        "score": 79,
+        "sourceContributions": [
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": true,
+            "sourceId": "awards-daily",
+            "listLength": 0,
+            "sourceName": "Awards Daily",
+            "publishedAt": "2026-10-23T00:00:00+00:00",
+            "observationId": "12196",
+            "publicationId": "2026/10/23/2027-oscar-predictions-hollywood-should-not-give-up-on-itself@c1af78027878f680",
+            "appearanceKind": "selection",
+            "publicationUrl": "https://www.awardsdaily.com/2026/10/23/2027-oscar-predictions-hollywood-should-not-give-up-on-itself/"
+          },
+          {
+            "rank": 1,
+            "points": 1,
+            "appeared": true,
+            "sourceId": "awards-radar",
+            "listLength": 50,
+            "sourceName": "Awards Radar",
+            "publishedAt": "2026-10-26T00:00:00+00:00",
+            "observationId": "12452",
+            "publicationId": "best-picture@92e8100f13222292",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://awardsradar.com/best-picture/"
+          },
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": true,
+            "sourceId": "awardswatch",
+            "listLength": 0,
+            "sourceName": "AwardsWatch",
+            "publishedAt": "2026-10-16T16:07:08+00:00",
+            "observationId": "11498",
+            "publicationId": "2027-oscar-predictions-best-picture-and-best-director-october@b17b7f8d49a146e4",
+            "appearanceKind": "selection",
+            "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-best-picture-and-best-director-october/"
+          },
+          {
+            "rank": 2,
+            "points": 0.95,
+            "appeared": true,
+            "sourceId": "next-best-picture",
+            "listLength": 10,
+            "sourceName": "Next Best Picture",
+            "publishedAt": null,
+            "observationId": "12732",
+            "publicationId": "u/655756da85df4c0efaa10bd2/oscars@c207e286109dee7e",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+          },
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": false,
+            "sourceId": "ankler",
+            "listLength": 10,
+            "sourceName": "The Ankler",
+            "publishedAt": "2026-11-03T00:00:00+00:00",
+            "observationId": null,
+            "publicationId": "pundit/christopher-rosen/best-picture@4b5b4ec3f90c326a",
+            "appearanceKind": "absent",
+            "publicationUrl": "https://anklerpundits.com/pundit/christopher-rosen/"
+          },
+          {
+            "rank": 1,
+            "points": 1,
+            "appeared": true,
+            "sourceId": "the-rolling-tape",
+            "listLength": 20,
+            "sourceName": "The Rolling Tape",
+            "publishedAt": "2026-11-03T17:40:16+00:00",
+            "observationId": "12845",
+            "publicationId": "danny-jarabek-oscar-predictions/best-picture@697c19b00566b5c8",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://therollingtape.com/danny-jarabek-oscar-predictions/"
+          },
+          {
+            "rank": 1,
+            "points": 1,
+            "appeared": true,
+            "sourceId": "variety",
+            "listLength": 40,
+            "sourceName": "Variety",
+            "publishedAt": "2026-10-22T00:00:00+00:00",
+            "observationId": "12683",
+            "publicationId": "lists/2027-oscars-best-picture-predictions@427e61db8eb091e6",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://variety.com/lists/2027-oscars-best-picture-predictions/"
+          }
+        ]
+      },
+      {
+        "label": "La Bola Negra",
+        "position": 3,
+        "score": 75,
+        "sourceContributions": [
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": true,
+            "sourceId": "awards-daily",
+            "listLength": 0,
+            "sourceName": "Awards Daily",
+            "publishedAt": "2026-10-23T00:00:00+00:00",
+            "observationId": "12199",
+            "publicationId": "2026/10/23/2027-oscar-predictions-hollywood-should-not-give-up-on-itself@c1af78027878f680",
+            "appearanceKind": "selection",
+            "publicationUrl": "https://www.awardsdaily.com/2026/10/23/2027-oscar-predictions-hollywood-should-not-give-up-on-itself/"
+          },
+          {
+            "rank": 2,
+            "points": 0.95,
+            "appeared": true,
+            "sourceId": "awards-radar",
+            "listLength": 50,
+            "sourceName": "Awards Radar",
+            "publishedAt": "2026-10-26T00:00:00+00:00",
+            "observationId": "12455",
+            "publicationId": "best-picture@92e8100f13222292",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://awardsradar.com/best-picture/"
+          },
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": true,
+            "sourceId": "awardswatch",
+            "listLength": 0,
+            "sourceName": "AwardsWatch",
+            "publishedAt": "2026-10-16T16:07:08+00:00",
+            "observationId": "11462",
+            "publicationId": "2027-oscar-predictions-best-picture-and-best-director-october@b17b7f8d49a146e4",
+            "appearanceKind": "selection",
+            "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-best-picture-and-best-director-october/"
+          },
+          {
+            "rank": 1,
+            "points": 1,
+            "appeared": true,
+            "sourceId": "next-best-picture",
+            "listLength": 10,
+            "sourceName": "Next Best Picture",
+            "publishedAt": null,
+            "observationId": "12729",
+            "publicationId": "u/655756da85df4c0efaa10bd2/oscars@c207e286109dee7e",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+          },
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": false,
+            "sourceId": "ankler",
+            "listLength": 10,
+            "sourceName": "The Ankler",
+            "publishedAt": "2026-11-03T00:00:00+00:00",
+            "observationId": null,
+            "publicationId": "pundit/christopher-rosen/best-picture@4b5b4ec3f90c326a",
+            "appearanceKind": "absent",
+            "publicationUrl": "https://anklerpundits.com/pundit/christopher-rosen/"
+          },
+          {
+            "rank": 2,
+            "points": 0.95,
+            "appeared": true,
+            "sourceId": "the-rolling-tape",
+            "listLength": 20,
+            "sourceName": "The Rolling Tape",
+            "publishedAt": "2026-11-03T17:40:16+00:00",
+            "observationId": "12846",
+            "publicationId": "danny-jarabek-oscar-predictions/best-picture@697c19b00566b5c8",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://therollingtape.com/danny-jarabek-oscar-predictions/"
+          },
+          {
+            "rank": 4,
+            "points": 0.85,
+            "appeared": true,
+            "sourceId": "variety",
+            "listLength": 40,
+            "sourceName": "Variety",
+            "publishedAt": "2026-10-22T00:00:00+00:00",
+            "observationId": "12684",
+            "publicationId": "lists/2027-oscars-best-picture-predictions@427e61db8eb091e6",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://variety.com/lists/2027-oscars-best-picture-predictions/"
+          }
+        ]
+      },
+      {
+        "label": "Wild Horse Nine",
+        "position": 4,
+        "score": 65,
+        "sourceContributions": [
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": true,
+            "sourceId": "awards-daily",
+            "listLength": 0,
+            "sourceName": "Awards Daily",
+            "publishedAt": "2026-10-23T00:00:00+00:00",
+            "observationId": "12198",
+            "publicationId": "2026/10/23/2027-oscar-predictions-hollywood-should-not-give-up-on-itself@c1af78027878f680",
+            "appearanceKind": "selection",
+            "publicationUrl": "https://www.awardsdaily.com/2026/10/23/2027-oscar-predictions-hollywood-should-not-give-up-on-itself/"
+          },
+          {
+            "rank": 4,
+            "points": 0.85,
+            "appeared": true,
+            "sourceId": "awards-radar",
+            "listLength": 50,
+            "sourceName": "Awards Radar",
+            "publishedAt": "2026-10-26T00:00:00+00:00",
+            "observationId": "12456",
+            "publicationId": "best-picture@92e8100f13222292",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://awardsradar.com/best-picture/"
+          },
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": true,
+            "sourceId": "awardswatch",
+            "listLength": 0,
+            "sourceName": "AwardsWatch",
+            "publishedAt": "2026-10-16T16:07:08+00:00",
+            "observationId": "11467",
+            "publicationId": "2027-oscar-predictions-best-picture-and-best-director-october@b17b7f8d49a146e4",
+            "appearanceKind": "selection",
+            "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-best-picture-and-best-director-october/"
+          },
+          {
+            "rank": 3,
+            "points": 0.9,
+            "appeared": true,
+            "sourceId": "next-best-picture",
+            "listLength": 10,
+            "sourceName": "Next Best Picture",
+            "publishedAt": null,
+            "observationId": "12730",
+            "publicationId": "u/655756da85df4c0efaa10bd2/oscars@c207e286109dee7e",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+          },
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": false,
+            "sourceId": "ankler",
+            "listLength": 10,
+            "sourceName": "The Ankler",
+            "publishedAt": "2026-11-03T00:00:00+00:00",
+            "observationId": null,
+            "publicationId": "pundit/christopher-rosen/best-picture@4b5b4ec3f90c326a",
+            "appearanceKind": "absent",
+            "publicationUrl": "https://anklerpundits.com/pundit/christopher-rosen/"
+          },
+          {
+            "rank": 7,
+            "points": 0.7,
+            "appeared": true,
+            "sourceId": "the-rolling-tape",
+            "listLength": 20,
+            "sourceName": "The Rolling Tape",
+            "publishedAt": "2026-11-03T17:40:16+00:00",
+            "observationId": "12849",
+            "publicationId": "danny-jarabek-oscar-predictions/best-picture@697c19b00566b5c8",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://therollingtape.com/danny-jarabek-oscar-predictions/"
+          },
+          {
+            "rank": 5,
+            "points": 0.8,
+            "appeared": true,
+            "sourceId": "variety",
+            "listLength": 40,
+            "sourceName": "Variety",
+            "publishedAt": "2026-10-22T00:00:00+00:00",
+            "observationId": "12686",
+            "publicationId": "lists/2027-oscars-best-picture-predictions@427e61db8eb091e6",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://variety.com/lists/2027-oscars-best-picture-predictions/"
+          }
+        ]
+      },
+      {
+        "label": "Project Hail Mary",
+        "position": 5,
+        "score": 62,
+        "sourceContributions": [
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": true,
+            "sourceId": "awards-daily",
+            "listLength": 0,
+            "sourceName": "Awards Daily",
+            "publishedAt": "2026-10-23T00:00:00+00:00",
+            "observationId": "12200",
+            "publicationId": "2026/10/23/2027-oscar-predictions-hollywood-should-not-give-up-on-itself@c1af78027878f680",
+            "appearanceKind": "selection",
+            "publicationUrl": "https://www.awardsdaily.com/2026/10/23/2027-oscar-predictions-hollywood-should-not-give-up-on-itself/"
+          },
+          {
+            "rank": 5,
+            "points": 0.8,
+            "appeared": true,
+            "sourceId": "awards-radar",
+            "listLength": 50,
+            "sourceName": "Awards Radar",
+            "publishedAt": "2026-10-26T00:00:00+00:00",
+            "observationId": "12454",
+            "publicationId": "best-picture@92e8100f13222292",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://awardsradar.com/best-picture/"
+          },
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": true,
+            "sourceId": "awardswatch",
+            "listLength": 0,
+            "sourceName": "AwardsWatch",
+            "publishedAt": "2026-10-16T16:07:08+00:00",
+            "observationId": "11552",
+            "publicationId": "2027-oscar-predictions-best-picture-and-best-director-october@b17b7f8d49a146e4",
+            "appearanceKind": "selection",
+            "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-best-picture-and-best-director-october/"
+          },
+          {
+            "rank": 5,
+            "points": 0.8,
+            "appeared": true,
+            "sourceId": "next-best-picture",
+            "listLength": 10,
+            "sourceName": "Next Best Picture",
+            "publishedAt": null,
+            "observationId": "12733",
+            "publicationId": "u/655756da85df4c0efaa10bd2/oscars@c207e286109dee7e",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+          },
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": false,
+            "sourceId": "ankler",
+            "listLength": 10,
+            "sourceName": "The Ankler",
+            "publishedAt": "2026-11-03T00:00:00+00:00",
+            "observationId": null,
+            "publicationId": "pundit/christopher-rosen/best-picture@4b5b4ec3f90c326a",
+            "appearanceKind": "absent",
+            "publicationUrl": "https://anklerpundits.com/pundit/christopher-rosen/"
+          },
+          {
+            "rank": 6,
+            "points": 0.75,
+            "appeared": true,
+            "sourceId": "the-rolling-tape",
+            "listLength": 20,
+            "sourceName": "The Rolling Tape",
+            "publishedAt": "2026-11-03T17:40:16+00:00",
+            "observationId": "12841",
+            "publicationId": "danny-jarabek-oscar-predictions/best-picture@697c19b00566b5c8",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://therollingtape.com/danny-jarabek-oscar-predictions/"
+          },
+          {
+            "rank": 6,
+            "points": 0.75,
+            "appeared": true,
+            "sourceId": "variety",
+            "listLength": 40,
+            "sourceName": "Variety",
+            "publishedAt": "2026-10-22T00:00:00+00:00",
+            "observationId": "12685",
+            "publicationId": "lists/2027-oscars-best-picture-predictions@427e61db8eb091e6",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://variety.com/lists/2027-oscars-best-picture-predictions/"
+          }
+        ]
+      },
+      {
+        "label": "The Invite",
+        "position": 6,
+        "score": 61,
+        "sourceContributions": [
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": true,
+            "sourceId": "awards-daily",
+            "listLength": 0,
+            "sourceName": "Awards Daily",
+            "publishedAt": "2026-10-23T00:00:00+00:00",
+            "observationId": "12202",
+            "publicationId": "2026/10/23/2027-oscar-predictions-hollywood-should-not-give-up-on-itself@c1af78027878f680",
+            "appearanceKind": "selection",
+            "publicationUrl": "https://www.awardsdaily.com/2026/10/23/2027-oscar-predictions-hollywood-should-not-give-up-on-itself/"
+          },
+          {
+            "rank": 6,
+            "points": 0.75,
+            "appeared": true,
+            "sourceId": "awards-radar",
+            "listLength": 50,
+            "sourceName": "Awards Radar",
+            "publishedAt": "2026-10-26T00:00:00+00:00",
+            "observationId": "12453",
+            "publicationId": "best-picture@92e8100f13222292",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://awardsradar.com/best-picture/"
+          },
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": true,
+            "sourceId": "awardswatch",
+            "listLength": 0,
+            "sourceName": "AwardsWatch",
+            "publishedAt": "2026-10-16T16:07:08+00:00",
+            "observationId": "11515",
+            "publicationId": "2027-oscar-predictions-best-picture-and-best-director-october@b17b7f8d49a146e4",
+            "appearanceKind": "selection",
+            "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-best-picture-and-best-director-october/"
+          },
+          {
+            "rank": 7,
+            "points": 0.7,
+            "appeared": true,
+            "sourceId": "next-best-picture",
+            "listLength": 10,
+            "sourceName": "Next Best Picture",
+            "publishedAt": null,
+            "observationId": "12734",
+            "publicationId": "u/655756da85df4c0efaa10bd2/oscars@c207e286109dee7e",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+          },
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": false,
+            "sourceId": "ankler",
+            "listLength": 10,
+            "sourceName": "The Ankler",
+            "publishedAt": "2026-11-03T00:00:00+00:00",
+            "observationId": null,
+            "publicationId": "pundit/christopher-rosen/best-picture@4b5b4ec3f90c326a",
+            "appearanceKind": "absent",
+            "publicationUrl": "https://anklerpundits.com/pundit/christopher-rosen/"
+          },
+          {
+            "rank": 3,
+            "points": 0.9,
+            "appeared": true,
+            "sourceId": "the-rolling-tape",
+            "listLength": 20,
+            "sourceName": "The Rolling Tape",
+            "publishedAt": "2026-11-03T17:40:16+00:00",
+            "observationId": "12844",
+            "publicationId": "danny-jarabek-oscar-predictions/best-picture@697c19b00566b5c8",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://therollingtape.com/danny-jarabek-oscar-predictions/"
+          },
+          {
+            "rank": 7,
+            "points": 0.7,
+            "appeared": true,
+            "sourceId": "variety",
+            "listLength": 40,
+            "sourceName": "Variety",
+            "publishedAt": "2026-10-22T00:00:00+00:00",
+            "observationId": "12688",
+            "publicationId": "lists/2027-oscars-best-picture-predictions@427e61db8eb091e6",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://variety.com/lists/2027-oscars-best-picture-predictions/"
+          }
+        ]
+      },
+      {
+        "label": "The Debut",
+        "position": 7,
+        "score": 54,
+        "sourceContributions": [
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": true,
+            "sourceId": "awards-daily",
+            "listLength": 0,
+            "sourceName": "Awards Daily",
+            "publishedAt": "2026-10-23T00:00:00+00:00",
+            "observationId": "12193",
+            "publicationId": "2026/10/23/2027-oscar-predictions-hollywood-should-not-give-up-on-itself@c1af78027878f680",
+            "appearanceKind": "selection",
+            "publicationUrl": "https://www.awardsdaily.com/2026/10/23/2027-oscar-predictions-hollywood-should-not-give-up-on-itself/"
+          },
+          {
+            "rank": 8,
+            "points": 0.65,
+            "appeared": true,
+            "sourceId": "awards-radar",
+            "listLength": 50,
+            "sourceName": "Awards Radar",
+            "publishedAt": "2026-10-26T00:00:00+00:00",
+            "observationId": "12458",
+            "publicationId": "best-picture@92e8100f13222292",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://awardsradar.com/best-picture/"
+          },
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": true,
+            "sourceId": "awardswatch",
+            "listLength": 0,
+            "sourceName": "AwardsWatch",
+            "publishedAt": "2026-10-16T16:07:08+00:00",
+            "observationId": "11466",
+            "publicationId": "2027-oscar-predictions-best-picture-and-best-director-october@b17b7f8d49a146e4",
+            "appearanceKind": "selection",
+            "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-best-picture-and-best-director-october/"
+          },
+          {
+            "rank": 6,
+            "points": 0.75,
+            "appeared": true,
+            "sourceId": "next-best-picture",
+            "listLength": 10,
+            "sourceName": "Next Best Picture",
+            "publishedAt": null,
+            "observationId": "12728",
+            "publicationId": "u/655756da85df4c0efaa10bd2/oscars@c207e286109dee7e",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+          },
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": false,
+            "sourceId": "ankler",
+            "listLength": 10,
+            "sourceName": "The Ankler",
+            "publishedAt": "2026-11-03T00:00:00+00:00",
+            "observationId": null,
+            "publicationId": "pundit/christopher-rosen/best-picture@4b5b4ec3f90c326a",
+            "appearanceKind": "absent",
+            "publicationUrl": "https://anklerpundits.com/pundit/christopher-rosen/"
+          },
+          {
+            "rank": 8,
+            "points": 0.65,
+            "appeared": true,
+            "sourceId": "the-rolling-tape",
+            "listLength": 20,
+            "sourceName": "The Rolling Tape",
+            "publishedAt": "2026-11-03T17:40:16+00:00",
+            "observationId": "12853",
+            "publicationId": "danny-jarabek-oscar-predictions/best-picture@697c19b00566b5c8",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://therollingtape.com/danny-jarabek-oscar-predictions/"
+          },
+          {
+            "rank": 8,
+            "points": 0.65,
+            "appeared": true,
+            "sourceId": "variety",
+            "listLength": 40,
+            "sourceName": "Variety",
+            "publishedAt": "2026-10-22T00:00:00+00:00",
+            "observationId": "12693",
+            "publicationId": "lists/2027-oscars-best-picture-predictions@427e61db8eb091e6",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://variety.com/lists/2027-oscars-best-picture-predictions/"
+          }
+        ]
+      },
+      {
+        "label": "You Can See Everything",
+        "position": 8,
+        "score": 48,
+        "sourceContributions": [
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": true,
+            "sourceId": "awards-daily",
+            "listLength": 0,
+            "sourceName": "Awards Daily",
+            "publishedAt": "2026-10-23T00:00:00+00:00",
+            "observationId": "12211",
+            "publicationId": "2026/10/23/2027-oscar-predictions-hollywood-should-not-give-up-on-itself@c1af78027878f680",
+            "appearanceKind": "selection",
+            "publicationUrl": "https://www.awardsdaily.com/2026/10/23/2027-oscar-predictions-hollywood-should-not-give-up-on-itself/"
+          },
+          {
+            "rank": 3,
+            "points": 0.9,
+            "appeared": true,
+            "sourceId": "awards-radar",
+            "listLength": 50,
+            "sourceName": "Awards Radar",
+            "publishedAt": "2026-10-26T00:00:00+00:00",
+            "observationId": "12457",
+            "publicationId": "best-picture@92e8100f13222292",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://awardsradar.com/best-picture/"
+          },
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": true,
+            "sourceId": "awardswatch",
+            "listLength": 0,
+            "sourceName": "AwardsWatch",
+            "publishedAt": "2026-10-16T16:07:08+00:00",
+            "observationId": "11511",
+            "publicationId": "2027-oscar-predictions-best-picture-and-best-director-october@b17b7f8d49a146e4",
+            "appearanceKind": "selection",
+            "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-best-picture-and-best-director-october/"
+          },
+          {
+            "rank": 10,
+            "points": 0.55,
+            "appeared": true,
+            "sourceId": "next-best-picture",
+            "listLength": 10,
+            "sourceName": "Next Best Picture",
+            "publishedAt": null,
+            "observationId": "12736",
+            "publicationId": "u/655756da85df4c0efaa10bd2/oscars@c207e286109dee7e",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+          },
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": false,
+            "sourceId": "ankler",
+            "listLength": 10,
+            "sourceName": "The Ankler",
+            "publishedAt": "2026-11-03T00:00:00+00:00",
+            "observationId": null,
+            "publicationId": "pundit/christopher-rosen/best-picture@4b5b4ec3f90c326a",
+            "appearanceKind": "absent",
+            "publicationUrl": "https://anklerpundits.com/pundit/christopher-rosen/"
+          },
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": false,
+            "sourceId": "the-rolling-tape",
+            "listLength": 20,
+            "sourceName": "The Rolling Tape",
+            "publishedAt": "2026-11-03T17:40:16+00:00",
+            "observationId": null,
+            "publicationId": "danny-jarabek-oscar-predictions/best-picture@697c19b00566b5c8",
+            "appearanceKind": "absent",
+            "publicationUrl": "https://therollingtape.com/danny-jarabek-oscar-predictions/"
+          },
+          {
+            "rank": 2,
+            "points": 0.95,
+            "appeared": true,
+            "sourceId": "variety",
+            "listLength": 40,
+            "sourceName": "Variety",
+            "publishedAt": "2026-10-22T00:00:00+00:00",
+            "observationId": "12687",
+            "publicationId": "lists/2027-oscars-best-picture-predictions@427e61db8eb091e6",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://variety.com/lists/2027-oscars-best-picture-predictions/"
+          }
+        ]
+      },
+      {
+        "label": "Artificial",
+        "position": 9,
+        "score": 38,
+        "sourceContributions": [
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": false,
+            "sourceId": "awards-daily",
+            "listLength": 0,
+            "sourceName": "Awards Daily",
+            "publishedAt": "2026-10-23T00:00:00+00:00",
+            "observationId": null,
+            "publicationId": "2026/10/23/2027-oscar-predictions-hollywood-should-not-give-up-on-itself@c1af78027878f680",
+            "appearanceKind": "absent",
+            "publicationUrl": "https://www.awardsdaily.com/2026/10/23/2027-oscar-predictions-hollywood-should-not-give-up-on-itself/"
+          },
+          {
+            "rank": 19,
+            "points": 0.1,
+            "appeared": true,
+            "sourceId": "awards-radar",
+            "listLength": 50,
+            "sourceName": "Awards Radar",
+            "publishedAt": "2026-10-26T00:00:00+00:00",
+            "observationId": "12470",
+            "publicationId": "best-picture@92e8100f13222292",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://awardsradar.com/best-picture/"
+          },
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": false,
+            "sourceId": "awardswatch",
+            "listLength": 0,
+            "sourceName": "AwardsWatch",
+            "publishedAt": "2026-10-16T16:07:08+00:00",
+            "observationId": null,
+            "publicationId": "2027-oscar-predictions-best-picture-and-best-director-october@b17b7f8d49a146e4",
+            "appearanceKind": "absent",
+            "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-best-picture-and-best-director-october/"
+          },
+          {
+            "rank": 9,
+            "points": 0.6,
+            "appeared": true,
+            "sourceId": "next-best-picture",
+            "listLength": 10,
+            "sourceName": "Next Best Picture",
+            "publishedAt": null,
+            "observationId": "12737",
+            "publicationId": "u/655756da85df4c0efaa10bd2/oscars@c207e286109dee7e",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+          },
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": false,
+            "sourceId": "ankler",
+            "listLength": 10,
+            "sourceName": "The Ankler",
+            "publishedAt": "2026-11-03T00:00:00+00:00",
+            "observationId": null,
+            "publicationId": "pundit/christopher-rosen/best-picture@4b5b4ec3f90c326a",
+            "appearanceKind": "absent",
+            "publicationUrl": "https://anklerpundits.com/pundit/christopher-rosen/"
+          },
+          {
+            "rank": 9,
+            "points": 0.6,
+            "appeared": true,
+            "sourceId": "the-rolling-tape",
+            "listLength": 20,
+            "sourceName": "The Rolling Tape",
+            "publishedAt": "2026-11-03T17:40:16+00:00",
+            "observationId": "12851",
+            "publicationId": "danny-jarabek-oscar-predictions/best-picture@697c19b00566b5c8",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://therollingtape.com/danny-jarabek-oscar-predictions/"
+          },
+          {
+            "rank": 9,
+            "points": 0.6,
+            "appeared": true,
+            "sourceId": "variety",
+            "listLength": 40,
+            "sourceName": "Variety",
+            "publishedAt": "2026-10-22T00:00:00+00:00",
+            "observationId": "12689",
+            "publicationId": "lists/2027-oscars-best-picture-predictions@427e61db8eb091e6",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://variety.com/lists/2027-oscars-best-picture-predictions/"
+          }
+        ]
+      },
+      {
+        "label": "I Play Rocky",
+        "position": 10,
+        "score": 33,
+        "sourceContributions": [
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": true,
+            "sourceId": "awards-daily",
+            "listLength": 0,
+            "sourceName": "Awards Daily",
+            "publishedAt": "2026-10-23T00:00:00+00:00",
+            "observationId": "12208",
+            "publicationId": "2026/10/23/2027-oscar-predictions-hollywood-should-not-give-up-on-itself@c1af78027878f680",
+            "appearanceKind": "selection",
+            "publicationUrl": "https://www.awardsdaily.com/2026/10/23/2027-oscar-predictions-hollywood-should-not-give-up-on-itself/"
+          },
+          {
+            "rank": 9,
+            "points": 0.6,
+            "appeared": true,
+            "sourceId": "awards-radar",
+            "listLength": 50,
+            "sourceName": "Awards Radar",
+            "publishedAt": "2026-10-26T00:00:00+00:00",
+            "observationId": "12461",
+            "publicationId": "best-picture@92e8100f13222292",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://awardsradar.com/best-picture/"
+          },
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": false,
+            "sourceId": "awardswatch",
+            "listLength": 0,
+            "sourceName": "AwardsWatch",
+            "publishedAt": "2026-10-16T16:07:08+00:00",
+            "observationId": null,
+            "publicationId": "2027-oscar-predictions-best-picture-and-best-director-october@b17b7f8d49a146e4",
+            "appearanceKind": "absent",
+            "publicationUrl": "https://awardswatch.com/2027-oscar-predictions-best-picture-and-best-director-october/"
+          },
+          {
+            "rank": 8,
+            "points": 0.65,
+            "appeared": true,
+            "sourceId": "next-best-picture",
+            "listLength": 10,
+            "sourceName": "Next Best Picture",
+            "publishedAt": null,
+            "observationId": "12735",
+            "publicationId": "u/655756da85df4c0efaa10bd2/oscars@c207e286109dee7e",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://predictions.nextbestpicture.com/u/655756da85df4c0efaa10bd2/oscars"
+          },
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": false,
+            "sourceId": "ankler",
+            "listLength": 10,
+            "sourceName": "The Ankler",
+            "publishedAt": "2026-11-03T00:00:00+00:00",
+            "observationId": null,
+            "publicationId": "pundit/christopher-rosen/best-picture@4b5b4ec3f90c326a",
+            "appearanceKind": "absent",
+            "publicationUrl": "https://anklerpundits.com/pundit/christopher-rosen/"
+          },
+          {
+            "rank": null,
+            "points": 0,
+            "appeared": false,
+            "sourceId": "the-rolling-tape",
+            "listLength": 20,
+            "sourceName": "The Rolling Tape",
+            "publishedAt": "2026-11-03T17:40:16+00:00",
+            "observationId": null,
+            "publicationId": "danny-jarabek-oscar-predictions/best-picture@697c19b00566b5c8",
+            "appearanceKind": "absent",
+            "publicationUrl": "https://therollingtape.com/danny-jarabek-oscar-predictions/"
+          },
+          {
+            "rank": 13,
+            "points": 0.4,
+            "appeared": true,
+            "sourceId": "variety",
+            "listLength": 40,
+            "sourceName": "Variety",
+            "publishedAt": "2026-10-22T00:00:00+00:00",
+            "observationId": "12694",
+            "publicationId": "lists/2027-oscars-best-picture-predictions@427e61db8eb091e6",
+            "appearanceKind": "ordered",
+            "publicationUrl": "https://variety.com/lists/2027-oscars-best-picture-predictions/"
+          }
+        ]
+      }
+    ]
+  },
+  "sources": [
+    {
+      "captureId": 2408,
+      "capturedAt": "2026-10-19T17:20:39.406+00:00",
+      "originalCategories": {
+        "best-picture": 10
+      },
+      "sourceId": "awardswatch",
+      "observationsAtCut": 10,
+      "rows": [
+        {
+          "id": 11462,
+          "subject": "La Bola Negra"
+        },
+        {
+          "id": 11466,
+          "subject": "The Debut"
+        },
+        {
+          "id": 11467,
+          "subject": "Wild Horse Nine"
+        },
+        {
+          "id": 11476,
+          "subject": "Dune: Part Three"
+        },
+        {
+          "id": 11486,
+          "subject": "All of a Sudden"
+        },
+        {
+          "id": 11498,
+          "subject": "The Odyssey"
+        },
+        {
+          "id": 11511,
+          "subject": "You Can See Everything"
+        },
+        {
+          "id": 11515,
+          "subject": "The Invite"
+        },
+        {
+          "id": 11525,
+          "subject": "Elsinore"
+        },
+        {
+          "id": 11552,
+          "subject": "Project Hail Mary"
+        }
+      ],
+      "run": {
+        "id": 930,
+        "connector_id": "awardswatch-predictions",
+        "status": "succeeded",
+        "started_at": "2026-10-19T17:20:39.406+00:00",
+        "finished_at": "2026-10-19T17:22:23.718+00:00",
+        "observations_seen": 45,
+        "observations_inserted": 45,
+        "observations_duplicate": 0,
+        "error_summary": null
+      }
+    },
+    {
+      "captureId": 2658,
+      "capturedAt": "2026-10-24T04:17:01.453+00:00",
+      "originalCategories": {
+        "actor": 5,
+        "actress": 5,
+        "casting": 5,
+        "directing": 5,
+        "best-picture": 10,
+        "film-editing": 5,
+        "cinematography": 5,
+        "costume-design": 5,
+        "visual-effects": 5,
+        "supporting-actor": 5,
+        "production-design": 5,
+        "adapted-screenplay": 5,
+        "makeup-hairstyling": 5,
+        "supporting-actress": 5,
+        "original-screenplay": 5
+      },
+      "sourceId": "awards-daily",
+      "observationsAtCut": 10,
+      "rows": [
+        {
+          "id": 12193,
+          "subject": "The Debut"
+        },
+        {
+          "id": 12196,
+          "subject": "The Odyssey"
+        },
+        {
+          "id": 12198,
+          "subject": "Wild Horse Nine"
+        },
+        {
+          "id": 12199,
+          "subject": "La Bola Negra"
+        },
+        {
+          "id": 12200,
+          "subject": "Project Hail Mary"
+        },
+        {
+          "id": 12202,
+          "subject": "The Invite"
+        },
+        {
+          "id": 12206,
+          "subject": "Obsession"
+        },
+        {
+          "id": 12208,
+          "subject": "I Play Rocky"
+        },
+        {
+          "id": 12210,
+          "subject": "The Further Mis-Adventures of Cliff Booth"
+        },
+        {
+          "id": 12211,
+          "subject": "You Can See Everything"
+        }
+      ],
+      "run": {
+        "id": 1018,
+        "connector_id": "awards-daily-predictions",
+        "status": "succeeded",
+        "started_at": "2026-10-24T04:17:01.453+00:00",
+        "finished_at": "2026-10-24T04:17:29.939+00:00",
+        "observations_seen": 80,
+        "observations_inserted": 79,
+        "observations_duplicate": 1,
+        "error_summary": null
+      }
+    },
+    {
+      "captureId": 2705,
+      "capturedAt": "2026-10-27T04:17:01.639+00:00",
+      "originalCategories": {
+        "best-picture": 50
+      },
+      "sourceId": "awards-radar",
+      "observationsAtCut": 20,
+      "rows": [
+        {
+          "id": 12452,
+          "subject": "The Odyssey",
+          "rank": 1
+        },
+        {
+          "id": 12453,
+          "subject": "The Invite",
+          "rank": 6
+        },
+        {
+          "id": 12454,
+          "subject": "Project Hail Mary",
+          "rank": 5
+        },
+        {
+          "id": 12455,
+          "subject": "La bola negra",
+          "rank": 2
+        },
+        {
+          "id": 12456,
+          "subject": "Wild Horse Nine",
+          "rank": 4
+        },
+        {
+          "id": 12457,
+          "subject": "You Can See Everything",
+          "rank": 3
+        },
+        {
+          "id": 12458,
+          "subject": "The Debut",
+          "rank": 8
+        },
+        {
+          "id": 12459,
+          "subject": "Elsinore",
+          "rank": 10
+        },
+        {
+          "id": 12460,
+          "subject": "Club Kid",
+          "rank": 11
+        },
+        {
+          "id": 12461,
+          "subject": "I Play Rocky",
+          "rank": 9
+        },
+        {
+          "id": 12462,
+          "subject": "Fjord",
+          "rank": 12
+        },
+        {
+          "id": 12463,
+          "subject": "Dune: Part Three",
+          "rank": 7
+        },
+        {
+          "id": 12464,
+          "subject": "Tender Loving Care",
+          "rank": 14
+        },
+        {
+          "id": 12465,
+          "subject": "Paper Tiger",
+          "rank": 15
+        },
+        {
+          "id": 12466,
+          "subject": "All of a Sudden",
+          "rank": 13
+        },
+        {
+          "id": 12467,
+          "subject": "Digger",
+          "rank": 16
+        },
+        {
+          "id": 12468,
+          "subject": "Behemoth!",
+          "rank": 18
+        },
+        {
+          "id": 12469,
+          "subject": "Wildwood",
+          "rank": 17
+        },
+        {
+          "id": 12470,
+          "subject": "Artifical",
+          "rank": 19
+        },
+        {
+          "id": 12471,
+          "subject": "Being Heumann",
+          "rank": 20
+        }
+      ],
+      "run": {
+        "id": 1032,
+        "connector_id": "awards-radar-predictions",
+        "status": "succeeded",
+        "started_at": "2026-10-27T04:17:01.639+00:00",
+        "finished_at": "2026-10-27T04:17:33.405+00:00",
+        "observations_seen": 190,
+        "observations_inserted": 190,
+        "observations_duplicate": 0,
+        "error_summary": null
+      }
+    },
+    {
+      "captureId": 2733,
+      "capturedAt": "2026-10-31T04:17:10.162+00:00",
+      "originalCategories": {},
+      "sourceId": "variety",
+      "observationsAtCut": 20,
+      "rows": [
+        {
+          "id": 12682,
+          "subject": "Dune: Part Three",
+          "rank": 3
+        },
+        {
+          "id": 12683,
+          "subject": "The Odyssey",
+          "rank": 1
+        },
+        {
+          "id": 12684,
+          "subject": "La Bola Negra",
+          "rank": 4
+        },
+        {
+          "id": 12685,
+          "subject": "Project Hail Mary",
+          "rank": 6
+        },
+        {
+          "id": 12686,
+          "subject": "Wild Horse Nine",
+          "rank": 5
+        },
+        {
+          "id": 12687,
+          "subject": "You Can See Everything",
+          "rank": 2
+        },
+        {
+          "id": 12688,
+          "subject": "The Invite",
+          "rank": 7
+        },
+        {
+          "id": 12689,
+          "subject": "Artificial",
+          "rank": 9
+        },
+        {
+          "id": 12690,
+          "subject": "Wildwood",
+          "rank": 10
+        },
+        {
+          "id": 12691,
+          "subject": "Fjord",
+          "rank": 12
+        },
+        {
+          "id": 12692,
+          "subject": "Elsinore",
+          "rank": 11
+        },
+        {
+          "id": 12693,
+          "subject": "The Debut",
+          "rank": 8
+        },
+        {
+          "id": 12694,
+          "subject": "I Play Rocky",
+          "rank": 13
+        },
+        {
+          "id": 12695,
+          "subject": "Possible Love",
+          "rank": 15
+        },
+        {
+          "id": 12696,
+          "subject": "Club Kid",
+          "rank": 14
+        },
+        {
+          "id": 12697,
+          "subject": "Tender Loving Care",
+          "rank": 16
+        },
+        {
+          "id": 12698,
+          "subject": "Behemoth!",
+          "rank": 17
+        },
+        {
+          "id": 12699,
+          "subject": "Being Heumann",
+          "rank": 20
+        },
+        {
+          "id": 12700,
+          "subject": "Michael",
+          "rank": 18
+        },
+        {
+          "id": 12702,
+          "subject": "Josephine",
+          "rank": 19
+        }
+      ],
+      "run": {
+        "id": 1039,
+        "connector_id": "variety-best-picture-predictions",
+        "status": "succeeded",
+        "started_at": "2026-10-31T04:17:10.162+00:00",
+        "finished_at": "2026-10-31T04:17:16.006+00:00",
+        "observations_seen": 40,
+        "observations_inserted": 40,
+        "observations_duplicate": 0,
+        "error_summary": null
+      }
+    },
+    {
+      "captureId": 2755,
+      "capturedAt": "2026-11-03T04:17:02.067+00:00",
+      "originalCategories": {
+        "actor": 5,
+        "sound": 5,
+        "actress": 5,
+        "casting": 5,
+        "directing": 5,
+        "best-picture": 10,
+        "film-editing": 5,
+        "original-song": 5,
+        "cinematography": 5,
+        "costume-design": 5,
+        "original-score": 5,
+        "visual-effects": 5,
+        "animated-feature": 5,
+        "supporting-actor": 5,
+        "production-design": 5,
+        "adapted-screenplay": 5,
+        "makeup-hairstyling": 5,
+        "supporting-actress": 5,
+        "documentary-feature": 5,
+        "original-screenplay": 5,
+        "international-feature": 5
+      },
+      "sourceId": "next-best-picture",
+      "observationsAtCut": 10,
+      "rows": [
+        {
+          "id": 12728,
+          "subject": "The Debut",
+          "rank": 6
+        },
+        {
+          "id": 12729,
+          "subject": "LA BOLA NEGRA",
+          "rank": 1
+        },
+        {
+          "id": 12730,
+          "subject": "Wild Horse Nine",
+          "rank": 3
+        },
+        {
+          "id": 12731,
+          "subject": "Dune: Part Three",
+          "rank": 4
+        },
+        {
+          "id": 12732,
+          "subject": "The Odyssey",
+          "rank": 2
+        },
+        {
+          "id": 12733,
+          "subject": "Project Hail Mary",
+          "rank": 5
+        },
+        {
+          "id": 12734,
+          "subject": "The Invite",
+          "rank": 7
+        },
+        {
+          "id": 12735,
+          "subject": "I Play Rocky",
+          "rank": 8
+        },
+        {
+          "id": 12736,
+          "subject": "You Can See Everything",
+          "rank": 10
+        },
+        {
+          "id": 12737,
+          "subject": "Artificial",
+          "rank": 9
+        }
+      ],
+      "run": {
+        "id": 1043,
+        "connector_id": "next-best-picture-predictions",
+        "status": "succeeded",
+        "started_at": "2026-11-03T04:17:02.067+00:00",
+        "finished_at": "2026-11-03T04:17:16.297+00:00",
+        "observations_seen": 110,
+        "observations_inserted": 110,
+        "observations_duplicate": 0,
+        "error_summary": null
+      }
+    },
+    {
+      "captureId": 2770,
+      "capturedAt": "2026-11-04T04:17:03.159+00:00",
+      "originalCategories": {},
+      "sourceId": "the-rolling-tape",
+      "observationsAtCut": 11,
+      "rows": [
+        {
+          "id": 12841,
+          "subject": "Project Hail Mary",
+          "rank": 6
+        },
+        {
+          "id": 12842,
+          "subject": "All of a Sudden",
+          "rank": 5
+        },
+        {
+          "id": 12843,
+          "subject": "Dune: Part Three",
+          "rank": 4
+        },
+        {
+          "id": 12844,
+          "subject": "The Invite",
+          "rank": 3
+        },
+        {
+          "id": 12845,
+          "subject": "The Odyssey",
+          "rank": 1
+        },
+        {
+          "id": 12846,
+          "subject": "La Bola Negra",
+          "rank": 2
+        },
+        {
+          "id": 12849,
+          "subject": "Wild Horse Nine",
+          "rank": 7
+        },
+        {
+          "id": 12851,
+          "subject": "Artificial",
+          "rank": 9
+        },
+        {
+          "id": 12853,
+          "subject": "The Debut",
+          "rank": 8
+        },
+        {
+          "id": 12856,
+          "subject": "Obsession",
+          "rank": 11
+        },
+        {
+          "id": 12857,
+          "subject": "Fjord",
+          "rank": 13
+        }
+      ],
+      "run": {
+        "id": 1062,
+        "connector_id": "rolling-tape-predictions",
+        "status": "failed",
+        "started_at": "2026-11-04T04:17:03.159+00:00",
+        "finished_at": "2026-11-05T04:17:01.973+00:00",
+        "observations_seen": 0,
+        "observations_inserted": 0,
+        "observations_duplicate": 0,
+        "error_summary": "Ejecución abandonada; recuperada antes de iniciar un nuevo intento"
+      }
+    },
+    {
+      "captureId": 2772,
+      "capturedAt": "2026-11-04T04:17:03.118+00:00",
+      "originalCategories": {},
+      "sourceId": "ankler",
+      "observationsAtCut": 1,
+      "rows": [
+        {
+          "id": 12855,
+          "subject": "Dune: Part Three",
+          "rank": 6
+        }
+      ],
+      "run": {
+        "id": 1060,
+        "connector_id": "ankler-predictions",
+        "status": "failed",
+        "started_at": "2026-11-04T04:17:03.118+00:00",
+        "finished_at": "2026-11-05T04:17:02.101+00:00",
+        "observations_seen": 0,
+        "observations_inserted": 0,
+        "observations_duplicate": 0,
+        "error_summary": "Ejecución abandonada; recuperada antes de iniciar un nuevo intento"
+      }
+    }
+  ]
+}

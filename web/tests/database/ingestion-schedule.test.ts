@@ -7,6 +7,28 @@ const schedulePath = path.resolve(
   import.meta.dirname,
   "../../../supabase/schedules/run-ingestion-daily.sql",
 );
+const jobPrefix = "runscars-ingestion-daily-connector-";
+const activeConnectorIds = [
+  "ankler-predictions",
+  "awards-daily-predictions",
+  "awards-radar-predictions",
+  "awardswatch-predictions",
+  "guardian-content-api",
+  "midnight-critics-predictions",
+  "movie-state-predictions",
+  "next-best-picture-predictions",
+  "ringer-best-picture",
+  "roger-ebert-rss",
+  "rolling-tape-predictions",
+  "variety-actor-predictions",
+  "variety-actress-predictions",
+  "variety-adapted-screenplay-predictions",
+  "variety-best-picture-predictions",
+  "variety-directing-predictions",
+  "variety-original-screenplay-predictions",
+  "variety-supporting-actor-predictions",
+  "variety-supporting-actress-predictions",
+];
 
 describe("daily ingestion dispatch", () => {
   let database: PGlite;
@@ -68,8 +90,7 @@ describe("daily ingestion dispatch", () => {
       insert into vault.decrypted_secrets values
         ('runscars_ingestion_cron_secret', 'fixture-before-rotation');
       insert into public.source_connectors values
-        ('awardswatch-predictions', true),
-        ('guardian-reviews', true),
+        ${activeConnectorIds.map((id) => `('${id}', true)`).join(",")},
         ('paused-predictions', false);
     `);
   });
@@ -80,32 +101,47 @@ describe("daily ingestion dispatch", () => {
 
   async function dispatch() {
     const { rows } = await database.query<{ command: string }>(`
-      select command from cron.job where jobname = 'runscars-ingestion-daily'
+      select command from cron.job where starts_with(jobname, '${jobPrefix}')
+      order by schedule, jobname
     `);
-    await database.exec(rows[0].command);
+    for (const row of rows) await database.exec(row.command);
   }
 
-  it("reinstalls one daily dispatcher while retaining unrelated jobs", async () => {
+  it("reinstalls nineteen unique staggered jobs while retaining markets and festivals", async () => {
     await database.exec(`
       insert into cron.job (jobname, schedule, command) values
         ('runscars-ingestion-daily', '17 4 * * *', 'select 1'),
-        ('runscars-markets-hourly', '17 * * * *', 'select 2');
+        ('runscars-ingestion-daily-connector-removed', '17 4 * * *', 'select 1'),
+        ('runscars-markets-hourly', '17 * * * *', 'select 2'),
+        ('runscars-festivals-daily', '17 5 * * *', 'select 3');
     `);
     await database.exec(scheduleSql);
     await database.exec(scheduleSql);
 
-    const jobs = await database.query(`
+    const jobs = await database.query<{ jobname: string; schedule: string }>(`
       select jobname, schedule from cron.job order by jobname
     `);
-    expect(jobs.rows).toEqual([
-      { jobname: "runscars-ingestion-daily", schedule: "17 4 * * *" },
+    const ingestionJobs = jobs.rows.filter((job) =>
+      job.jobname.startsWith(jobPrefix),
+    );
+    expect(ingestionJobs).toEqual(
+      activeConnectorIds.map((id, index) => ({
+        jobname: `${jobPrefix}${id}`,
+        schedule: `${17 + index} 4 * * *`,
+      })),
+    );
+    expect(new Set(ingestionJobs.map((job) => job.schedule)).size).toBe(19);
+    expect(
+      jobs.rows.filter((job) => !job.jobname.startsWith(jobPrefix)),
+    ).toEqual([
+      { jobname: "runscars-festivals-daily", schedule: "17 5 * * *" },
       { jobname: "runscars-markets-hourly", schedule: "17 * * * *" },
     ]);
     const requests = await database.query("select id from net.request_queue");
     expect(requests.rows).toEqual([]);
   });
 
-  it("queues a separately authenticated request per active connector", async () => {
+  it("queues one source per job and reads the rotated secret at invocation time", async () => {
     await database.exec(scheduleSql);
     await database.exec(`
       update vault.decrypted_secrets
@@ -121,12 +157,20 @@ describe("daily ingestion dispatch", () => {
       body: { trigger: string; connectors: string[] };
       timeout_milliseconds: number;
     }>("select * from net.request_queue order by id");
-    expect(rows).toHaveLength(2);
-    expect(new Set(rows.map((row) => row.id)).size).toBe(2);
-    expect(rows.map((row) => row.body)).toEqual([
-      { trigger: "scheduled", connectors: ["awardswatch-predictions"] },
-      { trigger: "scheduled", connectors: ["guardian-reviews"] },
-    ]);
+    expect(rows).toHaveLength(19);
+    expect(new Set(rows.map((row) => row.id)).size).toBe(19);
+    expect(rows.map((row) => row.body)).toEqual(
+      activeConnectorIds.map((id) => ({
+        trigger: "scheduled",
+        connectors: [id],
+      })),
+    );
+    const jobs = await database.query<{ command: string }>(
+      "select command from cron.job",
+    );
+    expect(jobs.rows.every((job) => !job.command.includes("fixture-"))).toBe(
+      true,
+    );
     for (const row of rows) {
       expect(row.url).toBe(
         "https://lgiqzrxeifwciykckzrn.supabase.co/functions/v1/run-ingestion",
@@ -139,10 +183,10 @@ describe("daily ingestion dispatch", () => {
     }
   });
 
-  it("reads activations and pauses at dispatch time and never queues an all-connectors fallback", async () => {
+  it("applies pauses immediately and installs newly activated sources when the schedule is reapplied", async () => {
     await database.exec(scheduleSql);
     await database.exec(`
-      update public.source_connectors set is_active = false;
+      update public.source_connectors set is_active = false where id = 'ankler-predictions';
       insert into public.source_connectors values ('new-predictions', true);
       update public.source_connectors set is_active = true
       where id = 'paused-predictions';
@@ -151,16 +195,33 @@ describe("daily ingestion dispatch", () => {
     const first = await database.query<{ body: { connectors: string[] } }>(
       "select body from net.request_queue order by id",
     );
-    expect(first.rows.map((row) => row.body.connectors)).toEqual([
-      ["new-predictions"],
-      ["paused-predictions"],
-    ]);
+    expect(first.rows.map((row) => row.body.connectors)).toEqual(
+      activeConnectorIds
+        .filter((id) => id !== "ankler-predictions")
+        .map((id) => [id]),
+    );
+
+    await database.exec("delete from net.request_queue");
+    await database.exec(scheduleSql);
+    await dispatch();
+    const newlyInstalled = await database.query<{
+      body: { connectors: string[] };
+    }>("select body from net.request_queue order by id");
+    expect(newlyInstalled.rows.map((row) => row.body.connectors)).toEqual(
+      [
+        ...activeConnectorIds.filter((id) => id !== "ankler-predictions"),
+        "new-predictions",
+        "paused-predictions",
+      ]
+        .sort()
+        .map((id) => [id]),
+    );
 
     await database.exec(
       "update public.source_connectors set is_active = false",
     );
     await dispatch();
     const second = await database.query("select id from net.request_queue");
-    expect(second.rows).toHaveLength(2);
+    expect(second.rows).toHaveLength(20);
   });
 });

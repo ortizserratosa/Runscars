@@ -96,6 +96,37 @@ afterEach(() => vi.unstubAllGlobals());
 
 describe("public prediction states", () => {
   it.each(["es", "en"] as const)(
+    "explains a withdrawn historical URL without displaying its invalid ranking in %s",
+    async (locale) => {
+      state.locale = locale;
+      const selected = view(5);
+      selected.integrityCorrection = {
+        snapshotId: "withdrawn-import",
+        reason: "Importación incompleta",
+        correctedAt: "2026-11-06T13:00:00Z",
+      };
+      const html = renderToStaticMarkup(
+        await CategoryPageView({
+          category: PUBLIC_CATEGORIES[0],
+          view: selected,
+        }),
+      );
+      expect(html).toContain('role="status"');
+      expect(html).toContain(
+        locale === "en"
+          ? "Historical update withdrawn"
+          : "Actualización histórica retirada",
+      );
+      expect(html).toContain(
+        locale === "en"
+          ? "A valid update is shown below."
+          : "A continuación se muestra una actualización válida.",
+      );
+      expect(html).not.toContain("corte=withdrawn-import");
+    },
+  );
+
+  it.each(["es", "en"] as const)(
     "renders the empty homepage without a fabricated leader or error in %s",
     async (locale) => {
       state.locale = locale;

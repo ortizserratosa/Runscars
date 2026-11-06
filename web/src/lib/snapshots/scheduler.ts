@@ -223,7 +223,7 @@ export class SupabaseSnapshotSchedulerRepository
     const observations =
       databaseError(
         await this.client
-          .from("professional_observations")
+          .from("completed_professional_observations")
           .select(
             "id, source_id, publication_id, film_id, data_type, original_subject, original_value, source_url, author, published_at, captured_at, participates, state",
           )
@@ -383,7 +383,7 @@ export class SupabaseSnapshotSchedulerRepository
     const observations = await allDatabaseRows(
       (from, to) =>
         this.client
-          .from("professional_observations")
+          .from("completed_professional_observations")
           .select(
             "id, source_id, publication_id, capture_id, category_candidate_id, data_type, original_subject, original_value, author, published_at, captured_at, participates, state",
           )
@@ -395,6 +395,7 @@ export class SupabaseSnapshotSchedulerRepository
           .not("category_candidate_id", "is", null)
           .in("data_type", ["prediction_ordered", "prediction_selection"])
           .order("id", { ascending: true })
+          .order("capture_id", { ascending: true })
           .range(from, to),
       `No se pudieron cargar observaciones v2 para ${schedule.id}`,
     );
@@ -521,6 +522,7 @@ export class SupabaseSnapshotSchedulerRepository
           sourceId: source.id,
           sourceName: source.name,
           publicationId: publication.external_id,
+          captureId: String(row.capture_id),
           publicationUrl: publication.canonical_url,
           author: row.author,
           publishedAt: row.published_at,
@@ -597,7 +599,7 @@ export class SupabaseSnapshotSchedulerRepository
       [...publicationById.keys()],
       (batch, from, to) =>
         this.client
-          .from("source_publication_captures")
+          .from("completed_source_publication_captures")
           .select("id, publication_id, original_data, captured_at")
           .in("publication_id", batch)
           .order("id", { ascending: true })

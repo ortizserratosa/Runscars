@@ -312,13 +312,100 @@ describe("public prediction history cache", () => {
     await expect(
       getPublicHistorySelection("best-picture", rows[25].id),
     ).rejects.toThrow("Transient database failure");
-    expect(state.cache.size).toBe(0);
+    expect(
+      [...state.cache.keys()].some((key) =>
+        key.includes("public-history-index-"),
+      ),
+    ).toBe(false);
     state.failPage = -1;
     const recovered = await getPublicHistorySelection(
       "best-picture",
       rows[25].id,
     );
     expect(recovered.selected?.id).toBe(rows[25].id);
+  });
+
+  it("applies a new correction after a minute without changing the pointer or repeatedly reloading history", async () => {
+    const first = snapshot("valid", "2026-07-20T04:47:00Z");
+    const invalid = snapshot(
+      "incomplete",
+      "2026-07-21T04:47:00Z",
+      "best-picture",
+      true,
+    );
+    state.tables.aggregate_snapshots = [first, invalid];
+    const before = await getPublicHistorySelection("best-picture", invalid.id);
+    expect(before.selected?.id).toBe(invalid.id);
+    expect(historyReads()).toHaveLength(1);
+
+    state.tables.snapshot_integrity_corrections = [
+      {
+        snapshot_id: invalid.id,
+        reason: "Importación incompleta",
+        corrected_at: "2026-11-06T13:00:00Z",
+      },
+    ];
+    state.now = 61_000;
+    const corrected = await getPublicHistorySelection(
+      "best-picture",
+      invalid.id,
+      invalid.id,
+    );
+    expect(corrected.selected?.id).toBe(first.id);
+    expect(corrected.cuts.map((cut) => cut.id)).toEqual([first.id]);
+    expect(corrected.previous).toBeNull();
+    expect(corrected.integrityCorrection?.snapshotId).toBe(invalid.id);
+    expect(historyReads()).toHaveLength(2);
+    state.now = 122_000;
+    await getPublicHistorySelection("best-picture", invalid.id);
+    expect(historyReads()).toHaveLength(2);
+    expect(state.tables.aggregate_snapshots).toEqual([first, invalid]);
+  });
+
+  it("returns no ranking when every persisted snapshot is withdrawn", async () => {
+    const invalid = snapshot("incomplete", "2026-07-21T04:47:00Z");
+    state.tables.aggregate_snapshots = [invalid];
+    state.tables.snapshot_integrity_corrections = [
+      {
+        snapshot_id: invalid.id,
+        reason: "Importación incompleta",
+        corrected_at: "2026-11-06T13:00:00Z",
+      },
+    ];
+    const corrected = await getPublicHistorySelection(
+      "best-picture",
+      invalid.id,
+    );
+    expect(corrected.selected).toBeNull();
+    expect(corrected.cuts).toEqual([]);
+    expect(corrected.currentCandidates).toEqual([]);
+    expect(corrected.integrityCorrection?.snapshotId).toBe(invalid.id);
+  });
+
+  it("retains the last complete envelope of the same day when a newer intraday envelope is withdrawn", async () => {
+    const valid = snapshot("morning", "2026-07-21T04:47:00Z");
+    const invalid = snapshot(
+      "afternoon-incomplete",
+      "2026-07-21T16:00:00Z",
+      "best-picture",
+      true,
+    );
+    state.tables.aggregate_snapshots = [valid, invalid];
+    state.tables.snapshot_integrity_corrections = [
+      {
+        snapshot_id: invalid.id,
+        reason: "Importación incompleta",
+        corrected_at: "2026-11-06T13:00:00Z",
+      },
+    ];
+    const corrected = await getPublicHistorySelection(
+      "best-picture",
+      invalid.id,
+      invalid.id,
+    );
+    expect(corrected.cuts.map((cut) => cut.id)).toEqual([valid.id]);
+    expect(corrected.selected?.id).toBe(valid.id);
+    expect(corrected.integrityCorrection?.snapshotId).toBe(invalid.id);
   });
 
   it("retries missing capture evidence after an hour without inventing movements", async () => {

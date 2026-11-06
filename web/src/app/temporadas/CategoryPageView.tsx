@@ -297,6 +297,31 @@ function ActiveCategory({
               </strong>
             </div>
           </div>
+          {view.integrityCorrection ? (
+            <div className="locked-snapshot-note" role="status">
+              <div>
+                <strong>
+                  {en
+                    ? "Historical update withdrawn"
+                    : "Actualización histórica retirada"}
+                </strong>
+                <span>
+                  {en
+                    ? "The requested update included an incomplete import and has been excluded from the history and movement comparisons."
+                    : "El corte solicitado incluía una importación incompleta y se ha excluido del historial y de las comparaciones de movimientos."}
+                </span>
+                <span>
+                  {view.snapshot
+                    ? en
+                      ? "A valid update is shown below."
+                      : "A continuación se muestra una actualización válida."
+                    : en
+                      ? "No valid update is available yet."
+                      : "Todavía no hay una actualización válida disponible."}
+                </span>
+              </div>
+            </div>
+          ) : null}
           {view.snapshot ? (
             <>
               <details

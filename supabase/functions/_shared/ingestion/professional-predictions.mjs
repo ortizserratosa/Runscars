@@ -147,6 +147,7 @@ const SCREENPLAY_CATEGORIES = new Set([
 const SOURCE_FILM_ALIASES = new Map([
   ["adventures of cliff booth", "The Adventures of Cliff Booth"],
   ["dune iii", "Dune: Part Three"],
+  ["further mis-adventures of cliff booth", "The Adventures of Cliff Booth"],
   ["la bola begra", "La Bola Negra"],
   ["sense and sensibillity", "Sense and Sensibility"],
   [
@@ -363,8 +364,11 @@ function expectedCeremonyYear(seasonId) {
 function assertPredictionSeason(evidence, seasonId, sourceId) {
   const expected = expectedCeremonyYear(seasonId);
   const years = [
-    ...evidence.matchAll(/\b(20\d{2})\s+Oscars?\s+Predictions\b/gi),
-  ].map((match) => Number(match[1]));
+    /\b(20\d{2})\s+Oscars?\s+(?:nomination\s+)?Predictions\b/gi,
+    /\bOscars?\s+(?:nomination\s+)?Predictions\s+(?:for\s+)?(20\d{2})\b/gi,
+  ].flatMap((pattern) =>
+    [...evidence.matchAll(pattern)].map((match) => Number(match[1])),
+  );
   if (expected && years.length && !years.includes(expected)) {
     throw new Error(`${sourceId} publicó predicciones de otra temporada`);
   }
@@ -418,17 +422,48 @@ function headingCategory(line) {
   return null;
 }
 
-function updatedPredictionDate(lines) {
+function updatedPredictionDate(lines, capturedAt) {
   const value = lines.find((line) =>
     /^Updated\s+[A-Z][a-z]+\s+\d{1,2}(?:st|nd|rd|th)?,\s+\d{4}$/i.test(line),
   );
   if (!value) return null;
-  const parsed = Date.parse(
-    `${value
-      .replace(/^Updated\s+/i, "")
-      .replace(/(\d{1,2})(?:st|nd|rd|th)/i, "$1")} UTC`,
+  const match = value.match(
+    /^Updated\s+([A-Z][a-z]+)\s+(\d{1,2})(?:st|nd|rd|th)?,\s+(\d{4})$/i,
   );
-  return Number.isNaN(parsed) ? null : new Date(parsed).toISOString();
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const month = months.findIndex(
+    (name) => name.toLowerCase() === match[1].toLowerCase(),
+  );
+  const year = Number(match[3]);
+  const day = Number(match[2]);
+  const parsed = Date.UTC(year, month, day);
+  const date = new Date(parsed);
+  if (
+    month < 0 ||
+    date.getUTCFullYear() !== year ||
+    date.getUTCMonth() !== month ||
+    date.getUTCDate() !== day ||
+    !Number.isFinite(Date.parse(capturedAt)) ||
+    parsed > Date.parse(capturedAt)
+  ) {
+    throw new Error(
+      "awards-radar contiene una fecha editorial inválida o futura",
+    );
+  }
+  return date.toISOString();
 }
 
 function peopleFromText(value) {
@@ -496,7 +531,10 @@ function subjectParts(categoryId, raw) {
       workTitle: null,
     };
   }
-  const parts = clean.split(/,\s*/);
+  const parts = clean
+    .split(/,\s*/)
+    .map((part) => part.trim())
+    .filter(Boolean);
   if (parts.length >= 2) {
     return {
       subject: clean,
@@ -729,16 +767,40 @@ export function parseAwardsDailyFixture(
     maxRows: 10,
     maxOrderedRows: Number.POSITIVE_INFINITY,
   });
-  return buildBatch({
+  // October's article explicitly declares an order immediately before its
+  // otherwise unnumbered Best Picture list. It does not declare an order for
+  // the remaining categories, or for a list elsewhere in the article.
+  const orderStatement = lines[start - 1]?.match(
+    /\bFor now, I[’']m ordering these by which films I think are strongest\b/i,
+  )?.[0];
+  const pictureRows = rowsByCategory.get("best-picture");
+  const declaredPictureOrder =
+    headingCategory(lines[start]) === "best-picture" &&
+    orderStatement &&
+    pictureRows?.length &&
+    pictureRows.every((row) => row.rank === null);
+  if (declaredPictureOrder) {
+    pictureRows.forEach((row, index) => {
+      row.rank = index + 1;
+      row.orderEvidence = "explicit-editorial-statement";
+    });
+  }
+  const batch = buildBatch({
     connectorId,
     sourceId: "awards-daily",
-    extractorVersion: "awards-daily-v9",
+    extractorVersion: "awards-daily-v10",
     seasonId,
     capturedAt,
     sourceUrl: publication.canonicalUrl,
     publication,
     rowsByCategory,
   });
+  if (declaredPictureOrder) {
+    batch.publications[0].originalData.order_statements = {
+      "best-picture": orderStatement,
+    };
+  }
+  return batch;
 }
 
 export function parseAwardsRadarFixture(
@@ -760,12 +822,16 @@ export function parseAwardsRadarFixture(
   const lines = htmlLines(html);
   assertPredictionSeason(
     lines
-      .filter((line) => /^20\d{2} Oscars? Predictions$/i.test(line))
+      .filter((line) =>
+        /^(?:20\d{2} Oscars? Predictions|Oscars? Predictions (?:for )?20\d{2})$/i.test(
+          line,
+        ),
+      )
       .join(" "),
     seasonId,
     "awards-radar",
   );
-  const updatedAt = updatedPredictionDate(lines);
+  const updatedAt = updatedPredictionDate(lines, capturedAt);
   const publication = {
     ...metadata,
     publishedAt: updatedAt ?? metadata.publishedAt,
@@ -1296,6 +1362,7 @@ export function parseRingerSelectionFixture(
     "the-ringer",
     capturedAt,
   );
+  assertPredictionSeason(publication.title, seasonId, "the-ringer");
   const article = html.match(/<article\b[\s\S]*?<\/article>/i)?.[0] ?? html;
   const films = [];
   for (const line of htmlLines(article)) {

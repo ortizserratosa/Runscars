@@ -533,10 +533,16 @@ export function parseManualManifest(manifest, { capturedAt }) {
 }
 
 export function matchFilm(subject, filmIdentities) {
+  // A malformed source label belongs in the editorial queue. It must not
+  // abort all of the other observations in an otherwise valid publication.
+  if (typeof subject !== "string" || !subject.trim()) return [];
   const normalized = normalizeIdentity(subject);
   return filmIdentities.filter((film) => {
     return [film.title, ...(film.alternate_titles ?? [])].some(
-      (title) => normalizeIdentity(title) === normalized,
+      (title) =>
+        typeof title === "string" &&
+        title.trim() &&
+        normalizeIdentity(title) === normalized,
     );
   });
 }

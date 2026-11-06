@@ -118,6 +118,24 @@ describe("The Movie State predictions", () => {
     );
   });
 
+  it("accepts the source's mismatched closing curly quote without changing its original label", async () => {
+    const html = (await fixture()).replace(
+      "Christopher Nolan, &#8220;The Odyssey&#8221;",
+      "Christopher Nolan, &#8220;The Odyssey&#8220;",
+    );
+    const row = parseMovieStateFixture(
+      html,
+      options,
+    ).publications[0].observations.find(
+      (observation) => observation.categoryId === "directing",
+    );
+    expect(row).toMatchObject({
+      filmSubject: "The Odyssey",
+      peopleSubjects: ["Christopher Nolan"],
+      originalValue: { raw: "1. Christopher Nolan, “The Odyssey“" },
+    });
+  });
+
   it("discovers the current ceremony without accepting similarly named articles, other seasons or domains", () => {
     const urls = discoverMovieStatePredictionUrls(
       `<a href="${url}">2027</a><a href="https://themoviestate.com/2025/09/16/2026-oscar-predictions/">2026</a><a href="https://other.com/2026/09/14/2027-oscar-predictions/">copy</a><a href="${url}#comment">duplicate</a><a href="https://themoviestate.com/2026/09/14/early-2027-oscar-predictions/">other</a>`,

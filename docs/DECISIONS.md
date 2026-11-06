@@ -1,6 +1,6 @@
 # Registro de decisiones
 
-**Última revisión:** 2026-10-30
+**Última revisión:** 2026-11-06
 
 ## Cómo usar este registro
 
@@ -86,6 +86,7 @@ pasado para ocultar cambios de criterio.
 | D-076 | Catálogo público reutilizable y sesión anónima sin trabajo Auth | Aceptada    |
 | D-077 | HTML público anónimo separado del render con sesión            | Aceptada    |
 | D-078 | Web Analytics básico en el plan gratuito                       | Aceptada    |
+| D-079 | Capturas completas antes de publicar predicciones              | Aceptada    |
 
 ## D-001 · Nombre de trabajo Runscars
 
@@ -1597,3 +1598,33 @@ ejemplos manuales de nominaciones y ganador coincidieron con
   visible en el panel de Production. No atribuir esa visita a audiencia orgánica.
 - **Evidencia:** [recibo de activación](audits/2026-11-02/analytics-enabled.json)
   e [informe de recuperación](VERCEL_CPU_RECOVERY_2026-11-02.md).
+
+## D-079 · Capturas completas antes de publicar predicciones
+
+- **Fecha:** 2026-11-06
+- **Estado:** Aceptada
+- **Origen:** auditoría y reparación solicitadas por el usuario tras detectar
+  Dune: Part Three como falso líder de Mejor película.
+- **Decisión:** certificar transaccionalmente la membresía completa de cada
+  captura antes de exponer sus observaciones al cálculo o a las fichas de fuentes.
+  Un intento interrumpido conserva sus filas privadas y la última revisión
+  completa sigue vigente. Un reintento puede reutilizar esas filas y certificar
+  el conjunto sin duplicarlas. El estado del run por sí solo no acredita
+  completitud. Las capturas ya completas son inmutables.
+- **Matching:** se cuentan todas las observaciones persistidas, incluidas las
+  pendientes o excluidas; no se confunde completitud con identidad resuelta.
+  Se mantienen los huecos, K=20/10, frescura y pesos vigentes.
+- **Historial:** un registro aditivo identifica los cortes que se calcularon
+  con listas incompletas. No se alteran payloads ni hashes; esos cortes dejan
+  de generar líderes o movimientos comparables en las series públicas.
+- **Operación:** reutilizar capturas completas y resueltas sin repetir las
+  escrituras por fila; las identidades pendientes se reintentan. La auditoría
+  detecta runs abandonados, además de frescura y salud de conectores.
+  Se instala un job por conector activo, escalonado desde las 04:17 UTC
+  (diecinueve conectores hasta las 04:35), antes del corte de las 04:47.
+  Pausar un conector tiene efecto inmediato; incorporar un ID nuevo o activar
+  uno sin job requiere reaplicar el SQL de programación y verificar el margen.
+- **Fuentes:** reparar formatos originales verificables y conservar el valor
+  original. Una declaración explícita de orden de Awards Daily solo ordena la
+  categoría adyacente a la que se refiere, sin extenderse al resto del artículo.
+- **Evidencia:** [auditoría de integridad](PREDICTION_INTEGRITY_AUDIT_2026-11-06.md).

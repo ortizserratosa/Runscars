@@ -59,6 +59,30 @@ function list(source: string, length: number) {
 }
 
 describe("common prediction scoring window v4", () => {
+  it("selects one committed capture cohort when a publication reuses earlier observation IDs", () => {
+    const older = list("source", 2).map((item) => ({
+      ...item,
+      captureId: "old-capture",
+    }));
+    const newer = older.map((item) => ({
+      ...item,
+      captureId: "new-capture",
+      capturedAt: "2026-10-19T05:00:00Z",
+      candidate:
+        item.rank === 2
+          ? { ...item.candidate, id: "new-candidate", label: "new-candidate" }
+          : item.candidate,
+    }));
+    const aggregate = aggregatePredictionsV4([...older, ...newer], options);
+    expect(aggregate.orderedSourceCount).toBe(1);
+    expect(aggregate.sourceLists[0].publicationId).toBe("source");
+    expect(aggregate.ranking.map((candidate) => candidate.candidateId)).toEqual(
+      ["source-1", "new-candidate"],
+    );
+    expect(aggregate.ranking[0].score).toBe(1);
+    expect(aggregate.ranking[1].score).toBe(0.9);
+  });
+
   it("gives the same position equal points across short and long sources", () => {
     const observations = [5, 20, 30].flatMap((length) =>
       list(`source-${length}`, length).map((item) =>

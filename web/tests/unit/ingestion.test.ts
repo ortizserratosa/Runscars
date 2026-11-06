@@ -68,6 +68,7 @@ class MemoryRepository {
   runs = new Map();
   observations = new Map();
   captures = new Map();
+  completedCaptures = new Map<number, number[]>();
   reviews = new Map();
   events: Array<{ runId: number; level: string; code: string }> = [];
   semanticResolutions: string[] = [];
@@ -154,6 +155,14 @@ class MemoryRepository {
     const id = this.observations.size + 1;
     this.observations.set(observation.dedupeKey, id);
     return { id, inserted: true, state: observation.state };
+  }
+  async finalizeCapture(captureId: number, observationIds: number[]) {
+    this.completedCaptures.set(captureId, observationIds);
+  }
+  async captureIsComplete(_captureId: number, _expectedCount: number) {
+    void _captureId;
+    void _expectedCount;
+    return false;
   }
   async saveReviewItem({
     observation,
@@ -378,7 +387,7 @@ describe("professional ingestion adapters", () => {
       `,
       {
         connectorId: "awards-radar-predictions",
-        capturedAt,
+        capturedAt: "2026-09-29T12:00:00Z",
         endpointUrl: "https://awardsradar.com/best-supporting-actress/",
         seasonId: "oscars-2027",
         categoryId: "supporting-actress",
@@ -508,7 +517,7 @@ describe("professional ingestion adapters", () => {
         observation.categoryId === "best-picture",
     );
 
-    expect(batch.extractorVersion).toBe("awards-daily-v9");
+    expect(batch.extractorVersion).toBe("awards-daily-v10");
     expect(bestPicture).toHaveLength(10);
     expect(
       bestPicture.every(
@@ -543,7 +552,7 @@ describe("professional ingestion adapters", () => {
       },
     );
 
-    expect(batch.extractorVersion).toBe("awards-daily-v9");
+    expect(batch.extractorVersion).toBe("awards-daily-v10");
     expect(
       batch.publications[0].observations.map(
         (observation: { originalValue: { raw: string } }) =>
@@ -1136,7 +1145,7 @@ describe("professional ingestion adapters", () => {
       `<p>2027 Oscar Predictions</p><p>Updated September 23rd, 2026</p>${cards}`,
       {
         connectorId: "awards-radar-predictions",
-        capturedAt,
+        capturedAt: "2026-09-29T12:00:00Z",
         endpointUrl: "https://awardsradar.com/best-picture/",
         seasonId: "oscars-2027",
         categoryId: "best-picture",
@@ -1208,7 +1217,7 @@ describe("professional ingestion adapters", () => {
         `<p>Updated September 23rd, 2026</p><p>1. The Odyssey<br/>1. Digger<br/>2. Fjord</p>`,
         {
           connectorId: "awards-radar-predictions",
-          capturedAt,
+          capturedAt: "2026-09-29T12:00:00Z",
           endpointUrl: "https://awardsradar.com/best-picture/",
           seasonId: "oscars-2027",
           categoryId: "best-picture",
@@ -1340,7 +1349,7 @@ describe("professional ingestion adapters", () => {
       `<p>Updated September 23rd, 2026</p><p>1. Unknown Writer — The Odyssey</p>`,
       {
         connectorId: "awards-radar-predictions",
-        capturedAt,
+        capturedAt: "2026-09-29T12:00:00Z",
         endpointUrl: "https://awardsradar.com/best-original-screenplay/",
         seasonId: "oscars-2027",
         categoryId: "original-screenplay",
@@ -1681,6 +1690,102 @@ describe("professional ingestion adapters", () => {
         expect.objectContaining({ code: "source.unchanged" }),
       ]),
     );
+  });
+
+  it("keeps an interrupted capture invisible and certifies all reused rows on retry", async () => {
+    const batch = parseAwardsWatchFixture(await fixture("awardswatch.html"), {
+      capturedAt,
+      endpointUrl:
+        "https://awardswatch.com/2027-oscar-predictions-best-picture/",
+    });
+    const repository = new MemoryRepository();
+    const save = repository.saveObservation.bind(repository);
+    let attempted = 0;
+    repository.saveObservation = async (values) => {
+      if (++attempted === 4) throw new Error("worker interrupted");
+      return save(values);
+    };
+    await expect(
+      persistBatch({ batch, repository, runId: 1, persistenceConcurrency: 1 }),
+    ).rejects.toThrow("worker interrupted");
+    expect(repository.observations.size).toBe(3);
+    expect(repository.completedCaptures.size).toBe(0);
+    expect(
+      repository.events.some((event) => event.code === "connector.completed"),
+    ).toBe(false);
+
+    repository.saveObservation = save;
+    const retried = await persistBatch({ batch, repository, runId: 2 });
+    expect(retried.observationsDuplicate).toBe(3);
+    expect(retried.observationsInserted).toBe(7);
+    expect(repository.completedCaptures.get(1)?.sort((a, b) => a - b)).toEqual(
+      Array.from({ length: 10 }, (_, index) => index + 1),
+    );
+  });
+
+  it("fails closed when the completion certificate cannot be persisted", async () => {
+    const batch = parseAwardsWatchFixture(await fixture("awardswatch.html"), {
+      capturedAt,
+      endpointUrl:
+        "https://awardswatch.com/2027-oscar-predictions-best-picture/",
+    });
+    const repository = new MemoryRepository();
+    repository.finalizeCapture = async () => {
+      throw new Error("certificate failed");
+    };
+    await expect(persistBatch({ batch, repository, runId: 1 })).rejects.toThrow(
+      "certificate failed",
+    );
+    expect(repository.observations.size).toBe(10);
+    expect(repository.completedCaptures.size).toBe(0);
+    expect(
+      repository.events.some((event) => event.code === "connector.completed"),
+    ).toBe(false);
+  });
+
+  it("certifies repeated identical source entries once while retaining raw counts", async () => {
+    const batch = parseAwardsWatchFixture(await fixture("awardswatch.html"), {
+      capturedAt,
+      endpointUrl:
+        "https://awardswatch.com/2027-oscar-predictions-best-picture/",
+    });
+    const rows = batch.publications[0].observations;
+    // Repeated selections are preserved by the extractor; persistence dedupes
+    // equivalent values. They must not prevent a complete capture's certificate.
+    const selected = { ...rows[0], dataType: "prediction_selection" };
+    batch.publications[0].observations = [selected, selected];
+    const repository = new MemoryRepository();
+    const result = await persistBatch({
+      batch,
+      repository,
+      runId: 1,
+      persistenceConcurrency: 1,
+    });
+    expect(result.observationsSeen).toBe(2);
+    expect(repository.observations.size).toBe(1);
+    expect(repository.completedCaptures.get(1)).toEqual([1]);
+  });
+
+  it("skips per-row writes only for a certified and fully resolved unchanged capture", async () => {
+    const batch = parseAwardsWatchFixture(await fixture("awardswatch.html"), {
+      capturedAt,
+      endpointUrl:
+        "https://awardswatch.com/2027-oscar-predictions-best-picture/",
+    });
+    const repository = new MemoryRepository();
+    await persistBatch({ batch, repository, runId: 1 });
+    repository.captureIsComplete = async (captureId, count) =>
+      repository.completedCaptures.get(captureId)?.length === count;
+    repository.saveObservation = async () => {
+      throw new Error("must not rewrite resolved capture");
+    };
+    const repeated = await persistBatch({ batch, repository, runId: 2 });
+    expect(repeated).toMatchObject({
+      observationsInserted: 0,
+      observationsDuplicate: 10,
+      observationsSeen: 10,
+    });
+    expect(repository.completedCaptures.size).toBe(1);
   });
 
   it("persists observations with bounded concurrency", async () => {

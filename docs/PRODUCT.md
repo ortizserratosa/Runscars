@@ -1,7 +1,7 @@
 # Contrato de producto
 
 **Estado:** contrato aceptado para el MVP
-**Última revisión:** 2026-10-19
+**Última revisión:** 2026-11-06
 
 ## 1. Visión
 
@@ -191,6 +191,8 @@ no forman parte de la identidad de la candidatura.
 ### Actualización y snapshots
 
 - Actualización automática diaria de conectores activos.
+- Una revisión solo sustituye la lista anterior cuando se ha persistido por
+  completo. Los intentos interrumpidos no aportan ausencias ni votos parciales.
 - Corte público tras la actualización diaria únicamente cuando cambia la
   superficie efectiva de al menos un proveedor profesional.
 - Las ejecuciones de una misma fecha UTC se consolidan en su último estado; no
@@ -208,6 +210,8 @@ no forman parte de la identidad de la candidatura.
 - La interfaz distingue la fecha de publicación del proveedor, la fecha del
   último cambio efectivo y la última comprobación correcta del conector.
 - Snapshot final de predicción de nominaciones.
+- Los cortes con incidencias de integridad documentadas conservan su original
+  y muestran el motivo, pero no generan movimientos en la serie comparable.
 - Snapshot final de predicción de ganadores.
 - Comparación posterior con resultados oficiales.
 

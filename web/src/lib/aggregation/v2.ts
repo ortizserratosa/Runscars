@@ -32,6 +32,8 @@ export type PredictionObservationV2 = {
   sourceId: string;
   sourceName: string;
   publicationId: string;
+  /** Committed receipt cohort; equivalent observations may predate this capture. */
+  captureId?: string;
   publicationUrl: string;
   author: string | null;
   publishedAt: string | null;
@@ -266,9 +268,13 @@ function selectActiveSources(observations: PredictionObservationV2[]) {
     const publications =
       bySource.get(observation.sourceId) ??
       new Map<string, PredictionObservationV2[]>();
-    const publication = publications.get(observation.publicationId) ?? [];
+    const revisionId = JSON.stringify([
+      observation.publicationId,
+      observation.captureId ?? null,
+    ]);
+    const publication = publications.get(revisionId) ?? [];
     publication.push(observation);
-    publications.set(observation.publicationId, publication);
+    publications.set(revisionId, publication);
     bySource.set(observation.sourceId, publications);
   }
 
@@ -290,7 +296,7 @@ function selectActiveSources(observations: PredictionObservationV2[]) {
     )[0];
     if (!latestPublication) continue;
 
-    const [publicationId, publicationObservations] = latestPublication;
+    const [, publicationObservations] = latestPublication;
     const ordered = publicationObservations.filter(
       (observation) => observation.dataType === "prediction_ordered",
     );
@@ -302,7 +308,7 @@ function selectActiveSources(observations: PredictionObservationV2[]) {
     active.push({
       sourceId,
       sourceName: first.sourceName,
-      publicationId,
+      publicationId: first.publicationId,
       publicationUrl: first.publicationUrl,
       publishedAt: first.publishedAt,
       freshnessAt: undatedFreshnessAt(first),

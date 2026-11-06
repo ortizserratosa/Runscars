@@ -1,0 +1,262 @@
+{
+  "auditedAt": "2026-11-06T13:43:56.391Z",
+  "scope": {
+    "seasonId": "oscars-2027",
+    "methodVersions": [
+      "runscars-aggregation-v2",
+      "runscars-aggregation-v3",
+      "runscars-aggregation-v4"
+    ],
+    "kind": "periodic",
+    "snapshotCount": 330,
+    "checkedCaptureReferences": 1663,
+    "unsupportedCaptureReferences": 21,
+    "verifiedMethodVersion": "runscars-aggregation-v4",
+    "verifiedSnapshotCount": 59,
+    "legacySnapshotCount": 271
+  },
+  "invalidSnapshots": [
+    {
+      "snapshotId": "periodic-oscars-2027-actor-nomination-2026-11-06-0b50b64438ac",
+      "categoryId": "actor",
+      "methodVersion": "runscars-aggregation-v4",
+      "lockedAt": "2026-11-06T04:47:53.915+00:00",
+      "leader": "Andrew Scott — Elsinore",
+      "reason": "La categoría de esta captura no había persistido todas las observaciones que afectan a la metodología al bloquear el corte; se incluyen pendientes de matching y se deduplican entradas originales idénticas y se recuperan observaciones equivalentes de capturas anteriores de la misma publicación.",
+      "failures": [
+        {
+          "sourceId": "variety",
+          "sourceName": "Variety",
+          "publicationUrl": "https://variety.com/feature/2027-oscars-best-actor-predictions-1236834269/",
+          "captureId": 2824,
+          "scoringDepth": 10,
+          "expectedObservationCount": 30,
+          "expectedScoringCount": 10,
+          "persistedScoringAtCut": 7,
+          "persistedAtCut": 7,
+          "persistedNow": 7,
+          "publishedConsidered": 7,
+          "firstInsertionAt": "2026-11-06T04:17:12.35455+00:00",
+          "lastInsertionAt": "2026-11-06T04:17:19.462079+00:00"
+        }
+      ]
+    },
+    {
+      "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-11-04-4c018ee649f5",
+      "categoryId": "best-picture",
+      "methodVersion": "runscars-aggregation-v4",
+      "lockedAt": "2026-11-04T04:47:53.568+00:00",
+      "leader": "Dune: Part Three",
+      "reason": "La categoría de esta captura no había persistido todas las observaciones que afectan a la metodología al bloquear el corte; se incluyen pendientes de matching y se deduplican entradas originales idénticas y se recuperan observaciones equivalentes de capturas anteriores de la misma publicación.",
+      "failures": [
+        {
+          "sourceId": "ankler",
+          "sourceName": "The Ankler",
+          "publicationUrl": "https://anklerpundits.com/pundit/christopher-rosen/",
+          "captureId": 2772,
+          "scoringDepth": 20,
+          "expectedObservationCount": 10,
+          "expectedScoringCount": 10,
+          "persistedScoringAtCut": 1,
+          "persistedAtCut": 1,
+          "persistedNow": 10,
+          "publishedConsidered": 1,
+          "firstInsertionAt": "2026-11-04T04:17:21.290816+00:00",
+          "lastInsertionAt": "2026-11-05T04:17:19.724081+00:00"
+        },
+        {
+          "sourceId": "the-rolling-tape",
+          "sourceName": "The Rolling Tape",
+          "publicationUrl": "https://therollingtape.com/danny-jarabek-oscar-predictions/",
+          "captureId": 2770,
+          "scoringDepth": 20,
+          "expectedObservationCount": 20,
+          "expectedScoringCount": 20,
+          "persistedScoringAtCut": 11,
+          "persistedAtCut": 11,
+          "persistedNow": 20,
+          "publishedConsidered": 11,
+          "firstInsertionAt": "2026-11-04T04:17:14.651631+00:00",
+          "lastInsertionAt": "2026-11-05T04:17:24.154171+00:00"
+        }
+      ]
+    },
+    {
+      "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-11-06-0f8ac40c5ad8",
+      "categoryId": "best-picture",
+      "methodVersion": "runscars-aggregation-v4",
+      "lockedAt": "2026-11-06T04:47:53.915+00:00",
+      "leader": "The Odyssey",
+      "reason": "La categoría de esta captura no había persistido todas las observaciones que afectan a la metodología al bloquear el corte; se incluyen pendientes de matching y se deduplican entradas originales idénticas y se recuperan observaciones equivalentes de capturas anteriores de la misma publicación.",
+      "failures": [
+        {
+          "sourceId": "awards-radar",
+          "sourceName": "Awards Radar",
+          "publicationUrl": "https://awardsradar.com/best-picture/",
+          "captureId": 2829,
+          "scoringDepth": 20,
+          "expectedObservationCount": 50,
+          "expectedScoringCount": 20,
+          "persistedScoringAtCut": 6,
+          "persistedAtCut": 6,
+          "persistedNow": 6,
+          "publishedConsidered": 6,
+          "firstInsertionAt": "2026-11-06T04:17:19.403574+00:00",
+          "lastInsertionAt": "2026-11-06T04:17:19.461679+00:00"
+        },
+        {
+          "sourceId": "variety",
+          "sourceName": "Variety",
+          "publicationUrl": "https://variety.com/lists/2027-oscars-best-picture-predictions/",
+          "captureId": 2819,
+          "scoringDepth": 20,
+          "expectedObservationCount": 40,
+          "expectedScoringCount": 20,
+          "persistedScoringAtCut": 19,
+          "persistedAtCut": 19,
+          "persistedNow": 19,
+          "publishedConsidered": 19,
+          "firstInsertionAt": "2026-11-06T04:17:08.232497+00:00",
+          "lastInsertionAt": "2026-11-06T04:17:19.216118+00:00"
+        }
+      ]
+    },
+    {
+      "snapshotId": "periodic-oscars-2027-supporting-actor-nomination-2026-11-04-9948bd1cde61",
+      "categoryId": "supporting-actor",
+      "methodVersion": "runscars-aggregation-v4",
+      "lockedAt": "2026-11-04T04:47:53.568+00:00",
+      "leader": "Paul Giamatti — The Debut",
+      "reason": "La categoría de esta captura no había persistido todas las observaciones que afectan a la metodología al bloquear el corte; se incluyen pendientes de matching y se deduplican entradas originales idénticas y se recuperan observaciones equivalentes de capturas anteriores de la misma publicación.",
+      "failures": [
+        {
+          "sourceId": "variety",
+          "sourceName": "Variety",
+          "publicationUrl": "https://variety.com/feature/2027-oscars-best-supporting-actor-predictions-1236834271/",
+          "captureId": 2764,
+          "scoringDepth": 10,
+          "expectedObservationCount": 30,
+          "expectedScoringCount": 10,
+          "persistedScoringAtCut": 8,
+          "persistedAtCut": 8,
+          "persistedNow": 30,
+          "publishedConsidered": 8,
+          "firstInsertionAt": "2026-11-04T04:17:11.005547+00:00",
+          "lastInsertionAt": "2026-11-05T04:17:35.345621+00:00"
+        }
+      ]
+    }
+  ],
+  "unsupportedCaptureReferences": [
+    {
+      "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-07-25-1baba5f19a33",
+      "captureId": 63,
+      "sourceId": "the-ringer"
+    },
+    {
+      "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-07-25-317e07b691cc",
+      "captureId": 63,
+      "sourceId": "the-ringer"
+    },
+    {
+      "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-07-25-863da5b1a5d1",
+      "captureId": 63,
+      "sourceId": "the-ringer"
+    },
+    {
+      "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-07-25-a7c0b61410f7",
+      "captureId": 63,
+      "sourceId": "the-ringer"
+    },
+    {
+      "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-07-25-ea050ef022b9",
+      "captureId": 63,
+      "sourceId": "the-ringer"
+    },
+    {
+      "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-07-27-d323dd7772f3",
+      "captureId": 63,
+      "sourceId": "the-ringer"
+    },
+    {
+      "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-08-03-1c00c70a6d6e",
+      "captureId": 63,
+      "sourceId": "the-ringer"
+    },
+    {
+      "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-08-07-52e4ba19ae89",
+      "captureId": 63,
+      "sourceId": "the-ringer"
+    },
+    {
+      "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-08-07-e5b5c80d3984",
+      "captureId": 63,
+      "sourceId": "the-ringer"
+    },
+    {
+      "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-08-10-bfef05af2cc7",
+      "captureId": 63,
+      "sourceId": "the-ringer"
+    },
+    {
+      "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-08-19-e3e260864695",
+      "captureId": 63,
+      "sourceId": "the-ringer"
+    },
+    {
+      "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-08-24-c02f20c82b56",
+      "captureId": 63,
+      "sourceId": "the-ringer"
+    },
+    {
+      "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-08-29-64347c2737ac",
+      "captureId": 63,
+      "sourceId": "the-ringer"
+    },
+    {
+      "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-08-29-9c79d959e453",
+      "captureId": 63,
+      "sourceId": "the-ringer"
+    },
+    {
+      "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-08-30-29c5d4e5a43a",
+      "captureId": 63,
+      "sourceId": "the-ringer"
+    },
+    {
+      "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-08-31-740a2f1f90b0",
+      "captureId": 63,
+      "sourceId": "the-ringer"
+    },
+    {
+      "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-09-01-7bf49752e35c",
+      "captureId": 63,
+      "sourceId": "the-ringer"
+    },
+    {
+      "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-09-05-c037ce5006a0",
+      "captureId": 63,
+      "sourceId": "the-ringer"
+    },
+    {
+      "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-09-06-234b4c943dab",
+      "captureId": 63,
+      "sourceId": "the-ringer"
+    },
+    {
+      "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-09-08-63d5fb25187f",
+      "captureId": 63,
+      "sourceId": "the-ringer"
+    },
+    {
+      "snapshotId": "periodic-oscars-2027-best-picture-nomination-2026-09-09-326473450194",
+      "captureId": 63,
+      "sourceId": "the-ringer"
+    }
+  ],
+  "limitations": [
+    "Se inspeccionaron las referencias de los 330 cortes. La clasificación de integridad confirmada se limita a los 59 cortes v4; los 271 cortes v2/v3 reutilizan observaciones entre capturas y versiones antiguas cambiaron la representación del valor original. Requieren replay específico para declarar otros cortes inválidos sin falsos positivos.",
+    "Hay 21 referencias de captura cuyo formato original no permite reconstrucción automática. No se retiran sus cortes por ausencia de prueba retrospectiva de finalización.",
+    "Las entradas pendientes de matching cuentan como persistidas, las duplicaciones originales idénticas se deduplican y las posiciones posteriores a K no bastan para invalidar un corte v4."
+  ]
+}

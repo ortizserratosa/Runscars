@@ -78,6 +78,19 @@ async function expand(
 }
 
 describe("automatic TMDB identity corroboration", () => {
+  it("ignores an empty source film identity without aborting corroboration for another film", async () => {
+    const { result, save } = await expand([
+      prediction("directing", ["Unknown Person"], ""),
+      prediction("best-picture"),
+      prediction("directing", ["Luca Guadagnino"]),
+      prediction("actor", ["Andrew Garfield"]),
+    ]);
+    expect(save).toHaveBeenCalledTimes(1);
+    expect(result.imported).toEqual([
+      { title: "Artificial", filmId: "artificial", tmdbId: 1492198 },
+    ]);
+  });
+
   it("rejects a same-title same-year film whose credited people contradict the predictions", async () => {
     const raw = {
       ...movie([director("Tyler Woods")], [actor("Mark Chapman")]),

@@ -1,7 +1,7 @@
 # Sistema de ingesta · profesionales, mercados y festivales
 
 **Estado:** circuito Oscar 2027 versionado
-**Última revisión:** 2026-09-03
+**Última revisión:** 2026-11-06
 
 ## Objetivo
 
@@ -127,15 +127,29 @@ El comando lee `web/.env.local` y necesita URL de Supabase y
 ## Ejecución diaria
 
 `run-ingestion` es una Supabase Edge Function protegida por
-`INGESTION_CRON_SECRET`. Cada día a las **04:17 UTC**, Supabase Cron la invoca;
-la función lee solo conectores activos y ejecuta cada uno dentro de su propio
-run. Un error se registra y el bucle continúa con la fuente siguiente.
+`INGESTION_CRON_SECRET`. Supabase Cron programa una invocación independiente
+por conector activo, espaciadas un minuto desde las **04:17 UTC**. Los diecinueve
+conectores actuales ocupan de **04:17 a 04:35 UTC**, antes del corte diario de
+snapshots de las 04:47 UTC. Cada job envía exactamente un ID y vuelve a comprobar
+su activación antes de llamar a Edge; una pausa no necesita reinstalar el Cron.
+La función también filtra los conectores activos y abre un run por intento.
+Un error de una fuente no interrumpe las invocaciones de las demás.
 
 La definición versionada está en
 `supabase/schedules/run-ingestion-daily.sql`. El secreto existe tanto como
 secreto de Edge Functions como en Vault, nunca en SQL o Git. Supabase recomienda
 combinar Cron, `pg_net`, Vault y una llamada HTTP para programar funciones:
 [guía oficial](https://supabase.com/docs/guides/functions/schedule-functions).
+
+Aplicar ese SQL sustituye idempotentemente el job histórico
+`runscars-ingestion-daily` y todos los jobs con prefijo
+`runscars-ingestion-daily-connector-`, conservando las tareas de mercados y
+festivales. Los IDs se ordenan para asignar minutos consecutivos. Cada comando
+consulta el secreto de Vault en el momento de la ejecución, de modo que una
+rotación no exige reprogramarlo. Al añadir un conector o activar uno que no tiene
+job, se debe reaplicar el archivo y comprobar que la última invocación conserva
+margen antes de las 04:47; la programación no incorpora automáticamente nuevos
+IDs. Una reactivación de un ID cuyo job sigue instalado tiene efecto inmediato.
 
 Comandos operativos de staging:
 
@@ -178,10 +192,12 @@ lista ordenada solo es válida si contiene enteros únicos y consecutivos desde 
 y si `list_length` coincide con el número de filas. Un salto o duplicado falla
 antes de persistir y mantiene vigente el último corte válido.
 
-Los conectores profesionales se ejecutan dentro de la Edge Function con un pool
-global de tres workers. Cada uno conserva su propio run y captura sus propios
-fallos; el resultado general solo es parcial cuando uno de ellos falla. El pool
-mantiene el paralelismo sin multiplicar sin límite las operaciones simultáneas.
+Cada invocación diaria ejecuta un único conector. Una llamada manual con varios
+IDs usa un pool de tres workers dentro de esa invocación; ese pool no limita
+otras llamadas concurrentes. El escalonado del Cron evita el pico anterior de
+diecinueve invocaciones simultáneas, cada una con hasta seis workers de
+persistencia. Los trabajos pueden solaparse si una fuente tarda más de un minuto;
+el escalonado reduce el pico sin afirmar exclusión mutua global.
 
 Cada request externo tiene timeout de 15 segundos y reintentos acotados. Awards
 Radar consulta sus páginas con concurrencia máxima de cuatro y Awards Daily
@@ -363,6 +379,17 @@ restricción única, la URL de procedencia y la privacidad de runs/logs/cola.
   explícito `Predictions`, corta antes de etiquetas o navegación y descarta
   filas rotuladas como alternativas. Si el bloque estructurado desaparece,
   falla ese conector y se conserva la última revisión válida.
+  La versión `awards-daily-v10` reconoce la declaración explícita y adyacente de
+  orden de Mejor película del artículo del 30/10; las demás listas sin orden
+  siguen siendo selecciones. Una coma final en una candidatura no crea una
+  identidad de película vacía ni bloquea el lote completo.
+- `movie-state-v2` admite la comilla curva de apertura usada por error como
+  cierre de un título, preservando el rótulo original. La fecha de modificación
+  del CMS sigue sin rejuvenecer su publicación original.
+- `variety-datawrapper-v3` admite la quinta columna de presentación `Type` o
+  vacía de los guiones, conservando las columnas originales. Las posiciones
+  continúan procediendo exclusivamente de `Rank`; columnas desconocidas,
+  puestos duplicados y huecos siguen provocando fallo.
 - Guardian está activo desde el 2026-07-24. Su clave existe únicamente en
   `web/.env.local` para desarrollo y en los secretos de Edge Functions para
   staging; no forma parte del seed, los logs ni Git.
@@ -408,7 +435,7 @@ alternativos de categorías técnicas y elección determinista del crédito
 relevante cuando una persona figura como guionista y directora. Repetir el
 archivo oficial 2026 confirmó que esas candidaturas son idempotentes.
 
-El Cron `runscars-ingestion-daily` está activo a las 04:17 UTC y
+En aquel corte, el Cron `runscars-ingestion-daily` estaba activo a las 04:17 UTC y
 `runscars-markets-hourly` al minuto 17 de cada hora. La primera captura de
 mercados terminó con Kalshi sin contratos Oscar abiertos y Polymarket con 65;
 ninguno creó observaciones profesionales.
@@ -437,6 +464,11 @@ pertenecen a categorías no públicas de Next Best Picture (documental, canción
 sonido) y permanecen sin participar porque el rótulo no identifica de forma
 inequívoca una candidatura. Las ocho categorías públicas no conservan ninguna
 revisión pendiente.
+
+La auditoría del 06/11 reemplaza la salida simultánea por jobs por conector de
+04:17 a 04:35 UTC. El diagnóstico, las pruebas de reinstalación, la rotación del
+secreto y sus límites constan en
+[la auditoría del despacho diario](audits/2026-11-06/ingestion-dispatch-audit.md).
 
 ## Puerta de salida
 

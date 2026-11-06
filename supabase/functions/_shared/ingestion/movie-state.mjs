@@ -114,7 +114,9 @@ function parts(categoryId, value) {
       workTitle: null,
     };
   }
-  const match = value.match(/^(.+?),\s*[“"]([^”"]+)[”"]$/u);
+  // The source occasionally uses an opening curly quote at both ends. The
+  // comma and quoted title still identify the film; retain the typo in raw.
+  const match = value.match(/^(.+?),\s*[“"]([^“”"]+)[“”"]$/u);
   if (!match)
     throw new Error(`The Movie State: candidatura ambigua en ${categoryId}`);
   const people = /^Los Javis$/i.test(match[1])
@@ -259,7 +261,7 @@ export function parseMovieStateFixture(
   return {
     connectorId,
     sourceId: "the-movie-state",
-    extractorVersion: "movie-state-v1",
+    extractorVersion: "movie-state-v2",
     seasonId,
     capturedAt: new Date(capturedAt).toISOString(),
     sourceUrl: canonicalUrl,

@@ -29,6 +29,7 @@ import {
   getPublicHistorySelection,
   selectedPublicCutIndex,
   type PublicHistorySelection,
+  type SnapshotIntegrityCorrection,
 } from "../snapshots/public-history";
 import { createSupabaseServerClient } from "../supabase/server";
 import { PUBLIC_CATEGORIES, type PublicCategoryId } from "./config";
@@ -52,6 +53,7 @@ export type ActiveCategoryView = {
   markets: Record<"kalshi" | "polymarket", MarketView[]>;
   dataState: "database" | "fixture" | "unavailable";
   sourceFreshness: SourceFreshnessView[];
+  integrityCorrection?: SnapshotIntegrityCorrection | null;
   snapshot: {
     id: string;
     contentHash: string;
@@ -198,6 +200,7 @@ function activeViewFromSelection({
       : null,
     markets,
     dataState,
+    integrityCorrection: selection.integrityCorrection ?? null,
     sourceFreshness: selected
       ? sourceFreshnessForSelection(
           cuts,

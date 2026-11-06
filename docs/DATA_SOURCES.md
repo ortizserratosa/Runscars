@@ -1,7 +1,7 @@
 # Registro de fuentes
 
 **Estado:** fuentes públicas y circuito festivalero 2026 versionados
-**Última revisión:** 2026-10-19
+**Última revisión:** 2026-11-06
 
 ## 1. Objetivo
 
@@ -11,6 +11,13 @@ obtención y su preparación para una eventual publicación.
 Durante el prototipo personal, una duda de publicación no bloquea el análisis
 técnico. Sí debe quedar registrada para poder desactivar o sustituir la fuente
 antes de publicar.
+
+La [auditoría del 06/11/2026](PREDICTION_INTEGRITY_AUDIT_2026-11-06.md)
+contrasta los diecisiete conectores profesionales y repara formatos vigentes:
+columna adicional de guiones de Variety, comillas de Movie State y delimitadores
+de Awards Daily. Este último declara orden explícito en Mejor película el 30/10;
+las demás categorías de esa pieza siguen siendo selecciones. La captura técnica
+no rejuvenece la publicación editorial ni resuelve identidades dudosas.
 
 ## 2. Tipos de fuente
 

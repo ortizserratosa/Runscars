@@ -11,6 +11,7 @@ beforeAll(async () => {
   database = new PGlite();
   await database.exec(`
     create role anon; create role authenticated; create role service_role;
+    alter default privileges in schema public grant execute on functions to anon, authenticated;
     create schema auth;
     create table auth.users (id uuid primary key, email text, raw_user_meta_data jsonb not null default '{}'::jsonb);
     create function auth.uid() returns uuid language sql stable as $$
@@ -54,6 +55,7 @@ async function capture(
   categories: Record<string, unknown>,
   published: string | null = null,
   state = "published",
+  complete = true,
 ) {
   const version = ++sequence;
   const result = await database.query<{ id: number }>(
@@ -72,18 +74,19 @@ async function capture(
       date,
     ],
   );
+  const observationIds: number[] = [];
   for (const [category, entries] of Object.entries(categories)) {
     for (const entry of entries as Array<{
       rank: number;
       parts: { subject: string; filmSubject: string };
     }>) {
-      await database.query(
+      const observation = await database.query<{ id: number }>(
         `insert into public.professional_observations
         (dedupe_key,source_id,publication_id,capture_id,run_id,season_id,film_id,category_id,data_type,prediction_intention,
           original_subject,original_value,source_url,published_at,captured_at,extractor_version,participates,state)
         values (md5($1)||md5($1),$2,$3,$4,(select id from public.ingestion_runs where run_key='evidence-test'),
           'oscars-2027','the-odyssey',$5,'prediction_ordered','nomination',$6,$7::jsonb,
-          'https://example.com/prediction',$8,$9,'test-v1',$10,$11::public.professional_observation_state)`,
+          'https://example.com/prediction',$8,$9,'test-v1',$10,$11::public.professional_observation_state) returning id`,
         [
           `${version}-${category}-${entry.rank}`,
           source,
@@ -102,7 +105,14 @@ async function capture(
           state,
         ],
       );
+      observationIds.push(observation.rows[0].id);
     }
+  }
+  if (complete && observationIds.length > 0) {
+    await database.query(
+      `select public.finalize_source_capture($1,$2,$3::bigint[],$4)`,
+      [result.rows[0].id, observationIds.length, observationIds, date],
+    );
   }
   return result.rows[0].id;
 }
@@ -372,6 +382,35 @@ describe("public source prediction evidence", () => {
     expect(result.rows).toEqual([{ original_subject: "Corrected version" }]);
   });
 
+  it("keeps an undated legacy URL from replacing a dated publication", async () => {
+    const dated = await publication(
+      "variety",
+      "dated-current",
+      "https://example.com/dated-current",
+    );
+    await capture(
+      dated,
+      "variety",
+      "2026-11-01T04:17:00Z",
+      { "best-picture": entries("Current dated prediction") },
+      "2026-11-01T00:00:00Z",
+    );
+    const undated = await publication(
+      "variety",
+      "undated-legacy",
+      "https://example.com/undated-legacy",
+    );
+    await capture(undated, "variety", "2026-11-06T04:17:00Z", {
+      "best-picture": entries("Legacy prediction checked later"),
+    });
+    const result = await database.query(
+      `select original_subject from public.public_prediction_source_evidence where source_id='variety' and category_id='best-picture'`,
+    );
+    expect(result.rows).toEqual([
+      { original_subject: "Current dated prediction" },
+    ]);
+  });
+
   it("keeps connector incidents specific to the affected category", async () => {
     await database.exec(`update public.source_connectors set last_success_at='2026-10-19T04:17:00Z',last_failure_at=null where source_id='variety';
       update public.source_connectors set last_failure_at='2026-10-19T04:18:00Z' where id='variety-actor-predictions'; set role anon;`);
@@ -382,6 +421,177 @@ describe("public source prediction evidence", () => {
       { category_id: "actor", has_current_failure: true },
       { category_id: "best-picture", has_current_failure: false },
     ]);
+    await database.exec("reset role");
+  });
+
+  it("keeps a newer unfinished capture out of evidence until every row is committed", async () => {
+    const old = await publication(
+      "ankler",
+      "complete-old",
+      "https://example.com/atomic",
+    );
+    await capture(
+      old,
+      "ankler",
+      "2026-11-02T04:17:00Z",
+      {
+        "best-picture": entries("Previous complete prediction"),
+      },
+      "2026-11-02T00:00:00Z",
+    );
+    const newer = await publication(
+      "ankler",
+      "incomplete-new",
+      "https://example.com/atomic",
+    );
+    const unfinished = await capture(
+      newer,
+      "ankler",
+      "2026-11-04T04:17:00Z",
+      {
+        "best-picture": entries("Dune: Part Three"),
+      },
+      "2026-11-03T00:00:00Z",
+      "published",
+      false,
+    );
+    const read = () =>
+      database.query<{ original_subject: string }>(
+        `select original_subject from public.public_prediction_source_evidence where source_id='ankler' and category_id='best-picture'`,
+      );
+    expect((await read()).rows).toEqual([
+      { original_subject: "Previous complete prediction" },
+    ]);
+    await database.exec("set role anon");
+    expect(
+      (
+        await database.query(
+          `select id from public.professional_observations where capture_id=$1`,
+          [unfinished],
+        )
+      ).rows,
+    ).toEqual([]);
+    await database.exec("reset role");
+    const ids = await database.query<{ id: number }>(
+      `select id from public.professional_observations where capture_id=$1`,
+      [unfinished],
+    );
+    await expect(
+      database.query(
+        `select public.finalize_source_capture($1,2,$2::bigint[],$3)`,
+        [unfinished, ids.rows.map((row) => row.id), "2026-11-04T04:18:00Z"],
+      ),
+    ).rejects.toThrow("distinct expected");
+    expect((await read()).rows).toEqual([
+      { original_subject: "Previous complete prediction" },
+    ]);
+    const parameters = [
+      unfinished,
+      1,
+      ids.rows.map((row) => row.id),
+      "2026-11-04T04:18:00Z",
+    ];
+    expect(
+      (
+        await database.query<{ finalized: boolean }>(
+          `select public.finalize_source_capture($1,$2,$3::bigint[],$4) as finalized`,
+          parameters,
+        )
+      ).rows[0].finalized,
+    ).toBe(true);
+    expect(
+      (
+        await database.query<{ finalized: boolean }>(
+          `select public.finalize_source_capture($1,$2,$3::bigint[],$4) as finalized`,
+          parameters,
+        )
+      ).rows[0].finalized,
+    ).toBe(false);
+    expect((await read()).rows).toEqual([
+      { original_subject: "Dune: Part Three" },
+    ]);
+    await database.exec("set role anon");
+    await expect(
+      database.query(`select * from public.source_capture_completions`),
+    ).rejects.toThrow("permission denied");
+    await expect(
+      database.query(
+        `select public.finalize_source_capture($1,$2,$3::bigint[],$4)`,
+        parameters,
+      ),
+    ).rejects.toThrow("permission denied");
+    await database.exec("reset role");
+  });
+
+  it("allows reused observation IDs only from the same publication and verifies the receipt length", async () => {
+    const pub = await publication("the-rolling-tape", "capture-reuse");
+    const original = await capture(
+      pub,
+      "the-rolling-tape",
+      "2026-11-05T04:17:00Z",
+      {
+        "best-picture": entries("Reused observation"),
+      },
+      null,
+      "published",
+      false,
+    );
+    const ids = await database.query<{ id: number }>(
+      `select id from public.professional_observations where capture_id=$1`,
+      [original],
+    );
+    const next = await database.query<{ id: number }>(
+      `insert into public.source_publication_captures(publication_id,content_hash,source_url,original_data,captured_at,extractor_version)
+       values ($1,repeat('d',64),'https://example.com/reuse','{"rows":[{},{}]}','2026-11-06T04:17:00Z','test-v2') returning id`,
+      [pub],
+    );
+    await expect(
+      database.query(
+        `select public.finalize_source_capture($1,1,$2::bigint[],'2026-11-06T04:18:00Z')`,
+        [next.rows[0].id, ids.rows.map((row) => row.id)],
+      ),
+    ).rejects.toThrow("expects 2");
+    const sameLength = await database.query<{ id: number }>(
+      `insert into public.source_publication_captures(publication_id,content_hash,source_url,original_data,captured_at,extractor_version)
+       values ($1,repeat('e',64),'https://example.com/reuse','{"rows":[{}]}','2026-11-06T04:17:00Z','test-v2') returning id`,
+      [pub],
+    );
+    await database.query(
+      `select public.finalize_source_capture($1,1,$2::bigint[],'2026-11-06T04:18:00Z')`,
+      [sameLength.rows[0].id, ids.rows.map((row) => row.id)],
+    );
+    const count = await database.query<{ count: number }>(
+      `select count(*)::integer as count from public.completed_professional_observations where id=$1`,
+      [ids.rows[0].id],
+    );
+    expect(count.rows[0].count).toBe(1);
+    const cohort = await database.query<{
+      capture_id: number;
+      captured_at: Date;
+      extractor_version: string;
+    }>(
+      `select capture_id,captured_at,extractor_version from public.completed_professional_observations where id=$1`,
+      [ids.rows[0].id],
+    );
+    expect(cohort.rows[0].capture_id).toBe(sameLength.rows[0].id);
+    expect(new Date(cohort.rows[0].captured_at).toISOString()).toBe(
+      "2026-11-06T04:17:00.000Z",
+    );
+    expect(cohort.rows[0].extractor_version).toBe("test-v2");
+    await database.exec("set role anon");
+    const evidence = await database.query<{
+      original_subject: string;
+      captured_at: Date;
+      extractor_version: string;
+    }>(
+      `select original_subject,captured_at,extractor_version from public.public_prediction_source_evidence where source_id='the-rolling-tape'`,
+    );
+    expect(evidence.rows).toHaveLength(1);
+    expect(evidence.rows[0].original_subject).toBe("Reused observation");
+    expect(new Date(evidence.rows[0].captured_at).toISOString()).toBe(
+      "2026-11-06T04:17:00.000Z",
+    );
+    expect(evidence.rows[0].extractor_version).toBe("test-v2");
     await database.exec("reset role");
   });
 });

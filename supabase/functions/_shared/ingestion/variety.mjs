@@ -317,7 +317,18 @@ export function parseVarietyFixture(
         : categoryId.endsWith("screenplay")
           ? ["Rank", "Film", "Writer(s)", "Distributor"]
           : ["Rank", "Performer", "Film", "Distributor"];
-  if (JSON.stringify(columns) !== JSON.stringify(expectedColumns))
+  // The November screenplay tables append a presentation column, named Type
+  // or left unnamed. Keep it in the original cells without treating it as a
+  // rank, subject or credit. Every required column remains exact and ordered.
+  const extraColumns = columns?.slice(expectedColumns.length) ?? [];
+  if (
+    JSON.stringify(columns?.slice(0, expectedColumns.length)) !==
+      JSON.stringify(expectedColumns) ||
+    extraColumns.length > 1 ||
+    (extraColumns.length &&
+      (!categoryId.endsWith("screenplay") ||
+        !["", "Type"].includes(extraColumns[0])))
+  )
     throw new Error("Variety: columnas no reconocidas");
   const ranked = [];
   const seen = new Set();
@@ -411,7 +422,7 @@ export function parseVarietyFixture(
   return {
     connectorId,
     sourceId: "variety",
-    extractorVersion: "variety-datawrapper-v2",
+    extractorVersion: "variety-datawrapper-v3",
     seasonId,
     capturedAt: captured,
     sourceUrl: canonicalUrl,

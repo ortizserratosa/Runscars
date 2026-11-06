@@ -121,7 +121,7 @@ describe("versioned database foundation", () => {
       where id = 'awards-daily-predictions'
     `);
     expect(awardsDaily.rows[0]).toEqual({
-      extractor_version: "awards-daily-v9",
+      extractor_version: "awards-daily-v10",
       endpoint_url:
         "https://www.awardsdaily.com/wp-json/wp/v2/search?search=2027%20Oscar%20Predictions&per_page=20&_fields=id,url,title,subtype",
     });
@@ -149,7 +149,7 @@ describe("versioned database foundation", () => {
     expect(movieState.rows[0]).toEqual({
       source_id: "the-movie-state",
       is_active: true,
-      extractor_version: "movie-state-v1",
+      extractor_version: "movie-state-v2",
       editorial_status: "selected",
       technical_status: "automated",
       publication_status: "publishable",
@@ -281,7 +281,7 @@ describe("versioned database foundation", () => {
     expect(
       result.rows.every(
         (row) =>
-          row.extractor_version === "variety-datawrapper-v2" &&
+          row.extractor_version === "variety-datawrapper-v3" &&
           row.is_active &&
           row.publication_status === "publishable" &&
           row.required_category_ids.length === 1 &&

@@ -39,6 +39,11 @@ export const getCurrentPublicSnapshotPointers = unstable_cache(
 
 export type PublicCutSummary = Omit<RealProviderCut, "aggregate">;
 type SnapshotReference = Pick<SnapshotHistoryEntry, "id" | "lockedAt">;
+export type SnapshotIntegrityCorrection = {
+  snapshotId: string;
+  reason: string;
+  correctedAt: string;
+};
 export type PublicCandidate = {
   id: string;
   label: string;
@@ -51,6 +56,7 @@ export type PublicHistorySelection = {
   previous: RealProviderCut | null;
   sourceNames: Record<string, string>;
   currentCandidates: PublicCandidate[];
+  integrityCorrection?: SnapshotIntegrityCorrection | null;
 };
 type PublicHistoryIndex = {
   snapshots: SnapshotReference[];
@@ -132,7 +138,9 @@ export function selectedPublicCutIndex(
 async function databaseHistoryIndex(
   categoryId: PublicCategoryId,
   currentSnapshotId: string,
+  correctionIdsKey: string,
 ): Promise<PublicHistoryIndex> {
+  const correctedIds = new Set<string>(JSON.parse(correctionIdsKey));
   const supabase = createSupabaseServerClient();
   const pointer = await supabase
     .from("aggregate_snapshots")
@@ -170,6 +178,9 @@ async function databaseHistoryIndex(
       const entry = snapshotEntry(row, categoryId);
       if (!entry) continue;
       snapshots.push({ id: entry.id, lockedAt: entry.lockedAt });
+      // Keep the ID for direct historical URLs, but never use an invalid
+      // envelope to build daily cuts, expert changes or movement baselines.
+      if (correctedIds.has(entry.id)) continue;
       // Projection is per snapshot: only the last envelope of a UTC day can
       // affect the public series. Keep all IDs for historical URL resolution.
       const day = new Date(entry.lockedAt).toISOString().slice(0, 10);
@@ -226,10 +237,36 @@ async function databaseHistoryIndex(
 
 const cachedHistoryIndex = unstable_cache(
   databaseHistoryIndex,
-  ["public-history-index-v1", cacheScope],
+  ["public-history-index-v2-integrity", cacheScope],
   // The pointer is part of the cache key, so a new cut is visible immediately.
   // Retry unavailable public capture dates instead of caching them forever.
   { revalidate: 3600 },
+);
+
+const cachedIntegrityCorrections = unstable_cache(
+  async (): Promise<SnapshotIntegrityCorrection[]> => {
+    const supabase = createSupabaseServerClient();
+    const corrections: SnapshotIntegrityCorrection[] = [];
+    for (let offset = 0; ; offset += 500) {
+      const result = await supabase
+        .from("snapshot_integrity_corrections")
+        .select("snapshot_id,reason,corrected_at")
+        .order("snapshot_id", { ascending: true })
+        .range(offset, offset + 499);
+      if (result.error) throw new Error(result.error.message);
+      const rows = result.data ?? [];
+      corrections.push(
+        ...rows.map((row) => ({
+          snapshotId: row.snapshot_id,
+          reason: row.reason,
+          correctedAt: row.corrected_at,
+        })),
+      );
+      if (rows.length < 500) return corrections;
+    }
+  },
+  ["public-snapshot-integrity-corrections-v1", cacheScope],
+  { revalidate: 60 },
 );
 
 const cachedSnapshot = unstable_cache(
@@ -257,7 +294,21 @@ export const getPublicHistorySelection = cache(async function (
   currentSnapshotId: string,
   selectedSnapshotId?: string,
 ): Promise<PublicHistorySelection> {
-  const history = await cachedHistoryIndex(categoryId, currentSnapshotId);
+  // Poll the small additive registry separately. Its IDs form part of the
+  // history key, so a new correction invalidates the large projection without
+  // refetching the immutable history every minute while it remains unchanged.
+  const corrections = await cachedIntegrityCorrections();
+  const history = await cachedHistoryIndex(
+    categoryId,
+    currentSnapshotId,
+    JSON.stringify(corrections.map((item) => item.snapshotId).sort()),
+  );
+  const requestedId = selectedSnapshotId ?? currentSnapshotId;
+  const integrityCorrection = history.snapshots.some(
+    (snapshot) => snapshot.id === requestedId,
+  )
+    ? (corrections.find((item) => item.snapshotId === requestedId) ?? null)
+    : null;
   const selectedIndex = selectedPublicCutIndex(
     history.snapshots,
     history.cuts,
@@ -288,5 +339,6 @@ export const getPublicHistorySelection = cache(async function (
     previous,
     sourceNames: history.sourceNames,
     currentCandidates: history.currentCandidates,
+    integrityCorrection,
   };
 });

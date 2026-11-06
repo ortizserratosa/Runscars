@@ -84,6 +84,88 @@ function fixtureCut(
 }
 
 describe("comparable prediction history across a freshness change", () => {
+  it("excludes corrected snapshots from leaders, movements and weekly history while explaining direct URLs", async () => {
+    const valid = fixtureCut(
+      "2026-10-01T00:00:00Z",
+      "2026-10-01T04:47:00Z",
+      false,
+    );
+    const incomplete = fixtureCut(
+      "2026-10-02T00:00:00Z",
+      "2026-10-02T04:47:00Z",
+      true,
+    );
+    const recovered = fixtureCut(
+      "2026-10-03T00:00:00Z",
+      "2026-10-03T04:47:00Z",
+      false,
+    );
+    database.tables = {
+      current_aggregate_snapshots: [
+        {
+          season_id: "oscars-2027",
+          category_id: "best-picture",
+          prediction_intention: "nomination",
+          kind: "periodic",
+          snapshot_id: "recovered",
+        },
+      ],
+      aggregate_snapshots: [
+        { id: "valid", aggregate: valid },
+        { id: "incomplete", aggregate: incomplete },
+        { id: "recovered", aggregate: recovered },
+      ].map(({ id, aggregate }) => ({
+        id,
+        season_id: "oscars-2027",
+        category_id: "best-picture",
+        prediction_intention: "nomination",
+        kind: "periodic",
+        content_hash: id,
+        locked_at: aggregate.cutoffDate,
+        schema_version: "runscars-snapshot-v2",
+        method_version: aggregate.methodVersion,
+        payload: { aggregate },
+      })),
+      snapshot_integrity_corrections: [
+        {
+          snapshot_id: "incomplete",
+          reason: "Importación incompleta",
+          corrected_at: "2026-11-06T13:00:00Z",
+        },
+      ],
+    };
+    const original = structuredClone(database.tables);
+    const current = (await getCategoryView(
+      2027,
+      "best-picture",
+    )) as ActiveCategoryView;
+    expect(current.snapshot?.cuts.map((cut) => cut.id)).toEqual(["valid"]);
+    expect(current.aggregate?.ranking[0].candidateId).toBe(
+      valid.ranking[0].candidateId,
+    );
+    expect(
+      current.aggregate?.ranking.every((row) => row.movement === null),
+    ).toBe(true);
+    expect(current.integrityCorrection).toBeNull();
+
+    const direct = (await getCategoryView(2027, "best-picture", {
+      snapshotId: "incomplete",
+    })) as ActiveCategoryView;
+    expect(direct.snapshot?.id).toBe("valid");
+    expect(direct.integrityCorrection).toEqual({
+      snapshotId: "incomplete",
+      reason: "Importación incompleta",
+      correctedAt: "2026-11-06T13:00:00Z",
+    });
+    const weekly = await getWeeklyReport("2026-09-28");
+    expect(weekly.categories[0].changes).toBe(1);
+    expect(weekly.categories[0].movements).toEqual([]);
+    expect(
+      (await getCurrentCategoryPredictions())[0].aggregate.ranking,
+    ).toEqual(current.aggregate?.ranking);
+    expect(database.tables).toEqual(original);
+  });
+
   it("shows an empty current cut while preserving the earlier public ranking", async () => {
     const active = fixtureCut(
       "2026-08-01T00:00:00Z",

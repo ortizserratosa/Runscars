@@ -126,6 +126,49 @@ describe("Variety public category rankings", () => {
     ).toEqual(["1", "3", "2"]);
   });
 
+  it.each([
+    ["original-screenplay", "Type"],
+    ["adapted-screenplay", ""],
+  ])(
+    "reads the November %s presentation column without shifting its published ranks",
+    (categoryId, extraColumn) => {
+      const csv = [
+        `Rank,Film,Writer(s),Distributor,${extraColumn}`,
+        "AND THE PREDICTED NOMINEES ARE,,,,",
+        '"Updated Oct. 1, 2026",,,,',
+        ...Array.from(
+          { length: 5 },
+          (_, index) =>
+            `${index + 1},Film ${index + 1},Writer ${index + 1},Studio,`,
+        ),
+        "ELIGIBLE FILMS (IN ALPHABETICAL ORDER),,,,",
+      ].join("\r\n");
+      const publication = parse(categoryId, { csv }).publications[0];
+      expect(publication.originalData.columns).toEqual([
+        "Rank",
+        "Film",
+        "Writer(s)",
+        "Distributor",
+        extraColumn,
+      ]);
+      expect(
+        publication.observations.map((row) => row.originalValue.rank),
+      ).toEqual([1, 2, 3, 4, 5]);
+      expect(publication.observations[4]).toMatchObject({
+        filmSubject: "Film 5",
+        originalValue: { list_length: 5, raw: { [extraColumn]: "" } },
+      });
+      expect(() =>
+        parse(categoryId, {
+          csv: csv.replace(
+            `Distributor,${extraColumn}\r`,
+            "Distributor,Unknown\r",
+          ),
+        }),
+      ).toThrow("columnas");
+    },
+  );
+
   it.each(["4", "6"])(
     "rejects a duplicated source rank %s instead of inventing its missing position",
     (rank) => {
