@@ -56,10 +56,51 @@ correctas y seguir caducados. No se rejuvenece una predicción al arreglar el
 extractor. No se cambian pesos, ventana20/10, frescura de treinta días ni umbral
 de cuatro rankings.
 
+## Historial y límites
+
+Se inspeccionaron 330 cortes y 1.663 referencias a capturas. Los 59 cortes v4
+permiten contrastar la ventana20/10: se confirman cuatro incidencias con pérdida
+de votos dentro de esa ventana, registradas con motivo en la migración
+`20261106120000`. No se marca un corte por tener identidades pendientes o por
+carecer únicamente de cola fuera de K.
+
+Los 271 cortes de métodos anteriores conservan representaciones y reutilización
+de observaciones que requieren una reconstrucción específica; 21 referencias no
+tienen formato reconocible. No se certifica retrospectivamente su completitud
+ni se retiran por un conteo simplificado de `capture_id`. Se conserva este límite
+en el [inventario](audits/2026-11-06/snapshot-integrity-audit.json).
+
 ## Verificación y publicación
 
-Pendiente de completar con los resultados finales de pruebas, importaciones,
-integridad histórica y publicación. La copia previa de roles, esquema y datos
+511 pruebas unitarias y 59 de base de datos correctas; 142 recorridos E2E
+correctos en escritorio, móvil, Chromium, Firefox y WebKit. Formato, lint, tipos
+y build local con fixtures correctos. La auditoría de dependencias no encuentra
+vulnerabilidades altas o críticas; informa ocho moderadas en herramientas de
+desarrollo existentes.
+
+Las diecisiete invocaciones profesionales terminaron con éxito, entre 1,9 y
+20,3 segundos: 18 capturas nuevas y 678 observaciones insertadas. Una repetición
+terminó también 17/17, sin capturas ni observaciones nuevas y con 1.008 reutilizadas.
+Se confirma cero runs abiertos y los 330 hashes originales intactos. Los
+[recibos](audits/2026-11-06/import-responses.json) y la
+[repetición](audits/2026-11-06/repeat-responses.json) conservan los resultados.
+
+La comprobación adicional de Guardian devuelve HTTP401 en su Content API;
+requiere renovar o validar la credencial del proveedor. Se conserva el fallo
+explícito y su última captura válida. No participa en el consenso profesional.
+RogerEbert termina correctamente, sin nuevas publicaciones del catálogo. Esta
+incidencia no se convierte en un éxito ficticio ni bloquea las otras fuentes.
+
+El primer build remoto detectó un timeout de la consulta pública de estados al
+generar el sitemap. La migración `20261106130000` elimina una barrera redundante
+de las dos vistas privadas, que impedía aprovechar índices, conservando la
+barrera pública, RLS y el certificado transaccional. El plan inicial tardaba
+51,56 segundos. Las ocho lecturas reales posteriores pasan: estados completos
+en 1,21–1,72 segundos y fichas de fuente en 0,20–0,74 segundos. El
+[benchmark](audits/2026-11-06/prediction-read-performance.json) incluye ambos roles.
+Publicación y resultado público pendientes.
+
+La copia previa de roles, esquema y datos
 públicos/Auth/Storage está fuera de Git en
 `/Users/nacho/Documents/Side/Runscars-backups/2026-11-06-prediction-integrity`,
 con directorio0700 y SQL0600. No se ha ensayado una restauración nueva.

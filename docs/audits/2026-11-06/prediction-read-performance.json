@@ -1,0 +1,66 @@
+{
+  "auditedAt": "2026-11-06T13:55:03.289Z",
+  "change": "20261106130000_prediction_completion_read_performance.sql",
+  "baseline": {
+    "statusReadExecutionMs": 51560.004,
+    "hypotheticalInlineEvidenceExecutionMs": 1903.323
+  },
+  "results": [
+    {
+      "role": "anon",
+      "scope": "all-statuses",
+      "durationMs": 1211,
+      "rowCount": 73,
+      "error": null
+    },
+    {
+      "role": "anon",
+      "scope": "radar-evidence",
+      "durationMs": 203,
+      "rowCount": 189,
+      "error": null
+    },
+    {
+      "role": "anon",
+      "scope": "variety-evidence",
+      "durationMs": 242,
+      "rowCount": 237,
+      "error": null
+    },
+    {
+      "role": "anon",
+      "scope": "nbp-evidence",
+      "durationMs": 739,
+      "rowCount": 45,
+      "error": null
+    },
+    {
+      "role": "service_role",
+      "scope": "all-statuses",
+      "durationMs": 1721,
+      "rowCount": 73,
+      "error": null
+    },
+    {
+      "role": "service_role",
+      "scope": "radar-evidence",
+      "durationMs": 271,
+      "rowCount": 189,
+      "error": null
+    },
+    {
+      "role": "service_role",
+      "scope": "variety-evidence",
+      "durationMs": 222,
+      "rowCount": 237,
+      "error": null
+    },
+    {
+      "role": "service_role",
+      "scope": "nbp-evidence",
+      "durationMs": 576,
+      "rowCount": 45,
+      "error": null
+    }
+  ]
+}
