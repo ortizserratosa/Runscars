@@ -10,7 +10,14 @@ import {
 export const PUBLIC_RENDER_PREFIX = "/public-render";
 
 function isPublicFamily(pathname: string) {
-  return pathname === "/" || /^\/(?:peliculas|personas)\/[^/]+$/.test(pathname);
+  return (
+    pathname === "/" ||
+    /^\/(?:peliculas|personas|fuentes)\/[^/]+$/.test(pathname) ||
+    pathname === "/fuentes" ||
+    pathname === "/semana" ||
+    /^\/semana\/\d{4}-\d{2}-\d{2}$/.test(pathname) ||
+    /^\/temporadas\/2027\/[^/]+$/.test(pathname)
+  );
 }
 
 export function canonicalPublicRenderPath(pathname: string): string | null {

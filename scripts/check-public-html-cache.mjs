@@ -41,7 +41,7 @@ try {
 
 const includeRsc = flags.includes("--rsc");
 const canonicalOrigin = "https://runscars.app";
-const requestBudget = 36;
+const requestBudget = 80;
 const warmSettleMs = 3000;
 const cacheRetryDelaysMs = [1000, 2000, 3000];
 const reportPath = path.resolve(reportArgument);
@@ -52,6 +52,14 @@ const routes = [
   "/en/peliculas/the-odyssey",
   "/personas/tmdb-7",
   "/en/personas/tmdb-7",
+  "/temporadas/2027/mejor-pelicula",
+  "/en/temporadas/2027/mejor-pelicula",
+  "/fuentes",
+  "/en/fuentes",
+  "/fuentes/next-best-picture",
+  "/en/fuentes/next-best-picture",
+  "/semana",
+  "/en/semana",
 ];
 const sharedHits = new Set(["HIT", "PRERENDER"]);
 const sharedResponses = new Set([...sharedHits, "STALE"]);
@@ -303,10 +311,16 @@ try {
       await delay(warmSettleMs);
     }
     await assertCachedHtml(route, "anonymous-repeat-1");
-    await assertCachedHtml(route, "anonymous-repeat-2");
+    if (routes.indexOf(route) < 6)
+      await assertCachedHtml(route, "anonymous-repeat-2");
   }
 
-  for (const route of ["/personas/tmdb-7", "/en/personas/tmdb-7"]) {
+  for (const route of [
+    "/personas/tmdb-7",
+    "/en/personas/tmdb-7",
+    "/temporadas/2027/mejor-pelicula",
+    "/en/temporadas/2027/mejor-pelicula",
+  ]) {
     for (const suffix of ["", ".0"]) {
       const result = await sample(
         route,

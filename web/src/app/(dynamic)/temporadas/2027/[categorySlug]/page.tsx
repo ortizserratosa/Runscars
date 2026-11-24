@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import {
   PUBLIC_CATEGORIES,
@@ -6,7 +5,7 @@ import {
 } from "../../../../../lib/categories/config";
 import { getCategoryView } from "../../../../../lib/categories/data";
 import { getRequestLocale } from "../../../../../lib/i18n/server";
-import { buildLocalizedMetadata } from "../../../../../lib/seo";
+import { categoryMetadata } from "../../../../temporadas/category-metadata";
 import { CategoryPageView } from "../../../../temporadas/CategoryPageView";
 
 export function generateStaticParams() {
@@ -19,24 +18,12 @@ export async function generateMetadata({
   params,
 }: {
   params: Promise<{ categorySlug: string }>;
-}): Promise<Metadata> {
-  const { categorySlug } = await params;
-  const category = categoryBySlug(categorySlug);
-  if (!category) return {};
-  const locale = await getRequestLocale();
-  const en = locale === "en";
-  const name = en ? category.nameEn : category.name;
-  return buildLocalizedMetadata({
-    locale,
-    socialImage: `/api/social?kind=category&id=${category.slug}&lang=${locale}`,
-    path: `/temporadas/2027/${category.slug}`,
-    title: en
-      ? `${name} Oscar Predictions 2027`
-      : `Predicciones Oscar 2027: ${name}`,
-    description: en
-      ? `Updated ${name} predictions for the 2027 Oscars, combining specialist rankings with transparent sources and change history.`
-      : `Predicciones actualizadas de ${name} para los Oscar 2027, con rankings de especialistas, fuentes y evolución verificables.`,
-  });
+}) {
+  const [{ categorySlug }, locale] = await Promise.all([
+    params,
+    getRequestLocale(),
+  ]);
+  return categoryMetadata(categorySlug, locale);
 }
 
 export default async function CategoryPage({

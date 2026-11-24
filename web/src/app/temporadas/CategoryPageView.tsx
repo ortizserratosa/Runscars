@@ -10,12 +10,20 @@ import {
   type PublicCategoryId,
 } from "../../lib/categories/config";
 import { localeTag, localizedPath, type Locale } from "../../lib/i18n/config";
+import {
+  formatCaptureDate as dateLabel,
+  formatLocalizedNumber,
+} from "../../lib/i18n/format";
 import { getRequestLocale } from "../../lib/i18n/server";
 import { absoluteUrl } from "../../lib/seo";
 import { JsonLd } from "../components/JsonLd";
 import { PublicRankingModule } from "../comunidad/PublicRankingModule";
 import { getFestivalFilmIds } from "../../lib/festivals/data";
-import { UserRankingPanel } from "./UserRankingPanel";
+import {
+  AnonymousUserRankingPanel,
+  UserRankingPanel,
+} from "./UserRankingPanel";
+import { LivePublicRankingModule } from "../comunidad/LivePublicRankingModule";
 
 type CategoryDefinition = {
   id: PublicCategoryId;
@@ -25,15 +33,6 @@ type CategoryDefinition = {
   shortName: string;
   shortNameEn: string;
 };
-
-function dateLabel(value: string, locale: Locale) {
-  if (!value) return locale === "en" ? "no capture" : "sin captura";
-  return new Intl.DateTimeFormat(localeTag(locale), {
-    dateStyle: "medium",
-    timeStyle: "short",
-    timeZone: "UTC",
-  }).format(new Date(value));
-}
 
 function candidateSubtitle(candidate: {
   film: { id: string; title: string } | null;
@@ -54,11 +53,13 @@ function ActiveCategory({
   view,
   locale,
   festivalFilmIds,
+  anonymous = false,
 }: {
   category: CategoryDefinition;
   view: ActiveCategoryView;
   locale: Locale;
   festivalFilmIds: Set<string>;
+  anonymous?: boolean;
 }) {
   const en = locale === "en";
   const categoryName = en ? category.nameEn : category.name;
@@ -111,13 +112,10 @@ function ActiveCategory({
         </div>
         <div className="points-cell">
           <strong>
-            {candidate.scoreOutOf100.toLocaleString(localeTag(locale), {
-              minimumFractionDigits: 1,
-              maximumFractionDigits: 1,
-            })}
+            {formatLocalizedNumber(candidate.scoreOutOf100, locale, "score")}
           </strong>
           <div
-            aria-label={`${candidate.scoreOutOf100.toLocaleString(localeTag(locale))} ${en ? "Borda points out of 100" : "puntos Borda sobre 100"}`}
+            aria-label={`${formatLocalizedNumber(candidate.scoreOutOf100, locale)} ${en ? "Borda points out of 100" : "puntos Borda sobre 100"}`}
             aria-valuemax={100}
             aria-valuemin={0}
             aria-valuenow={candidate.scoreOutOf100}
@@ -180,9 +178,7 @@ function ActiveCategory({
                       : "ausente"}
               </span>
               <strong>
-                {source.points.toLocaleString(localeTag(locale), {
-                  maximumFractionDigits: 3,
-                })}{" "}
+                {formatLocalizedNumber(source.points, locale, "points")}{" "}
                 {en ? "pts" : "pts"}
               </strong>
             </a>
@@ -694,10 +690,7 @@ function ActiveCategory({
                             <em>
                               {leader.probability === null
                                 ? "—"
-                                : `${(leader.probability * 100).toLocaleString(
-                                    localeTag(locale),
-                                    { maximumFractionDigits: 1 },
-                                  )}%`}
+                                : `${formatLocalizedNumber(leader.probability * 100, locale, "probability")}%`}
                             </em>
                             <small>
                               {en ? "Observed" : "Observado"}{" "}
@@ -747,11 +740,7 @@ function ActiveCategory({
                                     <strong>
                                       {market.probability === null
                                         ? "—"
-                                        : `${(
-                                            market.probability * 100
-                                          ).toLocaleString(localeTag(locale), {
-                                            maximumFractionDigits: 1,
-                                          })}%`}
+                                        : `${formatLocalizedNumber(market.probability * 100, locale, "probability")}%`}
                                     </strong>
                                     <small>
                                       {en ? "Updated" : "Actualizado"}{" "}
@@ -774,15 +763,32 @@ function ActiveCategory({
           </div>
         </section>
 
-        <UserRankingPanel
-          candidates={view.currentCandidates}
-          categoryId={category.id}
-          categoryName={category.name}
-        />
-        <PublicRankingModule
-          categoryId={category.id}
-          categoryName={category.name}
-        />
+        {anonymous ? (
+          <>
+            <AnonymousUserRankingPanel
+              categoryId={category.id}
+              categoryName={category.name}
+              locale={locale}
+            />
+            <LivePublicRankingModule
+              categoryId={category.id}
+              categoryName={category.name}
+              locale={locale}
+            />
+          </>
+        ) : (
+          <>
+            <UserRankingPanel
+              candidates={view.currentCandidates}
+              categoryId={category.id}
+              categoryName={category.name}
+            />
+            <PublicRankingModule
+              categoryId={category.id}
+              categoryName={category.name}
+            />
+          </>
+        )}
       </div>
     </>
   );
@@ -907,12 +913,16 @@ function ArchiveCategory({
 export async function CategoryPageView({
   category,
   view,
+  locale: explicitLocale,
+  anonymous = false,
 }: {
   category: CategoryDefinition;
   view: ActiveCategoryView | ArchiveCategoryView;
+  locale?: Locale;
+  anonymous?: boolean;
 }) {
   const [locale, festivalFilmIds] = await Promise.all([
-    getRequestLocale(),
+    explicitLocale ?? getRequestLocale(),
     view.mode === "active"
       ? getFestivalFilmIds()
       : Promise.resolve(new Set<string>()),
@@ -983,6 +993,7 @@ export async function CategoryPageView({
         <ActiveCategory
           category={category}
           festivalFilmIds={festivalFilmIds}
+          anonymous={anonymous}
           locale={locale}
           view={view}
         />

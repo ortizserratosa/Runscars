@@ -1,22 +1,10 @@
 import { getRequestLocale } from "../../../lib/i18n/server";
-import { buildLocalizedMetadata } from "../../../lib/seo";
+import { weeklyMetadata } from "../../semana/metadata";
 import { weekStart } from "../../../lib/discovery/weekly";
 import { WeeklyView } from "../../semana/WeeklyView";
 export async function generateMetadata() {
   const locale = await getRequestLocale();
-  return buildLocalizedMetadata({
-    locale,
-    socialImage: `/api/social?kind=weekly&lang=${locale}`,
-    path: "/semana",
-    title:
-      locale === "en"
-        ? "This week in the Oscar 2027 race"
-        : "Esta semana en la carrera a los Oscar 2027",
-    description:
-      locale === "en"
-        ? "Follow the latest Oscar prediction changes, category leaders and film festivals in the Runscars weekly edition."
-        : "Sigue los cambios en las predicciones Oscar, las favoritas por categoría y los festivales de cine en la edición semanal de Runscars.",
-  });
+  return weeklyMetadata(locale);
 }
 export default async function Page() {
   return (

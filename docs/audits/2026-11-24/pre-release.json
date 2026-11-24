@@ -1,0 +1,18 @@
+{
+  "previousDeployment": {
+    "id": "dpl_5DP1rnxSjdBNV1GEed1rcTBFdPGx",
+    "url": "https://runscars-lga1enwyf-nazzozzo-s-projects.vercel.app",
+    "commit": "d4d8bedc4f6e413d52f382b7e74eeac6933204a7",
+    "state": "READY"
+  },
+  "project": "runscars",
+  "team": "nazzozzo-s-projects",
+  "publicUrl": "https://runscars.app",
+  "migration": "20261124120000_prediction_evidence_scoped_heads.sql",
+  "backupDirectory": "/Users/nacho/Documents/Side/Runscars-backups/2026-11-24-cpu",
+  "backupPermissions": "0700 directory; 0600 files",
+  "backupRestoreTested": false,
+  "migrationDryRun": "Only this migration is pending",
+  "snapshotsBefore": 400,
+  "snapshotIdHashSha256Before": "dfb7597032df79867a69d3e7939ce2a555a6ddda857427e34fa57fdd9534956e"
+}

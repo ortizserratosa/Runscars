@@ -50,7 +50,10 @@ vi.mock("../../src/lib/supabase/server", () => ({
             },
             error: null,
           };
-        if (table === "tmdb_movie_snapshots")
+        if (
+          table === "tmdb_movie_snapshots" ||
+          table === "tmdb_person_snapshots"
+        )
           return {
             data:
               expiresAfter && state.expiresAt <= expiresAfter
@@ -139,6 +142,17 @@ describe("anonymous catalog cache boundaries", () => {
     expect(expired?.tmdb).toBeNull();
     expect(expired?.title).toBe("Editorial title");
     expect(expired?.credits).toEqual([]);
+  });
+
+  it("does not keep an expired person snapshot during the five-minute cache", async () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-11-24T12:00:00Z"));
+    state.expiresAt = "2026-11-24T12:00:01.000Z";
+    expect((await getPersonCatalogDetail("person-a"))?.tmdb).not.toBeNull();
+    vi.setSystemTime(new Date("2026-11-24T12:00:02Z"));
+    const expired = await getPersonCatalogDetail("person-a");
+    expect(expired?.tmdb).toBeNull();
+    expect(expired?.name).toBe("person-a");
   });
 
   it("preserves errors and retries after a failed anonymous read", async () => {

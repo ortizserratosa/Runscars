@@ -13,6 +13,7 @@ import {
 
 const database = vi.hoisted(() => ({
   tables: {} as Record<string, Record<string, unknown>[]>,
+  reads: [] as string[],
 }));
 vi.mock("server-only", () => ({}));
 vi.mock("next/cache", () => ({ unstable_cache: (fn: unknown) => fn }));
@@ -22,6 +23,7 @@ vi.mock("../../src/lib/environment", () => ({
 vi.mock("../../src/lib/supabase/server", () => ({
   createSupabaseServerClient: () => ({
     from(table: string) {
+      database.reads.push(table);
       let rows = [...(database.tables[table] ?? [])];
       const query = {
         select: () => query,
@@ -84,6 +86,64 @@ function fixtureCut(
 }
 
 describe("comparable prediction history across a freshness change", () => {
+  it("builds weekly history without requesting live markets or source health", async () => {
+    const baseline = fixtureCut(
+      "2026-09-25T00:00:00Z",
+      "2026-09-25T04:47:00Z",
+      false,
+    );
+    const current = fixtureCut(
+      "2026-10-01T00:00:00Z",
+      "2026-10-01T04:47:00Z",
+      true,
+    );
+    database.tables = {
+      current_aggregate_snapshots: [
+        {
+          season_id: "oscars-2027",
+          category_id: "best-picture",
+          prediction_intention: "nomination",
+          kind: "periodic",
+          snapshot_id: "weekly-current",
+        },
+      ],
+      aggregate_snapshots: [
+        { id: "weekly-baseline", aggregate: baseline },
+        { id: "weekly-current", aggregate: current },
+      ].map(({ id, aggregate }) => ({
+        id,
+        season_id: "oscars-2027",
+        category_id: "best-picture",
+        prediction_intention: "nomination",
+        kind: "periodic",
+        content_hash: id,
+        locked_at: aggregate.cutoffDate,
+        schema_version: "runscars-snapshot-v2",
+        method_version: aggregate.methodVersion,
+        payload: { aggregate },
+      })),
+    };
+    const expected = (await getCategoryView(
+      2027,
+      "best-picture",
+    )) as ActiveCategoryView;
+    database.reads = [];
+    const report = await getWeeklyReport("2026-09-28");
+    const weeks = await listDigestWeeks();
+    expect(report.categories[0].leader).toEqual(expected.aggregate?.ranking[0]);
+    expect(report.categories[0].changes).toBe(1);
+    expect(report.categories[0].hasBaseline).toBe(true);
+    expect(report.categories[0].movements.length).toBeGreaterThan(0);
+    expect(weeks).toEqual(["2026-09-28", "2026-09-21"]);
+    expect(new Set(database.reads)).toEqual(
+      new Set([
+        "current_aggregate_snapshots",
+        "aggregate_snapshots",
+        "snapshot_integrity_corrections",
+      ]),
+    );
+  });
+
   it("excludes corrected snapshots from leaders, movements and weekly history while explaining direct URLs", async () => {
     const valid = fixtureCut(
       "2026-10-01T00:00:00Z",

@@ -7,6 +7,7 @@ import {
   festivalName,
 } from "../../lib/festivals/presentation";
 import { localizedPath, type Locale } from "../../lib/i18n/config";
+import { formatWeekArchiveDate, formatWeeklyDate } from "../../lib/i18n/format";
 import { getFilmArtwork } from "../../lib/repositories/artwork";
 import { PosterBlock } from "../components/PosterBlock";
 import { ShareButton } from "../components/ShareButton";
@@ -77,11 +78,7 @@ export async function WeeklyView({
             href={href(`/semana/${date}`)}
             key={date}
           >
-            {new Intl.DateTimeFormat(locale, {
-              day: "numeric",
-              month: "short",
-              timeZone: "UTC",
-            }).format(new Date(`${date}T12:00:00Z`))}
+            {formatWeekArchiveDate(date, locale)}
           </Link>
         ))}
       </nav>
@@ -124,10 +121,7 @@ export async function WeeklyView({
                 </h2>
                 {item.cut ? (
                   <time dateTime={item.cut.lockedAt}>
-                    {new Intl.DateTimeFormat(locale, {
-                      dateStyle: "medium",
-                      timeZone: "UTC",
-                    }).format(new Date(item.cut.lockedAt))}
+                    {formatWeeklyDate(item.cut.lockedAt, locale)}
                   </time>
                 ) : null}
               </div>

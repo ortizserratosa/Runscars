@@ -300,6 +300,7 @@ async function databasePersonCatalogDetail(
           "locale",
           locale === "es-ES" ? ["es-ES", "en-US"] : ["en-US", "es-ES"],
         )
+        .gt("expires_at", new Date().toISOString())
         .order("fetched_at", { ascending: false }),
       supabase
         .from("film_credits")
@@ -383,7 +384,7 @@ const cachedFilmCatalogDetail = unstable_cache(
 const cachedPersonCatalogDetail = unstable_cache(
   databasePersonCatalogDetail,
   ["public-person-catalog-v1", catalogCacheScope],
-  { revalidate: 60 },
+  { revalidate: 300 },
 );
 
 export const getFilmCatalogDetail = cache(
@@ -398,8 +399,13 @@ export const getFilmCatalogDetail = cache(
   },
 );
 export const getPersonCatalogDetail = cache(
-  async (personId: string, locale: "es-ES" | "en-US" = "es-ES") =>
-    isSupabaseConfigured() ? cachedPersonCatalogDetail(personId, locale) : null,
+  async (personId: string, locale: "es-ES" | "en-US" = "es-ES") => {
+    if (!isSupabaseConfigured()) return null;
+    const detail = await cachedPersonCatalogDetail(personId, locale);
+    return detail?.tmdb && Date.parse(detail.tmdb.expiresAt) <= Date.now()
+      ? databasePersonCatalogDetail(personId, locale)
+      : detail;
+  },
 );
 
 async function listCatalogIds(table: "films" | "people") {

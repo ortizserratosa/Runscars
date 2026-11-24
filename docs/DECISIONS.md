@@ -1628,3 +1628,61 @@ ejemplos manuales de nominaciones y ganador coincidieron con
   original. Una declaración explícita de orden de Awards Daily solo ordena la
   categoría adyacente a la que se refiere, sin extenderse al resto del artículo.
 - **Evidencia:** [auditoría de integridad](PREDICTION_INTEGRITY_AUDIT_2026-11-06.md).
+
+
+## D-080 · Reutilización del HTML profesional y comunidad revocable en vivo
+
+- **Fecha:** 2026-11-24
+- **Estado:** Aceptada
+- **Origen:** petición de aplicar las optimizaciones de CPU tras consultar el uso
+  del equipo Hobby, conservando el límite normal compartido de cuatro horas.
+- **HTML público:** ampliar la rama anónima de D-077 a categorías Oscar 2027 sin
+  selector de corte, fuentes y ediciones semanales, en español e inglés. El
+  contenido profesional conserva ISR de 60 segundos y los selectores `corte`
+  siguen en SSR. Los lectores semanales recuperan únicamente historia pública y
+  las hojas de fuentes se reutilizan durante 60 segundos por backend y entidad.
+- **Comunidad:** el HTML compartido no contiene identidades, visionados ni
+  quinielas revocables. Un módulo del navegador consulta un resumen público
+  mínimo mediante un endpoint anónimo con RLS y `private, no-store`; las sesiones
+  suministradas conservan su render y validación existentes. Al ocultar la
+  pestaña se descartan los datos y las respuestas pendientes; al volver se leen
+  de nuevo. Un error de lectura no se presenta como cero quinielas.
+- **Fichas:** las personas y sus metadatos públicos se reutilizan durante cinco
+  minutos; portada y películas mantienen 60 segundos por su contexto de
+  predicciones. Ninguna caché amplía la fecha original de validez de TMDB. ISR
+  puede servir el último HTML correcto mientras regenera, como en D-077.
+- **Cálculo:** compartir instancias de formato Intl y consultar los agregados
+  históricos existentes no cambia Borda, pesos, vigencia, movimientos ni hashes.
+  No se adoptan Cache Components, PPR, planes o complementos de pago.
+- **Publicación:** verificar HTML/Flight, ES/EN, sesiones completas/fragmentadas,
+  consulta de cortes, revocación y errores antes de promover el mismo artefacto
+  de producción. El HIT acredita reutilización; el ahorro de CPU exige medir
+  ventanas posteriores completas, incluidas las tareas programadas.
+- **Evidencia:** [mantenimiento y límites de medición](VERCEL_CPU_MAINTENANCE_2026-11-24.md).
+
+
+## D-081 · Fecha representativa determinista de una captura de predicciones
+
+- **Fecha:** 2026-11-24
+- **Estado:** Aceptada
+- **Origen:** la revisión independiente del mantenimiento de CPU detecta que las
+  lecturas antiguas podían elegir distinta publicación al cambiar el plan SQL
+  cuando una captura legada contenía fechas de observación mixtas.
+- **Decisión:** elegir una sola fecha representativa por captura, fuente,
+  temporada, categoría e intención. El `publication_date` explícito del recibo
+  conserva su precedencia y su `null` explícito; cuando falta o no es válido se
+  usa la mayor fecha de publicación de las observaciones del grupo, igual que
+  en el resumen de estado existente. Una fecha de captura posterior no se
+  convierte en publicación ni rejuvenece una lista sin cambios.
+- **Originales:** la fecha representativa solo ordena revisiones y URLs. La
+  evidencia devuelve las fechas individuales originales; las observaciones sin
+  fecha conservan su cálculo de continuidad, también en capturas mixtas. No se
+  actualizan observaciones, recibos ni snapshots bloqueados.
+- **Compatibilidad:** las capturas con fechas uniformes conservan resultados
+  exactos. El legado contradictorio deja de depender del orden físico del plan;
+  esta corrección deliberada queda cubierta por pruebas diferenciales y de
+  continuidad, además de la equivalencia ordinaria con las vistas anteriores.
+- **Operación:** acotar las consultas por fuente y cabezas completas antes de
+  interpretar firmas históricas, conservando las barreras públicas, permisos y
+  columnas. No añadir tablas de caché ni migrar datos originales.
+- **Evidencia:** [mantenimiento y revisión independiente](VERCEL_CPU_MAINTENANCE_2026-11-24.md).

@@ -16,6 +16,10 @@ import {
 } from "../../lib/repositories/signals";
 import { localizedCategoryName } from "../../lib/i18n/categories";
 import { localeTag, localizedPath, type Locale } from "../../lib/i18n/config";
+import {
+  formatFilmDate as dateLabel,
+  formatLocalizedNumber,
+} from "../../lib/i18n/format";
 import { absoluteUrl, buildLocalizedMetadata } from "../../lib/seo";
 import { tmdbImageUrl } from "../../lib/tmdb/images";
 import { getFilmFestivalContext } from "../../lib/festivals/data";
@@ -40,22 +44,14 @@ export async function filmMetadata(
   });
 }
 
-function formatNumber(value: number | null, locale: Locale, digits = 1) {
+function formatNumber(value: number | null, locale: Locale, digits: 1 | 2 = 1) {
   return value === null
     ? "—"
-    : value.toLocaleString(localeTag(locale), {
-        minimumFractionDigits: digits,
-        maximumFractionDigits: digits,
-      });
-}
-
-function dateLabel(value: string | null, locale: Locale) {
-  if (!value)
-    return locale === "en" ? "Date not provided" : "Fecha no indicada";
-  return new Intl.DateTimeFormat(localeTag(locale), {
-    dateStyle: "medium",
-    timeZone: "UTC",
-  }).format(new Date(value.length === 10 ? `${value}T00:00:00Z` : value));
+    : formatLocalizedNumber(
+        value,
+        locale,
+        digits === 2 ? "preciseScore" : "score",
+      );
 }
 
 export async function renderFilm(

@@ -15,6 +15,7 @@ const state = vi.hoisted(() => ({
   connectors: [] as Record<string, unknown>[],
 }));
 vi.mock("server-only", () => ({}));
+vi.mock("next/cache", () => ({ unstable_cache: (fn: unknown) => fn }));
 vi.mock("../../src/lib/i18n/server", () => ({
   getRequestLocale: async () => "es",
 }));

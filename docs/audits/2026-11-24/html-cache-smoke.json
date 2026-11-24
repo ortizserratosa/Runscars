@@ -1,0 +1,2485 @@
+{
+  "capturedAt": "2026-11-24T09:29:45.753Z",
+  "pass": true,
+  "runtime": "next build + next start with local PostgREST/Auth fixtures",
+  "scope": "Real independent HTTP requests; anonymous HTML/Flight ISR versus legacy SSR bypasses. Invalid tokens and a local HMAC fixture identity with private watch state; no real users or external services.",
+  "cpuLimit": "Local process CPU includes cache, render and runtime overhead; this is not Vercel billed CPU or a monthly savings forecast.",
+  "rebuildRequired": "The fixture build replaced web/.next. Run normal npm run build before deploying.",
+  "buildDatabaseReads": 51,
+  "buildAuthReads": 0,
+  "samples": [
+    {
+      "id": "smoke-1",
+      "requestIds": [
+        "smoke-1"
+      ],
+      "route": "/",
+      "finalRoute": "/",
+      "redirects": [],
+      "kind": "anonymous-first",
+      "method": "GET",
+      "status": 200,
+      "cache": "MISS",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/es",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 30469,
+      "wallMs": 58.1,
+      "canonical": "http://localhost:53831/",
+      "htmlLang": "es-ES",
+      "jsonLdBlocks": 0,
+      "languageSwitchHref": "http://localhost:53831/en",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 62494,
+        "system": 4003
+      }
+    },
+    {
+      "id": "smoke-2",
+      "requestIds": [
+        "smoke-2"
+      ],
+      "route": "/",
+      "finalRoute": "/",
+      "redirects": [],
+      "kind": "anonymous-repeat",
+      "method": "GET",
+      "status": 200,
+      "cache": "HIT",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/es",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 30469,
+      "wallMs": 2.6,
+      "canonical": "http://localhost:53831/",
+      "htmlLang": "es-ES",
+      "jsonLdBlocks": 0,
+      "languageSwitchHref": "http://localhost:53831/en",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 2110,
+        "system": 129
+      }
+    },
+    {
+      "id": "smoke-3",
+      "requestIds": [
+        "smoke-3"
+      ],
+      "route": "/en",
+      "finalRoute": "/en",
+      "redirects": [],
+      "kind": "anonymous-first",
+      "method": "GET",
+      "status": 200,
+      "cache": "MISS",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/en",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 30394,
+      "wallMs": 9.7,
+      "canonical": "http://localhost:53831/en",
+      "htmlLang": "en-GB",
+      "jsonLdBlocks": 0,
+      "languageSwitchHref": "http://localhost:53831/",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 26110,
+        "system": 2827
+      }
+    },
+    {
+      "id": "smoke-4",
+      "requestIds": [
+        "smoke-4"
+      ],
+      "route": "/en",
+      "finalRoute": "/en",
+      "redirects": [],
+      "kind": "anonymous-repeat",
+      "method": "GET",
+      "status": 200,
+      "cache": "HIT",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/en",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 30394,
+      "wallMs": 4.5,
+      "canonical": "http://localhost:53831/en",
+      "htmlLang": "en-GB",
+      "jsonLdBlocks": 0,
+      "languageSwitchHref": "http://localhost:53831/",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 7606,
+        "system": 145
+      }
+    },
+    {
+      "id": "smoke-5",
+      "requestIds": [
+        "smoke-5"
+      ],
+      "route": "/peliculas/cache-html-film",
+      "finalRoute": "/peliculas/cache-html-film",
+      "redirects": [],
+      "kind": "anonymous-first",
+      "method": "GET",
+      "status": 200,
+      "cache": "MISS",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/es/peliculas/cache-html-film",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 4,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [
+        {
+          "method": "GET",
+          "path": "/rest/v1/films",
+          "fixtureIdentity": false
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/tmdb_movie_snapshots",
+          "fixtureIdentity": false
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/film_credits",
+          "fixtureIdentity": false
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/professional_observations",
+          "fixtureIdentity": false
+        }
+      ],
+      "responseBytes": 39425,
+      "wallMs": 28.2,
+      "canonical": "http://localhost:53831/peliculas/cache-html-film",
+      "htmlLang": "es-ES",
+      "jsonLdBlocks": 1,
+      "languageSwitchHref": "http://localhost:53831/en/peliculas/cache-html-film",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 43934,
+        "system": 4125
+      }
+    },
+    {
+      "id": "smoke-6",
+      "requestIds": [
+        "smoke-6"
+      ],
+      "route": "/peliculas/cache-html-film",
+      "finalRoute": "/peliculas/cache-html-film",
+      "redirects": [],
+      "kind": "anonymous-repeat",
+      "method": "GET",
+      "status": 200,
+      "cache": "HIT",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/es/peliculas/cache-html-film",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 39425,
+      "wallMs": 2.3,
+      "canonical": "http://localhost:53831/peliculas/cache-html-film",
+      "htmlLang": "es-ES",
+      "jsonLdBlocks": 1,
+      "languageSwitchHref": "http://localhost:53831/en/peliculas/cache-html-film",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 3205,
+        "system": 140
+      }
+    },
+    {
+      "id": "smoke-7",
+      "requestIds": [
+        "smoke-7"
+      ],
+      "route": "/en/peliculas/cache-html-film",
+      "finalRoute": "/en/peliculas/cache-html-film",
+      "redirects": [],
+      "kind": "anonymous-first",
+      "method": "GET",
+      "status": 200,
+      "cache": "MISS",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/en/peliculas/cache-html-film",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 4,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [
+        {
+          "method": "GET",
+          "path": "/rest/v1/films",
+          "fixtureIdentity": false
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/tmdb_movie_snapshots",
+          "fixtureIdentity": false
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/film_credits",
+          "fixtureIdentity": false
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/professional_observations",
+          "fixtureIdentity": false
+        }
+      ],
+      "responseBytes": 39472,
+      "wallMs": 9.9,
+      "canonical": "http://localhost:53831/en/peliculas/cache-html-film",
+      "htmlLang": "en-GB",
+      "jsonLdBlocks": 1,
+      "languageSwitchHref": "http://localhost:53831/peliculas/cache-html-film",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 13016,
+        "system": 1996
+      }
+    },
+    {
+      "id": "smoke-8",
+      "requestIds": [
+        "smoke-8"
+      ],
+      "route": "/en/peliculas/cache-html-film",
+      "finalRoute": "/en/peliculas/cache-html-film",
+      "redirects": [],
+      "kind": "anonymous-repeat",
+      "method": "GET",
+      "status": 200,
+      "cache": "HIT",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/en/peliculas/cache-html-film",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 39472,
+      "wallMs": 2.2,
+      "canonical": "http://localhost:53831/en/peliculas/cache-html-film",
+      "htmlLang": "en-GB",
+      "jsonLdBlocks": 1,
+      "languageSwitchHref": "http://localhost:53831/peliculas/cache-html-film",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 3431,
+        "system": 147
+      }
+    },
+    {
+      "id": "smoke-9",
+      "requestIds": [
+        "smoke-9"
+      ],
+      "route": "/personas/cache-html-person",
+      "finalRoute": "/personas/cache-html-person",
+      "redirects": [],
+      "kind": "anonymous-first",
+      "method": "GET",
+      "status": 200,
+      "cache": "MISS",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=300, stale-while-revalidate=31535700",
+      "rewrittenPath": "/public-render/es/personas/cache-html-person",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 3,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [
+        {
+          "method": "GET",
+          "path": "/rest/v1/people",
+          "fixtureIdentity": false
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/tmdb_person_snapshots",
+          "fixtureIdentity": false
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/film_credits",
+          "fixtureIdentity": false
+        }
+      ],
+      "responseBytes": 34660,
+      "wallMs": 9.7,
+      "canonical": "http://localhost:53831/personas/cache-html-person",
+      "htmlLang": "es-ES",
+      "jsonLdBlocks": 1,
+      "languageSwitchHref": "http://localhost:53831/en/personas/cache-html-person",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 13590,
+        "system": 2623
+      }
+    },
+    {
+      "id": "smoke-10",
+      "requestIds": [
+        "smoke-10"
+      ],
+      "route": "/personas/cache-html-person",
+      "finalRoute": "/personas/cache-html-person",
+      "redirects": [],
+      "kind": "anonymous-repeat",
+      "method": "GET",
+      "status": 200,
+      "cache": "HIT",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=300, stale-while-revalidate=31535700",
+      "rewrittenPath": "/public-render/es/personas/cache-html-person",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 34660,
+      "wallMs": 1.9,
+      "canonical": "http://localhost:53831/personas/cache-html-person",
+      "htmlLang": "es-ES",
+      "jsonLdBlocks": 1,
+      "languageSwitchHref": "http://localhost:53831/en/personas/cache-html-person",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 1692,
+        "system": 119
+      }
+    },
+    {
+      "id": "smoke-11",
+      "requestIds": [
+        "smoke-11"
+      ],
+      "route": "/en/personas/cache-html-person",
+      "finalRoute": "/en/personas/cache-html-person",
+      "redirects": [],
+      "kind": "anonymous-first",
+      "method": "GET",
+      "status": 200,
+      "cache": "MISS",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=300, stale-while-revalidate=31535700",
+      "rewrittenPath": "/public-render/en/personas/cache-html-person",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 3,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [
+        {
+          "method": "GET",
+          "path": "/rest/v1/people",
+          "fixtureIdentity": false
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/tmdb_person_snapshots",
+          "fixtureIdentity": false
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/film_credits",
+          "fixtureIdentity": false
+        }
+      ],
+      "responseBytes": 34691,
+      "wallMs": 7.3,
+      "canonical": "http://localhost:53831/en/personas/cache-html-person",
+      "htmlLang": "en-GB",
+      "jsonLdBlocks": 1,
+      "languageSwitchHref": "http://localhost:53831/personas/cache-html-person",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 9007,
+        "system": 1988
+      }
+    },
+    {
+      "id": "smoke-12",
+      "requestIds": [
+        "smoke-12"
+      ],
+      "route": "/en/personas/cache-html-person",
+      "finalRoute": "/en/personas/cache-html-person",
+      "redirects": [],
+      "kind": "anonymous-repeat",
+      "method": "GET",
+      "status": 200,
+      "cache": "HIT",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=300, stale-while-revalidate=31535700",
+      "rewrittenPath": "/public-render/en/personas/cache-html-person",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 34691,
+      "wallMs": 1.6,
+      "canonical": "http://localhost:53831/en/personas/cache-html-person",
+      "htmlLang": "en-GB",
+      "jsonLdBlocks": 1,
+      "languageSwitchHref": "http://localhost:53831/personas/cache-html-person",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 1358,
+        "system": 84
+      }
+    },
+    {
+      "id": "smoke-13",
+      "requestIds": [
+        "smoke-13"
+      ],
+      "route": "/temporadas/2027/mejor-pelicula",
+      "finalRoute": "/temporadas/2027/mejor-pelicula",
+      "redirects": [],
+      "kind": "anonymous-first",
+      "method": "GET",
+      "status": 200,
+      "cache": "MISS",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/es/temporadas/2027/mejor-pelicula",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 42324,
+      "wallMs": 10.6,
+      "canonical": "http://localhost:53831/temporadas/2027/mejor-pelicula",
+      "htmlLang": "es-ES",
+      "jsonLdBlocks": 1,
+      "languageSwitchHref": "http://localhost:53831/en/temporadas/2027/mejor-pelicula",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 11746,
+        "system": 3232
+      }
+    },
+    {
+      "id": "smoke-14",
+      "requestIds": [
+        "smoke-14"
+      ],
+      "route": "/temporadas/2027/mejor-pelicula",
+      "finalRoute": "/temporadas/2027/mejor-pelicula",
+      "redirects": [],
+      "kind": "anonymous-repeat",
+      "method": "GET",
+      "status": 200,
+      "cache": "HIT",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/es/temporadas/2027/mejor-pelicula",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 42324,
+      "wallMs": 1.7,
+      "canonical": "http://localhost:53831/temporadas/2027/mejor-pelicula",
+      "htmlLang": "es-ES",
+      "jsonLdBlocks": 1,
+      "languageSwitchHref": "http://localhost:53831/en/temporadas/2027/mejor-pelicula",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 1416,
+        "system": 83
+      }
+    },
+    {
+      "id": "smoke-15",
+      "requestIds": [
+        "smoke-15"
+      ],
+      "route": "/fuentes",
+      "finalRoute": "/fuentes",
+      "redirects": [],
+      "kind": "anonymous-first",
+      "method": "GET",
+      "status": 200,
+      "cache": "MISS",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/es/fuentes",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 5,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [
+        {
+          "method": "GET",
+          "path": "/rest/v1/sources",
+          "fixtureIdentity": false
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/market_connectors",
+          "fixtureIdentity": false
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/public_source_freshness",
+          "fixtureIdentity": false
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/public_festival_freshness",
+          "fixtureIdentity": false
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/public_prediction_source_status",
+          "fixtureIdentity": false
+        }
+      ],
+      "responseBytes": 32507,
+      "wallMs": 9.1,
+      "canonical": "http://localhost:53831/fuentes",
+      "htmlLang": "es-ES",
+      "jsonLdBlocks": 0,
+      "languageSwitchHref": "http://localhost:53831/en/fuentes",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 10374,
+        "system": 3185
+      }
+    },
+    {
+      "id": "smoke-16",
+      "requestIds": [
+        "smoke-16"
+      ],
+      "route": "/fuentes",
+      "finalRoute": "/fuentes",
+      "redirects": [],
+      "kind": "anonymous-repeat",
+      "method": "GET",
+      "status": 200,
+      "cache": "HIT",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/es/fuentes",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 32507,
+      "wallMs": 1.5,
+      "canonical": "http://localhost:53831/fuentes",
+      "htmlLang": "es-ES",
+      "jsonLdBlocks": 0,
+      "languageSwitchHref": "http://localhost:53831/en/fuentes",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 1151,
+        "system": 79
+      }
+    },
+    {
+      "id": "smoke-17",
+      "requestIds": [
+        "smoke-17"
+      ],
+      "route": "/fuentes/cache-html-source",
+      "finalRoute": "/fuentes/cache-html-source",
+      "redirects": [],
+      "kind": "anonymous-first",
+      "method": "GET",
+      "status": 200,
+      "cache": "MISS",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/es/fuentes/cache-html-source",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 2,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [
+        {
+          "method": "GET",
+          "path": "/rest/v1/public_prediction_source_evidence",
+          "fixtureIdentity": false
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/public_prediction_connector_freshness",
+          "fixtureIdentity": false
+        }
+      ],
+      "responseBytes": 36804,
+      "wallMs": 9.2,
+      "canonical": "http://localhost:53831/fuentes/cache-html-source",
+      "htmlLang": "es-ES",
+      "jsonLdBlocks": 1,
+      "languageSwitchHref": "http://localhost:53831/en/fuentes/cache-html-source",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 15154,
+        "system": 3079
+      }
+    },
+    {
+      "id": "smoke-18",
+      "requestIds": [
+        "smoke-18"
+      ],
+      "route": "/fuentes/cache-html-source",
+      "finalRoute": "/fuentes/cache-html-source",
+      "redirects": [],
+      "kind": "anonymous-repeat",
+      "method": "GET",
+      "status": 200,
+      "cache": "HIT",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/es/fuentes/cache-html-source",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 36804,
+      "wallMs": 1.5,
+      "canonical": "http://localhost:53831/fuentes/cache-html-source",
+      "htmlLang": "es-ES",
+      "jsonLdBlocks": 1,
+      "languageSwitchHref": "http://localhost:53831/en/fuentes/cache-html-source",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 1640,
+        "system": 58
+      }
+    },
+    {
+      "id": "smoke-19",
+      "requestIds": [
+        "smoke-19"
+      ],
+      "route": "/semana",
+      "finalRoute": "/semana",
+      "redirects": [],
+      "kind": "anonymous-first",
+      "method": "GET",
+      "status": 200,
+      "cache": "MISS",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/es/semana",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 40296,
+      "wallMs": 7.8,
+      "canonical": "http://localhost:53831/semana",
+      "htmlLang": "es-ES",
+      "jsonLdBlocks": 0,
+      "languageSwitchHref": "http://localhost:53831/en/semana",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 9910,
+        "system": 1997
+      }
+    },
+    {
+      "id": "smoke-20",
+      "requestIds": [
+        "smoke-20"
+      ],
+      "route": "/semana",
+      "finalRoute": "/semana",
+      "redirects": [],
+      "kind": "anonymous-repeat",
+      "method": "GET",
+      "status": 200,
+      "cache": "HIT",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/es/semana",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 40296,
+      "wallMs": 1.6,
+      "canonical": "http://localhost:53831/semana",
+      "htmlLang": "es-ES",
+      "jsonLdBlocks": 0,
+      "languageSwitchHref": "http://localhost:53831/en/semana",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 1620,
+        "system": 81
+      }
+    },
+    {
+      "id": "smoke-21",
+      "requestIds": [
+        "smoke-21"
+      ],
+      "route": "/semana/2026-11-23",
+      "finalRoute": "/semana/2026-11-23",
+      "redirects": [],
+      "kind": "anonymous-first",
+      "method": "GET",
+      "status": 200,
+      "cache": "MISS",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/es/semana/2026-11-23",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 40870,
+      "wallMs": 6.6,
+      "canonical": "http://localhost:53831/semana/2026-11-23",
+      "htmlLang": "es-ES",
+      "jsonLdBlocks": 0,
+      "languageSwitchHref": "http://localhost:53831/en/semana/2026-11-23",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 6205,
+        "system": 2224
+      }
+    },
+    {
+      "id": "smoke-22",
+      "requestIds": [
+        "smoke-22"
+      ],
+      "route": "/semana/2026-11-23",
+      "finalRoute": "/semana/2026-11-23",
+      "redirects": [],
+      "kind": "anonymous-repeat",
+      "method": "GET",
+      "status": 200,
+      "cache": "HIT",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/es/semana/2026-11-23",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 40870,
+      "wallMs": 1.5,
+      "canonical": "http://localhost:53831/semana/2026-11-23",
+      "htmlLang": "es-ES",
+      "jsonLdBlocks": 0,
+      "languageSwitchHref": "http://localhost:53831/en/semana/2026-11-23",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 1135,
+        "system": 93
+      }
+    },
+    {
+      "id": "smoke-23",
+      "requestIds": [
+        "smoke-23"
+      ],
+      "route": "/en/temporadas/2027/mejor-pelicula",
+      "finalRoute": "/en/temporadas/2027/mejor-pelicula",
+      "redirects": [],
+      "kind": "anonymous-first",
+      "method": "GET",
+      "status": 200,
+      "cache": "MISS",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/en/temporadas/2027/mejor-pelicula",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 42143,
+      "wallMs": 5.6,
+      "canonical": "http://localhost:53831/en/temporadas/2027/mejor-pelicula",
+      "htmlLang": "en-GB",
+      "jsonLdBlocks": 1,
+      "languageSwitchHref": "http://localhost:53831/temporadas/2027/mejor-pelicula",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 5550,
+        "system": 1891
+      }
+    },
+    {
+      "id": "smoke-24",
+      "requestIds": [
+        "smoke-24"
+      ],
+      "route": "/en/temporadas/2027/mejor-pelicula",
+      "finalRoute": "/en/temporadas/2027/mejor-pelicula",
+      "redirects": [],
+      "kind": "anonymous-repeat",
+      "method": "GET",
+      "status": 200,
+      "cache": "HIT",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/en/temporadas/2027/mejor-pelicula",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 42143,
+      "wallMs": 1.6,
+      "canonical": "http://localhost:53831/en/temporadas/2027/mejor-pelicula",
+      "htmlLang": "en-GB",
+      "jsonLdBlocks": 1,
+      "languageSwitchHref": "http://localhost:53831/temporadas/2027/mejor-pelicula",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 1453,
+        "system": 85
+      }
+    },
+    {
+      "id": "smoke-25",
+      "requestIds": [
+        "smoke-25"
+      ],
+      "route": "/en/fuentes",
+      "finalRoute": "/en/fuentes",
+      "redirects": [],
+      "kind": "anonymous-first",
+      "method": "GET",
+      "status": 200,
+      "cache": "MISS",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/en/fuentes",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 32394,
+      "wallMs": 5,
+      "canonical": "http://localhost:53831/en/fuentes",
+      "htmlLang": "en-GB",
+      "jsonLdBlocks": 0,
+      "languageSwitchHref": "http://localhost:53831/fuentes",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 5188,
+        "system": 1361
+      }
+    },
+    {
+      "id": "smoke-26",
+      "requestIds": [
+        "smoke-26"
+      ],
+      "route": "/en/fuentes",
+      "finalRoute": "/en/fuentes",
+      "redirects": [],
+      "kind": "anonymous-repeat",
+      "method": "GET",
+      "status": 200,
+      "cache": "HIT",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/en/fuentes",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 32394,
+      "wallMs": 1.6,
+      "canonical": "http://localhost:53831/en/fuentes",
+      "htmlLang": "en-GB",
+      "jsonLdBlocks": 0,
+      "languageSwitchHref": "http://localhost:53831/fuentes",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 1448,
+        "system": 141
+      }
+    },
+    {
+      "id": "smoke-27",
+      "requestIds": [
+        "smoke-27"
+      ],
+      "route": "/en/fuentes/cache-html-source",
+      "finalRoute": "/en/fuentes/cache-html-source",
+      "redirects": [],
+      "kind": "anonymous-first",
+      "method": "GET",
+      "status": 200,
+      "cache": "MISS",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/en/fuentes/cache-html-source",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 36704,
+      "wallMs": 5.3,
+      "canonical": "http://localhost:53831/en/fuentes/cache-html-source",
+      "htmlLang": "en-GB",
+      "jsonLdBlocks": 1,
+      "languageSwitchHref": "http://localhost:53831/fuentes/cache-html-source",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 5762,
+        "system": 1613
+      }
+    },
+    {
+      "id": "smoke-28",
+      "requestIds": [
+        "smoke-28"
+      ],
+      "route": "/en/fuentes/cache-html-source",
+      "finalRoute": "/en/fuentes/cache-html-source",
+      "redirects": [],
+      "kind": "anonymous-repeat",
+      "method": "GET",
+      "status": 200,
+      "cache": "HIT",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/en/fuentes/cache-html-source",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 36704,
+      "wallMs": 1.5,
+      "canonical": "http://localhost:53831/en/fuentes/cache-html-source",
+      "htmlLang": "en-GB",
+      "jsonLdBlocks": 1,
+      "languageSwitchHref": "http://localhost:53831/fuentes/cache-html-source",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 1305,
+        "system": 105
+      }
+    },
+    {
+      "id": "smoke-29",
+      "requestIds": [
+        "smoke-29"
+      ],
+      "route": "/en/semana",
+      "finalRoute": "/en/semana",
+      "redirects": [],
+      "kind": "anonymous-first",
+      "method": "GET",
+      "status": 200,
+      "cache": "MISS",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/en/semana",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 40064,
+      "wallMs": 7.3,
+      "canonical": "http://localhost:53831/en/semana",
+      "htmlLang": "en-GB",
+      "jsonLdBlocks": 0,
+      "languageSwitchHref": "http://localhost:53831/semana",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 11269,
+        "system": 2268
+      }
+    },
+    {
+      "id": "smoke-30",
+      "requestIds": [
+        "smoke-30"
+      ],
+      "route": "/en/semana",
+      "finalRoute": "/en/semana",
+      "redirects": [],
+      "kind": "anonymous-repeat",
+      "method": "GET",
+      "status": 200,
+      "cache": "HIT",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/en/semana",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 40064,
+      "wallMs": 2,
+      "canonical": "http://localhost:53831/en/semana",
+      "htmlLang": "en-GB",
+      "jsonLdBlocks": 0,
+      "languageSwitchHref": "http://localhost:53831/semana",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 1254,
+        "system": 80
+      }
+    },
+    {
+      "id": "smoke-31",
+      "requestIds": [
+        "smoke-31"
+      ],
+      "route": "/en/semana/2026-11-23",
+      "finalRoute": "/en/semana/2026-11-23",
+      "redirects": [],
+      "kind": "anonymous-first",
+      "method": "GET",
+      "status": 200,
+      "cache": "MISS",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/en/semana/2026-11-23",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 40694,
+      "wallMs": 5.4,
+      "canonical": "http://localhost:53831/en/semana/2026-11-23",
+      "htmlLang": "en-GB",
+      "jsonLdBlocks": 0,
+      "languageSwitchHref": "http://localhost:53831/semana/2026-11-23",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 4850,
+        "system": 1368
+      }
+    },
+    {
+      "id": "smoke-32",
+      "requestIds": [
+        "smoke-32"
+      ],
+      "route": "/en/semana/2026-11-23",
+      "finalRoute": "/en/semana/2026-11-23",
+      "redirects": [],
+      "kind": "anonymous-repeat",
+      "method": "GET",
+      "status": 200,
+      "cache": "HIT",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/en/semana/2026-11-23",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 40694,
+      "wallMs": 1.4,
+      "canonical": "http://localhost:53831/en/semana/2026-11-23",
+      "htmlLang": "en-GB",
+      "jsonLdBlocks": 0,
+      "languageSwitchHref": "http://localhost:53831/semana/2026-11-23",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 1050,
+        "system": 45
+      }
+    },
+    {
+      "id": "smoke-33",
+      "requestIds": [
+        "smoke-33"
+      ],
+      "route": "/personas/cache-html-person",
+      "finalRoute": "/personas/cache-html-person",
+      "redirects": [],
+      "kind": "session-full",
+      "method": "GET",
+      "status": 200,
+      "cache": null,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "rewrittenPath": null,
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 2,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [
+        {
+          "method": "GET",
+          "path": "/auth/v1/user",
+          "fixtureIdentity": false
+        },
+        {
+          "method": "GET",
+          "path": "/auth/v1/user",
+          "fixtureIdentity": false
+        }
+      ],
+      "responseBytes": 33229,
+      "wallMs": 10.2,
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 10605,
+        "system": 751
+      }
+    },
+    {
+      "id": "smoke-34",
+      "requestIds": [
+        "smoke-34"
+      ],
+      "route": "/en/personas/cache-html-person",
+      "finalRoute": "/en/personas/cache-html-person",
+      "redirects": [],
+      "kind": "session-full",
+      "method": "GET",
+      "status": 200,
+      "cache": null,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "rewrittenPath": "/personas/cache-html-person",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 2,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [
+        {
+          "method": "GET",
+          "path": "/auth/v1/user",
+          "fixtureIdentity": false
+        },
+        {
+          "method": "GET",
+          "path": "/auth/v1/user",
+          "fixtureIdentity": false
+        }
+      ],
+      "responseBytes": 33260,
+      "wallMs": 5.2,
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 9986,
+        "system": 495
+      }
+    },
+    {
+      "id": "smoke-35",
+      "requestIds": [
+        "smoke-35"
+      ],
+      "route": "/personas/cache-html-person",
+      "finalRoute": "/personas/cache-html-person",
+      "redirects": [],
+      "kind": "session-chunked",
+      "method": "GET",
+      "status": 200,
+      "cache": null,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "rewrittenPath": null,
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 2,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [
+        {
+          "method": "GET",
+          "path": "/auth/v1/user",
+          "fixtureIdentity": false
+        },
+        {
+          "method": "GET",
+          "path": "/auth/v1/user",
+          "fixtureIdentity": false
+        }
+      ],
+      "responseBytes": 33229,
+      "wallMs": 4.9,
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 7970,
+        "system": 520
+      }
+    },
+    {
+      "id": "smoke-36",
+      "requestIds": [
+        "smoke-36"
+      ],
+      "route": "/en/personas/cache-html-person",
+      "finalRoute": "/en/personas/cache-html-person",
+      "redirects": [],
+      "kind": "session-chunked",
+      "method": "GET",
+      "status": 200,
+      "cache": null,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "rewrittenPath": "/personas/cache-html-person",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 2,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [
+        {
+          "method": "GET",
+          "path": "/auth/v1/user",
+          "fixtureIdentity": false
+        },
+        {
+          "method": "GET",
+          "path": "/auth/v1/user",
+          "fixtureIdentity": false
+        }
+      ],
+      "responseBytes": 33260,
+      "wallMs": 4.7,
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 5735,
+        "system": 540
+      }
+    },
+    {
+      "id": "smoke-37",
+      "requestIds": [
+        "smoke-37"
+      ],
+      "route": "/temporadas/2027/mejor-pelicula",
+      "finalRoute": "/temporadas/2027/mejor-pelicula",
+      "redirects": [],
+      "kind": "new-family-session",
+      "method": "GET",
+      "status": 200,
+      "cache": null,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "rewrittenPath": null,
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 2,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [
+        {
+          "method": "GET",
+          "path": "/rest/v1/season_categories",
+          "fixtureIdentity": false
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/user_rankings",
+          "fixtureIdentity": false
+        }
+      ],
+      "responseBytes": 40704,
+      "wallMs": 6.4,
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 12694,
+        "system": 745
+      }
+    },
+    {
+      "id": "smoke-38",
+      "requestIds": [
+        "smoke-38",
+        "smoke-38-redirect-1"
+      ],
+      "route": "/temporadas/2027/mejor-pelicula?_rsc=local-smoke",
+      "finalRoute": "/temporadas/2027/mejor-pelicula?_rsc=HEAvJdHAQJrUAe2K",
+      "redirects": [
+        {
+          "status": 307,
+          "from": "/temporadas/2027/mejor-pelicula?_rsc=local-smoke",
+          "location": "/temporadas/2027/mejor-pelicula?_rsc=HEAvJdHAQJrUAe2K"
+        }
+      ],
+      "kind": "new-family-flight",
+      "method": "GET",
+      "status": 200,
+      "cache": "HIT",
+      "contentType": "text/x-component",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/es/temporadas/2027/mejor-pelicula",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 24506,
+      "wallMs": 3,
+      "cpuRequestCount": 2,
+      "cpuMicroseconds": {
+        "user": 4401,
+        "system": 133
+      }
+    },
+    {
+      "id": "smoke-39",
+      "requestIds": [
+        "smoke-39"
+      ],
+      "route": "/temporadas/2027/mejor-pelicula?corte=some-cut",
+      "finalRoute": "/temporadas/2027/mejor-pelicula?corte=some-cut",
+      "redirects": [],
+      "kind": "new-family-semantic",
+      "method": "GET",
+      "status": 200,
+      "cache": null,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "rewrittenPath": null,
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 2,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [
+        {
+          "method": "GET",
+          "path": "/rest/v1/season_categories",
+          "fixtureIdentity": false
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/user_rankings",
+          "fixtureIdentity": false
+        }
+      ],
+      "responseBytes": 40764,
+      "wallMs": 4.8,
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 5559,
+        "system": 609
+      }
+    },
+    {
+      "id": "smoke-40",
+      "requestIds": [
+        "smoke-40"
+      ],
+      "route": "/en/temporadas/2027/mejor-pelicula",
+      "finalRoute": "/en/temporadas/2027/mejor-pelicula",
+      "redirects": [],
+      "kind": "new-family-session",
+      "method": "GET",
+      "status": 200,
+      "cache": null,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "rewrittenPath": "/temporadas/2027/mejor-pelicula",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 2,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [
+        {
+          "method": "GET",
+          "path": "/rest/v1/season_categories",
+          "fixtureIdentity": false
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/user_rankings",
+          "fixtureIdentity": false
+        }
+      ],
+      "responseBytes": 40477,
+      "wallMs": 4.7,
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 7110,
+        "system": 518
+      }
+    },
+    {
+      "id": "smoke-41",
+      "requestIds": [
+        "smoke-41",
+        "smoke-41-redirect-1"
+      ],
+      "route": "/en/temporadas/2027/mejor-pelicula?_rsc=local-smoke",
+      "finalRoute": "/en/temporadas/2027/mejor-pelicula?_rsc=HEAvJdHAQJrUAe2K",
+      "redirects": [
+        {
+          "status": 307,
+          "from": "/en/temporadas/2027/mejor-pelicula?_rsc=local-smoke",
+          "location": "/en/temporadas/2027/mejor-pelicula?_rsc=HEAvJdHAQJrUAe2K"
+        }
+      ],
+      "kind": "new-family-flight",
+      "method": "GET",
+      "status": 200,
+      "cache": "HIT",
+      "contentType": "text/x-component",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/en/temporadas/2027/mejor-pelicula",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 24414,
+      "wallMs": 3.2,
+      "cpuRequestCount": 2,
+      "cpuMicroseconds": {
+        "user": 1900,
+        "system": 114
+      }
+    },
+    {
+      "id": "smoke-42",
+      "requestIds": [
+        "smoke-42"
+      ],
+      "route": "/en/temporadas/2027/mejor-pelicula?corte=some-cut",
+      "finalRoute": "/en/temporadas/2027/mejor-pelicula?corte=some-cut",
+      "redirects": [],
+      "kind": "new-family-semantic",
+      "method": "GET",
+      "status": 200,
+      "cache": null,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "rewrittenPath": "/temporadas/2027/mejor-pelicula",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 2,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [
+        {
+          "method": "GET",
+          "path": "/rest/v1/season_categories",
+          "fixtureIdentity": false
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/user_rankings",
+          "fixtureIdentity": false
+        }
+      ],
+      "responseBytes": 40537,
+      "wallMs": 4.5,
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 6974,
+        "system": 544
+      }
+    },
+    {
+      "id": "smoke-43",
+      "requestIds": [
+        "smoke-43"
+      ],
+      "route": "/fuentes/cache-html-source",
+      "finalRoute": "/fuentes/cache-html-source",
+      "redirects": [],
+      "kind": "new-family-session",
+      "method": "GET",
+      "status": 200,
+      "cache": null,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "rewrittenPath": null,
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 34268,
+      "wallMs": 4.2,
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 4824,
+        "system": 453
+      }
+    },
+    {
+      "id": "smoke-44",
+      "requestIds": [
+        "smoke-44",
+        "smoke-44-redirect-1"
+      ],
+      "route": "/fuentes/cache-html-source?_rsc=local-smoke",
+      "finalRoute": "/fuentes/cache-html-source?_rsc=HEAvJdHAQJrUAe2K",
+      "redirects": [
+        {
+          "status": 307,
+          "from": "/fuentes/cache-html-source?_rsc=local-smoke",
+          "location": "/fuentes/cache-html-source?_rsc=HEAvJdHAQJrUAe2K"
+        }
+      ],
+      "kind": "new-family-flight",
+      "method": "GET",
+      "status": 200,
+      "cache": "HIT",
+      "contentType": "text/x-component",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/es/fuentes/cache-html-source",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 21136,
+      "wallMs": 1.9,
+      "cpuRequestCount": 2,
+      "cpuMicroseconds": {
+        "user": 1830,
+        "system": 73
+      }
+    },
+    {
+      "id": "smoke-45",
+      "requestIds": [
+        "smoke-45"
+      ],
+      "route": "/fuentes/cache-html-source?corte=some-cut",
+      "finalRoute": "/fuentes/cache-html-source?corte=some-cut",
+      "redirects": [],
+      "kind": "new-family-semantic",
+      "method": "GET",
+      "status": 200,
+      "cache": null,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "rewrittenPath": null,
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 34328,
+      "wallMs": 3.3,
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 4564,
+        "system": 368
+      }
+    },
+    {
+      "id": "smoke-46",
+      "requestIds": [
+        "smoke-46"
+      ],
+      "route": "/en/fuentes/cache-html-source",
+      "finalRoute": "/en/fuentes/cache-html-source",
+      "redirects": [],
+      "kind": "new-family-session",
+      "method": "GET",
+      "status": 200,
+      "cache": null,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "rewrittenPath": "/fuentes/cache-html-source",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 34210,
+      "wallMs": 3.6,
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 3856,
+        "system": 374
+      }
+    },
+    {
+      "id": "smoke-47",
+      "requestIds": [
+        "smoke-47",
+        "smoke-47-redirect-1"
+      ],
+      "route": "/en/fuentes/cache-html-source?_rsc=local-smoke",
+      "finalRoute": "/en/fuentes/cache-html-source?_rsc=HEAvJdHAQJrUAe2K",
+      "redirects": [
+        {
+          "status": 307,
+          "from": "/en/fuentes/cache-html-source?_rsc=local-smoke",
+          "location": "/en/fuentes/cache-html-source?_rsc=HEAvJdHAQJrUAe2K"
+        }
+      ],
+      "kind": "new-family-flight",
+      "method": "GET",
+      "status": 200,
+      "cache": "HIT",
+      "contentType": "text/x-component",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/en/fuentes/cache-html-source",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 21102,
+      "wallMs": 1.9,
+      "cpuRequestCount": 2,
+      "cpuMicroseconds": {
+        "user": 1577,
+        "system": 84
+      }
+    },
+    {
+      "id": "smoke-48",
+      "requestIds": [
+        "smoke-48"
+      ],
+      "route": "/en/fuentes/cache-html-source?corte=some-cut",
+      "finalRoute": "/en/fuentes/cache-html-source?corte=some-cut",
+      "redirects": [],
+      "kind": "new-family-semantic",
+      "method": "GET",
+      "status": 200,
+      "cache": null,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "rewrittenPath": "/fuentes/cache-html-source",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 34270,
+      "wallMs": 3.3,
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 3054,
+        "system": 328
+      }
+    },
+    {
+      "id": "smoke-49",
+      "requestIds": [
+        "smoke-49"
+      ],
+      "route": "/semana",
+      "finalRoute": "/semana",
+      "redirects": [],
+      "kind": "new-family-session",
+      "method": "GET",
+      "status": 200,
+      "cache": null,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "rewrittenPath": null,
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 37838,
+      "wallMs": 4.2,
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 4539,
+        "system": 467
+      }
+    },
+    {
+      "id": "smoke-50",
+      "requestIds": [
+        "smoke-50",
+        "smoke-50-redirect-1"
+      ],
+      "route": "/semana?_rsc=local-smoke",
+      "finalRoute": "/semana?_rsc=HEAvJdHAQJrUAe2K",
+      "redirects": [
+        {
+          "status": 307,
+          "from": "/semana?_rsc=local-smoke",
+          "location": "/semana?_rsc=HEAvJdHAQJrUAe2K"
+        }
+      ],
+      "kind": "new-family-flight",
+      "method": "GET",
+      "status": 200,
+      "cache": "HIT",
+      "contentType": "text/x-component",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/es/semana",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 23160,
+      "wallMs": 1.9,
+      "cpuRequestCount": 2,
+      "cpuMicroseconds": {
+        "user": 1966,
+        "system": 85
+      }
+    },
+    {
+      "id": "smoke-51",
+      "requestIds": [
+        "smoke-51"
+      ],
+      "route": "/semana?corte=some-cut",
+      "finalRoute": "/semana?corte=some-cut",
+      "redirects": [],
+      "kind": "new-family-semantic",
+      "method": "GET",
+      "status": 200,
+      "cache": null,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "rewrittenPath": null,
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 37855,
+      "wallMs": 3.4,
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 3508,
+        "system": 350
+      }
+    },
+    {
+      "id": "smoke-52",
+      "requestIds": [
+        "smoke-52"
+      ],
+      "route": "/en/semana",
+      "finalRoute": "/en/semana",
+      "redirects": [],
+      "kind": "new-family-session",
+      "method": "GET",
+      "status": 200,
+      "cache": null,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "rewrittenPath": "/semana",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 37605,
+      "wallMs": 3.7,
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 4115,
+        "system": 390
+      }
+    },
+    {
+      "id": "smoke-53",
+      "requestIds": [
+        "smoke-53",
+        "smoke-53-redirect-1"
+      ],
+      "route": "/en/semana?_rsc=local-smoke",
+      "finalRoute": "/en/semana?_rsc=HEAvJdHAQJrUAe2K",
+      "redirects": [
+        {
+          "status": 307,
+          "from": "/en/semana?_rsc=local-smoke",
+          "location": "/en/semana?_rsc=HEAvJdHAQJrUAe2K"
+        }
+      ],
+      "kind": "new-family-flight",
+      "method": "GET",
+      "status": 200,
+      "cache": "HIT",
+      "contentType": "text/x-component",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/en/semana",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 23039,
+      "wallMs": 1.9,
+      "cpuRequestCount": 2,
+      "cpuMicroseconds": {
+        "user": 1583,
+        "system": 138
+      }
+    },
+    {
+      "id": "smoke-54",
+      "requestIds": [
+        "smoke-54"
+      ],
+      "route": "/en/semana?corte=some-cut",
+      "finalRoute": "/en/semana?corte=some-cut",
+      "redirects": [],
+      "kind": "new-family-semantic",
+      "method": "GET",
+      "status": 200,
+      "cache": null,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "rewrittenPath": "/semana",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 37622,
+      "wallMs": 3.5,
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 3627,
+        "system": 453
+      }
+    },
+    {
+      "id": "smoke-55",
+      "requestIds": [
+        "smoke-55"
+      ],
+      "route": "/peliculas/cache-html-film",
+      "finalRoute": "/peliculas/cache-html-film",
+      "redirects": [],
+      "kind": "valid-session-private",
+      "method": "GET",
+      "status": 200,
+      "cache": null,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "rewrittenPath": null,
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 2,
+      "authReads": 2,
+      "verifiedFixtureAuthReads": 2,
+      "privateStateReads": 1,
+      "upstreamPaths": [
+        {
+          "method": "GET",
+          "path": "/auth/v1/user",
+          "fixtureIdentity": true
+        },
+        {
+          "method": "GET",
+          "path": "/auth/v1/user",
+          "fixtureIdentity": true
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/professional_observations",
+          "fixtureIdentity": false
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/user_film_states",
+          "fixtureIdentity": true
+        }
+      ],
+      "responseBytes": 40313,
+      "wallMs": 8.2,
+      "canonical": "http://localhost:53831/peliculas/cache-html-film",
+      "htmlLang": "es-ES",
+      "jsonLdBlocks": 1,
+      "languageSwitchHref": "http://localhost:53831/en/peliculas/cache-html-film",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 11388,
+        "system": 961
+      }
+    },
+    {
+      "id": "smoke-56",
+      "requestIds": [
+        "smoke-56"
+      ],
+      "route": "/peliculas/cache-html-film",
+      "finalRoute": "/peliculas/cache-html-film",
+      "redirects": [],
+      "kind": "anonymous-after-private",
+      "method": "GET",
+      "status": 200,
+      "cache": "HIT",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/es/peliculas/cache-html-film",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 39425,
+      "wallMs": 1.4,
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 1140,
+        "system": 41
+      }
+    },
+    {
+      "id": "smoke-57",
+      "requestIds": [
+        "smoke-57",
+        "smoke-57-redirect-1"
+      ],
+      "route": "/peliculas/cache-html-film?_rsc=local-smoke",
+      "finalRoute": "/peliculas/cache-html-film?_rsc=HEAvJdHAQJrUAe2K",
+      "redirects": [
+        {
+          "status": 307,
+          "from": "/peliculas/cache-html-film?_rsc=local-smoke",
+          "location": "/peliculas/cache-html-film?_rsc=HEAvJdHAQJrUAe2K"
+        }
+      ],
+      "kind": "anonymous-rsc-after-private",
+      "method": "GET",
+      "status": 200,
+      "cache": "HIT",
+      "contentType": "text/x-component",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/es/peliculas/cache-html-film",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 22592,
+      "wallMs": 1.8,
+      "cpuRequestCount": 2,
+      "cpuMicroseconds": {
+        "user": 2302,
+        "system": 139
+      }
+    },
+    {
+      "id": "smoke-58",
+      "requestIds": [
+        "smoke-58"
+      ],
+      "route": "/en/peliculas/cache-html-film",
+      "finalRoute": "/en/peliculas/cache-html-film",
+      "redirects": [],
+      "kind": "valid-session-private",
+      "method": "GET",
+      "status": 200,
+      "cache": null,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "rewrittenPath": "/peliculas/cache-html-film",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 2,
+      "authReads": 2,
+      "verifiedFixtureAuthReads": 2,
+      "privateStateReads": 1,
+      "upstreamPaths": [
+        {
+          "method": "GET",
+          "path": "/auth/v1/user",
+          "fixtureIdentity": true
+        },
+        {
+          "method": "GET",
+          "path": "/auth/v1/user",
+          "fixtureIdentity": true
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/professional_observations",
+          "fixtureIdentity": false
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/user_film_states",
+          "fixtureIdentity": true
+        }
+      ],
+      "responseBytes": 40343,
+      "wallMs": 5.5,
+      "canonical": "http://localhost:53831/en/peliculas/cache-html-film",
+      "htmlLang": "en-GB",
+      "jsonLdBlocks": 1,
+      "languageSwitchHref": "http://localhost:53831/peliculas/cache-html-film",
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 6283,
+        "system": 525
+      }
+    },
+    {
+      "id": "smoke-59",
+      "requestIds": [
+        "smoke-59"
+      ],
+      "route": "/en/peliculas/cache-html-film",
+      "finalRoute": "/en/peliculas/cache-html-film",
+      "redirects": [],
+      "kind": "anonymous-after-private",
+      "method": "GET",
+      "status": 200,
+      "cache": "HIT",
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/en/peliculas/cache-html-film",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 39472,
+      "wallMs": 1.4,
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 1273,
+        "system": 51
+      }
+    },
+    {
+      "id": "smoke-60",
+      "requestIds": [
+        "smoke-60",
+        "smoke-60-redirect-1"
+      ],
+      "route": "/en/peliculas/cache-html-film?_rsc=local-smoke",
+      "finalRoute": "/en/peliculas/cache-html-film?_rsc=HEAvJdHAQJrUAe2K",
+      "redirects": [
+        {
+          "status": 307,
+          "from": "/en/peliculas/cache-html-film?_rsc=local-smoke",
+          "location": "/en/peliculas/cache-html-film?_rsc=HEAvJdHAQJrUAe2K"
+        }
+      ],
+      "kind": "anonymous-rsc-after-private",
+      "method": "GET",
+      "status": 200,
+      "cache": "HIT",
+      "contentType": "text/x-component",
+      "cacheControl": "s-maxage=60, stale-while-revalidate=31535940",
+      "rewrittenPath": "/public-render/en/peliculas/cache-html-film",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 22602,
+      "wallMs": 1.7,
+      "cpuRequestCount": 2,
+      "cpuMicroseconds": {
+        "user": 1666,
+        "system": 96
+      }
+    },
+    {
+      "id": "smoke-61",
+      "requestIds": [
+        "smoke-61"
+      ],
+      "route": "/personas/cache-html-person?snapshot=local-semantic-cut",
+      "finalRoute": "/personas/cache-html-person?snapshot=local-semantic-cut",
+      "redirects": [],
+      "kind": "semantic-query-first",
+      "method": "GET",
+      "status": 200,
+      "cache": null,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "rewrittenPath": null,
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 32237,
+      "wallMs": 3.4,
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 4389,
+        "system": 409
+      }
+    },
+    {
+      "id": "smoke-62",
+      "requestIds": [
+        "smoke-62"
+      ],
+      "route": "/personas/cache-html-person?snapshot=local-semantic-cut",
+      "finalRoute": "/personas/cache-html-person?snapshot=local-semantic-cut",
+      "redirects": [],
+      "kind": "semantic-query-repeat",
+      "method": "GET",
+      "status": 200,
+      "cache": null,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "rewrittenPath": null,
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 32237,
+      "wallMs": 3.3,
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 3220,
+        "system": 390
+      }
+    },
+    {
+      "id": "smoke-63",
+      "requestIds": [
+        "smoke-63"
+      ],
+      "route": "/personas/cache-html-person",
+      "finalRoute": "/personas/cache-html-person",
+      "redirects": [],
+      "kind": "post",
+      "method": "POST",
+      "status": 200,
+      "cache": null,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "rewrittenPath": null,
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 32125,
+      "wallMs": 4.5,
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 3863,
+        "system": 416
+      }
+    },
+    {
+      "id": "smoke-64",
+      "requestIds": [
+        "smoke-64"
+      ],
+      "route": "/en/personas/cache-html-person?snapshot=local-semantic-cut",
+      "finalRoute": "/en/personas/cache-html-person?snapshot=local-semantic-cut",
+      "redirects": [],
+      "kind": "semantic-query-first",
+      "method": "GET",
+      "status": 200,
+      "cache": null,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "rewrittenPath": "/personas/cache-html-person",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 32267,
+      "wallMs": 3.2,
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 4605,
+        "system": 349
+      }
+    },
+    {
+      "id": "smoke-65",
+      "requestIds": [
+        "smoke-65"
+      ],
+      "route": "/en/personas/cache-html-person?snapshot=local-semantic-cut",
+      "finalRoute": "/en/personas/cache-html-person?snapshot=local-semantic-cut",
+      "redirects": [],
+      "kind": "semantic-query-repeat",
+      "method": "GET",
+      "status": 200,
+      "cache": null,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "rewrittenPath": "/personas/cache-html-person",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 32267,
+      "wallMs": 3.3,
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 3563,
+        "system": 527
+      }
+    },
+    {
+      "id": "smoke-66",
+      "requestIds": [
+        "smoke-66"
+      ],
+      "route": "/en/personas/cache-html-person",
+      "finalRoute": "/en/personas/cache-html-person",
+      "redirects": [],
+      "kind": "post",
+      "method": "POST",
+      "status": 200,
+      "cache": null,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "rewrittenPath": "/personas/cache-html-person",
+      "location": null,
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 32155,
+      "wallMs": 3.1,
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 3087,
+        "system": 326
+      }
+    },
+    {
+      "id": "smoke-67",
+      "requestIds": [
+        "smoke-67"
+      ],
+      "route": "/public-render/es/personas/cache-html-person",
+      "finalRoute": "/public-render/es/personas/cache-html-person",
+      "redirects": [],
+      "kind": "internal-canonical-redirect",
+      "method": "GET",
+      "status": 308,
+      "cache": null,
+      "contentType": null,
+      "cacheControl": null,
+      "rewrittenPath": null,
+      "location": "/personas/cache-html-person",
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 27,
+      "wallMs": 0.7,
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 440,
+        "system": 11
+      }
+    },
+    {
+      "id": "smoke-68",
+      "requestIds": [
+        "smoke-68"
+      ],
+      "route": "/public-render/en/personas/cache-html-person",
+      "finalRoute": "/public-render/en/personas/cache-html-person",
+      "redirects": [],
+      "kind": "internal-canonical-redirect",
+      "method": "GET",
+      "status": 308,
+      "cache": null,
+      "contentType": null,
+      "cacheControl": null,
+      "rewrittenPath": null,
+      "location": "/en/personas/cache-html-person",
+      "setsCookie": false,
+      "databaseReads": 0,
+      "authReads": 0,
+      "verifiedFixtureAuthReads": 0,
+      "privateStateReads": 0,
+      "upstreamPaths": [],
+      "responseBytes": 30,
+      "wallMs": 0.4,
+      "cpuRequestCount": 1,
+      "cpuMicroseconds": {
+        "user": 1879,
+        "system": 8
+      }
+    }
+  ]
+}

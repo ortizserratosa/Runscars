@@ -265,6 +265,13 @@ el perfil de Matt Neglia. The Ankler sigue exclusivamente a Christopher Rosen y
 The Rolling Tape a Danny Jarabek (D-074). No se atribuyen estas listas a un consenso de equipo.
 La última revisión de una misma URL se resuelve antes de comparar las fechas
 de publicaciones distintas, evitando una elección dependiente del orden de filas.
+Para ordenar esas revisiones se usa una fecha representativa por captura,
+fuente, temporada, categoría e intención: prevalece `publication_date` explícito
+del recibo (incluido su `null`); cuando falta o es inválido se toma la mayor
+fecha de publicación de sus observaciones. Así una captura legada con fechas
+mixtas no depende del orden físico de SQL. La evidencia conserva las fechas de
+cada observación y la continuidad de las filas sin fecha; no se usa la fecha de
+captura para rejuvenecer la publicación (D-081).
 
 Esa publicación solo participa durante los 30 días siguientes a su fecha de
 publicación o, cuando esta no existe, a su evidencia fechada. En las capturas

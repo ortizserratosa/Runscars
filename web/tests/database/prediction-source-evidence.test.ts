@@ -1,5 +1,5 @@
 import { PGlite } from "@electric-sql/pglite";
-import { readdir, readFile } from "node:fs/promises";
+import { readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
@@ -24,6 +24,21 @@ beforeAll(async () => {
   for (const file of (await readdir(directory))
     .filter((name) => name.endsWith(".sql"))
     .sort()) {
+    if (file === "20261124120000_prediction_evidence_scoped_heads.sql") {
+      // Preserve the previous SQL as live, test-only views: both versions see
+      // the exact same receipts, including subsequent correction/reuse cases.
+      for (const suffix of ["status", "evidence"]) {
+        const result = await database.query<{ definition: string }>(
+          `select pg_get_viewdef($1::regclass, true) as definition`,
+          [`public.public_prediction_source_${suffix}`],
+        );
+        await database.exec(
+          `create view public.prior_prediction_source_${suffix}
+           with (security_barrier = true) as ${result.rows[0].definition}
+           grant select on public.prior_prediction_source_${suffix} to anon, authenticated;`,
+        );
+      }
+    }
     await database.exec(await readFile(path.join(directory, file), "utf8"));
   }
   await database.exec(
@@ -56,6 +71,8 @@ async function capture(
   published: string | null = null,
   state = "published",
   complete = true,
+  receiptOverrides: Record<string, unknown> = {},
+  observationPublicationDates?: Array<string | null>,
 ) {
   const version = ++sequence;
   const result = await database.query<{ id: number }>(
@@ -70,6 +87,7 @@ async function capture(
         publication_date: published,
         categories,
         private_debug: "do not publish",
+        ...receiptOverrides,
       }),
       date,
     ],
@@ -99,7 +117,9 @@ async function capture(
             list_length: 50,
             raw: entry.parts.subject,
           }),
-          published,
+          observationPublicationDates
+            ? observationPublicationDates[observationIds.length]
+            : published,
           date,
           state === "published",
           state,
@@ -593,5 +613,339 @@ describe("public source prediction evidence", () => {
     );
     expect(evidence.rows[0].extractor_version).toBe("test-v2");
     await database.exec("reset role");
+  });
+
+  it("preserves every public status/evidence field under filtered and unfiltered reads", async () => {
+    for (const role of ["anon", "authenticated"]) {
+      await database.exec(`set role ${role}`);
+      try {
+        for (const suffix of ["status", "evidence"]) {
+          for (const predicate of [
+            "true",
+            "season_id='oscars-2027' and prediction_intention='nomination'",
+            "source_id='next-best-picture'",
+            "source_id='variety' and category_id='best-picture'",
+          ]) {
+            const difference = await database.query(
+              `(select * from public.public_prediction_source_${suffix} where ${predicate}
+                except all select * from public.prior_prediction_source_${suffix} where ${predicate})
+               union all
+               (select * from public.prior_prediction_source_${suffix} where ${predicate}
+                except all select * from public.public_prediction_source_${suffix} where ${predicate})`,
+            );
+            expect(difference.rows).toEqual([]);
+          }
+        }
+      } finally {
+        await database.exec("reset role");
+      }
+    }
+    const barriers = await database.query<{ reloptions: string[] }>(
+      `select reloptions from pg_class where oid in
+       ('public.public_prediction_source_status'::regclass,
+        'public.public_prediction_source_evidence'::regclass)`,
+    );
+    expect(barriers.rows).toHaveLength(2);
+    expect(
+      barriers.rows.every((row) =>
+        row.reloptions.includes("security_barrier=true"),
+      ),
+    ).toBe(true);
+  });
+
+  it("bounds full-list freshness work when a complete receipt reuses a large ranked list", async () => {
+    const benchmark: unknown[] = [];
+    const pub = await publication(
+      "next-best-picture",
+      "large-complete-history",
+    );
+    const ranked = Array.from({ length: 50 }, (_, index) => ({
+      rank: index + 1,
+      parts: {
+        subject: `Film ${index}`,
+        filmSubject: `Film ${index}`,
+        peopleSubjects: [],
+      },
+    }));
+    const first = await capture(
+      pub,
+      "next-best-picture",
+      "2026-11-01T00:00:00Z",
+      {
+        "best-picture": ranked,
+      },
+    );
+    await database.query(
+      `with captures as (
+        insert into public.source_publication_captures
+          (publication_id,content_hash,source_url,original_data,captured_at,extractor_version)
+        select publication_id,md5('scale-'||n)||md5('scale-'||n),source_url,original_data,
+          captured_at+n*interval '1 hour',extractor_version
+        from public.source_publication_captures cross join generate_series(1,120) n
+        where id=$1 returning id,captured_at
+      ), completed as (
+        insert into public.source_capture_completions(capture_id,expected_observation_count,completed_at)
+        select id,50,captured_at from captures returning capture_id
+      ) insert into public.source_capture_observations(capture_id,observation_id)
+        select completed.capture_id,member.observation_id from completed
+        cross join public.source_capture_observations member where member.capture_id=$1`,
+      [first],
+    );
+    // Obsolete URLs are still immutable evidence. They must remain available
+    // without making a current source read revalidate all their old lists.
+    for (let oldUrl = 0; oldUrl < 5; oldUrl += 1) {
+      const oldPublication = await publication(
+        "next-best-picture",
+        `obsolete-large-history-${oldUrl}`,
+      );
+      const oldCapture = await capture(
+        oldPublication,
+        "next-best-picture",
+        "2026-09-01T00:00:00Z",
+        { "best-picture": ranked },
+      );
+      await database.query(
+        `with captures as (
+          insert into public.source_publication_captures
+            (publication_id,content_hash,source_url,original_data,captured_at,extractor_version)
+          select publication_id,md5('old-scale-'||n)||md5('old-scale-'||n),source_url,original_data,
+            captured_at+n*interval '1 hour',extractor_version
+          from public.source_publication_captures cross join generate_series(1,50) n
+          where id=$1 returning id,captured_at
+        ), completed as (
+          insert into public.source_capture_completions(capture_id,expected_observation_count,completed_at)
+          select id,50,captured_at from captures returning capture_id
+        ) insert into public.source_capture_observations(capture_id,observation_id)
+          select completed.capture_id,member.observation_id from completed
+          cross join public.source_capture_observations member where member.capture_id=$1`,
+        [oldCapture],
+      );
+    }
+    await database.exec("analyze");
+    type Plan = {
+      "Node Type": string;
+      "Function Name"?: string;
+      "Actual Loops": number;
+      Plans?: Plan[];
+    };
+    const functions = (plan: Plan): number =>
+      (plan["Function Name"] === "jsonb_array_elements"
+        ? plan["Actual Loops"]
+        : 0) +
+      (plan.Plans ?? []).reduce((count, child) => count + functions(child), 0);
+    for (const suffix of ["status", "evidence"]) {
+      const query = `select * from public.public_prediction_source_${suffix}
+        where season_id='oscars-2027' and prediction_intention='nomination'
+          ${suffix === "evidence" ? "and source_id='next-best-picture' order by id" : "order by source_id,category_id"}`;
+      const expected = await database.query(
+        query.replace("public_prediction", "prior_prediction"),
+      );
+      const actual = await database.query<{
+        source_id: string;
+        category_id: string;
+        freshness_at: Date;
+      }>(query);
+      expect(actual.rows).toEqual(expected.rows);
+      const selected = actual.rows.filter(
+        (row) =>
+          row.source_id === "next-best-picture" &&
+          row.category_id === "best-picture",
+      );
+      expect(selected).toHaveLength(suffix === "status" ? 1 : 50);
+      expect(new Date(selected[0].freshness_at).toISOString()).toBe(
+        "2026-11-01T00:00:00.000Z",
+      );
+      const plan = await database.query<{
+        "QUERY PLAN": Array<{ Plan: Plan; "Execution Time": number }>;
+      }>(`explain (analyze, format json) ${query}`);
+      const priorPlan = await database.query<{
+        "QUERY PLAN": Array<{ Plan: Plan; "Execution Time": number }>;
+      }>(
+        `explain (analyze, format json) ${query.replace("public_prediction", "prior_prediction")}`,
+      );
+      console.info("prediction scoped read", suffix, {
+        milliseconds: plan.rows[0]["QUERY PLAN"][0]["Execution Time"],
+        previousMilliseconds:
+          priorPlan.rows[0]["QUERY PLAN"][0]["Execution Time"],
+        signatureLists: functions(plan.rows[0]["QUERY PLAN"][0].Plan),
+        previousSignatureLists: functions(
+          priorPlan.rows[0]["QUERY PLAN"][0].Plan,
+        ),
+      });
+      benchmark.push({
+        view: suffix,
+        milliseconds: plan.rows[0]["QUERY PLAN"][0]["Execution Time"],
+        previousMilliseconds:
+          priorPlan.rows[0]["QUERY PLAN"][0]["Execution Time"],
+        signatureLists: functions(plan.rows[0]["QUERY PLAN"][0].Plan),
+        previousSignatureLists: functions(
+          priorPlan.rows[0]["QUERY PLAN"][0].Plan,
+        ),
+      });
+      // Each historical list is validated once for the head, rather than once
+      // per returned candidate. Timing is reported, never used as a flaky gate.
+      expect(functions(plan.rows[0]["QUERY PLAN"][0].Plan)).toBeLessThan(150);
+    }
+    if (process.env.RUNSCARS_SQL_BENCH_REPORT) {
+      await writeFile(
+        process.env.RUNSCARS_SQL_BENCH_REPORT,
+        JSON.stringify(benchmark, null, 2),
+      );
+    }
+  }, 60_000);
+
+  it("selects a deterministic legacy publication representative while preserving individual dates", async () => {
+    for (const [index, publicationDate] of [
+      undefined,
+      "",
+      "invalid",
+    ].entries()) {
+      const day = 20 + index;
+      const earlier = await publication("variety", `mixed-earlier-${index}`);
+      await capture(
+        earlier,
+        "variety",
+        `2026-11-${day}T04:17:00Z`,
+        {
+          "best-picture": [
+            {
+              rank: 1,
+              parts: {
+                subject: "Earlier one",
+                filmSubject: "Earlier one",
+                peopleSubjects: [],
+              },
+            },
+            {
+              rank: 2,
+              parts: {
+                subject: "Earlier two",
+                filmSubject: "Earlier two",
+                peopleSubjects: [],
+              },
+            },
+          ],
+        },
+        null,
+        "published",
+        true,
+        { publication_date: publicationDate },
+        ["2026-11-10T00:00:00Z", null],
+      );
+      const latest = await publication("variety", `mixed-latest-${index}`);
+      await capture(
+        latest,
+        "variety",
+        `2026-11-${day}T05:17:00Z`,
+        {
+          "best-picture": [
+            {
+              rank: 1,
+              parts: {
+                subject: "Current one",
+                filmSubject: "Current one",
+                peopleSubjects: [],
+              },
+            },
+            {
+              rank: 2,
+              parts: {
+                subject: "Current two",
+                filmSubject: "Current two",
+                peopleSubjects: [],
+              },
+            },
+          ],
+        },
+        null,
+        "published",
+        true,
+        { publication_date: publicationDate },
+        [`2026-11-${day}T00:00:00Z`, null],
+      );
+      const result = await database.query<{
+        publication_external_id: string;
+        published_at: Date | null;
+      }>(
+        `select publication_external_id,published_at from public.public_prediction_source_evidence
+         where source_id='variety' and category_id='best-picture' order by id`,
+      );
+      expect(result.rows.map((row) => row.publication_external_id)).toEqual([
+        `mixed-latest-${index}`,
+        `mixed-latest-${index}`,
+      ]);
+      expect(
+        result.rows.map((row) => row.published_at?.toISOString() ?? null),
+      ).toEqual([`2026-11-${day}T00:00:00.000Z`, null]);
+      const status = await database.query<{ publication_external_id: string }>(
+        `select publication_external_id from public.public_prediction_source_status
+         where source_id='variety' and category_id='best-picture'`,
+      );
+      expect(status.rows).toEqual([
+        { publication_external_id: `mixed-latest-${index}` },
+      ]);
+    }
+  });
+
+  it("retains undated member continuity when another member supplies a legacy publication date", async () => {
+    const pub = await publication("next-best-picture", "mixed-undated-members");
+    const categories = {
+      "best-picture": [
+        {
+          rank: 1,
+          parts: {
+            subject: "Mixed one",
+            filmSubject: "Mixed one",
+            peopleSubjects: [],
+          },
+        },
+        {
+          rank: 2,
+          parts: {
+            subject: "Mixed two",
+            filmSubject: "Mixed two",
+            peopleSubjects: [],
+          },
+        },
+      ],
+    };
+    await capture(
+      pub,
+      "next-best-picture",
+      "2026-11-10T04:17:00Z",
+      categories,
+      null,
+      "published",
+      true,
+      { publication_date: undefined },
+      ["2026-11-05T00:00:00Z", null],
+    );
+    await capture(
+      pub,
+      "next-best-picture",
+      "2026-11-24T04:17:00Z",
+      categories,
+      null,
+      "published",
+      true,
+      { publication_date: undefined },
+      ["2026-11-20T00:00:00Z", null],
+    );
+    const result = await database.query<{
+      published_at: Date | null;
+      freshness_at: Date;
+    }>(
+      `select published_at,freshness_at from public.public_prediction_source_evidence
+       where source_id='next-best-picture' and category_id='best-picture' order by id`,
+    );
+    expect(
+      result.rows.map((row) => [
+        row.published_at?.toISOString() ?? null,
+        row.freshness_at.toISOString(),
+      ]),
+    ).toEqual([
+      ["2026-11-20T00:00:00.000Z", "2026-11-20T00:00:00.000Z"],
+      [null, "2026-11-10T04:17:00.000Z"],
+    ]);
   });
 });

@@ -1,0 +1,53 @@
+{
+  "environment": "Local reproducible fixtures; no live TMDB or source websites in tests",
+  "npmCi": {
+    "passed": true
+  },
+  "verify": {
+    "passed": true,
+    "command": "NEXT_PUBLIC_SUPABASE_URL= NEXT_PUBLIC_SUPABASE_ANON_KEY= SUPABASE_SERVICE_ROLE_KEY= TMDB_READ_ACCESS_TOKEN= npm run verify",
+    "unitFiles": 64,
+    "unitTests": 565,
+    "databaseFiles": 8,
+    "databaseTests": 64,
+    "nextVersion": "16.4.6",
+    "audit": {
+      "high": 0,
+      "critical": 0,
+      "moderate": 7
+    }
+  },
+  "e2e": {
+    "passed": true,
+    "tests": 146,
+    "projects": [
+      "chromium",
+      "mobile-chrome",
+      "firefox-smoke",
+      "webkit-smoke"
+    ],
+    "cleanDevCache": true,
+    "notes": [
+      "Intentional aborts of the live public-ballot request are allowed only when the final module resolves successfully.",
+      "A repeated dev run had Fast Refresh/navigation interruptions; suite passed after archiving generated .next/dev without app changes."
+    ]
+  },
+  "htmlCacheSmoke": {
+    "passed": true,
+    "cases": 68,
+    "physicalRequests": 76,
+    "anonymousHitDatabaseReads": 0,
+    "anonymousHitAuthReads": 0,
+    "report": "html-cache-smoke.json"
+  },
+  "relativeDocumentationLinks": {
+    "passed": true
+  },
+  "diffCheck": {
+    "passed": true
+  },
+  "limits": [
+    "Local Node26 timings do not measure Node24 Vercel billed CPU.",
+    "No claim of monthly savings or sustained six-minute daily usage."
+  ]
+}

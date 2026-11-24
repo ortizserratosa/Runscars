@@ -114,11 +114,12 @@ async function publicProfilesByIds(
   userIds: string[],
 ) {
   if (!userIds.length) return new Map<string, ProfileRow>();
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("user_profiles")
     .select("user_id,slug,display_name,is_public")
     .eq("is_public", true)
     .in("user_id", userIds);
+  if (error) throw new Error(error.message);
   return new Map(
     ((data ?? []) as ProfileRow[]).map((profile) => [profile.user_id, profile]),
   );
@@ -135,13 +136,14 @@ async function rankingEntries(
       films: new Map<string, FilmRow>(),
     };
   }
-  const { data: rawEntries } = await supabase
+  const { data: rawEntries, error: entriesError } = await supabase
     .from("user_ranking_entries")
     .select(
       "id,ranking_id,category_candidate_id,custom_label,custom_kind,tmdb_url,qualifying_movie_tmdb_url,us_theatrical_release_date,tmdb_verified_at,position",
     )
     .in("ranking_id", rankingIds)
     .order("position");
+  if (entriesError) throw new Error(entriesError.message);
   const entries = (rawEntries ?? []) as EntryRow[];
   const candidateIds = [
     ...new Set(
@@ -150,12 +152,13 @@ async function rankingEntries(
         .filter((candidateId): candidateId is string => Boolean(candidateId)),
     ),
   ];
-  const { data: rawCandidates } = candidateIds.length
+  const { data: rawCandidates, error: candidatesError } = candidateIds.length
     ? await supabase
         .from("category_candidates")
         .select("id,film_id,display_label")
         .in("id", candidateIds)
-    : { data: [] };
+    : { data: [], error: null };
+  if (candidatesError) throw new Error(candidatesError.message);
   const candidates = new Map(
     ((rawCandidates ?? []) as CandidateRow[]).map((candidate) => [
       candidate.id,
@@ -169,9 +172,10 @@ async function rankingEntries(
         .filter((filmId): filmId is string => Boolean(filmId)),
     ),
   ];
-  const { data: rawFilms } = filmIds.length
+  const { data: rawFilms, error: filmsError } = filmIds.length
     ? await supabase.from("films").select("id,title").in("id", filmIds)
-    : { data: [] };
+    : { data: [], error: null };
+  if (filmsError) throw new Error(filmsError.message);
   const films = new Map(
     ((rawFilms ?? []) as FilmRow[]).map((film) => [film.id, film]),
   );
@@ -243,11 +247,12 @@ export async function listPublicRankings(input: {
   let matchingUserIds: string[] | null = null;
   if (filters.query) {
     const escaped = filters.query.replace(/[%_,]/g, "\\$&");
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("user_profiles")
       .select("user_id")
       .eq("is_public", true)
       .or(`display_name.ilike.%${escaped}%,slug.ilike.%${escaped}%`);
+    if (error) throw new Error(error.message);
     matchingUserIds = (data ?? []).map((profile) => profile.user_id);
     if (!matchingUserIds.length) {
       return {
@@ -268,7 +273,12 @@ export async function listPublicRankings(input: {
   if (category) rankingsQuery = rankingsQuery.eq("category_id", category.id);
   if (matchingUserIds)
     rankingsQuery = rankingsQuery.in("user_id", matchingUserIds);
-  const { data: rawRankings, count } = await rankingsQuery;
+  const {
+    data: rawRankings,
+    count,
+    error: rankingsError,
+  } = await rankingsQuery;
+  if (rankingsError) throw new Error(rankingsError.message);
   const allRankings = (rawRankings ?? []) as RankingRow[];
   const start = (filters.page - 1) * PAGE_SIZE;
   const rankings = allRankings.slice(start, start + PAGE_SIZE);
@@ -285,14 +295,15 @@ export async function listPublicRankings(input: {
   );
   const filmIds = [...details.films.keys()];
   const userIds = [...profileMap.keys()];
-  const { data: rawStates } =
+  const { data: rawStates, error: statesError } =
     filmIds.length && userIds.length
       ? await supabase
           .from("user_film_states")
           .select("user_id,film_id,status")
           .in("user_id", userIds)
           .in("film_id", filmIds)
-      : { data: [] };
+      : { data: [], error: null };
+  if (statesError) throw new Error(statesError.message);
   const statesByUser = new Map<string, Map<string, FilmWatchState>>();
   for (const state of rawStates ?? []) {
     const states = statesByUser.get(state.user_id) ?? new Map();

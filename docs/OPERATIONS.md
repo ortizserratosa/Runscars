@@ -435,3 +435,20 @@ lectura pública; se prefiere corregir sobre este artefacto.
 
 Resultados, limitaciones y recibos en
 [PREDICTION_INTEGRITY_AUDIT_2026-11-06.md](PREDICTION_INTEGRITY_AUDIT_2026-11-06.md).
+
+
+## Reutilización profesional y consumo · 24 de noviembre de 2026
+
+D-080 extiende el HTML anónimo a categorías 2027 sin `corte`, fuentes y semana,
+con ISR de 60 s. Personas utiliza 300 s; películas y portada conservan 60 s.
+Las sesiones, acciones y parámetros semánticos continúan en SSR. Las quinielas
+públicas de categorías se consultan mediante `/api/comunidad/quinielas`, con RLS
+y `private, no-store`; nunca forman parte del HTML profesional compartido.
+Comprobar retirada de quinielas, errores y vuelta a pestaña además del HIT.
+
+El verificador publicado admite ahora hasta 80 solicitudes para las familias
+nuevas; su informe conserva el presupuesto físico y los reintentos. No ejecutar
+un recorrido completo del sitemap para medir esta optimización. El
+[informe del corte](VERCEL_CPU_MAINTENANCE_2026-11-24.md) distingue pruebas,
+visitas registradas y CPU; la sostenibilidad requiere una ventana posterior que
+incluya el cron de las 04:47 y los cuatro proyectos.

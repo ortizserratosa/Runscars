@@ -28,6 +28,15 @@ for (const route of routes) {
       if (errorText === "cancelled" || errorText === "Load request cancelled") {
         return;
       }
+      // The live module aborts obsolete reads on cleanup/visibility changes.
+      // React's development Strict Mode also exercises that cleanup on mount.
+      // Require the final module below; ignore only this deliberate abort.
+      if (
+        new URL(request.url()).pathname === "/api/comunidad/quinielas" &&
+        ["net::ERR_ABORTED", "NS_BINDING_ABORTED"].includes(errorText ?? "")
+      ) {
+        return;
+      }
       failedRequests.push(`${errorText ?? "request failed"}: ${request.url()}`);
     });
     const response = await page.goto(route, { waitUntil: "networkidle" });
@@ -43,6 +52,11 @@ for (const route of routes) {
       ).length,
     }));
     expect(visualState).toEqual({ overflow: false, brokenImages: 0 });
+    if (route === "/temporadas/2027/mejor-pelicula") {
+      await expect(page.locator(".community-module")).toContainText(
+        "Todavía no hay quinielas públicas en esta categoría.",
+      );
+    }
     expect(failedRequests).toEqual([]);
     expect(errors).toEqual([]);
 

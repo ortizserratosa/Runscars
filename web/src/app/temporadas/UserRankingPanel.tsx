@@ -15,6 +15,52 @@ import { localizedPath } from "../../lib/i18n/config";
 import { getRequestLocale } from "../../lib/i18n/server";
 import { RankingEditor } from "./RankingEditor";
 
+export function AnonymousUserRankingPanel({
+  categoryId,
+  categoryName,
+  locale,
+}: {
+  categoryId: PublicCategoryId;
+  categoryName: string;
+  locale: import("../../lib/i18n/config").Locale;
+}) {
+  const en = locale === "en";
+  const category = categoryById(categoryId);
+  if (!category) return null;
+  const localizedName = localizedCategoryName(locale, categoryId, categoryName);
+  return (
+    <section className="ranking-lab ranking-locked">
+      <div className="ranking-intro">
+        <p className="section-index">{en ? "YOUR BALLOT" : "TU QUINIELA"}</p>
+        <h2>
+          {en
+            ? `Your ${localizedName} ranking`
+            : `Tu ranking de ${localizedName}`}
+        </h2>
+        <p>
+          {en
+            ? "Try your picks before signing in. Save them to your account when you’re ready."
+            : "Prueba tus elecciones sin registrarte. Guárdalas en tu cuenta cuando quieras."}
+        </p>
+        <Link
+          className="primary-button"
+          href={`${localizedPath("/quiniela", locale)}?categoria=${category.slug}`}
+        >
+          {en ? "Try your ballot" : "Prueba tu quiniela"}
+        </Link>
+      </div>
+      <div className="ranking-lock-copy">
+        <strong>{en ? "Private by default" : "Privado por defecto"}</strong>
+        <p>
+          {en
+            ? "Save your picks for yourself or make them public whenever you like."
+            : "Guarda tus favoritas para ti o hazlas públicas cuando quieras."}
+        </p>
+      </div>
+    </section>
+  );
+}
+
 export async function UserRankingPanel({
   candidates,
   categoryId,
@@ -38,35 +84,11 @@ export async function UserRankingPanel({
   const localizedName = localizedCategoryName(locale, categoryId, categoryName);
   if (!current) {
     return (
-      <section className="ranking-lab ranking-locked">
-        <div className="ranking-intro">
-          <p className="section-index">{en ? "YOUR BALLOT" : "TU QUINIELA"}</p>
-          <h2>
-            {en
-              ? `Your ${localizedName} ranking`
-              : `Tu ranking de ${localizedName}`}
-          </h2>
-          <p>
-            {en
-              ? "Try your picks before signing in. Save them to your account when you’re ready."
-              : "Prueba tus elecciones sin registrarte. Guárdalas en tu cuenta cuando quieras."}
-          </p>
-          <Link
-            className="primary-button"
-            href={`${localizedPath("/quiniela", locale)}?categoria=${category.slug}`}
-          >
-            {en ? "Try your ballot" : "Prueba tu quiniela"}
-          </Link>
-        </div>
-        <div className="ranking-lock-copy">
-          <strong>{en ? "Private by default" : "Privado por defecto"}</strong>
-          <p>
-            {en
-              ? "Save your picks for yourself or make them public whenever you like."
-              : "Guarda tus favoritas para ti o hazlas públicas cuando quieras."}
-          </p>
-        </div>
-      </section>
+      <AnonymousUserRankingPanel
+        categoryId={categoryId}
+        categoryName={categoryName}
+        locale={locale}
+      />
     );
   }
 

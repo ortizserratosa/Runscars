@@ -83,6 +83,25 @@ function rowsFor(url, signedIn) {
           status: "watched",
         }
       : [];
+  if (table === "sources")
+    return [
+      {
+        id: "cache-html-source",
+        name: "Smoke source",
+        homepage_url: "https://example.invalid/source",
+        source_types: ["prediction"],
+        editorial_status: "selected",
+        technical_status: "automated",
+        publication_status: "publishable",
+        last_reviewed_on: "2026-11-24",
+      },
+    ];
+  if (table === "season_categories")
+    return {
+      nominee_slots: 10,
+      nominee_slots_source_url: "https://example.invalid/rules",
+      nominee_slots_verified_on: "2026-11-24",
+    };
   if (table === "people" && id)
     return { id, name: `Smoke person ${id}`, tmdb_id: 100 };
   if (table === "films" && id)
@@ -500,6 +519,34 @@ Server.prototype.emit = function(event, request, response, ...rest) {
       content: "English smoke biography",
     },
   ];
+  for (const locale of ["es", "en"]) {
+    const prefix = locale === "en" ? "/en" : "";
+    routes.push(
+      {
+        route: `${prefix}/temporadas/2027/mejor-pelicula`,
+        locale,
+        content: locale === "en" ? "Best Picture" : "Mejor película",
+      },
+      { route: `${prefix}/fuentes`, locale, content: "Smoke source" },
+      {
+        route: `${prefix}/fuentes/cache-html-source`,
+        locale,
+        content: "Smoke source",
+      },
+      {
+        route: `${prefix}/semana`,
+        locale,
+        content:
+          locale === "en" ? "This week in the race" : "La carrera, esta semana",
+      },
+      {
+        route: `${prefix}/semana/2026-11-23`,
+        locale,
+        content:
+          locale === "en" ? "This week in the race" : "La carrera, esta semana",
+      },
+    );
+  }
   for (const item of routes) {
     for (const kind of ["anonymous-first", "anonymous-repeat"]) {
       const { response, html, result } = await sample(origin, item.route, kind);
@@ -570,6 +617,43 @@ Server.prototype.emit = function(event, request, response, ...rest) {
         `${kind}: token was not checked against local Auth`,
       );
     }
+  }
+  for (const route of [
+    "/temporadas/2027/mejor-pelicula",
+    "/en/temporadas/2027/mejor-pelicula",
+    "/fuentes/cache-html-source",
+    "/en/fuentes/cache-html-source",
+    "/semana",
+    "/en/semana",
+  ]) {
+    const supplied = await sample(origin, route, "new-family-session", {
+      headers: { Cookie: `${cookieName}=invalid` },
+    });
+    assert.equal(supplied.result.status, 200);
+    assertNotShared(supplied.result);
+    const flight = await sample(
+      origin,
+      `${route}?_rsc=local-smoke`,
+      "new-family-flight",
+      {
+        headers: { RSC: "1", "next-router-prefetch": "1" },
+        followRscRedirects: true,
+      },
+    );
+    assert.equal(flight.result.status, 200);
+    assert.match(
+      flight.response.headers.get("content-type") ?? "",
+      /^text\/x-component\b/,
+    );
+    assert.equal(flight.result.authReads, 0);
+    assert.ok(!flight.html.includes("watched-button"));
+    const semantic = await sample(
+      origin,
+      `${route}?corte=some-cut`,
+      "new-family-semantic",
+    );
+    assert.equal(semantic.result.status, 200);
+    assertNotShared(semantic.result);
   }
   const validSession = dummySession(supabaseUrl, true);
   for (const locale of ["es", "en"]) {

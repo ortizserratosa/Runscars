@@ -53,6 +53,18 @@ describe("public HTML routing boundary", () => {
     ["/en/peliculas/film-1", "/public-render/en/peliculas/film-1"],
     ["/personas/person-1", "/public-render/es/personas/person-1"],
     ["/en/personas/person-1", "/public-render/en/personas/person-1"],
+    [
+      "/temporadas/2027/mejor-pelicula",
+      "/public-render/es/temporadas/2027/mejor-pelicula",
+    ],
+    [
+      "/en/temporadas/2027/mejor-pelicula",
+      "/public-render/en/temporadas/2027/mejor-pelicula",
+    ],
+    ["/fuentes", "/public-render/es/fuentes"],
+    ["/en/fuentes/example", "/public-render/en/fuentes/example"],
+    ["/semana", "/public-render/es/semana"],
+    ["/en/semana/2026-11-23", "/public-render/en/semana/2026-11-23"],
   ])("routes anonymous %s by its URL", (path, target) => {
     expect(select(path)).toBe(target);
     expect(select(path, { method: "HEAD" })).toBe(target);
@@ -96,7 +108,7 @@ describe("public HTML routing boundary", () => {
     "/acceso",
     "/comunidad",
     "/usuarios/reader",
-    "/temporadas/2027/mejor-pelicula",
+    "/temporadas/2026/mejor-pelicula",
     "/peliculas/film-1/extra",
     "/personas",
   ])("keeps %s outside the public HTML families", (path) => {
@@ -107,6 +119,19 @@ describe("public HTML routing boundary", () => {
     "keeps a semantic or unknown query (%s) in SSR",
     (query) => expect(select(`/peliculas/film-1?${query}`)).toBeNull(),
   );
+
+  it.each([
+    "/temporadas/2027/mejor-pelicula",
+    "/en/fuentes/example",
+    "/semana/2026-11-23",
+  ])("keeps sessions, actions and cut selectors out of shared %s", (route) => {
+    expect(
+      select(route, { cookie: "sb-example-auth-token.0=invalid" }),
+    ).toBeNull();
+    expect(select(route, { headers: { "next-action": "action" } })).toBeNull();
+    expect(select(`${route}?corte=locked-cut`)).toBeNull();
+    expect(select(route, { method: "POST" })).toBeNull();
+  });
 
   it("does not let supplied internal headers choose the render or language", async () => {
     const response = await proxy(
@@ -165,6 +190,12 @@ describe("internal public render namespace", () => {
     ["/public-render/en", "/en"],
     ["/public-render/es/peliculas/film-1", "/peliculas/film-1"],
     ["/public-render/en/personas/person-1", "/en/personas/person-1"],
+    [
+      "/public-render/es/temporadas/2027/mejor-pelicula",
+      "/temporadas/2027/mejor-pelicula",
+    ],
+    ["/public-render/en/fuentes/example", "/en/fuentes/example"],
+    ["/public-render/es/semana/2026-11-23", "/semana/2026-11-23"],
   ])(
     "redirects direct GET requests for %s to the canonical path",
     async (path, canonical) => {

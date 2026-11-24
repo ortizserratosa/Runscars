@@ -1,0 +1,58 @@
+{
+  "source": "https://vercel.com/nazzozzo-s-projects/runscars/analytics?period=30d",
+  "environment": "Production",
+  "selectedRange": {
+    "from": "2026-10-25",
+    "to": "2026-11-24"
+  },
+  "analyticsEnabledOn": "2026-11-02",
+  "visitors": 247,
+  "pageViews": 902,
+  "bounceRatePercent": 42,
+  "devicesPercent": {
+    "mobile": 52,
+    "desktop": 48,
+    "tablet": "<0.5"
+  },
+  "countriesPercent": {
+    "US": 59,
+    "ES": 12,
+    "GB": 6,
+    "JP": 3,
+    "BR": 2
+  },
+  "topPagesByVisitors": [
+    {
+      "path": "/",
+      "visitors": 75
+    },
+    {
+      "path": "/en",
+      "visitors": 49
+    },
+    {
+      "path": "/en/temporadas/2027/mejor-pelicula",
+      "visitors": 45
+    },
+    {
+      "path": "/en/temporadas/2027/actriz-de-reparto",
+      "visitors": 41
+    },
+    {
+      "path": "/temporadas/2027/actor-de-reparto",
+      "visitors": 39
+    }
+  ],
+  "referrersByVisitors": {
+    "bing.com": 8,
+    "google.com": 4,
+    "duckduckgo.com": 2
+  },
+  "limitations": [
+    "Visitors use identifiers renewed daily; not deduplicated people over the whole range.",
+    "No historical collection before November 2.",
+    "Own checks are not separated from organic audience.",
+    "Top-page visitors overlap; counts must not be added."
+  ],
+  "observedAtNote": "Dashboard selection ended November 24 at 09:59; aggregate read before implementation."
+}

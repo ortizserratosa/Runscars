@@ -1,7 +1,7 @@
 import { personMetadata, renderPerson } from "@/app/views/PersonPageView";
 import { publicLocale } from "@/lib/rendering/public-locale";
 
-export const revalidate = 60;
+export const revalidate = 300;
 
 export function generateStaticParams() {
   return [];

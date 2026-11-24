@@ -1,5 +1,6 @@
 import "server-only";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { unstable_cache } from "next/cache";
 import { cache } from "react";
 import { isSupabaseConfigured } from "../environment";
 import { createSupabaseServerClient } from "../supabase/server";
@@ -23,6 +24,86 @@ import {
 function client() {
   return createSupabaseServerClient() as unknown as SupabaseClient;
 }
+
+const cacheScope = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "unconfigured";
+
+// Cache independent anonymous reads, not a composition that calls other
+// unstable_cache functions: Next skips those nested cache reads.
+const cachedSourceRegistry = unstable_cache(
+  async () => {
+    const result = await client()
+      .from("sources")
+      .select(
+        "id,name,homepage_url,source_types,editorial_status,technical_status,publication_status,last_reviewed_on",
+      );
+    if (result.error) throw new Error(result.error.message);
+    return result.data ?? [];
+  },
+  ["public-source-registry-v1", cacheScope],
+  { revalidate: 60 },
+);
+const cachedProfessionalFreshness = unstable_cache(
+  async () => {
+    const result = await client()
+      .from("public_source_freshness")
+      .select(
+        "source_id,last_successful_check_at,last_failure_at,has_current_failure,has_active_connector",
+      );
+    if (result.error) throw new Error(result.error.message);
+    return result.data ?? [];
+  },
+  ["public-source-freshness-v1", cacheScope],
+  { revalidate: 60 },
+);
+const cachedMarketConnectors = unstable_cache(
+  async () => {
+    const result = await client()
+      .from("market_connectors")
+      .select("source_id,is_active,last_success_at,last_failure_at");
+    if (result.error) throw new Error(result.error.message);
+    return result.data ?? [];
+  },
+  ["public-market-connector-freshness-v1", cacheScope],
+  { revalidate: 60 },
+);
+const cachedFestivalConnectors = unstable_cache(
+  async () => {
+    const result = await client()
+      .from("public_festival_freshness")
+      .select(
+        "source_id,is_active,configuration,last_success_at,last_failure_at",
+      );
+    if (result.error) throw new Error(result.error.message);
+    return result.data ?? [];
+  },
+  ["public-festival-connector-freshness-v1", cacheScope],
+  { revalidate: 60 },
+);
+const cachedPredictionConnectors = unstable_cache(
+  async (sourceId: string) => {
+    const result = await client()
+      .from("public_prediction_connector_freshness")
+      .select("*")
+      .eq("source_id", sourceId);
+    if (result.error) throw new Error(result.error.message);
+    return result.data ?? [];
+  },
+  ["public-source-category-freshness-v1", cacheScope],
+  { revalidate: 60 },
+);
+const cachedSourceNotes = unstable_cache(
+  async (sourceId: string) => {
+    const result = await client()
+      .from("sources")
+      .select("notes")
+      .eq("id", sourceId)
+      .single();
+    if (result.error) throw new Error(result.error.message);
+    return (result.data?.notes as string | null) ?? null;
+  },
+  ["public-source-notes-v1", cacheScope],
+  { revalidate: 60 },
+);
 
 export type SourceHealth = "ok" | "failed" | "unknown";
 
@@ -391,7 +472,9 @@ function withFestivalEvidence(
   });
 }
 
-export async function getSourceIndex(): Promise<SourceIndexView[]> {
+export const getSourceIndex = cache(async function getSourceIndex(): Promise<
+  SourceIndexView[]
+> {
   const [predictions, precursors, festivals] = await Promise.all([
     getCurrentCategoryPredictions(),
     getPrecursorIndex(),
@@ -403,57 +486,37 @@ export async function getSourceIndex(): Promise<SourceIndexView[]> {
       festivals,
     );
   try {
-    const supabase = client();
     const [
-      sourcesResult,
-      connectorsResult,
-      marketConnectorsResult,
-      festivalConnectorsResult,
+      sourceRows,
+      professionalFreshness,
+      marketConnectors,
+      festivalConnectors,
       predictionStatuses,
     ] = await Promise.all([
-      supabase
-        .from("sources")
-        .select(
-          "id,name,homepage_url,source_types,editorial_status,technical_status,publication_status,last_reviewed_on",
-        ),
-      supabase
-        .from("public_source_freshness")
-        .select(
-          "source_id,last_successful_check_at,last_failure_at,has_current_failure,has_active_connector",
-        ),
-      supabase
-        .from("market_connectors")
-        .select("source_id,is_active,last_success_at,last_failure_at"),
-      supabase
-        .from("public_festival_freshness")
-        .select(
-          "source_id,is_active,configuration,last_success_at,last_failure_at",
-        ),
+      cachedSourceRegistry(),
+      // Keep partial technical availability, but never persist a failed read
+      // as an empty success for the next sixty seconds.
+      cachedProfessionalFreshness().catch(() => []),
+      cachedMarketConnectors().catch(() => []),
+      cachedFestivalConnectors().catch(() => []),
       getPredictionSourceStatuses(),
     ]);
-    if (sourcesResult.error) throw new Error(sourcesResult.error.message);
     const connectorRows: ConnectorRow[] = [
-      ...(connectorsResult.error ? [] : (connectorsResult.data ?? [])),
-      ...(marketConnectorsResult.error
-        ? []
-        : (marketConnectorsResult.data ?? [])
-      ).map((connector) => ({
+      ...professionalFreshness,
+      ...marketConnectors.map((connector) => ({
         source_id: connector.source_id,
         last_successful_check_at: connector.last_success_at,
         last_failure_at: connector.last_failure_at,
         is_active: connector.is_active,
       })),
-      ...(festivalConnectorsResult.error
-        ? []
-        : (festivalConnectorsResult.data ?? [])
-      ).map((connector) => ({
+      ...festivalConnectors.map((connector) => ({
         source_id: connector.source_id,
         last_successful_check_at: connector.last_success_at,
         last_failure_at: connector.last_failure_at,
         is_active: connector.is_active,
       })),
     ];
-    const sources = (sourcesResult.data ?? [])
+    const sources = sourceRows
       .map((source): SourceIndexView => ({
         id: source.id,
         name: source.name,
@@ -477,11 +540,7 @@ export async function getSourceIndex(): Promise<SourceIndexView[]> {
         ),
       }))
       .sort((left, right) => left.name.localeCompare(right.name, "es"));
-    const festivalConnectors = (
-      festivalConnectorsResult.error
-        ? []
-        : (festivalConnectorsResult.data ?? [])
-    ).map((connector) => ({
+    const festivalFreshness = festivalConnectors.map((connector) => ({
       source_id: connector.source_id,
       is_active: connector.is_active,
       configuration: connector.configuration,
@@ -491,7 +550,7 @@ export async function getSourceIndex(): Promise<SourceIndexView[]> {
     return withFestivalEvidence(
       withPrecursorEvidence(sources, precursors),
       festivals,
-      festivalConnectors,
+      festivalFreshness,
     );
   } catch (error) {
     if (process.env.NODE_ENV === "production") throw error;
@@ -500,7 +559,7 @@ export async function getSourceIndex(): Promise<SourceIndexView[]> {
       festivals,
     );
   }
-}
+});
 
 function categoryViews(
   sourceId: string,
@@ -604,33 +663,21 @@ export const getSourceDetail = cache(async function getSourceDetail(
     };
   }
   try {
-    const supabase = client();
-    const [evidence, connectorResult] = summary.sourceTypes.includes(
-      "prediction",
-    )
+    const [evidence, connectors] = summary.sourceTypes.includes("prediction")
       ? await Promise.all([
           getPredictionSourceEvidence(sourceId),
-          supabase
-            .from("public_prediction_connector_freshness")
-            .select("*")
-            .eq("source_id", sourceId),
+          cachedPredictionConnectors(sourceId),
         ])
-      : [[], { data: [], error: null }];
-    if (connectorResult.error) throw new Error(connectorResult.error.message);
+      : [[], []];
     const categories = sourceEvidenceCategories(
       evidence as PredictionEvidenceRow[],
       predictions,
-      (connectorResult.data ?? []) as PredictionConnectorRow[],
+      connectors as PredictionConnectorRow[],
       new Date().toISOString(),
     );
     const notes = summary.sourceTypes.includes("prediction")
       ? null
-      : await supabase
-          .from("sources")
-          .select("notes")
-          .eq("id", sourceId)
-          .single();
-    if (notes?.error) throw new Error(notes.error.message);
+      : await cachedSourceNotes(sourceId);
     return {
       ...summary,
       lastPublishedAt: categories.reduce<string | null>(
@@ -638,7 +685,7 @@ export const getSourceDetail = cache(async function getSourceDetail(
         summary.lastPublishedAt,
       ),
       festivalEditions,
-      notes: notes?.data?.notes ?? null,
+      notes,
       categories,
     };
   } catch (error) {
