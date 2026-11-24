@@ -1,0 +1,106 @@
+{
+  "base": "https://runscars.app",
+  "capturedAt": "2026-11-24T09:46:26.214Z",
+  "samples": [
+    {
+      "route": "/api/health",
+      "status": 200,
+      "type": "application/json",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "bytes": 66
+    },
+    {
+      "route": "/api/health/database",
+      "status": 200,
+      "type": "application/json",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "bytes": 38
+    },
+    {
+      "route": "/acceso",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "bytes": 30794
+    },
+    {
+      "route": "/en/acceso",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "bytes": 30699
+    },
+    {
+      "route": "/comunidad",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "bytes": 32089
+    },
+    {
+      "route": "/en/comunidad",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "bytes": 31969
+    },
+    {
+      "route": "/festivales",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "bytes": 95600
+    },
+    {
+      "route": "/en/festivales",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "bytes": 95789
+    },
+    {
+      "route": "/festivales/cannes/2026",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "bytes": 178086
+    },
+    {
+      "route": "/en/festivales/cannes/2026",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "bytes": 177461
+    },
+    {
+      "route": "/robots.txt",
+      "status": 200,
+      "type": "text/plain; charset=utf-8",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "bytes": 175
+    },
+    {
+      "route": "/sitemap.xml",
+      "status": 200,
+      "type": "application/xml",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "bytes": 2182050
+    },
+    {
+      "route": "/api/social?kind=category&id=mejor-pelicula&lang=es",
+      "status": 200,
+      "type": "image/png",
+      "cacheControl": "public",
+      "bytes": 156662
+    },
+    {
+      "route": "/api/comunidad/quinielas?categoria=best-picture",
+      "status": 200,
+      "type": "application/json",
+      "cacheControl": "private, no-store",
+      "bytes": 25,
+      "publicBallotCount": 0
+    }
+  ],
+  "pass": true
+}

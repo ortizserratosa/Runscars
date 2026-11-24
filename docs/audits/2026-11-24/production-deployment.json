@@ -1,0 +1,12 @@
+{
+  "deploymentId": "dpl_EN4zvtjkV3vRuL1y158598wGfDNk",
+  "url": "https://runscars.app",
+  "artifactUrl": "https://runscars-io8c82moy-nazzozzo-s-projects.vercel.app",
+  "sourceCommit": "1eda3038366854706fd512b46adc7fb294fdc2ae",
+  "target": "production",
+  "state": "READY",
+  "promotedAtObservedUtc": "2026-11-24T09:45:47Z",
+  "sameArtifactVerifiedBeforePromotion": true,
+  "rollbackDeploymentId": "dpl_5DP1rnxSjdBNV1GEed1rcTBFdPGx",
+  "databaseRollback": "Private exact view definitions in the backup directory; additive indexes need not be removed for web rollback."
+}

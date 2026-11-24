@@ -1,0 +1,139 @@
+{
+  "queriesPassed": 11,
+  "samePublicRowsAndHashes": true,
+  "queries": [
+    {
+      "view": "public_prediction_source_status",
+      "sourceId": null,
+      "rows": 73,
+      "sameRowsAndHash": true,
+      "beforeMs": 1163,
+      "afterMs": 654,
+      "statuses": [
+        200
+      ]
+    },
+    {
+      "view": "public_prediction_source_evidence",
+      "sourceId": "ankler",
+      "rows": 41,
+      "sameRowsAndHash": true,
+      "beforeMs": 264,
+      "afterMs": 176,
+      "statuses": [
+        200
+      ]
+    },
+    {
+      "view": "public_prediction_source_evidence",
+      "sourceId": "awards-daily",
+      "rows": 43,
+      "sameRowsAndHash": true,
+      "beforeMs": 220,
+      "afterMs": 184,
+      "statuses": [
+        200
+      ]
+    },
+    {
+      "view": "public_prediction_source_evidence",
+      "sourceId": "awards-radar",
+      "rows": 189,
+      "sameRowsAndHash": true,
+      "beforeMs": 256,
+      "afterMs": 210,
+      "statuses": [
+        200
+      ]
+    },
+    {
+      "view": "public_prediction_source_evidence",
+      "sourceId": "awardswatch",
+      "rows": 44,
+      "sameRowsAndHash": true,
+      "beforeMs": 184,
+      "afterMs": 119,
+      "statuses": [
+        200
+      ]
+    },
+    {
+      "view": "public_prediction_source_evidence",
+      "sourceId": "midnight-critics",
+      "rows": 83,
+      "sameRowsAndHash": true,
+      "beforeMs": 605,
+      "afterMs": 190,
+      "statuses": [
+        200
+      ]
+    },
+    {
+      "view": "public_prediction_source_evidence",
+      "sourceId": "next-best-picture",
+      "rows": 45,
+      "sameRowsAndHash": true,
+      "beforeMs": 741,
+      "afterMs": 591,
+      "statuses": [
+        200
+      ]
+    },
+    {
+      "view": "public_prediction_source_evidence",
+      "sourceId": "the-movie-state",
+      "rows": 45,
+      "sameRowsAndHash": true,
+      "beforeMs": 151,
+      "afterMs": 72,
+      "statuses": [
+        200
+      ]
+    },
+    {
+      "view": "public_prediction_source_evidence",
+      "sourceId": "the-ringer",
+      "rows": 3,
+      "sameRowsAndHash": true,
+      "beforeMs": 114,
+      "afterMs": 83,
+      "statuses": [
+        200
+      ]
+    },
+    {
+      "view": "public_prediction_source_evidence",
+      "sourceId": "the-rolling-tape",
+      "rows": 89,
+      "sameRowsAndHash": true,
+      "beforeMs": 128,
+      "afterMs": 73,
+      "statuses": [
+        200
+      ]
+    },
+    {
+      "view": "public_prediction_source_evidence",
+      "sourceId": "variety",
+      "rows": 237,
+      "sameRowsAndHash": true,
+      "beforeMs": 243,
+      "afterMs": 233,
+      "statuses": [
+        200
+      ]
+    }
+  ],
+  "integrityUnchanged": true,
+  "integrity": {
+    "aggregate_snapshot_count": 400,
+    "aggregate_snapshot_id_content_hash_sha256": "dfb7597032df79867a69d3e7939ce2a555a6ddda857427e34fa57fdd9534956e",
+    "complete_capture_count": 440,
+    "complete_capture_observation_member_count": 14599,
+    "professional_observation_count": 15893,
+    "source_publication_capture_count": 614
+  },
+  "limits": [
+    "Single before/after HTTP sample includes network/cache effects; not Vercel CPU savings."
+  ]
+}

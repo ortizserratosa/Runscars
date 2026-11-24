@@ -1,0 +1,64 @@
+{
+  "publicGraph": {
+    "passed": true,
+    "pages": 32,
+    "requests": 33,
+    "budget": 64
+  },
+  "remotePredictionParsers": {
+    "passed": true,
+    "succeeded": 17,
+    "failed": 0,
+    "configuration": "Remote active connector configuration read through Supabase Management API",
+    "validation": "CONNECTORS + validateOrderedPredictionLists + validateRequiredPredictionCategories"
+  },
+  "marketParserChecks": {
+    "passed": true,
+    "kalshiContracts": 92,
+    "polymarketContracts": 295
+  },
+  "professionalAbandonedRuns": 0,
+  "latestSnapshotRefresh": {
+    "status": "succeeded",
+    "finishedAt": "2026-11-24T04:48:13Z",
+    "schedulesFailed": 0
+  },
+  "runtimeScan": {
+    "deploymentId": "dpl_EN4zvtjkV3vRuL1y158598wGfDNk",
+    "from": "2026-11-24T09:35:15.475Z",
+    "to": "2026-11-24T09:50:15.475Z",
+    "levels": [
+      "error",
+      "fatal",
+      "warning"
+    ],
+    "matchingLogs": 0
+  },
+  "preExistingIngestionIssues": [
+    {
+      "connector": "Guardian",
+      "lastSuccessDisplay": "2026-11-05 04:17 UTC",
+      "lastFailureDisplay": "2026-11-24 04:21 UTC",
+      "beforeRelease": true
+    },
+    {
+      "connector": "kalshi-oscars",
+      "lastSuccess": "2026-11-21T05:17:59Z",
+      "latestRunStatus": "running",
+      "latestRunStartedAt": "2026-11-24T09:17:01Z",
+      "latestRunFinishedAt": null,
+      "beforeRelease": true
+    }
+  ],
+  "canonicalAuditCommand": {
+    "exitCode": 1,
+    "reason": "Existing local production export has no usable server credential; six internal reads returned Invalid API key.",
+    "alternativeVerification": "Remote connector configuration and cron state checked via Management API; same parser validation executed separately without copying Production Secrets.",
+    "secretsChanged": false
+  },
+  "limits": [
+    "Sampled public graph only, not all 5204 sitemap URLs.",
+    "An empty short runtime-log scan does not prove long-term absence of errors.",
+    "Existing ingestion issues need their own recovery work."
+  ]
+}

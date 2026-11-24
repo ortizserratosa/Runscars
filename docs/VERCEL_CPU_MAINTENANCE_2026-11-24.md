@@ -84,7 +84,49 @@ Personas anuncia `s-maxage=300`; las otras familias permanecen en 60 segundos.
 El [recibo de verificación](audits/2026-11-24/verification.json) conserva el
 alcance. No se incluyen credenciales ni cuerpos de usuarios reales.
 
-Publicación de producción pendiente de terminar y comprobar.
+Se construye remotamente el commit `1eda3038366854706fd512b46adc7fb294fdc2ae`
+desde un archivo Git limpio, excluyendo los cambios ajenos y los archivos
+locales de hosting. El artefacto `dpl_EN4zvtjkV3vRuL1y158598wGfDNk` alcanza
+`READY` con el entorno de producción. Pasan catorce rutas de salud, idiomas,
+Comunidad, festivales, robots, sitemap, imagen social y resumen revocable; el
+[verificador staged](audits/2026-11-24/staged-html-cache.json) pasa 58 peticiones.
+Se promueve ese mismo artefacto a `https://runscars.app` el 24/11 hacia las
+09:45 UTC. En el dominio pasan otras [catorce rutas](audits/2026-11-24/production-routes.json)
+y [58 peticiones de caché](audits/2026-11-24/production-html-cache.json), sin
+reconstruir. La lectura de logs filtrada por este deployment no devuelve avisos
+ni errores en la ventana registrada; no acredita ausencia futura de errores.
+
+La migración se aplica antes de publicar la web. Las once consultas PostgREST
+reales mantienen todos los valores y hashes: 73 estados y 819 observaciones de
+evidencia. Los 400 snapshots, sus hashes, 614 capturas, 440 certificados y los
+recuentos de observaciones/membresía permanecen iguales. La muestra HTTP de
+estado pasa de 1.163 a 654 ms; las diez consultas de evidencia también responden
+más rápido en esa pasada. Red/cachés influyen: no se infiere ahorro facturado.
+El [recibo de migración](audits/2026-11-24/migration-production.json) conserva la
+comparación. La copia lógica previa y el rollback exacto de vistas permanecen
+fuera de Git en `/Users/nacho/Documents/Side/Runscars-backups/2026-11-24-cpu`,
+con directorio 0700 y archivos 0600. No se ensayó una restauración nueva.
+
+## Auditoría operativa y límites previos
+
+El [recibo operativo](audits/2026-11-24/operational-audit.json) distingue los
+resultados de cada transporte. El comando canónico de auditoría devuelve exit 1
+porque una exportación local antigua no contiene una credencial de servidor
+usable. No se copian Production Secrets ni se cambian credenciales. Mediante
+Management API se recupera la configuración real y la salud de tareas; los
+mismos conectores/validadores pasan las diecisiete fuentes de predicciones.
+El grafo público pasa 32 páginas con 33/64 peticiones y cero fallos; los parsers
+de mercados reconocen 92 contratos Kalshi y 295 Polymarket. El último refresco
+de snapshots terminó `succeeded` a las 04:48:13 UTC con cero fallos; no hay
+runs profesionales abandonados.
+
+Persisten dos incidencias anteriores al artefacto publicado: Guardian tiene su
+último éxito el 05/11 y volvió a fallar el 24/11 a las 04:21; Kalshi registra su
+último éxito el 21/11 y un run `running` desde el 24/11 a las 09:17:01 sin cierre.
+La recuperación de esas ingestas queda pendiente. No se declaran resueltas por
+este cambio de CPU. Festivales conserva cero conectores activos tras su archivo.
+El dominio no dispone de quinielas públicas para una muestra real de perfil;
+la retirada y visibilidad se verifican con fixtures, RLS y recorridos E2E.
 
 ## Medición posterior
 
